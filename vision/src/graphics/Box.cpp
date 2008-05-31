@@ -1,0 +1,114 @@
+/*
+  This source file is part of the Vision project
+  For the latest info, see http://www.XXX.org
+
+  Copyright (c) 2008 XXX
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software Foundation,
+  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
+#include "Box.h"
+#include "GraphicsManager.h"
+
+// Physics
+#include "physics/PhysicsBox.h"
+
+namespace Graphics
+{
+
+// Static member init
+const std::string  Box::DEFAULT_MESH			= "box.mesh";
+const std::string  Box::DEFAULT_MATERIAL	= "SolidColor";
+
+/**
+ * @internal
+ * @brief Constructor. Initializes class attributes.
+ */
+Box::Box():
+	m_bIsValid  ( false )
+{
+}
+
+/**
+ * @internal
+ * @brief Destructor. Class release.
+ */
+Box::~Box()
+{
+	// Release resources
+	end();
+}
+
+/**
+ * @internal
+ * @brief Creates a box with a specific size in each axis
+ * @param[in] width		Width of the box
+ * @param[in] height	Height of the box
+ * @param[in] depth		Depth of the box
+ */
+void Box::init( int width, int height, int depth )
+{
+	// Create the object 3d of a box
+	Object3D::init( DEFAULT_MESH, DEFAULT_MATERIAL );
+
+	// Set the size
+	setScale( width, height, depth );
+
+	// Store scale
+	m_width		= width;
+	m_height	= height;
+	m_depth		= depth;
+
+	// This is a primitive object type (Box)
+	setType( BOX );
+
+	m_bIsValid = true;
+}
+
+
+/**
+ * @internal
+ * @brief Creates a box with the same size in the three axis
+ * @param[in] size Defines the size of the cube (the same in the three axis: width, height, depth)
+ */
+void Box::init( int size )
+{
+	return init( size, size, size );
+}
+/**
+ * @internal
+ * @brief Releases the class resources. 
+ * After this call no method of this object can be called without calling init method again.
+ */
+void Box::end()
+{
+
+	m_bIsValid = false;
+}
+
+
+/*
+ * @brief Activates the physics for this Box
+ * 
+ * From now on, the box's position and rotation will be driven by the physics of the scene.
+ */
+void Box::activatePhysics()
+{
+	// Create and init the physics object
+	m_physicsObject = new Physics::PhysicsBox();
+	m_physicsObject->init( *this );
+}
+
+} // namespace Graphics
