@@ -1,0 +1,11 @@
+// Simple material with a solid color
+material SolidColor
+ {
+   technique
+   {
+     pass
+     {
+				ambient 1 1 1
+     } 
+   }
+ }
