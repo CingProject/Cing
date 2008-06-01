@@ -63,8 +63,8 @@ private:
 	Application();
 
 	// Attributes
-	Ogre::Timer		m_timer;		///< Application timer. Userd to messure time between frames
-	bool					m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	Ogre::Timer		m_timer;				///< Application timer. Userd to messure time between frames
+	bool					m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

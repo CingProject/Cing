@@ -32,6 +32,10 @@
 // Physics
 #include "physics/PhysicsManager.h"
 
+// Common
+#include "common/Exception.h"
+#include "common/ResourceManager.h"
+
 namespace Framework
 {
 
@@ -69,6 +73,9 @@ bool Application::initApp()
   // Init random number generator seed
   //TODO: setRandomSeed( timeGetTime() )
   
+	// Init the resource manager
+	Common::ResourceManager::getSingleton().init();
+
   // Init graphics manager
   Graphics::GraphicsManager::getSingleton().init();
 
@@ -112,6 +119,9 @@ void Application::endApp()
 
   // Release graphics manager
   Graphics::GraphicsManager::getSingleton().end();
+
+	// Release the resource manager
+	Common::ResourceManager::getSingleton().end();
 
 	// The class is not valid anymore
 	m_bIsValid = false;

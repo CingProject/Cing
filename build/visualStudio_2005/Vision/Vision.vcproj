@@ -391,6 +391,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\src\common\ResourceManager.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\src\common\Singleton.h"
 					>
 				</File>
@@ -400,6 +404,10 @@
 				>
 				<File
 					RelativePath="..\..\..\src\common\Exception.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\common\ResourceManager.cpp"
 					>
 				</File>
 			</Filter>

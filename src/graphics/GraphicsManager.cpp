@@ -56,7 +56,6 @@ namespace Graphics
  */
 GraphicsManager::GraphicsManager():
   m_bIsValid    ( false ),
-  m_pOgreRoot    ( NULL ),
   m_pSceneManager( NULL )
 {
 }
@@ -83,17 +82,15 @@ bool GraphicsManager::init()
   if ( isValid() )
     return true;
 
-  // Create Ogre root object
-  // TODO mover plugins cfg a zona de la librería
-  m_pOgreRoot = new Ogre::Root( "Plugins\\plugins.cfg" );
-  //m_pOgreRoot = new Ogre::Root( "" );
+	// Get reference to Ogre Root
+	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
 
   // Show config dialog
-  if ( !m_pOgreRoot->restoreConfig() && !m_pOgreRoot->showConfigDialog() )
+  if ( !ogreRoot.restoreConfig() && !ogreRoot.showConfigDialog() )
     THROW_EXCEPTION( "User canceled the config dialog!" );
 
   // Init rendering engine and create main window
-  Ogre::RenderWindow* ogreWindow = m_pOgreRoot->initialise( true, "Vision Library Demo" );       
+  Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Vision Library Demo" );       
   if ( !ogreWindow )
     THROW_EXCEPTION( "Error creating application window" );
 
@@ -101,13 +98,13 @@ bool GraphicsManager::init()
   m_mainWindow.init( ogreWindow );
 
   // Create the scene manager
-  m_pSceneManager = m_pOgreRoot->createSceneManager( Ogre::ST_GENERIC );
+  m_pSceneManager = ogreRoot.createSceneManager( Ogre::ST_GENERIC );
   
   // PreInit GUI Manager (QuickGUI requirements)
   GUI::GUIManager::getSingleton().preInit();
 
-  // Load assets
-  loadAssets();
+	// Initialize graphics resources, parse scripts etc
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
   // Init the main camera
   m_activeCamera.init( m_pSceneManager );
@@ -129,53 +126,7 @@ bool GraphicsManager::init()
   float gray = 0.1f;
   m_pSceneManager->setAmbientLight( Color(gray , gray , gray) );
 
-  //for (unsigned int i = 0; i < NUM_LIGHTS; ++i)
-  //{
-  //  mLightPivots[i] = m_pSceneManager->getRootSceneNode()->createChildSceneNode();
-  //  mLightPivots[i]->rotate(mLightRotationAxes[i], mLightRotationAngles[i]);
-  //  mLightPivots[i]->setPosition( Vector3( Globals::width / 2, Globals::height / 2, 100 ) );
-
-  //  // Create a light, use default parameters
-  //  mLights[i] = m_pSceneManager->createLight("Light" + Ogre::StringConverter::toString(i));
-  //  Vector3 lightPos( (Globals::width / 2) + 50, (Globals::height / 2) + 50, 100 );
-
-  //  mLights[i]->setPosition( lightPos );
-  //  mLights[i]->setDiffuseColour(mDiffuseLightColours[i]);
-  //  mLights[i]->setSpecularColour(mSpecularLightColours[i]);
-  //  mLights[i]->setVisible(mLightState[i]);
-  //  // Attach light
-  //  mLightPivots[i]->attachObject(mLights[i]);
-
-  //  // Create billboard for light
-  //  mLightFlareSets[i] = m_pSceneManager->createBillboardSet("Flare" + Ogre::StringConverter::toString(i));
-  //  mLightFlareSets[i]->setMaterialName("Examples/Flare");
-  //  mLightPivots[i]->attachObject(mLightFlareSets[i]);
-  //  mLightFlares[i] = mLightFlareSets[i]->createBillboard( lightPos );
-  //  mLightFlares[i]->setColour(mDiffuseLightColours[i]);
-  //  mLightFlareSets[i]->setVisible(mLightState[i]);
-  //}
-
-  // Shadow test
-  //m_pSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-  //m_pSceneManager->setShadowTextureSettings(1024, 2);
-  //m_pSceneManager->setShadowColour(Color(1, 0, 0));
-  // Shadow test
-
-  //pLight = m_pSceneManager->createLight( "Light" );
-  //pLight->setType(Ogre::Light::LT_POINT);
-  //pLight->setPosition(200, 300, 400);
-  //pLight->setDiffuseColour(1, 1, 0.7);
-  //pLight->setSpecularColour(1, 1, 0.7);
-
-  //// Attach light
-  //pLightSceneNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode();
-  //pLightSceneNode->attachObject( pLight );
-  //pLightSceneNode->lookAt( Vector3( Globals::width/2, Globals::height/2, 0), Ogre::Node::TS_WORLD );
-  // TODO poner decente
-
-
-
-  // Init the debug overlay
+	// Init the debug overlay
   // TODO
   //m_debugOverlay.init();
 
@@ -263,7 +214,7 @@ void GraphicsManager::draw()
 
 
   // Render scene
-  m_pOgreRoot->renderOneFrame();
+	Ogre::Root::getSingleton().renderOneFrame();
 
   // Update window
   m_mainWindow.update();
@@ -286,7 +237,7 @@ void GraphicsManager::draw()
 bool GraphicsManager::hasVertexProgramsSupport() const
 {
   // Get system capabilities
-  const Ogre::RenderSystemCapabilities* caps = m_pOgreRoot->getRenderSystem()->getCapabilities();
+  const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
 
   // Check vertex programs
   if ( caps->hasCapability( Ogre::RSC_VERTEX_PROGRAM ) )
@@ -304,7 +255,7 @@ bool GraphicsManager::hasVertexProgramsSupport() const
 bool GraphicsManager::hasFragmentProgramsSupport() const
 {
   // Get system capabilities
-  const Ogre::RenderSystemCapabilities* caps = m_pOgreRoot->getRenderSystem()->getCapabilities();
+  const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
 
   // Check fragment programs
   if ( caps->hasCapability( Ogre::RSC_FRAGMENT_PROGRAM ) )
@@ -325,7 +276,7 @@ bool GraphicsManager::hasFragmentProgramsSupport() const
 bool GraphicsManager::hasBumpMappingSupport() const
 {
   // Get system capabilities
-  const Ogre::RenderSystemCapabilities* caps = m_pOgreRoot->getRenderSystem()->getCapabilities();
+  const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
 
   // Check capabilities programs
   if (  caps->hasCapability( Ogre::RSC_VERTEX_PROGRAM ) && 
@@ -348,45 +299,6 @@ void GraphicsManager::setFillColor( const Color& color )
 	// We are using the emissive color to fake the fill color with lighting activated
 	// TODO dejar esto bien
 	m_pSceneManager->setAmbientLight( m_fillColor );
-}
-
-/**
- * @internal
- * 
- */
-void GraphicsManager::loadAssets()
-{
-  // TODO correct paths
-  // Load resource paths from config file
-  Ogre::ConfigFile  cf;
-  std::string       resourcePath;
-
-  resourcePath = "..\\..\\..\\vision\\data\\";
-  cf.load(resourcePath + "resources.cfg");
-
-  // Go through all sections & settings in the file
-  Ogre::String secName, typeName, archName;
-  Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-  while (seci.hasMoreElements())
-  {
-    // Get section name and data
-    secName = seci.peekNextKey();
-    Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-
-    // Iterate through section elements
-    Ogre::ConfigFile::SettingsMultiMap::iterator i;
-    for (i = settings->begin(); i != settings->end(); ++i)
-    {
-      typeName = i->first;
-      archName = i->second;
-
-      // Add the resource location to the manager
-      Ogre::ResourceGroupManager::getSingleton().addResourceLocation(resourcePath + archName, typeName, secName);
-    }
-  }
-
-  // Initialize, parse scripts etc
-  Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 void GraphicsManager::keyPressed( const OIS::KeyEvent &event )
