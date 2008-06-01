@@ -80,54 +80,15 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
   if ( !pOgreSceneManager )
     THROW_EXCEPTION( "Internal Error: NULL Scene Manager" );
 
-  // Create camera  
-  //m_pOgreCamera = pOgreSceneManager->createCamera( cameraName );
-  //m_pOgreCamera->setPosition( 0, 0, 2000 );
-  //m_pOgreCamera->lookAt( 0, 0, 0 );
+	// Create the camera scene and sets its initial properties
+	m_pOgreCamera = pOgreSceneManager->createCamera( cameraName );
+	m_pOgreCamera->setPosition( 0, 0, 2000 );
+	m_pOgreCamera->lookAt( 0, 0, 0 );
 
+	// Create camera scene node and add it to the scene manager
+	m_cameraSceneNode = pOgreSceneManager->getRootSceneNode()->createChildSceneNode();	
+	m_cameraSceneNode->attachObject( m_pOgreCamera );
 
-  // Calculate the camera distance
-  m_vFovRad           = Common::degToRad( V_FOV_DEG );
-  m_cameraDistance    = ( static_cast< float >( Globals::height ) / 2.0f ) / tanf( m_vFovRad / 2.0f );
-
-  // Calculate the aspect ratio
-  m_aspectRatio   = static_cast< float >( Globals::width ) / static_cast< float >( Globals::height );
-
-  // Camera pos and look at
-  m_cameraPos.x = static_cast< float >( Globals::width ) / 2.0f;
-  m_cameraPos.y = static_cast< float >( Globals::height ) / 2.0f;
-  m_cameraPos.z = m_cameraDistance;
-
-  m_cameraLookAt.x = static_cast< float >( Globals::width ) / 2.0f;
-  m_cameraLookAt.y = static_cast< float >( Globals::height ) / 2.0f;
-  m_cameraLookAt.z = 0;
-
-  // Up vector
-  m_cameraUpVector.x = 0.0f;
-  m_cameraUpVector.y = -1.0f;
-  m_cameraUpVector.z = 0.0f;
-
-  // Add camera to the scene manager
-  m_pOgreCamera = pOgreSceneManager->createCamera( cameraName );
-  
-  //TODO -> invertir vector up
-  //Vector3 up = m_pOgreCamera->getUp();
-  //m_pOgreCamera->setFixedYawAxis( false );
-  //m_pOgreCamera->rotate( Vector3( 0, 0, 1 ), Ogre::Radian( Ogre::Degree( 180 ) ) );
-  //up = m_pOgreCamera->getUp();
-  ////m_pOgreCamera->setUpVector( m_cameraUpVector );
-
-  // Set camera properties
-  //m_pOgreCamera->setPosition( m_cameraPos );
-  //m_pOgreCamera->lookAt( m_cameraLookAt );
-  m_pOgreCamera->setFOVy( Ogre::Radian( m_vFovRad ) );
-  m_pOgreCamera->setAspectRatio( m_aspectRatio );
-
-  // Create the camera scene node
-  m_cameraSceneNode = pOgreSceneManager->getRootSceneNode()->createChildSceneNode();
-  m_cameraSceneNode->setPosition( m_cameraPos );
-  m_cameraSceneNode->lookAt( m_cameraLookAt, Ogre::Node::TS_WORLD );
-  m_cameraSceneNode->attachObject( m_pOgreCamera );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -171,4 +132,50 @@ void Camera3D::moveRelative( const Vector3& move )
   m_pOgreCamera->moveRelative( move );
 }
 
+
+/**
+ * @brief Sets the camera in a way that the coordinate system of the scene is the same than in processing 
+ * TODO: finish it
+ */
+void Camera3D::setProcessingLikeCamera()
+{
+  // Calculate the camera distance
+  m_vFovRad           = Common::degToRad( V_FOV_DEG );
+  m_cameraDistance    = ( static_cast< float >( Globals::height ) / 2.0f ) / tanf( m_vFovRad / 2.0f );
+
+  // Calculate the aspect ratio
+  m_aspectRatio   = static_cast< float >( Globals::width ) / static_cast< float >( Globals::height );
+
+  // Camera pos and look at
+  m_cameraPos.x = static_cast< float >( Globals::width ) / 2.0f;
+  m_cameraPos.y = static_cast< float >( Globals::height ) / 2.0f;
+  m_cameraPos.z = m_cameraDistance;
+
+  m_cameraLookAt.x = static_cast< float >( Globals::width ) / 2.0f;
+  m_cameraLookAt.y = static_cast< float >( Globals::height ) / 2.0f;
+  m_cameraLookAt.z = 0;
+
+  // Up vector
+  m_cameraUpVector.x = 0.0f;
+  m_cameraUpVector.y = -1.0f;
+  m_cameraUpVector.z = 0.0f;
+  
+  //TODO -> invertir vector up
+  //Vector3 up = m_pOgreCamera->getUp();
+  //m_pOgreCamera->setFixedYawAxis( false );
+  //m_pOgreCamera->rotate( Vector3( 0, 0, 1 ), Ogre::Radian( Ogre::Degree( 180 ) ) );
+  //up = m_pOgreCamera->getUp();
+  ////m_pOgreCamera->setUpVector( m_cameraUpVector );
+
+  // Set camera properties
+  //m_pOgreCamera->setPosition( m_cameraPos );
+  //m_pOgreCamera->lookAt( m_cameraLookAt );
+  m_pOgreCamera->setFOVy( Ogre::Radian( m_vFovRad ) );
+  m_pOgreCamera->setAspectRatio( m_aspectRatio );
+
+	// Set position and lookat
+  m_cameraSceneNode->setPosition( m_cameraPos );
+  m_cameraSceneNode->lookAt( m_cameraLookAt, Ogre::Node::TS_WORLD );
+
+}
 } // namespace Graphics

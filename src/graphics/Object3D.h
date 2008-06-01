@@ -59,6 +59,7 @@ public:
 	Ogre::Entity*			getEntity					() { return m_entity;					}
 	const std::string getName						() { return m_objectName;			}
 	Object3DType			getType						() { return m_type;						}
+	const Pos3D&			getPosition				();
 
 	// Set methods
 	void							setType						( Object3DType type ) { m_type = type; }

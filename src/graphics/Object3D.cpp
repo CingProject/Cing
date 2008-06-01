@@ -152,6 +152,21 @@ void Object3D::end()
 	m_bIsValid = false;
 }
 
+
+/**
+ * @brief Returns the current position of the object
+ *
+ * @return The current position of the object in the scene
+ */
+const Pos3D& Object3D::getPosition()
+{
+	// Check if the class is already released
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to get a position of a 3d Object that has been already released (method end() has been called)" );
+
+	// Return the position
+	return m_sceneNode->getPosition();
+}
 /**
  * @internal
  * @brief Sets the new position of the object.
