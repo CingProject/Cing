@@ -149,7 +149,7 @@ material Examples/BumpMapping/SingleLight
 			// Base bump map
 			texture_unit
 			{
-				texture theviewerNMap.png
+				texture NMBumpsOut.png
 				colour_op replace
 			}
 			// Normalisation cube map
@@ -185,7 +185,7 @@ material Examples/BumpMapping/SingleLight
 			// Base bump map
 			texture_unit
 			{
-				texture theviewerNMap.png
+				texture NMBumpsOut.png
 				colour_op replace
 			}
 			// Normalisation cube map
@@ -263,7 +263,7 @@ material Examples/BumpMapping/MultiLight
 			// Base bump map
 			texture_unit
 			{
-				texture theviewerNMap.png
+				texture NMBumpsOut.png
 				colour_op replace
 			}
 			// Normalisation cube map
@@ -293,7 +293,7 @@ material Examples/BumpMapping/MultiLight
 			scene_blend dest_colour zero
 			texture_unit
 			{
-				texture theviewer.tif
+				texture RustedMetal.jpg 
 			}
 			
 		}
@@ -346,7 +346,7 @@ material Examples/BumpMapping/MultiLight
 			// Base bump map
 			texture_unit
 			{
-				texture theviewerNMap.png
+				texture NMBumpsOut.png
 				colour_op replace
 			}
 			// Normalisation cube map, with dot product on bump map
@@ -376,7 +376,7 @@ material Examples/BumpMapping/MultiLight
 			scene_blend dest_colour zero
 			texture_unit
 			{
-				texture theviewer.tif
+				texture RustedMetal.jpg 
 			}
 			
 		}
@@ -442,7 +442,7 @@ material Examples/BumpMapping/MultiLightSpecular
 			// Base bump map
 			texture_unit
 			{
-				texture theviewerNMap.png
+				texture NMBumpsOut.png
 				colour_op replace
 			}
 			// Normalisation cube map
@@ -477,7 +477,7 @@ material Examples/BumpMapping/MultiLightSpecular
 			scene_blend dest_colour zero
 			texture_unit
 			{
-				texture theviewer.tif
+				texture RustedMetal.jpg 
 			}
 			
 		}
@@ -530,7 +530,7 @@ material Examples/BumpMapping/MultiLightSpecular
 			// Base bump map
 			texture_unit
 			{
-				texture theviewerNMap.png
+				texture NMBumpsOut.png
 				colour_op replace
 			}
 			// Normalisation cube map, with dot product on bump map
@@ -560,7 +560,7 @@ material Examples/BumpMapping/MultiLightSpecular
 			scene_blend dest_colour zero
 			texture_unit
 			{
-				texture theviewer.tif
+				texture RustedMetal.jpg 
 			}
 			
 		}
