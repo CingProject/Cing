@@ -22,11 +22,8 @@ void setup()
 
   // Load the 3d head model
   head.init( "theviewer.mesh", "Examples/BumpMapping/MultiLight" );
-  head.setPosition( width / 2, height / 2 );
 
   // setup light
-  lightPos.x = (width  / 2) + 50;
-  lightPos.y = height / 2;
   lightPos.z = 100;
   targetPos = lightPos;
   pointLight.init( 1, 1, 1, lightPos.x, lightPos.y, lightPos.z );
@@ -59,7 +56,7 @@ void draw()
   }
 
   // Set light intensity
-  pointLight.setDiffuseColor( lightIntensity, lightIntensity, lightIntensity );
+  //pointLight.setDiffuseColor( lightIntensity, lightIntensity, lightIntensity );
 
   // If we are on target
   if ( dist( targetPos, lightPos ) < 10 )
@@ -70,13 +67,13 @@ void draw()
   }
   
   // Interpolation values
-  float speed = 0.1;
+  float speed = 0.5;
 
   // Modify the position 
   lightPos = (targetPos*speed) + (lightPos * (1-speed) );
 
   // Move the light
-  pointLight.setPosition( lightPos );
+  //pointLight.setPosition( lightPos );
 }
 
 void end()
