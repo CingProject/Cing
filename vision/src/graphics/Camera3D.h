@@ -46,17 +46,18 @@ public:
 	~Camera3D();
 
 	// Init / Release / Update
-	bool                init            ( Ogre::SceneManager* pOgreSceneManager, const std::string& cameraName = DEFAULT_NAME );
-	void                end             ();
-	void                update          ();
+	bool                init            				( Ogre::SceneManager* pOgreSceneManager, const std::string& cameraName = DEFAULT_NAME );
+	void                end             				();
+	void                update          				();
 
 	// Query methods
-	bool                isValid         () const  { return m_bIsValid;     } 
-	const Ogre::Camera* getOgreCamera   () const  { return m_pOgreCamera;  }
-	Ogre::Camera*       getOgreCamera   ()        { return m_pOgreCamera;  }
+	bool                isValid         				() const  { return m_bIsValid;     } 
+	const Ogre::Camera* getOgreCamera   				() const  { return m_pOgreCamera;  }
+	Ogre::Camera*       getOgreCamera   				()        { return m_pOgreCamera;  }
 	
 	// set methods
-	void                moveRelative    ( const Vector3& move );
+	void                moveRelative    				( const Vector3& move );
+	void								setProcessingLikeCamera	();
 
 private:
 
