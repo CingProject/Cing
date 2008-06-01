@@ -82,16 +82,12 @@ private:
 	// private constructor to ensure singleton
 	GraphicsManager      ();
 
-	// Private Methods
-	void loadAssets       ();
-
 	//TODO: poner decente
 	Ogre::Light*      pLight;
 	Ogre::SceneNode*  pLightSceneNode;
 
 
 	// Attributes
-	Ogre::Root*           m_pOgreRoot;      ///< Main communication with OGRE
 	Ogre::SceneManager*   m_pSceneManager;  ///< Main scene manager
 	Window                m_mainWindow;     ///< Main application window
 	Camera3D              m_activeCamera;   ///< Active camera
