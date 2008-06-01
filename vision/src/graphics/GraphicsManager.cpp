@@ -49,54 +49,6 @@
 
 namespace Graphics
 {
-
-
-  //TEMP
-  // Lights
-#define NUM_LIGHTS 3
-
-  // the light
-  Ogre::Light *mLights[NUM_LIGHTS];
-  // billboards for lights
-  Ogre::BillboardSet* mLightFlareSets[NUM_LIGHTS];
-  Ogre::Billboard* mLightFlares[NUM_LIGHTS];
-  // Base orientations of the lights 
-  Ogre::Radian mLightRotationAngles[NUM_LIGHTS] = { Ogre::Degree(0), Ogre::Degree(30), Ogre::Degree(75) };
-  Vector3 mLightRotationAxes[NUM_LIGHTS] = {
-    Vector3::UNIT_X, 
-    Vector3::UNIT_Z,
-    Vector3::UNIT_Y
-  };
-  // Rotation speed for lights, degrees per second
-  Ogre::Real mLightSpeeds[NUM_LIGHTS] = { 30, 10, 50};
-
-  // Colours for the lights
-  Ogre::ColourValue mDiffuseLightColours[NUM_LIGHTS] =
-  {
-    Ogre::ColourValue(1, 1, 1),
-    Ogre::ColourValue(1, 0, 0),
-    Ogre::ColourValue(1, 1, 0.5)
-  };
-  Ogre::ColourValue mSpecularLightColours[NUM_LIGHTS] =
-  {
-    Ogre::ColourValue(1, 1, 1),
-    Ogre::ColourValue(1, 0.8, 0.8),
-    Ogre::ColourValue(1, 1, 0.8)
-  };
-  // Which lights are enabled
-  bool mLightState[NUM_LIGHTS] = 
-  {
-    true,
-    false,
-    false
-  };
-  // the light nodes
-  Ogre::SceneNode* mLightNodes[NUM_LIGHTS];
-  // the light node pivots
-  Ogre::SceneNode* mLightPivots[NUM_LIGHTS];
-
-  //TEMP
-
   
 /**
  * @internal
