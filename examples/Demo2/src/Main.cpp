@@ -14,10 +14,10 @@ Pos3D           lightPos;             // current light pos
 void setup()
 {
   // Init camera capture
-  camera.init( 320, 240, 25, false );
+  camera.init( 640, 480, 25, false );
 
   // Init compute vision system
-  cv.init( 320, 240 );
+  cv.init( 640, 480 );
   debugComputerVision = false;
 
   // Load the 3d head model
@@ -27,7 +27,7 @@ void setup()
   // setup light
   lightPos.x = (width  / 2) + 50;
   lightPos.y = height / 2;
-  lightPos.z = 100;
+  lightPos.z = 300;
   pointLight.init( 1, 1, 1, lightPos.x, lightPos.y, lightPos.z );
 }
 
@@ -66,7 +66,7 @@ void draw()
     pos.y = map( blobTopY, 0, camera.getHeight(), 0, height );
 
     // Set new light pos
-    pointLight.setPosition( pos );
+    //pointLight.setPosition( pos );
   }
 }
 
