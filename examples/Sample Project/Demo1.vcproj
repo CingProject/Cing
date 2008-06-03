@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="DemoPhysics"
-	ProjectGUID="{7909D9FE-89C5-4597-925B-070532F6DCCC}"
-	RootNamespace="DemoPhysics"
+	Name="Demo1"
+	ProjectGUID="{5D837B13-4F0B-4400-962E-8550FDF8BBF7}"
+	RootNamespace="Demo1"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -21,7 +21,6 @@
 			IntermediateDirectory="$(ProjectDir)\temp"
 			ConfigurationType="1"
 			CharacterSet="2"
-			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -66,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cvd.lib cvauxd.lib cxcored.lib highguid.lib ptypes.lib dsvl.lib portVideoSDL.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib"
+				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib dsvl.lib portVideoSDL.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_debug.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
