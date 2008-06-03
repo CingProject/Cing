@@ -39,6 +39,7 @@
 #include "graphics/Box.h"
 #include "graphics/PointLight.h"
 #include "graphics/GraphicsTypes.h"
+#include "graphics/Image.h"
 
 // CameraInput
 #include "cameraInput/OCVCamera.h"

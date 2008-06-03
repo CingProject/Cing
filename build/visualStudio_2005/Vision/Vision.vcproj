@@ -155,10 +155,6 @@
 				Name="Header Files"
 				>
 				<File
-					RelativePath="..\..\..\src\graphics\BaseLight.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\src\graphics\Camera3D.h"
 					>
 				</File>
@@ -187,19 +183,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\graphics\Image.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\PointLight.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\src\graphics\Text.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\TexturedQuad.h"
 					>
 				</File>
 				<File
@@ -218,14 +202,34 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Image"
+					>
+					<File
+						RelativePath="..\..\..\src\graphics\Image.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\TexturedQuad.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Lighting"
+					>
+					<File
+						RelativePath="..\..\..\src\graphics\BaseLight.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\PointLight.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Source Files"
 				>
-				<File
-					RelativePath="..\..\..\src\graphics\BaseLight.cpp"
-					>
-				</File>
 				<File
 					RelativePath="..\..\..\src\graphics\Camera3D.cpp"
 					>
@@ -265,19 +269,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\graphics\Image.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\PointLight.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\src\graphics\Text.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\TexturedQuad.cpp"
 					>
 				</File>
 				<File
@@ -311,6 +303,30 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\graphics\Object3D.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Image"
+					>
+					<File
+						RelativePath="..\..\..\src\graphics\Image.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\TexturedQuad.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Lighting"
+					>
+					<File
+						RelativePath="..\..\..\src\graphics\BaseLight.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\PointLight.cpp"
 						>
 					</File>
 				</Filter>

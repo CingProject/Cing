@@ -32,7 +32,7 @@ namespace Graphics
 
 /**
  * @internal
- * Represents a quad (two triangles) with a texture (updatable dynamically)
+ * Represents a quad (two triangles) with a texture (dynamically update possible)
  */
 class TexturedQuad
 {
@@ -43,7 +43,7 @@ public:
 	~TexturedQuad();
 
 	// Init / Release 
-	bool  init            ( unsigned int textureWidth, unsigned int textureHeight, int nChannels, bool render2D = false );
+	bool  init            ( size_t textureWidth, size_t textureHeight, size_t nChannels, bool render2D = false );
 	void  end             ();
 
 	// Set methods
@@ -51,12 +51,16 @@ public:
 	void  setVisible      ( bool visible );
 
 	// Texture update
-	void  updateTexture   ( unsigned char* textureData, unsigned int width, unsigned int height, unsigned short channels );
-	void  updateTexture   ( char* textureData, unsigned int width, unsigned int height, unsigned short channels ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, channels ); }
+	void	updateTexture		( const Ogre::Image& img );
+	void  updateTexture   ( unsigned char* textureData, size_t width, size_t height, size_t channels );
+	void  updateTexture   ( char* textureData, size_t width, size_t height, size_t channels ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, channels ); }
+	void	updateTexture		( unsigned char* textureData, size_t size );
 
 	// Query methods
 	bool  isValid         () const { return m_bIsValid; }
 
+	// Operators 
+	void operator=				( const TexturedQuad& other );
 
 private:
 
@@ -72,11 +76,12 @@ private:
 	// Attributes
   Ogre::TexturePtr          m_ogreTexture;          ///< Ogre texture (to render the quad with it)  
   Ogre::SceneNode*          m_quadSceneNode;        ///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
-  unsigned int              m_width, m_height;      ///< Width and height of the texture
-  unsigned int              m_nChannels;            ///< Number of channels of the texture (RGB -> 3, RGBA -> 4 )
+  size_t										m_width, m_height;      ///< Width and height of the texture
+  size_t 										m_nChannels;            ///< Number of channels of the texture (RGB -> 3, RGBA -> 4 )
   std::string               m_ogreManualObjectName; ///< Unique object name
   std::string               m_ogreTextureName;      ///< Unique texture name
   std::string               m_ogreMaterialName;     ///< Unique material name
+	bool											m_visible;							///< Tells if the object is visible or not
   bool                      m_render2D;             ///< If true the quad is rendered in 2d, over the 3d scene
 	bool                      m_bIsValid;	            ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 

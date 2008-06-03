@@ -23,35 +23,60 @@
 #define _Image_H_
 
 #include "GraphicsPrereqs.h"
+#include "TexturedQuad.h"
+
+// Ogre
+#include "externLibs/Ogre3d/include/OgreImage.h"
 
 namespace Graphics
 {
 
 /**
  * @internal
- * 
+ * @brief Stores an image which can be loaded from a file, or created dynamically.
+ * Supported image formats are: .bmp, .jpg, .gif, .raw, .png, .tga and .dds.
  */
 class Image
 {
 public:
 
-	// Constructor / Destructor
-	 Image();
-	~Image();
+	/// Image formats
+	enum Format
+	{
+		RGB,	///< Red, Green and Blue
+		ARGB, ///< Alpha, Red, Green and Blue
+		GRAY	///< Gray scale
+	};
 
-	// Init / Release / Update
-	bool  init   ();
-	void  end    ();
-	void  update ();
+	// Constructor / Destructor
+	Image				();
+	Image				( const Image& img );
+	Image				( int widt, int height, Format format = RGB );
+	Image				( const std::string& name );
+	~Image			();
+
+	// Init / Release / Update / Save
+	void  init  ( int width, int height, Format format = RGB );
+	void  init  ( const Image& img );
+	void  load  ( const std::string& name );
+	void	save	( const std::string& name );
+	void  end		();
+
+	// Draw 
+	void	draw	( int xPos, int yPos, int zPos = 0 );
 
 	// Query methods
 	bool  isValid() const { return m_bIsValid; }
 
+	// Operators and operations
+	void	operator=	( const Image& other );
 
 private:
 
 	// Attributes
-	bool  m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	Ogre::Image		m_image;		///< Contains the image data (loaded from file or dynamically created)
+	TexturedQuad	m_quad;			///< This is the quad (geometry) and texture necessary to be able to render the image
+	bool					m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

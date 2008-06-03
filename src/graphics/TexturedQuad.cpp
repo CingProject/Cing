@@ -59,6 +59,7 @@ long               TexturedQuad::m_quadCounter       = 0;
  */
 TexturedQuad::TexturedQuad():
   m_quadSceneNode ( NULL  ),
+	m_visible				( true	),
   m_bIsValid      ( false )
 {
 }
@@ -83,7 +84,7 @@ TexturedQuad::~TexturedQuad()
  * @param[in] render2D      If true, the textured quad is rendered in 2d, so it is overlayed to the 3d scene
  * @return true if the initialization was ok | false otherwise
  */
-bool TexturedQuad::init( unsigned int textureWidth, unsigned int textureHeight, int nChannels, bool render2D /*= false*/ )
+bool TexturedQuad::init( size_t textureWidth, size_t textureHeight, size_t nChannels, bool render2D /*= false*/ )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -111,7 +112,7 @@ bool TexturedQuad::init( unsigned int textureWidth, unsigned int textureHeight, 
   m_ogreTexture = Ogre::TextureManager::getSingleton().createManual( m_ogreTextureName,
                                                                     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
                                                                     Ogre::TEX_TYPE_2D,                          // type
-                                                                    textureWidth, textureHeight,                // resolution
+																																		(Ogre::uint)textureWidth, (Ogre::uint)textureHeight,                // resolution
                                                                     0,                                          // number of mipmaps
                                                                     pFormat,                                    // pixel format
                                                                     Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE );  // usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
@@ -216,7 +217,22 @@ void TexturedQuad::setPosition( float x, float y, float z /*= 0.0f*/ )
  */
 void TexturedQuad::setVisible( bool visible )
 {
+	m_visible = visible;
   m_quadSceneNode->setVisible( visible );
+}
+
+/**
+ * @brief Updates the texture pixel information from an Image
+ *
+ * @param	img Image containing the pixel data to upload to the texture
+ */
+void TexturedQuad::updateTexture( const Ogre::Image& img )
+{
+	// Check if the object is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to upload data texture to a not initializad TextureQuad object" );
+
+	m_ogreTexture->loadImage( img );
 }
 
 /**
@@ -227,63 +243,110 @@ void TexturedQuad::setVisible( bool visible )
  * @param[in] height      Height of the new pixel data
  * @param[in] channels    Channels of the new pixel data (RGB -> 3, RGBA -> 4)
  */
-void TexturedQuad::updateTexture( unsigned char* textureData, unsigned int width, unsigned int height, unsigned short channels )
+void TexturedQuad::updateTexture( unsigned char* textureData, size_t width, size_t height, size_t channels )
 {
+	// Check if the object is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to upload data texture to a not initializad TextureQuad object" );
+
   // Check resolution
   if ( ( width > m_width ) || ( height > m_height ) )
     THROW_EXCEPTION( "Trying to update texture with too big image data" );
 
-  //// Check n channels
-  //if ( m_nChannels != channels )
-  //  THROW_EXCEPTION( "Trying to update texture with an image data that contains different number of channels" );
+	Ogre::DataStreamPtr dataPtr( new Ogre::MemoryDataStream( textureData, width * height * channels ) );
+	m_ogreTexture->loadRawData( dataPtr, (Ogre::ushort) width, (Ogre::ushort)height, Ogre::PF_BYTE_RGB );
 
-  // Get the texture pixel buffer
-  Ogre::HardwarePixelBufferSharedPtr pixelBuffer = m_ogreTexture->getBuffer();
-    
-  // Lock the pixel buffer and get a pixel box (HBL_DISCARD for best performance as we don't need to read the pixels)
-  pixelBuffer->lock( Ogre::HardwareBuffer::HBL_DISCARD ); 
-  
-  // Get pixel box (to access the actual pixels)
-  const Ogre::PixelBox& pixelBox = pixelBuffer->getCurrentLock();
+  ////// Check n channels
+  ////if ( m_nChannels != channels )
+  ////  THROW_EXCEPTION( "Trying to update texture with an image data that contains different number of channels" );
 
-  // Cast to texture data pointer to access the pixels
-  unsigned char* pDest = static_cast< unsigned char* >( pixelBox.data );
+  //// Get the texture pixel buffer
+  //Ogre::HardwarePixelBufferSharedPtr pixelBuffer = m_ogreTexture->getBuffer();
+  //  
+  //// Lock the pixel buffer and get a pixel box (HBL_DISCARD for best performance as we don't need to read the pixels)
+  //pixelBuffer->lock( Ogre::HardwareBuffer::HBL_DISCARD ); 
+  //
+  //// Get pixel box (to access the actual pixels)
+  //const Ogre::PixelBox& pixelBox = pixelBuffer->getCurrentLock();
 
-  // Fill in pixel data. 
-  size_t x = 0;
-  size_t y = 0;
-  size_t idx = 0;
-  size_t camIdx = 0;
-  size_t textureChannels = channels == 1? 1: 4;  //<- Always 4 channels, because when we create a texture even without alpha channel, it has 4 channels
-                               // but in render time the alpha is discarded... (TODO: look why this happens)
-  for( size_t i = 0, x = 0; i < width * height * channels; i += channels )
-  {
-    idx = (x * textureChannels) + y * pixelBox.rowPitch * textureChannels;
+  //// Cast to texture data pointer to access the pixels
+  //unsigned char* pDest = static_cast< unsigned char* >( pixelBox.data );
 
-    // Write the data
-    pDest[idx]    = textureData[i]  ; // B
-    pDest[idx+1]  = textureData[i+1]; // G
-    pDest[idx+2]  = textureData[i+2]; // R
-    
-    // Alpha channel?
-    if ( channels == 4 )
-      pDest[idx+3]  = textureData[i+3]; // A
-    else 
-      pDest[idx+3]  = 255;
+  //// Fill in pixel data. 
+  //size_t x = 0;
+  //size_t y = 0;
+  //size_t idx = 0;
+  //size_t camIdx = 0;
+  //size_t textureChannels = channels == 1? 1: 4;  //<- Always 4 channels, because when we create a texture even without alpha channel, it has 4 channels
+  //                             // but in render time the alpha is discarded... (TODO: look why this happens)
+  //for( size_t i = 0, x = 0; i < width * height * channels; i += channels )
+  //{
+  //  idx = (x * textureChannels) + y * pixelBox.rowPitch * textureChannels;
 
-    // Increment dest texture indexes
-    x++;
-    if ( x == width )
-    {
-      x = 0;
-      y++;
-    }
-  }
+  //  // Write the data
+  //  pDest[idx]    = textureData[i]  ; // B
+  //  pDest[idx+1]  = textureData[i+1]; // G
+  //  pDest[idx+2]  = textureData[i+2]; // R
+  //  
+  //  // Alpha channel?
+  //  if ( channels == 4 )
+  //    pDest[idx+3]  = textureData[i+3]; // A
+  //  else 
+  //    pDest[idx+3]  = 255;
 
-  // Unlock the pixel buffer
-  pixelBuffer->unlock();
+  //  // Increment dest texture indexes
+  //  x++;
+  //  if ( x == width )
+  //  {
+  //    x = 0;
+  //    y++;
+  //  }
+  //}
+
+  //// Unlock the pixel buffer
+  //pixelBuffer->unlock();
 }
 
+/**
+ * @internal 
+ * @brief Updates texture data
+ *
+ * @param
+ * @return
+ */
+void TexturedQuad::updateTexture( unsigned char* textureData, size_t size )
+{
+	// Check if the object is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to upload data texture to a not initializad TextureQuad object" );
+
+	Ogre::DataStreamPtr dataPtr( new Ogre::MemoryDataStream( textureData, size ) );
+	m_ogreTexture->loadRawData( dataPtr, (Ogre::ushort)m_width, (Ogre::ushort)m_height, Ogre::PF_BYTE_RGB );
+}
+
+/**
+ * @brief Copies the data of the received texture quad
+ *
+ * @param other TextureQuad to copy
+ */
+void TexturedQuad::operator=( const TexturedQuad& other )
+{
+	// Check the other texture quad is valid
+	if ( !other.isValid() )
+		THROW_EXCEPTION( "Trying to copy an invalid TextureQuad" );
+
+	// Init the texture
+	init( other.m_width, other.m_height, other.m_nChannels, other.m_render2D );
+
+	// Copy the texture
+	other.m_ogreTexture->copyToTexture( m_ogreTexture );
+
+	// Copy attributes
+	const Vector3& pos = other.m_quadSceneNode->getPosition(); 
+	setPosition( pos.x, pos.y, pos.z );
+	setVisible( other.m_visible );
+
+}
 
 /**
  * @internal
