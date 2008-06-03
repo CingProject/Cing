@@ -35,6 +35,7 @@
 // Common
 #include "common/Exception.h"
 #include "common/ResourceManager.h"
+#include "common/LogManager.h"
 
 namespace Framework
 {
@@ -72,9 +73,13 @@ bool Application::initApp()
   
   // Init random number generator seed
   //TODO: setRandomSeed( timeGetTime() )
-  
+
 	// Init the resource manager
 	Common::ResourceManager::getSingleton().init();
+
+	// Init the log manager
+	// Note: If the log manager is initalized before the Resource Manager, Ogre.log file won't be created
+	Common::LogManager::getSingleton().init();
 
   // Init graphics manager
   Graphics::GraphicsManager::getSingleton().init();
@@ -89,8 +94,8 @@ bool Application::initApp()
   setup();
 
 	// Reset timer
-	m_timer.reset();
-		
+	m_timer.reset();	
+
 	// The class is now initialized
 	m_bIsValid = true;
 
@@ -122,6 +127,9 @@ void Application::endApp()
 
 	// Release the resource manager
 	Common::ResourceManager::getSingleton().end();
+	
+	// Release the log manager
+	Common::LogManager::getSingleton().end();
 
 	// The class is not valid anymore
 	m_bIsValid = false;

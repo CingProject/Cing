@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ProjectDir)\temp"
+			IntermediateDirectory="$(ProjectDir)\temp\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			>
@@ -106,7 +106,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ProjectDir)\temp"
+			IntermediateDirectory="$(ProjectDir)\temp\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			WholeProgramOptimization="1"

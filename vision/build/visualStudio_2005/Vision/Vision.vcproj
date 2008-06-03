@@ -399,6 +399,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\src\common\LogManager.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\src\common\MathUtils.h"
 					>
 				</File>
@@ -420,6 +424,10 @@
 				>
 				<File
 					RelativePath="..\..\..\src\common\Exception.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\common\LogManager.cpp"
 					>
 				</File>
 				<File
