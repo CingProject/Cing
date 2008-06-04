@@ -74,7 +74,7 @@ public:
 	void              setScale    			( float scale );
 	void              setScale    			( const Vector3& scale );
 
-	void              trackObject 			( Object3D& objectToTrack );
+	void              lookAt 						( Object3D& objectToTrack );
 
 	//void							setAmbientColor		( const Color& color );
 	//void							setAmbientColor		( const Color& color, int alpha );

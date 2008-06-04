@@ -254,7 +254,8 @@ void TexturedQuad::updateTexture( unsigned char* textureData, size_t width, size
     THROW_EXCEPTION( "Trying to update texture with too big image data" );
 
 	Ogre::DataStreamPtr dataPtr( new Ogre::MemoryDataStream( textureData, width * height * channels ) );
-	m_ogreTexture->loadRawData( dataPtr, (Ogre::ushort) width, (Ogre::ushort)height, Ogre::PF_BYTE_RGB );
+	Ogre::PixelFormat format = channels == 1? Ogre::PF_BYTE_L: Ogre::PF_BYTE_RGB;
+	m_ogreTexture->loadRawData( dataPtr, (Ogre::ushort) width, (Ogre::ushort)height, format );
 
   ////// Check n channels
   ////if ( m_nChannels != channels )
