@@ -28,6 +28,10 @@
 // Ogre
 #include "externLibs/Ogre3d/include/OgreLogManager.h"
 
+// Macros for handy use of log system
+#define LOG(x, ...)						Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x, __VA_ARGS__ );
+#define LOG_CRITICAL(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_CRITICAL, x, __VA_ARGS__ );
+
 namespace Common
 {
 
@@ -77,7 +81,7 @@ public:
 	bool	isValid			() { return m_bIsValid; }
 
 	// Log
-	void	logMessage	( const std::string& msg, LogMessageLevel level = LOG_NORMAL );
+	void	logMessage	( LogMessageLevel level, const char* msg, ... );
 
 	// Constants
 	static const std::string logFileName; ///< Name of the log file
@@ -90,7 +94,7 @@ private:
 	Ogre::Log*				m_log;						///< Log used to output messages
 	Ogre::Log*				m_ogreLog;				///< Ogre Log, used to output ogre engine messages
 	bool							m_logToOutput;		///< If true messages will be directed to output
-	bool							m_logToFile;			///< If true messages will be firected to the log file
+	bool							m_logToFile;			///< If true messages will be directed to the log file
 	bool							m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
