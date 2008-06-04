@@ -270,9 +270,9 @@ void Object3D::setScale( const Vector3& scale )
 /**
  * @internal
  * @brief Makes this object to be constantly looking at the target object provided
- * @param[in] objectToTrack object that will be tracke
+ * @param[in] objectToTrack object that will be looked
  */
-void Object3D::trackObject( Object3D& objectToTrack )
+void Object3D::lookAt( Object3D& objectToTrack )
 {
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying track object in an Object3D not correctly initialized" );
