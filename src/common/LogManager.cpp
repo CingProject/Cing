@@ -102,22 +102,29 @@ void LogManager::end()
  * @internal 
  * @brief Logs a message. If no LogLevel specified, the default value will be LOG_NORMAL
  *
- * @param msg		Message to log
  * @param level Relevance level of the message to log. It can be: LOG_NORMAL or LOG_CRITICAL (for critical failures)
+ * @param msg		Message to log, with variable parameter format (this is a printf like format)
  */
-void LogManager::logMessage( const std::string& msg, LogMessageLevel level /*= LOG_NORMAL*/ )
+void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 {
+	// Extract string parameters
+	char			msgFormated[1024];
+	va_list		args;
+	va_start	(args, msg);
+	vsprintf	(msgFormated, msg, args);
+	va_end		(args);
+
 	// Log message normally
-	m_log->logMessage( msg, (Ogre::LogMessageLevel)level );
+	m_log->logMessage( msgFormated, (Ogre::LogMessageLevel)level );
 
 	// If we are in windows and debug -> log to visual studio output
 #if defined(WIN32) && defined(_DEBUG)
-		OutputDebugString( msg.c_str() );	// In debug, output everything
+		OutputDebugString( msgFormated );	// In debug, output everything
 		OutputDebugString( "\n" );
 #elif defined(WIN32)
 	if ( level == LOG_CRITICAL )
 	{
-		OutputDebugString( msg.c_str() );	// In release, only critical messages
+		OutputDebugString( msgFormated );	// In release, only critical messages
 		OutputDebugString( "\n" );
 	}
 #endif
