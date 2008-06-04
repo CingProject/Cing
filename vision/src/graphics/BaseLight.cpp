@@ -75,8 +75,6 @@ bool BaseLight::init()
   // Create the light (and its unique name)
   m_lightName = DEFAUTL_LIGHT_NAME + Ogre::StringConverter::toString( ++m_lightCounter );
   m_pLight = scenaManager.createLight( m_lightName );
- 
-m_pLight->setAttenuation(160, 1.000000, 0.027000, 0.002800);
 
   // Create a scene node for the light (to have a more convenient way of controlling it in the space)
   m_sceneNode = scenaManager.getRootSceneNode()->createChildSceneNode();
@@ -208,8 +206,7 @@ void BaseLight::setDiffuseColor( float r, float g, float b )
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set diffuse color in a Light not correctly initialized" );
 
-  // Set the absolute light direction
-  m_pLight->setDiffuseColour( r, g, b );
+	setDiffuseColor( Color( r, g, b ) );
 }
 
 
@@ -223,7 +220,6 @@ void BaseLight::setDiffuseColor( const Color& color )
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set diffuse color in a Light not correctly initialized" );
 
-  // Set the absolute light direction
   m_pLight->setDiffuseColour( color );
 }
 
@@ -239,8 +235,7 @@ void BaseLight::setSpecularColor( float r, float g, float b )
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set specular color in a Light not correctly initialized" );
 
-  // Set the absolute light direction
-  m_pLight->setDiffuseColour( r, g, b );
+	setSpecularColor( Color( r, g, b ) );
 }
 
 
@@ -254,8 +249,7 @@ void BaseLight::setSpecularColor( const Color& color )
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set specular color in a Light not correctly initialized" );
 
-  // Set the absolute light direction
-  m_pLight->setDiffuseColour( color );
+  m_pLight->setSpecularColour( color );
 }
 
 /**

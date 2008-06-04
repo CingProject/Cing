@@ -19,25 +19,41 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _GraphicsTypes_H_
-#define _GraphicsTypes_H_
+#ifndef _PhysicsSphere_h_
+#define _PhysicsSphere_h_
+
+#include "PhysicsPrereqs.h"
+#include "PhysicsObject.h"
+
+namespace Physics
+{
 
 /**
  * @internal
- * @file This file contains the common types of the Graphics namespace
+ * @brief Controls the physics associated with a sphere object
  */
-
-#include "Color.h"
-
-// Ogre includes
-#include "externLibs/Ogre3d/include/OgreLight.h"
-
-namespace Graphics
+class PhysicsSphere: public PhysicsObject
 {
+public:
 
-// Lights
-typedef Ogre::Light       		Light;
+	// Constructor / Destructor
+	PhysicsSphere();
+	virtual ~PhysicsSphere	();
 
-} // namespace Graphics
+	// Init / Release / Update
+	virtual void	init 	( Graphics::Object3D& object );
+	void					end		();	
 
-#endif // _GraphicsTypes_H_
+	// Query  Methods
+	bool					isValid				() { return m_bIsValid; }
+
+private:
+
+	// Attributes
+	bool	m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+
+};
+
+} // namespace Physics
+
+#endif // _PhysicsSphere_h_

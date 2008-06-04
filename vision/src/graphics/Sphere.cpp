@@ -19,24 +19,24 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "Box.h"
+#include "Sphere.h"
 #include "GraphicsManager.h"
 
 // Physics
-#include "physics/PhysicsBox.h"
+#include "physics/PhysicsSphere.h"
 
 namespace Graphics
 {
 
 // Static member init
-const std::string  Box::DEFAULT_MESH			= "box.mesh";
-const std::string  Box::DEFAULT_MATERIAL	= "EmptyMaterial";
+const std::string  Sphere::DEFAULT_MESH			= "sphere.mesh";
+const std::string  Sphere::DEFAULT_MATERIAL	= "EmptyMaterial";
 
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-Box::Box():
+Sphere::Sphere():
 	m_bIsValid  ( false )
 {
 }
@@ -45,7 +45,7 @@ Box::Box():
  * @internal
  * @brief Destructor. Class release.
  */
-Box::~Box()
+Sphere::~Sphere()
 {
 	// Release resources
 	end();
@@ -53,46 +53,32 @@ Box::~Box()
 
 /**
  * @internal
- * @brief Creates a box with a specific size in each axis
- * @param[in] width		Width of the box
- * @param[in] height	Height of the box
- * @param[in] depth		Depth of the box
+ * @brief Creates a sphere with a specific radius
+ * @param[in] radius		Radius of the sphere
  */
-void Box::init( int width, int height, int depth )
+void Sphere::init( int radius )
 {
-	// Create the object 3d of a box
+	// Create the object 3d of a sphere
 	Object3D::init( DEFAULT_MESH, DEFAULT_MATERIAL );
 
 	// Set the size
-	setScale( width, height, depth );
+	setScale( radius, radius, radius );
 
 	// Store scale
-	m_width		= width;
-	m_height	= height;
-	m_depth		= depth;
+	m_radius	= radius;
 
-	// This is a primitive object type (Box)
-	setType( BOX );
+	// This is a primitive object type (Sphere)
+	setType( SPHERE );
 
 	m_bIsValid = true;
 }
 
-
-/**
- * @internal
- * @brief Creates a box with the same size in the three axis
- * @param[in] size Defines the size of the cube (the same in the three axis: width, height, depth)
- */
-void Box::init( int size )
-{
-	return init( size, size, size );
-}
 /**
  * @internal
  * @brief Releases the class resources. 
  * After this call no method of this object can be called without calling init method again.
  */
-void Box::end()
+void Sphere::end()
 {
 
 	m_bIsValid = false;
@@ -100,14 +86,14 @@ void Box::end()
 
 
 /*
- * @brief Activates the physics for this Box
+ * @brief Activates the physics for this Sphere
  * 
- * From now on, the box's position and rotation will be driven by the physics of the scene.
+ * From now on, the sphere's position and rotation will be driven by the physics of the scene.
  */
-void Box::activatePhysics()
+void Sphere::activatePhysics()
 {
 	// Create and init the physics object
-	m_physicsObject = new Physics::PhysicsBox();
+	m_physicsObject = new Physics::PhysicsSphere();
 	m_physicsObject->init( *this );
 }
 

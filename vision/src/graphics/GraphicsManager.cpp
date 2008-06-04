@@ -121,11 +121,6 @@ bool GraphicsManager::init()
   m_defaultText.setPos( 0.01f, 0.9f );		        // Text position, using relative co-ordinates
   m_defaultText.setCol( 1.0f,1.0f,1.0f,0.5f );	// Text color (Red, Green, Blue, Alpha)  
 
-
-  // Ambient lighting
-  float gray = 0.1f;
-  m_pSceneManager->setAmbientLight( Color(gray , gray , gray) );
-
 	// Init the debug overlay
   // TODO
   //m_debugOverlay.init();

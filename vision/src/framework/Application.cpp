@@ -81,11 +81,6 @@ bool Application::initApp()
 	// Note: If the log manager is initalized before the Resource Manager, Ogre.log file won't be created
 	Common::LogManager::getSingleton().init();
 
-	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, "Log Normal" );
-	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_CRITICAL, "Log Critical" );
-	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, "Log Normal: %d", 10 );
-	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_CRITICAL, "Log Critical: %f", 0.5f );
-
   // Init graphics manager
   Graphics::GraphicsManager::getSingleton().init();
 

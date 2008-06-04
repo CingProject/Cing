@@ -30,6 +30,7 @@
 // Common
 #include "common/Exception.h"
 #include "common/Release.h"
+#include "common/MathUtils.h"
 
 // Ogre
 #include "externLibs/Ogre3d/include/OgreSceneManager.h"
@@ -281,11 +282,11 @@ void Object3D::trackObject( Object3D& objectToTrack )
 }
 
 /*
- * @brief Sets the color of the object.
+ * @brief Sets the diffuse color of the object.
  *
  * @param color New color of the object.
  */
-void Object3D::setColor( const Color& color )
+void Object3D::setDiffuseColor( const Color& color )
 {
 	// If this instance is going to have a specific color, it is necessary to 
 	// duplicate the material assigned (if we haven't done before)
@@ -310,9 +311,9 @@ void Object3D::setColor( const Color& color )
  * @param color New color of the object.
  * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
  */
-void Object3D::setColor( const Color& color, int alpha )
+void Object3D::setDiffuseColor( const Color& color, int alpha )
 {
-	setColor( Color ( color.r, color.g, color.b, alpha ) );
+	setDiffuseColor( Color ( color.r, color.g, color.b, alpha ) );
 }
 
 /*
@@ -320,9 +321,9 @@ void Object3D::setColor( const Color& color, int alpha )
  *
  * @param gray New gray color of the object.
  */
-void Object3D::setColor( int gray )
+void Object3D::setDiffuseColor( int gray )
 {
-	setColor( Color( gray, gray, gray ) );
+	setDiffuseColor( Color( gray, gray, gray ) );
 }
 
 /*
@@ -331,9 +332,9 @@ void Object3D::setColor( int gray )
  * @param gray	New gray color of the object.
  * @param alpha New alpha value.
  */
-void Object3D::setColor( int gray, int alpha )
+void Object3D::setDiffuseColor( int gray, int alpha )
 {
-	setColor( Color ( gray, gray, gray, alpha ) );
+	setDiffuseColor( Color ( gray, gray, gray, alpha ) );
 }
 
 /*
@@ -344,9 +345,9 @@ void Object3D::setColor( int gray, int alpha )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setColor( int value1, int value2, int value3 )
+void Object3D::setDiffuseColor( int value1, int value2, int value3 )
 {
-	setColor( Color ( value1, value2, value3 ) );
+	setDiffuseColor( Color ( value1, value2, value3 ) );
 }
 
 /*
@@ -357,11 +358,36 @@ void Object3D::setColor( int value1, int value2, int value3 )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setColor( int value1, int value2, int value3, int alpha )
+void Object3D::setDiffuseColor( int value1, int value2, int value3, int alpha )
 {
-	setColor( Color ( value1, value2, value3, alpha ) );
+
+	setDiffuseColor( Color ( value1, value2, value3, alpha ) );
 }
 
+/**
+ * @brief Uses a file as color texture to render this object
+ *
+ * @param textureFileName Name of the file to use as color texture. It should be in the data folder
+ */
+void Object3D::setTexture( const std::string& textureFileName )
+{
+	// If this instance is going to have a specific texture, it is necessary to 
+	// duplicate the material assigned (if we haven't done before)
+	if ( m_materialCopy.isNull() )
+	{
+		// Clone the material with a unique name (original name + object name (unique))
+		Ogre::MaterialPtr origMaterial = m_entity->getSubEntity(0)->getMaterial();	
+		std::string newMaterialName = origMaterial->getName() + m_objectName ;
+		m_materialCopy = origMaterial->clone( newMaterialName );
+
+		// Assign the material
+		m_entity->setMaterialName( newMaterialName );
+	}
+
+	// Change the ambient color of the copy material
+	m_materialCopy->getTechnique(0)->getPass(0)->createTextureUnitState( textureFileName );
+
+}
 
 /*
  * @brief Activates the physics for this object. 

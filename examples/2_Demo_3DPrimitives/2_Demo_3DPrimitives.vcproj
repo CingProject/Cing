@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="0_Demo_Image"
-	ProjectGUID="{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}"
-	RootNamespace="0_Demo_Image"
+	Name="2_Demo_3DPrimitives"
+	ProjectGUID="{6E07A895-68FC-4479-BD16-6A327467106B}"
+	RootNamespace="2_Demo_3DPrimitives"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

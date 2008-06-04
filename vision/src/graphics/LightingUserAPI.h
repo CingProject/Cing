@@ -19,25 +19,23 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _GraphicsTypes_H_
-#define _GraphicsTypes_H_
+#ifndef _LightingUserAPI_h_
+#define _LightingUserAPI_h_
 
-/**
- * @internal
- * @file This file contains the common types of the Graphics namespace
- */
-
-#include "Color.h"
-
-// Ogre includes
-#include "externLibs/Ogre3d/include/OgreLight.h"
+#include "GraphicsPrereqs.h"
 
 namespace Graphics
 {
 
-// Lights
-typedef Ogre::Light       		Light;
+/**
+ * @brief Lighting related functions that user can call directly
+ */
+
+// Ambient lighting
+void ambientLight( float gray );
+void ambientLight( float red, float green, float blue );
+
 
 } // namespace Graphics
 
-#endif // _GraphicsTypes_H_
+#endif // _LightingUserAPI_h_

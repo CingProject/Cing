@@ -25,7 +25,7 @@ void setup()
 	//box2.init( 3 );
 	box.setPosition( width / 2, height / 2 );
 	//box2.setPosition( width / 2, height / 2, -200 );
-	box.setColor( 255, 0, 0 );
+	box.setDiffuseColor( 255, 0, 0 );
 	//box2.setColor( 0, 0, 255 );
 
 	// physics
