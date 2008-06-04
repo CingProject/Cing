@@ -41,7 +41,8 @@ public:
 	// Types of 3d Objects
 	enum Object3DType
 	{
-		BOX,						///< Box object, this is, a cube
+		BOX,						///< Box primitive object, this is, a cube
+		SPHERE,					///< Sphere primitive object
 		TRIANGLE_MESH		///< Non primitive objects, this is, any 3d triangle mesh
 	};
 
@@ -63,20 +64,40 @@ public:
 
 	// Set methods
 	void							setType						( Object3DType type ) { m_type = type; }
+
 	void              setPosition 			( float x, float y, float z );
 	void              setPosition 			( float x, float y );  
 	void              setPosition 			( const Vector3& pos );
+
 	void              setScale    			( float xScale, float yScale, float zScale );
 	void              setScale    			( float xScale, float yScale );
 	void              setScale    			( float scale );
 	void              setScale    			( const Vector3& scale );
+
 	void              trackObject 			( Object3D& objectToTrack );
-	void							setColor					( const Color& color );
-	void							setColor					( const Color& color, int alpha );
-	void							setColor					( int gray );
-	void							setColor					( int gray, int alpha );
-	void							setColor					( int value1, int value2, int value3 );
-	void							setColor					( int value1, int value2, int value3, int alpha );
+
+	//void							setAmbientColor		( const Color& color );
+	//void							setAmbientColor		( const Color& color, int alpha );
+	//void							setAmbientColor		( int gray );
+	//void							setAmbientColor		( int gray, int alpha );
+	//void							setAmbientColor		( int value1, int value2, int value3 );
+	//void							setAmbientColor		( int value1, int value2, int value3, int alpha );
+
+	void							setDiffuseColor		( const Color& color );
+	void							setDiffuseColor		( const Color& color, int alpha );
+	void							setDiffuseColor		( int gray );
+	void							setDiffuseColor		( int gray, int alpha );
+	void							setDiffuseColor		( int value1, int value2, int value3 );
+	void							setDiffuseColor		( int value1, int value2, int value3, int alpha );
+
+	//void							setSpecularColor	( const Color& color );
+	//void							setSpecularColor	( const Color& color, int alpha );
+	//void							setSpecularColor	( int gray );
+	//void							setSpecularColor	( int gray, int alpha );
+	//void							setSpecularColor	( int value1, int value2, int value3 );
+	//void							setSpecularColor	( int value1, int value2, int value3, int alpha );
+
+	void							setTexture				( const std::string& textureFileName );
 
 	// Physics related methods
 	virtual void			activatePhysics		();

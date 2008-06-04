@@ -159,6 +159,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\src\graphics\Color.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\src\graphics\DebugOverlay.h"
 					>
 				</File>
@@ -201,6 +205,10 @@
 						RelativePath="..\..\..\src\graphics\Object3D.h"
 						>
 					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Sphere.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Image"
@@ -222,6 +230,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\src\graphics\LightingUserAPI.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\src\graphics\PointLight.h"
 						>
 					</File>
@@ -232,6 +244,10 @@
 				>
 				<File
 					RelativePath="..\..\..\src\graphics\Camera3D.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\graphics\Color.cpp"
 					>
 				</File>
 				<File
@@ -305,6 +321,10 @@
 						RelativePath="..\..\..\src\graphics\Object3D.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Sphere.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Image"
@@ -323,6 +343,10 @@
 					>
 					<File
 						RelativePath="..\..\..\src\graphics\BaseLight.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\LightingUserAPI.cpp"
 						>
 					</File>
 					<File
@@ -712,6 +736,10 @@
 					RelativePath="..\..\..\src\physics\PhysicsObject.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\src\physics\PhysicsSphere.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Header Files"
@@ -730,6 +758,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\src\physics\PhysicsPrereqs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\physics\PhysicsSphere.h"
 					>
 				</File>
 			</Filter>

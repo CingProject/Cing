@@ -47,9 +47,9 @@ PointLight::~PointLight()
  * @internal
  * @brief Initializes the class so it becomes valid.
  *
- * @param[in] r Red component of the diffuse color of the light.    Value Range: 0..1
- * @param[in] g Green component of the diffuse color of the light.  Value Range: 0..1
- * @param[in] b Blue component of the diffuse color of the light.   Value Range: 0..1
+ * @param[in] r Red component of the diffuse color of the light.    Value Range: 0..255
+ * @param[in] g Green component of the diffuse color of the light.  Value Range: 0..255
+ * @param[in] b Blue component of the diffuse color of the light.   Value Range: 0..255
  * @param[in] x x coordinate (horizontal axis) of the light in the scene
  * @param[in] y y coordinate (vertical axis) of the light in the scene
  * @param[in] z z coordinate (depth) of the light in the scene

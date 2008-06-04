@@ -23,12 +23,7 @@
 #define _MathUtils_H_
 
 #include "CommonPrereqs.h"
-
-// Graphics
-#include "graphics/GraphicsTypes.h"
-
-// TODO pasar esto a utils generales
-using namespace Graphics;
+#include "CommonTypes.h"
 
 /**
  * @file

@@ -1,0 +1,15 @@
+//------------------------
+// Basic Materials
+//------------------------
+
+ 
+// Empty material, used as default material for new objects (unless otherwise specified)
+material EmptyMaterial
+{
+   technique
+   {
+      pass
+      {
+      }   
+   }
+}

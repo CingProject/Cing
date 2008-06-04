@@ -37,9 +37,12 @@
 // Graphics
 #include "graphics/Object3D.h"
 #include "graphics/Box.h"
+#include "graphics/Sphere.h"
 #include "graphics/PointLight.h"
 #include "graphics/GraphicsTypes.h"
 #include "graphics/Image.h"
+#include "graphics/GraphicsUserAPI.h"
+#include "graphics/LightingUserAPI.h"
 
 // CameraInput
 #include "cameraInput/OCVCamera.h"
