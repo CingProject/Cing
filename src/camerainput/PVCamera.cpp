@@ -81,19 +81,17 @@ PVCamera::~PVCamera()
  * @internal
  * @brief Initializes the class so it becomes valid.
  *
- * @param[in] width   Width resolution to capture form camera
- * @param[in] height  Height resolution to capture form camera
- * @param[in] fps     FPS to capture form camera
- * @param[in] color   if true captured images will be color (if supported by the camera), false means b/w
+ * @param[in] deviceId	Id of the device to capture from (starting at 0)
+ * @param[in] width			width resolution capture
+ * @param[in] height		height resolution capture
+ * @param[in] fps				frames per second to capture
+ * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-void PVCamera::init( int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, bool color /*= true */ )
+void PVCamera::init( int deviceId, int width, int height, int fps, ImageFormat format )
 {
   // Check if the class is already initialized
   if ( isValid() )
     return;
-
-  // Init base class
-  BaseCameraInput::init( width, height, fps, color );
   
   // Find a camera in the system
   m_pvCamera = cameraTool::findCamera();	
@@ -101,15 +99,14 @@ void PVCamera::init( int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/
     THROW_EXCEPTION( "No camera found in the system." );
 
   // Init the camera
+	bool color = Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format ) == 3? true: false;
   bool success = m_pvCamera->initCamera( width, height, color );
 
   // Init ok
   if(success) 
   {
-    // Store real capture info (real means that maybe the requested capture is not supported by the connected camera, so it may differ)
-    setWidth( m_pvCamera->getWidth() );
-    setHeight( m_pvCamera->getHeight() );
-    setFPS( m_pvCamera->getFps() );
+		// Init base class (with actual capture resolution)
+		BaseCameraInput::init( deviceId, m_pvCamera->getWidth(), m_pvCamera->getHeight(), m_pvCamera->getFps(), format );
 
   } 
   // Init error
