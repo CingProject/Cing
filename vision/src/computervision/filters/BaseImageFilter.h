@@ -24,6 +24,9 @@
 
 #include "..\ComputerVisionPrereqs.h"
 
+// Graphics
+#include "graphics/GraphicsTypes.h"
+
 // OpenCV
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
 
@@ -44,7 +47,7 @@ public:
   virtual ~BaseImageFilter();
 
   // Init / Release
-  bool          init            ( int width, int height, int nChannels = 1 );
+  bool          init            ( int width, int height, ImageFormat format );
   void          end             ();
 
   // Query methods

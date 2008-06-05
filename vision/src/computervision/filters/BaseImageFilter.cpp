@@ -52,16 +52,17 @@ BaseImageFilter::~BaseImageFilter()
  *
  * @param[in] width     width of the images that the filter will work with
  * @param[in] height    height of the images that the filter will work with
- * @param[in] nChannels number of channel of the images that the filter will work with (RGB -> 3 channels, Grayscale -> 1 channel)
+ * @param[in] format		format of the image to analyze( RGB or GRAY)
  * @return true if the initialization was ok | false otherwise
  */
-bool BaseImageFilter::init( int width, int height, int nChannels /*= 1*/ )
+bool BaseImageFilter::init( int width, int height, ImageFormat format )
 {
   // Check if the class is already initialized
   if ( isValid() )
     return true;
 
   // Create the output image
+	int nChannels = (int)Ogre::PixelUtil::getNumElemBytes( Ogre::PixelFormat( format ) ) ;
   m_outputImage = cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, nChannels );
 
   // Store values

@@ -43,7 +43,7 @@ public:
 	~TexturedQuad();
 
 	// Init / Release 
-	bool  init            ( size_t textureWidth, size_t textureHeight, size_t nChannels, bool render2D = false );
+	bool  init            ( size_t textureWidth, size_t textureHeight, ImageFormat format, bool render2D = false );
 	void  end             ();
 
 	// Set methods
@@ -52,9 +52,8 @@ public:
 
 	// Texture update
 	void	updateTexture		( const Ogre::Image& img );
-	void  updateTexture   ( unsigned char* textureData, size_t width, size_t height, size_t channels );
-	void  updateTexture   ( char* textureData, size_t width, size_t height, size_t channels ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, channels ); }
-	void	updateTexture		( unsigned char* textureData, size_t size );
+	void  updateTexture   ( unsigned char* textureData, size_t width, size_t height, ImageFormat format );
+	void  updateTexture   ( char* textureData, size_t width, size_t height, ImageFormat format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
 
 	// Query methods
 	bool  isValid         () const { return m_bIsValid; }
@@ -77,7 +76,7 @@ private:
   Ogre::TexturePtr          m_ogreTexture;          ///< Ogre texture (to render the quad with it)  
   Ogre::SceneNode*          m_quadSceneNode;        ///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
   size_t										m_width, m_height;      ///< Width and height of the texture
-  size_t 										m_nChannels;            ///< Number of channels of the texture (RGB -> 3, RGBA -> 4 )
+	ImageFormat								m_format;								///< Format of the image
   std::string               m_ogreManualObjectName; ///< Unique object name
   std::string               m_ogreTextureName;      ///< Unique texture name
   std::string               m_ogreMaterialName;     ///< Unique material name

@@ -3,7 +3,7 @@
 
 CREATE_APPLICATION( "Vision Test" );
 
-PVCamera        camera;               // Camera input capture
+VICamera        camera;               // Camera input capture
 CompVision      cv;                   // Computer Vision system
 Object3D        head;                 // 3D head
 bool            debugComputerVision;  // if true computer vision debug will be drawn
@@ -14,10 +14,10 @@ Pos3D           lightPos;             // current light pos
 void setup()
 {
   // Init camera capture
-  camera.init( 640, 480, 25, false );
+  camera.init( 0, 640, 480, 25, RGB );
 
   // Init compute vision system
-  cv.init( 640, 480 );
+  cv.init( 640, 480, RGB );
   debugComputerVision = false;
 
   // Load the 3d head model

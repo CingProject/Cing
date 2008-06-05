@@ -59,36 +59,42 @@ CompVision::~CompVision()
  *
  * @param[in] width     width of the images to process by the framework
  * @param[in] height    height of the images to process by the framework
+ * @param[in] format		Format of the image to work with. if RGB the analyzed images should be color, if GRAYSCALE, they should be b/w
+ * This possibility is given to check the best performance and detection results between the two image formats
  * @return true if the initialization was ok | false otherwise
  */
-bool CompVision::init( int width, int height )
+bool CompVision::init( int width, int height, ImageFormat format )
 {
   // Check if the class is already initialized
   if ( isValid() )
     return true;
 
+	// Store data
+	m_format = format;
+
   // Init the available filters and computer vision algorithms
   m_blobFinder.init( width, height );
-  m_imgDiffFilter.init( width, height );
-  m_imgThresholdFilter.init( width, height );
+  m_imgDiffFilter.init( width, height, format );
+  m_imgThresholdFilter.init( width, height, format );
 
   // Create images (gray scale)
-  m_cameraImage                 = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, 1 ); 
-  m_background                  = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, 1 ); 
-  m_afterBackgroundSubtraction  = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, 1 ); 
+	int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
+  m_cameraImage                 = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, channels ); 
+  m_background                  = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, channels ); 
+  m_afterBackgroundSubtraction  = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, channels ); 
 
   // Configure filters
   // TODO: hacer parametrizable
   m_imgThresholdFilter.setThreshold( 50 );
 
   // Debug data 
-  m_cameraTQ.init( width, height, 1);
+  m_cameraTQ.init( width, height, format );
   m_cameraTQ.setVisible( false );
 
-  m_backgrounTQ.init( width, height, 1);
+  m_backgrounTQ.init( width, height, format );
   m_backgrounTQ.setVisible( false );
 
-  m_afterBackgroundSubtractionTQ.init( width, height, 1 );
+  m_afterBackgroundSubtractionTQ.init( width, height, format );
   m_afterBackgroundSubtractionTQ.setVisible( false );
 
 	// The class is now initialized
@@ -110,9 +116,9 @@ void CompVision::end()
 
   // Release data
   // TODO
-  //cvReleaseImage( &m_cameraImage );
-  //cvReleaseImage( &m_background );
-  //cvReleaseImage( &m_afterBackgroundSubtraction );
+  cvReleaseImage( &m_cameraImage );
+  cvReleaseImage( &m_background );
+	cvReleaseImage( &m_afterBackgroundSubtraction );
 
   // Release filters
   m_blobFinder.end();
@@ -182,9 +188,9 @@ void CompVision::drawComputerVisionProcess()
   m_afterBackgroundSubtractionTQ.setVisible( true );
 
   // Upload data to textures
-  m_cameraTQ.updateTexture( m_cameraImage->imageData, m_cameraImage->width, m_cameraImage->height, 1 );
-  m_backgrounTQ.updateTexture( m_background->imageData, m_background->width, m_background->height, 1 );
-  m_afterBackgroundSubtractionTQ.updateTexture( m_afterBackgroundSubtraction->imageData, m_afterBackgroundSubtraction->width, m_afterBackgroundSubtraction->height, 1 );
+  m_cameraTQ.updateTexture( m_cameraImage->imageData, m_cameraImage->width, m_cameraImage->height, m_format );
+  m_backgrounTQ.updateTexture( m_background->imageData, m_background->width, m_background->height, m_format );
+  m_afterBackgroundSubtractionTQ.updateTexture( m_afterBackgroundSubtraction->imageData, m_afterBackgroundSubtraction->width, m_afterBackgroundSubtraction->height, m_format );
 
   // Set quad positions
   m_backgrounTQ.setPosition( 320, 0 );

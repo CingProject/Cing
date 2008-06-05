@@ -52,11 +52,11 @@ Image::Image():
  *
  * @param width  Width of the image to be created
  * @param height Height of the image to be created
- * @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAY
+ * @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
  */
-Image::Image( int width, int height, Format format /*= RGB*/ )
+Image::Image( int width, int height, ImageFormat format /*= RGB*/ )
 {
-	init( width, height );
+	init( width, height, format );
 }
 
 /**
@@ -86,9 +86,9 @@ Image::~Image()
  *
  * @param width  Width of the image to be created
  * @param height Height of the image to be created
- * @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAY
+ * @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
  */
-void Image::init( int width, int height, Format format /*= RGB*/  )
+void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -128,7 +128,7 @@ void Image::load( const std::string& name  )
 	m_image.load( name, Common::ResourceManager::userResourcesGroupName );
 
 	// Create the texture quad (to draw image)
-	m_quad.init( m_image.getWidth(), m_image.getWidth(), m_image.getDepth() );
+	m_quad.init( m_image.getWidth(), m_image.getWidth(), (ImageFormat)m_image.getFormat() );
   
 	// Load data to texture
 	m_quad.updateTexture( m_image );

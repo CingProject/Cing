@@ -40,23 +40,15 @@ class Image
 {
 public:
 
-	/// Image formats
-	enum Format
-	{
-		RGB,	///< Red, Green and Blue
-		ARGB, ///< Alpha, Red, Green and Blue
-		GRAY	///< Gray scale
-	};
-
 	// Constructor / Destructor
 	Image				();
 	Image				( const Image& img );
-	Image				( int widt, int height, Format format = RGB );
+	Image				( int widt, int height, ImageFormat format = RGB );
 	Image				( const std::string& name );
 	~Image			();
 
 	// Init / Release / Update / Save
-	void  init  ( int width, int height, Format format = RGB );
+	void  init  ( int width, int height, ImageFormat format = RGB );
 	void  init  ( const Image& img );
 	void  load  ( const std::string& name );
 	void	save	( const std::string& name );
