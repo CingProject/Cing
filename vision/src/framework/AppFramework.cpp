@@ -18,10 +18,7 @@
   along with this program; if not, write to the Free Software Foundation,
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-//Linea de Julio
-// linea de jorge 
-asdasdasd
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32   324         
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32      
 #include "windows.h"    
 #endif
 
