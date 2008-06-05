@@ -47,6 +47,7 @@
 // CameraInput
 #include "cameraInput/OCVCamera.h"
 #include "cameraInput/PVCamera.h"
+#include "cameraInput/VICamera.h"
 
 // Framework 
 #include "framework/AppMain.h"

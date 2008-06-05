@@ -85,13 +85,12 @@ PVCamera::~PVCamera()
  * @param[in] height  Height resolution to capture form camera
  * @param[in] fps     FPS to capture form camera
  * @param[in] color   if true captured images will be color (if supported by the camera), false means b/w
- * @return true if the initialization was ok | false otherwise
  */
-bool PVCamera::init( int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, bool color /*= true */ )
+void PVCamera::init( int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, bool color /*= true */ )
 {
   // Check if the class is already initialized
   if ( isValid() )
-    return true;
+    return;
 
   // Init base class
   BaseCameraInput::init( width, height, fps, color );
@@ -134,8 +133,6 @@ bool PVCamera::init( int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/
 
 	// The class is now initialized
 	m_bIsValid = success;
-
-	return true;
 }
 
 /**
@@ -193,10 +190,6 @@ void PVCamera::update()
     // Check if there are more new frames
     cameraReadBuffer = m_ringBuffer->getNextBufferToRead();
   }
-
-  // update the texture
-  // TODO: esto sólo debería ser para debug
-  //loadCameraImageToTexture();  
 }
 
 } // namespace CameraInput

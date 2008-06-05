@@ -31,6 +31,17 @@
 
 // Ogre includes
 #include "externLibs/Ogre3d/include/OgreLight.h"
+#include "externLibs/Ogre3d/include/ogrepixelformat.h"
+
+
+/// Image formats
+enum ImageFormat
+{
+	RGB				= Ogre::PF_R8G8B8,	///< Red, Green and Blue
+	COLOR 		= Ogre::PF_R8G8B8,	///< Same as RGB
+	ARGB			= Ogre::PF_R8G8B8A8,///< Alpha, Red, Green and Blue
+	GRAYSCALE	= Ogre::PF_BYTE_L		///< Gray scale
+};
 
 namespace Graphics
 {

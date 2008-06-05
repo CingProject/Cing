@@ -46,7 +46,7 @@ public:
   virtual ~BaseCameraInput();
   
 	// Init / Release / Update (to be implemented in subclasses)
-	virtual bool    init            ( int width = 320, int height = 240, int fps = 25, bool color = true );
+	virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, ImageFormat format = RGB );
 	virtual void    end             ();
   virtual void    update          ();
 
@@ -72,15 +72,20 @@ protected:
   void  setHeight               ( int height  )   { m_height  = height; }
   void  setFPS                  ( int fps     )   { m_fps   = fps;  } 
 
+	// Protected attributes
+	int											m_deviceId;								///< Id of the device to capture from (starting at 0).
+
 private:
 	// Attributes
-  Graphics::TexturedQuad  m_texturedQuad;       ///< To render the camera images if required
-  IplImage*               m_currentCameraImage; ///< Image captured from the camera 
-  int                     m_width, m_height;    ///< Capture resolution
-  int                     m_fps;                ///< Capture frames per second
-  int                     m_nChannels;          ///< Number of channels of the camera captured images
-  bool                    m_newFrame;           ///< True when the camera has a new frame captured
-	bool                    m_bIsValid;	          ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	Graphics::TexturedQuad  m_texturedQuad;       		///< To render the camera images if required
+	IplImage*               m_currentCameraImage; 		///< Image captured from the camera 
+  int                     m_width, m_height;    		///< Capture resolution
+	int                     m_fps;                		///< Capture frames per second
+	int                     m_frameSize;          		///< Size in bytes of a single frame
+	int                     m_nChannels;          		///< Number of channels of the captured image
+	ImageFormat							m_format;									///< Format of the frames (RGB or GRAYSCALE)
+  bool                    m_newFrame;           		///< True when the camera has a new frame captured
+	bool                    m_bIsValid;	          		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

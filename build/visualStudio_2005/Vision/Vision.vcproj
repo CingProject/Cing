@@ -568,6 +568,10 @@
 					RelativePath="..\..\..\src\camerainput\PVCamera.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\src\camerainput\VICamera.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Header Files"
@@ -586,6 +590,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\src\camerainput\PVCamera.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\camerainput\VICamera.h"
 					>
 				</File>
 			</Filter>

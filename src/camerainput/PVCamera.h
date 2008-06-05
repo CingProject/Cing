@@ -64,7 +64,7 @@ public:
 	virtual ~PVCamera();
 
 	// BaseCameraInput Interface
-	virtual bool  init   ( int width = 320, int height = 240, int fps = 25, bool color = true );
+	virtual void  init   ( int width = 320, int height = 240, int fps = 25, bool color = true );
 	virtual void  end    ();
 	virtual void  update ();
 

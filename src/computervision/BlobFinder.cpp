@@ -24,6 +24,9 @@
 // Common
 #include "common/Exception.h"
 
+// opencv
+#include "externLibs/OpenCV/highgui/include/highgui.h"
+
 namespace ComputerVision
 {
 
@@ -64,10 +67,9 @@ BlobFinder::~BlobFinder()
  *
  * @param[in] width     with of the image to analyze
  * @param[in] height    height of the image to analyze
- * @param[in] nChannels number of channels of the image to analyze
  * @return true if the initialization was ok | false otherwise
  */
-bool BlobFinder::init( int width, int height, int nChannels /*= 1*/ )
+bool BlobFinder::init( int width, int height )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -75,7 +77,7 @@ bool BlobFinder::init( int width, int height, int nChannels /*= 1*/ )
 
   // Allocate memory for the contours and image
   m_findContoursStorage = cvCreateMemStorage();
-  m_cvImage             = cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, nChannels );
+  m_cvImage             = cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, 1 );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -117,11 +119,15 @@ void BlobFinder::computeBlobs( const IplImage& inImage )
     THROW_EXCEPTION( "Trying to compute blobs, with the BlobFinder not initialized. Init method should be called" );
 
   // Check both images have same size and it is the same than the filter size
-  if( (inImage.imageSize != m_cvImage->imageSize) )
-    THROW_EXCEPTION( "Trying to compute blobs on images with different size-> the BlobFinder should be initialized with same size of the images that will be anlyzed" );
+  if( (inImage.nChannels != 1) && (inImage.nChannels != 3) )
+    THROW_EXCEPTION( "Trying to compute blobs on images with non supporte format -> only RGB or GRAY images supported" );
 
-  // Copy the input image
-  cvCopy( &inImage, m_cvImage );
+	// If they have different number of channels -> convert them
+	if ( inImage.nChannels == 3 )
+		cvConvertImage( &inImage, m_cvImage );
+  // just one channel -> Copy the input image
+	else 
+		cvCopy( &inImage, m_cvImage );
 
   // Find blobs (openCV contours)	
   int retrivalMode = CV_RETR_EXTERNAL; // CV_RETR_CCOMP

@@ -49,7 +49,7 @@ public:
 	~CompVision();
 
 	// Init / Release / Update
-	bool        init              ( int width, int height);
+	bool        init              ( int width, int height, ImageFormat format );
 	void        end               ();
 	void        update            ( IplImage* imgToAnalyze );
 
@@ -86,6 +86,7 @@ private:
   Graphics::TexturedQuad  m_afterBackgroundSubtractionTQ; ///< Debug variable to allow drawing the image result after background subtraction
 
   // Computer vision process flags
+	ImageFormat							m_format;											///< Image format of the images processed (RGB or GRAY)
   bool                    m_backgroundSubtraction;      ///< If true background subtraction will be performed every frame
   bool                    m_blobDetection;              ///< If true blob detection will be performed every frame
 

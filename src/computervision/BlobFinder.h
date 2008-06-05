@@ -26,8 +26,12 @@
 #include "Blob.h"
 #include <vector>
 
+// Graphics
+#include "graphics/GraphicsTypes.h"
+
 namespace ComputerVision
 {
+
 
 /**
  * @internal
@@ -48,7 +52,7 @@ public:
 	~BlobFinder();
 
 	// Init / Release
-	bool          init          ( int width, int height, int nChannels = 1 );
+	bool          init          ( int width, int height );
 	void          end           ();
 
   // Blob related methods

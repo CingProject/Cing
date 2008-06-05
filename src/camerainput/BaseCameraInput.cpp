@@ -21,8 +21,12 @@
 
 #include "BaseCameraInput.h"
 
+// Common
+#include "common/LogManager.h"
+
 // OpenCV
 #include "externLibs/OpenCV/cxcore/include/cxcore.h"
+#include "externLibs/OpenCV/highgui/include/highgui.h"
 
 // Common
 #include "common/Exception.h"
@@ -35,12 +39,12 @@ namespace CameraInput
  * @brief Constructor. Initializes class attributes.
  */
 BaseCameraInput::BaseCameraInput():
-  m_newFrame          ( false ), 
-  m_currentCameraImage( NULL  ), 
-  m_width             ( 0     ), 
-  m_height            ( 0     ), 
-  m_fps               ( 0     ), 
-  m_bIsValid          ( false )
+  m_newFrame          		( false ), 
+  m_currentCameraImage		( NULL  ), 
+  m_width             		( 0     ), 
+  m_height            		( 0     ), 
+  m_fps               		( 0     ), 
+  m_bIsValid          		( false )
 {
 }
 
@@ -58,31 +62,43 @@ BaseCameraInput::~BaseCameraInput()
  * @internal
  * @brief Initializes the class so it becomes valid.
  *
- * @param[in] width   width resolution capture
- * @param[in] height  height resolution capture
- * @param[in] fps     frames per second to capture
- * @param[in] color   if true captured images will be color (if supported by the camera), false means b/w
- * @return true if the initialization was ok | false otherwise
+ * @param[in] deviceId	Id of the device to capture from (starting at 0)
+ * @param[in] width			width resolution capture
+ * @param[in] height		height resolution capture
+ * @param[in] fps				frames per second to capture
+ * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-bool BaseCameraInput::init( int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, bool color /*= true */ )
+void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, ImageFormat format )
 {
   // Check if the class is already initialized
   if ( isValid() )
-    return true;
+    return;
 
-  // Calculate number of channels of the captured images
-  m_nChannels = color? 3: 1; // 3: RGB, 1: Gray scale
+	// Check format has no alpha
+	if ( format == ARGB )
+	{
+		format = RGB;
+		LOG( "Camera capture with alpha channel not supported. Image format set to RGB" );
+	}
+
+	// Store data
+	m_deviceId	= deviceId;
+	m_width			= width;
+	m_height		= height;
+	m_format		= format;
+
+  // Calculate number of channels of the captured images and the frame size
+	m_frameSize	= m_width * m_height * (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
+	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 
   // Create the image to store the camera frames
   m_currentCameraImage = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, m_nChannels ); 
 
   // Init the textured quad (just in case we need to render the camera)
-  m_texturedQuad.init( width, height, m_nChannels );
+  m_texturedQuad.init( width, height, m_format );
 
 	// The class is now initialized
 	m_bIsValid = true;
-
-	return true;
 }
 
 /**
@@ -97,10 +113,8 @@ void BaseCameraInput::end()
     return;
 
   // Release resources
-  // TODO: revisar porque peta esto
-  //cvReleaseImage( &m_currentCameraImage );
+ 	cvReleaseImage( &m_currentCameraImage );
   m_texturedQuad.end();
-
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -125,7 +139,7 @@ void BaseCameraInput::draw()
 {
   m_texturedQuad.setVisible( true );
   m_texturedQuad.setPosition( 0, 0 );
-  m_texturedQuad.updateTexture( getImageData(), m_width, m_height, m_nChannels );
+  m_texturedQuad.updateTexture( getImageData(), m_width, m_height, m_format );
 }
 
 /**
@@ -138,11 +152,11 @@ void BaseCameraInput::draw()
  */
 void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int size )
 {
-  if ( size != (m_width * m_height * m_nChannels) )
-    THROW_EXCEPTION( "Trying to camera image data with a wrong image data size" );
+  //if ( size != m_frameSize )
+  //  THROW_EXCEPTION( "Trying to camera image data with a wrong image data size" );
 
   // Set image data
-  cvSetData( m_currentCameraImage, data, m_width*m_nChannels );
+  cvSetData( m_currentCameraImage, data, m_width * m_nChannels );
 }
 
 

@@ -80,43 +80,35 @@ TexturedQuad::~TexturedQuad()
  *
  * @param[in] textureWidth  Width of the texture to show on the quad
  * @param[in] textureHeight Height of the texture to show on the quad
- * @param[in] nChannels     Number of channels of the texture (1 -> Grayscale, 3 -> RGB, 4 -> RGBA )
+ * @param[in] format  Format of the image. RGB for color images (red, green and blue), ARGB for color plus alpha channel for transparency
+ * GRAYSCALE for greyscale images, this is, black & white
  * @param[in] render2D      If true, the textured quad is rendered in 2d, so it is overlayed to the 3d scene
  * @return true if the initialization was ok | false otherwise
  */
-bool TexturedQuad::init( size_t textureWidth, size_t textureHeight, size_t nChannels, bool render2D /*= false*/ )
+bool TexturedQuad::init( size_t textureWidth, size_t textureHeight, ImageFormat format, bool render2D /*= false*/ )
 {
   // Check if the class is already initialized
   if ( isValid() )
     return true;
 
-  // Store the texture resolution and number of channels
+  // Store the texture data
   m_width     = textureWidth;
   m_height    = textureHeight;
-  m_nChannels = nChannels;
+	m_format		= format;
   m_render2D  = render2D;
 
   // Generate unique names for texture, material and ogre manual object
   generateUniqueNames();
-  
-  // Texture pixel format depending on the alpha channel
-  Ogre::PixelFormat pFormat;
-  if ( m_nChannels == 1 )
-    pFormat = Ogre::PF_BYTE_L;
-  else if ( m_nChannels == 3 )
-    pFormat = Ogre::PF_R8G8B8;
-  else 
-    pFormat = Ogre::PF_R8G8B8A8;
 
   // Create the texture for the quad
   m_ogreTexture = Ogre::TextureManager::getSingleton().createManual( m_ogreTextureName,
                                                                     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-                                                                    Ogre::TEX_TYPE_2D,                          // type
-																																		(Ogre::uint)textureWidth, (Ogre::uint)textureHeight,                // resolution
-                                                                    0,                                          // number of mipmaps
-                                                                    pFormat,                                    // pixel format
-                                                                    Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE );  // usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
-                                                                                                                // textures updated very often (e.g. each frame)
+                                                                    Ogre::TEX_TYPE_2D,																		// type
+																																		(Ogre::uint)textureWidth, (Ogre::uint)textureHeight,  // resolution
+                                                                    0,                                          					// number of mipmaps
+																																		(Ogre::PixelFormat)format,														// pixel format
+                                                                    Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE );  					// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
+                                                                                                                					// textures updated very often (e.g. each frame)
 
   // Create a material for the quad
   Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName,
@@ -232,7 +224,7 @@ void TexturedQuad::updateTexture( const Ogre::Image& img )
 	if ( !isValid() )
 		THROW_EXCEPTION( "Trying to upload data texture to a not initializad TextureQuad object" );
 
-	//m_ogreTexture->loadImage( img );
+	// Update texture
 	m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( img.getPixelBox( 0, 0 ) );
 }
 
@@ -242,9 +234,10 @@ void TexturedQuad::updateTexture( const Ogre::Image& img )
  * @param[in] textureData New pixel data to upload to the texture
  * @param[in] width       Width of the new pixel data
  * @param[in] height      Height of the new pixel data
- * @param[in] channels    Channels of the new pixel data (RGB -> 3, RGBA -> 4)
+ * @param[in] format  Format of the image. RGB for color images (red, green and blue), ARGB for color plus alpha channel for transparency
+ * GRAYSCALE for grayscale images, this is, black & white
  */
-void TexturedQuad::updateTexture( unsigned char* textureData, size_t width, size_t height, size_t channels )
+void TexturedQuad::updateTexture( unsigned char* textureData, size_t width, size_t height, ImageFormat format )
 {
 	// Check if the object is valid
 	if ( !isValid() )
@@ -252,11 +245,14 @@ void TexturedQuad::updateTexture( unsigned char* textureData, size_t width, size
 
   // Check resolution
   if ( ( width > m_width ) || ( height > m_height ) )
-    THROW_EXCEPTION( "Trying to  update texture with too big image data" );
+    THROW_EXCEPTION( "Trying to update texture with too big image data" );
+
+	// Check format
+	if ( m_format != format )
+		THROW_EXCEPTION( "Trying to update texture with different format" );
 
 	// Update texture
-	Ogre::PixelFormat format = channels == 1? Ogre::PF_BYTE_L: Ogre::PF_BYTE_RGB;
-	m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, format, textureData ) );
+	m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
 
 
 
@@ -314,22 +310,7 @@ void TexturedQuad::updateTexture( unsigned char* textureData, size_t width, size
   //pixelBuffer->unlock();
 }
 
-/**
- * @internal 
- * @brief Updates texture data
- *
- * @param
- * @return
- */
-void TexturedQuad::updateTexture( unsigned char* textureData, size_t size )
-{
-	// Check if the object is valid
-	if ( !isValid() )
-		THROW_EXCEPTION( "Trying to upload data texture to a not initializad TextureQuad object" );
 
-	Ogre::DataStreamPtr dataPtr( new Ogre::MemoryDataStream( textureData, size ) );
-	m_ogreTexture->loadRawData( dataPtr, (Ogre::ushort)m_width, (Ogre::ushort)m_height, Ogre::PF_BYTE_RGB );
-}
 
 /**
  * @brief Copies the data of the received texture quad
@@ -343,7 +324,7 @@ void TexturedQuad::operator=( const TexturedQuad& other )
 		THROW_EXCEPTION( "Trying to copy an invalid TextureQuad" );
 
 	// Init the texture
-	init( other.m_width, other.m_height, other.m_nChannels, other.m_render2D );
+	init( other.m_width, other.m_height, other.m_format, other.m_render2D );
 
 	// Copy the texture
 	other.m_ogreTexture->copyToTexture( m_ogreTexture );
