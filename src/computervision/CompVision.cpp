@@ -91,8 +91,8 @@ bool CompVision::init( int width, int height, ImageFormat format )
   m_cameraTQ.init( width, height, format );
   m_cameraTQ.setVisible( false );
 
-  m_backgrounTQ.init( width, height, format );
-  m_backgrounTQ.setVisible( false );
+  m_backgroundTQ.init( width, height, format );
+  m_backgroundTQ.setVisible( false );
 
   m_afterBackgroundSubtractionTQ.init( width, height, format );
   m_afterBackgroundSubtractionTQ.setVisible( false );
@@ -142,7 +142,7 @@ void CompVision::update( IplImage* imgToAnalyze )
   
   // By default hide textured quads (they are only drawn if the method drawComputerVisionProcess is called)
   m_cameraTQ.setVisible( false );
-  m_backgrounTQ.setVisible( false );
+  m_backgroundTQ.setVisible( false );
   m_afterBackgroundSubtractionTQ.setVisible( false );
 
   // Copy camera image data pointer
@@ -201,18 +201,18 @@ void CompVision::drawComputerVisionProcess()
 {
   // Make texture quads visibles
   m_cameraTQ.setVisible( true );
-  m_backgrounTQ.setVisible( true );
+  m_backgroundTQ.setVisible( true );
   m_afterBackgroundSubtractionTQ.setVisible( true );
 
   // Upload data to textures
   m_cameraTQ.updateTexture( m_cameraImage->imageData, m_cameraImage->width, m_cameraImage->height, m_format );
-  m_backgrounTQ.updateTexture( m_background->imageData, m_background->width, m_background->height, m_format );
+  m_backgroundTQ.updateTexture( m_background->imageData, m_background->width, m_background->height, m_format );
   m_afterBackgroundSubtractionTQ.updateTexture( m_afterBackgroundSubtraction->imageData, m_afterBackgroundSubtraction->width, m_afterBackgroundSubtraction->height, m_format );
 
   // Set quad positions
-  m_backgrounTQ.setPosition( 640, 0 );
-  m_afterBackgroundSubtractionTQ.setPosition( 1280, 0 );
-
+	m_cameraTQ.setPosition( 0, 0 ) ;
+  m_backgroundTQ.setPosition( m_cameraTQ.getWidth(), 0 );
+  m_afterBackgroundSubtractionTQ.setPosition( m_cameraTQ.getWidth() + m_backgroundTQ.getWidth(), 0 );
 }
 
 } // namespace CompVision

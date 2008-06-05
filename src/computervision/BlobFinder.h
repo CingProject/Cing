@@ -65,7 +65,7 @@ public:
 
 	// Query methods
 	bool          isValid       () const { return m_bIsValid; }
-  size_t        getNumBlobs   () const { return m_blobs.size(); }
+  int						getNumBlobs   () const { return (int)m_blobs.size(); }
   
   // TODO check n
   const Blob&   getBlobN      ( int n ) const { return m_blobs[n]; }

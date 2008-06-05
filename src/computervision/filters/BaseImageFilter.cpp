@@ -52,7 +52,7 @@ BaseImageFilter::~BaseImageFilter()
  *
  * @param[in] width     width of the images that the filter will work with
  * @param[in] height    height of the images that the filter will work with
- * @param[in] format		format of the image to analyze( RGB or GRAY)
+ * @param[in] format		format of the image to analyze( RGB or GRAYSCALE)
  * @return true if the initialization was ok | false otherwise
  */
 bool BaseImageFilter::init( int width, int height, ImageFormat format )

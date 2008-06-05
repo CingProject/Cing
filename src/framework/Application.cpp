@@ -85,7 +85,7 @@ bool Application::initApp()
   Graphics::GraphicsManager::getSingleton().init();
 
 	// Init physics manager
-	Physics::PhysicsManager::getSingleton().init( Graphics::GraphicsManager::getSingleton().getSceneManager() );
+	//Physics::PhysicsManager::getSingleton().init( Graphics::GraphicsManager::getSingleton().getSceneManager() );
 
   // Init input manager
   Input::InputManager::getSingleton().init();
@@ -120,7 +120,7 @@ void Application::endApp()
   Input::InputManager::getSingleton().end();
 
 	// Release physics manager
-	Physics::PhysicsManager::getSingleton().end();
+	//Physics::PhysicsManager::getSingleton().end();
 
   // Release graphics manager
   Graphics::GraphicsManager::getSingleton().end();
@@ -155,7 +155,7 @@ void Application::drawApp()
     draw();
 
 		// Update physics
-		Physics::PhysicsManager::getSingleton().update( Globals::elapsedSec  );
+		//Physics::PhysicsManager::getSingleton().update( Globals::elapsedSec  );
 
     // Update rendering
     Graphics::GraphicsManager::getSingleton().draw();

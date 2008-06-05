@@ -120,7 +120,7 @@ void BlobFinder::computeBlobs( const IplImage& inImage )
 
   // Check both images have same size and it is the same than the filter size
   if( (inImage.nChannels != 1) && (inImage.nChannels != 3) )
-    THROW_EXCEPTION( "Trying to compute blobs on images with non supporte format -> only RGB or GRAY images supported" );
+    THROW_EXCEPTION( "Trying to compute blobs on images with non supporte format -> only RGB or GRAYSCALE images supported" );
 
 	// If they have different number of channels -> convert them
 	if ( inImage.nChannels == 3 )

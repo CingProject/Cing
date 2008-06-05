@@ -85,7 +85,7 @@ TexturedQuad::~TexturedQuad()
  * @param[in] render2D      If true, the textured quad is rendered in 2d, so it is overlayed to the 3d scene
  * @return true if the initialization was ok | false otherwise
  */
-bool TexturedQuad::init( size_t textureWidth, size_t textureHeight, ImageFormat format, bool render2D /*= false*/ )
+bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format, bool render2D /*= false*/ )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -237,7 +237,7 @@ void TexturedQuad::updateTexture( const Ogre::Image& img )
  * @param[in] format  Format of the image. RGB for color images (red, green and blue), ARGB for color plus alpha channel for transparency
  * GRAYSCALE for grayscale images, this is, black & white
  */
-void TexturedQuad::updateTexture( unsigned char* textureData, size_t width, size_t height, ImageFormat format )
+void TexturedQuad::updateTexture( unsigned char* textureData, int width, int height, ImageFormat format )
 {
 	// Check if the object is valid
 	if ( !isValid() )
