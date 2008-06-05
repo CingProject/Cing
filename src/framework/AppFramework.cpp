@@ -19,7 +19,8 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 //Linea de Julio
-// linea de jorge
+// linea de jorge 
+asdasdasd
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32   324         
 #include "windows.h"    
 #endif

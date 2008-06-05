@@ -43,7 +43,7 @@ public:
 	// Constructor / Destructor
 	Image				();
 	Image				( const Image& img );
-	Image				( int widt, int height, ImageFormat format = RGB );
+	Image				( int width, int height, ImageFormat format = RGB );
 	Image				( const std::string& name );
 	~Image			();
 
@@ -57,6 +57,8 @@ public:
 
 	// Draw 
 	void	draw	( int xPos, int yPos, int zPos = 0 );
+
+	//void	draw	();
 
 	// Query methods
 	bool  isValid() const { return m_bIsValid; }
