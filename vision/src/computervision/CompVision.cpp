@@ -164,6 +164,23 @@ void CompVision::update( IplImage* imgToAnalyze )
   // Blob detection
   if ( m_blobDetection )
     m_blobFinder.computeBlobs( *m_afterBackgroundSubtraction );
+
+	// Draw Blobs in m_cameraImage, using openCV
+	if ( m_blobDetection ){
+		
+		// **Preguntar como hacer esto con std::vector
+		for (int i = 0; i < m_blobFinder.getNumBlobs() ; i++)
+		{
+			Blob tempBlob = m_blobFinder.getBlobN(i);
+
+			CvPoint pt1 = { tempBlob.bbox.x,tempBlob.bbox.y };
+			CvPoint pt2 = { tempBlob.bbox.x+tempBlob.bbox.width,
+											tempBlob.bbox.y+tempBlob.bbox.height };
+
+			cvDrawRect(m_cameraImage,pt1,pt2,CV_RGB(0,255,0),2);
+		}
+	}
+
 }
 
 /**
@@ -193,8 +210,9 @@ void CompVision::drawComputerVisionProcess()
   m_afterBackgroundSubtractionTQ.updateTexture( m_afterBackgroundSubtraction->imageData, m_afterBackgroundSubtraction->width, m_afterBackgroundSubtraction->height, m_format );
 
   // Set quad positions
-  m_backgrounTQ.setPosition( 320, 0 );
-  m_afterBackgroundSubtractionTQ.setPosition( 640, 0 );
+  m_backgrounTQ.setPosition( 640, 0 );
+  m_afterBackgroundSubtractionTQ.setPosition( 1280, 0 );
+
 }
 
 } // namespace CompVision

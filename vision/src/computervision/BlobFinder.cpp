@@ -163,6 +163,8 @@ void BlobFinder::computeBlobs( const IplImage& inImage )
  */
 void BlobFinder::extractBlobsInformation()
 {
+
+
   // Order blobs (from bigger to smaller) -> this way the most relevant are at the beginning
   std::sort( m_blobs.begin(), m_blobs.end(), std::greater< Blob >() );
 

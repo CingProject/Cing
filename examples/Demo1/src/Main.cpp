@@ -14,11 +14,15 @@ Pos3D           lightPos, targetPos;  // current and target light pos
 void setup()
 {
   // Init camera capture
+<<<<<<< .mine
+  camera.init( 1, 640, 480, 25, RGB );
+=======
 	camera.init( 0, 640, 480, 25, RGB );
+>>>>>>> .r51
  
   // Init compute vision system
   cv.init( 640, 480, RGB );
-  debugComputerVision = false;
+  debugComputerVision = true;
 
   // Load the 3d head model
   head.init( "theviewer.mesh", "Examples/BumpMapping/MultiLight" );

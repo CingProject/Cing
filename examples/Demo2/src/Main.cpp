@@ -1,6 +1,8 @@
 // Vision test
 #include "Vision.h"
 
+//as
+
 CREATE_APPLICATION( "Vision Test" );
 
 VICamera        camera;               // Camera input capture
@@ -14,7 +16,7 @@ Pos3D           lightPos;             // current light pos
 void setup()
 {
   // Init camera capture
-  camera.init( 0, 640, 480, 25, RGB );
+  camera.init( 1, 640, 480, 25, RGB );
 
   // Init compute vision system
   cv.init( 640, 480, RGB );
