@@ -43,7 +43,7 @@ public:
 	~TexturedQuad();
 
 	// Init / Release 
-	bool  init            ( size_t textureWidth, size_t textureHeight, ImageFormat format, bool render2D = false );
+	bool  init            ( int textureWidth, int textureHeight, ImageFormat format, bool render2D = false );
 	void  end             ();
 
 	// Set methods
@@ -52,11 +52,14 @@ public:
 
 	// Texture update
 	void	updateTexture		( const Ogre::Image& img );
-	void  updateTexture   ( unsigned char* textureData, size_t width, size_t height, ImageFormat format );
-	void  updateTexture   ( char* textureData, size_t width, size_t height, ImageFormat format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
+	void  updateTexture   ( unsigned char* textureData, int width, int height, ImageFormat format );
+	void  updateTexture   ( char* textureData, int width, int height, ImageFormat format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
 
 	// Query methods
-	bool  isValid         () const { return m_bIsValid; }
+	bool  			isValid         () const { return m_bIsValid; }
+	int					getWidth				() const { return m_width;		}
+	int					getHeight				() const { return m_height;		}
+	ImageFormat	getFormat				() const { return m_format;		}
 
 	// Operators 
 	void operator=				( const TexturedQuad& other );
@@ -75,7 +78,7 @@ private:
 	// Attributes
   Ogre::TexturePtr          m_ogreTexture;          ///< Ogre texture (to render the quad with it)  
   Ogre::SceneNode*          m_quadSceneNode;        ///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
-  size_t										m_width, m_height;      ///< Width and height of the texture
+  int												m_width, m_height;      ///< Width and height of the texture
 	ImageFormat								m_format;								///< Format of the image
   std::string               m_ogreManualObjectName; ///< Unique object name
   std::string               m_ogreTextureName;      ///< Unique texture name

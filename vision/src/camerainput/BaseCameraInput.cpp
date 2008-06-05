@@ -27,6 +27,7 @@
 // OpenCV
 #include "externLibs/OpenCV/cxcore/include/cxcore.h"
 #include "externLibs/OpenCV/highgui/include/highgui.h"
+#include "externLibs/OpenCV/cv/include/cv.h"
 
 // Common
 #include "common/Exception.h"
@@ -75,7 +76,7 @@ void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
     return;
 
 	// Check format has no alpha
-	if ( format == ARGB )
+	if ( format == RGBA )
 	{
 		format = RGB;
 		LOG( "Camera capture with alpha channel not supported. Image format set to RGB" );
@@ -93,6 +94,12 @@ void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
 
   // Create the image to store the camera frames
   m_currentCameraImage = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, m_nChannels ); 
+
+	// Create a temp image of the opposite type to make conversions in case it is necessary.
+	// This means: if we are going to work in RGB, this image will be GRAYSCALE, just in case we receive a GRAYSCALE image instead of
+	// a RGB image, so we can convert it fast... or vice versa..
+	int channelsTemp = m_nChannels == 1? 3: 1;
+	m_tempImage					 = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, channelsTemp ); 
 
   // Init the textured quad (just in case we need to render the camera)
   m_texturedQuad.init( width, height, m_format );
@@ -114,6 +121,7 @@ void BaseCameraInput::end()
 
   // Release resources
  	cvReleaseImage( &m_currentCameraImage );
+	cvReleaseImage( &m_tempImage );
   m_texturedQuad.end();
 
 	// The class is not valid anymore
@@ -150,13 +158,23 @@ void BaseCameraInput::draw()
  * @param[in] data  Image data to update (the just captured camera frame)
  * @param[in] size  Size in bytes of the image data
  */
-void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int size )
+void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int size )	
 {
   //if ( size != m_frameSize )
   //  THROW_EXCEPTION( "Trying to camera image data with a wrong image data size" );
 
-  // Set image data
-  cvSetData( m_currentCameraImage, data, m_width * m_nChannels );
+	// If the received image has the same format... copy it
+	if ( size == m_frameSize )
+		cvSetData( m_currentCameraImage, data, m_width * m_nChannels );
+
+	// If we are working in GRAYSCALE and the received image is RGB -> convert it, and then store it
+	else if ( (m_format == GRAYSCALE) && (size == m_frameSize * 3) )
+	{
+		cvSetData( m_tempImage, data, (m_width * m_nChannels) * 3 );
+		cvCvtColor( m_tempImage, m_currentCameraImage, CV_BGR2GRAY );
+	}
+	else
+		LOG_CRITICAL( "Trying to set camera image data with a wrong format" );
 }
 
 

@@ -82,7 +82,7 @@ private:
 
   // Debug variables
   Graphics::TexturedQuad  m_cameraTQ;                     ///< Debug variable to allow drawing the camera image
-  Graphics::TexturedQuad  m_backgrounTQ;                  ///< Debug variable to allow drawing the background image
+  Graphics::TexturedQuad  m_backgroundTQ;                  ///< Debug variable to allow drawing the background image
   Graphics::TexturedQuad  m_afterBackgroundSubtractionTQ; ///< Debug variable to allow drawing the image result after background subtraction
 
   // Computer vision process flags

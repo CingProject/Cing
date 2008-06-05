@@ -128,7 +128,7 @@ void Image::load( const std::string& name  )
 	m_image.load( name, Common::ResourceManager::userResourcesGroupName );
 
 	// Create the texture quad (to draw image)
-	m_quad.init( m_image.getWidth(), m_image.getWidth(), (ImageFormat)m_image.getFormat() );
+	m_quad.init( (int)m_image.getWidth(), (int)m_image.getWidth(), (ImageFormat)m_image.getFormat() );
   
 	// Load data to texture
 	m_quad.updateTexture( m_image );
