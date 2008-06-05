@@ -39,16 +39,16 @@ enum ImageFormat
 {
 	RGB				= Ogre::PF_R8G8B8,	///< Red, Green and Blue
 	COLOR 		= Ogre::PF_R8G8B8,	///< Same as RGB
-	ARGB			= 5,///< Alpha, Red, Green and Blue
+	RGBA			= Ogre::PF_R8G8B8A8,///< Red, Green, Blue and Alpha
 	GRAYSCALE	= Ogre::PF_BYTE_L		///< Gray scale
 };
 
 /// 2D drawing primitives
 enum DrawingPrimitivesFormat
 {
-	line			= pongo un int aqui??,	///< Line
-	rectangle = Ogre::PF_R8G8B8,	///< Rectangle
-	oval			= Ogre::PF_R8G8B8A8,///< Oval
+	LINE,		///< Line
+	RECT,		///< Rectangle
+	OVAL		///< Oval
 };
 
 namespace Graphics
