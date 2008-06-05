@@ -20,8 +20,8 @@
 */
 //Linea de Julio
 // linea de jorge
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 
-#include "windows.h"
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32   324         
+#include "windows.h"    
 #endif
 
 #include "AppFramework.h"
