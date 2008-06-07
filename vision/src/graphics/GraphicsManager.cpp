@@ -186,15 +186,15 @@ void GraphicsManager::draw()
   // Zoom with the middle button...
   if (mouse.isButtonPressed(2)) 
   {
-    m_activeCamera.getOgreCamera()->moveRelative(Vector3(0.0, 0.0, -0.5) * mouse.getYAxisRelative() * MoveFactor);
+    m_activeCamera.getOgreCamera()->moveRelative(Vector(0.0, 0.0, -0.5) * mouse.getYAxisRelative() * MoveFactor);
   }
   // ... and the wheel ;-)
-  m_activeCamera.getOgreCamera()->moveRelative(Vector3(0.0, 0.0, -0.1) * mouse.getZAxisRelative() * MoveFactor);
+  m_activeCamera.getOgreCamera()->moveRelative(Vector(0.0, 0.0, -0.1) * mouse.getZAxisRelative() * MoveFactor);
 
   // Horizontal with the right button...
   if (mouse.isButtonPressed(1)) 
   {
-    m_activeCamera.getOgreCamera()->moveRelative(Vector3(-0.5, 0.0, 0.0) * mouse.getXAxisRelative() * MoveFactor);
+    m_activeCamera.getOgreCamera()->moveRelative(Vector(-0.5, 0.0, 0.0) * mouse.getXAxisRelative() * MoveFactor);
   }
 
 
@@ -301,7 +301,7 @@ void GraphicsManager::keyPressed( const OIS::KeyEvent &event )
   // FW
   if ( event.key == OIS::KC_W )
   {
-    m_activeCamera.moveRelative( Vector3( 0, 0, -10 ) );
+    m_activeCamera.moveRelative( Vector( 0, 0, -10 ) );
   }
 
 }

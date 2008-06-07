@@ -159,7 +159,7 @@ void Object3D::end()
  *
  * @return The current position of the object in the scene
  */
-const Pos3D& Object3D::getPosition()
+const Vector& Object3D::getPosition()
 {
 	// Check if the class is already released
 	if ( !isValid() )
@@ -203,7 +203,7 @@ void Object3D::setPosition( float x, float y )
  * @brief Sets the new position of the object.
  * @param[in] pos new absolute position of the object in the scene
  */
-void Object3D::setPosition( const Vector3& pos  )
+void Object3D::setPosition( const Vector& pos  )
 {
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set position in Object3D not correctly initialized" );
@@ -259,7 +259,7 @@ void Object3D::setScale( float scale )
  * @brief Sets the new scale of the object.
  * @param[in] scale vector containing the scale in the three axis of the object
  */
-void Object3D::setScale( const Vector3& scale )
+void Object3D::setScale( const Vector& scale )
 {
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set scale in Object3D not correctly initialized" );
@@ -278,7 +278,7 @@ void Object3D::lookAt( Object3D& objectToTrack )
     THROW_EXCEPTION( "Error. Trying track object in an Object3D not correctly initialized" );
   
   // TODO hacer offset configurable...
-  m_sceneNode->setAutoTracking( true, objectToTrack.getSceneNode(), Vector3::UNIT_Z );
+  m_sceneNode->setAutoTracking( true, objectToTrack.getSceneNode(), Vector::UNIT_Z );
 }
 
 /*

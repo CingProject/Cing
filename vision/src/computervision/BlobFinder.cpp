@@ -202,7 +202,7 @@ void BlobFinder::extractBlobsInformation()
     {
 	    // Read node of the contour
 	    CV_READ_SEQ_ELEM( contourNode, contourReader );
-	    blob.nodes.push_back( Pos2D( contourNode.x, contourNode.y ) );
+	    blob.nodes.push_back( Point( contourNode.x, contourNode.y , 0) );
     }
   }
 

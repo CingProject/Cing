@@ -61,7 +61,7 @@ public:
 	virtual ~PhysicsManager();
 
 	// Init / Release / Update
-	void	init		( Ogre::SceneManager& sceneManager, const Vector3& gravityVector = Vector3(0,-9.81,0), const AABox &bounds = AABox (Vector3 (-10000, -10000, -10000), Vector3 (10000,  10000,  10000)));
+	void	init		( Ogre::SceneManager& sceneManager, const Vector& gravityVector = Vector(0,-9.81,0), const AABox &bounds = AABox (Vector (-10000, -10000, -10000), Vector (10000,  10000,  10000)));
 	void	end			();	
 	void	update	( unsigned long elapsedSec );
 	

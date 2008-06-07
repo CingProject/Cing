@@ -69,7 +69,7 @@ void PhysicsBox::init( Graphics::Object3D& object )
 	Graphics::Box& box = static_cast< Graphics::Box& >( object );
 	
 	// Create the box collision shape
-	Vector3 size ( box.getWidth(), box.getHeight(), box.getDepth() );
+	Vector size ( box.getWidth(), box.getHeight(), box.getDepth() );
 	OgreBulletCollisions::BoxCollisionShape *boxShape = new OgreBulletCollisions::BoxCollisionShape( size );
 
 	// Create the rigid body and assign it the collision shape

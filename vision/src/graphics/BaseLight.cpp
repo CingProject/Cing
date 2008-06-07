@@ -140,7 +140,7 @@ void BaseLight::setPosition( float x, float y )
  * @brief Sets the new position of the light. Z coordinate (depth) is set to zero
  * @param[in] pos new position (horizontal axis) of the light in the scene
  */
-void BaseLight::setPosition( const Vector3& pos )
+void BaseLight::setPosition( const Vector& pos )
 {
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set position in a Light not correctly initialized" );
@@ -185,7 +185,7 @@ void BaseLight::setDirection( float x, float y )
  * @brief Sets the new direction of the light. Z coordinate (depth) is set to zero
  * @param[in] dir new direction (horizontal axis) of the light in the scene
  */
-void BaseLight::setDirection( const Vector3& dir )
+void BaseLight::setDirection( const Vector& dir )
 {
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
@@ -273,7 +273,7 @@ void BaseLight::setLightType( Light::LightTypes type )
  * @brief Returns the position of the light
  * @return the position of the light
  */
-const Pos3D& BaseLight::getPosition() const
+const Vector& BaseLight::getPosition() const
 {
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to get the position of a Light not correctly initialized" );

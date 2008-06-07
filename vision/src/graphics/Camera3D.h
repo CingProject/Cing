@@ -56,7 +56,7 @@ public:
 	Ogre::Camera*       getOgreCamera   				()        { return m_pOgreCamera;  }
 	
 	// set methods
-	void                moveRelative    				( const Vector3& move );
+	void                moveRelative    				( const Vector& move );
 	void								setProcessingLikeCamera	();
 
 private:
@@ -68,9 +68,9 @@ private:
 	// Attributes
 	Ogre::Camera*             m_pOgreCamera;    ///< Ogre camera
 	Ogre::SceneNode*          m_cameraSceneNode;///< Scene node where the camera is attatched to
-	Vector3                   m_cameraPos;      ///< Camera's position
-	Vector3                   m_cameraLookAt;   ///< Camera's look at position
-	Vector3                   m_cameraUpVector; ///< Camera's look up vector
+	Vector                   m_cameraPos;      ///< Camera's position
+	Vector                   m_cameraLookAt;   ///< Camera's look at position
+	Vector                   m_cameraUpVector; ///< Camera's look up vector
 	float                     m_vFovRad;        ///< Camera's  vertical fov in radians
 	float                     m_cameraDistance; ///< Camera's distance to the look at position
 	float                     m_aspectRatio;    ///< Camera's  aspect ratio

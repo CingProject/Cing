@@ -56,6 +56,7 @@
 
 // Common
 #include "common/MathUtils.h"
+#include "common/LogManager.h"
 
 // Computer Vision
 #include "computervision/CompVision.h"

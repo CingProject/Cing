@@ -148,7 +148,7 @@ inline bool equal( float f1, float f2 )
  * @param[in] pos2 second position 
  * @return the distance between two points in space
  */
-inline float dist( const Pos3D& pos1, const Pos3D& pos2 )
+inline float dist( const Vector& pos1, const Vector& pos2 )
 {
   return pos1.distance( pos2 );
 }

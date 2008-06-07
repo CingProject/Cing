@@ -60,19 +60,19 @@ public:
 	Ogre::Entity*			getEntity					() { return m_entity;					}
 	const std::string getName						() { return m_objectName;			}
 	Object3DType			getType						() { return m_type;						}
-	const Pos3D&			getPosition				();
+	const Vector&			getPosition				();
 
 	// Set methods
 	void							setType						( Object3DType type ) { m_type = type; }
 
 	void              setPosition 			( float x, float y, float z );
 	void              setPosition 			( float x, float y );  
-	void              setPosition 			( const Vector3& pos );
+	void              setPosition 			( const Vector& pos );
 
 	void              setScale    			( float xScale, float yScale, float zScale );
 	void              setScale    			( float xScale, float yScale );
 	void              setScale    			( float scale );
-	void              setScale    			( const Vector3& scale );
+	void              setScale    			( const Vector& scale );
 
 	void              lookAt 						( Object3D& objectToTrack );
 
