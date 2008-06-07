@@ -35,12 +35,14 @@
 namespace Common
 {
 	// Math
-	typedef Ogre::Vector2     		Pos2D;
-	typedef Ogre::Vector2     		Vector2;
-	typedef Ogre::Vector3     		Pos3D;
-	typedef Ogre::Vector3     		Vector3;
-	typedef Ogre::Vector4     		Pos4D;
-	typedef Ogre::Vector4     		Vector4;
+	typedef Ogre::Vector2     		Point2d;
+	typedef Ogre::Vector2     		Vector2d;
+
+	typedef Ogre::Vector3     		Point;
+	typedef Ogre::Vector3     		Vector;
+
+	typedef Ogre::Vector4     		Point4d;
+	typedef Ogre::Vector4     		Vector4d;
 
 	// Spatial
 	typedef Ogre::AxisAlignedBox	AABox;

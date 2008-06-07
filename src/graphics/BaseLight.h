@@ -49,11 +49,11 @@ public:
 	// Set methods
 	void  setPosition       ( float x, float y, float z );
 	void  setPosition       ( float x, float y );
-	void  setPosition       ( const Vector3& pos );
+	void  setPosition       ( const Vector& pos );
 
 	void  setDirection      ( float x, float y, float z );
 	void  setDirection      ( float x, float y );
-	void  setDirection      ( const Vector3& dir );
+	void  setDirection      ( const Vector& dir );
 
 	void  setDiffuseColor   ( float r, float g, float b );
 	void  setDiffuseColor   ( const Color& color );
@@ -65,7 +65,7 @@ public:
 
 	// Query methods
 	bool          isValid     () const { return m_bIsValid; }
-	const Pos3D&  getPosition () const;
+	const Vector&  getPosition () const;
 
 	
 

@@ -61,7 +61,7 @@ PhysicsManager::~PhysicsManager()
  * @param bounds				Bounds of the physics affected world
  */
 void PhysicsManager::init( Ogre::SceneManager&	sceneManager, 
-													 const Vector3&				gravityVector /*= Vector3(0,-9.81,0)*/,
+													 const Vector&				gravityVector /*= Vector3(0,-9.81,0)*/,
 													 const AABox&					bounds				/*= AABox (Vector3 (-10000, -10000, -10000), Vector3 (10000,  10000,  10000))*/ )
 {
 	// Start Bullet Physics engine
@@ -74,7 +74,7 @@ void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
 	m_physicsWorld->setDebugDrawer( m_physicsDebugDrawer );
 
 	// Attach it to the scene
-	Ogre::SceneNode *node = sceneManager.getRootSceneNode()->createChildSceneNode( "physicsDebugDrawer", Vector3::ZERO );
+	Ogre::SceneNode *node = sceneManager.getRootSceneNode()->createChildSceneNode( "physicsDebugDrawer", Vector::ZERO );
 	node->attachObject(static_cast < Ogre::SimpleRenderable *>( m_physicsDebugDrawer ));
 
 

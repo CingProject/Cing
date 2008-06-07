@@ -40,7 +40,7 @@ namespace ComputerVision
  */
 struct Blob
 {
-	typedef std::vector<Pos2D> BlobContourPoints; ///< Contour points of a blob
+	typedef std::vector<Point> BlobContourPoints; ///< Contour points of a blob
 
     // Constructor
     Blob( float _area, CvSeq* _contour ) : area( _area ), contour( _contour ) {}
@@ -51,7 +51,7 @@ struct Blob
 
     float	            area;		  ///< Blob's area
     CvRect		        bbox;		  ///< Blob's bounding box
-    Pos2D			        center;		///< Center of the Blob
+    Point			        center;		///< Center of the Blob
 	  BlobContourPoints nodes;		///< Points of the Blob's contour
 
 private:

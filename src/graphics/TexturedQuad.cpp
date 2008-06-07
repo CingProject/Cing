@@ -330,7 +330,7 @@ void TexturedQuad::operator=( const TexturedQuad& other )
 	other.m_ogreTexture->copyToTexture( m_ogreTexture );
 
 	// Copy attributes
-	const Vector3& pos = other.m_quadSceneNode->getPosition(); 
+	const Vector& pos = other.m_quadSceneNode->getPosition(); 
 	setPosition( pos.x, pos.y, pos.z );
 	setVisible( other.m_visible );
 

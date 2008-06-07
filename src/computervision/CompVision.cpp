@@ -35,11 +35,11 @@ namespace ComputerVision
  * @brief Constructor. Initializes class attributes.
  */
 CompVision::CompVision():
-  m_background                ( NULL  ),
-  m_afterBackgroundSubtraction( NULL  ),
-  m_backgroundSubtraction     ( true ),
-  m_blobDetection             ( true ),
-  m_bIsValid                  ( false )
+  m_background                 ( NULL  ),
+  m_afterBackgroundSubtraction ( NULL  ),
+  m_backgroundSubtraction      ( true  ),
+  m_blobDetection              ( true  ),
+  m_bIsValid                   ( false )
 {
 }
 

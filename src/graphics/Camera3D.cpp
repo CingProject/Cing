@@ -127,7 +127,7 @@ void Camera3D::update()
  * @internal
  * TODO
  */
-void Camera3D::moveRelative( const Vector3& move )
+void Camera3D::moveRelative( const Vector& move )
 {
   m_pOgreCamera->moveRelative( move );
 }
