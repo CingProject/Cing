@@ -28,6 +28,10 @@
 // Ogre
 #include "externLibs/Ogre3d/include/OgreImage.h"
 
+// OpenCv
+#include "externLibs/OpenCV/cxcore/include/cxtypes.h"
+#include "externLibs/OpenCV/highgui/include/highgui.h"
+
 namespace Graphics
 {
 
@@ -54,11 +58,12 @@ public:
 	void	save	( const std::string& name );
 	void  end		();
 
-
-	// Draw 
+	// Draw on scene
 	void	draw	( int xPos, int yPos, int zPos = 0 );
+	
 
-	//void	draw	();
+	// Draw inside the image
+	void  line  ( float x1, float y1, float x2, float y2 );
 
 	// Query methods
 	bool  isValid() const { return m_bIsValid; }
@@ -66,13 +71,17 @@ public:
 	// Operators and operations
 	void	operator=	( const Image& other );
 
-private:
+	// Getters and Setters
+	int					getWidth()const;
+	int					getHeight()const;
+	ImageFormat getFormat()const;
 
+private:
 	// Attributes
+	IplImage*		  m_cvImage;  ///< Contains the image compatible with openCV
 	Ogre::Image		m_image;		///< Contains the image data (loaded from file or dynamically created)
 	TexturedQuad	m_quad;			///< This is the quad (geometry) and texture necessary to be able to render the image
-	bool					m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
-
+	bool					m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
 };
 
 } // namespace Graphics
