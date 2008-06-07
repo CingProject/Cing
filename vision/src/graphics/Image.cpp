@@ -31,8 +31,9 @@ namespace Graphics
  * @brief Constructor. This constructor does not load or creates any image.
  */
 Image::Image():
+	m_cvImage(NULL),
   m_bIsValid( false ),
-	m_cvImage(NULL)
+	m_bUpdateTexture( false )
 {
 }
 
@@ -41,7 +42,8 @@ Image::Image():
  *
  * @param
  */
- Image::Image( const Image& img )
+	Image::Image( const Image& img ):
+	m_cvImage(NULL)
 {
 	init( img );
 }
@@ -103,6 +105,7 @@ void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
 
 	// The class is now initialized
 	m_bIsValid = true;
+	m_bUpdateTexture = false;
 }
 
 /**
@@ -112,9 +115,11 @@ void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
  */
 void Image::init( const Image& img )
 {
+	m_cvImage = new IplImage;
 	this->operator =( img );
 
 	m_bIsValid = true;
+	m_bUpdateTexture = false;
 }
 
 /**
@@ -131,7 +136,6 @@ void Image::load( const std::string& name  )
 	// Load file from disk
 	m_image.load( name, Common::ResourceManager::userResourcesGroupName );
 	
-	//TODO: Check this
 	//Copy pixels from the OgreImage to the IplImage	
 	if ( m_cvImage != NULL ) 
 		cvReleaseImage( &m_cvImage );
@@ -148,6 +152,7 @@ void Image::load( const std::string& name  )
 
 	// The class is now initialized
 	m_bIsValid = true;
+	m_bUpdateTexture = false;
 }
 
 /**
@@ -196,22 +201,37 @@ void Image::end()
 * @brief Returns image width 
 */
 int Image::getWidth() const{
-	return (int)m_image.getWidth();
+	return (int)m_cvImage->width;
 }
 
 /**
 * @brief Returns image height 
 */
 int Image::getHeight() const{
-	return (int)m_image.getHeight();
+	return (int)m_cvImage->height;
 }
 /**
 * @brief Returns image format 
 */
 ImageFormat Image::getFormat() const{
-	return (ImageFormat)m_image.getFormat();
+	int channels = m_cvImage->nChannels;
+	switch(channels)
+	{
+	case 1: return (ImageFormat)GRAYSCALE;
+		break;
+	case 3: return (ImageFormat)RGB;
+		break;
+	case 4: return (ImageFormat)RGBA;
+		break;
+	default: THROW_EXCEPTION( "Error in ImageFormat" );
+	}
 }
-
+/**
+* @brief Set if texture updates automatically every frame
+*/
+void	Image::setUpdateTexture(bool updateTextureFlag ) {
+	m_bUpdateTexture = updateTextureFlag;
+}
 /**
  * @brief Draws the image in a specific position
  *
@@ -221,6 +241,12 @@ ImageFormat Image::getFormat() const{
  */
 void Image::draw( int xPos, int yPos, int zPos /*= 0*/ )
 {
+	if (m_bUpdateTexture)
+		m_quad.updateTexture(	m_cvImage->imageData,
+													m_cvImage->width,
+													m_cvImage->height,
+													getFormat());
+
 	m_quad.setPosition( xPos, yPos, zPos );
 	m_quad.setVisible( true );
 }
@@ -235,7 +261,7 @@ void Image::draw( int xPos, int yPos, int zPos /*= 0*/ )
 */
 void Image::line ( float x1, float y1, float x2, float y2 )
 {
-
+	cvLine(m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(255,255,255),2);
 }
 
 /**
@@ -249,21 +275,27 @@ void Image::operator=( const Image& other )
 	if ( !other.isValid() )	
 		THROW_EXCEPTION( "Trying to copy an invalid image" );
 
-	// Copy the data
-	m_image = other.m_image;
-	
-	//TODO: Check speed of cvCloneImage, maybe is faster to use memcpy?
-	//Clone the input image to our IplImage	
-
-	if ( m_cvImage != NULL ) 
+	// TODO: Check speed of cvCloneImage, maybe is faster to use memcpy?
+	// and solve a bug when the loaded image has different size.
+	if ( m_bIsValid == true )
 		cvReleaseImage( &m_cvImage );
-	
-	m_cvImage = cvCloneImage(other.m_cvImage);
 
+	m_cvImage = cvCloneImage(other.m_cvImage);
 	m_quad  = other.m_quad;
 
 	// Now this image is valid
 	m_bIsValid = true;
 }
 
+/**
+* @brief  Duplicate an image, returns new Image object.
+*
+* @param other Image to copy
+*/
+void Image::clone()
+{
+	// Check the other image is valid
+	if ( !isValid() )	
+		THROW_EXCEPTION( "Trying to copy an invalid image" );
+}
 } // namespace Graphics
