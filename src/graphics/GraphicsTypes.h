@@ -47,7 +47,7 @@ enum ImageFormat
 enum DrawingPrimitivesFormat
 {
 	LINE,		///< Line
-	RECT,		///< Rectangle
+	RECTANGLE,		///< Rectangle
 	OVAL		///< Oval
 };
 
