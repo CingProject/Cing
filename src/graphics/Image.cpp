@@ -27,12 +27,12 @@
 
 namespace Graphics
 {
-
 /**
  * @brief Constructor. This constructor does not load or creates any image.
  */
 Image::Image():
-  m_bIsValid( false )
+  m_bIsValid( false ),
+	m_cvImage(NULL)
 {
 }
 
@@ -86,7 +86,7 @@ Image::~Image()
  *
  * @param width  Width of the image to be created
  * @param height Height of the image to be created
- * @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
+ * @param format Format of the image to be created. Possible formats are: RGB, RGBA, GRAYSCALE
  */
 void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
 {
@@ -97,9 +97,12 @@ void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
 	// Create the empty image
 	THROW_EXCEPTION( "TODO" );
 
+	// Create the empty IplImage image
+	int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
+	m_cvImage = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U,channels);
+
 	// The class is now initialized
 	m_bIsValid = true;
-
 }
 
 /**
@@ -110,6 +113,7 @@ void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
 void Image::init( const Image& img )
 {
 	this->operator =( img );
+
 	m_bIsValid = true;
 }
 
@@ -126,6 +130,15 @@ void Image::load( const std::string& name  )
 {
 	// Load file from disk
 	m_image.load( name, Common::ResourceManager::userResourcesGroupName );
+	
+	//TODO: Check this
+	//Copy pixels from the OgreImage to the IplImage	
+	if ( m_cvImage != NULL ) 
+		cvReleaseImage( &m_cvImage );
+
+	int channels = (int)Ogre::PixelUtil::getNumElemBytes( m_image.getFormat() );
+	m_cvImage = cvCreateImage(cvSize((int)m_image.getWidth(),(int)m_image.getHeight()),IPL_DEPTH_8U,channels);
+	m_cvImage->imageData = (char *)m_image.getData();
 
 	// Create the texture quad (to draw image)
 	m_quad.init( (int)m_image.getWidth(), (int)m_image.getWidth(), (ImageFormat)m_image.getFormat() );
@@ -151,6 +164,8 @@ void Image::load( const std::string& name  )
  */
 void Image::save( const std::string& name )
 {
+	// TODO: Pass data from IplImage to m_image for save the data
+
 	// Add the user app data folder to the name
 	m_image.save( Common::ResourceManager::userDataPath + name );
 }
@@ -168,8 +183,33 @@ void Image::end()
 
 	m_quad.end();
 
+	//Release IplImage
+	cvReleaseImage(&m_cvImage);
+	m_cvImage = NULL;
+
 	// The class is not valid anymore
 	m_bIsValid = false;
+
+}
+
+/**
+* @brief Returns image width 
+*/
+int Image::getWidth() const{
+	return (int)m_image.getWidth();
+}
+
+/**
+* @brief Returns image height 
+*/
+int Image::getHeight() const{
+	return (int)m_image.getHeight();
+}
+/**
+* @brief Returns image format 
+*/
+ImageFormat Image::getFormat() const{
+	return (ImageFormat)m_image.getFormat();
 }
 
 /**
@@ -185,6 +225,18 @@ void Image::draw( int xPos, int yPos, int zPos /*= 0*/ )
 	m_quad.setVisible( true );
 }
 
+/**
+* @brief Draws a line inside the image
+*
+* @param x1 x, first point
+* @param y1 y, first point
+* @param x2 x, end point
+* @param y2 y, end point
+*/
+void Image::line ( float x1, float y1, float x2, float y2 )
+{
+
+}
 
 /**
  * @brief Copies the received image into the current image
@@ -199,6 +251,15 @@ void Image::operator=( const Image& other )
 
 	// Copy the data
 	m_image = other.m_image;
+	
+	//TODO: Check speed of cvCloneImage, maybe is faster to use memcpy?
+	//Clone the input image to our IplImage	
+
+	if ( m_cvImage != NULL ) 
+		cvReleaseImage( &m_cvImage );
+	
+	m_cvImage = cvCloneImage(other.m_cvImage);
+
 	m_quad  = other.m_quad;
 
 	// Now this image is valid
