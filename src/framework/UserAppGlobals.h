@@ -40,6 +40,7 @@ extern char key;								///< Key being currently pressed
 
 // Time
 extern float elapsedSec;				///< Elapsed time in seconds from previous to current frame
+
 }
 
 
