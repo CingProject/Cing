@@ -71,8 +71,14 @@ public:
 	bool                      hasBumpMappingSupport     () const;
 
 	// Color related methods
-	void											setFillColor							( const Color& color );
+	void											setFillColor							(  const Color& color );
+	void											setStrokeColor						(  const Color& color );
+	const Color&							getFillColor					  	() const { return m_fillColor; }
+	const Color&							getStrokeColor						() const { return m_strokeColor; }
 
+	// Appearance drawing methods
+	void setStrokeWeight			(  int weight );
+	int  getStrokeWeight			() { return m_strokeWeight; }
 
 	// TEMP
 	void keyPressed( const OIS::KeyEvent &event );
@@ -95,6 +101,8 @@ private:
 	Font                  m_defaultFont;    ///< Default system font
 	Text                  m_defaultText;    ///< To print text to screen
 	Color									m_fillColor;			///< Color used to fill shapes
+	Color									m_strokeColor;		///< Color used to draw shapes
+	float									m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
 	bool                  m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 
