@@ -337,9 +337,9 @@ void Image::line ( float x1, float y1, float x2, float y2 )
 							cvPoint(x1,y1),
 							cvPoint(x2,y2),
 							CV_RGB(color.r,color.g,color.b),
-							strokeWeight,	///-> Thickness.
-							8,	///-> Type of the ellipse boundary, see cvLine description.
-							0); ///-> Number of fractional bits in the center coordinates and axes' values.
+							strokeWeight,	///< Thickness.
+							8,	///< Type of the ellipse boundary, see cvLine description.
+							0); ///< Number of fractional bits in the center coordinates and axes' values.
 
 	// Update texture when the next drawing call is made by the user
 	if ( !m_bUpdateTexture )
