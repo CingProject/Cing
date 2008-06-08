@@ -83,6 +83,9 @@ public:
 	void	operator=	( const Image& other );
 
 	// Getters and Setters
+	int						getWidth() const;
+	int						getHeight() const;
+	ImageFormat		getFormat() const;
 
 	void					setUpdateTexture( bool updateTextureFlag );	
 	bool					getUpdateTexture() const;	
