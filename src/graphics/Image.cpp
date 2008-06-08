@@ -333,9 +333,10 @@ void Image::updateTexture()
 void Image::line ( float x1, float y1, float x2, float y2 )
 {
 
+	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
-	Color color = Graphics::GraphicsManager::getSingleton().getStrokeColor();
-	int strokeWeight = Graphics::GraphicsManager::getSingleton().getStrokeWeight();
+	Color color        = graphManager.getStrokeColor();
+	int   strokeWeight = graphManager.getStrokeWeight();
 
 	// Draw a line
 	cvLine(m_cvImage,
@@ -361,11 +362,11 @@ void Image::line ( float x1, float y1, float x2, float y2 )
  */
 void Image::rect ( float x1, float y1, float x2, float y2 )
 {
-	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 
+	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
-	Color color = graphManager.getStrokeColor();
-	int strokeWeight = graphManager.getStrokeWeight();
+	Color color        = graphManager.getStrokeColor();
+	int   strokeWeight = graphManager.getStrokeWeight();
 
 	// Draw a rectangle
 	cvRectangle(m_cvImage,
@@ -390,9 +391,11 @@ void Image::rect ( float x1, float y1, float x2, float y2 )
 void Image::ellipse( float x, float y, float width, float height )
 {
 
-	Color color = Graphics::GraphicsManager::getSingleton().getStrokeColor();
-	int strokeWeight = Graphics::GraphicsManager::getSingleton().getStrokeWeight();
-	
+	GraphicsManager& graphManager = GraphicsManager::getSingleton();
+	// Get Stroke and Fill Color
+	Color color        = graphManager.getStrokeColor();
+	int   strokeWeight = graphManager.getStrokeWeight();
+
 	cvEllipse(	m_cvImage,							///-> Image.
 							cvPoint(x,y),						///-> Center of the ellipse.
 							cvSize(width,height),		///-> Length of the ellipse axes. 
