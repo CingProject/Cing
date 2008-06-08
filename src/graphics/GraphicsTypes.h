@@ -46,9 +46,9 @@ enum ImageFormat
 /// 2D drawing primitives
 enum DrawingPrimitivesFormat
 {
-	LINE,		///< Line
+	LINE,					///< Line
 	RECTANGLE,		///< Rectangle
-	OVAL		///< Oval
+	OVAL					///< Oval
 };
 
 namespace Graphics

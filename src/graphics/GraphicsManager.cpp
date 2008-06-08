@@ -296,6 +296,26 @@ void GraphicsManager::setFillColor( const Color& color )
 	m_pSceneManager->setAmbientLight( m_fillColor );
 }
 
+/**
+ * @brief Sets the border color used to draw shapes after this call.
+ *
+ * @param Color color to use to draw the border of shapes
+ */
+void GraphicsManager::setStrokeColor( const Color& color )
+{
+	m_strokeColor = color;
+}
+
+/**
+ * @brief Sets the border color used to draw shapes after this call.
+ *
+ * @param Color color to use to draw the border of shapes
+ */
+void GraphicsManager::setStrokeWeight( int weight )
+{
+	m_strokeWeight = weight;
+}
+
 void GraphicsManager::keyPressed( const OIS::KeyEvent &event )
 {
   // FW
