@@ -95,11 +95,40 @@ Color::Color( float  red, float green, float blue, float alpha ):
  */
 void Color::set( float red, float green, float blue, float alpha /*= 255.0f*/ )
 {
+	// store values
+	r = red;
+	g = green;
+	b = blue;
+	a = alpha;}
+
+/**
+ * @internal 
+ * @brief Returns the color value normalized. This means, value will range from 0..1
+ *
+ * @return Normalized (0..1) color value
+ */
+Color Color::normalized() const
+{
+	// Create an equal color
+	Color normalizedColor = *this;
+
+	// Normalize it
+	normalizedColor.normalize();
+
+	return normalizedColor;
+}
+
+/**
+ * @internal 
+ * @brief Normalizes the values of this color to range 0..1
+ */
+void Color::normalize()
+{
 	// Convert values to current color range
-	r = Common::map( red, m_lowRange, m_hightRange, 0.0f, 1.0f );
-	g = Common::map( green, m_lowRange, m_hightRange, 0.0f, 1.0f );
-	b = Common::map( blue, m_lowRange, m_hightRange, 0.0f, 1.0f );
-	a = Common::map( alpha, m_lowRange, m_hightRange, 0.0f, 1.0f );
+	r = Common::map( r, m_lowRange, m_hightRange, 0.0f, 1.0f );
+	g = Common::map( g, m_lowRange, m_hightRange, 0.0f, 1.0f );
+	b = Common::map( b, m_lowRange, m_hightRange, 0.0f, 1.0f );
+	a = Common::map( a, m_lowRange, m_hightRange, 0.0f, 1.0f );
 }
 
 } // namespace Graphics

@@ -48,7 +48,11 @@ public:
 	Color( float  red, float green, float blue, float alpha );
 
 	// To set values or range
-	void set( float red, float green, float blue, float alpha = 255.0f );
+	void	set					( float red, float green, float blue, float alpha = 255.0f );
+
+	// Color conversion
+	Color	normalized	() const;
+	void	normalize		();
 
 private:
 
