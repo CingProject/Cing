@@ -24,6 +24,7 @@
 
 #include "GraphicsPrereqs.h"
 #include "TexturedQuad.h"
+#include "GraphicsManager.h"
 
 // Ogre
 #include "externLibs/Ogre3d/include/OgreImage.h"
@@ -51,31 +52,43 @@ public:
 	Image				( const std::string& name );
 	~Image			();
 
-	// Init / Release / Update / Save
-	void  init  ( int width, int height, ImageFormat format = RGB );
-	void  init  ( const Image& img );
-	void  load  ( const std::string& name );
-	void	save	( const std::string& name );
-	void  end		();
+	// Init / Release / Update / Save / Clone
+	void		init  ( int width, int height, ImageFormat format = RGB );
+	void		init  ( const Image& img );
+	void		load  ( const std::string& name );
+	void		save	( const std::string& name );
+	void		end		();
+	// TODO: Check this
+	Image*	clone ();
 
 	// Draw on scene
 	void	draw	( int xPos, int yPos, int zPos = 0 );
 
-	// Draw inside the image
-	void  line  ( float x1, float y1, float x2, float y2 );
+	// 2D Image drawing methods
+	void  triangle	( float x1, float y1, float x2, float y2, float x3, float y3 );
+	void  line			( float x1, float y1, float x2, float y2 );
+	void  arc				( float x, float y,  float width, float height, float start, float stop );
+	void  point			( float x, float y);
+	void  quad			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
+	void  ellipse		( float x, float y, float width, float height);
+	void  rect			( float x1, float y1, float x2, float y2 );
+	
+	// Updates texture data
+	void updateTexture();
 
 	// Query methods
 	bool  isValid() const { return m_bIsValid; }
 
 	// Operators and operations
 	void	operator=	( const Image& other );
-	void clone ();
-	// Getters and Setters
-	int					getWidth()const;
-	int					getHeight()const;
-	ImageFormat getFormat()const;
 
-	void				setUpdateTexture( bool updateTextureFlag );	
+	// Getters and Setters
+	int								getWidth();
+	int								getHeight();
+	ImageFormat				getFormat();
+
+	void							setUpdateTexture( bool updateTextureFlag );	
+	bool							getUpdateTexture() const;	
 
 private:
 	// Attributes
@@ -83,7 +96,7 @@ private:
 	Ogre::Image		m_image;					///< Contains the image data (loaded from file or dynamically created)
 	TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
 	bool					m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
-	bool					m_bUpdateTexture;	///< Indicates whether the texture updates every frame or not.
+	bool					m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
 };
 
 } // namespace Graphics

@@ -103,4 +103,48 @@ void fill( const Color& color, int alpha )
 	GraphicsManager::getSingleton().setFillColor( newColor );
 }
 
+/*
+ * @brief Sets the color used to draw border of the shapes drawn after this call.
+ * 
+ * It specifies color for shapes not using textures or lighting. Value range is 0..255
+ * @param value1 Specifies the red value
+ * @param value2 Specifies the green value
+ * @param value3 Specifies the blue value
+ */
+void stroke( int value1 , int value2, int value3 )
+{
+	stroke( Color( value1, value2, value3, 1 ) );
+}
+
+/*
+ * @brief Sets the color used to draw border of shapes drawn after this call.
+ * 
+ * It specifies color for shapes not using textures or lighting. Value range is 0..255
+ * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
+ */
+void stroke( const Color& color )
+{
+	Graphics::GraphicsManager::getSingleton().setStrokeColor( color );
+}
+
+/*
+ * @brief Sets the width of the stroke used for lines, points, and the border around shapes. 
+ * 
+ * @param width Variable of type Int containing the weight (in pixels) of the stroke
+ */
+void strokeWeight( int weight )
+{
+	Graphics::GraphicsManager::getSingleton().setStrokeWeight(weight);
+}
+
+/*
+ * @brief Sets the width of the stroke used for lines, points, and the border around shapes. 
+ * 
+ * @param width Variable of type Int containing the weight (in pixels) of the stroke
+ */
+void strokeWeight( float weight )
+{
+	Graphics::GraphicsManager::getSingleton().setStrokeWeight((int)weight);
+}
+
 } // namespace Graphics

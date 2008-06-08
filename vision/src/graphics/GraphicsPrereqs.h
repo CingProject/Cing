@@ -59,7 +59,5 @@ namespace Physics
 {
 	class PhysicsObject;
 }
-// For use our image type with Opencv methods
-// struct _IplImage;
 
 #endif // _GraphicsPrereqs_H_

@@ -39,6 +39,16 @@ void fill( int value1 , int value2, int value3, int alpha );
 void fill( const Color& color );
 void fill( const Color& color, int alpha );
 
+void stroke( int gray );
+void stroke( int gray, int alpha );
+void stroke( int value1 , int value2, int value3 );
+void stroke( int value1 , int value2, int value3, int alpha );
+void stroke( const Color& color );
+void stroke( const Color& color, int alpha );
+
+void strokeWeight( int weight); 
+void strokeWeight( float weight);
+
 } // namespace Graphics
 
 #endif // _GraphicsUserAPI_h_
