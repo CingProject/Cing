@@ -219,6 +219,7 @@ int Image::getHeight() const
 {
 	return (int)m_cvImage->height;
 }
+
 /**
  * @brief Returns image format 
  * @return the imageFomat of the image
@@ -334,7 +335,6 @@ void Image::line ( float x1, float y1, float x2, float y2 )
 
 	// Get Stroke and Fill Color
 	Color color = Graphics::GraphicsManager::getSingleton().getStrokeColor();
-	color*=255;
 	int strokeWeight = Graphics::GraphicsManager::getSingleton().getStrokeWeight();
 
 	// Draw a line
@@ -361,10 +361,11 @@ void Image::line ( float x1, float y1, float x2, float y2 )
  */
 void Image::rect ( float x1, float y1, float x2, float y2 )
 {
+	GraphicsManager& graphManager = GraphicsManager::getSingleton();
+
 	// Get Stroke and Fill Color
-	Color color = Graphics::GraphicsManager::getSingleton().getStrokeColor();
-	color*=255;
-	int strokeWeight = Graphics::GraphicsManager::getSingleton().getStrokeWeight();
+	Color color = graphManager.getStrokeColor();
+	int strokeWeight = graphManager.getStrokeWeight();
 
 	// Draw a rectangle
 	cvRectangle(m_cvImage,
@@ -390,7 +391,6 @@ void Image::ellipse( float x, float y, float width, float height )
 {
 
 	Color color = Graphics::GraphicsManager::getSingleton().getStrokeColor();
-	color*=255;
 	int strokeWeight = Graphics::GraphicsManager::getSingleton().getStrokeWeight();
 	
 	cvEllipse(	m_cvImage,							///-> Image.
