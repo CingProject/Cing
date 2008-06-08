@@ -104,7 +104,7 @@ void fill( const Color& color, int alpha )
 }
 
 /*
- * @brief Sets the color used to draw border of the shapes drawn after this call.
+ * @brief Sets the color used to draw border of shapes drawn after this call.
  * 
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param value1 Specifies the red value
