@@ -203,24 +203,27 @@ void Image::end()
 }
 
 /**
-* @brief Returns image width 
-*/
-int Image::getWidth()
+ * @brief Returns image width 
+ * @return the height of the image
+ */
+int Image::getWidth() const
 {
 	return (int)m_cvImage->width;
 }
 
 /**
-* @brief Returns image height 
-*/
-int Image::getHeight()
+ * @brief Returns image height
+ * @return the height of the image
+ */
+int Image::getHeight() const
 {
 	return (int)m_cvImage->height;
 }
 /**
  * @brief Returns image format 
+ * @return the imageFomat of the image
  */
-ImageFormat Image::getFormat()
+ImageFormat Image::getFormat() const
 {
 	int channels = m_cvImage->nChannels;
 	switch(channels)
@@ -237,6 +240,7 @@ ImageFormat Image::getFormat()
 
 /**
  * @brief Get texture update state
+ * @return the m_bUpdateTexture attribute
  */
 bool Image::getUpdateTexture() const{
 		return m_bUpdateTexture;
@@ -247,6 +251,7 @@ bool Image::getUpdateTexture() const{
 void	Image::setUpdateTexture(bool updateTextureFlag ) {
 	m_bUpdateTexture = updateTextureFlag;
 }
+
 /**
  * @brief Draws the image in a specific position
  *
