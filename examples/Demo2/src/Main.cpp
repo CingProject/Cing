@@ -11,7 +11,7 @@ Object3D        head;                 // 3D head
 bool            debugComputerVision;  // if true computer vision debug will be drawn
 
 PointLight      pointLight;           // point light
-Pos3D           lightPos;             // current light pos
+Vector           lightPos;             // current light pos
 
 void setup()
 {
@@ -61,7 +61,7 @@ void draw()
     float blobTopY  = camera.getHeight() - blob.bbox.y;     
 
     // Get current light position
-    Pos3D pos = pointLight.getPosition();
+    Vector pos = pointLight.getPosition();
 
     // Map new values
     pos.x = map( blobX, 0, camera.getWidth(), 0, width );

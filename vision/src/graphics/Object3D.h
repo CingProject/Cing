@@ -43,6 +43,8 @@ public:
 	{
 		BOX,						///< Box primitive object, this is, a cube
 		SPHERE,					///< Sphere primitive object
+		PLANE,					///< Plane primitive object
+		CONE,						///< Cone primitive object
 		TRIANGLE_MESH		///< Non primitive objects, this is, any 3d triangle mesh
 	};
 
@@ -61,6 +63,7 @@ public:
 	const std::string getName						() { return m_objectName;			}
 	Object3DType			getType						() { return m_type;						}
 	const Vector&			getPosition				();
+	const Quaternion&	getOrientation		() const;
 
 	// Set methods
 	void							setType						( Object3DType type ) { m_type = type; }
@@ -68,6 +71,9 @@ public:
 	void              setPosition 			( float x, float y, float z );
 	void              setPosition 			( float x, float y );  
 	void              setPosition 			( const Vector& pos );
+	
+	void							setOrientation		( const Quaternion& orientation );
+	void							setOrientation		( const Vector& axis, float angle );
 
 	void              setScale    			( float xScale, float yScale, float zScale );
 	void              setScale    			( float xScale, float yScale );
@@ -76,12 +82,12 @@ public:
 
 	void              lookAt 						( Object3D& objectToTrack );
 
-	//void							setAmbientColor		( const Color& color );
-	//void							setAmbientColor		( const Color& color, int alpha );
-	//void							setAmbientColor		( int gray );
-	//void							setAmbientColor		( int gray, int alpha );
-	//void							setAmbientColor		( int value1, int value2, int value3 );
-	//void							setAmbientColor		( int value1, int value2, int value3, int alpha );
+	void							setAmbientColor		( const Color& color );
+	void							setAmbientColor		( const Color& color, int alpha );
+	void							setAmbientColor		( int gray );
+	void							setAmbientColor		( int gray, int alpha );
+	void							setAmbientColor		( int value1, int value2, int value3 );
+	void							setAmbientColor		( int value1, int value2, int value3, int alpha );
 
 	void							setDiffuseColor		( const Color& color );
 	void							setDiffuseColor		( const Color& color, int alpha );
@@ -90,24 +96,38 @@ public:
 	void							setDiffuseColor		( int value1, int value2, int value3 );
 	void							setDiffuseColor		( int value1, int value2, int value3, int alpha );
 
-	//void							setSpecularColor	( const Color& color );
-	//void							setSpecularColor	( const Color& color, int alpha );
-	//void							setSpecularColor	( int gray );
-	//void							setSpecularColor	( int gray, int alpha );
-	//void							setSpecularColor	( int value1, int value2, int value3 );
-	//void							setSpecularColor	( int value1, int value2, int value3, int alpha );
+	void							setSpecularColor	( const Color& color );
+	void							setSpecularColor	( const Color& color, int alpha );
+	void							setSpecularColor	( int gray );
+	void							setSpecularColor	( int gray, int alpha );
+	void							setSpecularColor	( int value1, int value2, int value3 );
+	void							setSpecularColor	( int value1, int value2, int value3, int alpha );
 
-	void							setTexture				( const std::string& textureFileName );
+	void							setSelfIlluminationColor	( const Color& color );
+	void							setSelfIlluminationColor	( const Color& color, int alpha );
+	void							setSelfIlluminationColor	( int gray );
+	void							setSelfIlluminationColor	( int gray, int alpha );
+	void							setSelfIlluminationColor	( int value1, int value2, int value3 );
+	void							setSelfIlluminationColor	( int value1, int value2, int value3, int alpha );
+
+	void							setTexture								( const std::string& textureFileName );
+
+	// Debug methods
+	void							showBoundingBox						( bool show );
 
 	// Physics related methods
-	virtual void			activatePhysics		();
-	void							deActivatePhysics	();
+	virtual void			activatePhysics						();
+	virtual void			activatePhysicsStatic			();
+	void							deActivatePhysics					();
 
-protected:
-
-	Physics::PhysicsObject*		m_physicsObject;///< Physics object that will control this 3d object in case the physics is activated for it
-
+	// Public Const static attributes
+	static const float OGRE_SCALE_CORRECTION; ///< Scale applied to all primitive objects in order to correct ogre scale bug with lighting
+																						///< So, for example, in order to have a 1m diameter sphere, we have to create a 100m diameter sphere in maya
+																						///< and then divide by 100 the scale in ogre (to have lighting working properly).
 private:
+
+	// Private methods
+	void duplicateMaterial();
 
 	// Constant / static attributes
 	static long       m_objectCounter;///< Used to generate unique names for the 3d objects
@@ -116,6 +136,7 @@ private:
 	Ogre::SceneNode* 					m_sceneNode;		///< Node in the scene manager where the object is placed
 	Ogre::Entity*    					m_entity;				///< Ogre entity that represents the model
 	Ogre::MaterialPtr					m_materialCopy;	///< Entity's material copy (to allow this object to have a specific color) 
+	Physics::PhysicsObject*		m_physicsObject;///< Physics object that will control this 3d object in case the physics is activated for it
 	std::string       				m_objectName;		///< Unique object name
 	Object3DType							m_type;					///< Type of 3d object
 	bool              				m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.

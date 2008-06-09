@@ -72,11 +72,12 @@ void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
 
 	// Set the active debug drawer for physics
 	m_physicsWorld->setDebugDrawer( m_physicsDebugDrawer );
+	m_physicsWorld->setShowDebugShapes( true );
+	//m_physicsDebugDrawer->setDrawWireframe( true );
 
 	// Attach it to the scene
 	Ogre::SceneNode *node = sceneManager.getRootSceneNode()->createChildSceneNode( "physicsDebugDrawer", Vector::ZERO );
 	node->attachObject(static_cast < Ogre::SimpleRenderable *>( m_physicsDebugDrawer ));
-
 
 	m_bIsValid = true;
 }
@@ -85,7 +86,7 @@ void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
  * @internal
  * @brief Releases the class resources. 
  * After this call no method of this object can be called without calling init method again.
- */
+ */	
 void PhysicsManager::end()
 {
 	// Release bullet related stuff
@@ -104,6 +105,18 @@ void PhysicsManager::end()
 void PhysicsManager::update( unsigned long elapsedSec )
 {
 	m_physicsWorld->stepSimulation( elapsedSec );
+}
+
+/**
+ * @brief Allows to debug physics, by drawing all physics volumes and contact points.
+ *
+ * @param draw if true, physics data will be drawn. Pass falseo to deactivate physics data rendering
+ */
+void PhysicsManager::drawPhysics( bool draw )
+{
+	//bool c = m_physicsDebugDrawer->doesDrawContactPoints();
+	//m_physicsWorld->setShowDebugShapes( draw );
+	//m_physicsWorld->setShowDebugContactPoints( draw );
 }
 
 } // namespace Physics

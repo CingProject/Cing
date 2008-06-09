@@ -56,7 +56,7 @@ public:
     PVCaptureThread ( PVCamera& pVCamera ): pt::thread( false ), m_PVCamera( pVCamera ) {};
     void execute    ();
 
-    PVCamera&       m_PVCamera; ///< Camera that will retreive the images captured in this thread
+    PVCamera&       m_PVCamera; ///< Camera that will retrieve the images captured in this thread
   };
 
 	// Constructor / Destructor

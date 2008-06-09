@@ -62,7 +62,7 @@ bool PointLight::init( float r, float g, float b, float x, float y, float z )
     return true;
 
   // Init base light
-  BaseLight::init();
+  BaseLight::init( r, g, b, x, y, z );
 
   // Setup light
   setPosition( x, y, z );

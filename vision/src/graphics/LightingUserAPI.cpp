@@ -35,7 +35,7 @@ namespace Graphics
  */
 void ambientLight( float gray )
 {
-	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(gray , gray , gray) );
+	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(gray , gray , gray).normalized() );
 }
 
 /**
@@ -47,7 +47,7 @@ void ambientLight( float gray )
  */
 void ambientLight( float red, float green, float blue )
 {
-	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(red , green , blue) );
+	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(red , green , blue).normalized() );
 }
 
 } // namespace Graphics

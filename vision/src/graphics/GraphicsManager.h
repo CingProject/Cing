@@ -70,6 +70,9 @@ public:
 	bool                      hasFragmentProgramsSupport() const;
 	bool                      hasBumpMappingSupport     () const;
 
+	// Rendering related methods
+	void											setRenderMode							( RenderMode mode );
+
 	// Color related methods
 	void											setFillColor							(  const Color& color );
 	void											setStrokeColor						(  const Color& color );

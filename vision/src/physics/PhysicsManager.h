@@ -65,6 +65,9 @@ public:
 	void	end			();	
 	void	update	( unsigned long elapsedSec );
 	
+	// Debug methods
+	void	drawPhysics( bool draw );
+
 	// Query  Methods
 	bool																isValid	()	{ return m_bIsValid; }
 	OgreBulletDynamics::DynamicsWorld*	getWorld()	{ return m_physicsWorld; }

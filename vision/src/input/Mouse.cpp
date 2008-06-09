@@ -23,9 +23,14 @@
 
 // Framework
 #include "framework/Application.h"
+#include "framework/UserAppGlobals.h"
 
 // Graphics
 #include "graphics/GraphicsManager.h"
+
+
+// Input
+#include "input/InputTypes.h"
 
 // OIS
 #include "OISInputManager.h"
@@ -175,6 +180,8 @@ bool Mouse::mouseMoved( const OIS::MouseEvent &event )
  */
 bool Mouse::mousePressed ( const OIS::MouseEvent &event, OIS::MouseButtonID id )
 {
+	Globals::mouseButton = (MouseButton) id;
+
   // Call user event function
   // TODO esto se debería hacer registrando listeners, y que applicatino estuviera registrado
   Framework::Application::getSingleton().mousePressedEvent();

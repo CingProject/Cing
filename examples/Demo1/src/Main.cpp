@@ -9,7 +9,7 @@ Object3D        head;                 // 3D head
 bool            debugComputerVision;  // if true computer vision debug will be drawn
 
 PointLight      pointLight;           // point light
-Pos3D           lightPos, targetPos;  // current and target light pos
+Vector           lightPos, targetPos;  // current and target light pos
 
 void setup()
 {

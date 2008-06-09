@@ -22,9 +22,6 @@
 #include "Box.h"
 #include "GraphicsManager.h"
 
-// Physics
-#include "physics/PhysicsBox.h"
-
 namespace Graphics
 {
 
@@ -58,10 +55,15 @@ Box::~Box()
  * @param[in] height	Height of the box
  * @param[in] depth		Depth of the box
  */
-void Box::init( int width, int height, int depth )
+void Box::init( float width, float height, float depth )
 {
 	// Create the object 3d of a box
 	Object3D::init( DEFAULT_MESH, DEFAULT_MATERIAL );
+
+	// Scale correction
+	width		*= OGRE_SCALE_CORRECTION;
+	height	*= OGRE_SCALE_CORRECTION;
+	depth		*= OGRE_SCALE_CORRECTION;
 
 	// Set the size
 	setScale( width, height, depth );
@@ -83,32 +85,9 @@ void Box::init( int width, int height, int depth )
  * @brief Creates a box with the same size in the three axis
  * @param[in] size Defines the size of the cube (the same in the three axis: width, height, depth)
  */
-void Box::init( int size )
+void Box::init( float size )
 {
 	return init( size, size, size );
-}
-/**
- * @internal
- * @brief Releases the class resources. 
- * After this call no method of this object can be called without calling init method again.
- */
-void Box::end()
-{
-
-	m_bIsValid = false;
-}
-
-
-/*
- * @brief Activates the physics for this Box
- * 
- * From now on, the box's position and rotation will be driven by the physics of the scene.
- */
-void Box::activatePhysics()
-{
-	// Create and init the physics object
-	m_physicsObject = new Physics::PhysicsBox();
-	m_physicsObject->init( *this );
 }
 
 } // namespace Graphics

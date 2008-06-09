@@ -24,6 +24,9 @@
 
 #include "FrameworkPrereqs.h"
 
+// Input
+#include "input/InputTypes.h"
+
 /**
  * @file
  * @brief This file contains the global variables that can be accessed by the user application
@@ -32,14 +35,15 @@ namespace Globals
 {
 
 // App
-extern unsigned short  width;		///< Window's width
-extern unsigned short  height;	///< Window's height
+extern unsigned short				width;					///< Window's width
+extern unsigned short				height;					///< Window's height
 
 // Input
-extern char key;								///< Key being currently pressed
+extern	char								key;						///< Key being currently pressed
+extern	Input::MouseButton	mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
 
 // Time
-extern float elapsedSec;				///< Elapsed time in seconds from previous to current frame
+extern float								elapsedSec;			///< Elapsed time in seconds from previous to current frame
 
 }
 

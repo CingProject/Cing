@@ -19,41 +19,49 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _PhysicsSphere_h_
-#define _PhysicsSphere_h_
+#ifndef _Plane_h_
+#define _Plane_h_
 
-#include "PhysicsPrereqs.h"
-#include "PhysicsObject.h"
+#include "GraphicsPrereqs.h"
+#include "Object3D.h"
 
-namespace Physics
+namespace Graphics
 {
 
 /**
  * @internal
- * @brief Controls the physics associated with a sphere object
+ * @brief Represents a 3D plane. It can have an associated texture to draw it.
  */
-class PhysicsSphere: public PhysicsObject
+	class Plane: public Object3D
 {
 public:
 
 	// Constructor / Destructor
-	PhysicsSphere();
-	virtual ~PhysicsSphere	();
+	Plane();
+	virtual ~Plane();
 
-	// Init / Release / Update
-	virtual void	init 	( Graphics::Object3D& object );
-	void					end		();	
+	// Init / Release
+	void	init 			( float width, float height );
+	void	init 			( float size );
 
 	// Query  Methods
-	bool					isValid				() { return m_bIsValid; }
+	bool	isValid		() { return m_bIsValid; }
+	float	getWidth	() { return m_width;		}
+	float	getHeight	() { return m_height;		}
 
 private:
 
+	// Constant attributes
+	static const std::string  DEFAULT_MESH;			///< Name of the default mesh used by this object
+	static const std::string  DEFAULT_MATERIAL; ///< Name of the default material used by this object
+
 	// Attributes
-	bool	m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	float		m_width;			///< Width of the plane
+	float		m_height;			///< Height of the plane
+	bool		m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 
-} // namespace Physics
+} // namespace Graphics
 
-#endif // _PhysicsSphere_h_
+#endif // _Plane_h_

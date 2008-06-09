@@ -158,16 +158,15 @@ namespace Ogre {
 		/// Struct that holds details of queued notifications
 		struct QueuedNotification
 		{
-			QueuedNotification(Resource::Listener* l, Resource* r)
-				: resourceListener(l), resource(r), opListener(0), ticket(0)
+			QueuedNotification(Resource* r)
+				: resource(r), opListener(0), ticket(0)
 			{}
 
 			QueuedNotification(Listener* l, BackgroundProcessTicket t)
-				: resourceListener(0), resource(0), opListener(l), ticket(t)  
+				: resource(0), opListener(l), ticket(t)  
 			{}
 
 			// Type 1 - Resource::Listener kind
-			Resource::Listener* resourceListener;
 			Resource* resource;
 			// Type 2 - ResourceBackgroundQueue::Listener kind
 			Listener* opListener;
@@ -398,11 +397,9 @@ namespace Ogre {
 			implements a thread-safe queue which can be processed in the main
 			frame loop thread each frame to clear the events in a simpler 
 			manner.
-		@param listener The listener to be notified
 		@param res The resource listened on
 		*/
-		virtual void _queueFireBackgroundLoadingComplete(Resource::Listener* listener, 
-			Resource* res);
+		virtual void _queueFireBackgroundLoadingComplete(Resource* res);
 
 		/** Fires all the queued events for background loaded resources.
 		@remarks

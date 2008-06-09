@@ -98,8 +98,8 @@ void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
 	// Create a temp image of the opposite type to make conversions in case it is necessary.
 	// This means: if we are going to work in RGB, this image will be GRAYSCALE, just in case we receive a GRAYSCALE image instead of
 	// a RGB image, so we can convert it fast... or vice versa..
-	int channelsTemp = m_nChannels == 1? 3: 1;
-	m_tempImage					 = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, channelsTemp ); 
+	int channelsTemp	= m_nChannels == 1? 3: 1;
+	m_tempImage				= cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, channelsTemp ); 
 
   // Init the textured quad (just in case we need to render the camera)
   m_texturedQuad.init( width, height, m_format );

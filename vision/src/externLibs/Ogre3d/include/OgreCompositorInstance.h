@@ -34,7 +34,7 @@ Torus Knot Software Ltd.
 #include "OgreTexture.h"
 #include "OgreRenderQueue.h"
 namespace Ogre {
-    const size_t RENDER_QUEUE_COUNT = RENDER_QUEUE_OVERLAY+1;       
+    const size_t RENDER_QUEUE_COUNT = RENDER_QUEUE_MAX+1;       
             
     /** An instance of a Compositor object for one Viewport. It is part of the CompositorChain
 		for a Viewport.
