@@ -697,7 +697,7 @@ namespace Ogre {
         */
         void setWorldResourceGroupName(const String& groupName) {mWorldGroupName = groupName;}
 
-        /// Sets the resource group that 'world' resources will use.
+        /// Gets the resource group that 'world' resources will use.
         const String& getWorldResourceGroupName(void) const { return mWorldGroupName; }
 
         /** Associates some world geometry with a resource group, causing it to 

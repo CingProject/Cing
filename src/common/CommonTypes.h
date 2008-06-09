@@ -44,6 +44,8 @@ namespace Common
 	typedef Ogre::Vector4     		Point4d;
 	typedef Ogre::Vector4     		Vector4d;
 
+	typedef Ogre::Quaternion			Quaternion;
+
 	// Spatial
 	typedef Ogre::AxisAlignedBox	AABox;
 	typedef Ogre::Box							BoxArea;

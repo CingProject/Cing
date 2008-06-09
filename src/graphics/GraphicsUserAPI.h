@@ -31,6 +31,9 @@ namespace Graphics
  * @brief Graphics related functions that user can call 
  */
 
+// Render related functions
+void setRenderMode( RenderMode mode );
+
 // Color related functions
 void fill( int gray );
 void fill( int gray, int alpha );

@@ -25,6 +25,8 @@
 // Ogre
 #include "externLibs/Ogre3d/include/OgreStringConverter.h"
 #include "externLibs/Ogre3d/include/OgreSceneManager.h"
+#include "externLibs/Ogre3d/include/OgreBillboardSet.h"
+#include "externLibs/Ogre3d/include/OgreBillboard.h"
 
 // Common
 #include "common/Exception.h"
@@ -41,9 +43,11 @@ long               BaseLight::m_lightCounter      = 0;
  * @brief Constructor. Initializes class attributes.
  */
 BaseLight::BaseLight():
-	m_sceneNode ( NULL  ),
-	m_pLight    ( NULL  ),
-	m_bIsValid  ( false )
+	m_sceneNode 		( NULL  ),
+	m_pLight    		( NULL  ),
+	m_lightFlare		( NULL  ),
+	m_lightFlareSet ( NULL  ),
+	m_bIsValid			( false )
 {
 }
 
@@ -61,9 +65,15 @@ BaseLight::~BaseLight()
  * @internal
  * @brief Creates the light and initializes its values
  *
+ * @param[in] r Red component of the diffuse color of the light.    Value Range: 0..255
+ * @param[in] g Green component of the diffuse color of the light.  Value Range: 0..255
+ * @param[in] b Blue component of the diffuse color of the light.   Value Range: 0..255
+ * @param[in] x x coordinate (horizontal axis) of the light in the scene
+ * @param[in] y y coordinate (vertical axis) of the light in the scene
+ * @param[in] z z coordinate (depth) of the light in the scene
  * @return true if the initialization was ok | false otherwise
  */
-bool BaseLight::init()
+bool BaseLight::init( float r, float g, float b, float x, float y, float z )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -79,6 +89,16 @@ bool BaseLight::init()
   // Create a scene node for the light (to have a more convenient way of controlling it in the space)
   m_sceneNode = scenaManager.getRootSceneNode()->createChildSceneNode();
   m_sceneNode->attachObject( m_pLight );
+
+	// Create billboard for debugging purposes
+	m_lightFlareSet = GraphicsManager::getSingleton().getSceneManager().createBillboardSet( m_lightName + "_billboard", 1 );
+	m_lightFlareSet->setMaterialName( "Examples/Flare" );
+	m_lightFlare = m_lightFlareSet->createBillboard( Vector( 0, 0, 0 ) );
+	m_lightFlare->setColour( Color( r, g, b, 255 ) );
+	m_lightFlareSet->setVisible( false );
+
+	// Attach billboard to light scene node
+	m_sceneNode->attachObject( m_lightFlareSet );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -99,6 +119,10 @@ void BaseLight::end()
   
   // Destroy the light and the scene node
   GraphicsManager::getSingleton().getSceneManager().destroyLight( m_lightName );
+
+	// Just reset billboard pointers (ogre scene manager is suposed to delete them)
+	m_lightFlareSet = NULL;
+	m_lightFlare		= NULL;
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -220,7 +244,7 @@ void BaseLight::setDiffuseColor( const Color& color )
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set diffuse color in a Light not correctly initialized" );
 
-  m_pLight->setDiffuseColour( color );
+  m_pLight->setDiffuseColour( color.normalized() );
 }
 
 /**
@@ -249,7 +273,7 @@ void BaseLight::setSpecularColor( const Color& color )
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to set specular color in a Light not correctly initialized" );
 
-  m_pLight->setSpecularColour( color );
+  m_pLight->setSpecularColour( color.normalized() );
 }
 
 /**
@@ -258,7 +282,7 @@ void BaseLight::setSpecularColor( const Color& color )
  * Available types are:
  *  Light::LT_POINT:        point light source that emits light equally in all directions.
  *  Light::LT_DIRECTIONAL:  light source with no position, only direction. Light range is infinite.
- *  Light::LT_SPOTLIGHT:    light source with position and direction (and many other tunning posibilities).
+ *  Light::LT_SPOTLIGHT:    light source with position and direction (and many other tunning possibilities).
  * @param[in] type Type to set to the light
  */
 void BaseLight::setLightType( Light::LightTypes type )
@@ -267,6 +291,20 @@ void BaseLight::setLightType( Light::LightTypes type )
     THROW_EXCEPTION( "Error. Trying to change the type of a Light not correctly initialized" );
   
   m_pLight->setType( type );
+}
+
+/**
+ * @brief Makes the light visible in the scene (for debugging purposes)
+ *
+ * @param draw if true, the light will be visible. If false, it will be invisible (although it will continue
+ * lighting up the scene)
+ */
+void BaseLight::drawDebug( bool draw )
+{
+	  if ( !isValid() )
+    THROW_EXCEPTION( "Error. Trying to draw a Light not correctly initialized" );
+
+	m_lightFlareSet->setVisible( draw );
 }
 
 /**

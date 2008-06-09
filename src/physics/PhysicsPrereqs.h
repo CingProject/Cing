@@ -38,6 +38,14 @@ namespace Physics
 {
 }
 
+// Graphics
+namespace Graphics
+{
+	class Box;
+	class Sphere;
+	class Plane;
+}
+
 // Ogre
 namespace Ogre
 {
@@ -50,7 +58,6 @@ namespace OgreBulletDynamics
 	class DynamicsWorld;
 	class RigidBody;
 }
-
 namespace OgreBulletCollisions
 {
 	class DebugDrawer;

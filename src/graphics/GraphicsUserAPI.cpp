@@ -25,6 +25,16 @@
 namespace Graphics
 {
 
+/**
+ * @brief Sets the render mode used to draw the objects in the scene
+ *
+ * @param mode Active render mode. Possible values: POINTS, WIREFRAME, SOLID
+ */
+void setRenderMode( RenderMode mode )
+{
+	GraphicsManager::getSingleton().setRenderMode( mode );
+}
+
 /*
  * @brief Sets the color used to fill the shapes drawn after this call. 
  * 

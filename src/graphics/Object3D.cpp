@@ -47,8 +47,8 @@ namespace Graphics
 {
 
 // Static member init
-long Object3D::m_objectCounter = 0;
-
+long					Object3D::m_objectCounter				= 0;
+const float		Object3D::OGRE_SCALE_CORRECTION = 0.01;
 
 /**
  * @internal
@@ -99,11 +99,11 @@ bool Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
 
 		// TODO remove this from here
     // Build tangent vectors (for normal mapping), all our meshes use only 1 texture coordset 
-    unsigned short src, dest;
-    if ( !pMesh->suggestTangentVectorBuildParams( Ogre::VES_TANGENT, src, dest ) )
-    {
-      pMesh->buildTangentVectors( Ogre::VES_TANGENT, src, dest );
-    }
+    //unsigned short src, dest;
+    //if ( !pMesh->suggestTangentVectorBuildParams( Ogre::VES_TANGENT, src, dest ) )
+    //{
+    //  pMesh->buildTangentVectors( Ogre::VES_TANGENT, src, dest );
+    //}
 
 		// Create a unique name for the entity
 		m_objectName = meshName + Ogre::StringConverter::toString( ++m_objectCounter );
@@ -163,11 +163,27 @@ const Vector& Object3D::getPosition()
 {
 	// Check if the class is already released
 	if ( !isValid() )
-		THROW_EXCEPTION( "Trying to get a position of a 3d Object that has been already released (method end() has been called)" );
+		THROW_EXCEPTION( "Trying to get the position of a 3d Object that has been already released (method end() has been called)" );
 
 	// Return the position
 	return m_sceneNode->getPosition();
 }
+
+/** 
+ * @brief Returns the current orientation of the object
+ *
+ * @return The current position of the object in the scene
+ */
+const Quaternion& Object3D::getOrientation() const
+{
+	// Check if the class is already released
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to get the orientation of a 3d Object that has been already released (method end() has been called)" );
+
+	// Return the position
+	return m_sceneNode->getOrientation();	
+}
+
 /**
  * @internal
  * @brief Sets the new position of the object.
@@ -209,6 +225,38 @@ void Object3D::setPosition( const Vector& pos  )
     THROW_EXCEPTION( "Error. Trying to set position in Object3D not correctly initialized" );
 
   setPosition( pos.x, pos.y, pos.z ); 
+}
+
+
+/**
+ * @internal 
+ * @brief Sets the new orientation of this object.
+ *
+ * @param orientation new orientation of this object. It is represented in a quaternion, this is, 
+ * a rotation around an axis
+ */
+void Object3D::setOrientation( const Quaternion& orientation )
+{
+	if ( !isValid() )
+		THROW_EXCEPTION( "Error. Trying to set orientation in Object3D not correctly initialized" );
+
+	m_sceneNode->setOrientation( orientation );
+}
+
+/**
+ * @internal 
+ * @brief Sets the new orientation of this object.
+ *
+ * @param axis	Axis of rotation
+ * @param angle Angle of rotation in degrees around the specified axis
+ */
+void Object3D::setOrientation( const Vector& axis, float angle )
+{
+	if ( !isValid() )
+		THROW_EXCEPTION( "Error. Trying to set orientation in Object3D not correctly initialized" );
+
+	Quaternion q( Ogre::Radian( Ogre::Degree( angle ) ), axis );
+	m_sceneNode->setOrientation( q );
 }
 
 /**
@@ -281,6 +329,83 @@ void Object3D::lookAt( Object3D& objectToTrack )
   m_sceneNode->setAutoTracking( true, objectToTrack.getSceneNode(), Vector::UNIT_Z );
 }
 
+//--------------------------------------------------------------------------------------------------
+// COLOR MODIFICATION
+//--------------------------------------------------------------------------------------------------
+
+/*
+ * @brief Sets the ambient color of the object.
+ *
+ * @param color New color of the object.
+ */
+void Object3D::setAmbientColor( const Color& color )
+{
+	// Duplicate material (if is not duplicated) to modify just this instance's material
+	duplicateMaterial();
+
+	// Change the ambient color of the copy material
+	m_materialCopy->setAmbient( color.normalized() );
+}
+
+/*
+ * @brief Sets the ambient color of the object.
+ *
+ * @param color New color of the object.
+ * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
+ */
+void Object3D::setAmbientColor( const Color& color, int alpha )
+{
+	setAmbientColor( Color ( color.r, color.g, color.b, alpha ) );
+}
+
+/*
+ * @brief Sets the ambient color of the object in gray scale
+ *
+ * @param gray New gray color of the object.
+ */
+void Object3D::setAmbientColor( int gray )
+{
+	setAmbientColor( Color( gray, gray, gray ) );
+}
+
+/*
+ * @brief Sets the ambient color of the object.
+ *
+ * @param gray	New gray color of the object.
+ * @param alpha New alpha value.
+ */
+void Object3D::setAmbientColor( int gray, int alpha )
+{
+	setAmbientColor( Color ( gray, gray, gray, alpha ) );
+}
+
+/*
+ * @brief Sets the ambient color of the object.
+ *
+ * @param value1	Firs value of the color (red or hue, depending on the color mode)
+ * @param value2	Second value of the color (green or saturation, depending on the color mode)
+ * @param value3	Third value of the color (blue or brightness, depending on the color mode)
+ * @param alpha New alpha value.
+ */
+void Object3D::setAmbientColor( int value1, int value2, int value3 )
+{
+	setAmbientColor( Color ( value1, value2, value3 ) );
+}
+
+/*
+ * @brief Sets the ambient color of the object.
+ *
+ * @param value1	Firs value of the color (red or hue, depending on the color mode)
+ * @param value2	Second value of the color (green or saturation, depending on the color mode)
+ * @param value3	Third value of the color (blue or brightness, depending on the color mode)
+ * @param alpha New alpha value.
+ */
+void Object3D::setAmbientColor( int value1, int value2, int value3, int alpha )
+{
+
+	setAmbientColor( Color ( value1, value2, value3, alpha ) );
+}
+
 /*
  * @brief Sets the diffuse color of the object.
  *
@@ -288,25 +413,15 @@ void Object3D::lookAt( Object3D& objectToTrack )
  */
 void Object3D::setDiffuseColor( const Color& color )
 {
-	// If this instance is going to have a specific color, it is necessary to 
-	// duplicate the material assigned (if we haven't done before)
-	if ( m_materialCopy.isNull() )
-	{
-		// Clone the material with a unique name (original name + object name (unique))
-		Ogre::MaterialPtr origMaterial = m_entity->getSubEntity(0)->getMaterial();	
-		std::string newMaterialName = origMaterial->getName() + m_objectName ;
-		m_materialCopy = origMaterial->clone( newMaterialName );
-
-		// Assign the material
-		m_entity->setMaterialName( newMaterialName );
-	}
+	// Duplicate material (if is not duplicated) to modify just this instance's material
+	duplicateMaterial();
 
 	// Change the ambient color of the copy material
-	m_materialCopy->setAmbient( color );
+	m_materialCopy->setDiffuse( color.normalized() );
 }
 
 /*
- * @brief Sets the color of the object.
+ * @brief Sets the diffuse color of the object.
  *
  * @param color New color of the object.
  * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
@@ -317,7 +432,7 @@ void Object3D::setDiffuseColor( const Color& color, int alpha )
 }
 
 /*
- * @brief Sets the color of the object in gray scale
+ * @brief Sets the diffuse color of the object in gray scale
  *
  * @param gray New gray color of the object.
  */
@@ -327,7 +442,7 @@ void Object3D::setDiffuseColor( int gray )
 }
 
 /*
- * @brief Sets the color of the object.
+ * @brief Sets the diffuse color of the object.
  *
  * @param gray	New gray color of the object.
  * @param alpha New alpha value.
@@ -338,7 +453,7 @@ void Object3D::setDiffuseColor( int gray, int alpha )
 }
 
 /*
- * @brief Sets the color of the object.
+ * @brief Sets the diffuse color of the object.
  *
  * @param value1	Firs value of the color (red or hue, depending on the color mode)
  * @param value2	Second value of the color (green or saturation, depending on the color mode)
@@ -351,7 +466,7 @@ void Object3D::setDiffuseColor( int value1, int value2, int value3 )
 }
 
 /*
- * @brief Sets the color of the object.
+ * @brief Sets the diffuse color of the object.
  *
  * @param value1	Firs value of the color (red or hue, depending on the color mode)
  * @param value2	Second value of the color (green or saturation, depending on the color mode)
@@ -364,6 +479,152 @@ void Object3D::setDiffuseColor( int value1, int value2, int value3, int alpha )
 	setDiffuseColor( Color ( value1, value2, value3, alpha ) );
 }
 
+/*
+ * @brief Sets the specular color of the object.
+ *
+ * @param color New color of the object.
+ */
+void Object3D::setSpecularColor( const Color& color )
+{
+	// Duplicate material (if is not duplicated) to modify just this instance's material
+	duplicateMaterial();
+
+	// Change the ambient color of the copy material
+	m_materialCopy->setSpecular( color.normalized() );
+}
+
+/*
+ * @brief Sets the specular color of the object.
+ *
+ * @param color New color of the object.
+ * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
+ */
+void Object3D::setSpecularColor( const Color& color, int alpha )
+{
+	setSpecularColor( Color ( color.r, color.g, color.b, alpha ) );
+}
+
+/*
+ * @brief Sets the specular color of the object in gray scale
+ *
+ * @param gray New gray color of the object.
+ */
+void Object3D::setSpecularColor( int gray )
+{
+	setSpecularColor( Color( gray, gray, gray ) );
+}
+
+/*
+ * @brief Sets the specular color of the object.
+ *
+ * @param gray	New gray color of the object.
+ * @param alpha New alpha value.
+ */
+void Object3D::setSpecularColor( int gray, int alpha )
+{
+	setSpecularColor( Color ( gray, gray, gray, alpha ) );
+}
+
+/*
+ * @brief Sets the specular color of the object.
+ *
+ * @param value1	Firs value of the color (red or hue, depending on the color mode)
+ * @param value2	Second value of the color (green or saturation, depending on the color mode)
+ * @param value3	Third value of the color (blue or brightness, depending on the color mode)
+ * @param alpha New alpha value.
+ */
+void Object3D::setSpecularColor( int value1, int value2, int value3 )
+{
+	setSpecularColor( Color ( value1, value2, value3 ) );
+}
+
+/*
+ * @brief Sets the specular color of the object.
+ *
+ * @param value1	Firs value of the color (red or hue, depending on the color mode)
+ * @param value2	Second value of the color (green or saturation, depending on the color mode)
+ * @param value3	Third value of the color (blue or brightness, depending on the color mode)
+ * @param alpha New alpha value.
+ */
+void Object3D::setSpecularColor( int value1, int value2, int value3, int alpha )
+{
+
+	setSpecularColor( Color ( value1, value2, value3, alpha ) );
+}
+
+/*
+ * @brief Sets the specular color of the object.
+ *
+ * @param color New color of the object.
+ */
+void Object3D::setSelfIlluminationColor( const Color& color )
+{
+	// Duplicate material (if is not duplicated) to modify just this instance's material
+	duplicateMaterial();
+
+	// Change the ambient color of the copy material
+	m_materialCopy->setSelfIllumination( color.normalized() );
+}
+
+/*
+ * @brief Sets the self illumination color of the object.
+ *
+ * @param color New color of the object.
+ * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
+ */
+void Object3D::setSelfIlluminationColor( const Color& color, int alpha )
+{
+	setSelfIlluminationColor( Color ( color.r, color.g, color.b, alpha ) );
+}
+
+/*
+ * @brief Sets the self illumination color of the object in gray scale
+ *
+ * @param gray New gray color of the object.
+ */
+void Object3D::setSelfIlluminationColor( int gray )
+{
+	setSelfIlluminationColor( Color( gray, gray, gray ) );
+}
+
+/*
+ * @brief Sets the self illumination color of the object.
+ *
+ * @param gray	New gray color of the object.
+ * @param alpha New alpha value.
+ */
+void Object3D::setSelfIlluminationColor( int gray, int alpha )
+{
+	setSelfIlluminationColor( Color ( gray, gray, gray, alpha ) );
+}
+
+/*
+ * @brief Sets the self illumination color of the object.
+ *
+ * @param value1	Firs value of the color (red or hue, depending on the color mode)
+ * @param value2	Second value of the color (green or saturation, depending on the color mode)
+ * @param value3	Third value of the color (blue or brightness, depending on the color mode)
+ * @param alpha New alpha value.
+ */
+void Object3D::setSelfIlluminationColor( int value1, int value2, int value3 )
+{
+	setSelfIlluminationColor( Color ( value1, value2, value3 ) );
+}
+
+/*
+ * @brief Sets the self illumination color of the object.
+ *
+ * @param value1	Firs value of the color (red or hue, depending on the color mode)
+ * @param value2	Second value of the color (green or saturation, depending on the color mode)
+ * @param value3	Third value of the color (blue or brightness, depending on the color mode)
+ * @param alpha New alpha value.
+ */
+void Object3D::setSelfIlluminationColor( int value1, int value2, int value3, int alpha )
+{
+
+	setSelfIlluminationColor( Color ( value1, value2, value3, alpha ) );
+}
+
 /**
  * @brief Uses a file as color texture to render this object
  *
@@ -371,22 +632,23 @@ void Object3D::setDiffuseColor( int value1, int value2, int value3, int alpha )
  */
 void Object3D::setTexture( const std::string& textureFileName )
 {
-	// If this instance is going to have a specific texture, it is necessary to 
-	// duplicate the material assigned (if we haven't done before)
-	if ( m_materialCopy.isNull() )
-	{
-		// Clone the material with a unique name (original name + object name (unique))
-		Ogre::MaterialPtr origMaterial = m_entity->getSubEntity(0)->getMaterial();	
-		std::string newMaterialName = origMaterial->getName() + m_objectName ;
-		m_materialCopy = origMaterial->clone( newMaterialName );
-
-		// Assign the material
-		m_entity->setMaterialName( newMaterialName );
-	}
+	// Duplicate material (if is not duplicated) to modify just this instance's material
+	duplicateMaterial();
 
 	// Change the ambient color of the copy material
 	m_materialCopy->getTechnique(0)->getPass(0)->createTextureUnitState( textureFileName );
 
+}
+
+/**
+ * @internal 
+ * @brief Shows the object's bounding box (or hides it)
+ *
+ * @param show If true, the object's bounding is rendered, if false it is hidden
+ */
+void Object3D::showBoundingBox( bool show )
+{
+	m_sceneNode->showBoundingBox( show );
 }
 
 /*
@@ -396,9 +658,29 @@ void Object3D::setTexture( const std::string& textureFileName )
  */
 void Object3D::activatePhysics()
 {
-	// Create and init the physics object
-	m_physicsObject = new Physics::PhysicsObject();
-	m_physicsObject->init( *this );
+	// Only activate if it is not currently activated.
+	if ( !m_physicsObject )
+	{
+		// Create and init the physics object
+		m_physicsObject = new Physics::PhysicsObject();
+		m_physicsObject->init( *this, false );
+	}
+}
+
+/*
+ * @brief Activates the physics for this object, but it will be static. Therefore it will affect collisions of 
+ * other physics object in the scene, but won't move.
+ * 
+ * From now on, the object's position and rotation will be driven by the physics of the scene.
+ */
+void Object3D::activatePhysicsStatic()
+{
+	// Only activate if it is not currently activated.
+	if ( !m_physicsObject )
+	{
+		m_physicsObject = new Physics::PhysicsObject();
+		m_physicsObject->init( *this, true );
+	}
 }
 
 /*
@@ -410,6 +692,30 @@ void Object3D::deActivatePhysics()
 {
 	// Release physics object
 	Common::Release( m_physicsObject );
+}
+
+
+/**
+ * @internal 
+ * @brief Duplicates the object's material, and stores the copy in the attribute m_materialCopy.
+ *
+ * If the material has been duplicated before, this method does nothing. The material duplication
+ * is done to allow modification of the material, but just for this instance, not affecting the rest
+ * of objects that are using the same material
+ */
+void Object3D::duplicateMaterial()
+{
+	// Check if the material is already duplicated
+	if ( m_materialCopy.isNull() )
+	{
+		// Clone the material with a unique name (original name + object name (unique))
+		Ogre::MaterialPtr origMaterial = m_entity->getSubEntity(0)->getMaterial();	
+		std::string newMaterialName = origMaterial->getName() + m_objectName ;
+		m_materialCopy = origMaterial->clone( newMaterialName );
+
+		// Assign the material
+		m_entity->setMaterialName( newMaterialName );
+	}
 }
 
 } // namespace Graphics

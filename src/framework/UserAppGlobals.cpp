@@ -24,14 +24,16 @@
 
 namespace Globals
 {
+
 // App
-unsigned short  width  = 1024;
-unsigned short  height = 600;
+unsigned short 	 		width  = 1024;
+unsigned short 	 		height = 600;
 
 // Input
-char key;
+char								key;
+Input::MouseButton	mouseButton;
 
 // Time
-float elapsedSec = 0;
+float								elapsedSec = 0;
 
 } // namespace Globals

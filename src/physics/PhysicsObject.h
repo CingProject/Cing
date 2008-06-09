@@ -45,8 +45,8 @@ public:
 	virtual ~PhysicsObject();
 
 	// Init / Release / Update
-	virtual void	init 		( Graphics::Object3D& object );
-	void					end			();	
+	virtual void	init 			( Graphics::Object3D& object, bool statcObject );
+	void					end				();	
 
 
 	// Query  Methods
@@ -54,8 +54,12 @@ public:
 
 protected:
 
-	// Rigid bodies
-	void createRigidBody	( Graphics::Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape );
+	// Rigid bodies and collison shapes
+	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Graphics::Object3D& object );
+	OgreBulletCollisions::CollisionShape*		buildBoxShape					( Graphics::Box& box );
+	OgreBulletCollisions::CollisionShape*		buildStaticPlaneShape	( Graphics::Plane& plane );
+	OgreBulletCollisions::CollisionShape*		buildSphereShape			( Graphics::Sphere& sphere );
+	void																		createRigidBody	( Graphics::Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody );
 
 private:
 

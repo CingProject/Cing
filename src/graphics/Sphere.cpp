@@ -22,9 +22,6 @@
 #include "Sphere.h"
 #include "GraphicsManager.h"
 
-// Physics
-#include "physics/PhysicsSphere.h"
-
 namespace Graphics
 {
 
@@ -54,18 +51,19 @@ Sphere::~Sphere()
 /**
  * @internal
  * @brief Creates a sphere with a specific radius
- * @param[in] radius		Radius of the sphere
+ * @param[in] diameter		Diameter of the sphere
  */
-void Sphere::init( int radius )
+void Sphere::init( float diameter )
 {
 	// Create the object 3d of a sphere
 	Object3D::init( DEFAULT_MESH, DEFAULT_MATERIAL );
 
-	// Set the size
-	setScale( radius, radius, radius );
+	// Scale correction
+	diameter *= OGRE_SCALE_CORRECTION;
 
-	// Store scale
-	m_radius	= radius;
+	// Set the size
+	m_radius = diameter / 2.0f;
+	setScale( m_radius, m_radius, m_radius );
 
 	// This is a primitive object type (Sphere)
 	setType( SPHERE );
@@ -73,28 +71,5 @@ void Sphere::init( int radius )
 	m_bIsValid = true;
 }
 
-/**
- * @internal
- * @brief Releases the class resources. 
- * After this call no method of this object can be called without calling init method again.
- */
-void Sphere::end()
-{
-
-	m_bIsValid = false;
-}
-
-
-/*
- * @brief Activates the physics for this Sphere
- * 
- * From now on, the sphere's position and rotation will be driven by the physics of the scene.
- */
-void Sphere::activatePhysics()
-{
-	// Create and init the physics object
-	m_physicsObject = new Physics::PhysicsSphere();
-	m_physicsObject->init( *this );
-}
 
 } // namespace Graphics

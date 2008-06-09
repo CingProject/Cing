@@ -69,6 +69,8 @@ namespace Ogre {
     public:
         /// Temp tag used for sorting
         Real tempSquareDist;
+		/// internal method for calculating current squared distance from some world position
+		void _calcTempSquareDist(const Vector3& worldPos);
 
         /// Defines the type of light
         enum LightTypes

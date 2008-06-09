@@ -41,15 +41,12 @@ public:
 	virtual ~Sphere();
 
 	// Init / Release
-	void	init 			( int radius );
-	void	end				();	
+	void	init 			( float diameter );
 
 	// Query  Methods
-	bool	isValid		() { return m_bIsValid; }
-	int		getRadius	() { return m_radius;		}
-
-	// Physics related methods
-	virtual void	activatePhysics		();
+	bool	isValid			() { return m_bIsValid; }
+	float	getRadius		() { return m_radius;		}
+	float	getDiameter	() { return m_radius * 2;		}
 
 private:
 
@@ -58,8 +55,8 @@ private:
 	static const std::string  DEFAULT_MATERIAL; ///< Name of the default material used by this object
 
 	// Attributes
-	int		m_radius;			///< Radius of the sphere
-	bool	m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	float		m_radius;			///< Radius of the sphere
+	bool		m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

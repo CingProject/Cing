@@ -54,6 +54,14 @@ enum DrawingPrimitivesFormat
 namespace Graphics
 {
 
+/// Render modes
+enum RenderMode
+{
+	DRAW_POINTS				= Ogre::PM_POINTS,
+	DRAW_WIREFRAME		= Ogre::PM_WIREFRAME,
+	DRAW_SOLID				= Ogre::PM_SOLID
+};
+
 // Lights
 typedef Ogre::Light       		Light;
 

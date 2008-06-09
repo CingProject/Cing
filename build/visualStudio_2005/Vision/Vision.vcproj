@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="Vision"
 	ProjectGUID="{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 	RootNamespace="Vision"
@@ -206,6 +206,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\src\graphics\Plane.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\src\graphics\Sphere.h"
 						>
 					</File>
@@ -319,6 +323,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\graphics\Object3D.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Plane.cpp"
 						>
 					</File>
 					<File
@@ -514,6 +522,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\src\input\InputPrereqs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\input\InputTypes.h"
 					>
 				</File>
 				<File
@@ -733,10 +745,6 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\..\..\src\physics\PhysicsBox.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\src\physics\PhysicsManager.cpp"
 					>
 				</File>
@@ -745,17 +753,13 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\physics\PhysicsSphere.cpp"
+					RelativePath="..\..\..\src\physics\PhysicsUserAPI.cpp"
 					>
 				</File>
 			</Filter>
 			<Filter
 				Name="Header Files"
 				>
-				<File
-					RelativePath="..\..\..\src\physics\PhysicsBox.h"
-					>
-				</File>
 				<File
 					RelativePath="..\..\..\src\physics\PhysicsManager.h"
 					>
@@ -769,7 +773,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\physics\PhysicsSphere.h"
+					RelativePath="..\..\..\src\physics\PhysicsTypes.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\physics\PhysicsUserAPI.h"
 					>
 				</File>
 			</Filter>

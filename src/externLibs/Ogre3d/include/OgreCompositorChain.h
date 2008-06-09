@@ -114,6 +114,9 @@ namespace Ogre {
          */
         Viewport *getViewport();
 
+		/** Internal method for reconnecting with viewport */
+		void _notifyViewport(Viewport* vp);
+
 		/** Remove a compositor by pointer. This is internally used by CompositionTechnique to
 			"weak" remove any instanced of a deleted technique.
         */

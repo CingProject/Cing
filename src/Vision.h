@@ -34,9 +34,11 @@
 #include <cstring>
 #include <stdlib.h>
 
+
 // Graphics
 #include "graphics/Object3D.h"
 #include "graphics/Box.h"
+#include "graphics/Plane.h"
 #include "graphics/Sphere.h"
 #include "graphics/PointLight.h"
 #include "graphics/GraphicsTypes.h"
@@ -58,8 +60,14 @@
 #include "common/MathUtils.h"
 #include "common/LogManager.h"
 
+// Input
+#include "input/InputTypes.h"
+
 // Computer Vision
 #include "computervision/CompVision.h"
+
+// Physics
+#include "physics/PhysicsUserAPI.h"
 
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
@@ -68,5 +76,7 @@ using namespace ComputerVision;
 using namespace Graphics;
 using namespace Globals;
 using namespace Common;
+using namespace Input;
+using namespace Physics;
 
 #endif // _Vision_H_

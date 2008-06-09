@@ -43,7 +43,7 @@ public:
 	virtual ~BaseLight();
 
 	// Init / Release / Update
-	bool  init              ();
+	bool  init              ( float r, float g, float b, float x, float y, float z );
 	void  end               ();
 
 	// Set methods
@@ -63,9 +63,12 @@ public:
 
 	void  setLightType      ( Light::LightTypes type );
 
+	// Debug methods
+	void	drawDebug					( bool draw );
+
 	// Query methods
-	bool          isValid     () const { return m_bIsValid; }
-	const Vector&  getPosition () const;
+	bool						isValid     () const { return m_bIsValid; }
+	const Vector&		getPosition () const;
 
 	
 
@@ -79,6 +82,11 @@ private:
 	std::string               m_lightName;  ///< Name of this light
 	Ogre::Light*              m_pLight;     ///< Pointer to the light object
 	Ogre::SceneNode*          m_sceneNode;  ///< Scene node where the light is attached
+
+	// Debugging purposes
+	Ogre::BillboardSet*				m_lightFlareSet; ///< Used to draw a billboard where the light is (to debug its position)
+	Ogre::Billboard*					m_lightFlare;		///< Used to draw a billboard where the light is (to debug its position)
+
 	bool                      m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };

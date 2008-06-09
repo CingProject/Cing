@@ -19,41 +19,22 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _PhysicsBox_h_
-#define _PhysicsBox_h_
+#ifndef _PhysicsUserAPI_h_
+#define _PhysicsUserAPI_h_
 
 #include "PhysicsPrereqs.h"
-#include "PhysicsObject.h"
 
 namespace Physics
 {
 
 /**
- * @internal
- * @brief Controls the physics associated with a box object
+ * @brief Physics related functions that user can call 
  */
-class PhysicsBox: public PhysicsObject
-{
-public:
 
-	// Constructor / Destructor
-	PhysicsBox();
-	virtual ~PhysicsBox	();
+// Debugging functions
+void drawPhysics( bool draw );
 
-	// Init / Release / Update
-	virtual void	init 	( Graphics::Object3D& object );
-	void					end		();	
-
-	// Query  Methods
-	bool	isValid				() { return m_bIsValid; }
-
-private:
-
-	// Attributes
-	bool	m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
-
-};
 
 } // namespace Physics
 
-#endif // _PhysicsBox_h_
+#endif // _PhysicsUserAPI_h_

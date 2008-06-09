@@ -283,6 +283,16 @@ bool GraphicsManager::hasBumpMappingSupport() const
 }
 
 /**
+ * @brief Sets the render mode used to draw the objects in the scene
+ *
+ * @param mode Active render mode. Possible values: POINTS, WIREFRAME, SOLID
+ */
+void GraphicsManager::setRenderMode( RenderMode mode )
+{
+	m_activeCamera.getOgreCamera()->setPolygonMode( (Ogre::PolygonMode) mode );
+}
+
+/**
  * @brief Sets the fill color used to draw all shapes rendered after this call.
  *
  * @param Color color to use to fill shapes

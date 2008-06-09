@@ -41,18 +41,14 @@ public:
 	virtual ~Box();
 
 	// Init / Release
-	void	init 			( int width, int height, int depth );
-	void	init 			( int size );
-	void	end				();	
+	void	init 			( float width, float height, float depth );
+	void	init 			( float size );
 
 	// Query  Methods
 	bool	isValid		() { return m_bIsValid; }
-	int		getWidth	() { return m_width;		}
-	int		getHeight	() { return m_height;		}
-	int		getDepth	() { return m_depth;		}
-
-	// Physics related methods
-	virtual void	activatePhysics		();
+	float	getWidth	() { return m_width;		}
+	float	getHeight	() { return m_height;		}
+	float	getDepth	() { return m_depth;		}
 
 private:
 
@@ -61,10 +57,10 @@ private:
 	static const std::string  DEFAULT_MATERIAL; ///< Name of the default material used by this object
 
 	// Attributes
-	int		m_width;			///< Width of the box
-	int		m_height;			///< Height of the box
-	int		m_depth;			///< Depth of the box
-	bool	m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	float		m_width;			///< Width of the box
+	float		m_height;			///< Height of the box
+	float		m_depth;			///< Depth of the box
+	bool		m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 
