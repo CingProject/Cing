@@ -34,7 +34,6 @@
 #include <cstring>
 #include <stdlib.h>
 
-
 // Graphics
 #include "graphics/Object3D.h"
 #include "graphics/Box.h"

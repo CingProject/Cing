@@ -613,62 +613,6 @@
 		<Filter
 			Name="ExternLibs"
 			>
-			<Filter
-				Name="PortVideo"
-				>
-				<File
-					RelativePath="..\..\..\src\externLibs\PortVideo\cameraEngine.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\PortVideo\cameraTool.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\PortVideo\cameraTool.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\PortVideo\FrameInverter.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\PortVideo\FrameInverter.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\PortVideo\FrameProcessor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\PortVideo\RingBuffer.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\PortVideo\RingBuffer.h"
-					>
-				</File>
-				<Filter
-					Name="win32"
-					>
-					<File
-						RelativePath="..\..\..\src\externLibs\PortVideo\win32\dslibCamera.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\externLibs\PortVideo\win32\dslibCamera.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="linux"
-					>
-				</Filter>
-				<Filter
-					Name="macosx"
-					>
-				</Filter>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="ComputerVision"
