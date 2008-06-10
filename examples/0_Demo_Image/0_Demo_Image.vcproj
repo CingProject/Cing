@@ -71,7 +71,7 @@
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				GenerateManifest="true"
-				ManifestFile="$(OutDir)\$(TargetFileName).intermediate.manifest"
+				ManifestFile="$(IntDir)\$(TargetFileName).intermediate.manifest"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(IntDir)\$(TargetName).pdb"
@@ -83,6 +83,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
