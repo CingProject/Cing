@@ -125,6 +125,9 @@ bool GraphicsManager::init()
   // TODO
   //m_debugOverlay.init();
 
+	// Init the cvFont
+	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
+
   // Init GUI Manager
   GUI::GUIManager::getSingleton().init();
 
