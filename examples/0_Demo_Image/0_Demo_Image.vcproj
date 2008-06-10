@@ -46,6 +46,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				FloatingPointModel="2"
+				OpenMP="false"
 				UsePrecompiledHeader="0"
 				ObjectFile="$(IntDir)\"
 				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
@@ -65,10 +66,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes_d.lib dsvl.lib portVideoSDL.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib videoInputDebug.lib"
+				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib videoInput_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_debug.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
+				GenerateManifest="true"
+				ManifestFile="$(OutDir)\$(TargetFileName).intermediate.manifest"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(IntDir)\$(TargetName).pdb"
@@ -99,7 +102,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE"
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;&#x0D;&#x0A;echo Copying data files of the Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the data files necessary to execute&#x0D;&#x0A;IF EXIST &quot;$(InputDir)data&quot; goto CopyData&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:CopyData&#x0D;&#x0A;xcopy &quot;$(InputDir)data&quot; &quot;$(OutDir)\data&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;&#x0D;&#x0A;echo Copying data files of the Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the data files necessary to execute&#x0D;&#x0A;IF EXIST &quot;$(InputDir)data&quot; goto CopyData&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:CopyData&#x0D;&#x0A;xcopy &quot;$(InputDir)data&quot; &quot;$(OutDir)\data&quot; /i /d /y /s&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -150,9 +153,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib dsvl.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib"
+				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
+				ManifestFile="$(OutDir)\$(TargetFileName).intermediate.manifest"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile="$(IntDir)\$(TargetName).pdb"
@@ -185,7 +189,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE"
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;&#x0D;&#x0A;echo Copying data files of the Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the data files necessary to execute&#x0D;&#x0A;IF EXIST &quot;$(InputDir)data&quot; goto CopyData&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:CopyData&#x0D;&#x0A;xcopy &quot;$(InputDir)data&quot; &quot;$(OutDir)\data&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;&#x0D;&#x0A;echo Copying data files of the Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the data files necessary to execute&#x0D;&#x0A;IF EXIST &quot;$(InputDir)data&quot; goto CopyData&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:CopyData&#x0D;&#x0A;xcopy &quot;$(InputDir)data&quot; &quot;$(OutDir)\data&quot; /i /d /y /s&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
