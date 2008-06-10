@@ -29,6 +29,10 @@
 #include "Font.h"
 #include "Text.h"
 
+// OpenCv includes
+#include "externLibs/OpenCV/cxcore/include/cxtypes.h"
+#include "externLibs/OpenCV/highgui/include/highgui.h"
+
 //TEMP
 #include "input/InputPrereqs.h"
 
@@ -80,9 +84,11 @@ public:
 	const Color&							getStrokeColor						() const { return m_strokeColor; }
 
 	// Appearance drawing methods
-	void setStrokeWeight			(  int weight );
-	int  getStrokeWeight			() { return m_strokeWeight; }
+	void setStrokeWeight	(  int weight );
+	int  getStrokeWeight	() { return m_strokeWeight; }
+	void noFill						();
 
+	const CvFont& getCvFont()const{ return  m_cvFont; }
 	// TEMP
 	void keyPressed( const OIS::KeyEvent &event );
 
@@ -106,6 +112,7 @@ private:
 	Color									m_fillColor;			///< Color used to fill shapes
 	Color									m_strokeColor;		///< Color used to draw shapes
 	float									m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
+	CvFont								m_cvFont;					///< Font used to draw text on images
 	bool                  m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 

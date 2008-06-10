@@ -49,8 +49,8 @@ void stroke( int value1 , int value2, int value3, int alpha );
 void stroke( const Color& color );
 void stroke( const Color& color, int alpha );
 
-void strokeWeight( int weight); 
-void strokeWeight( float weight);
+void strokeWeight( int weight ); 
+void strokeWeight( float weight );
 
 } // namespace Graphics
 
