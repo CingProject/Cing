@@ -171,40 +171,8 @@ void GraphicsManager::end()
  */
 void GraphicsManager::draw()
 {
+	// Update default camera controller
 	m_defaultCamController.update();
-
-
-  //// TODO: poner decente
-  //float MoveFactor = 6;
-
-  //// Get the mouse
-  //const Input::Mouse& mouse = Input::InputManager::getSingleton().getMouse();
-
-  //// Move the camera around with the left button
-  //if ( mouse.isButtonPressed(0) ) {
-  //  Ogre::SceneNode *camNode = m_activeCamera.getOgreCamera()->getParentSceneNode();
-
-  //  if (camNode == 0) {
-  //    std::cerr << "mCamera isn't attached to any SceneNode !" << std::endl;
-  //  }
-
-  //  camNode->yaw(Ogre::Degree(mouse.getXAxisRelative() * MoveFactor * -0.1));
-  //  camNode->pitch(Ogre::Degree(mouse.getYAxisRelative() * MoveFactor * -0.1));
-  //}
-
-  //// Zoom with the middle button...
-  //if (mouse.isButtonPressed(2)) 
-  //{
-  //  m_activeCamera.getOgreCamera()->moveRelative(Vector(0.0, 0.0, -0.5) * mouse.getYAxisRelative() * MoveFactor);
-  //}
-  //// ... and the wheel ;-)
-  //m_activeCamera.getOgreCamera()->moveRelative(Vector(0.0, 0.0, -0.1) * mouse.getZAxisRelative() * MoveFactor);
-
-  //// Horizontal with the right button...
-  //if (mouse.isButtonPressed(1)) 
-  //{
-  //  m_activeCamera.getOgreCamera()->moveRelative(Vector(-0.5, 0.0, 0.0) * mouse.getXAxisRelative() * MoveFactor);
-  //}
 
   // Render scene
 	Ogre::Root::getSingleton().renderOneFrame();
