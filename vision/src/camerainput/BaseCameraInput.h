@@ -79,7 +79,7 @@ private:
 	// Attributes
 	Graphics::TexturedQuad  m_texturedQuad;       		///< To render the camera images if required
 	IplImage*               m_currentCameraImage; 		///< Image captured from the camera 
-	IplImage*               m_tempImage;					 		///< Image used to conver received frames to working format
+	IplImage*               m_tempImage;					 		///< Image used to convert received frames to working format
   int                     m_width, m_height;    		///< Capture resolution
 	int                     m_fps;                		///< Capture frames per second
 	int                     m_frameSize;          		///< Size in bytes of a single frame
