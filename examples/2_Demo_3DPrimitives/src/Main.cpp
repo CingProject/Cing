@@ -64,8 +64,8 @@ void mousePressed()
 	{
 		// Deactivate object's physics
 		sphere.deActivatePhysics();
-		//box.deActivatePhysics();
-		//plane.deActivatePhysics();
+		box.deActivatePhysics();
+		plane.deActivatePhysics();
 	}
 }
 

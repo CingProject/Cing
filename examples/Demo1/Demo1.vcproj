@@ -71,7 +71,7 @@
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				ManifestFile="$(IntDir)\$(TargetFileName).intermediate.manifest"
 				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames="atlthunk"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(IntDir)\$(TargetName).pdb"
 				SubSystem="2"
