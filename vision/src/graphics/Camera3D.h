@@ -67,15 +67,16 @@ private:
 	static const float        V_FOV_DEG;      ///< Camera's vertical FOV in degrees
 
 	// Attributes
-	Ogre::Camera*             m_pOgreCamera;    ///< Ogre camera
-	Ogre::SceneNode*          m_cameraSceneNode;///< Scene node where the camera is attatched to
-	Vector                   m_cameraPos;      ///< Camera's position
-	Vector                   m_cameraLookAt;   ///< Camera's look at position
-	Vector                   m_cameraUpVector; ///< Camera's look up vector
-	float                     m_vFovRad;        ///< Camera's  vertical fov in radians
-	float                     m_cameraDistance; ///< Camera's distance to the look at position
-	float                     m_aspectRatio;    ///< Camera's  aspect ratio
-	bool                      m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	Ogre::Camera*             m_pOgreCamera;				///< Ogre camera
+	Ogre::SceneManager*				m_pOgreSceneManager;	///< Pointer to the scene manager where the camera will be created
+	Ogre::SceneNode*          m_cameraSceneNode;		///< Scene node where the camera is attached to
+	Vector										m_cameraPos;      		///< Camera's position
+	Vector										m_cameraLookAt;   		///< Camera's look at position
+	Vector										m_cameraUpVector; 		///< Camera's look up vector
+	float                     m_vFovRad;        		///< Camera's  vertical fov in radians
+	float                     m_cameraDistance; 		///< Camera's distance to the look at position
+	float                     m_aspectRatio;    		///< Camera's  aspect ratio
+	bool                      m_bIsValid;	      		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

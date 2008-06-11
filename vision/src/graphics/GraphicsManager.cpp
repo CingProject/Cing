@@ -30,10 +30,6 @@
 #include "common/Exception.h"
 #include "common/Release.h"
 
-// TEMP
-#include "externLibs/Ogre3d/include/ois/OISKeyboard.h"
-#include "input/InputManager.h"
-
 // Ogre includes
 #include "OgreRoot.h"
 #include "OgreConfigFile.h"
@@ -154,12 +150,13 @@ void GraphicsManager::end()
   // Release GUI Manager
   GUI::GUIManager::getSingleton().end();
 
+	// Release camera stuff
 	m_defaultCamController.end();
+	m_activeCamera.end();
 
-  // Release resources
-  // TODO
-  //Common::Release( m_pSceneManager );
-  //Common::Release( m_pOgreRoot );
+  // Release scene manager
+	Ogre::Root::getSingleton().destroySceneManager( m_pSceneManager );
+	m_pSceneManager = NULL;
 
 	// The class is not valid anymore
 	m_bIsValid = false;

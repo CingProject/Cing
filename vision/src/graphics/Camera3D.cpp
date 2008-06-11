@@ -48,6 +48,7 @@ const float         Camera3D::V_FOV_DEG     = 60.0f; ///< Camera's vertical FOV 
 Camera3D::Camera3D():
   m_bIsValid        ( false ),
   m_cameraSceneNode ( NULL ),
+	m_pOgreSceneManager( NULL ),
   m_pOgreCamera     ( NULL )
 {
 }
@@ -80,6 +81,9 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
   if ( !pOgreSceneManager )
     THROW_EXCEPTION( "Internal Error: NULL Scene Manager" );
 
+	// Store scene manager pointer
+	m_pOgreSceneManager = pOgreSceneManager;
+
 	// Create the camera scene and sets its initial properties
 	m_pOgreCamera = pOgreSceneManager->createCamera( cameraName );
 	m_pOgreCamera->setPosition( 0, 0, 2000 );
@@ -108,7 +112,7 @@ void Camera3D::end()
     return;
 
   // Delete resources
-  Common::Release( m_pOgreCamera );
+	m_pOgreSceneManager->destroyCamera( m_pOgreCamera );
 
 	// The class is not valid anymore
 	m_bIsValid = false;
