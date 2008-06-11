@@ -71,8 +71,8 @@
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
 using namespace CameraInput;
-using namespace ComputerVision;
 using namespace Graphics;
+using namespace ComputerVision;
 using namespace Globals;
 using namespace Common;
 using namespace Input;

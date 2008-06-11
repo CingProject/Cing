@@ -33,6 +33,10 @@
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
 #include "externLibs/OpenCV/highgui/include/highgui.h"
 
+// Image processing filters
+#include "imageProcessing/ImageDifferenceFilter.h"
+#include "imageProcessing/ImageThresholdFilter.h"
+
 //TEMP
 #include "input/InputPrereqs.h"
 
