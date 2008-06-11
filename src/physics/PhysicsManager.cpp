@@ -90,8 +90,8 @@ void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
 void PhysicsManager::end()
 {
 	// Release bullet related stuff
-	Common::Release( m_physicsDebugDrawer );
-	m_physicsWorld->setDebugDrawer( NULL );
+	//Common::Release( m_physicsDebugDrawer ); // TODO: check ogre bullet deletes it
+	//m_physicsWorld->setDebugDrawer( NULL );
 	Common::Release( m_physicsWorld );
 
 	m_bIsValid = false;
