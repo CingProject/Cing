@@ -78,4 +78,7 @@ using namespace Common;
 using namespace Input;
 using namespace Physics;
 
+// Camera used by the user
+#define	Capture	 VICamera
+
 #endif // _Vision_H_

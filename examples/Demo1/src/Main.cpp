@@ -3,7 +3,7 @@
 
 CREATE_APPLICATION( "Vision Test" );
 
-VICamera        camera;               // Camera input capture
+Capture					camera;               // Camera input capture
 CompVision      cv;                   // Computer Vision system
 Object3D        head;                 // 3D head
 bool            debugComputerVision;  // if true computer vision debug will be drawn
