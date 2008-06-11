@@ -33,7 +33,7 @@ void setup()
 
 	// Init lights and set the ambient light
 	ambientLight( 50, 50, 50 );
-	light.init( 255, 0, 0, 0, 0, 200 );	
+	light.init( 255, 255, 255, 0, 0, 200 );	
 	light2.init( 255, 100, 160, 100, 0, 200 );
 }
 
@@ -51,22 +51,6 @@ void end()
 
 void mousePressed()
 {
-	if ( mouseButton == RIGHT )
-	{
-		drawPhysics( true );
-		
-		// Activate object's physics
-		sphere.activatePhysics();
-		box.activatePhysics();
-		plane.activatePhysicsStatic();
-	}
-	else
-	{
-		// Deactivate object's physics
-		sphere.deActivatePhysics();
-		box.deActivatePhysics();
-		plane.deActivatePhysics();
-	}
 }
 
 void keyPressed()
@@ -79,10 +63,7 @@ void keyPressed()
 	else if ( key == '3' )
 		setRenderMode( DRAW_POINTS );
 
-	// debug physics
-	else if ( key == 'h' )
-		drawPhysics( true );
-	// debug lights
+	// Light debug
 	else if ( key == 'l' )
 	{
 		light.drawDebug( true );

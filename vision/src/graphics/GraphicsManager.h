@@ -73,7 +73,7 @@ public:
 	const Camera3D&           getActiveCamera           () const { return m_activeCamera; }
 	const Ogre::SceneManager& getSceneManager           () const { return *m_pSceneManager; }
 	Ogre::SceneManager&       getSceneManager           ()       { return *m_pSceneManager; }
-	Ogre::SceneManager*       getSceneManagePtr          ()      { return m_pSceneManager; }
+	Ogre::SceneManager*       getSceneManagerPtr         ()      { return m_pSceneManager; }
 
 	// Common capabilities checking
 	bool                      hasVertexProgramsSupport  () const;

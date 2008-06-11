@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2_Demo_3DPrimitives", "exam
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3_Demo_Physics", "examples\3_Demo_Physics\3_Demo_Physics.vcproj", "{35A10BBD-FF75-461D-A73B-93A7881BB37F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -57,6 +59,10 @@ Global
 		{6E07A895-68FC-4479-BD16-6A327467106B}.Debug|Win32.Build.0 = Debug|Win32
 		{6E07A895-68FC-4479-BD16-6A327467106B}.Release|Win32.ActiveCfg = Release|Win32
 		{6E07A895-68FC-4479-BD16-6A327467106B}.Release|Win32.Build.0 = Release|Win32
+		{35A10BBD-FF75-461D-A73B-93A7881BB37F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{35A10BBD-FF75-461D-A73B-93A7881BB37F}.Debug|Win32.Build.0 = Debug|Win32
+		{35A10BBD-FF75-461D-A73B-93A7881BB37F}.Release|Win32.ActiveCfg = Release|Win32
+		{35A10BBD-FF75-461D-A73B-93A7881BB37F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

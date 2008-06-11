@@ -174,7 +174,7 @@ void TexturedQuad::end()
     return;
 
   // Destroy quad quad object
-  Ogre::SceneManager* sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManagePtr();
+  Ogre::SceneManager* sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManagerPtr();
 	if ( sceneManager )
 		sceneManager->destroyManualObject( m_ogreManualObjectName );
 
