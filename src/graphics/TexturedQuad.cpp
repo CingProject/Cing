@@ -174,8 +174,9 @@ void TexturedQuad::end()
     return;
 
   // Destroy quad quad object
-  Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
-  sceneManager.destroyManualObject( m_ogreManualObjectName );
+  Ogre::SceneManager* sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManagePtr();
+	if ( sceneManager )
+		sceneManager->destroyManualObject( m_ogreManualObjectName );
 
 	// The class is not valid anymore
 	m_bIsValid = false;
