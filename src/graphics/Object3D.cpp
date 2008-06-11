@@ -273,6 +273,11 @@ void Object3D::setScale( float xScale, float yScale, float zScale )
 
   // Set the scale of the object 
   m_sceneNode->setScale( xScale, yScale, zScale );
+
+	// Set the normal normalization by hw, because if not, the scaling can cause
+	// the object not to be lighted properly
+	// @todo could be optimized
+	m_entity->setNormaliseNormals( true );
 }
 
 /**
