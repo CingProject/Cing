@@ -94,7 +94,7 @@ bool BaseLight::init( float r, float g, float b, float x, float y, float z )
 	m_lightFlareSet = GraphicsManager::getSingleton().getSceneManager().createBillboardSet( m_lightName + "_billboard", 1 );
 	m_lightFlareSet->setMaterialName( "Examples/Flare" );
 	m_lightFlare = m_lightFlareSet->createBillboard( Vector( 0, 0, 0 ) );
-	m_lightFlare->setColour( Color( r, g, b, 255 ) );
+	m_lightFlare->setColour( Color( r, g, b, 255 ).normalized() );
 	m_lightFlareSet->setVisible( false );
 
 	// Attach billboard to light scene node
@@ -118,7 +118,12 @@ void BaseLight::end()
     return;
   
   // Destroy the light and the scene node
-  GraphicsManager::getSingleton().getSceneManager().destroyLight( m_lightName );
+	Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
+	if ( sceneManager )
+	{
+		sceneManager->destroyLight( m_lightName );
+		sceneManager->destroyBillboardSet( m_lightFlareSet );
+	}
 
 	// Just reset billboard pointers (ogre scene manager is suposed to delete them)
 	m_lightFlareSet = NULL;
