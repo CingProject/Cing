@@ -52,6 +52,9 @@ void stroke( const Color& color, int alpha );
 void strokeWeight( int weight ); 
 void strokeWeight( float weight );
 
+// Camera 3D related functions
+void useDefault3DCameraControl( bool useDefault );
+
 } // namespace Graphics
 
 #endif // _GraphicsUserAPI_h_

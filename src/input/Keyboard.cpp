@@ -114,9 +114,25 @@ void Keyboard::end()
  */
 void Keyboard::update()
 {
-  m_pOISKeyboard->capture();
+	if ( isValid() )
+		m_pOISKeyboard->capture();
 }
 
+
+/**
+ * @internal 
+ * @brief Returns true if the received key is down
+ *
+ * @param key key to check
+ * @return true if the received key is down
+ */
+bool Keyboard::isKeyDown( OIS::KeyCode key ) const
+{
+	if ( isValid() )
+		return m_pOISKeyboard->isKeyDown( key );
+
+	return false;
+}
 
 /**
  * @internal
@@ -130,10 +146,9 @@ bool Keyboard::keyPressed( const OIS::KeyEvent &event )
   Globals::key = event.text;
 
   // Call user event function
-  // TODO esto se debería hacer registrando listeners, y que applicatino estuviera registrado
-  Framework::Application::getSingleton().keyPressedEvent();
+  // TODO make listeners system
+	Framework::Application::getSingleton().keyPressedEvent();
   
-  Graphics::GraphicsManager::getSingleton().keyPressed( event );
   return true;
 }
 

@@ -29,8 +29,8 @@
 #include "externLibs/Ogre3d/include/OgreLogManager.h"
 
 // Macros for handy use of log system
-#define LOG(x, ...)						Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x, __VA_ARGS__ );
-#define LOG_CRITICAL(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_CRITICAL, x, __VA_ARGS__ );
+#define LOG(x, ...)						Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x, __VA_ARGS__ )
+#define LOG_CRITICAL(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_CRITICAL, x, __VA_ARGS__ )
 
 namespace Common
 {
