@@ -116,9 +116,9 @@ public:
 	void							showBoundingBox						( bool show );
 
 	// Physics related methods
-	virtual void			activatePhysics						();
-	virtual void			activatePhysicsStatic			();
-	void							deActivatePhysics					();
+	void			activatePhysics						();
+	void			activatePhysicsStatic			();
+	void			deActivatePhysics					();
 
 	// Public Const static attributes
 	static const float OGRE_SCALE_CORRECTION; ///< Scale applied to all primitive objects in order to correct ogre scale bug with lighting
