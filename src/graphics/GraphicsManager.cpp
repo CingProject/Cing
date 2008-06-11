@@ -200,17 +200,6 @@ void GraphicsManager::draw()
     m_activeCamera.getOgreCamera()->moveRelative(Vector(-0.5, 0.0, 0.0) * mouse.getXAxisRelative() * MoveFactor);
   }
 
-
-
-  // Light rotation
-  // animate the lights
-  //for (size_t i = 0; i < NUM_LIGHTS; ++i)
-  //  mLightPivots[i]->rotate(Ogre::Vector3::UNIT_Z, Ogre::Degree(mLightSpeeds[i] / 100 ));
-
-  //pLightSceneNode->rotate( Ogre::Vector3::UNIT_Y, Ogre::Degree(10) );
-  // TODO: poner decente
-
-
   // Render scene
 	Ogre::Root::getSingleton().renderOneFrame();
 
