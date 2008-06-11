@@ -26,6 +26,11 @@
 
 namespace Graphics
 {
+
+// Static member init
+ImageThresholdFilter	Image::m_imgThresholdFilter;
+ImageDifferenceFilter	Image::m_imgDiffFilter;
+
 /**
  * @brief Constructor. This constructor does not load or creates any image.
  */

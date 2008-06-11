@@ -1,6 +1,10 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_Demo_Image", "examples\0_Demo_Image\0_Demo_Image.vcproj", "{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoPhysics", "examples\DemoPhysics\DemoPhysics.vcproj", "{7909D9FE-89C5-4597-925B-070532F6DCCC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
@@ -18,11 +22,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Demo2", "examples\Demo2\Dem
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_Demo_Image", "examples\0_Demo_Image\0_Demo_Image.vcproj", "{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2_Demo_3DPrimitives", "examples\2_Demo_3DPrimitives\2_Demo_3DPrimitives.vcproj", "{6E07A895-68FC-4479-BD16-6A327467106B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
@@ -34,6 +33,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Debug|Win32.Build.0 = Debug|Win32
+		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Release|Win32.ActiveCfg = Release|Win32
+		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Release|Win32.Build.0 = Release|Win32
 		{7909D9FE-89C5-4597-925B-070532F6DCCC}.Debug|Win32.ActiveCfg = Debug|Win32
 		{7909D9FE-89C5-4597-925B-070532F6DCCC}.Debug|Win32.Build.0 = Debug|Win32
 		{7909D9FE-89C5-4597-925B-070532F6DCCC}.Release|Win32.ActiveCfg = Release|Win32
@@ -50,10 +53,6 @@ Global
 		{2AB7FE2F-65FD-47E4-A5A6-9483CE7EB00B}.Debug|Win32.Build.0 = Debug|Win32
 		{2AB7FE2F-65FD-47E4-A5A6-9483CE7EB00B}.Release|Win32.ActiveCfg = Release|Win32
 		{2AB7FE2F-65FD-47E4-A5A6-9483CE7EB00B}.Release|Win32.Build.0 = Release|Win32
-		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Debug|Win32.Build.0 = Debug|Win32
-		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Release|Win32.ActiveCfg = Release|Win32
-		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Release|Win32.Build.0 = Release|Win32
 		{6E07A895-68FC-4479-BD16-6A327467106B}.Debug|Win32.ActiveCfg = Debug|Win32
 		{6E07A895-68FC-4479-BD16-6A327467106B}.Debug|Win32.Build.0 = Debug|Win32
 		{6E07A895-68FC-4479-BD16-6A327467106B}.Release|Win32.ActiveCfg = Release|Win32
