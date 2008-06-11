@@ -157,4 +157,24 @@ void strokeWeight( float weight )
 	Graphics::GraphicsManager::getSingleton().setStrokeWeight((int)weight);
 }
 
+
+/**
+ * @brief Allows to enable or disable the default 3d camera control
+ *
+ * @param useDefault If true, the default camera control will be enabled. 
+ * If false, it will be disable, so the user will be reposible to control the 3d camera
+ * if it is required.
+ *
+ * @note The default camera control is composed by:
+ * - mouse: controls rotation
+ * - keyboard:
+ *		- arrow keys: moves forward/backward/left/right
+ *		- pg up/down: moves camera up and down
+ *		- r: restore camera rotation to initial settings
+ */
+void useDefault3DCameraControl( bool useDefault )
+{
+	Graphics::GraphicsManager::getSingleton().useDefault3DCameraControl( useDefault );
+}
+
 } // namespace Graphics

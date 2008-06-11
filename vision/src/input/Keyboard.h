@@ -49,7 +49,9 @@ public:
 	void  update ();
 
 	// Query methods
-	bool  isValid       ()          const { return m_bIsValid; }
+	bool  isValid       ()  const { return m_bIsValid; }
+	bool	isKeyDown			( OIS::KeyCode key ) const;
+
   //bool  isKeyPressed  ( char c )  const;
 
 private:

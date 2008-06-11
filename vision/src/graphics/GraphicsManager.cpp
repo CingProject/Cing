@@ -125,6 +125,9 @@ bool GraphicsManager::init()
   // TODO
   //m_debugOverlay.init();
 
+	// Use default camera controller
+	useDefault3DCameraControl( true );
+
 	// Init the cvFont
 	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
 
@@ -151,6 +154,8 @@ void GraphicsManager::end()
   // Release GUI Manager
   GUI::GUIManager::getSingleton().end();
 
+	m_defaultCamController.end();
+
   // Release resources
   // TODO
   //Common::Release( m_pSceneManager );
@@ -166,39 +171,40 @@ void GraphicsManager::end()
  */
 void GraphicsManager::draw()
 {
+	m_defaultCamController.update();
 
 
-  // TODO: poner decente
-  float MoveFactor = 6;
+  //// TODO: poner decente
+  //float MoveFactor = 6;
 
-  // Get the mouse
-  const Input::Mouse& mouse = Input::InputManager::getSingleton().getMouse();
+  //// Get the mouse
+  //const Input::Mouse& mouse = Input::InputManager::getSingleton().getMouse();
 
-  // Move the camera around with the left button
-  if ( mouse.isButtonPressed(0) ) {
-    Ogre::SceneNode *camNode = m_activeCamera.getOgreCamera()->getParentSceneNode();
+  //// Move the camera around with the left button
+  //if ( mouse.isButtonPressed(0) ) {
+  //  Ogre::SceneNode *camNode = m_activeCamera.getOgreCamera()->getParentSceneNode();
 
-    if (camNode == 0) {
-      std::cerr << "mCamera isn't attached to any SceneNode !" << std::endl;
-    }
+  //  if (camNode == 0) {
+  //    std::cerr << "mCamera isn't attached to any SceneNode !" << std::endl;
+  //  }
 
-    camNode->yaw(Ogre::Degree(mouse.getXAxisRelative() * MoveFactor * -0.1));
-    camNode->pitch(Ogre::Degree(mouse.getYAxisRelative() * MoveFactor * -0.1));
-  }
+  //  camNode->yaw(Ogre::Degree(mouse.getXAxisRelative() * MoveFactor * -0.1));
+  //  camNode->pitch(Ogre::Degree(mouse.getYAxisRelative() * MoveFactor * -0.1));
+  //}
 
-  // Zoom with the middle button...
-  if (mouse.isButtonPressed(2)) 
-  {
-    m_activeCamera.getOgreCamera()->moveRelative(Vector(0.0, 0.0, -0.5) * mouse.getYAxisRelative() * MoveFactor);
-  }
-  // ... and the wheel ;-)
-  m_activeCamera.getOgreCamera()->moveRelative(Vector(0.0, 0.0, -0.1) * mouse.getZAxisRelative() * MoveFactor);
+  //// Zoom with the middle button...
+  //if (mouse.isButtonPressed(2)) 
+  //{
+  //  m_activeCamera.getOgreCamera()->moveRelative(Vector(0.0, 0.0, -0.5) * mouse.getYAxisRelative() * MoveFactor);
+  //}
+  //// ... and the wheel ;-)
+  //m_activeCamera.getOgreCamera()->moveRelative(Vector(0.0, 0.0, -0.1) * mouse.getZAxisRelative() * MoveFactor);
 
-  // Horizontal with the right button...
-  if (mouse.isButtonPressed(1)) 
-  {
-    m_activeCamera.getOgreCamera()->moveRelative(Vector(-0.5, 0.0, 0.0) * mouse.getXAxisRelative() * MoveFactor);
-  }
+  //// Horizontal with the right button...
+  //if (mouse.isButtonPressed(1)) 
+  //{
+  //  m_activeCamera.getOgreCamera()->moveRelative(Vector(-0.5, 0.0, 0.0) * mouse.getXAxisRelative() * MoveFactor);
+  //}
 
   // Render scene
 	Ogre::Root::getSingleton().renderOneFrame();
@@ -318,15 +324,29 @@ void GraphicsManager::setStrokeWeight( int weight )
 	m_strokeWeight = weight;
 }
 
-void GraphicsManager::keyPressed( const OIS::KeyEvent &event )
+
+/**
+ * @brief Allows to enable or disable the default 3d camera control
+ *
+ * @param useDefault If true, the default camera control will be enabled. 
+ * If false, it will be disable, so the user will be reposible to control the 3d camera
+ * if it is required.
+ *
+ * @note The default camera control is composed by:
+ * - mouse: controls rotation
+ * - keyboard:
+ *		- arrow keys: moves forward/backward/left/right
+ *		- pg up/down: moves camera up and down
+ *		- r: restore camera rotation to initial settings
+ */
+void GraphicsManager::useDefault3DCameraControl( bool useDefault )
 {
-  // FW
-  if ( event.key == OIS::KC_W )
-  {
-    m_activeCamera.moveRelative( Vector( 0, 0, -10 ) );
-  }
-
+	// Enable controller
+	if ( useDefault )
+		m_defaultCamController.init( m_activeCamera );
+	// Enable controller
+	else
+		m_defaultCamController.end();	
 }
-
 
 } // namespace Graphics

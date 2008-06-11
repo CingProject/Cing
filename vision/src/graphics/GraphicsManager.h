@@ -28,6 +28,7 @@
 #include "DebugOverlay.h"
 #include "Font.h"
 #include "Text.h"
+#include "CameraController.h"
 
 // OpenCv includes
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
@@ -88,13 +89,14 @@ public:
 	const Color&							getStrokeColor						() const { return m_strokeColor; }
 
 	// Appearance drawing methods
-	void setStrokeWeight	(  int weight );
-	int  getStrokeWeight	() { return m_strokeWeight; }
-	void noFill						();
+	void 											setStrokeWeight						(  int weight );
+	int  											getStrokeWeight						() { return m_strokeWeight; }
+	void 											noFill										();
 
-	const CvFont& getCvFont()const{ return  m_cvFont; }
-	// TEMP
-	void keyPressed( const OIS::KeyEvent &event );
+	const CvFont&							getCvFont									()const{ return  m_cvFont; }
+
+	// Camera control
+	void											useDefault3DCameraControl	( bool useDefault );
 
 private:
 
@@ -105,6 +107,9 @@ private:
 	Ogre::Light*      pLight;
 	Ogre::SceneNode*  pLightSceneNode;
 
+
+//TEST
+	CameraController m_defaultCamController;
 
 	// Attributes
 	Ogre::SceneManager*   m_pSceneManager;  ///< Main scene manager

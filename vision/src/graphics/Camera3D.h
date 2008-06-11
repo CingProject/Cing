@@ -52,6 +52,7 @@ public:
 
 	// Query methods
 	bool                isValid         				() const  { return m_bIsValid;     } 
+	Ogre::SceneNode*		getSceneNode						()				{ return m_cameraSceneNode; }
 	const Ogre::Camera* getOgreCamera   				() const  { return m_pOgreCamera;  }
 	Ogre::Camera*       getOgreCamera   				()        { return m_pOgreCamera;  }
 	
