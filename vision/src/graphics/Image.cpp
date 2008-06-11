@@ -557,4 +557,13 @@ void Image::ellipse( float x, float y, float width, float height )
 	m_bUpdateTexture = true;
 }
 
+/**
+ * @brief Method to apply a variety of basic filters to this image.
+ *
+ * @param ImageProcessingFilters type
+ */
+void Image::filter( ImageProcessingFilters type )
+{
+	m_imgThresholdFilter.apply(  *m_cvImage );
+}
 } // namespace Graphics

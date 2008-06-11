@@ -70,6 +70,8 @@ public:
 	void  rect			( float x1, float y1, float x2, float y2 );
 	void  text			( float x1, float y1, const char* text );
 
+	// Image processing
+	void filter( ImageProcessingFilters type );
 	// Updates texture data
 	void updateTexture();
 
@@ -89,6 +91,9 @@ public:
 
 private:
 	// Attributes
+	static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
+	static ImageThresholdFilter    m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
+
 	IplImage*		  m_cvImage;				///< Contains the image compatible with openCV
 	Ogre::Image		m_image;					///< Contains the image data (loaded from file or dynamically created)
 	TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image

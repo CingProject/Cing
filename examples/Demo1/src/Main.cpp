@@ -9,13 +9,13 @@ Object3D        head;                 // 3D head
 bool            debugComputerVision;  // if true computer vision debug will be drawn
 
 PointLight      pointLight;           // point light
-Vector           lightPos, targetPos;  // current and target light pos
+Vector          lightPos, targetPos;  // current and target light pos
 
 void setup()
 {
   // Init camera capture
-	camera.init( 0, 640, 480, 25, RGB );
- 
+  camera.init( 1, 640, 480, 25, RGB );
+
   // Init compute vision system
   cv.init( 640, 480, RGB );
   debugComputerVision = true;

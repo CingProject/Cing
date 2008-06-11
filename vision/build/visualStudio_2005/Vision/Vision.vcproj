@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="Vision"
 	ProjectGUID="{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 	RootNamespace="Vision"
@@ -242,6 +242,22 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="ImageProcessing"
+					>
+					<File
+						RelativePath="..\..\..\src\graphics\ImageProcessing\BaseImageFilter.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\ImageProcessing\ImageDifferenceFilter.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\ImageProcessing\ImageThresholdFilter.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Source Files"
@@ -359,6 +375,22 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\graphics\PointLight.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ImageProcessing"
+					>
+					<File
+						RelativePath="..\..\..\src\graphics\ImageProcessing\BaseImageFilter.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\ImageProcessing\ImageDifferenceFilter.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\ImageProcessing\ImageThresholdFilter.cpp"
 						>
 					</File>
 				</Filter>
@@ -628,22 +660,6 @@
 					RelativePath="..\..\..\src\computervision\CompVision.cpp"
 					>
 				</File>
-				<Filter
-					Name="Filters"
-					>
-					<File
-						RelativePath="..\..\..\src\computervision\filters\BaseImageFilter.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\computervision\filters\ImageDifferenceFilter.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\computervision\filters\ImageThresholdFilter.cpp"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="Header Files"
@@ -664,22 +680,6 @@
 					RelativePath="..\..\..\src\computervision\CompVision.h"
 					>
 				</File>
-				<Filter
-					Name="Filters"
-					>
-					<File
-						RelativePath="..\..\..\src\computervision\filters\BaseImageFilter.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\computervision\filters\ImageDifferenceFilter.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\computervision\filters\ImageThresholdFilter.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

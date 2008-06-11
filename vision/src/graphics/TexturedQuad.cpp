@@ -139,8 +139,8 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
     // Quad positions and texture coordinates
     quad->position( 0.0, 0.0, 0.0);  quad->textureCoord( 0, 0 );
     quad->position( 1.0, 0.0, 0.0);  quad->textureCoord( 1, 0 );
-    quad->position( 1.0, 1.0, 0.0);  quad->textureCoord( 1, -1 );
-    quad->position( 0.0, 1.0, 0.0);  quad->textureCoord( 0, -1 );
+    quad->position( 1.0, 1.0, 0.0);  quad->textureCoord( 1, 1 );
+    quad->position( 0.0, 1.0, 0.0);  quad->textureCoord( 0, 1 );
 
     // Quad indexes (two triangles)
     quad->triangle( 0, 1, 2 );

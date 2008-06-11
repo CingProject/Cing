@@ -23,8 +23,6 @@
 #define _ComputerVisionFramework_H_
 
 #include "ComputerVisionPrereqs.h"
-#include "filters/ImageDifferenceFilter.h"
-#include "filters/ImageThresholdFilter.h"
 #include "BlobFinder.h"
 
 // OpenCV
@@ -32,6 +30,8 @@
 
 // Graphics
 #include "graphics/TexturedQuad.h"
+#include "graphics/ImageProcessing/ImageDifferenceFilter.h"
+#include "graphics/ImageProcessing/ImageThresholdFilter.h"
 
 namespace ComputerVision
 {
@@ -71,9 +71,9 @@ public:
 private:
 
   // Filters / Computer vision algorithms
-  BlobFinder              m_blobFinder;                 ///< Finds blobs in a scene and extracts their information
-  ImageDifferenceFilter   m_imgDiffFilter;              ///< Filter to calculate the difference between two images
-  ImageThresholdFilter    m_imgThresholdFilter;         ///< Image to apply thresholding (posterizing) of an image
+  BlobFinder												m_blobFinder;         ///< Finds blobs in a scene and extracts their information
+	Graphics::ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
+  Graphics::ImageThresholdFilter    m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
 
 	// Computer vision process images
   IplImage*               m_cameraImage;                ///< Current camera image

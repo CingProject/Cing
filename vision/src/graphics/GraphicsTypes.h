@@ -43,12 +43,16 @@ enum ImageFormat
 	GRAYSCALE	= Ogre::PF_BYTE_L		///< Gray scale
 };
 
-/// 2D drawing primitives
-enum DrawingPrimitivesFormat
+/// Filter types
+enum ImageProcessingFilters
 {
-	LINE,					///< Line
-	RECTANGLE,		///< Rectangle
-	OVAL					///< Oval
+	BLUR,					///< provides a basic blur.
+	GRAY,					///< converts the image to grayscale based on luminance. 
+	INVERT,				///< will invert the color components in the image. 
+	//_OPAQUE,		///< set all the high bits in the image to opaque 
+	THRESHOLD,		///< converts the image to black and white. 
+	DILATE,				///< grow white/light areas 
+	ERODE				  ///< shrink white/light areas 
 };
 
 namespace Graphics
