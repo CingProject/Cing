@@ -5,7 +5,7 @@ CREATE_APPLICATION( "Vision Demo" );
 Image img, img2;
 Image* img3;
 float pTime = 0;
-Graphics::ImageThresholdFilter   m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
+//Graphics::ImageThresholdFilter   m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
 
 void setup()
 {
@@ -40,7 +40,7 @@ void draw()
 	stroke(0,255,0);
 	img2.text(20,42, "Imagen Dinamica");
 	
-	img2.filter(BLUR);
+	//img2.filter(BLUR);
 
 	img2.draw( 512, 0, 0 );
 
