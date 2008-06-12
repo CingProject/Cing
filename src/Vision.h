@@ -67,6 +67,10 @@
 
 // Physics
 #include "physics/PhysicsUserAPI.h"
+#include "physics/PhysicsBox.h"
+#include "physics/PhysicsPlane.h"
+#include "physics/PhysicsSphere.h"
+#include "physics/PhysicsObject.h"
 
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;

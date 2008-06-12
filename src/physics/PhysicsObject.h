@@ -32,11 +32,11 @@ namespace Physics
 
 /**
  * @internal
- * @brief Controls the physics associated with an object of the scene.
+ * @brief 3D object with physics associated
  * This physics object creates a triangle based physic mesh, so if the 3d object is a simple primitive
- * such as a box or a sphere, specialized classes should be used to get better performance (like BoxPhysicsObject...)
+ * such as a box or a sphere, specialized classes should be used to get better performance (like PhysicsBox...)
  */
-class PhysicsObject
+class PhysicsObject: public Graphics::Object3D
 {
 public:
 
@@ -45,27 +45,28 @@ public:
 	virtual ~PhysicsObject();
 
 	// Init / Release / Update
-	virtual void	init 			( Graphics::Object3D& object, bool statcObject );
-	void					end				();	
+	void					end			();	
 
+	// Physics control
+	virtual void	enablePhysics		( bool staticObject );
+	void					disablePhysics	();
 
 	// Query  Methods
-	bool					isValid	() { return m_bIsValid; }
+	bool					isValid	() { return m_bIsValid && Object3D::isValid(); }
 
 protected:
 
-	// Rigid bodies and collison shapes
-	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Graphics::Object3D& object );
-	OgreBulletCollisions::CollisionShape*		buildBoxShape					( Graphics::Box& box );
-	OgreBulletCollisions::CollisionShape*		buildStaticPlaneShape	( Graphics::Plane& plane );
-	OgreBulletCollisions::CollisionShape*		buildSphereShape			( Graphics::Sphere& sphere );
-	void																		createRigidBody	( Graphics::Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody );
+	// Protected methods
+	void	enableRigidBodyPhysics( OgreBulletCollisions::CollisionShape* collisionShape, bool staticObject );
+
+	// Protected attributes
+	OgreBulletDynamics::RigidBody*	m_rigidBody;				///< Physics rigid body that will control and define the physics of this object
+	bool														m_physicsEnabled;		///< Indicates whether the physics is activated for this object or not
 
 private:
 
 	// Attributes
-	OgreBulletDynamics::RigidBody*	m_rigidBody;	///< Physics rigid body that will control and define the physics of this object
-	bool														m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool				m_bIsValid;					///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

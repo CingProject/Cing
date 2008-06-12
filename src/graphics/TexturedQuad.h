@@ -49,6 +49,8 @@ public:
 	// Set methods
 	void  setPosition     ( float x, float y, float z = 0.0f );
 	void  setVisible      ( bool visible );
+	void	setDraw2D				( bool draw2D );
+
 
 	// Texture update
 	void	updateTexture		( const Ogre::Image& img );

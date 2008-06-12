@@ -125,7 +125,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
   Ogre::ManualObject* quad = sceneManager.createManualObject( m_ogreManualObjectName );
 
   // Check if we want 2d rendering
-  if ( m_render2D )
+	if ( m_render2D )
   {
     quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY);
     quad->setUseIdentityProjection(true);
