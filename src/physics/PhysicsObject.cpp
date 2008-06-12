@@ -43,8 +43,7 @@ namespace Physics
  */
 PhysicsObject::PhysicsObject():
 	m_rigidBody	( NULL  ),
-	m_physicsEnabled( NULL ),
-	m_bIsValid  ( false )
+	m_physicsEnabled( NULL )
 {
 }
 
@@ -72,8 +71,6 @@ void PhysicsObject::end()
 
 	// Release parent class stuff
 	Object3D::end();
-
-	m_bIsValid = false;
 }
 
 /**
@@ -111,6 +108,114 @@ void PhysicsObject::disablePhysics()
 }
 
 /**
+ * @brief Applies a force to the center of the object.
+ *
+ * @param force Force to apply
+ */
+void PhysicsObject::applyCentralForce( const Vector& force )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to apply a force to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->applyCentralForce( OgreBulletCollisions::OgreBtConverter::to( force ) );
+}
+
+/**
+ * @brief Applies an impulse to the center of the object.
+ *
+ * @param impulse Impulse to apply
+ */
+void PhysicsObject::applyCentralImpulse( const Vector& impulse )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to apply a impulse to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->applyCentralImpulse( OgreBulletCollisions::OgreBtConverter::to( impulse ) );
+}
+
+/**
+ * @brief Applies a force from a relative position (to the object's center)
+ *
+ * @param force Force to apply
+ */
+void PhysicsObject::applyForce( const Vector& force, const Vector& relPos )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to apply a force to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->applyForce( OgreBulletCollisions::OgreBtConverter::to( force ), OgreBulletCollisions::OgreBtConverter::to( relPos ) );
+}
+
+/**
+ * @brief Applies an impulse from a relative position (to the object's center)
+ *
+ * @param impulse Impulse to apply
+ */
+void PhysicsObject::applyImpulse( const Vector& impulse, const Vector& relPos )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to apply a impulse to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->applyImpulse( OgreBulletCollisions::OgreBtConverter::to( impulse ), OgreBulletCollisions::OgreBtConverter::to( relPos ) );
+}
+
+/**
+ * @brief Applies a torque to the center of the object.
+ *
+ * @param torque Torque to apply
+ */
+void PhysicsObject::applyTorque( const Vector& torque )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to apply a torque to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->applyTorque( OgreBulletCollisions::OgreBtConverter::to( torque ) );
+}
+
+/**
+ * @brief Applies a torque to the center of the object.
+ *
+ * @param torque Torque to apply
+ */
+void PhysicsObject::applyTorqueImpulse( const Vector& torque )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to apply a torque impulse to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->applyTorqueImpulse( OgreBulletCollisions::OgreBtConverter::to( torque ) );
+}
+
+/*
+ * @brief Returns the bullet rigid body object. Through this object, all the bullet physics related to the rigid
+ * body can be accessed
+ *
+ * @return the bullet rigid body object
+ */
+btRigidBody* PhysicsObject::getBulletRigidBody()	
+{ 
+	return m_rigidBody? m_rigidBody->getBulletRigidBody(): NULL; 
+}		
+
+
+/**
  * @internal 
  * @brief Enables rigid body physics using the received collision shape
  *
@@ -126,6 +231,9 @@ void PhysicsObject::enableRigidBodyPhysics( OgreBulletCollisions::CollisionShape
 	// Create the rigid body and assign it the collision shape
 	m_rigidBody = PhysicsManager::getSingleton().createRigidBody( *this, collisionShape, staticObject );
 	m_physicsEnabled = true;
+
+	// Activate the rigid body
+	getBulletRigidBody()->activate(); 
 }
 
 

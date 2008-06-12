@@ -116,7 +116,7 @@ void PhysicsManager::end()
  */
 void PhysicsManager::update( unsigned long elapsedSec )
 {
-	m_physicsWorld->stepSimulation( elapsedSec );
+	m_physicsWorld->stepSimulation( elapsedSec, MAX_SIMULATION_SUBSTEPS, FIXED_TIME_STEP );
 }
 
 /**
