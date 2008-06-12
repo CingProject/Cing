@@ -40,6 +40,7 @@ namespace Graphics
   class Camera3D;
   class Font;
   class Text;
+	class ImageResourceManager;
 }
 
 // Ogre Forward declarations

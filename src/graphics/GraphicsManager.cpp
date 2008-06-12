@@ -22,6 +22,7 @@
 // Graphics includes
 #include "GraphicsManager.h"
 #include "Window.h"
+#include "ImageResourceManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -87,7 +88,7 @@ bool GraphicsManager::init()
 
   // Init rendering engine and create main window
   Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Vision Library Demo" );       
-  if ( !ogreWindow )
+	  if ( !ogreWindow )
     THROW_EXCEPTION( "Error creating application window" );
 
   // Create main window
@@ -101,6 +102,9 @@ bool GraphicsManager::init()
 
 	// Initialize graphics resources, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+	// Init ImageResourceManager 
+	ImageResourceManager::getSingleton().init();
 
   // Init the main camera
   m_activeCamera.init( m_pSceneManager );
@@ -157,6 +161,9 @@ void GraphicsManager::end()
   // Release scene manager
 	Ogre::Root::getSingleton().destroySceneManager( m_pSceneManager );
 	m_pSceneManager = NULL;
+
+	// Release image resource manager
+	ImageResourceManager::getSingleton().end();
 
 	// The class is not valid anymore
 	m_bIsValid = false;
