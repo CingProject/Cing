@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="Vision"
 	ProjectGUID="{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 	RootNamespace="Vision"
@@ -709,23 +709,35 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\physics\PhysicsObject.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\src\physics\PhysicsUserAPI.cpp"
 					>
 				</File>
+				<Filter
+					Name="Physics Objects"
+					>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsBox.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsObject.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsPlane.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsSphere.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Header Files"
 				>
 				<File
 					RelativePath="..\..\..\src\physics\PhysicsManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\physics\PhysicsObject.h"
 					>
 				</File>
 				<File
@@ -736,6 +748,26 @@
 					RelativePath="..\..\..\src\physics\PhysicsUserAPI.h"
 					>
 				</File>
+				<Filter
+					Name="Physics Objects"
+					>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsBox.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsObject.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsPlane.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsSphere.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<File

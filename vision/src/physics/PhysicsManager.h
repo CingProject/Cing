@@ -24,6 +24,9 @@
 
 #include "PhysicsPrereqs.h"
 
+// Graphics
+#include "graphics/Object3D.h"
+
 // Common
 #include "common/Singleton.h"
 
@@ -65,6 +68,15 @@ public:
 	void	end			();	
 	void	update	( unsigned long elapsedSec );
 	
+	// Collision shape construction 
+	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Graphics::Object3D& object );
+	OgreBulletCollisions::CollisionShape*		buildBoxShape					( float width, float heigh, float depth );
+	OgreBulletCollisions::CollisionShape*		buildStaticPlaneShape	( float width, float heigh );
+	OgreBulletCollisions::CollisionShape*		buildSphereShape			( float radius );
+
+	// Rigid bodies
+	OgreBulletDynamics::RigidBody*					createRigidBody				( Graphics::Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody );
+
 	// Debug methods
 	void	drawPhysics( bool draw );
 
@@ -75,6 +87,9 @@ public:
 private:
 	// private constructor to ensure singleton
 	PhysicsManager();
+
+	// Static attributes
+	static long													m_rigidObjectCounter;///< Used to generate unique names for the rigid objects
 
 	// Attributes
 	OgreBulletDynamics::DynamicsWorld*	m_physicsWorld;				///< Manager of the physics world. All physics communication is managed through this object

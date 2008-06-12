@@ -53,8 +53,8 @@ public:
 	virtual ~Object3D();
 
 	// Init / Release / Update
-	bool              init        			( const std::string& meshName = "", const std::string& materialName = "");
-	void              end         			();
+	virtual void      init        			( const std::string& meshName = "", const std::string& materialName = "" );
+	virtual void      end         			();
 
 	// Query methods
 	bool              isValid     			() const { return m_bIsValid; }
@@ -115,10 +115,6 @@ public:
 	// Debug methods
 	void							showBoundingBox						( bool show );
 
-	// Physics related methods
-	void			activatePhysics						();
-	void			activatePhysicsStatic			();
-	void			deActivatePhysics					();
 
 	// Public Const static attributes
 	static const float OGRE_SCALE_CORRECTION; ///< Scale applied to all primitive objects in order to correct ogre scale bug with lighting
@@ -136,7 +132,6 @@ private:
 	Ogre::SceneNode* 					m_sceneNode;		///< Node in the scene manager where the object is placed
 	Ogre::Entity*    					m_entity;				///< Ogre entity that represents the model
 	Ogre::MaterialPtr					m_materialCopy;	///< Entity's material copy (to allow this object to have a specific color) 
-	Physics::PhysicsObject*		m_physicsObject;///< Physics object that will control this 3d object in case the physics is activated for it
 	std::string       				m_objectName;		///< Unique object name
 	Object3DType							m_type;					///< Type of 3d object
 	bool              				m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.

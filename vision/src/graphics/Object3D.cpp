@@ -31,6 +31,7 @@
 #include "common/Exception.h"
 #include "common/Release.h"
 #include "common/MathUtils.h"
+#include "common/LogManager.h"
 
 // Ogre
 #include "externLibs/Ogre3d/include/OgreSceneManager.h"
@@ -40,8 +41,6 @@
 #include "externLibs/Ogre3d/include/OgreMaterialManager.h"
 #include "externLibs/Ogre3d/include/OgreStringConverter.h"
 
-// Physics
-#include "physics/PhysicsObject.h"
 
 namespace Graphics
 {
@@ -55,7 +54,6 @@ const float		Object3D::OGRE_SCALE_CORRECTION = 0.01;
  * @brief Constructor. Initializes class attributes.
  */
 Object3D::Object3D():
-	m_physicsObject	( NULL  ),
   m_sceneNode			( NULL  ),
   m_entity				( NULL  ),
   m_bIsValid			( false )
@@ -80,11 +78,11 @@ Object3D::~Object3D()
  * @param[in] materialName  Name of the material (defines the visual aspect) of the object. If empty the object will have no material.
  * @return true if the initialization was ok | false otherwise
  */
-bool Object3D::init( const std::string& meshName /*= ""*/, const std::string& materialName /*= ""*/ )
+void Object3D::init( const std::string& meshName /*= ""*/, const std::string& materialName /*= ""*/ )
 {
   // Check if the class is already initialized
   if ( isValid() )
-    return true;
+    return;
 
   // Create a node in the scene for the object
   Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
@@ -99,11 +97,11 @@ bool Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
 
 		// TODO remove this from here
     // Build tangent vectors (for normal mapping), all our meshes use only 1 texture coordset 
-    //unsigned short src, dest;
-    //if ( !pMesh->suggestTangentVectorBuildParams( Ogre::VES_TANGENT, src, dest ) )
-    //{
-    //  pMesh->buildTangentVectors( Ogre::VES_TANGENT, src, dest );
-    //}
+    unsigned short src, dest;
+    if ( !pMesh->suggestTangentVectorBuildParams( Ogre::VES_TANGENT, src, dest ) )
+    {
+      pMesh->buildTangentVectors( Ogre::VES_TANGENT, src, dest );
+    }
 
 		// Create a unique name for the entity
 		m_objectName = meshName + Ogre::StringConverter::toString( ++m_objectCounter );
@@ -123,7 +121,7 @@ bool Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
 	}
 	// TODO: Log -> material does not exist
 	else
-		THROW_EXCEPTION( "Trying to set a material that does not exist" );
+		LOG_CRITICAL( "Trying to set a material (%s) that does not exist", materialName );
 
 
 	// This is a triangle mesh type
@@ -131,8 +129,6 @@ bool Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
 
 	// The class is now initialized
 	m_bIsValid = true;
-
-	return true;
 }
 
 /**
@@ -145,9 +141,6 @@ void Object3D::end()
   // Check if the class is already released
   if ( !isValid() )
     return;
-
-	// Release the physics (just in case are activated)
-	Common::Release( m_physicsObject );
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -654,49 +647,6 @@ void Object3D::setTexture( const std::string& textureFileName )
 void Object3D::showBoundingBox( bool show )
 {
 	m_sceneNode->showBoundingBox( show );
-}
-
-/*
- * @brief Activates the physics for this object. 
- * 
- * From now on, the object's position and rotation will be driven by the physics of the scene.
- */
-void Object3D::activatePhysics()
-{
-	// Only activate if it is not currently activated.
-	if ( !m_physicsObject )
-	{
-		// Create and init the physics object
-		m_physicsObject = new Physics::PhysicsObject();
-		m_physicsObject->init( *this, false );
-	}
-}
-
-/*
- * @brief Activates the physics for this object, but it will be static. Therefore it will affect collisions of 
- * other physics object in the scene, but won't move.
- * 
- * From now on, the object's position and rotation will be driven by the physics of the scene.
- */
-void Object3D::activatePhysicsStatic()
-{
-	// Only activate if it is not currently activated.
-	if ( !m_physicsObject )
-	{
-		m_physicsObject = new Physics::PhysicsObject();
-		m_physicsObject->init( *this, true );
-	}
-}
-
-/*
- * @brief DeActivates the physics for this object. 
- * 
- * From now on, the object's position and rotation will be again controlled manually
- */
-void Object3D::deActivatePhysics()
-{
-	// Release physics object
-	Common::Release( m_physicsObject );
 }
 
 

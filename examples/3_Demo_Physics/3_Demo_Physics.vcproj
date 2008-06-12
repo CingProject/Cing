@@ -68,6 +68,7 @@
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
+				IgnoreDefaultLibraryNames="atlthunk.lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/3_Demo_Physics.pdb"
 				SubSystem="2"
