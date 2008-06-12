@@ -64,6 +64,9 @@ namespace OgreBulletCollisions
 	class CollisionShape;
 }
 
+// Bullet
+class btRigidBody;
+
 // Used namespaces
 using namespace Common;
 

@@ -41,12 +41,15 @@ enum CollisionShape
 };
 
 // Physics constants (default values)
-const float      DEFAULT_STATIC_BODY_RESTITUTION  = 0.1f;
-const float      DEFAULT_STATIC_BODY_FRICTION     = 0.8f;
+const float				DEFAULT_STATIC_BODY_RESTITUTION		= 0.1f;
+const float				DEFAULT_STATIC_BODY_FRICTION			= 0.8f;
 
-const float      DEFAULT_DYNAMIC_BODY_RESTITUTION = 0.6f;
-const float      DEFAULT_DYNAMIC_BODY_FRICTION    = 0.6f;
-const float      DEFAULT_DYNAMIC_BODY_MASS        = 1.0f;
+const float				DEFAULT_DYNAMIC_BODY_RESTITUTION  = 0.6f;
+const float				DEFAULT_DYNAMIC_BODY_FRICTION     = 0.6f;
+const float				DEFAULT_DYNAMIC_BODY_MASS         = 1.0f;
+
+const int					MAX_SIMULATION_SUBSTEPS						= 3;
+const float				FIXED_TIME_STEP										= 1.0f / 60.f;
 
 
 /**
