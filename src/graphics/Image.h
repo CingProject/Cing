@@ -54,7 +54,9 @@ public:
 	void		load  ( const std::string& name );
 	void		save	( const std::string& name );
 	void		end		();
-	// TODO: Check this
+
+	// Image data
+	void		setData( char* imageData, int width, int height, ImageFormat format );
 	Image*	clone ();
 
 	// Draw on scene

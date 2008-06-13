@@ -23,6 +23,7 @@
 // Common
 #include "common/Exception.h"
 #include "common/ResourceManager.h"
+#include "common/LogManager.h"
 
 namespace Graphics
 {
@@ -107,9 +108,9 @@ void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
 	// Create the empty IplImage image
 	int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 	m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U,channels);
-	
+		
 	// Create the texture quad (to draw image)
-	m_quad.init( (int)m_image.getWidth(), (int)m_image.getWidth(), (ImageFormat)m_image.getFormat() );
+	m_quad.init( m_cvImage->width, m_cvImage->height, format );
 
 	// Load image data to texture
 	updateTexture();
@@ -179,7 +180,7 @@ void Image::load( const std::string& name  )
  */
 void Image::save( const std::string& name )
 {
-	// TODO: Pass data from IplImage to m_image for save the data
+	// TODO: Pass data from IplImage to m_image to save the data
 
 	// Add the user app data folder to the name
 	m_image.save( Common::ResourceManager::userDataPath + name );
@@ -199,13 +200,46 @@ void Image::end()
 	m_quad.end();
 
 	//Release IplImage
-	cvReleaseImage(&m_cvImage);
+	// TODO check why this crashes.. 
+	//cvReleaseImage(&m_cvImage);
 	m_cvImage = NULL;
 
 	// The class is not valid anymore
 	m_bIsValid = false;
 
 }
+
+/**
+ * @brief Sets the data of the image 
+ *
+ * @param imageData Data to set to the image
+ * @param width			Width of the passed image data
+ * @param height		Height of the passed image data
+ * @param format		format Format of the image passed
+ */
+void Image::setData( char* imageData, int width, int height, ImageFormat format )
+{
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to set data to an invalid image (it has not been initialized)" );
+		return;
+	}
+
+	// Check dimensions
+	int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
+	if ( (width != m_cvImage->width) || (height != m_cvImage->height) || (channels != m_cvImage->nChannels) )
+	{
+		LOG_ERROR( "Trying to set data with a wrong size of number of channels" );
+		return;
+	}
+
+	// Set the data
+	cvSetData( m_cvImage, imageData, m_cvImage->widthStep );
+
+	// Make the image to be updated to texture in the next draw
+	m_bUpdateTexture = true;
+}
+
 
 /**
  * @brief Returns image width 
@@ -248,13 +282,15 @@ ImageFormat Image::getFormat() const
  * @brief Get texture update state
  * @return the m_bUpdateTexture attribute
  */
-bool Image::getUpdateTexture() const{
+bool Image::getUpdateTexture() const
+{
 		return m_bUpdateTexture;
 }
 /**
  * @brief Set if texture updates automatically every frame
  */
-void	Image::setUpdateTexture(bool updateTextureFlag ) {
+void	Image::setUpdateTexture(bool updateTextureFlag ) 
+{
 	m_bUpdateTexture = updateTextureFlag;
 }
 

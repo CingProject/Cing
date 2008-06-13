@@ -850,6 +850,30 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Movies"
+			>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\src\movies\OCVMovie.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\src\movies\MoviePrereqs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\movies\OCVMovie.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
 		<File
 			RelativePath="..\..\..\src\Vision.h"
 			>

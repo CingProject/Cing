@@ -76,6 +76,9 @@
 #include "audio/SoundFMOD.h"
 #include "audio/MicroFMOD.h"
 
+// Movie
+#include "movies/OCVMovie.h"
+
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
 using namespace CameraInput;
@@ -86,6 +89,7 @@ using namespace Common;
 using namespace Input;
 using namespace Physics;
 using namespace Audio;
+using namespace	Movies;
 
 // Clases used by user
 
@@ -95,5 +99,8 @@ typedef	VICamera Capture;
 // Sound and Mic
 typedef SoundFMOD Sound;
 typedef MicroFMOD	Micro;
+
+// Movie
+typedef OCVMovie	Movie;
 
 #endif // _Vision_H_
