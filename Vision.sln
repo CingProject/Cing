@@ -42,6 +42,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5_Demo_Mic", "examples\5_De
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6_Demo_VideoPlayback", "examples\6_Demo_VideoPlayback\6_Demo_VideoPlayback.vcproj", "{CDB45802-76CA-4326-85BE-76212F25B1B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -84,6 +89,10 @@ Global
 		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Debug|Win32.Build.0 = Debug|Win32
 		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Release|Win32.ActiveCfg = Release|Win32
 		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Release|Win32.Build.0 = Release|Win32
+		{CDB45802-76CA-4326-85BE-76212F25B1B7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CDB45802-76CA-4326-85BE-76212F25B1B7}.Debug|Win32.Build.0 = Debug|Win32
+		{CDB45802-76CA-4326-85BE-76212F25B1B7}.Release|Win32.ActiveCfg = Release|Win32
+		{CDB45802-76CA-4326-85BE-76212F25B1B7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
