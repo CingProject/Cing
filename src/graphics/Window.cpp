@@ -206,7 +206,7 @@ void Window::setBackgroundColor( const Color& color )
   if ( !isValid() )
     return;
 
-  m_mainViewport->setBackgroundColour( Ogre::ColourValue(0.5,0.5,0.5) ); 
+  m_mainViewport->setBackgroundColour( color.normalized() ); 
 }
 
 } // namespace Graphics

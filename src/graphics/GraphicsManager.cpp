@@ -113,7 +113,7 @@ bool GraphicsManager::init()
   m_mainWindow.attachCameraToWindow( m_activeCamera );
 
   // Background color
-  //m_mainWindow.setBackgroundColor( Color( 0.8, 0.8, 0.8 ) );
+  m_mainWindow.setBackgroundColor( Color( 255, 255, 255 ) );
 
   // Init the default font / text
   m_defaultFont.init();  

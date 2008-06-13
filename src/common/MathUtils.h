@@ -25,6 +25,8 @@
 #include "CommonPrereqs.h"
 #include "CommonTypes.h"
 
+#include <numeric>
+
 /**
  * @file
  * This file contains several mathematical util functions
@@ -178,6 +180,59 @@ inline float map( float value, float low1, float hight1, float low2, float hight
     // Map to output range
     return v * fabs(hight2-low2) + low2;
 }
+
+/*
+ * @brief Constrains a value so it does not exceed a range
+ * 
+ * @param value value to constrain
+ * @param min   min value of the valid range
+ * @param min   min value of the valid range
+ *
+ * @return the constrained value
+ */
+inline float constrain( float value, float min, float max )
+{
+	if ( value > max )	return max;
+	if ( value < min )	return min;
+	return value;
+}
+
+/*
+ * @brief Stores values and returns the average of all of them
+ */
+struct Average
+{
+	/// @param nValues number of values to store
+	Average( int _nValues ) 
+	{ 
+		nValues = _nValues;
+		values.reserve( nValues ); 
+		index = 0;
+	}
+
+	/// @brief ads a value to average
+	void addValue( float value )
+	{
+		if ( values.size() < nValues )
+			values.push_back( value );
+		else 
+			values[index] = value;
+
+		// calculate new index
+		index = (++index) % values.capacity();
+	}
+
+	/// @brief returns the ave
+	float getValue()
+	{
+		float sum = std::accumulate( values.begin(), values.end(), 0 );
+		return sum / (float)values.size();
+	}
+
+	std::vector< float >	values;
+	size_t								nValues;
+	size_t								index;
+};
 
 
 } // namespace Common
