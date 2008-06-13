@@ -70,7 +70,7 @@
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/5_Demo_Mic.pdb"
+				ProgramDatabaseFile="$(IntDir)/5_Demo_Mic.pdb"
 				SubSystem="2"
 				OptimizeForWindows98="1"
 				TargetMachine="1"

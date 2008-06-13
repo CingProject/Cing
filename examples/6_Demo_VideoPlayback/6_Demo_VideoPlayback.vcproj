@@ -70,7 +70,7 @@
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/6_Demo_VideoPlayback.pdb"
+				ProgramDatabaseFile="$(IntDir)/6_Demo_VideoPlayback.pdb"
 				SubSystem="2"
 				OptimizeForWindows98="1"
 				TargetMachine="1"
