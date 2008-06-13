@@ -102,7 +102,7 @@ void LogManager::end()
  * @internal 
  * @brief Logs a message. If no LogLevel specified, the default value will be LOG_NORMAL
  *
- * @param level Relevance level of the message to log. It can be: LOG_NORMAL or LOG_CRITICAL (for critical failures)
+ * @param level Relevance level of the message to log. It can be: LOG_NORMAL or LOG_ERROR (for critical failures)
  * @param msg		Message to log, with variable parameter format (this is a printf like format)
  */
 void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
@@ -122,7 +122,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 		OutputDebugString( msgFormated );	// In debug, output everything
 		OutputDebugString( "\n" );
 #elif defined(WIN32)
-	if ( level == LOG_CRITICAL )
+	if ( level == LOG_ERROR )
 	{
 		OutputDebugString( msgFormated );	// In release, only critical messages
 		OutputDebugString( "\n" );

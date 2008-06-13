@@ -174,7 +174,7 @@ void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int size )
 		cvCvtColor( m_tempImage, m_currentCameraImage, CV_BGR2GRAY );
 	}
 	else
-		LOG_CRITICAL( "Trying to set camera image data with a wrong format" );
+		LOG_ERROR( "Trying to set camera image data with a wrong format" );
 }
 
 

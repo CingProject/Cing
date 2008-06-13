@@ -197,7 +197,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\Main.cpp"
+			RelativePath=".\src\2_Demo_3DPrimitives.cpp"
 			>
 		</File>
 	</Files>

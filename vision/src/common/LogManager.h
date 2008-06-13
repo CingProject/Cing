@@ -30,7 +30,7 @@
 
 // Macros for handy use of log system
 #define LOG(x, ...)						Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x, __VA_ARGS__ )
-#define LOG_CRITICAL(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_CRITICAL, x, __VA_ARGS__ )
+#define LOG_ERROR(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_ERROR, x, __VA_ARGS__ )
 
 namespace Common
 {
@@ -45,7 +45,7 @@ namespace Common
  *
  * There are only two kind of log messages (for the sake of simplicity)
  * - LOG_NORMAL: Default log message. It usually means that there is some minor problem, but the application can continue.
- * - LOG_CRITICAL: It means that there is some critical problem, so the application usually cannot continue executing.
+ * - LOG_ERROR: It means that there is some critical problem, so the application usually cannot continue executing.
  *
  * By default, the log messages work as follows:
  * - In debug mode: Normal and Critical messages are reported to the log file, and to the debug output console.
@@ -53,7 +53,7 @@ namespace Common
  * @code
  *	// Example use:
  * 	Common::LogManager::getSingleton().logMessage( "Normal log message" );
- *	Common::LogManager::getSingleton().logMessage( "Critical log message", Common::LogManager::LOG_CRITICAL );
+ *	Common::LogManager::getSingleton().logMessage( "Critical log message", Common::LogManager::LOG_ERROR );
  * @endcode
  */
 class LogManager: public SingletonStatic< LogManager >
@@ -63,7 +63,7 @@ public:
 	// Available log levels
 	enum LogMessageLevel
 	{
-		LOG_CRITICAL	= Ogre::LML_CRITICAL,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
+		LOG_ERROR	= Ogre::LML_CRITICAL,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
 		LOG_NORMAL		= Ogre::LML_NORMAL		///< Normal log level. It means that there is some problem, but the application can continue executing
 	};
 

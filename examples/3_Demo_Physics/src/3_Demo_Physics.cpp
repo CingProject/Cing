@@ -2,6 +2,7 @@
 
 CREATE_APPLICATION( "Vision Demo" );
 
+// Number of spheres and boxes that are goint to be created
 #define MAX_ELEMENTS 300
 
 // 3d primitives
@@ -86,7 +87,7 @@ void mousePressed()
 
 void keyPressed()
 {
-	// Apply force to all objects
+	// Apply force to all objects when space bar is pressed
 	if ( key == ' ' )
 	{
 		float forceScale = 100;

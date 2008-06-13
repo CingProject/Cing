@@ -72,6 +72,10 @@
 #include "physics/PhysicsSphere.h"
 #include "physics/PhysicsObject.h"
 
+// Audio
+#include "audio/SoundFMOD.h"
+#include "audio/MicroFMOD.h"
+
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
 using namespace CameraInput;
@@ -81,8 +85,15 @@ using namespace Globals;
 using namespace Common;
 using namespace Input;
 using namespace Physics;
+using namespace Audio;
 
-// Camera used by the user
-#define	Capture	 VICamera
+// Clases used by user
+
+// Camera
+typedef	VICamera Capture;
+
+// Sound and Mic
+typedef SoundFMOD Sound;
+typedef MicroFMOD	Micro;
 
 #endif // _Vision_H_

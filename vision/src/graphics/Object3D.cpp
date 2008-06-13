@@ -121,7 +121,7 @@ void Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
 	}
 	// TODO: Log -> material does not exist
 	else
-		LOG_CRITICAL( "Trying to set a material (%s) that does not exist", materialName );
+		LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName );
 
 
 	// This is a triangle mesh type

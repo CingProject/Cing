@@ -32,6 +32,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3_Demo_Physics", "examples\
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_Demo_SoundPlayback", "examples\4_Demo_SoundPlayback\4_Demo_SoundPlayback.vcproj", "{ACAF1B3D-F407-472E-A0D9-60546A5B8786}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5_Demo_Mic", "examples\5_Demo_Mic\5_Demo_Mic.vcproj", "{68C91ED7-3425-4A59-BDC5-BC5440992D21}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -66,6 +76,14 @@ Global
 		{35A10BBD-FF75-461D-A73B-93A7881BB37F}.Debug|Win32.Build.0 = Debug|Win32
 		{35A10BBD-FF75-461D-A73B-93A7881BB37F}.Release|Win32.ActiveCfg = Release|Win32
 		{35A10BBD-FF75-461D-A73B-93A7881BB37F}.Release|Win32.Build.0 = Release|Win32
+		{ACAF1B3D-F407-472E-A0D9-60546A5B8786}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ACAF1B3D-F407-472E-A0D9-60546A5B8786}.Debug|Win32.Build.0 = Debug|Win32
+		{ACAF1B3D-F407-472E-A0D9-60546A5B8786}.Release|Win32.ActiveCfg = Release|Win32
+		{ACAF1B3D-F407-472E-A0D9-60546A5B8786}.Release|Win32.Build.0 = Release|Win32
+		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Debug|Win32.Build.0 = Debug|Win32
+		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Release|Win32.ActiveCfg = Release|Win32
+		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

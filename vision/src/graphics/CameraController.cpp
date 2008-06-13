@@ -194,12 +194,6 @@ void CameraController::keyboardControl()
 	// Get the keyboard reference
 	const Input::Keyboard& keyboard = Input::InputManager::getSingleton().getKeyboard();
 
-	if ( keyboard.isKeyDown(OIS::KC_UP) )
-		LOG_CRITICAL( "Up Key pressed" );
-	else 
-		LOG_CRITICAL( "Up Key NOT pressed" );
-
-
 	// Move camera upwards along to world's Y-axis.
 	if(keyboard.isKeyDown(OIS::KC_PGUP))
 		m_cameraNode->setPosition(m_cameraNode->getPosition() + Ogre::Vector3(0, 5, 0));

@@ -661,6 +661,34 @@
 		<Filter
 			Name="ExternLibs"
 			>
+			<Filter
+				Name="Fmod"
+				>
+				<File
+					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_codec.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_dsp.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_errors.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_output.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="ComputerVision"
@@ -768,6 +796,58 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Audio"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\src\audio\AudioIncludes.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\audio\AudioPrereqs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\audio\BaseMicro.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\audio\BaseSound.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\audio\MicroFMOD.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\audio\SoundFMOD.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\audio\SoundManagerFMOD.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\src\audio\MicroFMOD.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\audio\SoundFMOD.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\audio\SoundManagerFMOD.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<File

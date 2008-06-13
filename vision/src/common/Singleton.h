@@ -43,7 +43,7 @@ class SingletonStatic
 {  
 public:
 
-  virtual ~SingletonStatic() { }
+  virtual ~SingletonStatic() { m_bIsValid = false; }
 
   /**
    * @brief Returns a reference to the singleton instance
@@ -55,16 +55,19 @@ public:
    * @brief Returns a pointer to the singleton instance
    * @return a reference to the singleton instance
    */
-  inline static T *getSingletonPtr() { return &m_singleton; }
+	inline static T *getSingletonPtr() { return m_bIsValid? &m_singleton: NULL; }
 
 private: 
-  static T m_singleton; ///< Singleton
+  static T		m_singleton; ///< Singleton
+	static bool	m_bIsValid;
 };
 
 // Singleton definition
 template < class T >
 T SingletonStatic<T>::m_singleton;
 
+template < class T >
+bool SingletonStatic<T>::m_bIsValid = true;
 
 
 /**

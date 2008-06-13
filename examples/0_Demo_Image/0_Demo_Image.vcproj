@@ -198,7 +198,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\Main.cpp"
+			RelativePath=".\src\0_Demo_Image.cpp"
 			>
 		</File>
 	</Files>
