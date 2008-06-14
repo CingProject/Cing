@@ -23,6 +23,9 @@
 
 #include "MoviePrereqs.h"
 
+// Ogre
+#include "externLibs/Ogre3d/include/OgreTimer.h"
+
 #include <string>
 
 namespace Movies
@@ -51,6 +54,7 @@ public:
 		void	loop		();
 		void	noLoop	();
 		void	stop		();
+		void	setFps	( int fps );
 
 		// Read data from movie
 		void read			( Graphics::Image &image );
@@ -60,18 +64,22 @@ public:
 		unsigned short	getWidth	() const    { return m_width; }
 		unsigned short	getHeight	() const    { return m_height; }
 		unsigned short	getFps		() const    { return m_fps; }
+		bool						newFrame	();
 
 private:
 
     // Attributes
-    CvCapture*      m_capture;      ///< OpenCV capture device
-		std::string			m_fileName;			///< Name of the file loaded
-		unsigned short	m_fps;					///< Frames per second of the video
-    unsigned short  m_width;        /// Movie's width
-    unsigned short  m_height;       /// Movie's height
-    bool            m_loop;         ///< Loop video
-		bool						m_playing;			///< Indicates whether the video is playing or not. If not playing it wont return images
-    bool            m_finished;     ///< True when the video has finished
+    CvCapture*      m_capture;      			///< OpenCV capture device
+		std::string			m_fileName;						///< Name of the file loaded
+		Ogre::Timer			m_timer;							///< Timer used to control the playback speed
+		unsigned long		m_timeBetweenFramesMs;///< Time between frames (depends on the frames per second of the playback) in microseconds
+		unsigned short	m_fps;								///< Frames per second of the video
+    unsigned short  m_width;        			/// Movie's width
+    unsigned short  m_height;       			/// Movie's height
+    bool            m_loop;         			///< Loop video
+		bool						m_playing;						///< Indicates whether the video is playing or not. If not playing it wont return images
+    bool            m_finished;     			///< True when the video has finished
+		bool						m_firstFrame;					///< True for the first read() call. Used to also give the first frame, regardles of the time passed
 };
 
 }

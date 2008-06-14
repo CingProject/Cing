@@ -90,17 +90,12 @@ bool OCVMovie::load(const char* fileName )
   m_height    = static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_HEIGHT ) );
 	m_fps				= static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FPS ) );
 
+	// Set the current fps for the playback speed
+	setFps( m_fps );
+
 	return true;
 }
 
-/**
- * Returns true if the video is correctly initialized.
- * @return True if the video is correctly initialized.
- */
-bool OCVMovie::isValid() const
-{
-    return m_capture != NULL;
-}
 
 /**
  * Closes the movie.
@@ -119,8 +114,12 @@ void OCVMovie::end()
  */
 void OCVMovie::play()
 {
-	m_playing = true;
-	m_loop		= false;
+	m_playing			= true;
+	m_loop				= false;
+	m_firstFrame	= true;
+
+	// Start timer to control the playback speed
+	m_timer.reset();
 }
 
 /**
@@ -130,8 +129,12 @@ void OCVMovie::play()
  */
 void OCVMovie::loop()
 {
-	m_playing = true;
-	m_loop		= true;
+	m_playing			= true;
+	m_loop				= true;
+	m_firstFrame	= true;
+
+	// Start timer to control the playback speed
+	m_timer.reset();
 }
 
 /**
@@ -141,8 +144,12 @@ void OCVMovie::loop()
 */
 void OCVMovie::noLoop()
 {
-	m_playing = true;
-	m_loop		= false;
+	m_playing			= true;
+	m_loop				= false;
+	m_firstFrame	= true;
+
+	// Start timer to control the playback speed
+	m_timer.reset();
 }
 
 /**
@@ -155,9 +162,22 @@ void OCVMovie::stop()
 	m_loop		= false;
 }
 
+/**
+ * @brief Sets the fps of the video playback.
+ *
+ * @param
+ */
+void OCVMovie::setFps( int fps )
+{
+	// Calculate time step between frames (in microseconds)
+	m_timeBetweenFramesMs = 1000000.0 / (double)fps;
+
+	// Store the new value
+	m_fps = fps;
+}
 
 /**
- * Obtains a frame from the video.
+ * Obtains a frame from the video (if it is available -> it depends on the current frames per second)
  * @param frame The image where to store the frame.
  */
 void OCVMovie::read( Graphics::Image &image )
@@ -175,6 +195,13 @@ void OCVMovie::read( Graphics::Image &image )
 		LOG_ERROR( "Movie(%s): could not get the frame, because the movie has not been loaded", m_fileName.c_str( ) );
 		return;
 	}
+
+	// Do nothing if no new frame (depends on the current frames per second)
+	if ( !newFrame() && !m_firstFrame )
+		return;
+
+	// Set first frame flag to false
+	m_firstFrame = false;
 
   // Get frame from video
   IplImage*   frame = cvQueryFrame( m_capture );
@@ -194,10 +221,6 @@ void OCVMovie::read( Graphics::Image &image )
 	// Copy the image
 	image.setData( frame->imageData, frame->width, frame->height, format );
 
-  // Flip image color BGR -> RGB
-  //cvConvertImage( frame, frame, CV_CVTIMG_SWAP_RB | CV_CVTIMG_FLIP );
-
-
 	// If it was the last frame and we have to loop -> restar the video
   if ( equal( cvGetCaptureProperty( m_capture, CV_CAP_PROP_POS_AVI_RATIO ), 1.0f ) )
   {
@@ -212,6 +235,28 @@ void OCVMovie::read( Graphics::Image &image )
           m_finished = true;
       }
   }
+
+	// Reset the frames timer
+	m_timer.reset();
+}
+
+/**
+ * Returns true if the video is correctly initialized.
+ * @return True if the video is correctly initialized.
+ */
+bool OCVMovie::isValid() const
+{
+    return m_capture != NULL;
+}
+
+/**
+ * @brief Returns true if a new frame is available (depending on the current frames per second)
+ *
+ * @return true if a new frame is available (depending on the current frames per second)
+ */
+bool OCVMovie::newFrame()
+{
+	return m_timer.getMicroseconds() >= m_timeBetweenFramesMs;
 }
 
 }

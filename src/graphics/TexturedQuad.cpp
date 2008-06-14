@@ -42,6 +42,7 @@
 // Common
 #include "common/Exception.h"
 #include "common/MathUtils.h"
+#include "common/LogManager.h"
 
 namespace Graphics
 {
@@ -191,6 +192,12 @@ void TexturedQuad::end()
  */
 void TexturedQuad::setPosition( float x, float y, float z /*= 0.0f*/ )
 {
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to set position in an invalid textured quad" );
+		return;
+	}
+
   // Render 2D
   if ( m_render2D )
   {
@@ -210,6 +217,12 @@ void TexturedQuad::setPosition( float x, float y, float z /*= 0.0f*/ )
  */
 void TexturedQuad::setVisible( bool visible )
 {
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to set position in an invalid textured quad" );
+		return;
+	}
+
 	m_visible = visible;
   m_quadSceneNode->setVisible( visible );
 }
