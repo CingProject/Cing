@@ -19,6 +19,10 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 #include "Image.h"
+#include "ImageResourceManager.h"
+
+// Open CV
+#include "externLibs/OpenCV/cv/include/cv.h"
 
 // Common
 #include "common/Exception.h"
@@ -181,6 +185,7 @@ void Image::load( const std::string& name  )
 void Image::save( const std::string& name )
 {
 	// TODO: Pass data from IplImage to m_image to save the data
+	m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage->imageData, m_cvImage->width, m_cvImage	->height, 1, (Ogre::PixelFormat)getFormat() );
 
 	// Add the user app data folder to the name
 	m_image.save( Common::ResourceManager::userDataPath + name );
@@ -265,8 +270,7 @@ int Image::getHeight() const
  */
 ImageFormat Image::getFormat() const
 {
-	int channels = m_cvImage->nChannels;
-	switch(channels)
+	switch(m_nChannels)
 	{
 	case 1: return (ImageFormat)GRAYSCALE;
 		break;
@@ -670,4 +674,100 @@ void Image::filter( ImageProcessingFilters type )
 {
 	//m_imgThresholdFilter.apply(  *m_cvImage );
 }
+
+/**
+ * @brief Converts an image from GRAYSCALE to Color format
+ * TODO: optimize
+ */
+void Image::toColor()
+{
+	// Check valid
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to convert to color an invalid image. Maybe it is not initialized" );
+		return;
+	}
+
+	// Check current format
+	if ( m_nChannels >=3 )
+		return;
+
+	// Image Store data temporarily
+	IplImage* tempImage = Graphics::ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 3 );
+
+	// Convert image
+	cvCvtColor( m_cvImage, tempImage, CV_GRAY2RGB );
+
+	// Update attributes
+	m_nChannels = 3;
+
+	// Release current image
+	if ( m_cvImage )
+		cvReleaseImage( &m_cvImage );
+
+	// Release and recreate the quad
+	m_quad.end();
+	m_quad.init( tempImage->width, tempImage->height, getFormat() );
+
+	// Clone the temp
+	m_cvImage = cvCloneImage( tempImage );
+
+	// Mark texture to be updated in the next draw call
+	setUpdateTexture( true );
+	
+	// Release temp image
+	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
+
+	// Now this image is valid
+	m_bIsValid = true;
+}
+
+
+/**
+ * @brief Converts an image from Color (RGB) to GRAYSCALE
+ * TODO: optimize
+ */
+void Image::toGray()
+{
+	// Check valid
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to convert to gray an invalid image. Maybe it is not initialized" );
+		return;
+	}
+
+	// Check current format
+	if ( m_nChannels == 1 )
+		return;
+
+	// Image Store data temporarily
+	IplImage* tempImage = Graphics::ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 1 );
+
+	// Convert image
+	cvCvtColor( m_cvImage, tempImage, CV_RGB2GRAY );
+
+	// Update attributes
+	m_nChannels = 1;
+
+	// Release current image
+	if ( m_cvImage )
+		cvReleaseImage( &m_cvImage );
+
+	// Release and recreate the quad
+	m_quad.end();
+	m_quad.init( tempImage->width, tempImage->height, getFormat() );
+
+	// Clone the temp
+	m_cvImage = cvCloneImage( tempImage );
+
+	// Mark texture to be updated in the next draw call
+	setUpdateTexture( true );
+	
+	// Release temp image
+	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
+
+	// Now this image is valid
+	m_bIsValid = true;
+}
+
 } // namespace Graphics

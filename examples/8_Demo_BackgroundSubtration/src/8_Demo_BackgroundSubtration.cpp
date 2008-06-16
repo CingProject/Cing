@@ -2,32 +2,29 @@
 
 CREATE_APPLICATION( "Vision Demo" );
 
-BackgroundSubtraction bg;
-Capture								camera;
-IplImage*							cvimage;
-Image									img;
-bool									drawCV;
+BackgroundSubtraction bgSubtraction;
+Capture								camera;	// Camera to capture video input
+Image									img;		// Image to draw the result of the background subtraction
 
 void setup()
 {
-	drawCV = false;
+	// Init camera and image
 	camera.init( 0, 320, 240, 25, GRAYSCALE );
 	img.init( 320, 240, GRAYSCALE );
-	bg.storeBackground( camera.getImage() );
+
+	// Store background 
+	bgSubtraction.storeBackground( camera.getImage() );
 }
 
 void draw()
 {
 	// Update the camera
 	camera.update();
-	if ( drawCV )
-		camera.getImage().draw2d( 0, 0 );
+	camera.getImage().draw2d( 0, 0 );
 
 	// background subtraction
-	bg.compute( camera.getImage(), img);
-
-	if ( drawCV )
-		img.draw2d( 320, 0 );
+	bgSubtraction.update( camera.getImage(), img);
+	img.draw2d( 320, 0 );
 }
 
 void end()
@@ -49,7 +46,5 @@ void mouseReleased()
 void keyPressed()
 {
 	if ( key == ' ' )
-		bg.storeBackground( camera.getImage() );
-	else if ( key == 'b' )
-		drawCV = !drawCV;
+		bgSubtraction.storeBackground( camera.getImage() );
 }

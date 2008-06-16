@@ -23,7 +23,7 @@
 #define _GUIManagerCEGUI_H_
 
 #include "GUIPrereqs.h"
-#include "OuputDebugTextBoxCEGUI.h"
+#include "OutputDebugTextBoxCEGUI.h"
 
 // CEGUI
 #include "externLibs/Ogre3d/include/cegui/CEGUIInputEvent.h"
@@ -60,7 +60,7 @@ public:
 
 	// Query methods
 	bool										isValid       () const { return m_bIsValid; }
-	OuputDebugTextBoxCEGUI&	getDebugOutput()			 { return m_debugOutput; }
+	OutputDebugTextBoxCEGUI&	getDebugOutput()			 { return m_debugOutput; }
 
 	// OIS Listeners interface
 	bool mouseMoved		( const OIS::MouseEvent &arg );
@@ -80,7 +80,7 @@ private:
 	CEGUI::OgreCEGUIRenderer*		m_CEGUIRenderer;	///< CEGUI Renderer. Connects gui system with render system
 	CEGUI::System*							m_CEGUISystem;		///< Main CEGUI object
 	CEGUI::Window*							m_mainSheet;			///< Main gui sheet: place where all gui elements will be placed<s
-	OuputDebugTextBoxCEGUI			m_debugOutput;		///< Text Box to output debug messages
+	OutputDebugTextBoxCEGUI			m_debugOutput;		///< Text Box to output debug messages
 	bool												m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };

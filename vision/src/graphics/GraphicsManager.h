@@ -126,7 +126,7 @@ private:
 	Text                  m_defaultText;    ///< To print text to screen
 	Color									m_fillColor;			///< Color used to fill shapes
 	Color									m_strokeColor;		///< Color used to draw shapes
-	float									m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
+	int										m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
 	CvFont								m_cvFont;					///< Font used to draw text on images
 					
 	// To manage visibility of loaded images

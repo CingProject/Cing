@@ -41,10 +41,6 @@ namespace Graphics
  */
 void ImageThresholdFilter::apply( const IplImage& inImage, IplImage& output )
 {
-  // Check valid filter
-  //if ( !isValid() )
-  //  THROW_EXCEPTION( "Trying to apply ImageThresholdFilter, with filter not initialized. Init method should be called" );
-
   // Check both images have same size and it is the same than the filter size
   if( (inImage.imageSize != output.imageSize) )
     THROW_EXCEPTION( "Trying to apply ImageThresholdFilter to images with different size-> they must have the same size!" );

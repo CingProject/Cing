@@ -48,7 +48,7 @@ public:
 	// Init / Release / Update (to be implemented in subclasses)
 	virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, ImageFormat format = RGB );
 	virtual void    end             ();
-  virtual void    update          ();
+  virtual void    update          () = 0;
 
   // Misc
   void							draw();

@@ -64,7 +64,7 @@
 #include "input/InputTypes.h"
 
 // Computer Vision
-#include "computervision/CompVision.h"
+#include "computervision/BlobFinder.h"
 #include "computervision/BackgroundSubtraction.h"
 
 // Physics

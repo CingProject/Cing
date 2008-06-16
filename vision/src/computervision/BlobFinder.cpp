@@ -27,6 +27,10 @@
 // opencv
 #include "externLibs/OpenCV/highgui/include/highgui.h"
 
+// Graphics
+#include "graphics/Image.h"
+#include "graphics/ImageResourceManager.h"
+
 namespace ComputerVision
 {
 
@@ -43,12 +47,14 @@ const unsigned int  BlobFinder::DEFAULT_MAX_BLOBS   = 20;
 BlobFinder::BlobFinder():
   m_findContoursStorage ( NULL  ),
   m_contour             ( NULL  ),
-  m_cvImage             ( NULL  ),
   m_minBlobArea         ( DEFAULT_MIN_AREA ),
   m_maxBlobArea         ( DEFAULT_MAX_AREA ),
   m_maxBlobs            ( DEFAULT_MAX_BLOBS ),
   m_bIsValid            ( false )
 {
+	// Reserve memory
+	m_findContoursStorage = cvCreateMemStorage();
+	m_bIsValid = true;
 }
 
 /**
@@ -61,29 +67,6 @@ BlobFinder::~BlobFinder()
   end();
 }
 
-/**
- * @internal
- * @brief Initializes the class so it becomes valid.
- *
- * @param[in] width     with of the image to analyze
- * @param[in] height    height of the image to analyze
- * @return true if the initialization was ok | false otherwise
- */
-bool BlobFinder::init( int width, int height )
-{
-  // Check if the class is already initialized
-  if ( isValid() )
-    return true;
-
-  // Allocate memory for the contours and image
-  m_findContoursStorage = cvCreateMemStorage();
-  m_cvImage             = cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, 1 );
-
-	// The class is now initialized
-	m_bIsValid = true;
-
-	return true;
-}
 
 /**
  * @internal
@@ -98,7 +81,6 @@ void BlobFinder::end()
   
   // Release data
   cvReleaseMemStorage( &m_findContoursStorage );
-  cvReleaseImage( &m_cvImage );
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -112,26 +94,29 @@ void BlobFinder::end()
  * 
  * @param[in] inImage image where the blobs will be searched
  */
-void BlobFinder::computeBlobs( const IplImage& inImage )
+void BlobFinder::update( const Graphics::Image& inImage )
 {
   // Check valid
   if ( !isValid() )
     THROW_EXCEPTION( "Trying to compute blobs, with the BlobFinder not initialized. Init method should be called" );
 
   // Check both images have same size and it is the same than the filter size
-  if( (inImage.nChannels != 1) && (inImage.nChannels != 3) )
+  if( (inImage.getNChannels() != 1) && (inImage.getNChannels() != 3) )
     THROW_EXCEPTION( "Trying to compute blobs on images with non supporte format -> only RGB or GRAYSCALE images supported" );
 
+	// Request temp image to work with
+	IplImage* cvTempImage = Graphics::ImageResourceManager::getSingleton().getImage( inImage.getWidth(), inImage.getHeight(), 1 );
+
 	// If they have different number of channels -> convert them
-	if ( inImage.nChannels == 3 )
-		cvConvertImage( &inImage, m_cvImage );
+	if ( inImage.getNChannels() == 3 )
+		cvConvertImage( &inImage.getCVImage(), cvTempImage );
   // just one channel -> Copy the input image
 	else 
-		cvCopy( &inImage, m_cvImage );
+		cvCopy( &inImage.getCVImage(), cvTempImage );
 
   // Find blobs (openCV contours)	
   int retrivalMode = CV_RETR_EXTERNAL; // CV_RETR_CCOMP
-  cvFindContours( m_cvImage, m_findContoursStorage, &m_contour, sizeof(CvContour), retrivalMode, CV_CHAIN_APPROX_SIMPLE );
+  cvFindContours( cvTempImage, m_findContoursStorage, &m_contour, sizeof(CvContour), retrivalMode, CV_CHAIN_APPROX_SIMPLE );
 
   // Extract found contours    
 
@@ -150,6 +135,8 @@ void BlobFinder::computeBlobs( const IplImage& inImage )
     m_blobs.push_back( Blob( area, m_contour ) );
   }
 
+	// Release temp image
+	Graphics::ImageResourceManager::getSingleton().releaseImage( cvTempImage );
 
   // Extract information of found blobs
   extractBlobsInformation();
@@ -163,12 +150,10 @@ void BlobFinder::computeBlobs( const IplImage& inImage )
  */
 void BlobFinder::extractBlobsInformation()
 {
-
-
   // Order blobs (from bigger to smaller) -> this way the most relevant are at the beginning
   std::sort( m_blobs.begin(), m_blobs.end(), std::greater< Blob >() );
 
-  // Discard blobs (if there is more than the max
+  // Discard blobs (if there is more than the max)
   // TODO
 
   // To store contour moments

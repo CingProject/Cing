@@ -125,28 +125,6 @@ void BaseCameraInput::end()
 
 /**
  * @internal
- * @brief Updates the class state
- */
-void BaseCameraInput::update()
-{
-  // Invisible except draw method is called
- // m_texturedQuad.setVisible( false );
-}
-
-/**
- * @internal
- * @brief Loads the camera image data into the textured quad (just in case it is going to be rendered)
- * TODO: optimize this.
- */
-void BaseCameraInput::draw( )
-{
-	//m_texturedQuad.setVisible( true );
- // m_texturedQuad.setPosition2d( 0, 0 );
- // m_texturedQuad.updateTexture( getImageData(), m_width, m_height, m_format );
-}
-
-/**
- * @internal
  * @briefUpdates the data of the camera frame.
  * This method should be called by subclasses to update the captured images
  * 
@@ -157,24 +135,27 @@ void BaseCameraInput::draw( )
  */
 void BaseCameraInput::setNewFrameData( char* data, unsigned int width, unsigned int height, ImageFormat format )	
 {
-  //if ( size != m_frameSize )
-  //  THROW_EXCEPTION( "Trying to camera image data with a wrong image data size" );
-
 	// If the received image has the same format... copy it
-	if ( (width == m_currentCameraImage.getWidth() ) && (height == m_currentCameraImage.getHeight()) && (m_format == format) )
-		m_currentCameraImage.setData( data, width, height, format );
-		//cvSetData( m_currentCameraImage, data, m_width * m_nChannels );
-
-	// If we are working in GRAYSCALE and the received image is RGB -> convert it, and then store it
-	else if ( (m_format == GRAYSCALE) && (format == RGB) )
+	if (	(width == m_currentCameraImage.getWidth() ) && 
+				(height == m_currentCameraImage.getHeight()) && 
+				(m_format == format) )
 	{
+		m_currentCameraImage.setData( data, width, height, format );
+	}
+	// If we are working in GRAYSCALE and the received image is RGB -> convert it, and then store it
+	else if ( (width == m_currentCameraImage.getWidth() ) && 
+						(height == m_currentCameraImage.getHeight()) && 
+						(m_format == GRAYSCALE) && (format == RGB) )
+	{
+		// Set data to temp image to make the conversion
 		m_tempImage.setData( data, width, height, format );
-		//cvSetData( m_tempImage, data, (m_width * m_nChannels) * 3 );
+
+		// Convert it and mark the image to update to texture next draw
 		cvCvtColor( &m_tempImage.getCVImage(), &m_currentCameraImage.getCVImage(), CV_BGR2GRAY );
 		m_currentCameraImage.setUpdateTexture( true );
 	}
 	else
-		LOG_ERROR( "Trying to set camera image data with a wrong format" );
+		LOG_ERROR( "Trying to set camera image data with a wrong size or format" );
 }
 
 
