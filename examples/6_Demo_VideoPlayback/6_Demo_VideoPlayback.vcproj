@@ -166,6 +166,7 @@
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
+				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"

@@ -144,6 +144,9 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
   m_quadSceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
   m_quadSceneNode->attachObject( m_quad );
 
+	// Register in graphics manager so that it is marked as invisible every frame
+	GraphicsManager::getSingleton().addDrawableImage( this );
+
   // The class is now initialized
 	m_bIsValid = true;
 
@@ -164,7 +167,12 @@ void TexturedQuad::end()
   // Destroy quad quad object
   Ogre::SceneManager* sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManagerPtr();
 	if ( sceneManager )
+	{
 		sceneManager->destroyManualObject( m_ogreManualObjectName );
+
+		// Unregister in graphics manager so that it is marked as invisible every frame
+		GraphicsManager::getSingleton().removeDrawableImage( this );
+	}
 
 	// The class is not valid anymore
 	m_bIsValid = false;

@@ -99,6 +99,10 @@ public:
 	// Camera control
 	void											useDefault3DCameraControl	( bool useDefault );
 
+	// Drawing images control (Temp)
+	void											addDrawableImage					( TexturedQuad* img );
+	void											removeDrawableImage				( TexturedQuad* img );
+
 private:
 
 	// private constructor to ensure singleton
@@ -125,6 +129,11 @@ private:
 	float									m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
 	CvFont								m_cvFont;					///< Font used to draw text on images
 					
+	// To manage visibility of loaded images
+	// TODO optimize this
+	std::list< TexturedQuad* >	m_drawableImagesQueue; ///< Images that are being drawn by the user ar maked as not visible every frame
+																							// to if the user does not call the draw one frame the image is not drawn
+
 	bool									m_showFps;				///< Indicates whether the frames per second should be shown or not
 	bool                  m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};

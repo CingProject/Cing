@@ -23,6 +23,7 @@
 #include "GraphicsManager.h"
 #include "Window.h"
 #include "ImageResourceManager.h"
+#include "TexturedQuad.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -203,6 +204,11 @@ void GraphicsManager::draw()
 		oss << "FPS: " << frameStats.lastFPS;
 		m_defaultText.setText( oss.str() );	// Text to be displayed
 	}
+
+	// Mark all drawable images as not visible
+	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
+	for (; it != m_drawableImagesQueue.end(); ++it )
+		(*it)->setVisible( false );
 }
 
 
@@ -342,6 +348,37 @@ void GraphicsManager::useDefault3DCameraControl( bool useDefault )
 	// Enable controller
 	else
 		m_defaultCamController.end();	
+}
+
+/**
+ * @internal 
+ * @brief Informs that an image is created (so it can be be drawn), it will be made invisible after each frame is rendered.
+ * This way, if the user does not call the draw method for the same image in any frame, it won't be rendered
+ * @note This is a bit triky, but allows to emulate software rendering (this is, the image is renderd just when the draw method
+ * is called), when it is really working with ogre's 3d scene manager
+ *
+ * @param img Image that is going to be rendered
+ */
+void GraphicsManager::addDrawableImage( TexturedQuad* img)
+{
+	m_drawableImagesQueue.push_back( img );
+}
+
+/**
+ * @internal 
+ * @brief Informs that an image that was added as drawable image (@sa addDrawableImage) is being released
+ *
+ * @param img Image that is going to be rendered
+ */
+void GraphicsManager::removeDrawableImage( TexturedQuad* img)
+{
+	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
+	for (; it != m_drawableImagesQueue.end(); ++it )
+		if ( *it == img )
+		{
+			m_drawableImagesQueue.erase( it );
+			return;
+		}
 }
 
 } // namespace Graphics
