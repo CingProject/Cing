@@ -63,8 +63,9 @@ public:
 	// Available log levels
 	enum LogMessageLevel
 	{
-		LOG_ERROR	= Ogre::LML_CRITICAL,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
-		LOG_NORMAL		= Ogre::LML_NORMAL		///< Normal log level. It means that there is some problem, but the application can continue executing
+		LOG_NORMAL	= Ogre::LML_NORMAL,		///< Normal log level. It means that there is some problem, but the application can continue executing
+		LOG_ERROR		= Ogre::LML_CRITICAL,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
+		LOG_SILENT												///< No message will be output								
 	};
 
 	// Singleton needs
@@ -76,6 +77,10 @@ public:
 	// Init / Release / Update
 	void	init 				( bool logToOutput = true, bool logToFile = true );
 	void	end					();	
+
+	// Log control
+	void	logNormalMsgsToDebugOutput( bool value );
+	void	logErrorMsgsToDebugOutput	( bool value );
 
 	// Query  Methods
 	bool	isValid			() { return m_bIsValid; }
@@ -91,11 +96,12 @@ private:
 	LogManager();
 
 	// Attributes
-	Ogre::Log*				m_log;						///< Log used to output messages
-	Ogre::Log*				m_ogreLog;				///< Ogre Log, used to output ogre engine messages
-	bool							m_logToOutput;		///< If true messages will be directed to output
-	bool							m_logToFile;			///< If true messages will be directed to the log file
-	bool							m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	Ogre::Log*				m_log;								///< Log used to output messages
+	Ogre::Log*				m_ogreLog;						///< Ogre Log, used to output ogre engine messages
+	LogMessageLevel		m_debugOutputLogLevel;///< Min log level for a message to be directed to the debug output
+	bool							m_logToOutput;				///< If true messages will be directed to output
+	bool							m_logToFile;					///< If true messages will be directed to the log file
+	bool							m_bIsValid;						///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

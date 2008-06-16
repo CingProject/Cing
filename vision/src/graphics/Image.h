@@ -29,6 +29,10 @@
 // Ogre
 #include "externLibs/Ogre3d/include/OgreImage.h"
 
+// Image processing
+#include "ImageThresholdFilter.h"
+#include "ImageDifferenceFilter.h"
+
 namespace Graphics
 {
 
@@ -57,10 +61,14 @@ public:
 
 	// Image data
 	void		setData( char* imageData, int width, int height, ImageFormat format );
+	char*		getData() { return isValid()? m_cvImage->imageData: NULL; }
 	Image*	clone ();
 
 	// Draw on scene
-	void	draw	( int xPos, int yPos, int zPos = 0 );
+	void	draw	( float xPos, float yPos, float zPos );
+	void	draw	( float xPos, float yPos, float zPos, float width, float height );
+	void	draw2d( float xPos, float yPos );
+	void	draw2d( float xPos, float yPos, float width, float height );
 
 	// 2D Image drawing methods
 	void  triangle	( float x1, float y1, float x2, float y2, float x3, float y3 );
@@ -78,16 +86,18 @@ public:
 	void updateTexture();
 
 	// Query methods
-	bool  isValid() const { return m_bIsValid; }
+	bool						isValid			() const	{ return m_bIsValid; }
+	const IplImage&	getCVImage	() const	{ return *m_cvImage; }
+	IplImage&				getCVImage	()				{ return *m_cvImage; }
+	int							getWidth		() const;
+	int							getHeight		() const;
+	ImageFormat			getFormat		() const;
+	int							getNChannels() const	{ return m_nChannels; }
 
 	// Operators and operations
 	void	operator=	( const Image& other );
 
-	// Getters and Setters
-	int						getWidth() const;
-	int						getHeight() const;
-	ImageFormat		getFormat() const;
-
+	// Texture update control
 	void					setUpdateTexture( bool updateTextureFlag );	
 	bool					getUpdateTexture() const;	
 
@@ -99,6 +109,7 @@ private:
 	IplImage*		  m_cvImage;				///< Contains the image compatible with openCV
 	Ogre::Image		m_image;					///< Contains the image data (loaded from file or dynamically created)
 	TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
+	int						m_nChannels;			///< Number of channels of the image
 	bool					m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
 	bool					m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
 };

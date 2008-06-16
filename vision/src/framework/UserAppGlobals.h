@@ -41,9 +41,15 @@ extern unsigned short				height;					///< Window's height
 // Input
 extern	char								key;						///< Key being currently pressed
 extern	Input::MouseButton	mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
+extern	int									mouseX;					///< X coordinate of the mouse (in screen coordinates)
+extern	int									mouseY;					///< Y coordinate of the mouse (in screen coordinates)
 
 // Time
 extern float								elapsedSec;			///< Elapsed time in seconds from previous to current frame
+
+// Advanced 
+extern Ogre::SceneManager*	ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object
+extern Ogre::Camera*				ogreCamera;				///< Ogre Camera used to render the scene
 
 }
 

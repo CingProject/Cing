@@ -33,9 +33,24 @@
 namespace Graphics
 {
 
+struct ImageResource
+{
+	ImageResource( IplImage* pImage ): image( pImage ), available( true ) {}
+
+	IplImage* image;
+	bool			available;
+};
+
 /**
  * @internal
- * Manages the communication with the ImageResource manager
+ * Manager of IplImages to optimize performance when temporal images are required
+ * It maintains a pool of images of difference sizes.
+ *
+ * @note Important: The images returned have the purpose to be used as temporal working images
+ * but they should not be stored nor deleted (as they can be served to another requester in the next frame).
+ *
+ * @note Currently, width default settings, it consumes around 5Mb or ram memory, but can increase performance
+ * and memory connsumption singnificantly in an application with a high rate of image processing or computer vision processes
  */
 class ImageResourceManager: public Common::SingletonStatic< ImageResourceManager >
 {
@@ -54,14 +69,17 @@ public:
 
 	// Query methods
 	bool                      isValid                   () const { return m_bIsValid; }
-	IplImage&									getImage									(int width, int height, int channels) const ;
+	IplImage*									getImage									(int width, int height, int channels) ;
+	void											releaseImage							( IplImage* image );
 
 private:
 
 	// private constructor to ensure singleton
-	ImageResourceManager				();
-	std::vector< IplImage* >  	m_TempImages;
-	bool												m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
+	ImageResourceManager();
+
+	// Attributes
+	std::vector< ImageResource >  m_imagePool[2];	///< First vector stores 1 channel images and second stores 3 channel images
+	bool													m_bIsValid;	    ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 
 } // namespace Graphics

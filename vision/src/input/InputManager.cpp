@@ -73,7 +73,7 @@ bool InputManager::init()
   // Fill params depending on the OS
     #if defined OIS_WIN32_PLATFORM
     {
-      paramList.insert( std::make_pair(std::string( "w32_mouse" ), std::string( "DISCL_FOREGROUND" ) ) );
+      paramList.insert( std::make_pair(std::string( "w32_mouse" ), std::string( "DISCL_BACKGROUND" ) ) );
       paramList.insert( std::make_pair(std::string( "w32_mouse" ), std::string( "DISCL_NONEXCLUSIVE" ) ) );
       
       // TODO: try -> Uncomment these two lines to allow users to switch keyboards via the language bar

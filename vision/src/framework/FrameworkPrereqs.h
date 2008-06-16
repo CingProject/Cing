@@ -31,7 +31,13 @@
 namespace Framework
 {
 
-
-
 } // namespace Framework
+
+// Ogre
+namespace Ogre
+{
+	class SceneManager;
+	class Camera;
+}
+
 #endif // _FrameworkPrereqs_H_

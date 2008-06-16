@@ -25,6 +25,10 @@
 // Common
 #include "common/Singleton.h"
 
+// OIS
+#include "externLibs/Ogre3d/include/ois/OISMouse.h"
+#include "externLibs/Ogre3d/include/ois/OISKeyboard.h"
+
 // Ogre
 #include "externLibs/Ogre3d/include/OgreTimer.h"
 
@@ -36,7 +40,7 @@ namespace Framework
  * Base class to create an application. Manages the render loop and the initialization and 
  * release of the main application systems
  */
-class Application: public Common::SingletonStatic< Application >
+class Application: public Common::SingletonStatic< Application >, public OIS::KeyListener, public OIS::MouseListener
 {
 public:
 
@@ -55,8 +59,11 @@ public:
 	bool  isValid() const { return m_bIsValid; }
 	
   // Event handlers
-  void mousePressedEvent();
-  void keyPressedEvent  ();
+	bool mouseMoved			( const OIS::MouseEvent& event );
+	bool mousePressed		( const OIS::MouseEvent& event, OIS::MouseButtonID id  );
+	bool mouseReleased	( const OIS::MouseEvent& event, OIS::MouseButtonID id  );
+	bool keyPressed			( const OIS::KeyEvent& event );
+	bool keyReleased		( const OIS::KeyEvent& event);
 
 private:
 	// private constructor to ensure singleton

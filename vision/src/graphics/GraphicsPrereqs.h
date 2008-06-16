@@ -61,4 +61,7 @@ namespace Physics
 	class PhysicsObject;
 }
 
+// Open CV
+struct _IplImage;
+
 #endif // _GraphicsPrereqs_H_

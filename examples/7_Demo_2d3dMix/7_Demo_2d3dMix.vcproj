@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="6_Demo_VideoPlayback"
-	ProjectGUID="{CDB45802-76CA-4326-85BE-76212F25B1B7}"
-	RootNamespace="My6_Demo_VideoPlayback"
+	Name="7_Demo_2d3dMix"
+	ProjectGUID="{06B166EF-28D8-4CFB-B43B-7B6408133DCC}"
+	RootNamespace="My7_Demo_2d3dMix"
 	>
 	<Platforms>
 		<Platform
@@ -70,11 +70,10 @@
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(IntDir)/6_Demo_VideoPlayback.pdb"
+				ProgramDatabaseFile="$(IntDir)\$(TargetName).pdb"
 				SubSystem="2"
 				OptimizeForWindows98="1"
 				TargetMachine="1"
-				AllowIsolation="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -82,9 +81,7 @@
 			<Tool
 				Name="VCManifestTool"
 				OutputManifestFile="$(TargetPath).manifest"
-				ManifestResourceFile="$(TargetPath)\$(TargetFileName).embed.manifest.res"
 				EmbedManifest="false"
-				DependencyInformationFile="$(TargetPath)\mt.dep"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -205,7 +202,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\6_Demo_VideoPlayback.cpp"
+			RelativePath=".\src\7_Demo_2d3dMix.cpp"
 			>
 		</File>
 	</Files>

@@ -33,6 +33,19 @@ namespace GUI
 
 } 
 
+namespace CEGUI
+{
+	class OgreCEGUIRenderer;
+	class System;
+	class Listbox;
+}
+
+namespace Ogre
+{
+	class RenderWindow;
+	class SceneManager;
+}
+
 namespace QuickGUI
 {
   class Root;

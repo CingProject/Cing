@@ -74,8 +74,8 @@ bool CompVision::init( int width, int height, ImageFormat format )
 
   // Init the available filters and computer vision algorithms
   m_blobFinder.init( width, height );
-  m_imgDiffFilter.init( width, height, format );
-  m_imgThresholdFilter.init( width, height, format );
+  //m_imgDiffFilter.init( width, height, format );
+  //m_imgThresholdFilter.init( width, height, format );
 
   // Create images (gray scale)
 	int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
@@ -122,8 +122,8 @@ void CompVision::end()
 
   // Release filters
   m_blobFinder.end();
-  m_imgDiffFilter.end();
-  m_imgThresholdFilter.end();
+  //m_imgDiffFilter.end();
+  //m_imgThresholdFilter.end();
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -152,10 +152,10 @@ void CompVision::update( IplImage* imgToAnalyze )
   if ( m_backgroundSubtraction )
   {
     // Calculate the difference between the background and the current image
-    m_imgDiffFilter.apply( *m_background, *imgToAnalyze );
+    //m_imgDiffFilter.apply( *m_background, *imgToAnalyze );
 
     // Threshold the image
-    m_imgThresholdFilter.apply( m_imgDiffFilter.getOutputImage() );
+    //m_imgThresholdFilter.apply( m_imgDiffFilter.getOutputImage() );
 
     // Store result
     cvCopy( &m_imgThresholdFilter.getOutputImage(), m_afterBackgroundSubtraction, 0 );
@@ -210,9 +210,9 @@ void CompVision::drawComputerVisionProcess()
   m_afterBackgroundSubtractionTQ.updateTexture( m_afterBackgroundSubtraction->imageData, m_afterBackgroundSubtraction->width, m_afterBackgroundSubtraction->height, m_format );
 
   // Set quad positions
-	m_cameraTQ.setPosition( 0, 0 ) ;
-  m_backgroundTQ.setPosition( m_cameraTQ.getWidth(), 0 );
-  m_afterBackgroundSubtractionTQ.setPosition( m_cameraTQ.getWidth() + m_backgroundTQ.getWidth(), 0 );
+	m_cameraTQ.setPosition2d( 0, 0 ) ;
+  m_backgroundTQ.setPosition2d( m_cameraTQ.getTextWidth(), 0 );
+  m_afterBackgroundSubtractionTQ.setPosition2d( m_cameraTQ.getTextWidth() + m_backgroundTQ.getTextWidth(), 0 );
 }
 
 } // namespace CompVision

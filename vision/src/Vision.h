@@ -58,12 +58,14 @@
 // Common
 #include "common/MathUtils.h"
 #include "common/LogManager.h"
+#include "common/CommonUserAPI.h"
 
 // Input
 #include "input/InputTypes.h"
 
 // Computer Vision
 #include "computervision/CompVision.h"
+#include "computervision/BackgroundSubtraction.h"
 
 // Physics
 #include "physics/PhysicsUserAPI.h"
@@ -79,6 +81,15 @@
 // Movie
 #include "movies/OCVMovie.h"
 
+// GUI
+#include "gui/GUIUserAPI.h"
+
+// OGRE -> this is included because some Ogre objects are exposed to user application
+// just in case an advanced user wants to use them...
+#include "externLibs/Ogre3d/include/OgreSceneManager.h"
+#include "externLibs/Ogre3d/include/OgreCamera.h"
+
+
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
 using namespace CameraInput;
@@ -90,8 +101,9 @@ using namespace Input;
 using namespace Physics;
 using namespace Audio;
 using namespace	Movies;
+using namespace GUI;
 
-// Clases used by user
+// Classes used by user
 
 // Camera
 typedef	VICamera Capture;

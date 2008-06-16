@@ -53,6 +53,14 @@ void mousePressed()
 {
 }
 
+void mouseMoved()
+{
+}
+
+void mouseReleased()
+{
+}
+
 void keyPressed()
 {
 	// Drawing modes

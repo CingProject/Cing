@@ -41,6 +41,8 @@ Window::Window():
   m_bIsValid      ( false ),
   m_mainViewport  ( NULL  ),
   m_stats         ( NULL  ),
+	m_width					( -1    ),
+	m_height				( -1    ),
   m_pOgreWindow   ( NULL  )
 {
 }
@@ -77,6 +79,12 @@ bool Window::init( Ogre::RenderWindow* pOgreWindow )
 
 	// The class is now initialized
 	m_bIsValid = true;
+
+	// Store window size
+	TWindowMetrics metrics;
+	getMetrics( metrics );
+	m_width		= metrics.width;
+	m_height	= metrics.height;
 
 	return true;
 }

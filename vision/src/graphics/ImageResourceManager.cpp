@@ -22,10 +22,10 @@
 #include "ImageResourceManager.h"
 
 // Common includes
-#include "common/Exception.h"
-#include "common/Release.h"
+#include "common/CommonUtils.h"
 
-#include "externLibs/OpenCV/highgui/include/highgui.h"
+// Open CV
+#include "externLibs/OpenCV/cxcore/include/cxcore.h"
 
 namespace Graphics
 {
@@ -64,29 +64,103 @@ bool ImageResourceManager::init()
 	// The class is now initialized
 	m_bIsValid = true;
 
-	// for debug
-	for (int i = 0; i < 4 ; i++)
+	// Create initial pool of images with typical video camera resolutions (160x120, 320x240...)
+	int minResX = 160;
+	int	minResY = 120;
+	int maxResX = 640;
+	int	maxResY = 480;
+	for ( int xRes = minResX, yRes = minResY; (xRes <= maxResX) && (yRes <= maxResY) ;  xRes *= 2, yRes *= 2)
 	{
-		m_TempImages.push_back( cvCreateImage( cvSize( 640, 480 ), IPL_DEPTH_8U, 3 ) );
+		// For 1 and 3 channel images
+		m_imagePool[0].push_back( ImageResource( cvCreateImage( cvSize( xRes, yRes ), IPL_DEPTH_8U, 1 ) ) );
+		m_imagePool[1].push_back( ImageResource( cvCreateImage( cvSize( xRes, yRes ), IPL_DEPTH_8U, 3 ) ) );
 	}
-	
+
+	// Create initial pool of images with standard sizes
+	int minRes = 64;
+	int	maxRes = 512;
+	for ( int xRes = minRes; xRes <= maxRes ; xRes *= 2)
+		for ( int yRes = minRes; yRes <= maxRes ; yRes *= 2)
+	{
+		// For 1 and 3 channel images
+		m_imagePool[0].push_back( ImageResource( cvCreateImage( cvSize( xRes, yRes ), IPL_DEPTH_8U, 1 ) ) );
+		m_imagePool[1].push_back( ImageResource( cvCreateImage( cvSize( xRes, yRes ), IPL_DEPTH_8U, 3 ) ) );
+	}
+
 	return true;
 }
 
 /**
  * @brief This method returns an IplImage with the requested size and number of channels 
- *				Creates a new one if requires.
- * @param  int width, int height, int channels
- * @return IplImage
+ *				Creates a new one if required (and store it in the pool).
+ *
+ * @note Important: The images returned have the purpose to be used as temporal working images
+ * but they should not be stored nor deleted. When the work with them is finished <b>releaseImage should be called</b>
+*
+ * @param  width		Width of the requested image
+ * @param  height		Height of the requested image
+ * @param  channels Number of channels of the requested image. Supported 1 and 3
+ * @return IplImage pointer to the image requested, or NULL if number of channels not supported
  */
-IplImage&	ImageResourceManager::getImage (int width, int height, int channels) const {
-	
-	// Search for the desired image into the image container	
+IplImage*	ImageResourceManager::getImage( int width, int height, int channels ) 
+{
+	// Check ok number of channels
+	if ( ( channels != 1) && ( channels != 3 ) )
+	{
+		LOG_ERROR( "Requesting an image with a non supported number of channels. Supported 1 (Grayscale) or 3 (RGB)" );
+		return NULL;
+	}
 
-	// Return the found image.
-	return *m_TempImages[0];
+	// Search for the desired image into the image container	
+	int index = 0;
+	if ( channels == 1 )			index = 0;
+	else if ( channels == 3 ) index = 1;
+
+	// Search the image
+	for ( size_t i = 0; i < m_imagePool[index].size(); ++i )
+	{
+		// If found and available -> return it
+		if ( (m_imagePool[index][i].image->width == width) &&  (m_imagePool[index][i].image->height == height) &&
+					m_imagePool[index][i].available )
+		{
+			// mark is as used
+			m_imagePool[index][i].available = false;
+			return m_imagePool[index][i].image;
+		}
+	}
+
+	// If not found -> create it and insert it in the pool
+	m_imagePool[index].push_back( ImageResource( cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, channels ) ) );
+	m_imagePool[index].back().available = false;
+	return m_imagePool[index].back().image;
 };
 
+/**
+ * @brief Releases an image that has been requested to the manager before. This should be called after the
+ * image is not needed anymore
+ *
+ * @param image Image to release so another one can use it
+ */
+void ImageResourceManager::releaseImage( IplImage* image )
+{
+	// Search for the desired image into the image container	
+	int index = 0;
+	if ( image->nChannels == 1 )			index = 0;
+	else if ( image->nChannels == 3 ) index = 1;
+	else return;
+
+	// Search the image
+	for ( size_t i = 0; i < m_imagePool[index].size(); ++i )
+	{
+		// If found and available -> mark it as available
+		if ( m_imagePool[index][i].image == image )
+		{
+			m_imagePool[index][i].available = true;
+			return;
+		}
+	}
+
+}
 /**
  * @internal
  * @brief Releases the class resources. 
@@ -98,6 +172,19 @@ void ImageResourceManager::end()
   if ( !isValid() )
     return;
 
+	// Release all images
+
+	// 1 channel images
+	for ( size_t i = 0; i < m_imagePool[0].size(); ++i )
+		cvReleaseImage( &m_imagePool[0][i].image );
+
+	// 3 channel images
+	for ( size_t i = 0; i < m_imagePool[1].size(); ++i )
+		cvReleaseImage( &m_imagePool[1][i].image );
+
+	m_imagePool[0].clear();
+	m_imagePool[1].clear();
+		
 	// The class is not valid anymore
 	m_bIsValid = false;
 }

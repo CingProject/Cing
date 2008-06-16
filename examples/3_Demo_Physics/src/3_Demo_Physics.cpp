@@ -85,6 +85,14 @@ void mousePressed()
 	}
 }
 
+void mouseMoved()
+{
+}
+
+void mouseReleased()
+{
+}
+
 void keyPressed()
 {
 	// Apply force to all objects when space bar is pressed

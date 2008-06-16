@@ -21,6 +21,9 @@
 
 #include "LogManager.h"
 
+// GUI
+#include "gui/GUIManagerCEGUI.h"
+
 // To use the outputdebugstring
 #ifdef WIN32
 #include <Windows.h>
@@ -70,6 +73,9 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= false*/ )
 	m_logToOutput = logToOutput;
 	m_logToFile		= logToFile;
 
+	// By default just lot error messages to debug output 
+	m_debugOutputLogLevel = LOG_ERROR;
+
 	// Get ogre log pointer (just in case)
 	m_ogreLog = Ogre::LogManager::getSingleton().getDefaultLog();
 
@@ -100,6 +106,38 @@ void LogManager::end()
 
 /**
  * @internal 
+ * @brief Indicates whether the informative system messages should be output to the debug output
+ *
+ * @note If you are not debugging an application, is better in terms of performance no to set this
+ * value to true.
+ * @param value if true, normal system log messages will be output to the debug output
+ */
+void LogManager::logNormalMsgsToDebugOutput( bool value )
+{
+	if ( value )
+		m_debugOutputLogLevel = LOG_NORMAL;
+	else
+		m_debugOutputLogLevel = LOG_ERROR;
+}
+
+
+/**
+ * @internal 
+ * @brief Indicates whether the error system messages should be output to the debug output
+ *
+ * @note It can affect the performance, but ideally there should be not error messages in an applciation
+ * @param value if true, error system log messages will be output to the debug output
+ */
+void LogManager::logErrorMsgsToDebugOutput( bool value )
+{
+	if ( value )
+		m_debugOutputLogLevel = LOG_ERROR;
+	else
+		m_debugOutputLogLevel = LOG_SILENT;
+}
+
+/**
+ * @internal 
  * @brief Logs a message. If no LogLevel specified, the default value will be LOG_NORMAL
  *
  * @param level Relevance level of the message to log. It can be: LOG_NORMAL or LOG_ERROR (for critical failures)
@@ -116,6 +154,10 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 
 	// Log message normally
 	m_log->logMessage( msgFormated, (Ogre::LogMessageLevel)level );
+
+	// Send it to the debug console
+	if ( level >= m_debugOutputLogLevel )
+		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
 
 	// If we are in windows and debug -> log to visual studio output
 #if defined(WIN32) && defined(_DEBUG)

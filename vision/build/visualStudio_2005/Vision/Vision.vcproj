@@ -254,15 +254,15 @@
 					Name="ImageProcessing"
 					>
 					<File
-						RelativePath="..\..\..\src\graphics\ImageProcessing\BaseImageFilter.h"
+						RelativePath="..\..\..\src\graphics\BaseImageFilter.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\ImageProcessing\ImageDifferenceFilter.h"
+						RelativePath="..\..\..\src\graphics\ImageDifferenceFilter.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\ImageProcessing\ImageThresholdFilter.h"
+						RelativePath="..\..\..\src\graphics\ImageThresholdFilter.h"
 						>
 					</File>
 				</Filter>
@@ -398,15 +398,15 @@
 					Name="ImageProcessing"
 					>
 					<File
-						RelativePath="..\..\..\src\graphics\ImageProcessing\BaseImageFilter.cpp"
+						RelativePath="..\..\..\src\graphics\BaseImageFilter.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\ImageProcessing\ImageDifferenceFilter.cpp"
+						RelativePath="..\..\..\src\graphics\ImageDifferenceFilter.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\ImageProcessing\ImageThresholdFilter.cpp"
+						RelativePath="..\..\..\src\graphics\ImageThresholdFilter.cpp"
 						>
 					</File>
 				</Filter>
@@ -475,6 +475,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\src\common\CommonUserAPI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\common\CommonUtils.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\src\common\Exception.h"
 					>
 				</File>
@@ -502,6 +510,10 @@
 			<Filter
 				Name="Source Files"
 				>
+				<File
+					RelativePath="..\..\..\src\common\CommonUserAPI.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\..\..\src\common\Exception.cpp"
 					>
@@ -593,7 +605,19 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\..\..\src\gui\GUIManager.cpp"
+					RelativePath="..\..\..\src\gui\GUIManagerCEGUI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\gui\GUIManagerQuickGUI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\gui\GUIUserAPI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\gui\OuputDebugTextBoxCEGUI.cpp"
 					>
 				</File>
 			</Filter>
@@ -601,11 +625,23 @@
 				Name="Header Files"
 				>
 				<File
-					RelativePath="..\..\..\src\gui\GUIManager.h"
+					RelativePath="..\..\..\src\gui\GUIManagerCEGUI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\gui\GUIManagerQuickGUI.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\src\gui\GUIPrereqs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\gui\GUIUserAPI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\gui\OuputDebugTextBoxCEGUI.h"
 					>
 				</File>
 			</Filter>
@@ -697,6 +733,10 @@
 				Name="Source Files"
 				>
 				<File
+					RelativePath="..\..\..\src\computervision\BackgroundSubtraction.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\src\computervision\BlobFinder.cpp"
 					>
 				</File>
@@ -708,6 +748,10 @@
 			<Filter
 				Name="Header Files"
 				>
+				<File
+					RelativePath="..\..\..\src\computervision\BackgroundSubtraction.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\..\src\computervision\Blob.h"
 					>

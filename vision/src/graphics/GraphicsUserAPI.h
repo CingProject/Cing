@@ -55,6 +55,9 @@ void strokeWeight( float weight );
 // Camera 3D related functions
 void useDefault3DCameraControl( bool useDefault );
 
+// Debug methods
+void	showFps ( bool show );
+
 } // namespace Graphics
 
 #endif // _GraphicsUserAPI_h_

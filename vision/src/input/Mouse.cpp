@@ -72,6 +72,9 @@ bool Mouse::init( OIS::InputManager* pOISInputManager )
   if ( isValid() )
     return true;
 
+	// Init base input device
+	BaseInputDevice::init();
+
   // Create the buffered mouse
   if ( pOISInputManager && ( pOISInputManager->numMice() > 0 ) )
   {
@@ -165,7 +168,11 @@ int Mouse::getZAxisRelative() const
  */
 bool Mouse::mouseMoved( const OIS::MouseEvent &event )
 {
-  //TODO: m_listeners->mouseMoved()
+	// Tell registered listeners
+	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
+		it->second->mouseMoved( event );
+
+
   return true;
 }
 
@@ -180,11 +187,10 @@ bool Mouse::mouseMoved( const OIS::MouseEvent &event )
  */
 bool Mouse::mousePressed ( const OIS::MouseEvent &event, OIS::MouseButtonID id )
 {
-	Globals::mouseButton = (MouseButton) id;
+	// Tell registered listeners
+	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
+		it->second->mousePressed( event, id );
 
-  // Call user event function
-  // TODO esto se debería hacer registrando listeners, y que applicatino estuviera registrado
-  Framework::Application::getSingleton().mousePressedEvent();
   return true;
 }
 
@@ -197,6 +203,10 @@ bool Mouse::mousePressed ( const OIS::MouseEvent &event, OIS::MouseButtonID id )
  */
 bool Mouse::mouseReleased( const OIS::MouseEvent &event, OIS::MouseButtonID id )
 {
+	// Tell registered listeners
+	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
+		it->second->mouseReleased( event, id );
+
   return true;
 }
 

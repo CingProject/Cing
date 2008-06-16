@@ -47,6 +47,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6_Demo_VideoPlayback", "exa
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1_Demo_DrawingPrimitives", "examples\1_Demo_DrawingPrimitives\1_Demo_DrawingPrimitives.vcproj", "{B0ABE9D8-F361-4011-87F1-CF71FF9C13C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7_Demo_2d3dMix", "examples\7_Demo_2d3dMix\7_Demo_2d3dMix.vcproj", "{06B166EF-28D8-4CFB-B43B-7B6408133DCC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8_Demo_BackgroundSubtration", "examples\8_Demo_BackgroundSubtration\8_Demo_BackgroundSubtration.vcproj", "{0E89CA54-CD0E-493B-A594-0C08C2EF990C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -93,6 +108,18 @@ Global
 		{CDB45802-76CA-4326-85BE-76212F25B1B7}.Debug|Win32.Build.0 = Debug|Win32
 		{CDB45802-76CA-4326-85BE-76212F25B1B7}.Release|Win32.ActiveCfg = Release|Win32
 		{CDB45802-76CA-4326-85BE-76212F25B1B7}.Release|Win32.Build.0 = Release|Win32
+		{B0ABE9D8-F361-4011-87F1-CF71FF9C13C1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B0ABE9D8-F361-4011-87F1-CF71FF9C13C1}.Debug|Win32.Build.0 = Debug|Win32
+		{B0ABE9D8-F361-4011-87F1-CF71FF9C13C1}.Release|Win32.ActiveCfg = Release|Win32
+		{B0ABE9D8-F361-4011-87F1-CF71FF9C13C1}.Release|Win32.Build.0 = Release|Win32
+		{06B166EF-28D8-4CFB-B43B-7B6408133DCC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{06B166EF-28D8-4CFB-B43B-7B6408133DCC}.Debug|Win32.Build.0 = Debug|Win32
+		{06B166EF-28D8-4CFB-B43B-7B6408133DCC}.Release|Win32.ActiveCfg = Release|Win32
+		{06B166EF-28D8-4CFB-B43B-7B6408133DCC}.Release|Win32.Build.0 = Release|Win32
+		{0E89CA54-CD0E-493B-A594-0C08C2EF990C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0E89CA54-CD0E-493B-A594-0C08C2EF990C}.Debug|Win32.Build.0 = Debug|Win32
+		{0E89CA54-CD0E-493B-A594-0C08C2EF990C}.Release|Win32.ActiveCfg = Release|Win32
+		{0E89CA54-CD0E-493B-A594-0C08C2EF990C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -38,5 +38,6 @@ namespace ComputerVision
 
 // OpenCV
 struct CvSeq;
+struct _IplImage;
 
 #endif // _ComputerVisionPrereqs_H_

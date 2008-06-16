@@ -68,6 +68,9 @@ bool Keyboard::init( OIS::InputManager* pOISInputManager )
   if ( isValid() )
     return true;
 
+	// Init base input device
+	BaseInputDevice::init();
+
   // If possible create a buffered keyboard
   if ( pOISInputManager && ( pOISInputManager->numKeyboards() > 0 ) )
   {
@@ -142,13 +145,13 @@ bool Keyboard::isKeyDown( OIS::KeyCode key ) const
  */
 bool Keyboard::keyPressed( const OIS::KeyEvent &event )
 {
-  // Set global variable key
-  Globals::key = event.text;
+	// TODO: install boost, tr1 c++ or create binders that support rederence parameters!
+	//std::for_each( m_listeners.begin(), m_listeners.end(), std::bind2nd( std::mem_fun( &OIS::KeyListener::keyPressed ), event ) );
+	
+	// Tell registered listeners
+	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
+		it->second->keyPressed( event );
 
-  // Call user event function
-  // TODO make listeners system
-	Framework::Application::getSingleton().keyPressedEvent();
-  
   return true;
 }
 
@@ -160,7 +163,11 @@ bool Keyboard::keyPressed( const OIS::KeyEvent &event )
  */
 bool Keyboard::keyReleased( const OIS::KeyEvent &event )
 {
-  return true;
+	// Tell registered listeners
+	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
+		it->second->keyReleased( event );
+
+	return true;
 }
 
 

@@ -28,7 +28,7 @@
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
 
 // Graphics
-#include "Graphics/TexturedQuad.h"
+#include "graphics/Image.h"
 
 namespace CameraInput
 {
@@ -51,22 +51,22 @@ public:
   virtual void    update          ();
 
   // Misc
-  void            draw();
+  void							draw();
 
 	// Query methods
-	bool            isValid         () const { return m_bIsValid;   }
-  bool            haveNewFrame    () const { return m_newFrame;   }
-  int             getWidth        () const { return m_width;      }
-  int             getHeight       () const { return m_height;     }
-  int             getFPS          () const { return m_fps;        }
-  int             getNumChannels  () const { return m_nChannels;  }
-  IplImage*       getImage        () const { return m_currentCameraImage; }
-  unsigned char*  getImageData    () const { return reinterpret_cast< unsigned char* >( m_currentCameraImage->imageData ); }
+	bool            				isValid         () const { return m_bIsValid;   }
+  bool            				haveNewFrame    () const { return m_newFrame;   }
+  int             				getWidth        () const { return m_width;      }
+  int             				getHeight       () const { return m_height;     }
+  int             				getFPS          () const { return m_fps;        }
+  int             				getNumChannels  () const { return m_nChannels;  }
+	Graphics::Image&				getImage        ()			 { return m_currentCameraImage; }
+	ImageFormat							getFormat				() const { return m_format; }
 	 
 protected:
 
   // Protected methods
-  void  setNewFrameData         ( unsigned char* data, unsigned int size );
+  void  setNewFrameData         ( char* data, unsigned int width, unsigned int height, ImageFormat format );
   void  setNewFrame             ( bool newFrame ) { m_newFrame = newFrame;    }  
   void  setWidth                ( int width   )   { m_width   = width;  }
   void  setHeight               ( int height  )   { m_height  = height; }
@@ -77,9 +77,8 @@ protected:
 
 private:
 	// Attributes
-	Graphics::TexturedQuad  m_texturedQuad;       		///< To render the camera images if required
-	IplImage*               m_currentCameraImage; 		///< Image captured from the camera 
-	IplImage*               m_tempImage;					 		///< Image used to convert received frames to working format
+	Graphics::Image					m_currentCameraImage; 		///< Image captured from the camera 
+	Graphics::Image					m_tempImage;					 		///< Image used to convert received frames to working format
   int                     m_width, m_height;    		///< Capture resolution
 	int                     m_fps;                		///< Capture frames per second
 	int                     m_frameSize;          		///< Size in bytes of a single frame

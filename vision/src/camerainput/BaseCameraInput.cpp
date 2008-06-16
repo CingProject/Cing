@@ -41,7 +41,6 @@ namespace CameraInput
  */
 BaseCameraInput::BaseCameraInput():
   m_newFrame          		( false ), 
-  m_currentCameraImage		( NULL  ), 
   m_width             		( 0     ), 
   m_height            		( 0     ), 
   m_fps               		( 0     ), 
@@ -93,16 +92,15 @@ void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
 	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 
   // Create the image to store the camera frames
-  m_currentCameraImage = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, m_nChannels ); 
+	m_currentCameraImage.init( width, height, format );
+  //m_currentCameraImage = cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, m_nChannels ); 
 
 	// Create a temp image of the opposite type to make conversions in case it is necessary.
 	// This means: if we are going to work in RGB, this image will be GRAYSCALE, just in case we receive a GRAYSCALE image instead of
 	// a RGB image, so we can convert it fast... or vice versa..
-	int channelsTemp	= m_nChannels == 1? 3: 1;
-	m_tempImage				= cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, channelsTemp ); 
-
-  // Init the textured quad (just in case we need to render the camera)
-  m_texturedQuad.init( width, height, m_format );
+	ImageFormat tempFormat	= format == RGB? GRAYSCALE: RGB;
+	m_tempImage.init( width, height, tempFormat );
+	//m_tempImage				= cvCreateImage( cvSize(width,height), IPL_DEPTH_8U, channelsTemp ); 
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -120,9 +118,10 @@ void BaseCameraInput::end()
     return;
 
   // Release resources
- 	cvReleaseImage( &m_currentCameraImage );
-	cvReleaseImage( &m_tempImage );
-  m_texturedQuad.end();
+	m_currentCameraImage.end();
+	m_tempImage.end();
+ 	//cvReleaseImage( &m_currentCameraImage );
+	//cvReleaseImage( &m_tempImage );
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -135,7 +134,7 @@ void BaseCameraInput::end()
 void BaseCameraInput::update()
 {
   // Invisible except draw method is called
-  m_texturedQuad.setVisible( false );
+ // m_texturedQuad.setVisible( false );
 }
 
 /**
@@ -143,11 +142,11 @@ void BaseCameraInput::update()
  * @brief Loads the camera image data into the textured quad (just in case it is going to be rendered)
  * TODO: optimize this.
  */
-void BaseCameraInput::draw()
+void BaseCameraInput::draw( )
 {
-  m_texturedQuad.setVisible( true );
-  m_texturedQuad.setPosition( 0, 0 );
-  m_texturedQuad.updateTexture( getImageData(), m_width, m_height, m_format );
+	//m_texturedQuad.setVisible( true );
+ // m_texturedQuad.setPosition2d( 0, 0 );
+ // m_texturedQuad.updateTexture( getImageData(), m_width, m_height, m_format );
 }
 
 /**
@@ -156,22 +155,27 @@ void BaseCameraInput::draw()
  * This method should be called by subclasses to update the captured images
  * 
  * @param[in] data  Image data to update (the just captured camera frame)
- * @param[in] size  Size in bytes of the image data
+ * @param[in] width		Width in pixels
+ * @param[in] height  Height in pixels
+ * @param format			Format to the image passed
  */
-void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int size )	
+void BaseCameraInput::setNewFrameData( char* data, unsigned int width, unsigned int height, ImageFormat format )	
 {
   //if ( size != m_frameSize )
   //  THROW_EXCEPTION( "Trying to camera image data with a wrong image data size" );
 
 	// If the received image has the same format... copy it
-	if ( size == m_frameSize )
-		cvSetData( m_currentCameraImage, data, m_width * m_nChannels );
+	if ( (width == m_currentCameraImage.getWidth() ) && (height == m_currentCameraImage.getHeight()) && (m_format == format) )
+		m_currentCameraImage.setData( data, width, height, format );
+		//cvSetData( m_currentCameraImage, data, m_width * m_nChannels );
 
 	// If we are working in GRAYSCALE and the received image is RGB -> convert it, and then store it
-	else if ( (m_format == GRAYSCALE) && (size == m_frameSize * 3) )
+	else if ( (m_format == GRAYSCALE) && (format == RGB) )
 	{
-		cvSetData( m_tempImage, data, (m_width * m_nChannels) * 3 );
-		cvCvtColor( m_tempImage, m_currentCameraImage, CV_BGR2GRAY );
+		m_tempImage.setData( data, width, height, format );
+		//cvSetData( m_tempImage, data, (m_width * m_nChannels) * 3 );
+		cvCvtColor( &m_tempImage.getCVImage(), &m_currentCameraImage.getCVImage(), CV_BGR2GRAY );
+		m_currentCameraImage.setUpdateTexture( true );
 	}
 	else
 		LOG_ERROR( "Trying to set camera image data with a wrong format" );

@@ -30,8 +30,8 @@
 
 // Graphics
 #include "graphics/TexturedQuad.h"
-#include "graphics/ImageProcessing/ImageDifferenceFilter.h"
-#include "graphics/ImageProcessing/ImageThresholdFilter.h"
+#include "graphics/ImageDifferenceFilter.h"
+#include "graphics/ImageThresholdFilter.h"
 
 namespace ComputerVision
 {

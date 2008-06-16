@@ -86,12 +86,18 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
 
 	// Create the camera scene and sets its initial properties
 	m_pOgreCamera = pOgreSceneManager->createCamera( cameraName );
-	m_pOgreCamera->setPosition( 0, 0, 2000 );
-	m_pOgreCamera->lookAt( 0, 0, 0 );
+
+	// Set properties
+	//m_pOgreCamera->setPosition( 0, 0, 2000 );
+	//m_pOgreCamera->lookAt( 0, 0, 0 );
 
 	// Create camera scene node and add it to the scene manager
 	m_cameraSceneNode = pOgreSceneManager->getRootSceneNode()->createChildSceneNode();	
 	m_cameraSceneNode->attachObject( m_pOgreCamera );
+
+	//TEST
+	setProcessingLikeCamera();
+
 
 
 	// The class is now initialized
