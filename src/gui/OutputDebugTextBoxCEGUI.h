@@ -19,8 +19,8 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _OuputDebugTextBoxCEGUI_h_
-#define _OuputDebugTextBoxCEGUI_h_
+#ifndef _OutputDebugTextBoxCEGUI_h_
+#define _OutputDebugTextBoxCEGUI_h_
 
 #include "GUIPrereqs.h"
 
@@ -31,13 +31,13 @@ namespace GUI
  * @internal
  * @brief Kind of text box that allows to output messages within the application window
  */
-class OuputDebugTextBoxCEGUI
+class OutputDebugTextBoxCEGUI
 {
 public:
 
 	// Constructor / Destructor
-	OuputDebugTextBoxCEGUI();
-	~OuputDebugTextBoxCEGUI();
+	OutputDebugTextBoxCEGUI();
+	~OutputDebugTextBoxCEGUI();
 
 	// Init / Release / Update
 	void	init 	();
@@ -72,4 +72,4 @@ private:
 
 } // namespace GUI
 
-#endif // _OuputDebugTextBoxCEGUI_h_
+#endif // _OutputDebugTextBoxCEGUI_h_

@@ -147,17 +147,6 @@ void strokeWeight( int weight )
 	Graphics::GraphicsManager::getSingleton().setStrokeWeight(weight);
 }
 
-/*
- * @brief Sets the width of the stroke used for lines, points, and the border around shapes. 
- * 
- * @param width Variable of type Int containing the weight (in pixels) of the stroke
- */
-void strokeWeight( float weight )
-{
-	Graphics::GraphicsManager::getSingleton().setStrokeWeight((int)weight);
-}
-
-
 /**
  * @brief Allows to enable or disable the default 3d camera control
  *

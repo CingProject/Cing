@@ -33,6 +33,9 @@
 namespace ComputerVision
 {
 
+// Static member init
+const int BackgroundSubtraction::DEFAULT_THRESHOLD = 50;
+
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
@@ -40,6 +43,8 @@ namespace ComputerVision
 BackgroundSubtraction::BackgroundSubtraction():
 	m_backgroundImage	( NULL )
 {
+	// Set default threshold
+	m_thresholdFilter.setThreshold( DEFAULT_THRESHOLD );
 }
 
 /**
@@ -60,6 +65,7 @@ BackgroundSubtraction::~BackgroundSubtraction()
  */
 void BackgroundSubtraction::end()
 {
+	cvReleaseImage( &m_backgroundImage );
 	m_backgroundImage = NULL;
 }
 
@@ -69,7 +75,7 @@ void BackgroundSubtraction::end()
  * @param				imgToAnalyze	Image to analyze. It will be compared with the stored background
  * @param[out]	output				The result of the background subtraction will be stored in this image
  */
-void BackgroundSubtraction::compute( const Graphics::Image& imgToAnalyze, Graphics::Image& output )
+void BackgroundSubtraction::update( const Graphics::Image& imgToAnalyze, Graphics::Image& output )
 {
 	// Request temporal images to the image resource manager
 	IplImage* tempImage = Graphics::ImageResourceManager::getSingleton().getImage( imgToAnalyze.getWidth(), imgToAnalyze.getHeight(), imgToAnalyze.getNChannels() );
@@ -115,7 +121,7 @@ void BackgroundSubtraction::storeBackground( const Graphics::Image& backgroundIm
 				( backgroundImage.getNChannels() != m_backgroundImage->nChannels) )
 	{
 		// Release old image (if it exists) and create the new one
-		Common::Release( m_backgroundImage );
+		cvReleaseImage( &m_backgroundImage );
 		m_backgroundImage = cvCloneImage( &backgroundImage.getCVImage() );
 	}
 	// If we have an ok image -> just copy the data

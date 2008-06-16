@@ -23,7 +23,6 @@
 #define _ImageThresholdFilter_H_
 
 #include "GraphicsPrereqs.h"
-#include "BaseImageFilter.h"
 
 namespace Graphics
 {
@@ -33,14 +32,14 @@ namespace Graphics
  * Applies a fixed-level threshold filter to an image -> thus polarizing it. This is usually used to 
  * get bi-level (binary) image out of grayscale image
  */
-class ImageThresholdFilter: public BaseImageFilter
+class ImageThresholdFilter
 {
 public:
 
 	ImageThresholdFilter(): m_threshold( 50 ) {}
 
   // Apply the filter (the result is stored in m_outputImage of the base filter class)
-  void  apply        ( const IplImage& inImage, IplImage& output );
+  void  apply        ( const _IplImage& inImage, _IplImage& output );
 
   // Set image threshold value
   void  setThreshold ( int threshold ) { m_threshold = threshold; }

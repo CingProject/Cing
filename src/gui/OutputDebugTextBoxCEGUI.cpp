@@ -19,7 +19,7 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "OuputDebugTextBoxCEGUI.h"
+#include "OutputDebugTextBoxCEGUI.h"
 #include "GUIManagerCEGUI.h"
 
 // CEGUI
@@ -37,15 +37,15 @@ namespace GUI
 {
 
 // Static members init
-const int		OuputDebugTextBoxCEGUI::DEFAULT_TEXT_BOX_HIGHT	= 150;
-const float OuputDebugTextBoxCEGUI::DEFAULT_TRANSPARENCY		= 0.5f;
-const int		OuputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 300;
+const int		OutputDebugTextBoxCEGUI::DEFAULT_TEXT_BOX_HIGHT	= 150;
+const float OutputDebugTextBoxCEGUI::DEFAULT_TRANSPARENCY		= 0.5f;
+const int		OutputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 300;
 
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-OuputDebugTextBoxCEGUI::OuputDebugTextBoxCEGUI():
+OutputDebugTextBoxCEGUI::OutputDebugTextBoxCEGUI():
 	m_listBox( NULL ),
 	m_bIsValid  ( false )
 {
@@ -55,7 +55,7 @@ OuputDebugTextBoxCEGUI::OuputDebugTextBoxCEGUI():
  * @internal
  * @brief Destructor. Class release.
  */
-OuputDebugTextBoxCEGUI::~OuputDebugTextBoxCEGUI()
+OutputDebugTextBoxCEGUI::~OutputDebugTextBoxCEGUI()
 {
 	// Release resources
 	end();
@@ -65,13 +65,13 @@ OuputDebugTextBoxCEGUI::~OuputDebugTextBoxCEGUI()
  * @internal
  * @brief Creates the text box layout
  */
-void OuputDebugTextBoxCEGUI::init()
+void OutputDebugTextBoxCEGUI::init()
 {
 	// Get CEGUI window manager to create new windows
 	CEGUI::WindowManager&	win = CEGUI::WindowManager::getSingleton();
 
 	// Create the listbox (will work as a text box)
-	m_listBox = static_cast<CEGUI::Listbox*>(win.createWindow("Vanilla/Listbox", "Vision/OuputDebugTextBoxCEGUI"));
+	m_listBox = static_cast<CEGUI::Listbox*>(win.createWindow("Vanilla/Listbox", "Vision/OutputDebugTextBoxCEGUI"));
 	m_listBox->setArea( CEGUI::URect(	cegui_absdim(0), 
 																		cegui_absdim(Globals::height-DEFAULT_TEXT_BOX_HIGHT), 
 																		cegui_absdim(Globals::width), 
@@ -92,7 +92,7 @@ void OuputDebugTextBoxCEGUI::init()
  * @brief Releases the class resources. 
  * After this call no method of this object can be called without calling init method again.
  */
-void OuputDebugTextBoxCEGUI::end()
+void OutputDebugTextBoxCEGUI::end()
 {
 
 	m_bIsValid = false;
@@ -103,11 +103,11 @@ void OuputDebugTextBoxCEGUI::end()
  *
  * @param text Text to output
  */
-void OuputDebugTextBoxCEGUI::print( const char* text )
+void OutputDebugTextBoxCEGUI::print( const char* text )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to print to the OuputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to print to the OutputDebugTextBoxCEGUI, but it has not been initialized" );
 		return;
 	}
 
@@ -133,11 +133,11 @@ void OuputDebugTextBoxCEGUI::print( const char* text )
  *
  * @param text Text to output
  */
-void OuputDebugTextBoxCEGUI::println( const char* text )
+void OutputDebugTextBoxCEGUI::println( const char* text )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to print to the OuputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to print to the OutputDebugTextBoxCEGUI, but it has not been initialized" );
 		return;
 	}
 
@@ -146,9 +146,7 @@ void OuputDebugTextBoxCEGUI::println( const char* text )
 		m_listBox->removeItem( m_listBox->getListboxItemFromIndex( 0 ) );
 
 	// Create a new list box item to print the text
-	std::ostringstream oss;
-	oss << m_listBox->getItemCount() << " " << text;
-	CEGUI::ListboxTextItem* listboxitem = new CEGUI::ListboxTextItem ( oss.str() );
+	CEGUI::ListboxTextItem* listboxitem = new CEGUI::ListboxTextItem ( text );
 	listboxitem->setAutoDeleted( true );
 	m_listBox->addItem( listboxitem );
 
@@ -159,11 +157,11 @@ void OuputDebugTextBoxCEGUI::println( const char* text )
 /**
  * @brief Clears all the messages that the list box contains
  */
-void OuputDebugTextBoxCEGUI::clear()
+void OutputDebugTextBoxCEGUI::clear()
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to clear the OuputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to clear the OutputDebugTextBoxCEGUI, but it has not been initialized" );
 		return;
 	}
 
@@ -176,11 +174,11 @@ void OuputDebugTextBoxCEGUI::clear()
  * @param visible if true, the text box will be visible, if false, it will become invisible, although
  * it will continue storing items
  */
-void OuputDebugTextBoxCEGUI::setVisible( bool visible )
+void OutputDebugTextBoxCEGUI::setVisible( bool visible )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to set visible the OuputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to set visible the OutputDebugTextBoxCEGUI, but it has not been initialized" );
 		return;
 	}
 
@@ -192,11 +190,11 @@ void OuputDebugTextBoxCEGUI::setVisible( bool visible )
  *
  * @param pxHight hight in pixels of the text box
  */
-void OuputDebugTextBoxCEGUI::setHight( int pxHight )
+void OutputDebugTextBoxCEGUI::setHight( int pxHight )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to set visible the OuputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to set visible the OutputDebugTextBoxCEGUI, but it has not been initialized" );
 		return;
 	}
 
@@ -208,11 +206,11 @@ void OuputDebugTextBoxCEGUI::setHight( int pxHight )
  *
  * @param alpha transparency of the text box. Range: 0..1
  */
-void OuputDebugTextBoxCEGUI::setAlpha( float alpha )
+void OutputDebugTextBoxCEGUI::setAlpha( float alpha )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to set visible the OuputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to set visible the OutputDebugTextBoxCEGUI, but it has not been initialized" );
 		return;
 	}
 

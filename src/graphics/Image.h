@@ -81,7 +81,10 @@ public:
 	void  text			( float x1, float y1, const char* text );
 
 	// Image processing
-	void filter( ImageProcessingFilters type );
+	void	filter	( ImageProcessingFilters type );
+	void	toColor	();
+	void	toGray	();
+
 	// Updates texture data
 	void updateTexture();
 

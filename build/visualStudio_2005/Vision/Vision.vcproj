@@ -617,7 +617,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\gui\OuputDebugTextBoxCEGUI.cpp"
+					RelativePath="..\..\..\src\gui\OutputDebugTextBoxCEGUI.cpp"
 					>
 				</File>
 			</Filter>
@@ -641,7 +641,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\gui\OuputDebugTextBoxCEGUI.h"
+					RelativePath="..\..\..\src\gui\OutputDebugTextBoxCEGUI.h"
 					>
 				</File>
 			</Filter>
@@ -740,10 +740,6 @@
 					RelativePath="..\..\..\src\computervision\BlobFinder.cpp"
 					>
 				</File>
-				<File
-					RelativePath="..\..\..\src\computervision\CompVision.cpp"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Header Files"
@@ -762,10 +758,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\src\computervision\ComputerVisionPrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\computervision\CompVision.h"
 					>
 				</File>
 			</Filter>

@@ -41,10 +41,6 @@ namespace Graphics
  */
 void ImageDifferenceFilter::apply( const IplImage& inImage1, const IplImage& inImage2, IplImage& output )
 {
-  // Check valid filter
-  //if ( !isValid() )
-  //  THROW_EXCEPTION( "Trying to apply ImageDifferenceFilter, with filter not initialized. Init method should be called" );
-
   // Check both images have same size and it is the same than the filter size
   if( (inImage1.imageSize != inImage2.imageSize) )
     THROW_EXCEPTION( "Trying to apply ImageDifferenceFilter to images with different size-> they must have the same size!" );

@@ -47,15 +47,17 @@ public:
 	void	end		();	
 
 	// Operations
-	void	compute					( const Graphics::Image& imgToAnalyze, Graphics::Image& output );
+	void	update					( const Graphics::Image& imgToAnalyze, Graphics::Image& output );
 	void	storeBackground	( const Graphics::Image& backgroundImage );
 
 	// Configuration
 	void  setThreshold		( int threshold ) { m_thresholdFilter.setThreshold( threshold ); }
 
-
 	// Query  Methods
 	bool	isValid	() { return m_backgroundImage != NULL; }
+
+	// Constants
+	static const int DEFAULT_THRESHOLD; ///< Default threshold value to perform background subtraction
 
 private:
 

@@ -52,11 +52,10 @@ public:
 	~BlobFinder();
 
 	// Init / Release
-	bool          init          ( int width, int height );
 	void          end           ();
 
   // Blob related methods
-  void          computeBlobs  ( const IplImage& inImage );
+	void          update				( const Graphics::Image& inImage );
 
   // Set methods
   void          setMinBlobArea( float minArea ) { m_minBlobArea = minArea; }
@@ -67,8 +66,8 @@ public:
 	bool          isValid       () const { return m_bIsValid; }
   int						getNumBlobs   () const { return (int)m_blobs.size(); }
   
-  // TODO check n
-  const Blob&   getBlobN      ( int n ) const { return m_blobs[n]; }
+  // TODO check n valid
+  Blob&					getBlobN      ( int n )  { return m_blobs[n]; }
 
 private:
 
@@ -87,7 +86,6 @@ private:
   unsigned int        m_maxBlobs;             ///< Max number of blos to look for
 
   // OpenCV stuff
-  IplImage*           m_cvImage;              ///< Image to store the input image, and perform the blob analysis on it
   CvMemStorage*       m_findContoursStorage;  ///< To store contour data (by opencv)
   CvSeq*              m_contour;              ///< To store opencv contours
 

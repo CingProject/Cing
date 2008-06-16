@@ -55,6 +55,9 @@ namespace Graphics
 GraphicsManager::GraphicsManager():
   m_bIsValid    ( false ),
 	m_showFps			( false ),
+	m_strokeWeight( 1 ),
+	m_strokeColor( 255, 255, 255 ),
+	m_fillColor( 255, 255, 255 ),
   m_pSceneManager( NULL )
 {
 }

@@ -23,7 +23,6 @@
 #define _ImageDifferenceFilter_H_
 
 #include "GraphicsPrereqs.h"
-//#include "BaseImageFilter.h"
 
 namespace Graphics
 {

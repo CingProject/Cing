@@ -50,7 +50,7 @@ struct ImageResource
  * but they should not be stored nor deleted (as they can be served to another requester in the next frame).
  *
  * @note Currently, width default settings, it consumes around 5Mb or ram memory, but can increase performance
- * and memory connsumption singnificantly in an application with a high rate of image processing or computer vision processes
+ * and memory consumption significantly in an application with a high rate of image processing or computer vision processes
  */
 class ImageResourceManager: public Common::SingletonStatic< ImageResourceManager >
 {
