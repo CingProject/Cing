@@ -34,10 +34,6 @@
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
 #include "externLibs/OpenCV/highgui/include/highgui.h"
 
-// Image processing filters
-#include "imageProcessing/ImageDifferenceFilter.h"
-#include "imageProcessing/ImageThresholdFilter.h"
-
 //TEMP
 #include "input/InputPrereqs.h"
 
@@ -70,6 +66,7 @@ public:
 	// Query methods
 	bool                      isValid                   () const { return m_bIsValid; }
 	const Window&             getMainWindow             () const { return m_mainWindow; }
+	Window&										getMainWindow             ()			 { return m_mainWindow; }
 	const Camera3D&           getActiveCamera           () const { return m_activeCamera; }
 	const Ogre::SceneManager& getSceneManager           () const { return *m_pSceneManager; }
 	Ogre::SceneManager&       getSceneManager           ()       { return *m_pSceneManager; }
@@ -96,6 +93,9 @@ public:
 
 	const CvFont&							getCvFont									()const{ return  m_cvFont; }
 
+	// Debug methods
+	void											showFps										( bool show );
+
 	// Camera control
 	void											useDefault3DCameraControl	( bool useDefault );
 
@@ -116,6 +116,7 @@ private:
 	Ogre::SceneManager*   m_pSceneManager;  ///< Main scene manager
 	Window                m_mainWindow;     ///< Main application window
 	Camera3D              m_activeCamera;   ///< Active camera
+	
 	DebugOverlay          m_debugOverlay;   ///< Debug overlay used to show debug information
 	Font                  m_defaultFont;    ///< Default system font
 	Text                  m_defaultText;    ///< To print text to screen
@@ -123,6 +124,8 @@ private:
 	Color									m_strokeColor;		///< Color used to draw shapes
 	float									m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
 	CvFont								m_cvFont;					///< Font used to draw text on images
+					
+	bool									m_showFps;				///< Indicates whether the frames per second should be shown or not
 	bool                  m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 

@@ -52,9 +52,9 @@ public:
 	void              update      ();
 
 	// Query methods
-	bool              isValid     () const { return m_bIsValid; }
-  const Mouse&      getMouse    () const { return m_mouse;    } 
-  const Keyboard&   getKeyboard () const { return m_keyboard; } 
+	bool        isValid     () const	{ return m_bIsValid; }
+  Mouse&      getMouse    ()				{ return m_mouse;    } 
+  Keyboard&   getKeyboard ()				{ return m_keyboard; } 
 	
 
 private:

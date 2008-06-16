@@ -61,6 +61,9 @@ long               TexturedQuad::m_quadCounter       = 0;
 TexturedQuad::TexturedQuad():
   m_quadSceneNode ( NULL  ),
 	m_visible				( true	),
+	m_quad					( NULL  ),
+	m_2dXPos				( -INT_MAX ),
+	m_2dYPos				( -INT_MAX ),
   m_bIsValid      ( false )
 {
 }
@@ -83,20 +86,19 @@ TexturedQuad::~TexturedQuad()
  * @param[in] textureHeight Height of the texture to show on the quad
  * @param[in] format  Format of the image. RGB for color images (red, green and blue), ARGB for color plus alpha channel for transparency
  * GRAYSCALE for greyscale images, this is, black & white
- * @param[in] render2D      If true, the textured quad is rendered in 2d, so it is overlayed to the 3d scene
  * @return true if the initialization was ok | false otherwise
  */
-bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format, bool render2D /*= false*/ )
+bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format )
 {
   // Check if the class is already initialized
   if ( isValid() )
     return true;
 
   // Store the texture data
-  m_width     = textureWidth;
-  m_height    = textureHeight;
+  m_textWidth     = textureWidth;
+  m_textHeight    = textureHeight;
 	m_format		= format;
-  m_render2D  = render2D;
+  m_render2D  = false;
 
   // Generate unique names for texture, material and ogre manual object
   generateUniqueNames();
@@ -114,48 +116,33 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
   // Create a material for the quad
   Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName,
                                                                              Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-  // Assign texture to material
+  // Assign texture to material and set materia properties
   material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
   material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
-  // No lighting
-  material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
-
   // Create the manual object (is used to define geometry on the fly)
   Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
-  Ogre::ManualObject* quad = sceneManager.createManualObject( m_ogreManualObjectName );
-
-  // Check if we want 2d rendering
-	if ( m_render2D )
-  {
-    quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY);
-    quad->setUseIdentityProjection(true);
-    quad->setUseIdentityView(true);
-    quad->setQueryFlags(0);
-  }
+	m_quad = sceneManager.createManualObject( m_ogreManualObjectName );
 
   // Generate the geometry of the quad
-  quad->begin( m_ogreMaterialName, Ogre::RenderOperation::OT_TRIANGLE_LIST );
+	m_quad->begin( m_ogreMaterialName );
 
-    // Quad positions and texture coordinates
-    quad->position( 0.0, 0.0, 0.0);  quad->textureCoord( 0, 0 );
-    quad->position( 1.0, 0.0, 0.0);  quad->textureCoord( 1, 0 );
-    quad->position( 1.0, 1.0, 0.0);  quad->textureCoord( 1, 1 );
-    quad->position( 0.0, 1.0, 0.0);  quad->textureCoord( 0, 1 );
+    // m_quad positions and texture coordinates
+    m_quad->position( 0.0, 0.0, 0.0);  m_quad->textureCoord( 0, 1 );
+    m_quad->position( 1.0, 0.0, 0.0);  m_quad->textureCoord( 1, 1 );
+    m_quad->position( 1.0, 1.0, 0.0);  m_quad->textureCoord( 1, 0 );
+    m_quad->position( 0.0, 1.0, 0.0);  m_quad->textureCoord( 0, 0 );
 
-    // Quad indexes (two triangles)
-    quad->triangle( 0, 1, 2 );
-    quad->triangle( 0, 2, 3 );
+    // m_quad indexes (two triangles)
+		m_quad->triangle( 0, 1, 2 );
+		m_quad->triangle( 0, 2, 3 );
 
   // Finish defining geometry
-  quad->end();
+  m_quad->end();
 
   // Add to the scene
   m_quadSceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
-  m_quadSceneNode->attachObject( quad );
-
-  // By default scale quad to texture resolution
-  m_quadSceneNode->setScale( textureWidth, textureHeight, 1 );
+  m_quadSceneNode->attachObject( m_quad );
 
   // The class is now initialized
 	m_bIsValid = true;
@@ -184,13 +171,12 @@ void TexturedQuad::end()
 }
 
 /**
- * @internal
- * Sets the position in the scene of the textured quad
+ * @brief Sets the position in the scene of the textured quad
  * @param[in] x x coordinate of the new position
  * @param[in] y y coordinate of the new position
  * @param[in] z z coordinate of the new position
  */
-void TexturedQuad::setPosition( float x, float y, float z /*= 0.0f*/ )
+void TexturedQuad::setPosition( float x, float y, float z )
 {
 	if ( !isValid() )
 	{
@@ -198,16 +184,53 @@ void TexturedQuad::setPosition( float x, float y, float z /*= 0.0f*/ )
 		return;
 	}
 
-  // Render 2D
-  if ( m_render2D )
-  {
-    float screenX = Common::map( x, 0, Globals::width, 0, 1 );
-    float screenY = Common::map( y, 0, Globals::height, 0, 1 );
-    m_quadSceneNode->setPosition( screenX, screenY, 0 );
-  }
-  // Render 3D
-  else 
-    m_quadSceneNode->setPosition( x, y, z );
+  m_quadSceneNode->setPosition( x, y, z );
+}
+
+/**
+ * @brief Sets the position in the scene of the textured quad (in 2 dimensions -> in screen coordinates)
+ * @param[in] x x coordinate of the new position
+ * @param[in] y y coordinate of the new position
+ */
+void TexturedQuad::setPosition2d( float x, float y )
+{
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to set position in an invalid textured quad" );
+		return;
+	}
+	
+	// Simulate upper left corner to be 0,0 (although in ogre the 0,0 is the lower left corner
+	// That is why the y screen coordinate is inverted
+	m_2dXPos = (x / (float)Globals::width) * 2.0f - 1;
+	m_2dYPos = -((y / (float)Globals::height) * 2.0f - 1);
+	m_quadSceneNode->setPosition( m_2dXPos, m_2dYPos - m_2dHeight, 0 );
+}
+
+/**
+ * @brief Sets the scale of the object
+ *
+ * @param[in] xScale scale in the x axis
+ * @param[in] xScale scale in the y axis
+ * @param[in] xScale scale in the z axis
+ */
+void TexturedQuad::setScale( float xScale, float yScale, float zScale /*= 1.0f*/ )
+{
+	m_quadSceneNode->setScale( xScale, yScale, zScale );
+}
+
+
+/**
+ * @brief Sets the scale of the object in 2d, this is in screen coordinates
+ *
+ * @param[in] xScale scale in the x axis
+ * @param[in] xScale scale in the y axis
+ */
+void TexturedQuad::setScale2d( float xScale, float yScale )
+{
+	m_2dWidth = (xScale / (float)Globals::width) * 2.0f;
+	m_2dHeight = (yScale / (float)Globals::height) * 2.0f;
+	m_quadSceneNode->setScale( m_2dWidth, m_2dHeight, 1 );
 }
 
 /**
@@ -226,6 +249,83 @@ void TexturedQuad::setVisible( bool visible )
 	m_visible = visible;
   m_quadSceneNode->setVisible( visible );
 }
+
+/**
+ * @brief Draws the texture quad in three dimensions, with the texture size
+ *
+ * @param x X coordinate where it will be drawn
+ * @param y Y coordinate where it will be drawn
+ * @param z Z coordinate where it will be drawn
+ */
+void TexturedQuad::draw( float x, float y, float z )
+{
+	draw( x, y, z, m_textWidth, m_textHeight );
+}
+
+/**
+ * @brief Draws the texture quad in three dimensions, with a specific size
+ *
+ * @param x 			X coordinate where it will be drawn
+ * @param y 			Y coordinate where it will be drawn
+ * @param z 			Z coordinate where it will be drawn
+ * @param width		Width of the quad that will be rendered
+ * @param height	Height of the quad that will be rendered
+ */
+void TexturedQuad::draw( float x, float y, float z, float width, float height )
+{
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to draw a textured quad not initialized" );
+		return;
+	}
+
+	// If the object is set to render in 2d -> set it to render in 3d
+	if ( m_render2D )
+		set3dRendering();
+
+	// Set properties of the quad, and set visible -> it will be rendered in the next render
+	m_quadSceneNode->setPosition( x, y, z );
+	m_quadSceneNode->setScale( width, height, 1 );
+	m_quadSceneNode->setVisible( true );
+}
+
+/**
+ * @brief Draws the texture quad in two dimensions, with the texture size
+ * 
+ * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
+ * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
+ */
+void TexturedQuad::draw2d( float x, float y )
+{
+	draw2d( x, y, m_textWidth, m_textHeight );
+}
+
+/**
+ * @brief Draws the texture quad in two dimensions, with a specific size
+ * 
+ * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
+ * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
+ * @param width		Width of the quad that will be rendered <b>in screen coordinates</b>
+ * @param height	Height of the quad that will be rendered <b>in screen coordinates</b>
+ */
+void TexturedQuad::draw2d( float x, float y, float width, float height )
+{
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to draw a textured quad not initialized" );
+		return;
+	}
+
+	// If the object was set to render in 3d -> set it to render in 2d
+	if ( !m_render2D )
+		set2dRendering();
+
+	// Set properties of the quad, and set visible -> it will be rendered in the next render
+	setScale2d( width, height );
+	setPosition2d( x, y );
+	m_quadSceneNode->setVisible( true );
+}
+
 
 /**
  * @brief Updates the texture pixel information from an Image
@@ -258,7 +358,7 @@ void TexturedQuad::updateTexture( unsigned char* textureData, int width, int hei
 		THROW_EXCEPTION( "Trying to upload data texture to a not initializad TextureQuad object" );
 
   // Check resolution
-  if ( ( width > m_width ) || ( height > m_height ) )
+  if ( ( width > m_textWidth ) || ( height > m_textHeight ) )
     THROW_EXCEPTION( "Trying to update texture with too big image data" );
 
 	// Check format
@@ -267,64 +367,7 @@ void TexturedQuad::updateTexture( unsigned char* textureData, int width, int hei
 
 	// Update texture
 	m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
-
-
-
-	//Ogre::DataStreamPtr dataPtr( new Ogre::MemoryDataStream( textureData, width * height * channels ) );
-	//m_ogreTexture->loadRawData( dataPtr, (Ogre::ushort) width, (Ogre::ushort)height, format );
-
-  ////// Check n channels
-  ////if ( m_nChannels != channels )
-  ////  THROW_EXCEPTION( "Trying to update texture with an image data that contains different number of channels" );
-
-  //// Get the texture pixel buffer
-  //Ogre::HardwarePixelBufferSharedPtr pixelBuffer = m_ogreTexture->getBuffer();
-  //  
-  //// Lock the pixel buffer and get a pixel box (HBL_DISCARD for best performance as we don't need to read the pixels)
-  //pixelBuffer->lock( Ogre::HardwareBuffer::HBL_DISCARD ); 
-  //
-  //// Get pixel box (to access the actual pixels)
-  //const Ogre::PixelBox& pixelBox = pixelBuffer->getCurrentLock();
-
-  //// Cast to texture data pointer to access the pixels
-  //unsigned char* pDest = static_cast< unsigned char* >( pixelBox.data );
-
-  //// Fill in pixel data. 
-  //size_t x = 0;
-  //size_t y = 0;
-  //size_t idx = 0;
-  //size_t camIdx = 0;
-  //size_t textureChannels = channels == 1? 1: 4;  //<- Always 4 channels, because when we create a texture even without alpha channel, it has 4 channels
-  //                             // but in render time the alpha is discarded... (TODO: look why this happens)
-  //for( size_t i = 0, x = 0; i < width * height * channels; i += channels )
-  //{
-  //  idx = (x * textureChannels) + y * pixelBox.rowPitch * textureChannels;
-
-  //  // Write the data
-  //  pDest[idx]    = textureData[i]  ; // B
-  //  pDest[idx+1]  = textureData[i+1]; // G
-  //  pDest[idx+2]  = textureData[i+2]; // R
-  //  
-  //  // Alpha channel?
-  //  if ( channels == 4 )
-  //    pDest[idx+3]  = textureData[i+3]; // A
-  //  else 
-  //    pDest[idx+3]  = 255;
-
-  //  // Increment dest texture indexes
-  //  x++;
-  //  if ( x == width )
-  //  {
-  //    x = 0;
-  //    y++;
-  //  }
-  //}
-
-  //// Unlock the pixel buffer
-  //pixelBuffer->unlock();
 }
-
-
 
 /**
  * @brief Copies the data of the received texture quad
@@ -338,7 +381,7 @@ void TexturedQuad::operator=( const TexturedQuad& other )
 		THROW_EXCEPTION( "Trying to copy an invalid TextureQuad" );
 
 	// Init the texture
-	init( other.m_width, other.m_height, other.m_format, other.m_render2D );
+	init( other.m_textWidth, other.m_textHeight, other.m_format );
 
 	// Copy the texture
 	other.m_ogreTexture->copyToTexture( m_ogreTexture );
@@ -373,5 +416,40 @@ void TexturedQuad::generateUniqueNames()
   oss << MATERIAL_NAME << m_quadCounter;
   m_ogreMaterialName = oss.str();
 }
+
+/**
+ * @internal 
+ * @brief Sets the necessary properties for the object to be rendered in 2d (in screen coordinates and size in pixels)
+ */
+void TexturedQuad::set2dRendering()
+{
+	// Properties to be rendered in 2d
+	m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
+	m_quad->setUseIdentityProjection(true);
+	m_quad->setUseIdentityView(true);
+	Ogre::AxisAlignedBox aabb;
+	aabb.setInfinite();
+	m_quad->setBoundingBox(aabb);
+
+	// mark the object as 2d rendering
+	m_render2D = true;
+}
+
+/**
+ * @internal 
+ * @brief Sets the necessary properties for the object to be rendered in 3d (in world coordinates and world units)
+ */
+void TexturedQuad::set3dRendering()
+{
+	// Set properties for 3d rendering
+	m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
+	m_quad->setUseIdentityProjection( false );
+	m_quad->setUseIdentityView( false );
+	m_quad->setQueryFlags( m_3dQueryFlags );
+
+	// mark the object as 3d rendering
+	m_render2D = false;
+}
+
 
 } // namespace Graphics

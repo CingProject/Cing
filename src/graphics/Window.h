@@ -67,9 +67,12 @@ public:
 	bool                                  isValid               () const { return m_bIsValid; }
 	bool                                  isClosed              () const;
 	bool                                  isFullScreen          () const;
+	int																		getWidth							() const { return m_width; }
+	int																		getHeight							() const { return m_height; }
 	void                                  getMetrics            ( TWindowMetrics& metrics ) const;
 	size_t                                getWindowHandle       () const;
 	const Ogre::RenderTarget::FrameStats& getFrameStats         () const { return *m_stats; }
+	Ogre::RenderWindow*										getOgreWindow					() { return m_pOgreWindow; }
 
 	// Various
 	void                                  attachCameraToWindow  ( Camera3D& camera );
@@ -78,10 +81,11 @@ public:
 private:
 
 	// Attributes
-	Ogre::RenderWindow *                  m_pOgreWindow;  ///< Ogre window
-	Ogre::Viewport*                       m_mainViewport; ///< Window viewport
-	const Ogre::RenderTarget::FrameStats* m_stats;        ///< Window render statistics
-	bool                                  m_bIsValid;     ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	Ogre::RenderWindow*	                  m_pOgreWindow;  		///< Ogre window
+	Ogre::Viewport*                       m_mainViewport; 		///< Window viewport
+	const Ogre::RenderTarget::FrameStats* m_stats;        		///< Window render statistics
+	int																		m_width, m_height;	///< Window size
+	bool                                  m_bIsValid;					///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

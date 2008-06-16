@@ -26,6 +26,9 @@
 // Graphics 
 #include "graphics/GraphicsManager.h"
 
+// GUI
+#include "gui/GUIManagerCEGUI.h"
+
 // Input
 #include "input/InputManager.h"
 
@@ -90,6 +93,14 @@ bool Application::initApp()
   // Init input manager
   Input::InputManager::getSingleton().init();
 
+	// Register the application as listener for mouse and keyboard	
+	Input::InputManager::getSingleton().getMouse().addListener( this );
+	Input::InputManager::getSingleton().getKeyboard().addListener( this );
+
+	// Init GUI Manager
+	GUI::GUIManagerCEGUI::getSingleton().init( Graphics::GraphicsManager::getSingleton().getMainWindow().getOgreWindow(), 
+																						 &Graphics::GraphicsManager::getSingleton().getSceneManager() );
+
   // Init user application
   setup();
 
@@ -121,6 +132,9 @@ void Application::endApp()
 
 	// Release physics manager
 	Physics::PhysicsManager::getSingleton().end();
+
+	// Release GUI Manager
+	GUI::GUIManagerCEGUI::getSingleton().end();
 
   // Release graphics manager
   Graphics::GraphicsManager::getSingleton().end();
@@ -165,21 +179,89 @@ void Application::drawApp()
 /**
  * @internal
  * Mouse pressed handler
+ *
+ * @param event Contains the information about the mouse
  */
-void Application::mousePressedEvent()
+bool Application::mouseMoved( const OIS::MouseEvent& event )
 {
+	// Update mouse pos global var
+	Globals::mouseX = event.state.X.abs;
+	Globals::mouseY = event.state.Y.abs;
+
   // Call user mousepressed handler
-  mousePressed();
+	::mouseMoved();
+
+	return true;
+}
+
+/**
+ * @internal
+ * Mouse pressed handler
+ *
+ * @param event Contains the information about the mouse
+ * @param id button that has been pressed
+ */
+bool Application::mousePressed( const OIS::MouseEvent& event, OIS::MouseButtonID id  )
+{
+	Globals::mouseButton = (Input::MouseButton) id;
+
+  // Call user mousepressed handler
+	::mousePressed();
+
+	return true;
+}
+
+
+/**
+ * @internal
+ * Mouse pressed handler
+ *
+ * @param event Contains the information about the mouse
+ * @param id button that has been released
+ */
+bool Application::mouseReleased( const OIS::MouseEvent& event, OIS::MouseButtonID id  )
+{
+	Globals::mouseButton = (Input::MouseButton) id;
+
+  // Call user mousepressed handler
+	::mouseReleased();
+
+	return true;
 }
 
 /**
  * @internal
  * Key pressed handler
+ *
+ * @param event Contains the information about the event
  */
-void Application::keyPressedEvent()
+bool Application::keyPressed( const OIS::KeyEvent& event )
 {
+	// Set global variable key
+	Globals::key = event.text;
+
   // Call user mousepressed handler
-  keyPressed();
+	::keyPressed();
+
+	return true;
+}
+
+/**
+ * @internal
+ * Key pressed handler
+ *
+ * @param event Contains the information about the event
+ */
+bool Application::keyReleased( const OIS::KeyEvent& event )
+{
+	// Set global variable key
+	Globals::key = event.text;
+
+  // Call user mousepressed handler
+	// TODO: see a posibility to allow the user to define these handlers or not
+  //::keyReleased();
+
+	return true;
 }
 
 } // namespace Framework

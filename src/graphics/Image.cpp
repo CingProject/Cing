@@ -106,8 +106,8 @@ void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
    THROW_EXCEPTION( "Image already initialized" );
 
 	// Create the empty IplImage image
-	int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
-	m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U,channels);
+	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
+	m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
 		
 	// Create the texture quad (to draw image)
 	m_quad.init( m_cvImage->width, m_cvImage->height, format );
@@ -127,7 +127,7 @@ void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
  */
 void Image::init( const Image& img )
 {
-	this->operator =( img );
+	this->operator=( img );
 
 	m_bIsValid = true;
 	m_bUpdateTexture = false;
@@ -151,8 +151,8 @@ void Image::load( const std::string& name  )
 	if ( m_cvImage != NULL ) 
 		cvReleaseImage( &m_cvImage );
 
-	int channels = (int)Ogre::PixelUtil::getNumElemBytes( m_image.getFormat() );
-	m_cvImage = cvCreateImage(cvSize((int)m_image.getWidth(),(int)m_image.getHeight()),IPL_DEPTH_8U,channels);
+	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( m_image.getFormat() );
+	m_cvImage = cvCreateImage(cvSize((int)m_image.getWidth(),(int)m_image.getHeight()),IPL_DEPTH_8U,m_nChannels);
 	m_cvImage->imageData = (char *)m_image.getData();
 
 	// Create the texture quad (to draw image)
@@ -278,6 +278,7 @@ ImageFormat Image::getFormat() const
 	}
 }
 
+
 /**
  * @brief Get texture update state
  * @return the m_bUpdateTexture attribute
@@ -301,16 +302,77 @@ void	Image::setUpdateTexture(bool updateTextureFlag )
  * @param yPos y coordinate where the image should be drawn
  * @param zPos z coordinate where the image should be drawn. If not passed, z will be set to zero
  */
-void Image::draw( int xPos, int yPos, int zPos /*= 0*/ )
+void Image::draw( float xPos, float yPos, float zPos )
 {
+	// check if texture needs to be updated
 	if (m_bUpdateTexture)
 	{
 		updateTexture();
 		m_bUpdateTexture = false;
 	}
 
-	m_quad.setPosition( xPos, yPos, zPos );
-	m_quad.setVisible( true );
+	m_quad.draw( xPos, yPos, zPos );
+}
+
+/**
+ * @brief Draws the image in a specific position
+ *
+ * @param xPos x coordinate where the image should be drawn
+ * @param yPos y coordinate where the image should be drawn
+ * @param zPos z coordinate where the image should be drawn. If not passed, z will be set to zero
+ * @param width		Width of the quad that will be rendered
+ * @param height	Height of the quad that will be rendered
+ */
+void Image::draw( float xPos, float yPos, float zPos, float width, float height )
+{
+	// check if texture needs to be updated
+	if (m_bUpdateTexture)
+	{
+		updateTexture();
+		m_bUpdateTexture = false;
+	}
+
+	m_quad.draw( xPos, yPos, zPos, width, height );
+}
+
+/**
+ * @internal 
+ * @brief Draws the image in 2d -> screen coordinates
+ *
+ * @param xPos x coordinate where the image should be drawn
+ * @param yPos y coordinate where the image should be drawn
+ */
+void Image::draw2d( float xPos, float yPos )
+{
+	// check if texture needs to be updated
+	if (m_bUpdateTexture)
+	{
+		updateTexture();
+		m_bUpdateTexture = false;
+	}
+
+	m_quad.draw2d( xPos, yPos );
+}
+
+/**
+ * @internal 
+ * @brief Draws the image in 2d -> screen coordinates
+ *
+ * @param xPos x coordinate where the image should be drawn
+ * @param yPos y coordinate where the image should be drawn
+ * @param width		Width of the image that will be rendered <b>in screen coordinates</b>
+ * @param height	Height of the image that will be rendered <b>in screen coordinates</b>
+ */
+void Image::draw2d( float xPos, float yPos, float width, float height )
+{
+	// check if texture needs to be updated
+	if (m_bUpdateTexture)
+	{
+		updateTexture();
+		m_bUpdateTexture = false;
+	}
+
+	m_quad.draw2d( xPos, yPos, width, height );
 }
 
 /**
@@ -331,6 +393,7 @@ void Image::operator=( const Image& other )
 
 	m_cvImage = cvCloneImage(other.m_cvImage);
 	m_quad    = other.m_quad;
+	m_nChannels = other.m_nChannels;
 
 	// Load image data to texture
 	updateTexture();
@@ -605,6 +668,6 @@ void Image::ellipse( float x, float y, float width, float height )
  */
 void Image::filter( ImageProcessingFilters type )
 {
-	m_imgThresholdFilter.apply(  *m_cvImage );
+	//m_imgThresholdFilter.apply(  *m_cvImage );
 }
 } // namespace Graphics

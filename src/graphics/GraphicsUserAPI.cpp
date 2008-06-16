@@ -177,4 +177,14 @@ void useDefault3DCameraControl( bool useDefault )
 	Graphics::GraphicsManager::getSingleton().useDefault3DCameraControl( useDefault );
 }
 
+/**
+ * @brief Makes the frames per second to be printed on the screen or not
+ *
+ * @param show if true the current fps wil be printed on screen, if false, it won't be printed
+ */
+void showFps( bool show )
+{
+	Graphics::GraphicsManager::getSingleton().showFps( show );
+}
+
 } // namespace Graphics

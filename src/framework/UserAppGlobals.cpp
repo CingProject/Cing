@@ -25,15 +25,21 @@
 namespace Globals
 {
 
-// App
-unsigned short 	 		width  = 1024;
-unsigned short 	 		height = 600;
+// Window
+unsigned short 	 		width  = -1;
+unsigned short 	 		height = -1;
 
 // Input
 char								key;
 Input::MouseButton	mouseButton;
+int									mouseX = 0;	
+int									mouseY = 0;
 
 // Time
 float								elapsedSec = 0;
+
+// Advanced
+Ogre::SceneManager*	ogreSceneManager	= NULL;
+Ogre::Camera*				ogreCamera				= NULL;
 
 } // namespace Globals

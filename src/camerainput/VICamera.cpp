@@ -81,8 +81,16 @@ void VICamera::update()
 	// If we have a new frame
 	if( m_viCamera.isFrameNew( m_deviceId ) )	
 	{
+		// Calculate the format
+		int npixels				= m_viCamera.getWidth( m_deviceId ) * m_viCamera.getHeight( m_deviceId );
+		size_t frameSize	= m_viCamera.getSize( m_deviceId );
+		ImageFormat format = ( npixels == frameSize )? GRAYSCALE: RGB;
+
 		// we get the pixels by passing in out buffer which gets 
-		setNewFrameData( m_viCamera.getPixels( m_deviceId, true ), m_viCamera.getSize( m_deviceId ) );
+		setNewFrameData(	(char*)m_viCamera.getPixels( m_deviceId, false, true ), 
+											m_viCamera.getWidth( m_deviceId ), 
+											m_viCamera.getHeight( m_deviceId ),
+											format );
 	}
 }
 

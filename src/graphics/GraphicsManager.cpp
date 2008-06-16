@@ -41,7 +41,7 @@
 #include "externLibs/Ogre3d/include/OgreStringConverter.h"
 
 // GUI
-#include "gui/GUIManager.h"
+//#include "gui/GUIManager.h"
 
 
 namespace Graphics
@@ -53,6 +53,7 @@ namespace Graphics
  */
 GraphicsManager::GraphicsManager():
   m_bIsValid    ( false ),
+	m_showFps			( false ),
   m_pSceneManager( NULL )
 {
 }
@@ -83,7 +84,7 @@ bool GraphicsManager::init()
 	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
 
   // Show config dialog
-  if ( !ogreRoot.restoreConfig() && !ogreRoot.showConfigDialog() )
+  if ( /*!ogreRoot.restoreConfig() &&*/ !ogreRoot.showConfigDialog() )
     THROW_EXCEPTION( "User canceled the config dialog!" );
 
   // Init rendering engine and create main window
@@ -94,11 +95,15 @@ bool GraphicsManager::init()
   // Create main window
   m_mainWindow.init( ogreWindow );
 
+	// Set global window size variables
+	Globals::width = m_mainWindow.getWidth();
+	Globals::height = m_mainWindow.getHeight();
+
   // Create the scene manager
   m_pSceneManager = ogreRoot.createSceneManager( Ogre::ST_GENERIC );
   
   // PreInit GUI Manager (QuickGUI requirements)
-  GUI::GUIManager::getSingleton().preInit();
+  //GUI::GUIManager::getSingleton().preInit();
 
 	// Initialize graphics resources, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
@@ -107,19 +112,19 @@ bool GraphicsManager::init()
 	ImageResourceManager::getSingleton().init();
 
   // Init the main camera
-  m_activeCamera.init( m_pSceneManager );
+   m_activeCamera.init( m_pSceneManager );
 
   // Make the camera render in the main window
   m_mainWindow.attachCameraToWindow( m_activeCamera );
 
   // Background color
-  m_mainWindow.setBackgroundColor( Color( 255, 255, 255 ) );
+  m_mainWindow.setBackgroundColor( Color( 200, 200, 200 ) );
 
   // Init the default font / text
   m_defaultFont.init();  
   m_defaultText.init();
-  m_defaultText.setPos( 0.01f, 0.9f );		        // Text position, using relative co-ordinates
-  m_defaultText.setCol( 1.0f,1.0f,1.0f,0.5f );	// Text color (Red, Green, Blue, Alpha)  
+  m_defaultText.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
+  m_defaultText.setCol( 0.3f, 0.3f, 0.3f, 1.0f );	// Text color (Red, Green, Blue, Alpha)  
 
 	// Init the debug overlay
   // TODO
@@ -132,7 +137,11 @@ bool GraphicsManager::init()
 	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
 
   // Init GUI Manager
-  GUI::GUIManager::getSingleton().init();
+	//GUI::GUIManager::getSingleton().init();
+
+	// Set the global pointer to the scene manager and camera
+	Globals::ogreSceneManager	= m_pSceneManager;
+	Globals::ogreCamera				= m_activeCamera.getOgreCamera();
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -152,7 +161,7 @@ void GraphicsManager::end()
     return;
   
   // Release GUI Manager
-  GUI::GUIManager::getSingleton().end();
+  //GUI::GUIManager::getSingleton().end();
 
 	// Release camera stuff
 	m_defaultCamController.end();
@@ -188,9 +197,12 @@ void GraphicsManager::draw()
   const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
 
   // Show fps
-  std::ostringstream oss;
-  oss << "FPS: " << frameStats.lastFPS;
-  m_defaultText.setText( oss.str() );	// Text to be displayed
+	if ( m_showFps )
+	{
+		std::ostringstream oss;
+		oss << "FPS: " << frameStats.lastFPS;
+		m_defaultText.setText( oss.str() );	// Text to be displayed
+	}
 }
 
 
@@ -294,6 +306,17 @@ void GraphicsManager::setStrokeColor( const Color& color )
 void GraphicsManager::setStrokeWeight( int weight )
 {
 	m_strokeWeight = weight;
+}
+
+/**
+ * @internal 
+ * @brief Makes the frames per second to be printed on the screen or not
+ *
+ * @param show if true the current fps wil be printed on screen, if false, it won't be printed
+ */
+void GraphicsManager::showFps( bool show )
+{
+	m_showFps = show;
 }
 
 

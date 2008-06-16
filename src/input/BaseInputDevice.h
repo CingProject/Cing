@@ -57,17 +57,19 @@ public:
   void      removeListener      ( Listener* pListener );
   void      removeAllListeners  ();
 
+protected:
+
+	// Listeners container
+	typedef typename  std::map< Listener*, Listener* >                  Listeners;
+	typedef typename  std::map< Listener*, Listener* >::iterator        ListenersIt;
+	typedef typename  std::map< Listener*, Listener* >::const_iterator  ListenersConstIt;
+
+	// Protected attributes
+	Listeners     m_listeners;  ///< Listeners registered to receive events from this input device
+
 private:
 
-  // Private types
-
-  // Listeners container
-  typedef typename  std::map< Listener*, Listener* >                  Listeners;
-  typedef typename  std::map< Listener*, Listener* >::iterator        ListenersIt;
-  typedef typename  std::map< Listener*, Listener* >::const_iterator  ListenersConstIt;
-
 	// Attributes
-  Listeners     m_listeners;  ///< Listeners registered to receive events from this input device
 	bool          m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };

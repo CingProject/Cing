@@ -49,7 +49,8 @@ public:
 	void  update ();
 
 	// Query methods
-	bool  isValid() const { return m_bIsValid; }
+	bool				isValid			() const	{ return m_bIsValid; }
+	OIS::Mouse*	getOISMouse	()				{ return m_pOISMouse; }
 
   // TEMP
   bool  isButtonPressed ( int n ) const;

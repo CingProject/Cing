@@ -181,7 +181,7 @@ void PVCamera::update()
   while( cameraReadBuffer != NULL )
   {
     // Copy current frame and notify it has been read to the ring buffer
-    setNewFrameData( cameraReadBuffer, m_ringBuffer->size() );    
+    setNewFrameData( (char*)cameraReadBuffer, getWidth(), getHeight(), getFormat() );    
     m_ringBuffer->readFinished();
 
     // Check if there are more new frames

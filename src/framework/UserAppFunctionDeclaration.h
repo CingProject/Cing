@@ -33,8 +33,10 @@ void end     ();
 /// Draws the application. Called every frame
 void draw    ();
 
-/// INPUT EVENT FUNCTIONS
+/// Input events
 void mousePressed();
+void mouseMoved();
+void mouseReleased();
 void keyPressed();
 
 #endif // _UserAppFunctionDeclaration_H_

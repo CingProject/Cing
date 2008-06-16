@@ -105,9 +105,6 @@ void BaseInputDevice< Listener >::addListener( Listener* pListener )
 
   // Store the listener
   m_listeners[ pListener ] = pListener;
-
-	// The class is not valid anymore
-	m_bIsValid = false;
 }
 
 
@@ -130,9 +127,6 @@ void BaseInputDevice< Listener >::removeListener( Listener* pListener )
   // Delete it if found
   if( it != m_listeners.end() ) 
     m_listeners.erase( it );
-
-	// The class is not valid anymore
-	m_bIsValid = false;
 }
 
 /**
@@ -147,9 +141,6 @@ void BaseInputDevice< Listener >::removeAllListeners()
     return;
 
   m_listeners.clear();
-
-	// The class is not valid anymore
-	m_bIsValid = false;
 }
 
 } // namespace Input
