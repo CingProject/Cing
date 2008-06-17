@@ -216,7 +216,10 @@ void OCVMovie::read( Graphics::Image &image )
 
 	// Check if the target image is valid (if not -> init it)
 	if ( !image.isValid() )
+	{		
 		image.init( frame->width, frame->height, format );
+		image.flipVertical();
+	}
 
 	// Copy the image
 	image.setData( frame->imageData, frame->width, frame->height, format );

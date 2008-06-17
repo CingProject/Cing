@@ -50,6 +50,8 @@ CameraController::CameraController():
 	m_cameraRollNode( NULL ),
 	m_moveScale			( 5.0f ),
 	m_rotateScale		( 0.1f ),
+	m_useMouse			( false	),
+	m_useKeyboard		( true ),
 	m_bIsValid  ( false )
 {
 }
@@ -126,10 +128,12 @@ void CameraController::update()
 		return;
 
 	// Check keyboard's state
-	keyboardControl();
+	if ( m_useKeyboard )
+		keyboardControl();
 
 	// Check mouse's state
-	//mouseControl();
+	if ( m_useMouse )
+		mouseControl();
 
 	// Translates the camera according to the translate vector which is
 	// controlled by the keyboard arrows.
@@ -144,6 +148,27 @@ void CameraController::update()
 	m_translateVector = Vector::ZERO;
 }
 
+/**
+ * @brief Allows camera control through the keyboard
+ *
+ * @note keys are: w/a/s/d - q/e - r - cursors
+ *
+ * @param value if true, keyboard control will be activated, if false it will be deactivated
+ */
+void CameraController::userKeyboard( bool value )
+{
+	m_useKeyboard = value;
+}
+
+/**
+ * @brief Allows camera control through the mouse
+ *
+ * @param value if true, mouse control will be activated, if false it will be deactivated
+ */
+void CameraController::userMouse( bool value )
+{
+	m_useMouse = value;
+}
 /**
  * @internal 
  * @brief Checks the mouse state to modify the camera based on it

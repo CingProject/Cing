@@ -104,6 +104,10 @@ public:
 	void					setUpdateTexture( bool updateTextureFlag );	
 	bool					getUpdateTexture() const;	
 
+	// Texture coordinate flip
+	void					flipVertical		();
+	bool					isVFlipped			() const { return m_bVFlip; }
+
 private:
 	// Attributes
 	static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
@@ -114,6 +118,7 @@ private:
 	TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
 	int						m_nChannels;			///< Number of channels of the image
 	bool					m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
+	bool					m_bVFlip;					///< True if the image texture coordinates are flipped vertically 
 	bool					m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
 };
 

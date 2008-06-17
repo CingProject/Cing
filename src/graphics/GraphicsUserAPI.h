@@ -52,7 +52,9 @@ void stroke( const Color& color, int alpha );
 void strokeWeight( int weight ); 
 
 // Camera 3D related functions
-void useDefault3DCameraControl( bool useDefault );
+void	useDefault3DCameraControl	( bool useDefault );
+void	useMouseCameraControl			( bool value );
+void	useKeyboardCameraControl	( bool value );
 
 // Debug methods
 void	showFps ( bool show );

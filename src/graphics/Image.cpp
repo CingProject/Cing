@@ -42,6 +42,7 @@ ImageDifferenceFilter	Image::m_imgDiffFilter;
 Image::Image():
 	m_cvImage(NULL),
   m_bIsValid( false ),
+	m_bVFlip( false ),
 	m_bUpdateTexture( false )
 {
 }
@@ -291,6 +292,16 @@ bool Image::getUpdateTexture() const
 {
 		return m_bUpdateTexture;
 }
+
+/**
+ * @brief Flips the texture coordinates vertically
+ */
+void Image::flipVertical()
+{
+	m_quad.flipVertical();
+	m_bVFlip = true;
+}
+
 /**
  * @brief Set if texture updates automatically every frame
  */
@@ -672,6 +683,7 @@ void Image::ellipse( float x, float y, float width, float height )
  */
 void Image::filter( ImageProcessingFilters type )
 {
+	// TODO
 	//m_imgThresholdFilter.apply(  *m_cvImage );
 }
 
