@@ -1,7 +1,19 @@
 #include "Vision.h"
 
 /*
- * 
+ * This example shows of create 3d primitives with physics properties
+ * It creates a grid of boxes and spheres and activates their physics.
+ * Some of the primitives created are create with static physics properties
+ * so they don't move although they collide with the rest of the objects
+ *
+ * Mouse
+ *	- Left button activates physics
+ *	- Right button deactivates physics
+ *	- move mouse to rotate the camera
+ * Keys
+ *	- Space bar applies a vertical force to all the objects( those non static) if
+ *		the physics is activated
+ *	- w,a,s,d,q,e,r and arrows: control the 3d camera
  */
 
 CREATE_APPLICATION( "Vision Demo" );

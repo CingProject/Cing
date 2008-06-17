@@ -1,6 +1,9 @@
 #include "Vision.h"
-
 CREATE_APPLICATION( "Vision Demo" );
+
+/*
+ * This example shows of to use the 2d drawing primitives to modify a loaded image
+ */
 
 Image img, img2, img3;
 float timeVar = 0;
@@ -17,8 +20,10 @@ void setup()
 
 void draw()
 {
+	// variable to modify drawn shapes over time
 	timeVar += 0.01;
 
+	// restore original images (to draw over them)
 	img = img3;
 	img2 = img3;
 

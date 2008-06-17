@@ -1,6 +1,12 @@
 #include "Vision.h"
-
 CREATE_APPLICATION( "Vision Demo" );
+
+/*
+ * This example shows of to load and play a video file (where the mouse is located)
+ * Mouse
+ *	- Left button plays the video at 5 fps
+ *  - Right button plays the video at 30 fps (original speed)
+ */
 
 Movie myMovie;
 Image	img;

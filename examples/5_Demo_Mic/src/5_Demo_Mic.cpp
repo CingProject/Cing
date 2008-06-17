@@ -1,6 +1,11 @@
 #include "Vision.h"
-
 CREATE_APPLICATION( "Vision Demo" );
+
+/*
+ * This example shows of to capture microphone input
+ * It also uses the input volume of the mic to modify the intensity of a light in the scene
+ */
+
 
 Micro				mic;
 Sphere			sphere;

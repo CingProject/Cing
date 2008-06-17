@@ -1,30 +1,40 @@
 #include "Vision.h"
-
 CREATE_APPLICATION( "Vision Demo" );
 
-Image		img, img2;		// image to load from disk and draw
-bool		draw2d;	// to control 2d or 3d drawing
+/*
+ * This example shows of is possible to mix 2d and 3d rendering in the same scene
+ * Keys 
+ *	- w,a,s,d,q,e,r and arrows: control the 3d camera
+ * Mouse
+ *	- move mouse to rotate the camera
+ */
+
+Image				img;		// image to load from disk and draw
+Sphere			sphere;	// Sphere 3d primitive
+PointLight	light;	// light to light up the sphere
 
 void setup()
 {
-	// Lets start with first image in 2d
-	draw2d = true;
-
-	// Load images
+	// Load image
 	img.load( "BeachStones.jpg" );
-	img2.load( "BeachStones.jpg" );
+
+	// set sphere properties
+	sphere.init( 100 );
+	sphere.setPosition( (width / 2) + 100, height / 2, 0 );
+	sphere.setDiffuseColor( 100, 100, 100 );
+
+	// set lighting
+	ambientLight( 30, 30, 30 );
+	light.init( 0, 255, 0, width/2 - 100, height / 2, 200 );	
+	light.drawDebug( true );
+
+	// allow mouse control
+	useMouseCameraControl( true );
 }
 
 void draw()	
 {
-	// draw images in 2d and 3d mixed
-	if ( draw2d )
-		img.draw2d( mouseX, mouseY, 100, 100 );
-	else 
-		img.draw( width / 2, height / 2, 0, 100, 100 );
-
-	// Second image always in 3d
-	img2.draw( 0, 0, 0, 100, 100 );
+	img.draw2d( mouseX, mouseY, 100, 100 );
 }
 
 void end()
@@ -33,8 +43,6 @@ void end()
 
 void mousePressed()
 {
-	// When mouse is pressed change first image from 2d to 3d or vice versa
-	draw2d = !draw2d;
 }
 
 void mouseMoved()

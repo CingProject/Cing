@@ -1,6 +1,9 @@
 #include "Vision.h"
-
 CREATE_APPLICATION( "Vision Demo" );
+
+/*
+ * This example shows of to load and draw an image where the mouse is located
+ */
 
 Image		img; // image to load from disk and draw
 

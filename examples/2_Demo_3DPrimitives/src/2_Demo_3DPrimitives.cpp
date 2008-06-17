@@ -1,6 +1,15 @@
 #include "Vision.h"
-
 CREATE_APPLICATION( "Vision Demo" );
+
+/*
+ * This example shows of create 3d primitives and basic lighting
+ * It applies a texture (from an image file) to the 3d primitives
+ * Keys 
+ *	- 1, 2, 3 to control render mode
+ *	- w,a,s,d,q,e,r and arrows: control the 3d camera
+ * Mouse
+ *	- move mouse to rotate the camera
+ */
 
 // 3d primitives
 Sphere			sphere;					// Sphere 3d primitive

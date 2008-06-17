@@ -1,6 +1,13 @@
 #include "Vision.h"
-
 CREATE_APPLICATION( "Vision Demo" );
+
+/*
+ * This example shows the computer vision technique background subtraction working.
+ * It can be used to detect presence and extract properties about it (such as area, position...etc)
+ * Here the background subtraction is performed over black & white camera images
+ * Keys 
+ *	- space bar: store current camera image as background
+ */
 
 BackgroundSubtraction bgSubtraction;// Object to perform Background subtraction
 Capture								camera;				// Camera to capture video input

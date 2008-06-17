@@ -1,6 +1,10 @@
 #include "Vision.h"
-
 CREATE_APPLICATION( "Vision Demo" );
+
+/*
+ * This example shows of to load and play a sound.
+ * It also uses the volume of the played sound to modify the intensity of a light in the scene
+ */
 
 Sound				sound;					// To play a sound
 Sphere			sphere;					// 3d sphere
