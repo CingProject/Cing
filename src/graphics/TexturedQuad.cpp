@@ -119,6 +119,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
   // Assign texture to material and set materia properties
   material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
   material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+	material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
 
   // Create the manual object (is used to define geometry on the fly)
   Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
