@@ -8,41 +8,48 @@ Box					box;						// Box (cube) 3d primitive
 Plane				plane;					// Plane 3d primitive
 PointLight	light, light2;	// Lights in the scene
 
-
+float				timeVar = 0;
 
 void setup()
 {
 	// sphere
 	sphere.init( 100 );
-	sphere.setPosition( 0, -100, 0 );
+	sphere.setPosition( (width / 2) + 100, height / 2, 0 );
 	sphere.setDiffuseColor( 100, 100, 100 );
 	sphere.setTexture( "BeachStones.jpg" );
 
 	// box
 	box.init( 100 );
-	box.setPosition( 100, 0, 0 );
+	box.setPosition( (width / 2) - 100, height / 2, 0 );
 	box.setTexture( "BeachStones.jpg" );
-	box.setDiffuseColor( 255, 255, 255 );
+	box.setDiffuseColor( 255, 0, 0 );
 
 	// plane
-	plane.init( 100000 );
-	plane.setPosition( 0, -500, 0 );
-	plane.setTexture( "BeachStones.jpg" );
-	plane.setSelfIlluminationColor( 60, 0, 30 );
+	plane.init( 10000 );
+	plane.setPosition( 0, 0 , 0 );
+	plane.setSelfIlluminationColor( 0, 0, 100 );
 	plane.setOrientation( Vector( 1, 0, 0 ), 10 );
 
 	// Init lights and set the ambient light
 	ambientLight( 50, 50, 50 );
-	light.init( 255, 255, 255, 0, 0, 200 );	
-	light2.init( 255, 100, 160, 100, 0, 200 );
+	light.init( 255, 255, 255, width / 2, height / 2, 200 );	
+	light2.init( 255, 100, 160, width / 2, height / 2, 200 );
+
+	// Allow mouse control
+	useMouseCameraControl( true );
+
+	// Show lights in the scene
+	light.drawDebug( true );
+	light2.drawDebug( true );
 }
 
 void draw()
 {
-	static float pTime;
-	pTime += 0.01f;
-	float v = cos(pTime)*150;
-	light.setPosition( Vector( v, 0, 200 ) );
+	// move light
+	timeVar += 0.01f;
+	Vector pos = light.getPosition(); 
+	pos.x += cos( timeVar ) * 10;
+	light.setPosition( pos );
 }
 
 void end()
@@ -70,11 +77,4 @@ void keyPressed()
 		setRenderMode( DRAW_SOLID );
 	else if ( key == '3' )
 		setRenderMode( DRAW_POINTS );
-
-	// Light debug
-	else if ( key == 'l' )
-	{
-		light.drawDebug( true );
-		light2.drawDebug( true );
-	}
 }

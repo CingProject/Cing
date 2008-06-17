@@ -45,6 +45,10 @@ public:
 	void	end		();	
 	void	update();	
 
+	// control methods
+	void	userKeyboard( bool value );
+	void	userMouse		( bool value );
+
 	// Query  Methods
 	bool	isValid	() { return m_bIsValid; }
 
@@ -63,6 +67,9 @@ private:
 	Vector						m_translateVector;
 	float							m_moveScale;
 	Ogre::Degree			m_rotateScale;
+
+	bool							m_useKeyboard;
+	bool							m_useMouse;
 	bool							m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };

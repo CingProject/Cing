@@ -77,6 +77,10 @@ void BackgroundSubtraction::end()
  */
 void BackgroundSubtraction::update( const Graphics::Image& imgToAnalyze, Graphics::Image& output )
 {
+	// If we don't have background stored -> store this image as the background
+	if ( !m_backgroundImage )
+		storeBackground( imgToAnalyze );
+
 	// Request temporal images to the image resource manager
 	IplImage* tempImage = Graphics::ImageResourceManager::getSingleton().getImage( imgToAnalyze.getWidth(), imgToAnalyze.getHeight(), imgToAnalyze.getNChannels() );
 	if ( tempImage == NULL )

@@ -1,8 +1,12 @@
 #include "Vision.h"
 
+/*
+ * 
+ */
+
 CREATE_APPLICATION( "Vision Demo" );
 
-// Number of spheres and boxes that are goint to be created
+// Number of spheres and boxes that are going to be created
 #define MAX_ELEMENTS 300
 
 // 3d primitives
@@ -42,6 +46,9 @@ void setup()
 	// Init lights and set the ambient light
 	ambientLight( 50, 50, 50 );
 	light.init( 255, 255, 255, 0, 0, 200 );	
+
+	// Allow mouse control
+	useMouseCameraControl( true );
 }
 
 void draw()

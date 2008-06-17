@@ -7,6 +7,7 @@ Image	img;
 
 void setup()
 {
+	// Load the video and play in loop mode
 	myMovie.load( "test.avi" );
 	myMovie.loop();
 }
@@ -17,7 +18,7 @@ void draw()
 	myMovie.read( img );
 
 	// Draw the image that contains the read frame
-	img.draw( 0, 0, 0 );
+	img.draw2d( mouseX, mouseY );
 }
 
 void end()

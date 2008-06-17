@@ -2,54 +2,52 @@
 
 CREATE_APPLICATION( "Vision Demo" );
 
-Image img, img2;
-Image* img3;
-float pTime = 0;
-//Graphics::ImageThresholdFilter   m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
+Image img, img2, img3;
+float timeVar = 0;
 
 void setup()
 {
-
-
+	// Load image from file
 	img.load( "BeachStones.jpg" );
+
+	// We can copy an image just by assigning it to another one
 	img2 = img;
-	img3 = new Image( img2 );
+	img3 = img;
 }
 
 void draw()
 {
-	pTime+= 0.01;
+	timeVar += 0.01;
 
-	// clone image 1 into img2
-	img2 = img;
+	img = img3;
+	img2 = img3;
 
-	// draw a line
-	strokeWeight(8);
-	stroke(0,0,0);
-	img2.line(256,256,cos(pTime)*150+256,sin(pTime)*150+256);
+	// draw a line in the first image
+	strokeWeight( 8 );
+	stroke( 0, 0, 0 );
+	img.line( 256, 256, cos(timeVar)*150 + 256, sin(timeVar)*150 + 256 );
 
-	// draw some shapes
+	// draw some shapes in the second
 	strokeWeight(4);
-	stroke(205,205,15);
-	img2.ellipse(256,256,50 + cos(pTime)*20,50 + cos(pTime)*20);
-	img2.arc(256,256,40,40,0,cos(pTime)*360);
 
+	stroke( 205, 205, 15 );
+	img2.ellipse( 256, 256, 50 + cos(timeVar)*20, 50 + cos(timeVar)*20 );
 
-	stroke(255,0,0);
-	img.text( 20,20, "Imagen Cargada");
-	img.draw( 0, 0, 0 );
+	stroke( 205, 0, 15 );
+	img2.arc( 256, 256, 40, 40, 0, cos(timeVar)*360 );
 
-	stroke(0,255,0);
-	img2.text(20,42, "Imagen Dinamica");
+	// Size to draw the images
+	int size = 400;
 
-	//img2.filter(BLUR);
+	// Draw a label in the first image
+	stroke( 255, 0, 0 );
+	img.text( 20, 20, "Loaded Image");
+	img.draw2d( 0, 100, size, size );
 
-	img2.draw( 512, 0, 0 );
-
-	stroke(0,0,255);
-	img3->text(20,20,"Imagen Clonada");
-	img3->draw( 1024, 0, 0 );
-
+	// Draw a label in the second image
+	stroke( 0, 255, 0 );
+	img2.text( 20, 20, "Cloned image" );
+	img2.draw2d( size, 100, size, size );
 }
 
 void end()
@@ -58,7 +56,6 @@ void end()
 
 void mousePressed()
 {
-	//img.save( "test.tif" );
 }
 
 void mouseMoved()

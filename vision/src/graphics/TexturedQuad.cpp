@@ -378,6 +378,32 @@ void TexturedQuad::updateTexture( unsigned char* textureData, int width, int hei
 }
 
 /**
+ * @brief Flips the texture coordinates vertically
+ */
+void TexturedQuad::flipVertical()
+{
+	// Update geometry to flip texture coordinates
+	// We recreate the object instead of updating it because this is an extrange use, and for the normal
+	// use is better in terms of performance to have static objects (in terms of vertex data)
+	m_quad->clear();
+	m_quad->begin( m_ogreMaterialName );
+
+	// m_quad positions and texture coordinates
+	m_quad->position( 0.0, 0.0, 0.0);  m_quad->textureCoord( 0, 0 );
+	m_quad->position( 1.0, 0.0, 0.0);  m_quad->textureCoord( 1, 0 );
+	m_quad->position( 1.0, 1.0, 0.0);  m_quad->textureCoord( 1, 1 );
+	m_quad->position( 0.0, 1.0, 0.0);  m_quad->textureCoord( 0, 1 );
+
+	// m_quad indexes (two triangles)
+	m_quad->triangle( 0, 1, 2 );
+	m_quad->triangle( 0, 2, 3 );
+
+	// Finish updating geometry
+	m_quad->end();
+}
+
+
+/**
  * @brief Copies the data of the received texture quad
  *
  * @param other TextureQuad to copy

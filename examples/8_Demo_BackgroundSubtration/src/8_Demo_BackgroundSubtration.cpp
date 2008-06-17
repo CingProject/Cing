@@ -2,18 +2,15 @@
 
 CREATE_APPLICATION( "Vision Demo" );
 
-BackgroundSubtraction bgSubtraction;
-Capture								camera;	// Camera to capture video input
-Image									img;		// Image to draw the result of the background subtraction
+BackgroundSubtraction bgSubtraction;// Object to perform Background subtraction
+Capture								camera;				// Camera to capture video input
+Image									img;					// Image to draw the result of the background subtraction
 
 void setup()
 {
 	// Init camera and image
 	camera.init( 0, 320, 240, 25, GRAYSCALE );
 	img.init( 320, 240, GRAYSCALE );
-
-	// Store background 
-	bgSubtraction.storeBackground( camera.getImage() );
 }
 
 void draw()
@@ -45,6 +42,7 @@ void mouseReleased()
 
 void keyPressed()
 {
+	// Store background when space bar is pressed
 	if ( key == ' ' )
 		bgSubtraction.storeBackground( camera.getImage() );
 }

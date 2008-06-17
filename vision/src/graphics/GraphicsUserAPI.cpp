@@ -151,20 +151,42 @@ void strokeWeight( int weight )
  * @brief Allows to enable or disable the default 3d camera control
  *
  * @param useDefault If true, the default camera control will be enabled. 
- * If false, it will be disable, so the user will be reposible to control the 3d camera
+ * If false, it will be disable, so the user will be responsible to control the 3d camera
  * if it is required.
  *
  * @note The default camera control is composed by:
- * - mouse: controls rotation
+ * - mouse: controls rotation -> by default deactivated
  * - keyboard:
- *		- arrow keys: moves forward/backward/left/right
- *		- pg up/down: moves camera up and down
+ *		- w,a,s,d: moves forward/backward/left/right
+ *		- q,e: rotation
+ *		- cursors: up, down movement
  *		- r: restore camera rotation to initial settings
  */
 void useDefault3DCameraControl( bool useDefault )
 {
 	Graphics::GraphicsManager::getSingleton().useDefault3DCameraControl( useDefault );
 }
+
+/**
+ * @brief Activates or deactivates the default camera control through the mouse
+ *
+ * @param value if true, it activates mouse control, if false it deactivates it
+ */
+void useMouseCameraControl( bool value )
+{
+	Graphics::GraphicsManager::getSingleton().getDefaultCameraController().userMouse( value );
+}
+
+/**
+ * @brief Activates or deactivates the default camera control through the keyboard
+ *
+ * @param value if true, it activates keyboard control, if false it deactivates it
+ */
+void useKeyboardCameraControl( bool value )
+{
+	Graphics::GraphicsManager::getSingleton().getDefaultCameraController().userKeyboard( value );
+}
+
 
 /**
  * @brief Makes the frames per second to be printed on the screen or not

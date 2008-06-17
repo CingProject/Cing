@@ -136,10 +136,7 @@ void OutputDebugTextBoxCEGUI::print( const char* text )
 void OutputDebugTextBoxCEGUI::println( const char* text )
 {
 	if ( !isValid() )
-	{
-		LOG_ERROR( "Trying to print to the OutputDebugTextBoxCEGUI, but it has not been initialized" );
 		return;
-	}
 
 	// Check the message limit
 	if ( m_listBox->getItemCount() >= DEFAULT_MAX_MESSAGES )

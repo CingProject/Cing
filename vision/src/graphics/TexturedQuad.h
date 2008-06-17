@@ -70,6 +70,9 @@ public:
 	int					getTextHeight		() const { return m_textHeight;	}
 	ImageFormat	getFormat				() const { return m_format;		}
 
+	// Texture coordinate control
+	void				flipVertical		();
+
 	// Operators 
 	void operator=				( const TexturedQuad& other );
 

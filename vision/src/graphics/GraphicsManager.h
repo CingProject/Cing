@@ -70,7 +70,8 @@ public:
 	const Camera3D&           getActiveCamera           () const { return m_activeCamera; }
 	const Ogre::SceneManager& getSceneManager           () const { return *m_pSceneManager; }
 	Ogre::SceneManager&       getSceneManager           ()       { return *m_pSceneManager; }
-	Ogre::SceneManager*       getSceneManagerPtr         ()      { return m_pSceneManager; }
+	Ogre::SceneManager*       getSceneManagerPtr        ()      { return m_pSceneManager; }
+	CameraController&					getDefaultCameraController()			{ return m_defaultCamController; }	
 
 	// Common capabilities checking
 	bool                      hasVertexProgramsSupport  () const;
@@ -112,15 +113,17 @@ private:
 	Ogre::Light*      pLight;
 	Ogre::SceneNode*  pLightSceneNode;
 
+	// Attributes
 
-//TEST
+	// Camera controller
 	CameraController m_defaultCamController;
 
-	// Attributes
+	// Core
 	Ogre::SceneManager*   m_pSceneManager;  ///< Main scene manager
 	Window                m_mainWindow;     ///< Main application window
 	Camera3D              m_activeCamera;   ///< Active camera
 	
+	// Misc
 	DebugOverlay          m_debugOverlay;   ///< Debug overlay used to show debug information
 	Font                  m_defaultFont;    ///< Default system font
 	Text                  m_defaultText;    ///< To print text to screen

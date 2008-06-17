@@ -7,7 +7,7 @@ Sphere			sphere;
 Plane				plane;	
 PointLight	light;
 
-Average			average( 20 );
+Average			average( 15 );
 
 void setup()
 {
@@ -16,13 +16,13 @@ void setup()
 
 	// setup plane and sphere
 	plane.init( 100000 );
-	plane.setPosition( 0, -500, 0 );	
+	plane.setPosition( width/2, height/2 - 500, 0 );	
 	sphere.init( 100 );
-	sphere.setPosition( 0, 0, 0 );
+	sphere.setPosition( width/2, height/2, 0 );
 
 	// setup light
 	ambientLight( 20, 20, 20 );
-	light.init( 0, 0, 0, 0, 0, 200 );
+	light.init( 0, 0, 0, width/2, height/2, 200 );
 }
 
 void draw()
