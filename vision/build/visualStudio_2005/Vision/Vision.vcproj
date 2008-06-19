@@ -841,10 +841,6 @@
 				Name="Header Files"
 				>
 				<File
-					RelativePath="..\..\..\src\audio\AudioIncludes.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\src\audio\AudioPrereqs.h"
 					>
 				</File>

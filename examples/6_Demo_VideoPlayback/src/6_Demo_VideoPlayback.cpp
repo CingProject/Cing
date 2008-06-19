@@ -20,7 +20,7 @@ void setup()
 
 void draw()
 {
-	// Get a frame from the video
+	// Get a frame from th e video
 	myMovie.read( img );
 
 	// Draw the image that contains the read frame

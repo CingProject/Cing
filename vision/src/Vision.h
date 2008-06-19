@@ -24,6 +24,19 @@
 
 
 /**
+ * \mainpage Vision Documentation
+ *
+ * \section intro Introduction
+ * Vision can be used to create interactive audiovisual applications involving: audio, video, 2d and 3d graphics,
+ * computer vision...
+ *
+ * See the <b>examples</b> to have an idea about how the code looks like.
+ *
+ * To see the documentatio of the main library areas go to the <b>namespaces</b> section.
+ */
+
+
+/**
  * @internal
  * @file This is the entry include file from applications
  * It should include all the necessary files for the vision library, so the users don't need to 
