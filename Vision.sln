@@ -57,6 +57,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A_Demo_Interactive3dObject"
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_Midi_In", "examples\10_Midi_In\10_Midi_In.vcproj", "{230ECBFC-C62F-4DEE-BD41-F2D7AD9882D3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -111,6 +116,10 @@ Global
 		{07E8F4C2-B3A5-4958-AC5E-18A35A5D5854}.Debug|Win32.Build.0 = Debug|Win32
 		{07E8F4C2-B3A5-4958-AC5E-18A35A5D5854}.Release|Win32.ActiveCfg = Release|Win32
 		{07E8F4C2-B3A5-4958-AC5E-18A35A5D5854}.Release|Win32.Build.0 = Release|Win32
+		{230ECBFC-C62F-4DEE-BD41-F2D7AD9882D3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{230ECBFC-C62F-4DEE-BD41-F2D7AD9882D3}.Debug|Win32.Build.0 = Debug|Win32
+		{230ECBFC-C62F-4DEE-BD41-F2D7AD9882D3}.Release|Win32.ActiveCfg = Release|Win32
+		{230ECBFC-C62F-4DEE-BD41-F2D7AD9882D3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
