@@ -24,6 +24,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include"midi\MidiPrereqs.h"
 
+#include "gui\GUIManagerCEGUI.h"
+
 namespace Midi
 {
 /**
@@ -50,8 +52,12 @@ public:
 	// Query methods
 	bool        isValid     () const	{ return m_bIsValid; }
 	
-	// Returns a string with all midi devices.
-	std::string	printInputDevices();
+	// Prints  input midi devices.
+	void	printInputDevices();
+	// Prints  output midi devices.
+	void	printOutputDevices();
+	// Prints  all midi devices.
+	void	printDevices();
 
 private:
 	RtMidiIn*    m_MidiIn;
