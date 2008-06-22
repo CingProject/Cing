@@ -102,6 +102,8 @@
 #include "externLibs/Ogre3d/include/OgreSceneManager.h"
 #include "externLibs/Ogre3d/include/OgreCamera.h"
 
+// Midi
+#include "midi/MidiPrereqs.h"
 
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
@@ -115,6 +117,7 @@ using namespace Physics;
 using namespace Audio;
 using namespace	Movies;
 using namespace GUI;
+using namespace Midi;
 
 // Classes used by user
 
