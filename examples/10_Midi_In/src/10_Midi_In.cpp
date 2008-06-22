@@ -8,7 +8,7 @@ MidiIO midiIO;
 void setup()
 {
 	showDebugOutput(true);
-	print(midiIO.printInputDevices().c_str());
+	midiIO.printDevices();
 }
 
 void draw()
