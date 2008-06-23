@@ -1,6 +1,6 @@
 /*
 	This source file is part of the Vision project
-	For the latest info, see http://www.XXX.org
+	For the latest info, see http://www.playthemagic.com/vision
 
 	Copyright (c) 2008 XXX
 
