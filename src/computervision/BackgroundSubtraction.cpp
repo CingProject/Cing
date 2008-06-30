@@ -111,7 +111,7 @@ void BackgroundSubtraction::update( const Graphics::Image& imgToAnalyze, Graphic
 
 
 /**
- * @brief Stores the background image. It is the image that will be comparad with the images
+ * @brief Stores the background image. It is the image that will be compared with the images
  * passed to the method compute to calculate the result
  *
  * @param backgroundImage	Image that will be compared with the "every frame" image.
