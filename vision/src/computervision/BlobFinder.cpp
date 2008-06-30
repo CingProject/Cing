@@ -140,6 +140,9 @@ void BlobFinder::update( const Graphics::Image& inImage )
 
   // Extract information of found blobs
   extractBlobsInformation();
+
+	// Clear OpenCV contours storage 
+	cvClearMemStorage( m_findContoursStorage );
 }
 
 
