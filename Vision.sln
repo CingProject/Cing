@@ -62,6 +62,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_Midi_In", "examples\10_M
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LunaSegovia2008", "examples\LunaSegovia2008\LunaSegovia2008.vcproj", "{D325A643-14B8-4917-BA47-AF0145756398}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -120,6 +125,10 @@ Global
 		{230ECBFC-C62F-4DEE-BD41-F2D7AD9882D3}.Debug|Win32.Build.0 = Debug|Win32
 		{230ECBFC-C62F-4DEE-BD41-F2D7AD9882D3}.Release|Win32.ActiveCfg = Release|Win32
 		{230ECBFC-C62F-4DEE-BD41-F2D7AD9882D3}.Release|Win32.Build.0 = Release|Win32
+		{D325A643-14B8-4917-BA47-AF0145756398}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D325A643-14B8-4917-BA47-AF0145756398}.Debug|Win32.Build.0 = Debug|Win32
+		{D325A643-14B8-4917-BA47-AF0145756398}.Release|Win32.ActiveCfg = Release|Win32
+		{D325A643-14B8-4917-BA47-AF0145756398}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
