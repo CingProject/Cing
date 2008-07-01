@@ -930,6 +930,38 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="OpenSteer"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\src\externLibs\OpenSteer\include\opensteerdemo.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\openSteer\OpenSteerPrereqs.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\src\openSteer\OpenSteerDemo.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="plugins"
+				>
+				<File
+					RelativePath="..\..\..\src\openSteer\plugins\Boids.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
 		<File
 			RelativePath="..\..\..\src\Vision.h"
 			>

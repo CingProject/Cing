@@ -109,8 +109,9 @@ bool Application::initApp()
 
 	// The class is now initialized
 	m_bIsValid = true;
-
+	
 	return true;
+
 }
 
 /**

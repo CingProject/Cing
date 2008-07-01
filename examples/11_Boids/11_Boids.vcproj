@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="9_Demo_BlobDetection"
-	ProjectGUID="{6E9D505C-607A-40F1-A14B-001519DAEE4C}"
-	RootNamespace="My10_DemoBlobDetection"
+	Name="11_Boids"
+	ProjectGUID="{37EB661D-0BFB-4514-9BD4-2C1422C456BC}"
+	RootNamespace="My11_Boids"
 	>
 	<Platforms>
 		<Platform
@@ -203,7 +203,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\9_Demo_BlobDetection.cpp"
+			RelativePath=".\src\11_Boids.cpp"
 			>
 		</File>
 	</Files>

@@ -55,6 +55,8 @@ namespace Ogre
   class Viewport;
   class TextAreaOverlayElement;
   class Entity;
+  class Node;
+  class SceneNode;
 }
 
 // Physics (This shouldn't be here, but for the moment, as there is no Logic module that combines graphics and physics....)

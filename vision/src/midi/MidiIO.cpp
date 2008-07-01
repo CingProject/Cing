@@ -92,6 +92,8 @@ void MidiIO::end()
   if ( !isValid() )
     return;
 
+	// Close all open ports
+
 	// Clear RtMidi objects
 	delete m_MidiIn;
 	m_MidiIn  =  NULL;
@@ -111,17 +113,17 @@ void MidiIO::update()
 }
 
 /**
-* @internal
-* @brief Print input devices
-*/
+ * @external
+ * @brief Print input devices
+ */
 void MidiIO::printInputDevices()
 {
+
 	// Check if the class is initialized
 	if ( !isValid() )
 		init();
 
-
-	// Input Ports
+	// Print Input Ports
 	std::string portName;
 	unsigned int nPorts = m_MidiIn->getPortCount();
 	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( "Input Ports:" );
@@ -133,37 +135,36 @@ void MidiIO::printInputDevices()
 		catch ( RtError &error ) {
 			error.printMessage();
 		}
-		// Print it to debug output
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
-		
+
 		char *portNumber; 
 		// Create a new char array 
 		portNumber = new char[128]; 
 		// Set it to empty 
 		memset(portNumber,'\0',100); 
 		// Convert to string 
-		itoa(i,portNumber,10); 
+		itoa(i,portNumber,10);
 
+		// Print it to debug output
+		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
 		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
 		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( "  | Port" );
 		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");		
 		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
 
 		// Delete the buffer 
-		delete[] portNumber; 
+		delete portNumber; 
 	}
 }
 
 /**
-* @internal
-* @brief Print Output devices
-*/
+ * @external
+ * @brief Print Output devices
+ */
 void MidiIO::printOutputDevices()
 {
 	// Check if the class is initialized
 	if ( !isValid() )
 		init();
-
 
 	// Input Ports
 	std::string portName;
@@ -194,14 +195,14 @@ void MidiIO::printOutputDevices()
 		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
 
 		// Delete the buffer 
-		delete[] portNumber; 
+		delete portNumber; 
 	}
 }
 
 /**
-* @internal
-* @brief Print all devices
-*/
+ * @external
+ * @brief Print all devices
+ */
 void MidiIO::printDevices()
 {
 	// Check if the class is initialized
@@ -268,8 +269,79 @@ void MidiIO::printDevices()
 		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
 
 		// Delete the buffer 
-		delete[] portNumber; 
+		delete portNumber; 
 	}
 
+}
+
+/**
+ * @external
+ * @brief  Use this Method to open an input device.
+ */
+void MidiIO::openInput(int inputDeviceNumber)
+{
+
+	// Check if the class is initialized
+	if ( !isValid() )
+		init();
+
+	m_MidiIn->openPort(inputDeviceNumber);
+	// Ignore sysex, timing, or active sensing messages.
+	m_MidiIn->ignoreTypes( true, true, true );
+
+}
+
+/**
+ * @internal
+ * @brief  Use this Method to close an input device.
+ */
+void MidiIO::closeInput()
+{
+	if ( isValid() )
+		m_MidiIn->closePort();
+}
+
+/**
+ * @internal
+ * @brief  TODO
+ */
+void MidiIO::onMessage( double deltatime, std::vector< unsigned char > *message, void *userData )
+{
+	unsigned int nBytes = message->size();
+
+	// for debug
+	char* messageChunk;
+	messageChunk = new char[128]; 
+	memset(messageChunk,'\0',100); 
+
+	if ( nBytes == 3 ) {
+
+		unsigned int byte0 = message->at(0);
+		unsigned int byte1 = message->at(1);
+		unsigned int byte2 = message->at(2);	
+
+		byte0 = (unsigned int)(message->at(0));
+		byte1 = (unsigned int)(message->at(1));
+		byte2 = (unsigned int)(message->at(2));
+
+		sprintf(messageChunk, "Byte 0: %i ,", byte0);
+		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
+	
+		sprintf(messageChunk, "Byte 1: %i ,", byte1);
+		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
+
+		sprintf(messageChunk, "Byte 2: %i ,", byte2);
+		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
+
+	}
+	delete messageChunk;
+}
+/**
+ * @internal
+ * @brief  TODO
+ */
+void MidiIO::plug(  void (*callbackFunction)( double deltatime, std::vector< unsigned char > *message, void *userData )  ) 
+{
+	m_MidiIn->setCallback( callbackFunction );
 }
 } // namespace Midi
