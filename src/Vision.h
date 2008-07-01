@@ -105,6 +105,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Midi
 #include "midi/MidiPrereqs.h"
 
+// OpenSteer AI???
+#include "openSteer/OpenSteerPrereqs.h"
+
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
 using namespace CameraInput;
@@ -118,6 +121,7 @@ using namespace Audio;
 using namespace	Movies;
 using namespace GUI;
 using namespace Midi;
+using namespace OpenSteer;
 
 // Classes used by user
 

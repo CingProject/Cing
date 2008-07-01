@@ -36,6 +36,7 @@ namespace Midi
  * and to open them. To start use the printDevices
  * method to get all devices available on your system.
  */
+
 class MidiIO
 {
 public:
@@ -53,17 +54,25 @@ public:
 	bool        isValid     () const	{ return m_bIsValid; }
 	
 	// Prints  input midi devices.
-	void	printInputDevices();
+	void				printInputDevices();
 	// Prints  output midi devices.
-	void	printOutputDevices();
+	void				printOutputDevices();
 	// Prints  all midi devices.
-	void	printDevices();
+	void				printDevices();
+
+	// Use this Method to open an input device.
+	void				openInput(int inputDeviceNumber);
+	// Close an open MIDI connection (if one exists). 
+	void				closeInput();
+
+	static void	onMessage( double deltatime, std::vector< unsigned char > *message, void *userData );
+	void	plug     ( void (*callbackFunction) ( double deltatime, std::vector< unsigned char > *message, void *userData )  );
+	RtMidiIn*    m_MidiIn;
 
 private:
-	RtMidiIn*    m_MidiIn;
+
 	RtMidiOut*   m_MidiOut;
 	bool         m_bIsValid;	        ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
-
 };
 
 } // namespace Midi
