@@ -197,6 +197,16 @@ inline float constrain( float value, float min, float max )
 	return value;
 }
 
+/**
+ * @brief Returns the angle between two vectors. They must be normalized
+ *
+ * @param the angle between two vectors
+ */
+inline float angleBetweenVectors( const Vector& v1, const Vector& v2 )
+{
+	return acos( v1.dotProduct( v2 ) );
+}
+
 /*
  * @brief Stores values and returns the average of all of them
  */

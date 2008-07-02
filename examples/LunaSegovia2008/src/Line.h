@@ -19,32 +19,45 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _SegoviaParticleSystem_h_
-#define _SegoviaParticleSystem_h_
+#ifndef _Line_h_
+#define _Line_h_
 
-#include "Line.h"
-#include <vector>
+#include "common/CommonTypes.h"
+
+
+// Forward declarations
+namespace Ogre
+{
+	class SceneNode;
+	class ParticleSystem;
+}
 
 /**
  * @internal
  * @brief 
  */
-class SegoviaParticleSystem
+class Line
 {
 public:
 
 	// Constructor / Destructor
-	SegoviaParticleSystem( float x, float y, float z, int nLines);
-	~SegoviaParticleSystem();
+	Line( float x, float y, float z, float phase );
+	~Line();
 
 	// Control 
 	bool update			();
 	void setPosition( float x, float y, float z );
 
 private:
-	typedef std::vector< Line* > Lines;
-
-	Lines m_lines;
+	static int						index;
+	
+	
+	Ogre::SceneNode*			m_particleNode;
+	Ogre::ParticleSystem* m_pSystem;
+	float									m_timeControl;
+	Vector								m_center;
+	Vector								m_target;
+	size_t								m_prevNumParticles;
 };
 
-#endif // _SegoviaParticleSystem_h_
+#endif // _Line_h_

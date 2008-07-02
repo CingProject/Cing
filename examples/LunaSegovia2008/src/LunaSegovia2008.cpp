@@ -22,7 +22,7 @@ void draw()
 			it = pSystems.erase( it );
 			delete pSystem;
 
-			// if it was the last -> do nothing elese
+			// if it was the last -> do nothing else
 			if ( pSystems.empty() )
 				break;
 		}
@@ -37,7 +37,11 @@ void mousePressed()
 {
 	if ( mouseButton == LEFT )
 	{
-		pSystems.push_back( new SegoviaParticleSystem( mouseX, height - mouseY, 0 ) );
+		// config
+		int nLines = 3;
+		
+		// Create new particle system
+		pSystems.push_back( new SegoviaParticleSystem( mouseX, height - mouseY, 0, nLines ) );
 	}
 }
 

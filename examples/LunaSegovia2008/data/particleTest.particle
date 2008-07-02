@@ -25,14 +25,14 @@ particleTest
 		colour_range_start	1 1 1 1
 		colour_range_end	1 1 1 1
 		direction	0 1 0
-		emission_rate	50
+		emission_rate	60
 		position	10 0 0
 		velocity	0
 		velocity_min	0
 		velocity_max	0
 		time_to_live	5
-		duration_min	3
-		duration_max	6
+		duration_min	2
+		duration_max	2
 		repeat_delay	0
 		repeat_delay_min	0
 		repeat_delay_max	0

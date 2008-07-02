@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="2_Demo_3DPrimitives"
 	ProjectGUID="{6E07A895-68FC-4479-BD16-6A327467106B}"
 	RootNamespace="2_Demo_3DPrimitives"
@@ -102,7 +102,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE"
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;&#x0D;&#x0A;echo Copying data files of the Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the data files necessary to execute&#x0D;&#x0A;IF EXIST &quot;$(InputDir)data&quot; goto CopyData&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:CopyData&#x0D;&#x0A;xcopy &quot;$(InputDir)data&quot; &quot;$(OutDir)\data&quot; /i /d /y /s&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -189,7 +189,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE"
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;&#x0D;&#x0A;echo Copying data files of the Project: $(ProjectName)&#x0D;&#x0A;&#x0D;&#x0A;REM Copy the data files necessary to execute&#x0D;&#x0A;IF EXIST &quot;$(InputDir)data&quot; goto CopyData&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:CopyData&#x0D;&#x0A;xcopy &quot;$(InputDir)data&quot; &quot;$(OutDir)\data&quot; /i /d /y /s&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

@@ -21,38 +21,27 @@
 
 #include "SegoviaParticleSystem.h"
 #include "Vision.h"
-
-#include "externLibs/Ogre3d/include/OgreSceneNode.h"
-#include "externLibs/Ogre3d/include/OgreParticleSystem.h"
-#include "externLibs/Ogre3d/include/OgreParticle.h"
-#include "externLibs/Ogre3d/include/OgreStringConverter.h"
-
-
-int		SegoviaParticleSystem::index = 0;
-
+#include "common/CommonUtils.h"
 
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-SegoviaParticleSystem::SegoviaParticleSystem( float x, float y, float z ):
-	m_pSystem( NULL ),
-	m_particleNode( NULL ),
-	m_timeControl	( 0 ),
-	m_prevNumParticles( 0 )
+SegoviaParticleSystem::SegoviaParticleSystem( float x, float y, float z, int nLines )
 {
-	// Create the particle system's node
-	m_particleNode = ogreSceneManager->getRootSceneNode()->createChildSceneNode( "SevoviaParticleSystemNode" + Ogre::StringConverter::toString( index++ ) );
+	// config
+	float xMargin = 0;
+	float yMargin = 0;
+	float zMargin = 100;
+	float phaseMargin = PI;
 
-	// Create the particle system
-	m_pSystem = ogreSceneManager->createParticleSystem( "SevoviaParticleSystem" + Ogre::StringConverter::toString( index++ ), "particleTest");
-
-	// Attach it to the node
-	m_particleNode->attachObject( m_pSystem );
-	
-	// Set pos
-	m_particleNode->setPosition( x, y, z );
-
+	for ( int i = 0; i < nLines; i++ )
+	{
+		m_lines.push_back( new Line(	x + random(-xMargin, xMargin) , 
+																	y + random(-yMargin, yMargin), 
+																	z + random(-zMargin, zMargin),
+																	random(-phaseMargin, phaseMargin)) );
+	}
 }
 
 /**
@@ -61,11 +50,14 @@ SegoviaParticleSystem::SegoviaParticleSystem( float x, float y, float z ):
  */
 SegoviaParticleSystem::~SegoviaParticleSystem()
 {
-	// destroy node
-	ogreSceneManager->getRootSceneNode()->removeAndDestroyChild( m_particleNode->getName() );
+	//std::for_each( m_lines.begin(), m_lines.end(), Common::ReleaseArrayFunctor< Line* >() );
+	Lines::iterator it = m_lines.begin();
+	for (; it != m_lines.end(); ++it )
+	{
+		delete *it;
+	}
+	m_lines.clear();
 
-	// destroy particle system
-	ogreSceneManager->destroyParticleSystem( m_pSystem );
 }
 
 /**
@@ -76,70 +68,16 @@ SegoviaParticleSystem::~SegoviaParticleSystem()
  */
 bool SegoviaParticleSystem::update()
 {
-	// Control vars
-	m_timeControl			+= 0.01f * elapsedSec;
-	float upSpeed			= 0.5f * elapsedSec;
-	float followSpeed = 0.3f;
+	bool alive = false;;
 
-	// Get current number of particles
-	size_t nParticles = m_pSystem->getNumParticles();
-
-	// If it had particles and has 0 now -> the system is dead
-	if ( (m_prevNumParticles > 0 ) && (nParticles == 0) )
-		return false;
-
-	// Affect particles
-	// OPTION 1: spiral
-	//Ogre::ParticleIterator pit = m_pSystem->_getIterator();
-	//while (!pit.end())
-	//{
-	//	Ogre::Particle* particle = pit.getNext();
-	//	Vector& pos = particle->position;
-	//	float val = cos( (particle->totalTimeToLive - particle->timeToLive)* rotSpeed );
-	//	pos.x +=  val / 10.0f;
-	//}
-
-	// Affect particles
-	// OPTION 2: follow the first particle
-	Ogre::ParticleIterator pit = m_pSystem->_getIterator();
-	Ogre::Particle* firstParticle;
-	Ogre::Particle* particle, *prevParticle;
-	int index = 0;
-	while (!pit.end())
+	// Update all lines
+	Lines::iterator it = m_lines.begin();
+	for (; it != m_lines.end(); ++it )
 	{
-		// First
-		if ( index ==  0)
-		{
-			firstParticle = pit.getNext();
-			//firstParticle->totalTimeToLive = 10;
-			//firstParticle->timeToLive = 10;
-			Vector& pos = firstParticle->position;
-			float val = cos( m_timeControl );
-			pos.x +=  val;
-			pos.y += upSpeed;
-
-			prevParticle = firstParticle;
-		}
-		// Rest
-		else
-		{
-			particle = pit.getNext();
-			Vector& pos = particle->position;
-			float val = cos( m_timeControl );
-			//pos.y += upSpeed;
-			//pos.x +=  val;
-			pos = ((1.0f - followSpeed) * pos) + (followSpeed * prevParticle->position);
-
-			prevParticle = particle;
-		}
-
-		index++;
+		alive = (*it)->update() || alive;
 	}
 
-	// Store the number of particles
-	m_prevNumParticles = nParticles;
-
-	return true;
+	return alive;
 }
 
 /**
@@ -150,5 +88,9 @@ bool SegoviaParticleSystem::update()
  */
 void SegoviaParticleSystem::setPosition( float x, float y, float z )
 {
-	m_particleNode->setPosition( x, y, z );
+	Lines::iterator it = m_lines.begin();
+	for (; it != m_lines.end(); ++it )
+	{
+		(*it)->setPosition( x, y, z );
+	}
 }
