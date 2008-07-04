@@ -198,4 +198,14 @@ void showFps( bool show )
 	Graphics::GraphicsManager::getSingleton().showFps( show );
 }
 
+/**
+ * @brief Modifies the background of the window (really the main viewport in the window)
+ *
+ * @param[in] color Color to set to the background
+ */
+void setBackgroundColor( const Color& color )
+{
+	Graphics::GraphicsManager::getSingleton().getMainWindow().setBackgroundColor( color );
+}
+
 } // namespace Graphics

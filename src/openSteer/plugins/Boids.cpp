@@ -42,7 +42,7 @@
 #include "externLibs/OpenSteer/include/OpenSteerDemo.h"
 #include "externLibs/OpenSteer/include/Proximity.h"
 
-// for graphics
+// graphics
 #include "graphics/Box.h"
 #include "graphics/GraphicsPrereqs.h"
 #include "externLibs/Ogre3d/include/OgreSceneNode.h"
@@ -52,10 +52,8 @@ using namespace OpenSteer;
 
 // ----------------------------------------------------------------------------
 
-
 typedef OpenSteer::AbstractProximityDatabase<AbstractVehicle*> ProximityDatabase;
 typedef OpenSteer::AbstractTokenForProximityDatabase<AbstractVehicle*> ProximityToken;
-
 
 // ----------------------------------------------------------------------------
 
@@ -67,7 +65,6 @@ public:
     // type for a flock: an STL vector of Boid pointers
     typedef std::vector<Boid*> groupType;
 
-
     // constructor
     Boid (ProximityDatabase& pd)
     {
@@ -76,9 +73,9 @@ public:
         newPD (pd);
 
 				// init the mesh
-				m_Model.init("cone.mesh", "Examples/Red" );
-				m_Model.setScale(12,72,12);
-
+				m_Model.init(1);
+				m_Model.setScale(0.5,1.5,0.5);
+				m_Life = 0;
         // reset all boid state
         reset ();
     }
@@ -97,23 +94,12 @@ public:
     {
         // reset the vehicle
         SimpleVehicle::reset ();
-
-        // steering force is clipped to this magnitude
-        setMaxForce (27);
-
-        // velocity is clipped to this magnitude
-        setMaxSpeed (26);
-
+				// steering force is clipped to this magnitude
+				setMaxForce (12);
+				// velocity is clipped to this magnitude
+				setMaxSpeed (17.2);
         // initial slow speed
         setSpeed (maxSpeed() * 0.3f);
-
-        // randomize initial orientation
-        regenerateOrthonormalBasisUF (RandomUnitVector ());
-
-        // randomize initial position
-        setPosition (RandomVectorInUnitRadiusSphere () * 20);
-
-				this->
         // notify proximity database that our position has changed
         proximityToken->updateForNewPosition (position());
     }
@@ -122,8 +108,7 @@ public:
     // draw this boid into the scene
 		void draw (void)
 		{
-
-			float k = 10.0f;
+			float k = 10.0f; //scale
 
 			// Update selected vehicle position
 			m_Model.setPosition( position().x*k,position().y*k,position().z*k);
@@ -134,44 +119,42 @@ public:
 				forward().z);
 
 			m_Model.getSceneNode()->setDirection(forwDir, Ogre::SceneNode::TS_WORLD, Ogre::Vector3::UNIT_Y);  
-
-			/*
-			drawBasic3dSphericalVehicle (*this, gGray70);
-			//drawTrail ();
-			drawTrail(Vec3(1,0,0),Vec3(1,0,0));
-			*/
 		}
 
 
     // per frame simulation update
     void update (const float currentTime, const float elapsedTime)
     {
+				// Eliminates y component to maintain boids in a plane
+				Vec3 force = steerToFlock ();
+				force.y = 0;
         // steer to flock and perhaps to stay within the spherical boundary
-        applySteeringForce (steerToFlock () + handleBoundary(), elapsedTime);
+        applySteeringForce ( (const Vec3) force + handleBoundary(), elapsedTime);
 
         // notify proximity database that our position has changed
         proximityToken->updateForNewPosition (position());
 				
-				// annotation
-				//annotationVelocityAcceleration ();
-				recordTrailVertex (currentTime, position());
+				m_Life += 1;
     }
 
 
     // basic flocking
     Vec3 steerToFlock (void)
     {
-        const float separationRadius =  5.0f;
+				
+        const float separationRadius =  30.0f;
         const float separationAngle  = -0.707f;
-        const float separationWeight =  24.0f;
+        const float separationWeight =  6.01f;
 
-        const float alignmentRadius = 16.5f;
-        const float alignmentAngle  = 0.7f;
-        const float alignmentWeight = 8.0f;
+        const float alignmentRadius = 35.5f;
+        const float alignmentAngle  = -0.3f;
+        const float alignmentWeight = 4.0f;
 
-        const float cohesionRadius = 14.0f;
+        const float cohesionRadius = 60.0f;
         const float cohesionAngle  = -0.15f;
-        const float cohesionWeight = 14.0f;
+        const float cohesionWeight = 5.0f;
+
+				const float wanderWeight = 5.0f;
 
         const float maxRadius = maxXXX (separationRadius,
                                         maxXXX (alignmentRadius,
@@ -192,22 +175,19 @@ public:
                                                     cohesionAngle,
                                                     neighbors);
 
+				const Vec3 wander   = steerForWander(0.01);
+
         // apply weights to components (save in variables for annotation)
         const Vec3 separationW = separation * separationWeight;
-        const Vec3 alignmentW = alignment * alignmentWeight;
-        const Vec3 cohesionW = cohesion * cohesionWeight;
+        const Vec3 alignmentW  = alignment  * alignmentWeight;
+        const Vec3 cohesionW   = cohesion   * cohesionWeight;
+        const Vec3 wanderW     = wander     * wanderWeight;
 
-        // annotation
-        // const float s = 0.1;
-        // annotationLine (position, position + (separationW * s), gRed);
-        // annotationLine (position, position + (alignmentW  * s), gOrange);
-        // annotationLine (position, position + (cohesionW   * s), gYellow);
-
-        return separationW + alignmentW + cohesionW;
+        return separationW + alignmentW + cohesionW + wanderW;
     }
 
 
-    // Take action to stay within sphereical boundary.  Returns steering
+    // Take action to stay within spherical boundary.  Returns steering
     // value (which is normally zero) and may take other side-effecting
     // actions such as kinematically changing the Boid's position.
     Vec3 handleBoundary (void)
@@ -236,7 +216,6 @@ public:
         return Vec3::zero; // should not reach here
     }
 
-
     // make boids "bank" as they fly
     void regenerateLocalSpace (const Vec3& newVelocity,
                                const float elapsedTime)
@@ -254,13 +233,13 @@ public:
         proximityToken = pd.allocateToken (this);
     }
 
-
     // cycle through various boundary conditions
     static void nextBoundaryCondition (void)
     {
         const int max = 2;
         boundaryCondition = (boundaryCondition + 1) % max;
     }
+
     static int boundaryCondition;
 
     // a pointer to this boid's interface object for the proximity database
@@ -272,12 +251,17 @@ public:
 
     static float worldRadius;
 
-		Graphics::Object3D m_Model;
+		// a model 
+		Graphics::Box m_Model;
+
+		// life time
+		int m_Life;
+
 };
 
 
 AVGroup Boid::neighbors;
-float Boid::worldRadius = 80.0f;
+float Boid::worldRadius = 400;
 int Boid::boundaryCondition = 0;
 
 
@@ -304,66 +288,30 @@ public:
         // make default-sized flock
         population = 0;
         for (int i = 0; i < 20; i++) addBoidToFlock ();
-
-        // initialize camera
-        OpenSteerDemo::init3dCamera (*OpenSteerDemo::selectedVehicle);
-        OpenSteerDemo::camera.mode = Camera::cmFixed;
-        OpenSteerDemo::camera.fixedDistDistance = OpenSteerDemo::cameraTargetDistance;
-        OpenSteerDemo::camera.fixedDistVOffset = 0;
-        OpenSteerDemo::camera.lookdownDistance = 20;
-        OpenSteerDemo::camera.aimLeadTime = 0.5;
-        OpenSteerDemo::camera.povOffset.set (0, 0.5, -2);
     }
 
     void update (const float currentTime, const float elapsedTime)
     {
-        // update flock simulation for each boid
-        for (iterator i = flock.begin(); i != flock.end(); i++)
-        {
-            (**i).update (currentTime, elapsedTime);
-        }
+			const static int iterations = 6;
+			for (int s = 0; s < iterations ; s++)
+			{
+				// update flock simulation for each boid
+				for (iterator i = flock.begin(); i != flock.end(); i++)
+				{
+					(**i).update (currentTime, elapsedTime);
+				}	
+			}
 
     }
 
     void redraw (const float currentTime, const float elapsedTime)
     {
-        // selected vehicle (user can mouse click to select another)
-        AbstractVehicle& selected = *OpenSteerDemo::selectedVehicle;
 
-        // vehicle nearest mouse (to be highlighted)
-        AbstractVehicle& nearMouse = *OpenSteerDemo::vehicleNearestToMouse ();
-
-        // update camera
-        OpenSteerDemo::updateCamera (currentTime, elapsedTime, selected);
-
-        // draw each boid in flock
-        for (iterator i = flock.begin(); i != flock.end(); i++) (**i).draw ();
-
-        // highlight vehicle nearest mouse
-//        OpenSteerDemo::drawCircleHighlightOnVehicle (nearMouse, 1, gGray70);
-
-        // highlight selected vehicle
-//        OpenSteerDemo::drawCircleHighlightOnVehicle (selected, 1, gGray50);
-
-        // display status in the upper left corner of the window
-        std::ostringstream status;
-        status << "[F1/F2] " << population << " boids";
-        status << "\n[F3]    PD type: ";
-        switch (cyclePD)
-        {
-        case 0: status << "LQ bin lattice"; break;
-        case 1: status << "brute force";    break;
-        }
-        status << "\n[F4]    Boundary: ";
-        switch (Boid::boundaryCondition)
-        {
-        case 0: status << "steer back when outside"; break;
-        case 1: status << "wrap around (teleport)";  break;
-        }
-        status << std::endl;
-//        const float h = drawGetWindowHeight ();
-//        const Vec3 screenLocation (10, h-50, 0);
-//        draw2dTextAt2dLocation (status, screenLocation, gGray80);
+      // draw each boid in flock
+			for (iterator i = flock.begin(); i != flock.end(); i++)
+			{
+				(**i).draw ();
+			}
     }
 
     void close (void)
@@ -381,11 +329,6 @@ public:
         // reset each boid in flock
         for (iterator i = flock.begin(); i != flock.end(); i++) (**i).reset();
 
-        // reset camera position
-        OpenSteerDemo::position3dCamera (*OpenSteerDemo::selectedVehicle);
-
-        // make camera jump immediately to new position
-        OpenSteerDemo::camera.doNotSmoothNextMove ();
     }
 
     // for purposes of demonstration, allow cycling through various
@@ -454,8 +397,17 @@ public:
         population++;
         Boid* boid = new Boid (*pd);
         flock.push_back (boid);
-        if (population == 1) OpenSteerDemo::selectedVehicle = boid;
     }
+
+		void addBoidToFlock (float x, float y, float z)
+		{
+			population++;
+			Boid* boid = new Boid (*pd);
+			boid->setPosition( x, y, z );
+			boid->setForward(0,0,-1);
+			boid->setSpeed(y);
+			flock.push_back (boid);
+		}
 
     void removeBoidFromFlock (void)
     {
@@ -463,12 +415,9 @@ public:
         {
             // save a pointer to the last boid, then remove it from the flock
             const Boid* boid = flock.back();
+
             flock.pop_back();
             population--;
-
-            // if it is OpenSteerDemo's selected vehicle, unselect it
-            if (boid == OpenSteerDemo::selectedVehicle)
-                OpenSteerDemo::selectedVehicle = NULL;
 
             // delete the Boid
             delete boid;
@@ -492,9 +441,6 @@ public:
     int cyclePD;
 };
 
-
 BoidsPlugIn gBoidsPlugIn;
-
-
 
 // ----------------------------------------------------------------------------
