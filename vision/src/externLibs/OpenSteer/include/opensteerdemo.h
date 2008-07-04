@@ -1,33 +1,6 @@
 // ----------------------------------------------------------------------------
 //
 //
-// OpenSteer -- Steering Behaviors for Autonomous Characters
-//
-// Copyright (c) 2002-2003, Sony Computer Entertainment America
-// Original author: Craig Reynolds <craig_reynolds@playstation.sony.com>
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
-//
-//
-// ----------------------------------------------------------------------------
-//
-//
 // OpenSteerDemo
 //
 // This class encapsulates the state of the OpenSteerDemo application and
@@ -44,13 +17,10 @@
 #ifndef OPENSTEER_OPENSTEERDEMO_H
 #define OPENSTEER_OPENSTEERDEMO_H
 
-
 #include "externLibs/OpenSteer/include/Vec3.h"
 #include "externLibs/OpenSteer/include/Clock.h"
 #include "externLibs/OpenSteer/include/PlugIn.h"
-#include "externLibs/OpenSteer/include/Camera.h"
 #include "externLibs/OpenSteer/include/Utilities.h"
-
 
 namespace OpenSteer {
 
@@ -62,24 +32,15 @@ namespace OpenSteer {
 
         // clock keeps track of both "real time" and "simulation time"
         static Clock clock;
-        // camera automatically tracks selected vehicle
-        static Camera camera;
 
         // ------------------------------------------ addresses of selected objects
 
         // currently selected plug-in (user can choose or cycle through them)
         static PlugIn* selectedPlugIn;
 
-        // currently selected vehicle.  Generally the one the camera follows and
-        // for which additional information may be displayed.  Clicking the mouse
-        // near a vehicle causes it to become the Selected Vehicle.
-        static AbstractVehicle* selectedVehicle;
-
         // -------------------------------------------- initialize, update and exit
 
         // initialize OpenSteerDemo
-        //     XXX  if I switch from "totally static" to "singleton"
-        //     XXX  class structure this becomes the constructor
         static void initialize (void);
 
         // main update function: step simulation forward and redraw scene
@@ -125,13 +86,13 @@ namespace OpenSteer {
         static const AVGroup& allVehiclesOfSelectedPlugIn(void);
 
         // ---------------------------------------------------- OpenSteerDemo phase
-
-        static bool phaseIsDraw     (void) {return phase == drawPhase;}
-        static bool phaseIsUpdate   (void) {return phase == updatePhase;}
-        static bool phaseIsOverhead (void) {return phase == overheadPhase;}
+        static bool  phaseIsDraw     (void) {return phase == drawPhase;}
+        static bool  phaseIsUpdate   (void) {return phase == updatePhase;}
+        static bool  phaseIsOverhead (void) {return phase == overheadPhase;}
 
         static float phaseTimerDraw     (void) {return phaseTimers[drawPhase];}
         static float phaseTimerUpdate   (void) {return phaseTimers[updatePhase];}
+
         // XXX get around shortcomings in current implementation, see note
         // XXX in updateSimulationAndRedraw
         //static float phaseTimerOverhead(void){return phaseTimers[overheadPhase];}
@@ -140,107 +101,6 @@ namespace OpenSteer {
             return (clock.getElapsedRealTime() -
                     (phaseTimerDraw() + phaseTimerUpdate()));
         }
-
-        // ------------------------------------------------------ delayed reset XXX
-
-        // XXX to be reconsidered
-        static void queueDelayedResetPlugInXXX (void);
-        static void doDelayedResetPlugInXXX (void);
-
-        // ------------------------------------------------------ vehicle selection
-
-        // select the "next" vehicle: cycle through the registry
-        static void selectNextVehicle (void);
-
-        // select vehicle nearest the given screen position (e.g.: of the mouse)
-        static void selectVehicleNearestScreenPosition (int x, int y);
-
-        // ---------------------------------------------------------- mouse support
-
-        // Find the AbstractVehicle whose screen position is nearest the
-        // current the mouse position.  Returns NULL if mouse is outside
-        // this window or if there are no AbstractVehicles.
-        static AbstractVehicle* vehicleNearestToMouse (void);
-
-        // Find the AbstractVehicle whose screen position is nearest the
-        // given window coordinates, typically the mouse position.  Note
-        // this will return NULL if there are no AbstractVehicles.
-        static AbstractVehicle* findVehicleNearestScreenPosition (int x, int y);
-
-        // for storing most recent mouse state
-        static int mouseX;
-        static int mouseY;
-        static bool mouseInWindow;
-
-        // ------------------------------------------------------- camera utilities
-
-        // set a certain initial camera state used by several plug-ins
-        static void init2dCamera (AbstractVehicle& selected);
-        static void init2dCamera (AbstractVehicle& selected,
-                                  float distance,
-                                  float elevation);
-        static void init3dCamera (AbstractVehicle& selected);
-        static void init3dCamera (AbstractVehicle& selected,
-                                  float distance,
-                                  float elevation);
-
-        // set initial position of camera based on a vehicle
-        static void position3dCamera (AbstractVehicle& selected);
-        static void position3dCamera (AbstractVehicle& selected,
-                                      float distance,
-                                      float elevation);
-        static void position2dCamera (AbstractVehicle& selected);
-        static void position2dCamera (AbstractVehicle& selected,
-                                      float distance,
-                                      float elevation);
-
-        // camera updating utility used by several (all?) plug-ins
-        static void updateCamera (const float currentTime,
-                                  const float elapsedTime,
-                                  const AbstractVehicle& selected);
-
-        // some camera-related default constants
-        static const float camera2dElevation;
-        static const float cameraTargetDistance;
-        static const Vec3 cameraTargetOffset;
-
-        // ------------------------------------------------ graphics and annotation
-				
-        // do all initialization related to graphics
-        static void initializeGraphics (void);
-
-        // ground plane grid-drawing utility used by several plug-ins
-        static void gridUtility (const Vec3& gridTarget);
-
-        // draws a gray disk on the XZ plane under a given vehicle
-        static void highlightVehicleUtility (const AbstractVehicle& vehicle);
-
-        // draws a gray circle on the XZ plane under a given vehicle
-        static void circleHighlightVehicleUtility (const AbstractVehicle& vehicle);
-
-        // draw a box around a vehicle aligned with its local space
-        // xxx not used as of 11-20-02
-        static void drawBoxHighlightOnVehicle (const AbstractVehicle& v,
-                                               const Vec3 color);
-
-        // draws a colored circle (perpendicular to view axis) around the center
-        // of a given vehicle.  The circle's radius is the vehicle's radius times
-        // radiusMultiplier.
-        static void drawCircleHighlightOnVehicle (const AbstractVehicle& v,
-                                                  const float radiusMultiplier,
-                                                  const Vec3 color);
-				
-
-        // graphical annotation: master on/off switch
-				
-				
-        static bool annotationIsOn (void) {return enableAnnotation;}
-        static void setAnnotationOn (void) {enableAnnotation = true;}
-        static void setAnnotationOff (void) {enableAnnotation = false;}
-        static bool toggleAnnotationState (void)
-            {return (enableAnnotation = !enableAnnotation);}
-				
-
         // ----------------------------------------------------------- console text
 
         // print a line on the console with "OpenSteerDemo: " then the given ending
@@ -254,8 +114,6 @@ namespace OpenSteer {
         // print list of known commands
         static void keyboardMiniHelp (void);
 
-				// add/remove boids
-				void addBoidToFlock (void);
 
         // ---------------------------------------------------------------- private
 
@@ -273,24 +131,11 @@ namespace OpenSteer {
         static void initPhaseTimers (void);
         static void updatePhaseTimers (void);
 
-        // XXX apparently MS VC6 cannot handle initialized static const members,
-        // XXX so they have to be initialized not-inline.
-        // static const int drawPhase = 2;
-        // static const int updatePhase = 1;
-        // static const int overheadPhase = 0;
         static const int drawPhase;
         static const int updatePhase;
         static const int overheadPhase;
     };
 
 } // namespace OpenSteer
-    
-    
-// ----------------------------------------------------------------------------
-
-
-//#include "Draw.h"
-
-
 // ----------------------------------------------------------------------------
 #endif // OPENSTEER_OPENSTEERDEMO_H

@@ -60,6 +60,7 @@ bool MidiIO::init()
 	// RtMidiIn constructor
 	try {
 		m_MidiIn = new RtMidiIn();
+		m_MidiIn->setQueueSizeLimit(4096);
 	}
 	catch ( RtError &error ) {
 		error.printMessage();

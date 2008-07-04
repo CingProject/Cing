@@ -34,6 +34,9 @@ namespace Graphics
 // Render related functions
 void setRenderMode( RenderMode mode );
 
+// 2d 
+void strokeWeight( int weight ); 
+
 // Color related functions
 void fill( int gray );
 void fill( int gray, int alpha );
@@ -49,7 +52,7 @@ void stroke( int value1 , int value2, int value3, int alpha );
 void stroke( const Color& color );
 void stroke( const Color& color, int alpha );
 
-void strokeWeight( int weight ); 
+void setBackgroundColor( const Color& color );
 
 // Camera 3D related functions
 void	useDefault3DCameraControl	( bool useDefault );
@@ -58,6 +61,7 @@ void	useKeyboardCameraControl	( bool value );
 
 // Debug methods
 void	showFps ( bool show );
+
 
 } // namespace Graphics
 
