@@ -1,0 +1,53 @@
+vertex_program RibbonTurbulenceVp cg
+{
+	source RibbonTurbulence.cg
+	entry_point ribbon_turbulence_vp
+	profiles vs_1_1 arbvp1 vp20
+
+	default_params
+	{
+		param_named_auto worldViewProj worldviewproj_matrix
+		param_named curlSize float 120.5
+		param_named gravity float3 0 -1 0
+		param_named ttl float 2.3
+		param_named seed float3 123 -456 789
+		param_named amount float 36
+	}
+}
+
+material RibbonTrailTurbulence
+{
+	technique
+	{
+		pass
+		{
+			vertex_program_ref RibbonTurbulenceVp
+			{
+			}
+			
+
+      /*  Original
+			lighting on
+			scene_blend add
+			depth_write off
+			cull_hardware none
+			cull_software none
+			*/
+			
+			/* Modified */
+			lighting on
+			scene_blend alpha_blend 
+      ambient 0.5 0.5 0.5
+      diffuse 1.0 1.0 1.0
+			emissive 1 0 0 1
+
+			texture_unit
+			{
+				texture ribbonband.png 1d
+				tex_address_mode clamp
+				filtering linear linear none
+			}
+		}
+	}
+}
+

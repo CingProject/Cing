@@ -75,8 +75,9 @@ public:
         newPD (pd);
 
 				// init the mesh
-				m_Model.init(1);
+				m_Model.init(2);
 				m_Model.setScale(0.5,1.5,0.5);
+
 				m_Life = 0;
 
 				std::vector< Vector > path;
@@ -86,7 +87,7 @@ public:
 													100, 
 													100,
 													100,
-													1800, 
+													800, 
 													3,
 													path );
         // reset all boid state
@@ -110,7 +111,7 @@ public:
 				// steering force is clipped to this magnitude
 				setMaxForce (12);
 				// velocity is clipped to this magnitude
-				setMaxSpeed (17.2);
+				setMaxSpeed (17);
         // initial slow speed
         setSpeed (maxSpeed() * 0.3f);
         // notify proximity database that our position has changed
@@ -142,7 +143,6 @@ public:
 		
 			//update ribbon trail
 			m_Ribbon->setPosition(x, y, z);
-			//m_Ribbon->update();
 		}
 
     // per frame simulation update
@@ -165,19 +165,19 @@ public:
     Vec3 steerToFlock (void)
     {
 				
-        const float separationRadius =  30.0f;
+        const float separationRadius =  10.0f;
         const float separationAngle  = -0.707f;
-        const float separationWeight =  6.01f;
+        const float separationWeight =  14.27f;
 
-        const float alignmentRadius = 35.5f;
-        const float alignmentAngle  = -0.3f;
-        const float alignmentWeight = 4.0f;
+        const float alignmentRadius = 55.5f;
+        const float alignmentAngle  = -0.5f;
+        const float alignmentWeight = 1.0f;
 
-        const float cohesionRadius = 60.0f;
+        const float cohesionRadius = 70.0f;
         const float cohesionAngle  = -0.15f;
-        const float cohesionWeight = 5.0f;
+        const float cohesionWeight = 3.9f;
 
-				const float wanderWeight = 5.0f;
+				const float wanderWeight   = 2.0f;
 
         const float maxRadius = maxXXX (separationRadius,
                                         maxXXX (alignmentRadius,
@@ -310,13 +310,13 @@ public:
 
         // make default-sized flock
         population = 0;
-				for (int i = 0; i < 60; i++) addBoidToFlock (RandomUnitVector().x,
+				for (int i = 0; i < 200; i++) addBoidToFlock (RandomUnitVector().x,
 					RandomUnitVector().y,RandomUnitVector().z);
     }
 
     void update (const float currentTime, const float elapsedTime)
     {
-			const static int iterations = 6;
+			const static int iterations = 5;
 			for (int s = 0; s < iterations ; s++)
 			{
 				// update flock simulation for each boid
