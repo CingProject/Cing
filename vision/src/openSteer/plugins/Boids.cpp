@@ -38,10 +38,10 @@
 
 #include <sstream>
 
-#include "externLibs/OpenSteer/include/SimpleVehicle.h"
-#include "externLibs/OpenSteer/include/OpenSteerDemo.h"
-#include "externLibs/OpenSteer/include/Proximity.h"
-
+#include "SimpleVehicle.h"
+#include "OpenSteerDemo.h"
+#include "Proximity.h"
+#include "PlugIn.h"
 // graphics
 #include "graphics/Box.h"
 #include "graphics/GraphicsPrereqs.h"
@@ -58,7 +58,7 @@ typedef OpenSteer::AbstractTokenForProximityDatabase<AbstractVehicle*> Proximity
 // ----------------------------------------------------------------------------
 
 
-class Boid : public OpenSteer::SimpleVehicle
+class Boid : public SimpleVehicle
 {
 public:
 
@@ -76,6 +76,7 @@ public:
 				m_Model.init(1);
 				m_Model.setScale(0.5,1.5,0.5);
 				m_Life = 0;
+
         // reset all boid state
         reset ();
     }
@@ -111,23 +112,29 @@ public:
 			float k = 10.0f; //scale
 
 			// Update selected vehicle position
-			m_Model.setPosition( position().x*k,position().y*k,position().z*k);
+
+			Vec3 position = this->position();
+
+			float x = position.x * k;
+			float y = position.y * k;
+			float z = position.z * k;
+
+			m_Model.setPosition( x,y,z );
 
 			// and orientation
 			Ogre::Vector3	forwDir	= Ogre::Vector3(	forward().x,
-				forward().y,
-				forward().z);
+																							forward().y,
+																							forward().z);
 
 			m_Model.getSceneNode()->setDirection(forwDir, Ogre::SceneNode::TS_WORLD, Ogre::Vector3::UNIT_Y);  
 		}
-
 
     // per frame simulation update
     void update (const float currentTime, const float elapsedTime)
     {
 				// Eliminates y component to maintain boids in a plane
 				Vec3 force = steerToFlock ();
-				force.y = 0;
+				//force.y = 0;
         // steer to flock and perhaps to stay within the spherical boundary
         applySteeringForce ( (const Vec3) force + handleBoundary(), elapsedTime);
 
@@ -175,7 +182,7 @@ public:
                                                     cohesionAngle,
                                                     neighbors);
 
-				const Vec3 wander   = steerForWander(0.01);
+				const Vec3 wander     = steerForWander(0.01);
 
         // apply weights to components (save in variables for annotation)
         const Vec3 separationW = separation * separationWeight;
@@ -268,7 +275,6 @@ int Boid::boundaryCondition = 0;
 // ----------------------------------------------------------------------------
 // PlugIn for OpenSteerDemo
 
-
 class BoidsPlugIn : public PlugIn
 {
 public:
@@ -287,7 +293,8 @@ public:
 
         // make default-sized flock
         population = 0;
-        for (int i = 0; i < 20; i++) addBoidToFlock ();
+				for (int i = 0; i < 200; i++) addBoidToFlock (RandomUnitVector().x,
+					RandomUnitVector().y,RandomUnitVector().z);
     }
 
     void update (const float currentTime, const float elapsedTime)
