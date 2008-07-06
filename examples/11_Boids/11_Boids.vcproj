@@ -226,6 +226,14 @@
 			RelativePath=".\src\OpenSteerDemo.cpp"
 			>
 		</File>
+		<File
+			RelativePath=".\src\Ribbon.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\Ribbon.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

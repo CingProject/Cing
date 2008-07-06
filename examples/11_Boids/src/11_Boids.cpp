@@ -1,5 +1,6 @@
 #include "Vision.h"
 // boid simulation
+
 #include "OpenSteerDemo.h"
 OpenSteer::OpenSteerDemo	boidSimulation;
 

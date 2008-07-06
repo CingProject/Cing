@@ -37,6 +37,7 @@
 
 
 #include <sstream>
+#include <vector>
 
 #include "SimpleVehicle.h"
 #include "OpenSteerDemo.h"
@@ -47,6 +48,7 @@
 #include "graphics/GraphicsPrereqs.h"
 #include "externLibs/Ogre3d/include/OgreSceneNode.h"
 
+#include "..\Ribbon.h"
 // Include names declared in the OpenSteer namespace into the namespaces to search to find names.
 using namespace OpenSteer;
 
@@ -77,6 +79,16 @@ public:
 				m_Model.setScale(0.5,1.5,0.5);
 				m_Life = 0;
 
+				std::vector< Vector > path;
+				path.push_back( Vector( 0, 0, 0 ) );
+
+				m_Ribbon = new Ribbon(	100, 
+													100, 
+													100,
+													100,
+													1800, 
+													3,
+													path );
         // reset all boid state
         reset ();
     }
@@ -127,6 +139,10 @@ public:
 																							forward().z);
 
 			m_Model.getSceneNode()->setDirection(forwDir, Ogre::SceneNode::TS_WORLD, Ogre::Vector3::UNIT_Y);  
+		
+			//update ribbon trail
+			m_Ribbon->setPosition(x, y, z);
+			//m_Ribbon->update();
 		}
 
     // per frame simulation update
@@ -258,8 +274,9 @@ public:
 
     static float worldRadius;
 
-		// a model 
+		// graphics
 		Graphics::Box m_Model;
+		Ribbon*			m_Ribbon;
 
 		// life time
 		int m_Life;
@@ -293,7 +310,7 @@ public:
 
         // make default-sized flock
         population = 0;
-				for (int i = 0; i < 200; i++) addBoidToFlock (RandomUnitVector().x,
+				for (int i = 0; i < 60; i++) addBoidToFlock (RandomUnitVector().x,
 					RandomUnitVector().y,RandomUnitVector().z);
     }
 
