@@ -28,7 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "input/InputManager.h"
 
 // Common
-#include "common/CommonUtils.h"
+#include "common/CommonUtilsIncludes.h"
 
 // CEGUI
 #include "externLibs/Ogre3d/include/OgreCEGUIRenderer.h"

@@ -19,31 +19,25 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "UserAppGlobals.h"
+#ifndef _SystemUtils_H_
+#define _SystemUtils_H_
 
+#include "CommonPrereqs.h"
 
-namespace Globals
+#include <string>
+
+/**
+ * @file
+ * This file contains several System related utilities
+ */
+
+namespace Common
 {
 
-// Window
-unsigned short 	 		width  = -1;
-unsigned short 	 		height = -1;
+// Files I/O
+bool fileExists( const std::string& fileName );
 
-// Data folder
-std::string					dataFolder = "";
+} // namespace
 
-// Input
-char								key;
-Input::MouseButton	mouseButton;
-int									mouseX = 0;	
-int									mouseY = 0;
 
-// Time
-float								elapsedSec		= 0;
-float								elapsedMillis = 0;
-
-// Advanced
-Ogre::SceneManager*	ogreSceneManager	= NULL;
-Ogre::Camera*				ogreCamera				= NULL;
-
-} // namespace Globals
+#endif  // _SystemUtils_H_

@@ -69,9 +69,8 @@
 #include "framework/UserAppGlobals.h"
 
 // Common
-#include "common/MathUtils.h"
-#include "common/LogManager.h"
 #include "common/CommonUserAPI.h"
+#include "common/CommonUtilsIncludes.h"
 
 // Input
 #include "input/InputTypes.h"

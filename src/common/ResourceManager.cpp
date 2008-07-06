@@ -26,6 +26,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreRoot.h"
 #include "externLibs/Ogre3d/include/OgreConfigFile.h"
 
+// Framework 
+#include "framework/UserAppGlobals.h"
+
 namespace Common
 {
 
@@ -100,6 +103,9 @@ void ResourceManager::init()
 
 	// Add the resource location of the user data
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( userDataPath, typeName, userResourcesGroupName, true );
+
+	// Set global variable with user data folder
+	Globals::dataFolder = userDataPath;
 
 	m_bIsValid = true;
 }

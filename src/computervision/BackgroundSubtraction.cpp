@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "BackgroundSubtraction.h"
 
 // Common
-#include "common/CommonUtils.h"
+#include "common/CommonUtilsIncludes.h"
 
 // Graphics
 #include "graphics/ImageResourceManager.h"
