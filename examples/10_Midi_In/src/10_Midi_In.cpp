@@ -23,7 +23,7 @@ void setup()
 	midiIO.printDevices();
 
 	// Open the first input device
-	midiIO.openInput(0);
+	//midiIO.openInput(0);
 
 	// Add a callback function for noteOn events.
 
