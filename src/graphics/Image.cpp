@@ -298,7 +298,15 @@ bool Image::getUpdateTexture() const
  */
 void Image::flipVertical()
 {
-	m_quad.flipVertical();
+
+	//cvFlip(m_cvImage, NULL, 0);
+	//m_quad.flipVertical();
+
+	// Make the image to be updated to texture in the next draw
+	//m_bUpdateTexture = true;
+	// Load image data to texture
+	//updateTexture();
+
 	m_bVFlip = true;
 }
 
@@ -359,6 +367,13 @@ void Image::draw( float xPos, float yPos, float zPos, float width, float height 
  */
 void Image::draw2d( float xPos, float yPos )
 {
+
+	// check if image needs to be mirrored
+	if (m_bVFlip)
+	{
+		cvFlip(m_cvImage, NULL, 0);
+	}
+
 	// check if texture needs to be updated
 	if (m_bUpdateTexture)
 	{
