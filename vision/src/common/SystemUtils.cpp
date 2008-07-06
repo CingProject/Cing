@@ -2,7 +2,7 @@
   This source file is part of the Vision project
   For the latest info, see http://www.playthemagic.com/vision
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -19,20 +19,33 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _CommonUtils_h_
-#define _CommonUtils_h_
+#include "SystemUtils.h"
 
-/// @file This file contains the includes of all the common system utils of the library
+namespace Common
+{
 
-// common general utils
-#include "common/CommonTypes.h"
-#include "common/Exception.h"
-#include "common/LogManager.h"
-#include "common/Release.h"
-#include "common/MathUtils.h"
+/**
+ * @brief Checks if a file exists
+ *
+ * @param fileName Path to the file to that will be checked
+ * @return True if the file exitst, false otherwise
+ */
+bool fileExists( const std::string& fileName )
+{
+  FILE* fp = NULL;
 
-// standard general utils
-#include <cstdio>
+  //will not work if you do not have read permissions
+  //to the file, but if you don't have read, it
+  //may as well not exist to begin with.
 
+  fopen_s( &fp, fileName.c_str(), "rb" );
+  if( fp != NULL )
+  {
+      fclose( fp );
+      return true; // File exists
+  }
 
-#endif // _CommonUtils_h_
+  return false;	// File does not exist
+}
+
+} // namespace Common

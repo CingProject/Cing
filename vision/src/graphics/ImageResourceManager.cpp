@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "ImageResourceManager.h"
 
 // Common includes
-#include "common/CommonUtils.h"
+#include "common/CommonUtilsIncludes.h"
 
 // Open CV
 #include "externLibs/OpenCV/cxcore/include/cxcore.h"

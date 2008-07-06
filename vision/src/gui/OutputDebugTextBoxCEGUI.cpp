@@ -28,7 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/cegui/elements/CEGUIListboxTextItem.h"
 
 //  Common
-#include "common/CommonUtils.h"
+#include "common/CommonUtilsIncludes.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"

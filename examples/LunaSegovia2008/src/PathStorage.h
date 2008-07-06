@@ -53,8 +53,8 @@ public:
 	void				setVisible	( bool visible );
 
 	// Save / load
-	friend std::ostream& operator<<( std::ostream& file, const PathStorage& path );
-	void operator >> ( std::ifstream& file );
+	friend std::ostream&	operator<<	( std::ostream& file, const PathStorage& path );
+	friend std::ifstream& operator>>	( std::ifstream& file, PathStorage& path );
 
 private:
 	Path									m_path;

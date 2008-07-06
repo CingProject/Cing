@@ -2,7 +2,7 @@
   This source file is part of the Vision project
   For the latest info, see http://www.playthemagic.com/vision
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+	Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -19,31 +19,21 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "UserAppGlobals.h"
+#ifndef _CommonUtilsIncludes_h_
+#define _CommonUtilsIncludes_h_
+
+/// @file This file contains the includes of all the common system utils of the library
+
+// common general utils
+#include "common/CommonTypes.h"
+#include "common/Exception.h"
+#include "common/LogManager.h"
+#include "common/Release.h"
+#include "common/MathUtils.h"
+#include "common/SystemUtils.h"
+
+// standard general utils
+#include <cstdio>
 
 
-namespace Globals
-{
-
-// Window
-unsigned short 	 		width  = -1;
-unsigned short 	 		height = -1;
-
-// Data folder
-std::string					dataFolder = "";
-
-// Input
-char								key;
-Input::MouseButton	mouseButton;
-int									mouseX = 0;	
-int									mouseY = 0;
-
-// Time
-float								elapsedSec		= 0;
-float								elapsedMillis = 0;
-
-// Advanced
-Ogre::SceneManager*	ogreSceneManager	= NULL;
-Ogre::Camera*				ogreCamera				= NULL;
-
-} // namespace Globals
+#endif // _CommonUtilsIncludes_h_

@@ -91,7 +91,7 @@ Ribbon::Ribbon( float x, float y, float z, float phase, float length, float dura
 
 	// Store data
 	m_duration = duration;
-	std::copy( path.begin()+1, path.end(), std::back_inserter( m_path ) );
+	std::copy( path.begin(), path.end(), std::back_inserter( m_path ) );
 
 	// Calculate speed depending on duration and total distance
 	float distance = 0;

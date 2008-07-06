@@ -58,8 +58,6 @@ Application::Application():
  */
 Application::~Application()
 {
-  // Release resources
-  end();
 }
 
 /**

@@ -20,7 +20,7 @@
 */
 
 #include "PathStorage.h"
-#include "common/CommonUtils.h"
+#include "common/CommonUtilsIncludes.h"
 
 #include <fstream>
 
@@ -115,13 +115,13 @@ void PathStorage::setVisible( bool visible )
 std::ostream& operator<<( std::ostream& file, const PathStorage& path )
 {
 	// Write number of points
-	file << path.m_path.size();
+	file << path.m_path.size() << " ";
 
 	// Write points
 	PathStorage::Path::const_iterator it = path.m_path.begin();
 	for (; it != path.m_path.end(); ++it )
 	{
-		file << (*it).x << (*it).y << (*it).z;
+		file << (*it).x << " " << (*it).y << " " << (*it).z << " ";
 	}
 
 	// New line
@@ -135,7 +135,7 @@ std::ostream& operator<<( std::ostream& file, const PathStorage& path )
  *
  * @param
  */
-void PathStorage::operator >> ( std::ifstream& file )
+std::ifstream& operator>> ( std::ifstream& file, PathStorage& path )
 {
 	// Read number of points
 	int nPoints = 0;
@@ -144,9 +144,13 @@ void PathStorage::operator >> ( std::ifstream& file )
 	// Read points
 	for ( int i = 0; i < nPoints; ++i )
 	{
-		m_path.push_back( Vector() );
-		file >> m_path.back().x;
-		file >> m_path.back().y;
-		file >> m_path.back().z;
+		float x, y, z;
+		file >> x;
+		file >> y;
+		file >> z;
+
+		path.addPoint( x, y, z );
 	}
+
+	return file;
 }

@@ -8,6 +8,35 @@ std::list< SegoviaParticleSystem* > pSystems;
 std::list< PathStorage* >						paths;
 bool																debugPaths, creatingNewPath;
 
+void savePathsFile( const std::string& fileName )
+{
+	std::ofstream f ( fileName.c_str() );
+
+	// Write the number of paths
+	f << paths.size() << std::endl;
+
+	// Write the paths
+	std::list< PathStorage* >::iterator it = paths.begin();
+	for ( ; it != paths.end(); ++it )
+		f << *(*it)	;
+}
+
+void loadPathsFile( const std::string& fileName )
+{
+	std::ifstream f ( fileName.c_str() );
+
+	// Read number of paths
+	int nPaths;
+	f >> nPaths;
+
+	// Read paths
+	for ( int i = 0; i < nPaths; ++i )
+	{
+		paths.push_back( new PathStorage( true ) );
+		f >> *paths.back();
+	}
+}
+
 void setup()
 {
 	showFps( true );
@@ -19,6 +48,11 @@ void setup()
 	// Init vars
 	debugPaths			= true;
 	creatingNewPath = false;
+
+	// Load paths file
+	std::string fileName = dataFolder + "Paths.txt";
+	if ( fileExists( fileName ) )
+		loadPathsFile( fileName );
 }
 
 void draw()
@@ -45,11 +79,14 @@ void draw()
 void end()
 {
 	// Save paths
-	std::ofstream f ( "Paths.txt" );
-	std::list< PathStorage* >::iterator it = paths.begin();
-	for ( ; it != paths.end(); ++it )
-		f << (*it)	;
-
+	std::string fileName = dataFolder + "Paths.txt";
+	if ( fileExists( fileName ) )
+	{
+		if ( MessageBox( NULL, "Paths.txt file already exists. Do you want to overwrite it?", "Paths save", MB_OKCANCEL ) == IDOK )
+			savePathsFile( fileName );
+	}
+	else
+		savePathsFile( fileName );
 }
 
 void mousePressed()
@@ -113,3 +150,4 @@ void keyPressed()
 		std::for_each( paths.begin(), paths.end(), std::bind2nd( std::mem_fun( &PathStorage::setVisible ), debugPaths ) );
 	}
 }
+

@@ -23,6 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _UserAppGlobals_H_
 
 #include "FrameworkPrereqs.h"
+#include <string>
 
 // Input
 #include "input/InputTypes.h"
@@ -34,9 +35,12 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Globals
 {
 
-// App
+// Window
 extern unsigned short				width;					///< Window's width
 extern unsigned short				height;					///< Window's height
+
+// Data folder
+extern std::string					dataFolder;			///< Path to user's application data folder
 
 // Input
 extern	char								key;						///< Key being currently pressed
