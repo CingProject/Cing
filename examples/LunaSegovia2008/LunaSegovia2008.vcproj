@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="LunaSegovia2008"
 	ProjectGUID="{D325A643-14B8-4917-BA47-AF0145756398}"
 	RootNamespace="LunaSegovia2008"
@@ -159,7 +159,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib opensteer.lib"
+				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"

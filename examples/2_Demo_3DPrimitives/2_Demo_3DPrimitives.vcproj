@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="2_Demo_3DPrimitives"
 	ProjectGUID="{6E07A895-68FC-4479-BD16-6A327467106B}"
 	RootNamespace="2_Demo_3DPrimitives"
@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib videoInput_d.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib opensteer_d.lib"
+				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib videoInput_d.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_debug.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
@@ -153,7 +153,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib opensteer.lib"
+				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				ManifestFile="$(OutDir)\$(TargetFileName).intermediate.manifest"
