@@ -14,7 +14,7 @@ void draw()
 {
 	// Update systems and delete dead ones
 	std::list< SegoviaParticleSystem* >::iterator it = pSystems.begin();
-	for ( ; it != pSystems.end(); ++it )
+	while( it != pSystems.end() )
 	{
 		SegoviaParticleSystem* pSystem = *it;
 		if ( pSystem && !pSystem->update() )
@@ -26,6 +26,8 @@ void draw()
 			if ( pSystems.empty() )
 				break;
 		}
+		else
+			++it;
 	}
 }
 

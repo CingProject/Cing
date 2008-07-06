@@ -35,12 +35,19 @@ SegoviaParticleSystem::SegoviaParticleSystem( float x, float y, float z, int nLi
 	float zMargin = 100;
 	float phaseMargin = PI;
 
+	std::vector< Vector > path;
+	path.push_back( Vector( x, y, z ) );
+	path.push_back( Vector( width/2.0f, height-100, 0 ) );
+
 	for ( int i = 0; i < nLines; i++ )
 	{
-		m_lines.push_back( new Line(	x + random(-xMargin, xMargin) , 
+		m_lines.push_back( new Ribbon(x + random(-xMargin, xMargin) , 
 																	y + random(-yMargin, yMargin), 
 																	z + random(-zMargin, zMargin),
-																	random(-phaseMargin, phaseMargin)) );
+																	random(-phaseMargin, phaseMargin),
+																	400, 
+																	3,
+																	path) );
 	}
 }
 
@@ -68,16 +75,23 @@ SegoviaParticleSystem::~SegoviaParticleSystem()
  */
 bool SegoviaParticleSystem::update()
 {
-	bool alive = false;;
-
 	// Update all lines
 	Lines::iterator it = m_lines.begin();
-	for (; it != m_lines.end(); ++it )
+	while( it != m_lines.end() )
 	{
-		alive = (*it)->update() || alive;
+		// Update the line and if it is not alive -> delete it
+		bool lineAlive = (*it)->update();
+		if ( !lineAlive )
+		{
+			delete *it;
+			it = m_lines.erase( it );
+		}
+		else
+			++it;
 	}
 
-	return alive;
+	// Return false if all the lines are dead
+	return !m_lines.empty();
 }
 
 /**

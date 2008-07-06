@@ -215,6 +215,22 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\PathStorage.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\PathStorage.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\Ribbon.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\Ribbon.h"
+			>
+		</File>
+		<File
 			RelativePath=".\src\SegoviaParticleSystem.cpp"
 			>
 		</File>

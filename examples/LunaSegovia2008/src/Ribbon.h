@@ -19,33 +19,50 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _SegoviaParticleSystem_h_
-#define _SegoviaParticleSystem_h_
+#ifndef _Ribbon_h_
+#define _Ribbon_h_
 
-#include "Line.h"
-#include "Ribbon.h"
-#include <vector>
+#include "common/CommonTypes.h"
+
+
+// Forward declarations
+namespace Ogre
+{
+	class SceneNode;
+	class ParticleSystem;
+}
 
 /**
  * @internal
  * @brief 
  */
-class SegoviaParticleSystem
+class Ribbon
 {
 public:
 
 	// Constructor / Destructor
-	SegoviaParticleSystem( float x, float y, float z, int nLines);
-	~SegoviaParticleSystem();
+	Ribbon( float x, float y, float z, float phase, float length, float duration, const std::vector< Vector >& path );
+	~Ribbon();
 
 	// Control 
 	bool update			();
 	void setPosition( float x, float y, float z );
 
 private:
-	typedef std::vector< Ribbon* > Lines;
-
-	Lines m_lines;
+	static int						index;
+	
+	
+	Ogre::RibbonTrail*		m_ribbon;
+	Ogre::SceneNode*			m_ribbonNode;
+	Ogre::SceneNode*			m_animNode;
+	Ogre::Animation*			m_ribbonAnimation;
+	Ogre::AnimationState* m_ribbonAnimState;
+	std::vector< Vector >	m_path;
+	int										m_targetIndex;
+	float									m_timeControl;
+	float									m_duration;
+	Vector								m_pos, m_prevPos;
+	size_t								m_prevNumParticles;
 };
 
-#endif // _SegoviaParticleSystem_h_
+#endif // _Ribbon_h_

@@ -19,33 +19,43 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _SegoviaParticleSystem_h_
-#define _SegoviaParticleSystem_h_
+#ifndef _PathStorage_h_
+#define _PathStorage_h_
 
-#include "Line.h"
-#include "Ribbon.h"
 #include <vector>
+#include "Vision.h"
+#include "common/CommonTypes.h"
+
 
 /**
  * @internal
  * @brief 
  */
-class SegoviaParticleSystem
+class PathStorage
 {
 public:
+	
+	typedef std::vector< Vector > Path;
 
 	// Constructor / Destructor
-	SegoviaParticleSystem( float x, float y, float z, int nLines);
-	~SegoviaParticleSystem();
+	PathStorage( bool debug );
+	~PathStorage();
 
-	// Control 
-	bool update			();
-	void setPosition( float x, float y, float z );
+	// Path creation / reset
+	void 				reset			();
+	void 				addPoint	( float x, float y, float z );
+	const Path&	getPath		() const { return m_path; }
+
+	// Queries
+	float				getDistance( float x, float y, float z );
+
+	// Debug
+	void				draw	();
 
 private:
-	typedef std::vector< Ribbon* > Lines;
-
-	Lines m_lines;
+	Path									m_path;
+	std::vector< Sphere* > m_debugSpheres;
+	bool									m_debug; ///< If debug is activated a sphere will be created per each point (to be able to draw it)
 };
 
-#endif // _SegoviaParticleSystem_h_
+#endif // _PathStorage_h_
