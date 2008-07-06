@@ -66,7 +66,7 @@ Ribbon::Ribbon( float x, float y, float z, float phase, float length, float dura
 	m_ribbon->setColourChange(0, 0.0, 0.0, 0.0, 0.5);
 	m_ribbon->setInitialWidth(0, 5);
 	m_ribbon->setNumberOfChains( 1 );
-	m_ribbon->setTrailLength( 400 );
+	m_ribbon->setTrailLength( length );
 	m_ribbon->setMaxChainElements( 100 );
 	m_ribbon->addNode( m_animNode );
 
