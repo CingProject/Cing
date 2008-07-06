@@ -27,6 +27,7 @@
 #include "externLibs/Ogre3d/include/OgreAnimation.h"
 #include "externLibs/Ogre3d/include/OgreStringConverter.h"
 #include "externLibs/Ogre3d/include/OgreBillboardSet.h"
+#include "externLibs/Ogre3d/include/OgreGpuProgram.h"
 
 
 int		Ribbon::index = 0;
@@ -51,7 +52,17 @@ Ribbon::Ribbon( float x, float y, float z, float phase, float length, float dura
 	m_ribbon = ogreSceneManager->createRibbonTrail( "Ribbon" + Ogre::StringConverter::toString( currentIndex ) );
 	//m_ribbon->setMaterialName( "Examples/LightRibbonTrail" );
 	m_ribbon->setMaterialName( "RibbonTrailTurbulence" );
-	m_ribbon->setTrailLength( length );
+
+	// Duplicate material to set different seed
+	Ogre::MaterialPtr origMaterial = m_ribbon->getMaterial();	
+	std::string newMaterialName = origMaterial->getName() + Ogre::StringConverter::toString( currentIndex ) ;
+	Ogre::MaterialPtr materialCopy = origMaterial->clone( newMaterialName );
+	m_ribbon->setMaterialName( newMaterialName );
+
+	// Modify seed
+	Ogre::GpuProgramParametersSharedPtr vpParams = m_ribbon->getMaterial()->getTechnique(0)->getPass(0)->getVertexProgramParameters();	
+	Vector seed( random(-500, 500), random(-500, 500), random(-500, 500) );
+	vpParams->setNamedConstant( "seed", seed ); 
 
 	// Create scene node for the ribbon (so it is visible) and attach it
 	m_ribbonNode = ogreSceneManager->getRootSceneNode()->createChildSceneNode( "RibbonNode" + Ogre::StringConverter::toString( currentIndex ) );

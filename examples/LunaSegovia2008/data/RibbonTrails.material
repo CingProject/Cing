@@ -7,12 +7,12 @@ vertex_program RibbonTurbulenceVp cg
 	default_params
 	{
 		param_named_auto worldViewProj worldviewproj_matrix
-		param_named curlSize float 6.5
+		param_named curlSize float 100.5
 		param_named gravity float3 0 0 0
 		param_named ttl float 1
 		param_named seed float3 123 -456 789
-		param_named amount float 20
-	}
+		param_named amount float 160
+ 	}
 }
 
 material RibbonTrailTurbulence
