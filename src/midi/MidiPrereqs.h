@@ -24,20 +24,15 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "externLibs/RtMidi/include/RtMidi.h"
 
-#include "midi/MidiIO.h"
-
 /**
  * Prereqs File: This header file contains forward class declarations of the 
- * Audio namespace to speed up compiling.
- */
-   
+ * Midi namespace to speed up compiling.
+ */ 
 
 /// Contains classes or utilities used by all the subsystems of the library
 namespace Midi
 {
 	class MidiIO;
 } // namespace Midi
-
-
 
 #endif // _MidiPrereqs_H_
