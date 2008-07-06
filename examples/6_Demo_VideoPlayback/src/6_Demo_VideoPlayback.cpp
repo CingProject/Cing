@@ -14,7 +14,7 @@ Image	img;
 void setup()
 {
 	// Load the video and play in loop mode
-	myMovie.load( "test.avi" );
+	myMovie.load( "video.avi" );
 	myMovie.loop();
 }
 

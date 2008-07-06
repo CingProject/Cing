@@ -8,6 +8,13 @@ std::list< SegoviaParticleSystem* > pSystems;
 std::list< PathStorage* >						paths;
 bool																debugPaths, creatingNewPath;
 
+// CV
+BackgroundSubtraction bgSubtraction;	// Object to perform Background subtraction
+BlobFinder						bfinder;				// Object to perform blob finding
+Movie									movie;
+Image									movieFrame;
+Image									img;						// Image to draw the result of the background subtraction
+
 void savePathsFile( const std::string& fileName )
 {
 	std::ofstream f ( fileName.c_str() );
@@ -35,6 +42,7 @@ void loadPathsFile( const std::string& fileName )
 		paths.push_back( new PathStorage( true ) );
 		f >> *paths.back();
 	}
+
 }
 
 void setup()
@@ -53,10 +61,38 @@ void setup()
 	std::string fileName = dataFolder + "Paths.txt";
 	if ( fileExists( fileName ) )
 		loadPathsFile( fileName );
+
+	//Setup CV
+	movie.load( "video2.avi" );
+	movie.loop();
+	movieFrame.init(  320, 240, RGB );
+ 	img.init( 320, 240, RGB );
+	img.flipVertical();
+	//movieFrame.flipVertical();
 }
 
 void draw()
 {
+
+	//Draw CV
+	movie.read( movieFrame );
+	// background subtraction
+	bgSubtraction.update( movieFrame, img);
+	// Find blobs
+	bfinder.update( img );
+	// Draw images
+	movieFrame.draw2d( 0,0 );
+
+	int nBlobs = bfinder.getNumBlobs();
+	for ( int i = 0; i < nBlobs; i++ )
+	{
+		// get blob
+		Blob& blob = bfinder.getBlobN( i );
+		// draw it in the image
+		img.rect( blob.bbox.x, blob.bbox.y, blob.bbox.x + blob.bbox.width, blob.bbox.y + blob.bbox.height );
+	}
+
+	img.draw2d( width/2 - img.getWidth()/2, height - img.getHeight() );
 	// Update systems and delete dead ones
 	std::list< SegoviaParticleSystem* >::iterator it = pSystems.begin();
 	while( it != pSystems.end() )
@@ -74,6 +110,7 @@ void draw()
 		else
 			++it;
 	}
+
 }
 
 void end()
@@ -149,5 +186,9 @@ void keyPressed()
 		debugPaths = !debugPaths;
 		std::for_each( paths.begin(), paths.end(), std::bind2nd( std::mem_fun( &PathStorage::setVisible ), debugPaths ) );
 	}
+
+	// Store background when space bar is pressed
+	if ( key == ' ' )
+		bgSubtraction.storeBackground( movieFrame );
 }
 
