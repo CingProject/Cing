@@ -60,8 +60,9 @@ Ribbon::Ribbon( float x, float y, float z, float phase, float length, float dura
 	m_ribbon->setMaterialName( newMaterialName );
 
 	// Modify seed
+	float seedRange = 500;
 	Ogre::GpuProgramParametersSharedPtr vpParams = m_ribbon->getMaterial()->getTechnique(0)->getPass(0)->getVertexProgramParameters();	
-	Vector seed( random(-500, 500), random(-500, 500), random(-500, 500) );
+	Vector seed( random(-seedRange, seedRange), random(-seedRange, seedRange), random(-seedRange, seedRange) );
 	vpParams->setNamedConstant( "seed", seed ); 
 
 	// Create scene node for the ribbon (so it is visible) and attach it
@@ -176,84 +177,6 @@ bool Ribbon::update()
 	// Update scene node's position
 	m_animNode->setPosition( pos );
 
-	//// Get current number of particles
-	//size_t nParticles = m_pSystem->getNumParticles();
-
-	//// If it had particles and has 0 now -> the system is dead
-	//if ( (m_prevNumParticles > 0 ) && (nParticles == 0) )
-	//	return false;
-
-	//// Control vars
-	//m_timeControl			+= 0.01f * elapsedSec;
-	//float followSpeed = 0.6f;
-	//float spiralWidth	= 60;
-
-	//float speed = 0.7f;
-	//speed *= elapsedSec;
-
-	////Vector speed( 0.0f, 0.5f, 0.0f );
-	//Vector dir( m_target - m_center );
-	//dir.normalise();
-
-	//// Calculate rotation of current direction (respect vertical y)
-	//float		angle = angleBetweenVectors( Vector::UNIT_Y, dir );
-	//Vector	axis  = (Vector::UNIT_Y.crossProduct( dir )).normalisedCopy();
-	//Ogre::Matrix3 m;
-	//m.FromAxisAngle( axis, Ogre::Radian( angle ) );
-
-	//// Update center
-	//dir				*= speed;
-	//m_center	+= dir;
-
-	//// Affect particles -> make all follow the first particle
-	//Ogre::ParticleIterator pit = m_pSystem->_getIterator();
-	//Ogre::Particle* firstParticle;
-	//Ogre::Particle* particle, *prevParticle;
-	//int index = 0;
-	//while (!pit.end())
-	//{
-	//	// First
-	//	if ( index ==  0)
-	//	{
-	//		firstParticle = pit.getNext();
-	//		firstParticle->timeToLive = 10;
-	//		Vector& pos = firstParticle->position;
-	//		float xSpiral = cos( m_timeControl ) * spiralWidth;
-	//		float ySpiral = sin( m_timeControl ) * spiralWidth;
-
-	//		Vector spiral( xSpiral, 0, 0 );
-	//		Vector spiralNorm = spiral.normalisedCopy();
-	//		spiral = spiral * m;
-	//		//pos.x =  xCenter + val;
-	//		//pos.y += upSpeed;
-	//		//pos += speed;
-	//		
-
-	//		pos.x = m_center.x + xSpiral;
-	//		pos.y = m_center.y /*+ ySpiral*/;
-
-	//		prevParticle = firstParticle;
-	//	}
-	//	// Rest
-	//	else
-	//	{
-	//		particle = pit.getNext();
-	//		Vector& pos = particle->position;
-	//		//float val = cos( m_timeControl );
-	//		//pos.y += upSpeed;
-	//		//pos.x +=  val;
-	//		pos.x = ((1.0f - followSpeed) * pos.x) + (followSpeed * prevParticle->position.x);
-	//		pos.y = ((1.0f - followSpeed) * pos.y) + (followSpeed * prevParticle->position.y);
-
-	//		prevParticle = particle;
-	//	}
-
-	//	index++;
-	//}
-
-	// Store the number of particles
-	//m_prevNumParticles = nParticles;
-
 	return true;
 }
 
@@ -265,5 +188,5 @@ bool Ribbon::update()
  */
 void Ribbon::setPosition( float x, float y, float z )
 {
-	//m_particleNode->setPosition( x, y, z );
+	m_animNode->setPosition( x, y, z );
 }
