@@ -26,6 +26,8 @@
 #include "Ribbon.h"
 #include <vector>
 
+class PathStorage;
+
 /**
  * @internal
  * @brief 
@@ -35,7 +37,7 @@ class SegoviaParticleSystem
 public:
 
 	// Constructor / Destructor
-	SegoviaParticleSystem( float x, float y, float z, int nLines);
+	SegoviaParticleSystem( float x, float y, float z, int nLines, const std::list< PathStorage* >& paths );
 	~SegoviaParticleSystem();
 
 	// Control 

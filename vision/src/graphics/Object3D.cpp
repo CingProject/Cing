@@ -636,7 +636,17 @@ void Object3D::setTexture( const std::string& textureFileName )
 
 	// Change the ambient color of the copy material
 	m_materialCopy->getTechnique(0)->getPass(0)->createTextureUnitState( textureFileName );
+}
 
+/**
+ * @brief Sets the object visible or invisible
+ *
+ * @param visible if true the object will be visible, if false it will be invisible
+ */
+void Object3D::setVisible( bool visible )
+{
+	if ( isValid() )
+		m_sceneNode->setVisible( visible );
 }
 
 /**

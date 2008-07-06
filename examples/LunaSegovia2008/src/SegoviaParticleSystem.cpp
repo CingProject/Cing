@@ -22,12 +22,13 @@
 #include "SegoviaParticleSystem.h"
 #include "Vision.h"
 #include "common/CommonUtils.h"
+#include "PathStorage.h"
 
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-SegoviaParticleSystem::SegoviaParticleSystem( float x, float y, float z, int nLines )
+SegoviaParticleSystem::SegoviaParticleSystem( float x, float y, float z, int nLines, const std::list< PathStorage* >& paths )
 {
 	// config
 	float xMargin = 0;
@@ -35,10 +36,20 @@ SegoviaParticleSystem::SegoviaParticleSystem( float x, float y, float z, int nLi
 	float zMargin = 100;
 	float phaseMargin = PI;
 
-	std::vector< Vector > path;
-	path.push_back( Vector( x, y, z ) );
-	path.push_back( Vector( width/2.0f, height-100, 0 ) );
+	// Get distance to all available paths to select the closest path
+	float minDistance = FLT_MAX;
+	std::list< PathStorage* >::const_iterator minDistanceIt;		
+	for ( std::list< PathStorage* >::const_iterator it = paths.begin(); it != paths.end(); ++it )
+	{
+		float distance = (*it)->getDistance( x, y, z );
+		if ( distance < minDistance )
+		{
+			minDistance			= distance;
+			minDistanceIt		= it;
+		}
+	}
 
+	// Create lines assigning the selected path
 	for ( int i = 0; i < nLines; i++ )
 	{
 		m_lines.push_back( new Ribbon(x + random(-xMargin, xMargin) , 
@@ -47,7 +58,7 @@ SegoviaParticleSystem::SegoviaParticleSystem( float x, float y, float z, int nLi
 																	random(-phaseMargin, phaseMargin),
 																	400, 
 																	3,
-																	path) );
+																	(*minDistanceIt)->getPath() ) );
 	}
 }
 

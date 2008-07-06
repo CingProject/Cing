@@ -112,6 +112,8 @@ public:
 
 	void							setTexture								( const std::string& textureFileName );
 
+	void							setVisible								( bool visible );
+
 	// Debug methods
 	void							showBoundingBox						( bool show );
 

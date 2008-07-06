@@ -50,7 +50,11 @@ public:
 	float				getDistance( float x, float y, float z );
 
 	// Debug
-	void				draw	();
+	void				setVisible	( bool visible );
+
+	// Save / load
+	friend std::ostream& operator<<( std::ostream& file, const PathStorage& path );
+	void operator >> ( std::ifstream& file );
 
 private:
 	Path									m_path;

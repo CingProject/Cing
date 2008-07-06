@@ -22,6 +22,8 @@
 #include "PathStorage.h"
 #include "common/CommonUtils.h"
 
+#include <fstream>
+
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
@@ -55,6 +57,7 @@ void PathStorage::reset()
 	{
 		delete (*it);
 	}
+	m_debugSpheres.clear();
 }
 
 /**
@@ -73,6 +76,7 @@ void PathStorage::addPoint( float x, float y, float z )
 	{
 		Sphere* sphere = new Sphere();
 		sphere->init( 10 );
+		sphere->setPosition( x, y, z );
 		m_debugSpheres.push_back( sphere );
 	}
 
@@ -90,4 +94,59 @@ float PathStorage::getDistance( float x, float y, float z )
 		distances.push_back( (*it).distance( Vector( x, y, z ) ) );
 
 	return *(std::min( distances.begin(), distances.end() ));
+}
+
+
+/**
+ * @brief Renders debug spheres
+ *
+ * @param
+ */
+void PathStorage::setVisible( bool visible )
+{
+	std::for_each( m_debugSpheres.begin(), m_debugSpheres.end(), std::bind2nd( std::mem_fun( &Sphere::setVisible ), visible ) );
+}
+
+/**
+ * @brief Write path to file
+ *
+ * @param
+ */
+std::ostream& operator<<( std::ostream& file, const PathStorage& path )
+{
+	// Write number of points
+	file << path.m_path.size();
+
+	// Write points
+	PathStorage::Path::const_iterator it = path.m_path.begin();
+	for (; it != path.m_path.end(); ++it )
+	{
+		file << (*it).x << (*it).y << (*it).z;
+	}
+
+	// New line
+	file << std::endl;
+
+	return file;
+}
+
+/**
+ * @brief Read path from file
+ *
+ * @param
+ */
+void PathStorage::operator >> ( std::ifstream& file )
+{
+	// Read number of points
+	int nPoints = 0;
+	file >> nPoints;
+
+	// Read points
+	for ( int i = 0; i < nPoints; ++i )
+	{
+		m_path.push_back( Vector() );
+		file >> m_path.back().x;
+		file >> m_path.back().y;
+		file >> m_path.back().z;
+	}
 }

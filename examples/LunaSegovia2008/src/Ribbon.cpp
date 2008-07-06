@@ -132,7 +132,7 @@ bool Ribbon::update()
 	Vector pos = m_animNode->getPosition();
 
 	// Check if we have reached the current target
-	float targetDistThreshold = 100;
+	float targetDistThreshold = 10;
 	if ( pos.distance( m_path[m_targetIndex] ) < targetDistThreshold )
 	{
 		m_targetIndex++;
