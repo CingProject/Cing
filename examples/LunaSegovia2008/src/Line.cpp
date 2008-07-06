@@ -90,12 +90,12 @@ bool Line::update()
 		return false;
 
 	// Control vars
-	m_timeControl			+= 0.01f * elapsedSec;
+	m_timeControl			+= 0.01f * elapsedMillis;
 	float followSpeed = 0.6f;
 	float spiralWidth	= 60;
 
 	float speed = 0.7f;
-	speed *= elapsedSec;
+	speed *= elapsedMillis;
 
 	//Vector speed( 0.0f, 0.5f, 0.0f );
 	Vector dir( m_target - m_center );

@@ -49,7 +49,8 @@ Ribbon::Ribbon( float x, float y, float z, float phase, float length, float dura
 
 	// Create Ribbon
 	m_ribbon = ogreSceneManager->createRibbonTrail( "Ribbon" + Ogre::StringConverter::toString( currentIndex ) );
-	m_ribbon->setMaterialName( "Examples/LightRibbonTrail" );
+	//m_ribbon->setMaterialName( "Examples/LightRibbonTrail" );
+	m_ribbon->setMaterialName( "RibbonTrailTurbulence" );
 	m_ribbon->setTrailLength( length );
 
 	// Create scene node for the ribbon (so it is visible) and attach it
@@ -60,35 +61,13 @@ Ribbon::Ribbon( float x, float y, float z, float phase, float length, float dura
 	m_animNode = ogreSceneManager->getRootSceneNode()->createChildSceneNode();
 	m_animNode->setPosition( x, y, z );
 
-	// Create animation for the ribbon
-	//m_ribbonAnimation = ogreSceneManager->createAnimation( "RibbonAnimation" + Ogre::StringConverter::toString( currentIndex ), duration );
-	//m_ribbonAnimation->setInterpolationMode(Ogre::Animation::IM_LINEAR);
-
-	// Set key frames
-	//Ogre::NodeAnimationTrack* track = m_ribbonAnimation->createNodeTrack( 1, m_animNode );
-	//Ogre::TransformKeyFrame* kf = NULL;
-
-	//float pathNodeStep = duration / (float)(path.size()-1);
-	//float kfTime = 0;
-	//for ( size_t i = 0; i < path.size(); i++ )
-	//{
-	//	// Create key frame and set position
-	//	kf = track->createNodeKeyFrame( kfTime );
-	//	kf->setTranslate( path[i] );
-	//	
-	//	// Increase time for next key frame
-	//	kfTime += pathNodeStep;
-	//}
-
-	// Create animation state to control animation 
-	//m_ribbonAnimState = ogreSceneManager->createAnimationState( m_ribbonAnimation->getName() );
-	//m_ribbonAnimState->setEnabled( true );
-	//m_ribbonAnimState->setLoop( false );
-
 	// Set ribbon properties
-	m_ribbon->setInitialColour(0, 1.0, 0.8, 0);
-	m_ribbon->setColourChange(0, 0.5, 0.5, 0.5, 0.5);
+	m_ribbon->setInitialColour(0, 1.0, 1.0, 1.0);
+	m_ribbon->setColourChange(0, 0.0, 0.0, 0.0, 0.5);
 	m_ribbon->setInitialWidth(0, 5);
+	m_ribbon->setNumberOfChains( 1 );
+	m_ribbon->setTrailLength( 400 );
+	m_ribbon->setMaxChainElements( 100 );
 	m_ribbon->addNode( m_animNode );
 
 	// Add billboard to the head of the ribbon
@@ -102,6 +81,14 @@ Ribbon::Ribbon( float x, float y, float z, float phase, float length, float dura
 	m_duration = duration;
 	std::copy( path.begin()+1, path.end(), std::back_inserter( m_path ) );
 
+	// Calculate speed depending on duration and total distance
+	float distance = 0;
+	for ( size_t i = 1; i < path.size(); i++ )
+	{
+		distance += path[i].distance( path[i-1] );
+	}
+	m_speed = distance / m_duration;
+	
 	// Set current target
 	m_targetIndex = 0;
 
@@ -144,9 +131,9 @@ bool Ribbon::update()
 	// Move the ribbon
 
 	// Control vars
-	m_timeControl			+= 0.01f * elapsedSec;
-	float spiralWidth	= 5;
-	float speed				= 0.7f * elapsedSec;
+	m_timeControl			+= 5 * elapsedSec;
+	float spiralWidth	= 1;
+	float speed				= m_speed * elapsedSec;
 	
 	// Direction vector
 	Vector dir( m_path[m_targetIndex] - pos );

@@ -159,8 +159,9 @@ void Application::drawApp()
   // Loop while window is open
   while( Graphics::GraphicsManager::getSingleton().getMainWindow().isClosed() == false )
   {
-		// Store elapsed (and convert it to seconds)
-		Globals::elapsedSec = m_timer.getMilliseconds();
+		// Store elapsed 
+		Globals::elapsedMillis	= m_timer.getMilliseconds();
+		Globals::elapsedSec			=  Globals::elapsedMillis / 1000.0f;
 		m_timer.reset();
 
     // Update input manager
@@ -170,7 +171,7 @@ void Application::drawApp()
     draw();
 
 		// Update physics
-		Physics::PhysicsManager::getSingleton().update( Globals::elapsedSec  );
+		Physics::PhysicsManager::getSingleton().update( Globals::elapsedMillis  );
 
     // Update rendering
     Graphics::GraphicsManager::getSingleton().draw();

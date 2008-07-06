@@ -112,11 +112,11 @@ void PhysicsManager::end()
 /**
  * @brief Updates the physics state
  *
- * @param elapsedSec Time elapsed since last frame in seconds
+ * @param elapsedMillis Time elapsed since last frame in milliseconds
  */
-void PhysicsManager::update( unsigned long elapsedSec )
+void PhysicsManager::update( unsigned long elapsedMillis )
 {
-	m_physicsWorld->stepSimulation( elapsedSec, MAX_SIMULATION_SUBSTEPS, FIXED_TIME_STEP );
+	m_physicsWorld->stepSimulation( elapsedMillis, MAX_SIMULATION_SUBSTEPS, FIXED_TIME_STEP );
 }
 
 /**

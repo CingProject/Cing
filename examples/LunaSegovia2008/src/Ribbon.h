@@ -60,6 +60,7 @@ private:
 	std::vector< Vector >	m_path;
 	int										m_targetIndex;
 	float									m_timeControl;
+	float									m_speed;
 	float									m_duration;
 	Vector								m_pos, m_prevPos;
 	size_t								m_prevNumParticles;
