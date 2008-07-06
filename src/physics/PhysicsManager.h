@@ -69,7 +69,7 @@ public:
 	// Init / Release / Update
 	void	init		( Ogre::SceneManager& sceneManager, const Vector& gravityVector = Vector(0,-9.81,0), const AABox &bounds = AABox (Vector (-10000, -10000, -10000), Vector (10000,  10000,  10000)));
 	void	end			();	
-	void	update	( unsigned long elapsedSec );
+	void	update	( unsigned long elapsedMillis );
 	
 	// Collision shape construction 
 	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Graphics::Object3D& object );

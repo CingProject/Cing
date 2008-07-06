@@ -46,6 +46,7 @@ extern	int									mouseY;					///< Y coordinate of the mouse (in screen coordin
 
 // Time
 extern float								elapsedSec;			///< Elapsed time in seconds from previous to current frame
+extern float								elapsedMillis;	///< Elapsed time in milliseconds from previous to current frame
 
 // Advanced 
 extern Ogre::SceneManager*	ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object
