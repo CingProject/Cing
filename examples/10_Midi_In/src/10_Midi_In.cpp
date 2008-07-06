@@ -25,19 +25,15 @@ void setup()
 	// Open the first input device
 	midiIO.openInput(0);
 
-
 	// Add a callback function for noteOn events.
 
 	//midiIO.plug(&noteOn);  
 	midiIO.m_MidiIn->setQueueSizeLimit(128);
-
 }
 
 void draw()  
 {	
-
 }
-
 
 void end()
 {

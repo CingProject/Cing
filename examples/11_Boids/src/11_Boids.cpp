@@ -1,7 +1,8 @@
 #include "Vision.h"
-
 // boid simulation
+#include "OpenSteerDemo.h"
 OpenSteer::OpenSteerDemo	boidSimulation;
+
 PointLight								light;
 Box												myFloor;
 
@@ -14,7 +15,7 @@ void setup()
 
 	// Init lights and set the ambient light
 	setBackgroundColor( Color(0,0,0) );
-	ambientLight( 255, 255, 255 );
+	ambientLight( 55, 55, 55 );
 	light.init( 255, 255, 255, width / 2, height / 2, 200 );
 
 	// Set camera position and direction
@@ -23,6 +24,7 @@ void setup()
 
 	// Create a boid simulation
 	boidSimulation.initialize();
+
 }
 
 void draw()
@@ -39,11 +41,11 @@ void end()
 
 void mousePressed()
 {
-	if ( mouseButton == LEFT )
-		gBoidsPlugIn.addBoidToFlock( mouseX - width/2, 18, mouseY - height/2);
+	//if ( mouseButton == LEFT )
+		//gBoidsPlugIn.addBoidToFlock( mouseX - width/2, 18, mouseY - height/2);
 	
-	if ( mouseButton == RIGHT )
-		gBoidsPlugIn.addBoidToFlock( mouseX - width/2, 18, mouseY - height/2);
+	//if ( mouseButton == RIGHT )
+//		gBoidsPlugIn.addBoidToFlock( mouseX - width/2, 18, mouseY - height/2);
 
 }
 

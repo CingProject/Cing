@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="11_Boids"
 	ProjectGUID="{37EB661D-0BFB-4514-9BD4-2C1422C456BC}"
 	RootNamespace="My11_Boids"
@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include"
+				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include;OpenSteer\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -133,7 +133,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include"
+				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include;OpenSteer\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -202,8 +202,28 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="PlugIns"
+			>
+			<File
+				RelativePath=".\src\plugins\Boids.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			>
+			<File
+				RelativePath=".\OpenSteer\include\OpenSteerDemo.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\src\11_Boids.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\OpenSteerDemo.cpp"
 			>
 		</File>
 	</Files>

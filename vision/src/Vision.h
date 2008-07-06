@@ -103,10 +103,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreCamera.h"
 
 // Midi
-#include "midi/MidiPrereqs.h"
-
-// OpenSteer AI???
-#include "openSteer/OpenSteerPrereqs.h"
+#include "midi/midiIO.h"
 
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
@@ -121,7 +118,6 @@ using namespace Audio;
 using namespace	Movies;
 using namespace GUI;
 using namespace Midi;
-using namespace OpenSteer;
 
 // Classes used by user
 
