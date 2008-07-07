@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="7_Demo_2d3dMix"
+	Name="07_Demo_2d3dMix"
 	ProjectGUID="{06B166EF-28D8-4CFB-B43B-7B6408133DCC}"
-	RootNamespace="My7_Demo_2d3dMix"
+	RootNamespace="My07_Demo_2d3dMix"
 	>
 	<Platforms>
 		<Platform
@@ -203,7 +203,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\7_Demo_2d3dMix.cpp"
+			RelativePath=".\src\07_Demo_2d3dMix.cpp"
 			>
 		</File>
 	</Files>

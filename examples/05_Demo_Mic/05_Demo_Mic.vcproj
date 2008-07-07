@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="5_Demo_Mic"
+	Name="05_Demo_Mic"
 	ProjectGUID="{68C91ED7-3425-4A59-BDC5-BC5440992D21}"
-	RootNamespace="My5_Demo_Mic"
+	RootNamespace="My05_Demo_Mic"
 	>
 	<Platforms>
 		<Platform
@@ -70,7 +70,7 @@
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(IntDir)/5_Demo_Mic.pdb"
+				ProgramDatabaseFile="$(IntDir)/05_Demo_Mic.pdb"
 				SubSystem="2"
 				OptimizeForWindows98="1"
 				TargetMachine="1"
@@ -203,7 +203,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\5_Demo_Mic.cpp"
+			RelativePath=".\src\05_Demo_Mic.cpp"
 			>
 		</File>
 	</Files>

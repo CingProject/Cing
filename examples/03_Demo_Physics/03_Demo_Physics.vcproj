@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="3_Demo_Physics"
+	Name="03_Demo_Physics"
 	ProjectGUID="{35A10BBD-FF75-461D-A73B-93A7881BB37F}"
-	RootNamespace="My3_Demo_Physics"
+	RootNamespace="My03_Demo_Physics"
 	>
 	<Platforms>
 		<Platform
@@ -70,7 +70,7 @@
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				IgnoreDefaultLibraryNames="atlthunk.lib"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(IntDir)/3_Demo_Physics.pdb"
+				ProgramDatabaseFile="$(IntDir)/03_Demo_Physics.pdb"
 				SubSystem="2"
 				OptimizeForWindows98="1"
 				TargetMachine="1"
@@ -203,7 +203,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\3_Demo_Physics.cpp"
+			RelativePath=".\src\03_Demo_Physics.cpp"
 			>
 		</File>
 	</Files>

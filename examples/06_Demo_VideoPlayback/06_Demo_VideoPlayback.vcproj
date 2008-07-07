@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="6_Demo_VideoPlayback"
+	Name="06_Demo_VideoPlayback"
 	ProjectGUID="{CDB45802-76CA-4326-85BE-76212F25B1B7}"
-	RootNamespace="My6_Demo_VideoPlayback"
+	RootNamespace="My06_Demo_VideoPlayback"
 	>
 	<Platforms>
 		<Platform
@@ -70,7 +70,7 @@
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(IntDir)/6_Demo_VideoPlayback.pdb"
+				ProgramDatabaseFile="$(IntDir)/06_Demo_VideoPlayback.pdb"
 				SubSystem="2"
 				OptimizeForWindows98="1"
 				TargetMachine="1"
@@ -206,7 +206,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\6_Demo_VideoPlayback.cpp"
+			RelativePath=".\src\06_Demo_VideoPlayback.cpp"
 			>
 		</File>
 	</Files>

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="A_Demo_Interactive3dObject"
+	Name="11_Demo_Interactive3dObject"
 	ProjectGUID="{07E8F4C2-B3A5-4958-AC5E-18A35A5D5854}"
-	RootNamespace="A_Demo_Interactive3dObject"
+	RootNamespace="11_Demo_Interactive3dObject"
 	>
 	<Platforms>
 		<Platform
@@ -203,7 +203,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\A_Demo_Interactive3dObject.cpp"
+			RelativePath=".\src\11_Demo_Interactive3dObject.cpp"
 			>
 		</File>
 	</Files>

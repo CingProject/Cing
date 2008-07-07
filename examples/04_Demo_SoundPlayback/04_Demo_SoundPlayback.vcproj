@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="4_Demo_SoundPlayback"
+	Name="04_Demo_SoundPlayback"
 	ProjectGUID="{ACAF1B3D-F407-472E-A0D9-60546A5B8786}"
-	RootNamespace="My4_Demo_SoundPlayback"
+	RootNamespace="My04_Demo_SoundPlayback"
 	>
 	<Platforms>
 		<Platform
@@ -70,7 +70,7 @@
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(IntDir)/4_Demo_SoundPlayback.pdb"
+				ProgramDatabaseFile="$(IntDir)/04_Demo_SoundPlayback.pdb"
 				SubSystem="2"
 				OptimizeForWindows98="1"
 				TargetMachine="1"
@@ -203,7 +203,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\4_Demo_SoundPlayback.cpp"
+			RelativePath=".\src\04_Demo_SoundPlayback.cpp"
 			>
 		</File>
 	</Files>

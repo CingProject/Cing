@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="2_Demo_3DPrimitives"
+	Name="02_Demo_3DPrimitives"
 	ProjectGUID="{6E07A895-68FC-4479-BD16-6A327467106B}"
-	RootNamespace="2_Demo_3DPrimitives"
+	RootNamespace="02_Demo_3DPrimitives"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -197,7 +197,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\2_Demo_3DPrimitives.cpp"
+			RelativePath=".\src\02_Demo_3DPrimitives.cpp"
 			>
 		</File>
 	</Files>
