@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
-	Name="0_Demo_Image"
+	Version="8.00"
+	Name="00_Demo_Image"
 	ProjectGUID="{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}"
 	RootNamespace="0_Demo_Image"
 	Keyword="Win32Proj"
@@ -198,7 +198,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\0_Demo_Image.cpp"
+			RelativePath=".\src\00_Demo_Image.cpp"
 			>
 		</File>
 	</Files>
