@@ -35,9 +35,9 @@ namespace ComputerVision
 {
 
 // Static member init
-const float         BlobFinder::DEFAULT_MIN_AREA    = 200;
+const float         BlobFinder::DEFAULT_MIN_AREA    = 10;
 const float         BlobFinder::DEFAULT_MAX_AREA    = 320 * 240 * 0.75f;
-const unsigned int  BlobFinder::DEFAULT_MAX_BLOBS   = 20;
+const unsigned int  BlobFinder::DEFAULT_MAX_BLOBS   = 40;
 
 
 /**

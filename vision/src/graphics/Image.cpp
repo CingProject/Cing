@@ -698,6 +698,15 @@ void Image::ellipse( float x, float y, float width, float height )
  */
 void Image::filter( ImageProcessingFilters type )
 {
+	if (type == BLUR)
+		cvSmooth(m_cvImage, m_cvImage, CV_GAUSSIAN , 3);
+
+	if (type == ERODE)
+		cvErode( m_cvImage, m_cvImage, 0, 1 );
+
+	if (type == DILATE)
+		cvDilate( m_cvImage, m_cvImage, 0, 1 );
+
 	// TODO
 	//m_imgThresholdFilter.apply(  *m_cvImage );
 }
