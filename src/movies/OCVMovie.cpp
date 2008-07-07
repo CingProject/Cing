@@ -216,13 +216,11 @@ void OCVMovie::read( Graphics::Image &image )
 
 	// Check if the target image is valid (if not -> init it)
 	if ( !image.isValid() )
-	{		
 		image.init( frame->width, frame->height, format );
-		image.flipVertical();
-	}
 
-	// Copy the image
-	image.setData( frame->imageData, frame->width, frame->height, format );
+	// Set the image data (flipping it vertically)
+	cvConvertImage( frame, &image.getCVImage(), CV_CVTIMG_FLIP );
+	image.setUpdateTexture( true );
 
 	// If it was the last frame and we have to loop -> restar the video
   if ( equal( cvGetCaptureProperty( m_capture, CV_CAP_PROP_POS_AVI_RATIO ), 1.0f ) )
