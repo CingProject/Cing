@@ -1,4 +1,0 @@
-namespace OgreManager
-{
-    class OgreManager;
-}
