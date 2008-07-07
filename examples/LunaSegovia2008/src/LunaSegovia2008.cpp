@@ -48,6 +48,7 @@ void loadPathsFile( const std::string& fileName )
 void setup()
 {
 	showFps( true );
+	//showDebugOutput( true );
 
 	// Disable camera control
 	useMouseCameraControl( false );
@@ -63,7 +64,7 @@ void setup()
 		loadPathsFile( fileName );
 
 	//Setup CV
-	movie.load( "video2.avi" );
+	movie.load( "test_Segovia.avi" );
 	movie.loop();
 	movieFrame.init(  320, 240, RGB );
  	img.init( 320, 240, RGB );

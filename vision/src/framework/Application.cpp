@@ -104,6 +104,7 @@ bool Application::initApp()
 
 	// Reset timer
 	m_timer.reset();	
+	m_absTimer.reset();
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -157,9 +158,11 @@ void Application::drawApp()
   // Loop while window is open
   while( Graphics::GraphicsManager::getSingleton().getMainWindow().isClosed() == false )
   {
-		// Store elapsed 
-		Globals::elapsedMillis	= m_timer.getMilliseconds();
+		// Store elapsed from timers
+		Globals::elapsedMillis	= m_timer.getMillisecondsCPU();
 		Globals::elapsedSec			=  Globals::elapsedMillis / 1000.0f;
+		Globals::secFromStart		= m_absTimer.getMilliseconds() / 1000.0f;
+		Globals::millisFromStart= m_absTimer.getMilliseconds();
 		m_timer.reset();
 
     // Update input manager

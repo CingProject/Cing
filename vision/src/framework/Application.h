@@ -70,7 +70,8 @@ private:
 	Application();
 
 	// Attributes
-	Ogre::Timer		m_timer;				///< Application timer. Userd to messure time between frames
+	Ogre::Timer		m_timer;				///< Application timer. Used to measure time between frames
+	Ogre::Timer		m_absTimer;			///< Time to control the total time elapsed since application started
 	bool					m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };

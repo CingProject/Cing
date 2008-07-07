@@ -99,8 +99,11 @@ Ribbon::Ribbon( float x, float y, float z, float phase, float length, float dura
 	{
 		distance += path[i].distance( path[i-1] );
 	}
-	m_speed = distance / m_duration;
+	m_speed = distance / (m_duration*1000.0);
 	
+	// Get initial node pos
+	m_center = m_animNode->getPosition();
+
 	// Set current target
 	m_targetIndex = 0;
 
@@ -129,11 +132,11 @@ bool Ribbon::update()
 	// TODO: Check if the system is dead
 
 	// Get a copy of the current position
-	Vector pos = m_animNode->getPosition();
+	//Vector pos = m_animNode->getPosition();
 
 	// Check if we have reached the current target
 	float targetDistThreshold = 10;
-	if ( pos.distance( m_path[m_targetIndex] ) < targetDistThreshold )
+	if ( m_center.distance( m_path[m_targetIndex] ) < targetDistThreshold )
 	{
 		m_targetIndex++;
 		if ( m_targetIndex == m_path.size() )
@@ -143,12 +146,13 @@ bool Ribbon::update()
 	// Move the ribbon
 
 	// Control vars
-	m_timeControl			+= 5 * elapsedSec;
-	float spiralWidth	= 1;
-	float speed				= m_speed * elapsedSec;
+	//println( "ElapsedMillis: %f", elapsedMillis );
+	m_timeControl			+= 0.005f * elapsedMillis;
+	float spiralWidth	= 50.0f;
+	float speed				= m_speed * elapsedMillis;
 	
 	// Direction vector
-	Vector dir( m_path[m_targetIndex] - pos );
+	Vector dir( m_path[m_targetIndex] - m_center );
 	dir.normalise();
 	dir *= speed;
 
@@ -159,7 +163,7 @@ bool Ribbon::update()
 	m.FromAxisAngle( axis, Ogre::Radian( angle ) );
 
 	// Update position (center)
-	pos += dir;
+	m_center += dir;
 
 	// Calculate spiral coordinates (use just x coord for now)
 	float xSpiral = cos( m_timeControl ) * spiralWidth;
@@ -169,10 +173,11 @@ bool Ribbon::update()
 	Vector spiral( xSpiral, 0, 0 );
 	Vector spiralNorm = spiral.normalisedCopy();
 	spiral = spiral * m;
-
-	// Modify position
-	pos.x = pos.x + xSpiral;
-	pos.y = pos.y /*+ ySpiral*/;
+		
+	// Modify position to create the turbulences
+	Vector pos( m_center );
+	pos.x = m_center.x + xSpiral;
+	//pos.y = m_center.y /*+ ySpiral*/;
 	
 	// Update scene node's position
 	m_animNode->setPosition( pos );

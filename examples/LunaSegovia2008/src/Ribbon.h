@@ -58,10 +58,11 @@ private:
 	Ogre::Animation*			m_ribbonAnimation;
 	Ogre::AnimationState* m_ribbonAnimState;
 	std::vector< Vector >	m_path;
+	Vector								m_center;
 	int										m_targetIndex;
-	float									m_timeControl;
-	float									m_speed;
-	float									m_duration;
+	double								m_timeControl;
+	double								m_speed;
+	double								m_duration;
 	Vector								m_pos, m_prevPos;
 	size_t								m_prevNumParticles;
 };

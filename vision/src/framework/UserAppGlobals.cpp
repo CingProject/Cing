@@ -39,8 +39,10 @@ int									mouseX = 0;
 int									mouseY = 0;
 
 // Time
-float								elapsedSec		= 0;
-float								elapsedMillis = 0;
+float								elapsedSec			= 0;
+float								elapsedMillis		= 0;
+float								secFromStart		= 0;
+float								millisFromStart	= 0;
 
 // Advanced
 Ogre::SceneManager*	ogreSceneManager	= NULL;
