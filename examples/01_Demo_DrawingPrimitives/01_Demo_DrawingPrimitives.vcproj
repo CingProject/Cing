@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="1_Demo_DrawingPrimitives"
+	Name="01_Demo_DrawingPrimitives"
 	ProjectGUID="{B0ABE9D8-F361-4011-87F1-CF71FF9C13C1}"
-	RootNamespace="My1_Demo_DrawingPrimitives"
+	RootNamespace="My01_Demo_DrawingPrimitives"
 	>
 	<Platforms>
 		<Platform
@@ -203,7 +203,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\1_Demo_DrawingPrimitives.cpp"
+			RelativePath=".\src\01_Demo_DrawingPrimitives.cpp"
 			>
 		</File>
 	</Files>
