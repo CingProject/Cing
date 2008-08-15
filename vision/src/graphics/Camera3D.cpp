@@ -96,7 +96,7 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
 	m_cameraSceneNode->attachObject( m_pOgreCamera );
 
 	//TEST
-	setProcessingLikeCamera();
+	set3DCameraProperties();
 
 
 
@@ -144,10 +144,10 @@ void Camera3D::moveRelative( const Vector& move )
 
 
 /**
- * @brief Sets the camera in a way that the coordinate system of the scene is the same than in processing 
- * TODO: finish it
+ * @brief Sets the camera in a way that the coordinate system of the scene is the same for 3d and 2d, this is
+ * origin is upper left corner
  */
-void Camera3D::setProcessingLikeCamera()
+void Camera3D::set3DCameraProperties()
 {
   // Calculate the camera distance
   m_vFovRad           = Common::degToRad( V_FOV_DEG );
@@ -159,7 +159,7 @@ void Camera3D::setProcessingLikeCamera()
   // Camera pos and look at
   m_cameraPos.x = static_cast< float >( Globals::width ) / 2.0f;
   m_cameraPos.y = static_cast< float >( Globals::height ) / 2.0f;
-  m_cameraPos.z = m_cameraDistance;
+  m_cameraPos.z = -m_cameraDistance;
 
   m_cameraLookAt.x = static_cast< float >( Globals::width ) / 2.0f;
   m_cameraLookAt.y = static_cast< float >( Globals::height ) / 2.0f;
@@ -170,16 +170,10 @@ void Camera3D::setProcessingLikeCamera()
   m_cameraUpVector.y = -1.0f;
   m_cameraUpVector.z = 0.0f;
   
-  //TODO -> invertir vector up
-  //Vector3 up = m_pOgreCamera->getUp();
-  //m_pOgreCamera->setFixedYawAxis( false );
-  //m_pOgreCamera->rotate( Vector3( 0, 0, 1 ), Ogre::Radian( Ogre::Degree( 180 ) ) );
-  //up = m_pOgreCamera->getUp();
-  ////m_pOgreCamera->setUpVector( m_cameraUpVector );
+  // Invert up vector
+	m_pOgreCamera->roll( Ogre::Radian( Ogre::Degree( 180 ) ) );
 
   // Set camera properties
-  //m_pOgreCamera->setPosition( m_cameraPos );
-  //m_pOgreCamera->lookAt( m_cameraLookAt );
   m_pOgreCamera->setFOVy( Ogre::Radian( m_vFovRad ) );
   m_pOgreCamera->setAspectRatio( m_aspectRatio );
 

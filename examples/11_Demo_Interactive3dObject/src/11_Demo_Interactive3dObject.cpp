@@ -37,7 +37,8 @@ void setup()
 
 	// Load 3d object of a head
 	head.init( "head.mesh", "Examples/BumpMapping/MultiLight" );
-	head.setPosition( width/2, height/2, 200 );
+	head.setPosition( width/2, height/2, -200 );
+	head.setOrientation( Vector::UNIT_Z, 180 );
 
 	// Init object that will be used to represent the position of the user -> no mesh and no material
 	user.init();
@@ -47,7 +48,7 @@ void setup()
 	// setup lighting
 	lightPos.z = 100;
 	targetPos = lightPos;
-	pointLight.init( 255, 255, 255, width/2, height/2, 300 );	
+	pointLight.init( 255, 255, 255, width/2, height/2, -300 );	
 	ambientLight( 10, 10, 10 );
 
 	// no camera movement
@@ -86,7 +87,7 @@ void draw()
 
 		// Set new light pos
 		pointLight.setPosition( pos );
-		pos.z = 1500;
+		pos.z = -1500;
 		user.setPosition( pos );
 	}
 
@@ -118,7 +119,7 @@ void mouseReleased()
 void keyPressed()
 {
 	// Draw computer vision process
-	if ( key == 'b' )
+	if ( key == 'd' )
 		drawCV = !drawCV;
 
 	// Store background when space bar is pressed

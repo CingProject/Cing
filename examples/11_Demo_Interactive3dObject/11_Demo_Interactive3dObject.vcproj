@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="11_Demo_Interactive3dObject"
 	ProjectGUID="{07E8F4C2-B3A5-4958-AC5E-18A35A5D5854}"
 	RootNamespace="11_Demo_Interactive3dObject"

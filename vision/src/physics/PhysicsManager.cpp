@@ -72,7 +72,7 @@ PhysicsManager::~PhysicsManager()
  * @param bounds				Bounds of the physics affected world
  */
 void PhysicsManager::init( Ogre::SceneManager&	sceneManager, 
-													 const Vector&				gravityVector /*= Vector3(0,-9.81,0)*/,
+													 const Vector&				gravityVector /*= Vector3(0,9.81,0)*/,
 													 const AABox&					bounds				/*= AABox (Vector3 (-10000, -10000, -10000), Vector3 (10000,  10000,  10000))*/ )
 {
 	if ( isValid() )

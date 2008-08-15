@@ -15,7 +15,7 @@ CREATE_APPLICATION( "Vision Demo" );
 Sphere			sphere;					// Sphere 3d primitive
 Box					box;						// Box (cube) 3d primitive
 Plane				plane;					// Plane 3d primitive
-PointLight	light, light2;	// Lights in the scene
+PointLight	light;					// Lights in the scene
 
 float				timeVar = 0;
 
@@ -35,21 +35,19 @@ void setup()
 
 	// plane
 	plane.init( 10000 );
-	plane.setPosition( 0, 0 , 0 );
-	plane.setSelfIlluminationColor( 0, 0, 100 );
+	plane.setPosition( 0, height, 0 );
+	// plane.setSelfIlluminationColor( 0, 0, 100 );
 	plane.setOrientation( Vector( 1, 0, 0 ), 10 );
 
 	// Init lights and set the ambient light
 	ambientLight( 50, 50, 50 );
-	light.init( 255, 255, 255, width / 2, height / 2, 200 );	
-	light2.init( 255, 100, 160, width / 2, height / 2, 200 );
-
+	light.init( 255, 255, 255, width / 2, height / 2, -200 );	
+	
 	// Allow mouse control
 	useMouseCameraControl( true );
 
 	// Show lights in the scene
 	light.drawDebug( true );
-	light2.drawDebug( true );
 }
 
 void draw()

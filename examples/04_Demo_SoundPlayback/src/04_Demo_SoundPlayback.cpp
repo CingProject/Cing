@@ -21,13 +21,13 @@ void setup()
 
 	// setup plane and sphere
  	plane.init( 100000 );
-	plane.setPosition( width/2, height/2 - 200, 0 );	
+	plane.setPosition( width/2, height/2 + 200, 0 );	
 	sphere.init( 100 );
 	sphere.setPosition( width/2, height/2, 0 );
 
 	// setup light
 	ambientLight( 20, 20, 20 );
-	light.init( 0, 0, 0, width/2, height/2, 200 );
+	light.init( 0, 0, 0, width/2, height/2, -200 );
 }
 
 void draw()

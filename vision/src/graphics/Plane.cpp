@@ -28,7 +28,7 @@ namespace Graphics
 
 // Static member init
 const std::string  Plane::DEFAULT_MESH			= "plane.mesh";
-const std::string  Plane::DEFAULT_MATERIAL	= "EmptyMaterial";
+const std::string  Plane::DEFAULT_MATERIAL	= "EmptyMaterialNoCulling";
 
 /**
  * @internal

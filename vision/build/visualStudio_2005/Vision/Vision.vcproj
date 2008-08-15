@@ -149,793 +149,813 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Graphics"
+			Name="Materials"
 			>
 			<Filter
-				Name="Header Files"
+				Name="Scripts"
 				>
 				<File
-					RelativePath="..\..\..\src\graphics\Camera3D.h"
+					RelativePath="..\..\..\data\materials\scripts\Basic_Vision.material"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\graphics\CameraController.h"
+					RelativePath="..\..\..\data\materials\scripts\Example.material"
 					>
 				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\Color.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\DebugOverlay.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\Font.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\GraphicsManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\GraphicsPrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\GraphicsTypes.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\GraphicsUserAPI.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\ImageResourceManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\Text.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\Window.h"
-					>
-				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Src"
+			>
+			<Filter
+				Name="Audio"
+				>
 				<Filter
-					Name="3DObjects"
+					Name="Header Files"
 					>
 					<File
-						RelativePath="..\..\..\src\graphics\Box.h"
+						RelativePath="..\..\..\src\audio\AudioPrereqs.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\Object3D.h"
+						RelativePath="..\..\..\src\audio\BaseMicro.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\Plane.h"
+						RelativePath="..\..\..\src\audio\BaseSound.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\Sphere.h"
+						RelativePath="..\..\..\src\audio\MicroFMOD.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\audio\SoundFMOD.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\audio\SoundManagerFMOD.h"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="Image"
+					Name="Source Files"
 					>
 					<File
-						RelativePath="..\..\..\src\graphics\Image.h"
+						RelativePath="..\..\..\src\audio\MicroFMOD.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\TexturedQuad.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Lighting"
-					>
-					<File
-						RelativePath="..\..\..\src\graphics\BaseLight.h"
+						RelativePath="..\..\..\src\audio\SoundFMOD.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\LightingUserAPI.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\graphics\PointLight.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="ImageProcessing"
-					>
-					<File
-						RelativePath="..\..\..\src\graphics\BaseImageFilter.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\graphics\ImageDifferenceFilter.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\graphics\ImageThresholdFilter.h"
+						RelativePath="..\..\..\src\audio\SoundManagerFMOD.cpp"
 						>
 					</File>
 				</Filter>
 			</Filter>
 			<Filter
-				Name="Source Files"
+				Name="Physics"
 				>
-				<File
-					RelativePath="..\..\..\src\graphics\Camera3D.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\CameraController.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\Color.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\DebugOverlay.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\Font.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\GraphicsManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\GraphicsUserAPI.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\ImageResourceManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\Text.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\graphics\Window.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
 				<Filter
-					Name="3DObjects"
+					Name="Source Files"
 					>
 					<File
-						RelativePath="..\..\..\src\graphics\Box.cpp"
+						RelativePath="..\..\..\src\physics\PhysicsManager.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\Object3D.cpp"
+						RelativePath="..\..\..\src\physics\PhysicsUserAPI.cpp"
+						>
+					</File>
+					<Filter
+						Name="Physics Objects"
+						>
+						<File
+							RelativePath="..\..\..\src\physics\PhysicsBox.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\physics\PhysicsObject.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\physics\PhysicsPlane.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\physics\PhysicsSphere.cpp"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\src\physics\PhysicsManager.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\Plane.cpp"
+						RelativePath="..\..\..\src\physics\PhysicsPrereqs.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\Sphere.cpp"
+						RelativePath="..\..\..\src\physics\PhysicsUserAPI.h"
+						>
+					</File>
+					<Filter
+						Name="Physics Objects"
+						>
+						<File
+							RelativePath="..\..\..\src\physics\PhysicsBox.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\physics\PhysicsObject.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\physics\PhysicsPlane.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\physics\PhysicsSphere.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="CameraInput"
+				>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\..\src\camerainput\BaseCameraInput.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\camerainput\OCVCamera.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\camerainput\PVCamera.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\camerainput\VICamera.cpp"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="Image"
+					Name="Header Files"
 					>
 					<File
-						RelativePath="..\..\..\src\graphics\Image.cpp"
+						RelativePath="..\..\..\src\camerainput\BaseCameraInput.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\TexturedQuad.cpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Lighting"
-					>
-					<File
-						RelativePath="..\..\..\src\graphics\BaseLight.cpp"
+						RelativePath="..\..\..\src\camerainput\CameraInputPrereqs.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\LightingUserAPI.cpp"
+						RelativePath="..\..\..\src\camerainput\OCVCamera.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\PointLight.cpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="ImageProcessing"
-					>
-					<File
-						RelativePath="..\..\..\src\graphics\BaseImageFilter.cpp"
+						RelativePath="..\..\..\src\camerainput\PVCamera.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\graphics\ImageDifferenceFilter.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\graphics\ImageThresholdFilter.cpp"
-						>
-					</File>
-				</Filter>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Framework"
-			>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\src\framework\AppFramework.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\framework\Application.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\framework\UserAppGlobals.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\src\framework\AppFramework.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\framework\Application.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\framework\AppMain.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\framework\FrameworkPrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\framework\UserAppFunctionDeclaration.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\framework\UserAppGlobals.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Common"
-			>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\src\common\CommonPrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\CommonTypes.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\CommonUserAPI.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\CommonUtilsIncludes.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\Exception.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\LogManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\MathUtils.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\Release.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\ResourceManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\Singleton.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\SystemUtils.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\src\common\CommonUserAPI.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\Exception.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\LogManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\ResourceManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\common\SystemUtils.cpp"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Input"
-			>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\src\input\InputManager.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\..\..\src\input\Keyboard.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\input\Mouse.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\src\input\BaseInputDevice.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\input\BaseInputDevice.inl"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\input\InputManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\input\InputPrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\input\InputTypes.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\input\Keyboard.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\input\Mouse.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="GUI"
-			>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\src\gui\GUIManagerCEGUI.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\gui\GUIManagerQuickGUI.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\gui\GUIUserAPI.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\gui\OutputDebugTextBoxCEGUI.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\src\gui\GUIManagerCEGUI.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\gui\GUIManagerQuickGUI.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\gui\GUIPrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\gui\GUIUserAPI.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\gui\OutputDebugTextBoxCEGUI.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="CameraInput"
-			>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\src\camerainput\BaseCameraInput.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\camerainput\OCVCamera.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\camerainput\PVCamera.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\camerainput\VICamera.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\src\camerainput\BaseCameraInput.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\camerainput\CameraInputPrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\camerainput\OCVCamera.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\camerainput\PVCamera.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\camerainput\VICamera.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="ExternLibs"
-			>
-			<Filter
-				Name="Fmod"
-				>
-				<File
-					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_codec.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_dsp.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_errors.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_output.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="ComputerVision"
-			>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\src\computervision\BackgroundSubtraction.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\computervision\BlobFinder.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\src\computervision\BackgroundSubtraction.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\computervision\Blob.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\computervision\BlobFinder.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\computervision\ComputerVisionPrereqs.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Physics"
-			>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\src\physics\PhysicsManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\physics\PhysicsUserAPI.cpp"
-					>
-				</File>
-				<Filter
-					Name="Physics Objects"
-					>
-					<File
-						RelativePath="..\..\..\src\physics\PhysicsBox.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\physics\PhysicsObject.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\physics\PhysicsPlane.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\physics\PhysicsSphere.cpp"
+						RelativePath="..\..\..\src\camerainput\VICamera.h"
 						>
 					</File>
 				</Filter>
 			</Filter>
 			<Filter
-				Name="Header Files"
+				Name="Common"
 				>
-				<File
-					RelativePath="..\..\..\src\physics\PhysicsManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\physics\PhysicsPrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\physics\PhysicsUserAPI.h"
-					>
-				</File>
 				<Filter
-					Name="Physics Objects"
+					Name="Header Files"
 					>
 					<File
-						RelativePath="..\..\..\src\physics\PhysicsBox.h"
+						RelativePath="..\..\..\src\common\CommonPrereqs.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\physics\PhysicsObject.h"
+						RelativePath="..\..\..\src\common\CommonTypes.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\physics\PhysicsPlane.h"
+						RelativePath="..\..\..\src\common\CommonUserAPI.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\physics\PhysicsSphere.h"
+						RelativePath="..\..\..\src\common\CommonUtilsIncludes.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\Exception.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\LogManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\MathUtils.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\Release.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\ResourceManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\Singleton.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\SystemUtils.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\..\src\common\CommonUserAPI.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\Exception.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\LogManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\ResourceManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\SystemUtils.cpp"
 						>
 					</File>
 				</Filter>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="Audio"
-			>
 			<Filter
-				Name="Header Files"
+				Name="ComputerVision"
 				>
-				<File
-					RelativePath="..\..\..\src\audio\AudioPrereqs.h"
+				<Filter
+					Name="Source Files"
 					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\audio\BaseMicro.h"
+					<File
+						RelativePath="..\..\..\src\computervision\BackgroundSubtraction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\computervision\BlobFinder.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Header Files"
 					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\audio\BaseSound.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\audio\MicroFMOD.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\audio\SoundFMOD.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\audio\SoundManagerFMOD.h"
-					>
-				</File>
+					<File
+						RelativePath="..\..\..\src\computervision\BackgroundSubtraction.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\computervision\Blob.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\computervision\BlobFinder.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\computervision\ComputerVisionPrereqs.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
-				Name="Source Files"
+				Name="ExternLibs"
 				>
-				<File
-					RelativePath="..\..\..\src\audio\MicroFMOD.cpp"
+				<Filter
+					Name="Fmod"
 					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\audio\SoundFMOD.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\audio\SoundManagerFMOD.cpp"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Movies"
-			>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\src\movies\OCVMovie.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\src\movies\MoviePrereqs.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\movies\OCVMovie.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Midi"
-			>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\src\midi\midiIO.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\midi\MidiPrereqs.h"
-					>
-				</File>
+					<File
+						RelativePath="..\..\..\src\externLibs\Fmod\include\fmod.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\externLibs\Fmod\include\fmod.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_codec.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_dsp.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_errors.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\externLibs\Fmod\include\fmod_output.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
-				Name="Source Files"
+				Name="Framework"
 				>
-				<File
-					RelativePath="..\..\..\src\midi\MidiIO.cpp"
+				<Filter
+					Name="Source Files"
 					>
-				</File>
+					<File
+						RelativePath="..\..\..\src\framework\AppFramework.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\framework\Application.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\framework\UserAppGlobals.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\src\framework\AppFramework.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\framework\Application.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\framework\AppMain.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\framework\FrameworkPrereqs.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\framework\UserAppFunctionDeclaration.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\framework\UserAppGlobals.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Graphics"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\src\graphics\Camera3D.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\CameraController.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Color.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\DebugOverlay.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Font.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\GraphicsManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\GraphicsPrereqs.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\GraphicsTypes.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\GraphicsUserAPI.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\ImageResourceManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Text.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Window.h"
+						>
+					</File>
+					<Filter
+						Name="3DObjects"
+						>
+						<File
+							RelativePath="..\..\..\src\graphics\Box.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\Object3D.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\Plane.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\Sphere.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Image"
+						>
+						<File
+							RelativePath="..\..\..\src\graphics\Image.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\TexturedQuad.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Lighting"
+						>
+						<File
+							RelativePath="..\..\..\src\graphics\BaseLight.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\LightingUserAPI.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\PointLight.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="ImageProcessing"
+						>
+						<File
+							RelativePath="..\..\..\src\graphics\BaseImageFilter.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\ImageDifferenceFilter.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\ImageThresholdFilter.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\..\src\graphics\Camera3D.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\CameraController.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Color.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\DebugOverlay.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Font.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\GraphicsManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\GraphicsUserAPI.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\ImageResourceManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Text.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Window.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+					</File>
+					<Filter
+						Name="3DObjects"
+						>
+						<File
+							RelativePath="..\..\..\src\graphics\Box.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\Object3D.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\Plane.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\Sphere.cpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Image"
+						>
+						<File
+							RelativePath="..\..\..\src\graphics\Image.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\TexturedQuad.cpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Lighting"
+						>
+						<File
+							RelativePath="..\..\..\src\graphics\BaseLight.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\LightingUserAPI.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\PointLight.cpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="ImageProcessing"
+						>
+						<File
+							RelativePath="..\..\..\src\graphics\BaseImageFilter.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\ImageDifferenceFilter.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\src\graphics\ImageThresholdFilter.cpp"
+							>
+						</File>
+					</Filter>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="GUI"
+				>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\..\src\gui\GUIManagerCEGUI.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\gui\GUIManagerQuickGUI.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\gui\GUIUserAPI.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\gui\OutputDebugTextBoxCEGUI.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\src\gui\GUIManagerCEGUI.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\gui\GUIManagerQuickGUI.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\gui\GUIPrereqs.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\gui\GUIUserAPI.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\gui\OutputDebugTextBoxCEGUI.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Input"
+				>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\..\src\input\InputManager.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="..\..\..\src\input\Keyboard.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\input\Mouse.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\src\input\BaseInputDevice.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\input\BaseInputDevice.inl"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\input\InputManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\input\InputPrereqs.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\input\InputTypes.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\input\Keyboard.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\input\Mouse.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Midi"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\src\midi\midiIO.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\midi\MidiPrereqs.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\..\src\midi\MidiIO.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Movies"
+				>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\..\src\movies\OCVMovie.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\src\movies\MoviePrereqs.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\movies\OCVMovie.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<File

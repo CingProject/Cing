@@ -58,7 +58,7 @@ public:
 	
 	// set methods
 	void                moveRelative    				( const Vector& move );
-	void								setProcessingLikeCamera	();
+	void								set3DCameraProperties		();
 
 private:
 

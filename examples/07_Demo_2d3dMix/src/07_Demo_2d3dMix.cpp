@@ -24,8 +24,8 @@ void setup()
 	sphere.setDiffuseColor( 100, 100, 100 );
 
 	// set lighting
-	ambientLight( 30, 30, 30 );
-	light.init( 0, 255, 0, width/2 - 100, height / 2, 200 );	
+	ambientLight( 30, 30, 30  );
+	light.init( 0, 255, 0, width/2 - 100, height / 2, -200 );	
 	light.drawDebug( true );
 
 	// allow mouse control

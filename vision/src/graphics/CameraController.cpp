@@ -182,11 +182,11 @@ void CameraController::mouseControl()
 	const Input::Mouse& mouse = Input::InputManager::getSingleton().getMouse();
 
 	// Yaws the camera according to the mouse relative movement.
-	Ogre::Radian rotX = Ogre::Degree( -mouse.getXAxisRelative() * 0.13 );
+	Ogre::Radian rotX = Ogre::Degree( mouse.getXAxisRelative() * 0.13 );
 	m_cameraYawNode->yaw(rotX);
 
 	// Pitches the camera according to the mouse relative movement.
-	Ogre::Radian rotY = Ogre::Degree( -mouse.getYAxisRelative() * 0.13 );
+	Ogre::Radian rotY = Ogre::Degree( mouse.getYAxisRelative() * 0.13 );
 	m_cameraPitchNode->pitch(rotY);
 
 	// Angle of rotation around the X-axis.
@@ -237,11 +237,11 @@ void CameraController::keyboardControl()
 
 	// Move camera left.
 	if(keyboard.isKeyDown(OIS::KC_A))
-		m_translateVector.x = -(m_moveScale);
+		m_translateVector.x = m_moveScale;
 
 	// Move camera right.
 	if(keyboard.isKeyDown(OIS::KC_D))
-		m_translateVector.x = m_moveScale;
+		m_translateVector.x = -m_moveScale;
 
 	// Rotate camera left.
 	if(keyboard.isKeyDown(OIS::KC_Q))
