@@ -52,8 +52,9 @@ void setup()
 
 	// plane
 	plane.init( 100000 );
-	plane.setPosition( 0, -500, 0 );
-	plane.setOrientation( Vector::UNIT_X, 20 );
+	plane.setPosition( 0, 2000, 0 );
+	plane.setOrientation( Vector::UNIT_X, 15 );
+	plane.setSelfIlluminationColor( 100, 0, 0 );
 
 	// Init lights and set the ambient light
 	ambientLight( 50, 50, 50 );
@@ -120,8 +121,8 @@ void keyPressed()
 		float forceScale = 100;
 		for ( int i = 0; i < MAX_ELEMENTS; i++ )
 		{
-			box[i].applyCentralImpulse( Vector::UNIT_Y * forceScale );
-			sphere[i].applyCentralImpulse( Vector::UNIT_Y * forceScale );
+			box[i].applyCentralImpulse( Vector::NEGATIVE_UNIT_Y * forceScale );
+			sphere[i].applyCentralImpulse( Vector::NEGATIVE_UNIT_Y * forceScale );
 		}
 	}
 }

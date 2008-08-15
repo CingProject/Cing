@@ -197,7 +197,7 @@ OgreBulletCollisions::CollisionShape* PhysicsManager::buildStaticPlaneShape( flo
 	float	 distance = 0.0f;
 
 	// Create collision shape
-	OgreBulletCollisions::StaticPlaneCollisionShape* planeShape = new OgreBulletCollisions::StaticPlaneCollisionShape( normal, distance );
+	OgreBulletCollisions::StaticPlaneCollisionShape* planeShape = new OgreBulletCollisions::StaticPlaneCollisionShape( -normal, distance );
 
 	return planeShape;
 }

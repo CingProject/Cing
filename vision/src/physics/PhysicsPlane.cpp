@@ -30,7 +30,7 @@ namespace Physics
 
 // Static member init
 const std::string  PhysicsPlane::DEFAULT_MESH			= "Plane.mesh";
-const std::string  PhysicsPlane::DEFAULT_MATERIAL	= "EmptyMaterialNoCulling";
+const std::string  PhysicsPlane::DEFAULT_MATERIAL	= "EmptyMaterial";
 
 /**
  * @internal

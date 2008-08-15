@@ -47,7 +47,7 @@ namespace Graphics
 
 // Static member init
 long					Object3D::m_objectCounter				= 0;
-const float		Object3D::OGRE_SCALE_CORRECTION = 0.01;
+const float		Object3D::OGRE_SCALE_CORRECTION = 1;
 
 /**
  * @internal
