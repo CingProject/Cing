@@ -96,6 +96,8 @@ public:
 	int							getHeight		() const;
 	ImageFormat			getFormat		() const;
 	int							getNChannels() const	{ return m_nChannels; }
+	Color						getPixel		( int x, int y );
+
 
 	// Operators and operations
 	void	operator=	( const Image& other );

@@ -111,6 +111,7 @@ public:
 	void							setSelfIlluminationColor	( int value1, int value2, int value3, int alpha );
 
 	void							setTexture								( const std::string& textureFileName );
+	void							setMaterial								( const std::string& materialName );
 
 	void							setVisible								( bool visible );
 

@@ -28,6 +28,12 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Input
 #include "input/InputTypes.h"
 
+// Forward declarations
+namespace	Input
+{
+	class Mouse;
+}
+
 /**
  * @file
  * @brief This file contains the global variables that can be accessed by the user application
@@ -47,12 +53,13 @@ extern	char								key;						///< Key being currently pressed
 extern	Input::MouseButton	mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
 extern	int									mouseX;					///< X coordinate of the mouse (in screen coordinates)
 extern	int									mouseY;					///< Y coordinate of the mouse (in screen coordinates)
+extern	Input::Mouse&				mouse;					///< System mouse
 
 // Time
-extern float								elapsedSec;			///< Elapsed time in seconds from previous to current frame
-extern float								elapsedMillis;	///< Elapsed time in milliseconds from previous to current frame
-extern float								secFromStart;		///< Seconds elapsed since application started
-extern float								millisFromStart;///< Milliseconds elapsed since application started
+extern double								elapsedSec;			///< Elapsed time in seconds from previous to current frame
+extern unsigned long				elapsedMillis;	///< Elapsed time in milliseconds from previous to current frame
+extern double								secFromStart;		///< Seconds elapsed since application started
+extern unsigned long				millisFromStart;///< Milliseconds elapsed since application started
 
 // Advanced 
 extern Ogre::SceneManager*	ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object

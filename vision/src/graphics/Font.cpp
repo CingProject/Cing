@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Font.h"
 
 // Ogre
-#include "OgreFontManager.h"
+#include "externLibs/Ogre3d/include/OgreFontManager.h"
 
 namespace Graphics
 {

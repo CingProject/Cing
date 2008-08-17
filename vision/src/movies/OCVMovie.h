@@ -65,6 +65,8 @@ public:
 		unsigned short	getHeight	() const    { return m_height; }
 		unsigned short	getFps		() const    { return m_fps; }
 		bool						newFrame	();
+		bool						isPlaying	() const { return m_playing; }
+		bool						isFinished() const { return m_finished;}
 
 private:
 
@@ -76,7 +78,8 @@ private:
 		unsigned short	m_fps;								///< Frames per second of the video
     unsigned short  m_width;        			/// Movie's width
     unsigned short  m_height;       			/// Movie's height
-    bool            m_loop;         			///< Loop video
+		double					m_nFrames;						/// Movie's number of frames
+		bool            m_loop;         			///< Loop video
 		bool						m_playing;						///< Indicates whether the video is playing or not. If not playing it wont return images
     bool            m_finished;     			///< True when the video has finished
 		bool						m_firstFrame;					///< True for the first read() call. Used to also give the first frame, regardles of the time passed

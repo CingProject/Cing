@@ -634,8 +634,31 @@ void Object3D::setTexture( const std::string& textureFileName )
 	// Duplicate material (if is not duplicated) to modify just this instance's material
 	duplicateMaterial();
 
+	// Remove texture units (just in case)
+	m_materialCopy->getTechnique(0)->getPass(0)->removeAllTextureUnitStates();
+
 	// Change the ambient color of the copy material
 	m_materialCopy->getTechnique(0)->getPass(0)->createTextureUnitState( textureFileName );
+}
+
+/**
+ * @brief Sets the material for the object
+ *
+ * @param materialName Name of the material to assign. It must be located in the data folder.
+ */
+void Object3D::setMaterial( const std::string& materialName )
+{
+	// Check if the material exist
+	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName );
+	if ( !material.isNull() )
+	{
+		// Assign material
+		if ( materialName != "" )
+			m_entity->setMaterialName( materialName );  
+	}
+	// TODO: Log -> material does not exist
+	else
+		LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName );
 }
 
 /**

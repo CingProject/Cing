@@ -20,7 +20,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 */
 
 #include "UserAppGlobals.h"
-
+#include "input/InputManager.h"
 
 namespace Globals
 {
@@ -37,12 +37,13 @@ char								key;
 Input::MouseButton	mouseButton;
 int									mouseX = 0;	
 int									mouseY = 0;
+Input::Mouse&				mouse = Input::InputManager::m_mouse;
 
 // Time
-float								elapsedSec			= 0;
-float								elapsedMillis		= 0;
-float								secFromStart		= 0;
-float								millisFromStart	= 0;
+double							elapsedSec			= 0;
+unsigned long				elapsedMillis		= 0;
+double							secFromStart		= 0;
+unsigned long	 			millisFromStart	= 0;
 
 // Advanced
 Ogre::SceneManager*	ogreSceneManager	= NULL;

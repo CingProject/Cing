@@ -159,9 +159,9 @@ void Application::drawApp()
   while( Graphics::GraphicsManager::getSingleton().getMainWindow().isClosed() == false )
   {
 		// Store elapsed from timers
-		Globals::elapsedMillis	= m_timer.getMillisecondsCPU();
-		Globals::elapsedSec			=  Globals::elapsedMillis / 1000.0f;
-		Globals::secFromStart		= m_absTimer.getMilliseconds() / 1000.0f;
+		Globals::elapsedMillis	= m_timer.getMilliseconds();
+		Globals::elapsedSec			=  Globals::elapsedMillis / 1000.0;
+		Globals::secFromStart		= m_absTimer.getMilliseconds() / 1000.0;
 		Globals::millisFromStart= m_absTimer.getMilliseconds();
 		m_timer.reset();
 

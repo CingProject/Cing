@@ -67,7 +67,7 @@ public:
 	bool                      isValid                   () const { return m_bIsValid; }
 	const Window&             getMainWindow             () const { return m_mainWindow; }
 	Window&										getMainWindow             ()			 { return m_mainWindow; }
-	const Camera3D&           getActiveCamera           () const { return m_activeCamera; }
+	Camera3D&									getActiveCamera           ()			 { return m_activeCamera; }
 	const Ogre::SceneManager& getSceneManager           () const { return *m_pSceneManager; }
 	Ogre::SceneManager&       getSceneManager           ()       { return *m_pSceneManager; }
 	Ogre::SceneManager*       getSceneManagerPtr        ()      { return m_pSceneManager; }

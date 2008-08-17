@@ -26,7 +26,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Application.h"
 
 // Ogre
-#include "OgreException.h"
+#include "externLibs/Ogre3d/include/OgreException.h"
 
 // Common includes
 #include "common/Exception.h"

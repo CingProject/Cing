@@ -161,7 +161,7 @@ void Image::load( const std::string& name  )
 	m_cvImage->imageData = (char *)m_image.getData();
 
 	// Create the texture quad (to draw image)
-	m_quad.init( (int)m_image.getWidth(), (int)m_image.getWidth(), (ImageFormat)m_image.getFormat() );
+	m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), (ImageFormat)m_image.getFormat() );
   
 	// Load image data to texture
 	updateTexture();
@@ -283,6 +283,63 @@ ImageFormat Image::getFormat() const
 	}
 }
 
+/**
+ * @brief Method to get the color of a pixel at x-y position in this image.
+ *
+ * @param x x coordinate of the pixel that wants to be retrieved
+ * @param y y coordinate of the pixel that wants to be retrieved
+ */
+Color Image::getPixel( int x, int y )
+{
+
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+
+	// if we will read at incorrect position, correct it
+	if ( x < 0 )								x = 0;
+	if ( x > m_cvImage->width )	x = m_cvImage->width - 1;
+	if ( y < 0 )								y = 0;
+	if ( y > m_cvImage->height) y = m_cvImage->height -1 ;
+
+	int		channels = m_cvImage->nChannels;
+	char* pixelPtr = m_cvImage->imageData + m_cvImage->widthStep * y;
+	char blue, red, green, alpha = 0;
+
+	switch( channels )
+	{
+	case 1:
+		blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
+		green = blue;
+		red   = blue;
+		alpha = 1;
+		break;
+	case 2:
+		THROW_EXCEPTION( "Invalid number of channels in image" );
+		break;
+	case 3:
+
+		blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
+		green = (abs)((int)pixelPtr[ x*channels + 1 ]);
+		red   = (abs)((int)pixelPtr[ x*channels + 2 ]);
+		alpha = 1;
+
+		break;
+	case 4:
+		blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
+		green = (abs)((int)pixelPtr[ x*channels + 1 ]);
+		red   = (abs)((int)pixelPtr[ x*channels + 2 ]);
+		alpha = (abs)((int)pixelPtr[ x*channels + 3 ]);
+		break;
+	default:
+		THROW_EXCEPTION( "Invalid number of channels in image" )
+		break;
+	}
+
+	Color color = Color( red*255,green*255,blue*255,alpha*255 );
+
+	return color;
+}
 
 /**
  * @brief Get texture update state
@@ -469,6 +526,9 @@ void Image::updateTexture()
  */
 void Image::triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
@@ -496,6 +556,9 @@ void Image::triangle( float x1, float y1, float x2, float y2, float x3, float y3
  */
 void Image::line( float x1, float y1, float x2, float y2 )
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
@@ -526,6 +589,9 @@ void Image::line( float x1, float y1, float x2, float y2 )
  */
 void Image::arc( float x, float y, float width, float height, float start, float end )
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
@@ -552,6 +618,9 @@ void Image::arc( float x, float y, float width, float height, float start, float
  */
 void Image::point( float x, float y )
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
@@ -583,6 +652,9 @@ void Image::point( float x, float y )
  */
 void Image::quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
@@ -623,6 +695,9 @@ void Image::quad( float x1, float y1, float x2, float y2, float x3, float y3, fl
  */
 void Image::text( float x1, float y1,  const char* text )
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
@@ -672,6 +747,9 @@ void Image::rect( float x1, float y1, float x2, float y2 )
  */
 void Image::ellipse( float x, float y, float width, float height )
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
@@ -698,8 +776,12 @@ void Image::ellipse( float x, float y, float width, float height )
  */
 void Image::filter( ImageProcessingFilters type )
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+
 	if (type == BLUR)
-		cvSmooth(m_cvImage, m_cvImage, CV_GAUSSIAN , 3);
+		cvSmooth(m_cvImage, m_cvImage, CV_BLUR , 9);
 
 	if (type == ERODE)
 		cvErode( m_cvImage, m_cvImage, 0, 1 );
@@ -710,6 +792,7 @@ void Image::filter( ImageProcessingFilters type )
 	// TODO
 	//m_imgThresholdFilter.apply(  *m_cvImage );
 }
+
 
 /**
  * @brief Converts an image from GRAYSCALE to Color format

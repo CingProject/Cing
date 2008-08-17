@@ -25,16 +25,16 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GraphicsManager.h"
 
 // Ogre
-#include "OgrePixelFormat.h"
-#include "OgreImage.h"
-#include "OgreSceneManager.h"
-#include "OgreManualObject.h"
-#include "OgreRenderOperation.h"
-#include "OgreHardwarePixelBuffer.h"
-#include "OgreTextureManager.h"
-#include "OgreTexture.h"
-#include "OgreMaterial.h"
-#include "OgreMaterialManager.h"
+#include "externLibs/Ogre3d/include/OgrePixelFormat.h"
+#include "externLibs/Ogre3d/include/OgreImage.h"
+#include "externLibs/Ogre3d/include/OgreSceneManager.h"
+#include "externLibs/Ogre3d/include/OgreManualObject.h"
+#include "externLibs/Ogre3d/include/OgreRenderOperation.h"
+#include "externLibs/Ogre3d/include/OgreHardwarePixelBuffer.h"
+#include "externLibs/Ogre3d/include/OgreTextureManager.h"
+#include "externLibs/Ogre3d/include/OgreTexture.h"
+#include "externLibs/Ogre3d/include/OgreMaterial.h"
+#include "externLibs/Ogre3d/include/OgreMaterialManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"

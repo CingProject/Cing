@@ -53,12 +53,33 @@ inline int nextPowerOf2( int number )
 	return rval;
 }
 
+/*
+ * @brief Returns the min of the two received values
+ * @return the min of the two received values
+ */
+template < typename T > 
+T min( T value1, T value2 )
+{
+	return (value1 < value2)? value1: value2;
+}
+
+/*
+ * @brief Returns the max of the two received values
+ * @return the max of the two received values
+ */
+template < typename T >
+T max( T value1, T value2 )
+{
+	return (value1 > value2)? value1: value2;
+}
+
 /**
  * @brief Returns the absolute value of the received number
  * @param[in] number Number to get the absolute value
  * @return the absolute value of the received number
  */
-template< typename T > T abs ( T value ) {  return static_cast< T >( fabs( value ) );  }
+template< typename T > 
+T abs ( T value ) {  return static_cast< T >( fabs( value ) );  }
 
 
 /**
@@ -105,14 +126,15 @@ inline int random( int max )
 }
 
 /**
- * @brief Returns a random number in a range min..max (float version)
+ * @brief Returns a random number in a range min..max (floating numbers version)
  * @param[in] min Min number for the generated random value
  * @param[in] max Max number for the generated random value
  */
-inline float random( float min, float max )
+template< typename T >
+inline T random( T min, T max )
 {
     // Number 0..1
-    float normalizedRandom = (float)rand() / RAND_MAX;
+    T normalizedRandom = static_cast<T>( rand()) / RAND_MAX;
 
     // Return float in range min..max
     return  min  + ( normalizedRandom * ( max - min ) );
@@ -120,12 +142,13 @@ inline float random( float min, float max )
 
 
 /**
- * @brief Returns a random number in a range 0..max (float version)
+ * @brief Returns a random number in a range 0..max (floating numbers version)
  * @param[in] max Max number for the generated random value
  */
-inline float random( float max )
+template< typename T >
+inline T random( T max )
 {
-    return random( 0.0f, max );
+    return random( (T)0, max );
 }
 
 

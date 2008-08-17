@@ -25,6 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/ResourceManager.h"
 #include "common/LogManager.h"
 #include "common/MathUtils.h"
+#include "common/CommonUtilsIncludes.h"
 
 // Graphics
 #include "graphics/GraphicsTypes.h"
@@ -89,6 +90,7 @@ bool OCVMovie::load(const char* fileName )
   m_width     = static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_WIDTH ) );
   m_height    = static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_HEIGHT ) );
 	m_fps				= static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FPS ) );
+	m_nFrames		= cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_COUNT );
 
 	// Set the current fps for the playback speed
 	setFps( m_fps );
@@ -117,8 +119,10 @@ void OCVMovie::play()
 	m_playing			= true;
 	m_loop				= false;
 	m_firstFrame	= true;
+	m_finished		= false;
 
 	// Start timer to control the playback speed
+	cvSetCaptureProperty( m_capture, CV_CAP_PROP_POS_FRAMES, 0 );
 	m_timer.reset();
 }
 
@@ -132,6 +136,7 @@ void OCVMovie::loop()
 	m_playing			= true;
 	m_loop				= true;
 	m_firstFrame	= true;
+	m_finished		= false;
 
 	// Start timer to control the playback speed
 	m_timer.reset();
@@ -147,6 +152,7 @@ void OCVMovie::noLoop()
 	m_playing			= true;
 	m_loop				= false;
 	m_firstFrame	= true;
+	m_finished		= false;
 
 	// Start timer to control the playback speed
 	m_timer.reset();
@@ -197,8 +203,14 @@ void OCVMovie::read( Graphics::Image &image )
 	}
 
 	// Do nothing if no new frame (depends on the current frames per second)
-	if ( !newFrame() && !m_firstFrame )
-		return;
+	//if ( !newFrame() && !m_firstFrame )
+	//	return;
+
+	// Set current frame to ensure correct synchronization
+	double elapsedMicroSecs = m_timer.getMicroseconds();
+	double currentFrame			=  elapsedMicroSecs / m_timeBetweenFramesMs;
+	currentFrame						= constrain( currentFrame, 0, m_nFrames-1 );
+	cvSetCaptureProperty( m_capture, CV_CAP_PROP_POS_FRAMES, currentFrame );
 
 	// Set first frame flag to false
 	m_firstFrame = false;
@@ -238,7 +250,7 @@ void OCVMovie::read( Graphics::Image &image )
   }
 
 	// Reset the frames timer
-	m_timer.reset();
+	//m_timer.reset();
 }
 
 /**

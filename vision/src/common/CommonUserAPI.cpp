@@ -56,10 +56,12 @@ void print( const char* msg, ... )
 	std::cout << msgFormated;
 
 	// Print it to debug output
-	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( msgFormated );
+	// TODO Decide policy
+	//GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( msgFormated );
 
 	// If in windows, output it to the output debug string of the visual studio
-#if defined(WIN32) && defined(_DEBUG)
+	// TODO: decide policy
+#if defined(WIN32)
 	OutputDebugString( msgFormated );
 #endif
 }
@@ -83,10 +85,12 @@ void println( const char* msg, ... )
 	std::cout << msgFormated;
 
 	// Print it to debug output
-	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
+	// TODO: decide policy
+	//GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
 
 	// If in windows, output it to the output debug string of the visual studio
-#if defined(WIN32) && defined(_DEBUG)
+	// TODO: decide policy
+#if defined(WIN32)
 	OutputDebugString( msgFormated );
 	OutputDebugString( "\n" );
 #endif

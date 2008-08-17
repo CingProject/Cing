@@ -33,6 +33,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Input
 {
 
+// Static member definition
+Mouse			InputManager::m_mouse;
+Keyboard	InputManager::m_keyboard;
+
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.

@@ -32,7 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
 
 // Ogre
-#include "OgreTexture.h"
+#include "externLibs/Ogre3d/include/OgreTexture.h"
 
 // PTypes
 #include "externLibs/PTypes/include/pasync.h"

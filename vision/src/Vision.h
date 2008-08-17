@@ -74,6 +74,8 @@
 
 // Input
 #include "input/InputTypes.h"
+#include "input/Mouse.h"
+#include "input/Keyboard.h"
 
 // Computer Vision
 #include "computervision/BlobFinder.h"

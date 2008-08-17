@@ -55,7 +55,10 @@ public:
 	bool        isValid     () const	{ return m_bIsValid; }
   Mouse&      getMouse    ()				{ return m_mouse;    } 
   Keyboard&   getKeyboard ()				{ return m_keyboard; } 
-	
+
+	// Public input devices
+	static Mouse        m_mouse;            ///< System's mouse
+	static Keyboard     m_keyboard;         ///< System's keyboard
 
 private:
 
@@ -64,8 +67,6 @@ private:
 
 	// Attributes
   OIS::InputManager*  m_pOISInputManager; ///< Pointer to the OIS input manager
-  Mouse               m_mouse;            ///< System's mouse
-  Keyboard            m_keyboard;         ///< System's keyboard
 	bool                m_bIsValid;	        ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };

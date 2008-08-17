@@ -22,10 +22,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Text.h"
 
 // OGRE
-#include "OgreOverlayManager.h"
-#include "OgreOverlayContainer.h"
-#include "OgreStringConverter.h"
-#include "OgreTextAreaOverlayElement.h"
+#include "externLibs/Ogre3d/include/OgreOverlayManager.h"
+#include "externLibs/Ogre3d/include/OgreOverlayContainer.h"
+#include "externLibs/Ogre3d/include/OgreStringConverter.h"
+#include "externLibs/Ogre3d/include/OgreTextAreaOverlayElement.h"
 
 namespace Graphics
 {

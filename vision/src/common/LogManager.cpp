@@ -156,8 +156,9 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	m_log->logMessage( msgFormated, (Ogre::LogMessageLevel)level );
 
 	// Send it to the debug console
-	if ( level >= m_debugOutputLogLevel )
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
+	// TODO: decide policy
+	//if ( level >= m_debugOutputLogLevel )
+	//	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
 
 	// If we are in windows and debug -> log to visual studio output
 #if defined(WIN32) && defined(_DEBUG)

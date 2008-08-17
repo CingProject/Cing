@@ -33,9 +33,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Release.h"
 
 // Ogre includes
-#include "OgreRoot.h"
-#include "OgreConfigFile.h"
-#include "OgreRenderWindow.h"
+#include "externLibs/Ogre3d/include/OgreRoot.h"
+#include "externLibs/Ogre3d/include/OgreConfigFile.h"
+#include "externLibs/Ogre3d/include/OgreRenderWindow.h"
 #include "externLibs/Ogre3d/include/OgreRenderSystem.h"
 #include "externLibs/Ogre3d/include/OgreBillboard.h"
 #include "externLibs/Ogre3d/include/OgreBillboardSet.h"

@@ -25,7 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GraphicsPrereqs.h"
 
 // Ogre
-#include "OgreTexture.h"
+#include "externLibs/Ogre3d/include/OgreTexture.h"
 
 namespace Graphics
 {

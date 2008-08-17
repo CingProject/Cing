@@ -64,7 +64,7 @@ public:
 
 	// Query methods
 	bool          isValid       () const { return m_bIsValid; }
-  int						getNumBlobs   () const { return (int)m_blobs.size(); }
+  int						getNumBlobs   () const { return m_nBlobs; }
   
   // TODO check n valid
   Blob&					getBlobN      ( int n )  { return m_blobs[n]; }
@@ -81,7 +81,8 @@ private:
 
 	// Attributes
   Blobs               m_blobs;                ///< To store the found blobs
-  float               m_minBlobArea;          ///< Min area (in pixels) that a blob should have to be considered
+	int									m_nBlobs;								///< Number of detected blobs in the scene
+	float               m_minBlobArea;          ///< Min area (in pixels) that a blob should have to be considered
   float               m_maxBlobArea;          ///< Max area (in pixels) that a blob should have to be considered
   unsigned int        m_maxBlobs;             ///< Max number of blos to look for
 

@@ -23,6 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Common
 #include "common/Exception.h"
+#include "common/MathUtils.h"
 
 // opencv
 #include "externLibs/OpenCV/highgui/include/highgui.h"
@@ -37,7 +38,7 @@ namespace ComputerVision
 // Static member init
 const float         BlobFinder::DEFAULT_MIN_AREA    = 10;
 const float         BlobFinder::DEFAULT_MAX_AREA    = 320 * 240 * 0.75f;
-const unsigned int  BlobFinder::DEFAULT_MAX_BLOBS   = 40;
+const unsigned int  BlobFinder::DEFAULT_MAX_BLOBS   = 20;
 
 
 /**
@@ -47,6 +48,7 @@ const unsigned int  BlobFinder::DEFAULT_MAX_BLOBS   = 40;
 BlobFinder::BlobFinder():
   m_findContoursStorage ( NULL  ),
   m_contour             ( NULL  ),
+	m_nBlobs							( 0			),
   m_minBlobArea         ( DEFAULT_MIN_AREA ),
   m_maxBlobArea         ( DEFAULT_MAX_AREA ),
   m_maxBlobs            ( DEFAULT_MAX_BLOBS ),
@@ -186,7 +188,7 @@ void BlobFinder::extractBlobsInformation()
 
     // Store the contour nodes
     cvStartReadSeq( blob.contour, &contourReader );
-    for( int i = 0; i < blob.contour->total; ++i )
+    for( int j = 0; j < blob.contour->total; ++j )
     {
 	    // Read node of the contour
 	    CV_READ_SEQ_ELEM( contourNode, contourReader );
@@ -194,6 +196,8 @@ void BlobFinder::extractBlobsInformation()
     }
   }
 
+	// Store number of actual blobs
+	m_nBlobs = min( (int)m_blobs.size(), (int)m_maxBlobs );
 }
 
 } // namespace ComputerVision

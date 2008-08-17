@@ -35,7 +35,7 @@ void mousePressed()
 {
 	// Change the frames per second of the video playback
 	if ( mouseButton == LEFT )
-		myMovie.setFps( 5 );
+		myMovie.setFps( 100 );
 	else
 		myMovie.setFps( 30 );
 }
