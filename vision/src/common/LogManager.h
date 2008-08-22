@@ -29,8 +29,11 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreLogManager.h"
 
 // Macros for handy use of log system
-#define LOG(x, ...)						Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x, __VA_ARGS__ )
-#define LOG_ERROR(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_ERROR, x, __VA_ARGS__ )
+//#define LOG(x, ...)						Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x, __VA_ARGS__ )
+//#define LOG_ERROR(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_ERROR, x, __VA_ARGS__ )
+
+#define LOG(x, ...)						Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x )
+#define LOG_ERROR(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_ERROR, x )
 
 namespace Common
 {
@@ -59,13 +62,13 @@ namespace Common
 class LogManager: public SingletonStatic< LogManager >
 {
 public:
-	
+
 	// Available log levels
 	enum LogMessageLevel
 	{
 		LOG_NORMAL	= Ogre::LML_NORMAL,		///< Normal log level. It means that there is some problem, but the application can continue executing
 		LOG_ERROR		= Ogre::LML_CRITICAL,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
-		LOG_SILENT												///< No message will be output								
+		LOG_SILENT												///< No message will be output
 	};
 
 	// Singleton needs
@@ -76,7 +79,7 @@ public:
 
 	// Init / Release / Update
 	void	init 				( bool logToOutput = true, bool logToFile = true );
-	void	end					();	
+	void	end					();
 
 	// Log control
 	void	logNormalMsgsToDebugOutput( bool value );

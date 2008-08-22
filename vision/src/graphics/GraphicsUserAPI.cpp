@@ -36,8 +36,8 @@ void setRenderMode( RenderMode mode )
 }
 
 /*
- * @brief Sets the color used to fill the shapes drawn after this call. 
- * 
+ * @brief Sets the color used to fill the shapes drawn after this call.
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param gray Gray level. A value of 0 means black, and 255 means white.
  */
@@ -48,7 +48,7 @@ void fill( int gray )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param gray Gray level. A value of 0 means black, and 255 means white.
  * @param alpha Alpha level. A value of 0 means transparent, and 255 means opaque.
@@ -61,7 +61,7 @@ void fill( int gray, int alpha )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param value1 Specifies the red value
  * @param value2 Specifies the green value
@@ -74,7 +74,7 @@ void fill( int value1 , int value2, int value3 )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param value1 Specifies the red value
  * @param value2 Specifies the green value
@@ -88,7 +88,7 @@ void fill( int value1 , int value2, int value3, int alpha )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
  */
@@ -99,7 +99,7 @@ void fill( const Color& color )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
  * @param alpha Specifies the alpha value. A value of 0 means transparent, and 255 means opaque.
@@ -115,7 +115,7 @@ void fill( const Color& color, int alpha )
 
 /*
  * @brief Sets the color used to draw border of shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param value1 Specifies the red value
  * @param value2 Specifies the green value
@@ -128,7 +128,7 @@ void stroke( int value1 , int value2, int value3 )
 
 /*
  * @brief Sets the color used to draw border of shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
  */
@@ -138,8 +138,8 @@ void stroke( const Color& color )
 }
 
 /*
- * @brief Sets the width of the stroke used for lines, points, and the border around shapes. 
- * 
+ * @brief Sets the width of the stroke used for lines, points, and the border around shapes.
+ *
  * @param width Variable of type Int containing the weight (in pixels) of the stroke
  */
 void strokeWeight( int weight )
@@ -150,7 +150,7 @@ void strokeWeight( int weight )
 /**
  * @brief Allows to enable or disable the default 3d camera control
  *
- * @param useDefault If true, the default camera control will be enabled. 
+ * @param useDefault If true, the default camera control will be enabled.
  * If false, it will be disable, so the user will be responsible to control the 3d camera
  * if it is required.
  *

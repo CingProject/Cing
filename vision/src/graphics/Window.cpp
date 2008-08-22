@@ -91,7 +91,7 @@ bool Window::init( Ogre::RenderWindow* pOgreWindow )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Window::end()
@@ -122,8 +122,8 @@ void Window::update()
  * @brief Returns true if the window is closed. False otherwise.
  * @return true if the window is closed. False otherwise.
  */
-bool Window::isClosed() const 
-{ 
+bool Window::isClosed() const
+{
   if ( !isValid() )
     return false;
 
@@ -144,7 +144,7 @@ bool Window::isFullScreen() const
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Used to retrieve the metrics of the window
  * @param[out] metrics stores the metrics of the window
  */
@@ -200,12 +200,12 @@ void Window::attachCameraToWindow( Camera3D& camera )
   m_mainViewport = m_pOgreWindow->addViewport( camera.getOgreCamera() );
 
   // Set the camera aspect ratio to match the window's aspect ratio
-  camera.getOgreCamera()->setAspectRatio( float(m_mainViewport->getActualWidth()) / m_mainViewport->getActualHeight() ); 
+  camera.getOgreCamera()->setAspectRatio( float(m_mainViewport->getActualWidth()) / m_mainViewport->getActualHeight() );
 }
 
 /**
  * @internal
- * @brief Modifies the background of the window 
+ * @brief Modifies the background of the window
  * (really the main viewport in the window)
  * @param[in] color Color to set to the background
  */
@@ -214,7 +214,7 @@ void Window::setBackgroundColor( const Color& color )
   if ( !isValid() )
     return;
 
-  m_mainViewport->setBackgroundColour( color.normalized() ); 
+  m_mainViewport->setBackgroundColour( color.normalized() );
 }
 
 } // namespace Graphics

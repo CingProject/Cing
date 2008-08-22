@@ -29,7 +29,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 namespace Graphics
 {
-  
+
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
@@ -91,7 +91,7 @@ bool ImageResourceManager::init()
 }
 
 /**
- * @brief This method returns an IplImage with the requested size and number of channels 
+ * @brief This method returns an IplImage with the requested size and number of channels
  *				Creates a new one if required (and store it in the pool).
  *
  * @note Important: The images returned have the purpose to be used as temporal working images
@@ -102,7 +102,7 @@ bool ImageResourceManager::init()
  * @param  channels Number of channels of the requested image. Supported 1 and 3
  * @return IplImage pointer to the image requested, or NULL if number of channels not supported
  */
-IplImage*	ImageResourceManager::getImage( int width, int height, int channels ) 
+IplImage*	ImageResourceManager::getImage( int width, int height, int channels )
 {
 	// Check ok number of channels
 	if ( ( channels != 1) && ( channels != 3 ) )
@@ -111,7 +111,7 @@ IplImage*	ImageResourceManager::getImage( int width, int height, int channels )
 		return NULL;
 	}
 
-	// Search for the desired image into the image container	
+	// Search for the desired image into the image container
 	int index = 0;
 	if ( channels == 1 )			index = 0;
 	else if ( channels == 3 ) index = 1;
@@ -143,7 +143,7 @@ IplImage*	ImageResourceManager::getImage( int width, int height, int channels )
  */
 void ImageResourceManager::releaseImage( IplImage* image )
 {
-	// Search for the desired image into the image container	
+	// Search for the desired image into the image container
 	int index = 0;
 	if ( image->nChannels == 1 )			index = 0;
 	else if ( image->nChannels == 3 ) index = 1;
@@ -163,7 +163,7 @@ void ImageResourceManager::releaseImage( IplImage* image )
 }
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void ImageResourceManager::end()
@@ -184,7 +184,7 @@ void ImageResourceManager::end()
 
 	m_imagePool[0].clear();
 	m_imagePool[1].clear();
-		
+
 	// The class is not valid anymore
 	m_bIsValid = false;
 }

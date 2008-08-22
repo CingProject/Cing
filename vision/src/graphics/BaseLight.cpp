@@ -108,7 +108,7 @@ bool BaseLight::init( float r, float g, float b, float x, float y, float z )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void BaseLight::end()
@@ -116,7 +116,7 @@ void BaseLight::end()
   // Check if the class is already released
   if ( !isValid() )
     return;
-  
+
   // Destroy the light and the scene node
 	Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
 	if ( sceneManager )
@@ -294,7 +294,7 @@ void BaseLight::setLightType( Light::LightTypes type )
 {
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to change the type of a Light not correctly initialized" );
-  
+
   m_pLight->setType( type );
 }
 
@@ -320,7 +320,7 @@ const Vector& BaseLight::getPosition() const
 {
   if ( !isValid() )
     THROW_EXCEPTION( "Error. Trying to get the position of a Light not correctly initialized" );
-  
+
   return m_sceneNode->getPosition();
 }
 

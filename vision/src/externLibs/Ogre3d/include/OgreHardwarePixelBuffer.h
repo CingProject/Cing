@@ -33,7 +33,7 @@ Torus Knot Software Ltd.
 #include "OgrePrerequisites.h"
 #include "OgreHardwareBuffer.h"
 #include "OgreSharedPtr.h"
-#include "OgrePixelFormat.h"
+#include "ogrepixelformat.h"
 #include "OgreImage.h"
 
 namespace Ogre {
@@ -46,7 +46,7 @@ namespace Ogre {
     */
     class _OgreExport HardwarePixelBuffer : public HardwareBuffer
     {
-    protected: 
+    protected:
         // Extents
         size_t mWidth, mHeight, mDepth;
         // Pitches (offsets between rows and slices)
@@ -55,7 +55,7 @@ namespace Ogre {
         PixelFormat mFormat;
         // Currently locked region
         PixelBox mCurrentLock;
-        
+
         /// Internal implementation of lock(), must be overridden in subclasses
         virtual PixelBox lockImpl(const Image::Box lockBox,  LockOptions options) = 0;
 
@@ -81,7 +81,7 @@ namespace Ogre {
         /** make every lock method from HardwareBuffer available.
         See http://www.research.att.com/~bs/bs_faq2.html#overloadderived
         */
-        using HardwareBuffer::lock;	
+        using HardwareBuffer::lock;
 
         /** Lock the buffer for (potentially) reading / writing.
 		    @param lockBox Region of the buffer to lock
@@ -96,74 +96,74 @@ namespace Ogre {
 		/** Get the current locked region. This is the same value as returned
 		    by lock(const Image::Box, LockOptions)
 		    @returns PixelBox containing the locked region
-		*/        
+		*/
         const PixelBox& getCurrentLock();
-		
+
 		/// @copydoc HardwareBuffer::readData
 		virtual void readData(size_t offset, size_t length, void* pDest);
 		/// @copydoc HardwareBuffer::writeData
 		virtual void writeData(size_t offset, size_t length, const void* pSource,
 				bool discardWholeBuffer = false);
-        
-        /** Copies a box from another PixelBuffer to a region of the 
-        	this PixelBuffer. 
+
+        /** Copies a box from another PixelBuffer to a region of the
+        	this PixelBuffer.
 			@param dst		Source pixel buffer
         	@param srcBox	Image::Box describing the source region in src
         	@param dstBox	Image::Box describing the destination region in this buffer
 			@remarks The source and destination regions dimensions don't have to match, in which
 		   	case scaling is done. This scaling is generally done using a bilinear filter in hardware,
             but it is faster to pass the source image in the right dimensions.
-			@note Only call this function when both  buffers are unlocked. 
-         */        
+			@note Only call this function when both  buffers are unlocked.
+         */
         virtual void blit(const HardwarePixelBufferSharedPtr &src, const Image::Box &srcBox, const Image::Box &dstBox);
 
-		/** Convience function that blits the entire source pixel buffer to this buffer. 
+		/** Convience function that blits the entire source pixel buffer to this buffer.
 			If source and destination dimensions don't match, scaling is done.
 			@param src		PixelBox containing the source pixels and format in memory
-			@note Only call this function when the buffer is unlocked. 
+			@note Only call this function when the buffer is unlocked.
 		*/
-		void blit(const HardwarePixelBufferSharedPtr &src); 
-		
+		void blit(const HardwarePixelBufferSharedPtr &src);
+
 		/** Copies a region from normal memory to a region of this pixelbuffer. The source
-			image can be in any pixel format supported by OGRE, and in any size. 
+			image can be in any pixel format supported by OGRE, and in any size.
 		   	@param src		PixelBox containing the source pixels and format in memory
 		   	@param dstBox	Image::Box describing the destination region in this buffer
             @remarks The source and destination regions dimensions don't have to match, in which
             case scaling is done. This scaling is generally done using a bilinear filter in hardware,
             but it is faster to pass the source image in the right dimensions.
-			@note Only call this function when the buffer is unlocked. 
+			@note Only call this function when the buffer is unlocked.
 		*/
 		virtual void blitFromMemory(const PixelBox &src, const Image::Box &dstBox) = 0;
-		
-		/** Convience function that blits a pixelbox from memory to the entire 
+
+		/** Convience function that blits a pixelbox from memory to the entire
 			buffer. The source image is scaled as needed.
 			@param src		PixelBox containing the source pixels and format in memory
-			@note Only call this function when the buffer is unlocked. 
+			@note Only call this function when the buffer is unlocked.
 		*/
 		void blitFromMemory(const PixelBox &src)
 		{
 			blitFromMemory(src, Box(0,0,0,mWidth,mHeight,mDepth));
 		}
-		
+
 		/** Copies a region of this pixelbuffer to normal memory.
 		   	@param srcBox	Image::Box describing the source region of this buffer
 		   	@param dst		PixelBox describing the destination pixels and format in memory
 		   	@remarks The source and destination regions don't have to match, in which
 		   	case scaling is done.
-			@note Only call this function when the buffer is unlocked. 
+			@note Only call this function when the buffer is unlocked.
 		 */
 		virtual void blitToMemory(const Image::Box &srcBox, const PixelBox &dst) = 0;
 
 		/** Convience function that blits this entire buffer to a pixelbox.
 			The image is scaled as needed.
 			@param src		PixelBox containing the source pixels and format in memory
-			@note Only call this function when the buffer is unlocked. 
+			@note Only call this function when the buffer is unlocked.
 		*/
 		void blitToMemory(const PixelBox &dst)
 		{
 			blitToMemory(Box(0,0,0,mWidth,mHeight,mDepth), dst);
 		}
-        
+
         /** Get a render target for this PixelBuffer, or a slice of it. The texture this
             was acquired from must have TU_RENDERTARGET set, otherwise it is possible to
             render to it and this method will throw an ERR_RENDERSYSTEM exception.
@@ -172,7 +172,7 @@ namespace Ogre {
             PixelBuffer.
         */
         virtual RenderTexture *getRenderTarget(size_t slice=0);
-        
+
         /// Gets the width of this buffer
         size_t getWidth() const { return mWidth; }
         /// Gets the height of this buffer

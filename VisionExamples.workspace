@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="VisionExamples workspace">
+		<Project filename="../../vision_proj/vision/build/codeBlocks/vision/Vision.cbp" active="1" />
+		<Project filename="../../vision_proj/examples/00_Demo_Image/00_Demo_Image.cbp">
+			<Depends filename="../../vision_proj/vision/build/codeBlocks/vision/Vision.cbp" />
+		</Project>
+		<Project filename="../../vision_proj/examples/01_Demo_DrawingPrimitives/01_Demo_DrawingPrimitives.cbp">
+			<Depends filename="../../vision_proj/vision/build/codeBlocks/vision/Vision.cbp" />
+		</Project>
+		<Project filename="../../vision_proj/examples/02_Demo_3DPrimitives/02_Demo_3DPrimitives.cbp">
+			<Depends filename="../../vision_proj/vision/build/codeBlocks/vision/Vision.cbp" />
+		</Project>
+		<Project filename="../../vision_proj/examples/03_Demo_Physics/03_Demo_Physics.cbp">
+			<Depends filename="../../vision_proj/vision/build/codeBlocks/vision/Vision.cbp" />
+		</Project>
+		<Project filename="../../vision_proj/examples/04_Demo_SoundPlayback/04_Demo_SoundPlayback.cbp">
+			<Depends filename="../../vision_proj/vision/build/codeBlocks/vision/Vision.cbp" />
+		</Project>
+		<Project filename="../../vision_proj/examples/05_Demo_Mic/05_Demo_Mic.cbp">
+			<Depends filename="../../vision_proj/vision/build/codeBlocks/vision/Vision.cbp" />
+		</Project>
+		<Project filename="../../vision_proj/examples/06_Demo_VideoPlayback/06_Demo_VideoPlayback.cbp">
+			<Depends filename="../../vision_proj/vision/build/codeBlocks/vision/Vision.cbp" />
+		</Project>
+		<Project filename="../../vision_proj/examples/07_Demo_2d3dMix/07_Demo_2d3dMix.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

@@ -35,7 +35,7 @@ namespace Graphics
  * @internal
  * Applies a threshold filter to an image -> thus polarizing it
  * @note the result is stored in m_outputImage of the base filter class
- * 
+ *
  * @param[in] inImage Image that will be thresholded (polarized)
  * @param[out] output	 Image where the result will be stored
  */

@@ -8,11 +8,11 @@ CREATE_APPLICATION( "Vision Demo" );
 
 
 Micro				mic;
-Sphere			sphere;
-Plane				plane;	
-PointLight	light;
+Sphere			    sphere;
+Plane				plane;
+PointLight	        light;
 
-Average			average( 15 );
+Average			    average( 15 );
 
 void setup()
 {
@@ -21,7 +21,7 @@ void setup()
 
 	// setup plane and sphere
 	plane.init( 100000 );
-	plane.setPosition( width/2, height/2 + 500, 0 );	
+	plane.setPosition( width/2, height/2 + 500, 0 );
 	sphere.init( 100 );
 	sphere.setPosition( width/2, height/2, 0 );
 

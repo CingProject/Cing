@@ -36,7 +36,7 @@ namespace ComputerVision
 /**
  * @internal
  * Class that analyzes an image to finds blobs (elements).
- * What it looks for in an image is bright areas, so typically 
+ * What it looks for in an image is bright areas, so typically
  * the image result of a background subtraction is a good input.
  * It also gives information about the found blobs.
  */
@@ -65,7 +65,7 @@ public:
 	// Query methods
 	bool          isValid       () const { return m_bIsValid; }
   int						getNumBlobs   () const { return m_nBlobs; }
-  
+
   // TODO check n valid
   Blob&					getBlobN      ( int n )  { return m_blobs[n]; }
 
@@ -75,9 +75,9 @@ private:
   void          extractBlobsInformation();
 
   // Constant / static attributes
-  static const float        BlobFinder::DEFAULT_MIN_AREA;
-  static const float        BlobFinder::DEFAULT_MAX_AREA;
-  static const unsigned int BlobFinder::DEFAULT_MAX_BLOBS;
+  static const float            DEFAULT_MIN_AREA;
+  static const float            DEFAULT_MAX_AREA;
+  static const unsigned int     DEFAULT_MAX_BLOBS;
 
 	// Attributes
   Blobs               m_blobs;                ///< To store the found blobs

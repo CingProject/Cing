@@ -79,7 +79,7 @@ bool PointLight::init( float r, float g, float b, float x, float y, float z )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void PointLight::end()

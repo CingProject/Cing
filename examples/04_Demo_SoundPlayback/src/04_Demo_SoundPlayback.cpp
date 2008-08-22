@@ -21,7 +21,7 @@ void setup()
 
 	// setup plane and sphere
  	plane.init( 100000 );
-	plane.setPosition( width/2, height/2 + 200, 0 );	
+	plane.setPosition( width/2, height/2 + 200, 0 );
 	sphere.init( 100 );
 	sphere.setPosition( width/2, height/2, 0 );
 

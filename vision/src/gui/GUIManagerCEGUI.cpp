@@ -32,9 +32,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // CEGUI
 #include "externLibs/Ogre3d/include/OgreCEGUIRenderer.h"
-#include "externLibs/Ogre3d/include/cegui/CEGUI.h"
-#include "externLibs/Ogre3d/include/cegui/elements/CEGUIScrollablePane.h"
-#include "externLibs/Ogre3d/include/cegui/elements/CEGUIListbox.h"
+#include "externLibs/Ogre3d/include/CEGUI/CEGUI.h"
+#include "externLibs/Ogre3d/include/CEGUI/elements/CEGUIScrollablePane.h"
+#include "externLibs/Ogre3d/include/CEGUI/elements/CEGUIListbox.h"
 
 
 namespace GUI
@@ -65,7 +65,7 @@ GUIManagerCEGUI::~GUIManagerCEGUI()
 /**
  * @internal
  * @brief  Initializes the gui system
- * 
+ *
  * @param ogreWindow Ogre Window where the application will be rendered
  * @param ogreSceneManager Ogre Scene manager where the gui syste will insert its stuff
  */
@@ -91,8 +91,8 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 
 	// Create default sheet to place GUI elements
 	CEGUI::WindowManager&	win = CEGUI::WindowManager::getSingleton();
-	m_mainSheet = win.createWindow( "DefaultGUISheet", "Vision/DefaultGUISheet");
-	m_mainSheet->setSize( CEGUI::UVector2(CEGUI::UDim(0, Globals::width), CEGUI::UDim(0, Globals::height) ) ); 
+	m_mainSheet = win.createWindow( "DefaultGUISheet", "Vision/DefaultGUISheet","Vision" );
+	m_mainSheet->setSize( CEGUI::UVector2(CEGUI::UDim(0, Globals::width), CEGUI::UDim(0, Globals::height) ) );
 	m_CEGUISystem->setGUISheet( m_mainSheet );
 
 	// Now the gui managet is valid
@@ -105,7 +105,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void GUIManagerCEGUI::end()
@@ -117,8 +117,8 @@ void GUIManagerCEGUI::end()
 }
 
 /**
- * @internal 
- * @brief 
+ * @internal
+ * @brief
  *
  * @param
  */

@@ -32,7 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/Sphere.h"
 
 // Ogre bullet
-#include "externLibs/OgreBullet/Dynamics/include/OgreBulletDynamicsRigidBody.h"
+#include "externLibs/OgreBullet/Dynamics/include/ogrebulletdynamicsrigidbody.h"
 
 namespace Physics
 {
@@ -60,7 +60,7 @@ PhysicsObject::~PhysicsObject()
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void PhysicsObject::end()
@@ -76,7 +76,7 @@ void PhysicsObject::end()
 /**
  * @brief Creates the collision shape to control object's collisions and activates its physics
  *
- * @param staticObject	If true, this object will be static, this means that this object is affected by 
+ * @param staticObject	If true, this object will be static, this means that this object is affected by
  * physics objects and forces of the scene (so it will collide with other physics object), but won't move.
  */
 void PhysicsObject::enablePhysics( bool staticObject )
@@ -88,7 +88,7 @@ void PhysicsObject::enablePhysics( bool staticObject )
 	}
 
 	// Create collision shape for the object based on the triangle mesh
-	OgreBulletCollisions::CollisionShape*	collisionShape =  PhysicsManager::getSingleton().buildTriMeshShape( *this );	
+	OgreBulletCollisions::CollisionShape*	collisionShape =  PhysicsManager::getSingleton().buildTriMeshShape( *this );
 
 	enableRigidBodyPhysics( collisionShape, staticObject );
 	m_physicsEnabled = true;
@@ -96,8 +96,8 @@ void PhysicsObject::enablePhysics( bool staticObject )
 
 
 /*
- * @brief DeActivates the physics for this object. 
- * 
+ * @brief DeActivates the physics for this object.
+ *
  * From now on, the object's position and rotation will be again controlled manually
  */
 void PhysicsObject::disablePhysics()
@@ -209,18 +209,18 @@ void PhysicsObject::applyTorqueImpulse( const Vector& torque )
  *
  * @return the bullet rigid body object
  */
-btRigidBody* PhysicsObject::getBulletRigidBody()	
-{ 
-	return m_rigidBody? m_rigidBody->getBulletRigidBody(): NULL; 
-}		
+btRigidBody* PhysicsObject::getBulletRigidBody()
+{
+	return m_rigidBody? m_rigidBody->getBulletRigidBody(): NULL;
+}
 
 
 /**
- * @internal 
+ * @internal
  * @brief Enables rigid body physics using the received collision shape
  *
  * @param collisionShape	collision shape to use by the rigid body
- * @param staticObject		if true the object will be static (regarding the physics)				
+ * @param staticObject		if true the object will be static (regarding the physics)
  */
 void PhysicsObject::enableRigidBodyPhysics( OgreBulletCollisions::CollisionShape* collisionShape, bool staticObject )
 {
@@ -233,7 +233,7 @@ void PhysicsObject::enableRigidBodyPhysics( OgreBulletCollisions::CollisionShape
 	m_physicsEnabled = true;
 
 	// Activate the rigid body
-	getBulletRigidBody()->activate(); 
+	getBulletRigidBody()->activate();
 }
 
 

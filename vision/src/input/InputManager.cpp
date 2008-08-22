@@ -79,7 +79,7 @@ bool InputManager::init()
     {
       paramList.insert( std::make_pair(std::string( "w32_mouse" ), std::string( "DISCL_BACKGROUND" ) ) );
       paramList.insert( std::make_pair(std::string( "w32_mouse" ), std::string( "DISCL_NONEXCLUSIVE" ) ) );
-      
+
       // TODO: try -> Uncomment these two lines to allow users to switch keyboards via the language bar
       paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND") ));
       paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE") ));
@@ -89,16 +89,16 @@ bool InputManager::init()
       paramList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
       paramList.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
       paramList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-      paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")))
+      paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     }
     #endif
-  
+
     // Get window handle
     windowHnd = Graphics::GraphicsManager::getSingleton().getMainWindow().getWindowHandle();
 
     // Insert window handle in parameters
     windowHndStr << (unsigned int) windowHnd;
-    paramList.insert( std::make_pair( std::string( "WINDOW" ), windowHndStr.str() ) );    
+    paramList.insert( std::make_pair( std::string( "WINDOW" ), windowHndStr.str() ) );
 
     // Create OIS input manager
     m_pOISInputManager = OIS::InputManager::createInputSystem( paramList );
@@ -115,7 +115,7 @@ bool InputManager::init()
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void InputManager::end()

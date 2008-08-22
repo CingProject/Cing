@@ -41,7 +41,7 @@ ImageDifferenceFilter	Image::m_imgDiffFilter;
  */
 Image::Image():
 	m_cvImage(NULL),
-  m_bIsValid( false ),
+    m_bIsValid( false ),
 	m_bVFlip( false ),
 	m_bUpdateTexture( false )
 {
@@ -113,7 +113,7 @@ void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
 	// Create the empty IplImage image
 	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 	m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
-		
+
 	// Create the texture quad (to draw image)
 	m_quad.init( m_cvImage->width, m_cvImage->height, format );
 
@@ -140,7 +140,7 @@ void Image::init( const Image& img )
 
 /**
  * @brief Creates an image from a file. The image loaded can be modified afterwards.
- * 
+ *
  * @note The image file specified should be placed on the data directory of the application
  *
  * @note Supported image formats are: .bmp, .jpg, .gif, .raw, .png, .tga and .dds.
@@ -151,9 +151,9 @@ void Image::load( const std::string& name  )
 {
 	// Load file from disk
 	m_image.load( name, Common::ResourceManager::userResourcesGroupName );
-	
-	//Copy pixels from the OgreImage to the IplImage	
-	if ( m_cvImage != NULL ) 
+
+	//Copy pixels from the OgreImage to the IplImage
+	if ( m_cvImage != NULL )
 		cvReleaseImage( &m_cvImage );
 
 	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( m_image.getFormat() );
@@ -162,7 +162,7 @@ void Image::load( const std::string& name  )
 
 	// Create the texture quad (to draw image)
 	m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), (ImageFormat)m_image.getFormat() );
-  
+
 	// Load image data to texture
 	updateTexture();
 
@@ -194,7 +194,7 @@ void Image::save( const std::string& name )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Image::end()
@@ -206,7 +206,7 @@ void Image::end()
 	m_quad.end();
 
 	//Release IplImage
-	// TODO check why this crashes.. 
+	// TODO check why this crashes..
 	//cvReleaseImage(&m_cvImage);
 	m_cvImage = NULL;
 
@@ -216,7 +216,7 @@ void Image::end()
 }
 
 /**
- * @brief Sets the data of the image 
+ * @brief Sets the data of the image
  *
  * @param imageData Data to set to the image
  * @param width			Width of the passed image data
@@ -248,7 +248,7 @@ void Image::setData( char* imageData, int width, int height, ImageFormat format 
 
 
 /**
- * @brief Returns image width 
+ * @brief Returns image width
  * @return the height of the image
  */
 int Image::getWidth() const
@@ -266,7 +266,7 @@ int Image::getHeight() const
 }
 
 /**
- * @brief Returns image format 
+ * @brief Returns image format
  * @return the imageFomat of the image
  */
 ImageFormat Image::getFormat() const
@@ -370,7 +370,7 @@ void Image::flipVertical()
 /**
  * @brief Set if texture updates automatically every frame
  */
-void	Image::setUpdateTexture(bool updateTextureFlag ) 
+void	Image::setUpdateTexture(bool updateTextureFlag )
 {
 	m_bUpdateTexture = updateTextureFlag;
 }
@@ -416,7 +416,7 @@ void Image::draw( float xPos, float yPos, float zPos, float width, float height 
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Draws the image in 2d -> screen coordinates
  *
  * @param xPos x coordinate where the image should be drawn
@@ -442,7 +442,7 @@ void Image::draw2d( float xPos, float yPos )
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Draws the image in 2d -> screen coordinates
  *
  * @param xPos x coordinate where the image should be drawn
@@ -497,7 +497,7 @@ void Image::operator=( const Image& other )
 Image* Image::clone()
 {
 	// Check the other image is valid
-	if ( !isValid() )	
+	if ( !isValid() )
 		THROW_EXCEPTION( "Trying to copy an invalid image" );
 
 	return new Image( *this );
@@ -536,7 +536,7 @@ void Image::triangle( float x1, float y1, float x2, float y2, float x3, float y3
 	int   strokeWeight = graphManager.getStrokeWeight();
 
 	cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
-					strokeWeight,8,0); 
+					strokeWeight,8,0);
 	cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
 		strokeWeight,8,0);
 	cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x1,y1),CV_RGB(color.r,color.g,color.b),
@@ -600,7 +600,7 @@ void Image::arc( float x, float y, float width, float height, float start, float
 
 	cvEllipse(	m_cvImage,							///-> Image.
 							cvPoint(x,y),						///-> Center of the ellipse.
-							cvSize(width,height),		///-> Length of the ellipse axes. 
+							cvSize(width,height),		///-> Length of the ellipse axes.
 							0,											///->	Rotation angle.
 							start,											///-> Starting angle of the elliptic arc.
 							end,										///-> Ending angle of the elliptic arc.
@@ -626,7 +626,7 @@ void Image::point( float x, float y )
 	// Get Stroke and Fill Color
 	Color color        = graphManager.getStrokeColor();
 	int   strokeWeight = graphManager.getStrokeWeight();
-	
+
 	// Draw a pixel
 	cvRectangle( m_cvImage,
 							 cvPoint(x,y),
@@ -661,7 +661,7 @@ void Image::quad( float x1, float y1, float x2, float y2, float x3, float y3, fl
 	Color color        = graphManager.getStrokeColor();
 	int   strokeWeight = graphManager.getStrokeWeight();
 
-	// Draw a quad	
+	// Draw a quad
 	int count = 4;
 	CvPoint pt[4];
 
@@ -732,7 +732,7 @@ void Image::rect( float x1, float y1, float x2, float y2 )
 							cvPoint(x2,y2),
 							CV_RGB(color.r,color.g,color.b),
 							strokeWeight);		///-> Thickness.
-	
+
 	// Update texture when the next drawing call is made by the user
 	m_bUpdateTexture = true;
 }
@@ -758,13 +758,13 @@ void Image::ellipse( float x, float y, float width, float height )
 
 	cvEllipse(	m_cvImage,							///-> Image.
 							cvPoint(x,y),						///-> Center of the ellipse.
-							cvSize(width,height),		///-> Length of the ellipse axes. 
+							cvSize(width,height),		///-> Length of the ellipse axes.
 							0,											///->	Rotation angle.
 							0,											///-> Starting angle of the elliptic arc.
 							360,										///-> Ending angle of the elliptic arc.
 							CV_RGB(color.r,color.g,color.b),///-> Ellipse color.
 							strokeWeight );										///-> Thickness of the ellipse arc.
-	
+
 	// Update texture when the next drawing call is made by the user
 	m_bUpdateTexture = true;
 }
@@ -833,7 +833,7 @@ void Image::toColor()
 
 	// Mark texture to be updated in the next draw call
 	setUpdateTexture( true );
-	
+
 	// Release temp image
 	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
 
@@ -881,7 +881,7 @@ void Image::toGray()
 
 	// Mark texture to be updated in the next draw call
 	setUpdateTexture( true );
-	
+
 	// Release temp image
 	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
 

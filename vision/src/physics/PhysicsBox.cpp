@@ -96,7 +96,7 @@ void PhysicsBox::init( float size )
 /**
  * @brief Creates the collision shape to control box's collisions and activates its physics
  *
- * @param staticObject	If true, this object will be static, this means that this object is affected by 
+ * @param staticObject	If true, this object will be static, this means that this object is affected by
  * physics objects and forces of the scene (so it will collide with other physics object), but won't move.
  */
 void PhysicsBox::enablePhysics( bool staticObject )

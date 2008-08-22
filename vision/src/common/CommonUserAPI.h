@@ -28,7 +28,7 @@ namespace Common
 {
 
 /**
- * @brief Common functions that user can call 
+ * @brief Common functions that user can call
  */
 
 // Print

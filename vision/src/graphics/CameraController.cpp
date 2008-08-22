@@ -28,7 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Ogre
 #include "externLibs/Ogre3d/include/OgreSceneNode.h"
 #include "externLibs/Ogre3d/include/OgreCamera.h"
-#include "externLibs/Ogre3d/include/ois/OISKeyboard.h"
+#include "externLibs/Ogre3d/include/OIS/OISKeyboard.h"
 
 // Input
 #include "input/Mouse.h"
@@ -94,13 +94,13 @@ void CameraController::init( Camera3D& cameraToControl )
 	// Create the camera's roll node as a child of camera's pitch node and attach the camera to it.
 	m_cameraRollNode = m_cameraPitchNode->createChildSceneNode();
 	m_cameraRollNode->attachObject( m_camera->getOgreCamera() );
-	
+
 	m_bIsValid = true;
 }
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void CameraController::end()
@@ -119,7 +119,7 @@ void CameraController::end()
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Updates the movement of the camera
  */
 void CameraController::update()
@@ -170,7 +170,7 @@ void CameraController::userMouse( bool value )
 	m_useMouse = value;
 }
 /**
- * @internal 
+ * @internal
  * @brief Checks the mouse state to modify the camera based on it
  */
 void CameraController::mouseControl()
@@ -211,7 +211,7 @@ void CameraController::mouseControl()
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Checks the keyboard state to modify the camera based on it
  */
 void CameraController::keyboardControl()

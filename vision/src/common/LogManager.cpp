@@ -73,7 +73,7 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= false*/ )
 	m_logToOutput = logToOutput;
 	m_logToFile		= logToFile;
 
-	// By default just lot error messages to debug output 
+	// By default just lot error messages to debug output
 	m_debugOutputLogLevel = LOG_ERROR;
 
 	// Get ogre log pointer (just in case)
@@ -96,7 +96,7 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= false*/ )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void LogManager::end()
@@ -105,7 +105,7 @@ void LogManager::end()
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Indicates whether the informative system messages should be output to the debug output
  *
  * @note If you are not debugging an application, is better in terms of performance no to set this
@@ -122,7 +122,7 @@ void LogManager::logNormalMsgsToDebugOutput( bool value )
 
 
 /**
- * @internal 
+ * @internal
  * @brief Indicates whether the error system messages should be output to the debug output
  *
  * @note It can affect the performance, but ideally there should be not error messages in an applciation
@@ -137,7 +137,7 @@ void LogManager::logErrorMsgsToDebugOutput( bool value )
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Logs a message. If no LogLevel specified, the default value will be LOG_NORMAL
  *
  * @param level Relevance level of the message to log. It can be: LOG_NORMAL or LOG_ERROR (for critical failures)

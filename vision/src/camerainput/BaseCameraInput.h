@@ -44,7 +44,7 @@ public:
 	// Constructor / Destructor
   BaseCameraInput ();
   virtual ~BaseCameraInput();
-  
+
 	// Init / Release / Update (to be implemented in subclasses)
 	virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, ImageFormat format = RGB );
 	virtual void    end             ();
@@ -62,22 +62,22 @@ public:
   int             				getNumChannels  () const { return m_nChannels;  }
 	Graphics::Image&				getImage        ()			 { return m_currentCameraImage; }
 	ImageFormat							getFormat				() const { return m_format; }
-	 
+
 protected:
 
   // Protected methods
-  void  setNewFrameData         ( char* data, unsigned int width, unsigned int height, ImageFormat format );
-  void  setNewFrame             ( bool newFrame ) { m_newFrame = newFrame;    }  
+  void  setNewFrameData         ( char* data, int width, int height, ImageFormat format );
+  void  setNewFrame             ( bool newFrame ) { m_newFrame = newFrame;    }
   void  setWidth                ( int width   )   { m_width   = width;  }
   void  setHeight               ( int height  )   { m_height  = height; }
-  void  setFPS                  ( int fps     )   { m_fps   = fps;  } 
+  void  setFPS                  ( int fps     )   { m_fps   = fps;  }
 
 	// Protected attributes
 	int											m_deviceId;								///< Id of the device to capture from (starting at 0).
 
 private:
 	// Attributes
-	Graphics::Image					m_currentCameraImage; 		///< Image captured from the camera 
+	Graphics::Image					m_currentCameraImage; 		///< Image captured from the camera
 	Graphics::Image					m_tempImage;					 		///< Image used to convert received frames to working format
   int                     m_width, m_height;    		///< Capture resolution
 	int                     m_fps;                		///< Capture frames per second

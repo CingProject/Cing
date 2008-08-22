@@ -26,9 +26,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef _OGREBULLETDYNAMICS_RaycastVehicle_H
 #define _OGREBULLETDYNAMICS_RaycastVehicle_H
 
-#include "OgreBulletDynamicsPreRequisites.h"
+#include "Dynamics/include/OgreBulletDynamicsPreRequisites.h"
 
-#include "OgreBulletDynamicsConstraint.h"
+#include "Dynamics/include/OgreBulletDynamicsConstraint.h"
 
 
 namespace OgreBulletDynamics
@@ -41,12 +41,12 @@ namespace OgreBulletDynamics
     public:
         VehicleRayCaster(DynamicsWorld *world);
         virtual ~VehicleRayCaster();
-        
+
         btVehicleRaycaster *getBulletVehicleRayCaster()
         {return static_cast <btVehicleRaycaster*> (mBulletVehicleRayCaster);};
-         
+
     private:
-        btDefaultVehicleRaycaster *mBulletVehicleRayCaster;        
+        btDefaultVehicleRaycaster *mBulletVehicleRayCaster;
     };
     // -------------------------------------------------------------------------
     // VehicleTuning  class
@@ -60,25 +60,25 @@ namespace OgreBulletDynamics
             const Ogre::Real maxSuspensionTravelCm,
             const Ogre::Real frictionSlip);
         virtual ~VehicleTuning();
-        
+
         btRaycastVehicle::btVehicleTuning *getBulletTuning()
         {return mBulletTuning;};
-        
+
     private:
-        btRaycastVehicle::btVehicleTuning *mBulletTuning;        
+        btRaycastVehicle::btVehicleTuning *mBulletTuning;
     };
     // -------------------------------------------------------------------------
     // RaycastVehicle  class
     class WheelInfo
     {
     public:
-        WheelInfo(btWheelInfo &w): 
+        WheelInfo(btWheelInfo &w):
           mWheel(&w)
           {};
         virtual ~WheelInfo(){};
 
         btWheelInfo *getBulletWheelInfo(){return static_cast<btWheelInfo *> (mWheel);}
-       
+
     protected:
         btWheelInfo                   *mWheel;
     };
@@ -87,7 +87,7 @@ namespace OgreBulletDynamics
     class RaycastVehicle : public TypedConstraint
     {
     public:
-        RaycastVehicle(WheeledRigidBody *body,  
+        RaycastVehicle(WheeledRigidBody *body,
             VehicleTuning        *vt,
             VehicleRayCaster     *caster = 0);
 
@@ -119,13 +119,13 @@ namespace OgreBulletDynamics
      protected:
          VehicleTuning                   *mTuning;
          VehicleRayCaster                *mRayCaster;
-    
+
          std::vector<btWheelInfo *>         mWheelsInfo;
          std::vector<Ogre::SceneNode *>      mWheelNodes;
 
          WheeledRigidBody* mChassisBody;
          Ogre::SceneNode *mNode;
-         
+
     };
 }
 #endif //_OGREBULLETDYNAMICS_RaycastVehicle_H

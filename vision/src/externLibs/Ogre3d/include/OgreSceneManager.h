@@ -8,17 +8,17 @@ Copyright (c) 2000-2006 Torus Knot Software Ltd
 Also see acknowledgements in Readme.html
 
 This library is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License (LGPL) as 
-published by the Free Software Foundation; either version 2.1 of the 
+under the terms of the GNU Lesser General Public License (LGPL) as
+published by the Free Software Foundation; either version 2.1 of the
 License, or (at your option) any later version.
 
-This library is distributed in the hope that it will be useful, but 
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
-or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public 
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
 License for more details.
 
-You should have received a copy of the GNU Lesser General Public License 
-along with this library; if not, write to the Free Software Foundation, 
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 
@@ -44,7 +44,7 @@ Torus Knot Software Ltd.
 #include "OgreRenderQueue.h"
 #include "OgreRenderQueueSortingGrouping.h"
 #include "OgreRectangle2D.h"
-#include "OgrePixelFormat.h"
+#include "ogrepixelformat.h"
 #include "OgreResourceGroupManager.h"
 #include "OgreTexture.h"
 #include "OgreShadowCameraSetup.h"
@@ -91,11 +91,11 @@ namespace Ogre {
 			maxDistance = 0;
 		}
 
-		void merge(const AxisAlignedBox& boxBounds, const Sphere& sphereBounds, 
+		void merge(const AxisAlignedBox& boxBounds, const Sphere& sphereBounds,
 			const Camera* cam)
 		{
 			aabb.merge(boxBounds);
-			Real camDistToCenter = 
+			Real camDistToCenter =
 				(cam->getDerivedPosition() - sphereBounds.getCenter()).length();
 			minDistance = (std::min)(minDistance, (std::max)((Real)0, camDistToCenter - sphereBounds.getRadius()));
 			maxDistance = (std::max)(maxDistance, camDistToCenter + sphereBounds.getRadius());
@@ -113,15 +113,15 @@ namespace Ogre {
 		ShadowListener() {}
 		virtual ~ShadowListener() {}
 
-		/** Event raised after all shadow textures have been rendered into for 
+		/** Event raised after all shadow textures have been rendered into for
 			all queues / targets but before any other geometry has been rendered
-		    (including main scene geometry and any additional shadow receiver 
-			passes). 
+		    (including main scene geometry and any additional shadow receiver
+			passes).
 		@remarks
-			This callback is useful for those that wish to perform some 
-			additional processing on shadow textures before they are used to 
-			render shadows. For example you could perform some filtering by 
-			rendering the existing shadow textures into another alternative 
+			This callback is useful for those that wish to perform some
+			additional processing on shadow textures before they are used to
+			render shadows. For example you could perform some filtering by
+			rendering the existing shadow textures into another alternative
 			shadow texture with a shader.]
 		@note
 			This event will only be fired when texture shadows are in use.
@@ -141,14 +141,14 @@ namespace Ogre {
 		@param light Pointer to the light for which shadows are being rendered
 		@param camera Pointer to the camera being used to render
 		*/
-		virtual void shadowTextureCasterPreViewProj(Light* light, 
+		virtual void shadowTextureCasterPreViewProj(Light* light,
 			Camera* camera) = 0;
 		/** This event occurs just before the view & projection matrices are
 		 	set for re-rendering a shadow receiver.
 		@remarks
 			You can use this event hook to perform some custom processing,
-			such as altering the projection frustum being used for rendering 
-			the shadow onto the receiver to perform an advanced shadow 
+			such as altering the projection frustum being used for rendering
+			the shadow onto the receiver to perform an advanced shadow
 			technique.
 		@note
 			This event will only be fired when texture shadows are in use.
@@ -156,26 +156,26 @@ namespace Ogre {
 		@param frustum Pointer to the projection frustum being used to project
 			the shadow texture
 		*/
-		virtual void shadowTextureReceiverPreViewProj(Light* light, 
+		virtual void shadowTextureReceiverPreViewProj(Light* light,
 			Frustum* frustum) = 0;
 
 		/** Hook to allow the listener to override the ordering of lights for
 			the entire frustum.
 		@remarks
-			Whilst ordinarily lights are sorted per rendered object 
+			Whilst ordinarily lights are sorted per rendered object
 			(@see MovableObject::queryLights), texture shadows adds another issue
 			in that, given there is a finite number of shadow textures, we must
 			choose which lights to render texture shadows from based on the entire
 			frustum. These lights should always be listed first in every objects
-			own list, followed by any other lights which will not cast texture 
+			own list, followed by any other lights which will not cast texture
 			shadows (either because they have shadow casting off, or there aren't
 			enough shadow textures to service them).
 		@par
 			This hook allows you to override the detailed ordering of the lights
-			per frustum. The default ordering is shadow casters first (which you 
+			per frustum. The default ordering is shadow casters first (which you
 			must also respect if you override this method), and ordered
 			by distance from the camera within those 2 groups. Obviously the closest
-			lights with shadow casting enabled will be listed first. Only lights 
+			lights with shadow casting enabled will be listed first. Only lights
 			within the range of the frustum will be in the list.
 		@param lightList The list of lights within range of the frustum which you
 			may sort.
@@ -183,37 +183,37 @@ namespace Ogre {
 		*/
 		virtual bool sortLightsAffectingFrustum(LightList& lightList) { return false; }
 
-		
+
 	};
 
-    /** Manages the organisation and rendering of a 'scene' i.e. a collection 
+    /** Manages the organisation and rendering of a 'scene' i.e. a collection
 		of objects and potentially world geometry.
     @remarks
-		This class defines the interface and the basic behaviour of a 
+		This class defines the interface and the basic behaviour of a
 		'Scene Manager'. A SceneManager organises the culling and rendering of
-		the scene, in conjunction with the RenderQueue. This class is designed 
+		the scene, in conjunction with the RenderQueue. This class is designed
 		to be extended through subclassing in order to provide more specialised
-		scene organisation structures for particular needs. The default 
+		scene organisation structures for particular needs. The default
 		SceneManager culls based on a hierarchy of node bounding boxes, other
 		implementations can use an octree (@see OctreeSceneManager), a BSP
 		tree (@see BspSceneManager), and many other options. New SceneManager
-		implementations can be added at runtime by plugins, see 
+		implementations can be added at runtime by plugins, see
 		SceneManagerEnumerator for the interfaces for adding new SceneManager
 		types.
 	@par
-		There is a distinction between 'objects' (which subclass MovableObject, 
+		There is a distinction between 'objects' (which subclass MovableObject,
 		and are movable, discrete objects in the world), and 'world geometry',
-		which is large, generally static geometry. World geometry tends to 
+		which is large, generally static geometry. World geometry tends to
 		influence the SceneManager organisational structure (e.g. lots of indoor
 		static geometry might result in a spatial tree structure) and as such
 		world geometry is generally tied to a given SceneManager implementation,
 		whilst MovableObject instances can be used with any SceneManager.
 		Subclasses are free to define world geometry however they please.
 	@par
-		Multiple SceneManager instances can exist at one time, each one with 
+		Multiple SceneManager instances can exist at one time, each one with
 		a distinct scene. Which SceneManager is used to render a scene is
 		dependent on the Camera, which will always call back the SceneManager
-		which created it to render the scene. 
+		which created it to render the scene.
      */
     class _OgreExport SceneManager
     {
@@ -270,7 +270,7 @@ namespace Ogre {
 			Real skyDomeCurvature;
 			Real skyDomeTiling;
 			Real skyDomeDistance;
-			int skyDomeXSegments; 
+			int skyDomeXSegments;
 			int skyDomeYSegments;
 			int skyDomeYSegments_keep;
 		};
@@ -278,10 +278,10 @@ namespace Ogre {
 		struct SkyPlaneGenParameters
 		{
 			Real skyPlaneScale;
-			Real skyPlaneTiling; 
-			Real skyPlaneBow; 
-			int skyPlaneXSegments; 
-			int skyPlaneYSegments; 
+			Real skyPlaneTiling;
+			Real skyPlaneBow;
+			int skyPlaneXSegments;
+			int skyPlaneYSegments;
 		};
 
 		struct SkyBoxGenParameters
@@ -372,7 +372,7 @@ namespace Ogre {
 		SpecialCaseRenderQueueList mSpecialCaseQueueList;
 		SpecialCaseRenderQueueMode mSpecialCaseQueueMode;
 		uint8 mWorldGeometryRenderQueue;
-		
+
 		unsigned long mLastFrameNumber;
 		Matrix4 mTempXform[256];
 		bool mResetIdentityView;
@@ -388,7 +388,7 @@ namespace Ogre {
 				scene elements.
 		*/
 		typedef std::map< const Camera*, VisibleObjectsBoundsInfo> CamVisibleObjectsMap;
-		CamVisibleObjectsMap mCamVisibleObjectsMap; 
+		CamVisibleObjectsMap mCamVisibleObjectsMap;
 
 		/** ShadowCamera to light mapping */
 		typedef std::map< const Camera*, const Light* > ShadowCamLightMapping;
@@ -459,7 +459,7 @@ namespace Ogre {
             This method will usually return the standard solid black pass for
             all fixed function passes, but will merge in a vertex program
             and fudge the AutpoParamDataSource to set black lighting for
-            passes with vertex programs. 
+            passes with vertex programs.
         */
         virtual const Pass* deriveShadowCasterPass(const Pass* pass);
         /** Internal method for turning a regular pass into a shadow receiver pass.
@@ -468,15 +468,15 @@ namespace Ogre {
         ensure that objects are rendered with a projective texture.
         This method will usually return a standard single-texture pass for
         all fixed function passes, but will merge in a vertex program
-        for passes with vertex programs. 
+        for passes with vertex programs.
         */
         virtual const Pass* deriveShadowReceiverPass(const Pass* pass);
-    
+
         /** Internal method to validate whether a Pass should be allowed to render.
         @remarks
             Called just before a pass is about to be used for rendering a group to
             allow the SceneManager to omit it if required. A return value of false
-            skips this pass. 
+            skips this pass.
         */
         virtual bool validatePassForRendering(const Pass* pass);
 
@@ -484,7 +484,7 @@ namespace Ogre {
         @remarks
         Called just before a pass is about to be used for rendering a Renderable to
         allow the SceneManager to omit it if required. A return value of false
-        skips it. 
+        skips it.
         */
         virtual bool validateRenderableForRendering(const Pass* pass, const Renderable* rend);
 
@@ -512,7 +512,7 @@ namespace Ogre {
             BoxPlane bp,
             Real curvature, Real tiling, Real distance,
             const Quaternion& orientation,
-            int xsegments, int ysegments, int ySegmentsToKeep, 
+            int xsegments, int ysegments, int ySegmentsToKeep,
             const String& groupName);
 
         // Flag indicating whether SceneNodes will be rendered as a set of 3 axes
@@ -528,7 +528,7 @@ namespace Ogre {
         /** Internal method used by _renderSingleObject to deal with renderables
             which override the camera's own view / projection materices. */
         virtual void useRenderableViewProjMode(const Renderable* pRend);
-        
+
         /** Internal method used by _renderSingleObject to deal with renderables
             which override the camera's own view / projection matrices. */
         virtual void resetViewProjMode(void);
@@ -553,7 +553,7 @@ namespace Ogre {
         virtual void setViewport(Viewport *vp);
 
 		/** Flag that indicates if all of the scene node's bounding boxes should be shown as a wireframe. */
-		bool mShowBoundingBoxes;      
+		bool mShowBoundingBoxes;
 
 		/** Internal method for rendering all objects using the default queue sequence. */
 		virtual void renderVisibleObjectsDefaultSequence(void);
@@ -563,7 +563,7 @@ namespace Ogre {
 		virtual void prepareRenderQueue(void);
 
 
-        /** Internal utility method for rendering a single object. 
+        /** Internal utility method for rendering a single object.
         @remarks
             Assumes that the pass has already been set up.
         @param rend The renderable to issue to the pipeline
@@ -575,7 +575,7 @@ namespace Ogre {
             method allows you to pass in a previously determined set of lights
             which will be used for a single render of this object.
         */
-        virtual void renderSingleObject(const Renderable* rend, const Pass* pass, 
+        virtual void renderSingleObject(const Renderable* rend, const Pass* pass,
 			bool doLightIteration, const LightList* manualLightList = 0);
 
         /// Utility class for calculating automatic parameters for gpu programs
@@ -611,7 +611,7 @@ namespace Ogre {
 		@remarks
 			Since shadow textures are generated from lights based on the
 			frustum rather than individual objects, a shadow and camera-wise sort is
-			required to pick the best lights near the start of the list. Up to 
+			required to pick the best lights near the start of the list. Up to
 			the number of shadow textures will be generated from this.
 		*/
 		struct lightsForShadowTextureLess
@@ -620,7 +620,7 @@ namespace Ogre {
 		};
 
 
-        /** Internal method for locating a list of lights which could be affecting the frustum. 
+        /** Internal method for locating a list of lights which could be affecting the frustum.
         @remarks
             Custom scene managers are encouraged to override this method to make use of their
             scene partitioning scheme to more efficiently locate lights, and to eliminate lights
@@ -636,13 +636,13 @@ namespace Ogre {
         /// Internal method for preparing shadow textures ready for use in a regular render
         virtual void prepareShadowTextures(Camera* cam, Viewport* vp);
 
-        /** Internal method for rendering all the objects for a given light into the 
+        /** Internal method for rendering all the objects for a given light into the
             stencil buffer.
         @param light The light source
         @param cam The camera being viewed from
         */
         virtual void renderShadowVolumesToStencil(const Light* light, const Camera* cam);
-        /** Internal utility method for setting stencil state for rendering shadow volumes. 
+        /** Internal utility method for setting stencil state for rendering shadow volumes.
         @param secondpass Is this the second pass?
         @param zfail Should we be using the zfail method?
         @param twosided Should we use a 2-sided stencil?
@@ -697,13 +697,13 @@ namespace Ogre {
             Real mFarDistSquared;
         public:
             ShadowCasterSceneQueryListener(SceneManager* sm) : mSceneMgr(sm),
-				mCasterList(0), mIsLightInFrustum(false), mLightClipVolumeList(0), 
+				mCasterList(0), mIsLightInFrustum(false), mLightClipVolumeList(0),
                 mCamera(0) {}
-            // Prepare the listener for use with a set of parameters  
-            void prepare(bool lightInFrustum, 
-                const PlaneBoundedVolumeList* lightClipVolumes, 
-                const Light* light, const Camera* cam, ShadowCasterList* casterList, 
-                Real farDistSquared) 
+            // Prepare the listener for use with a set of parameters
+            void prepare(bool lightInFrustum,
+                const PlaneBoundedVolumeList* lightClipVolumes,
+                const Light* light, const Camera* cam, ShadowCasterList* casterList,
+                Real farDistSquared)
             {
                 mCasterList = casterList;
                 mIsLightInFrustum = lightInFrustum;
@@ -718,47 +718,47 @@ namespace Ogre {
 
         ShadowCasterSceneQueryListener* mShadowCasterQueryListener;
 
-        /** Internal method for locating a list of shadow casters which 
-            could be affecting the frustum for a given light. 
+        /** Internal method for locating a list of shadow casters which
+            could be affecting the frustum for a given light.
         @remarks
-            Custom scene managers are encouraged to override this method to add optimisations, 
+            Custom scene managers are encouraged to override this method to add optimisations,
             and to add their own custom shadow casters (perhaps for world geometry)
         */
-        virtual const ShadowCasterList& findShadowCastersForLight(const Light* light, 
+        virtual const ShadowCasterList& findShadowCastersForLight(const Light* light,
             const Camera* camera);
         /** Render a group in the ordinary way */
-		virtual void renderBasicQueueGroupObjects(RenderQueueGroup* pGroup, 
+		virtual void renderBasicQueueGroupObjects(RenderQueueGroup* pGroup,
 			QueuedRenderableCollection::OrganisationMode om);
 		/** Render a group with the added complexity of additive stencil shadows. */
-		virtual void renderAdditiveStencilShadowedQueueGroupObjects(RenderQueueGroup* group, 
+		virtual void renderAdditiveStencilShadowedQueueGroupObjects(RenderQueueGroup* group,
 			QueuedRenderableCollection::OrganisationMode om);
 		/** Render a group with the added complexity of modulative stencil shadows. */
-		virtual void renderModulativeStencilShadowedQueueGroupObjects(RenderQueueGroup* group, 
+		virtual void renderModulativeStencilShadowedQueueGroupObjects(RenderQueueGroup* group,
 			QueuedRenderableCollection::OrganisationMode om);
         /** Render a group rendering only shadow casters. */
-		virtual void renderTextureShadowCasterQueueGroupObjects(RenderQueueGroup* group, 
+		virtual void renderTextureShadowCasterQueueGroupObjects(RenderQueueGroup* group,
 			QueuedRenderableCollection::OrganisationMode om);
         /** Render a group rendering only shadow receivers. */
-		virtual void renderTextureShadowReceiverQueueGroupObjects(RenderQueueGroup* group, 
+		virtual void renderTextureShadowReceiverQueueGroupObjects(RenderQueueGroup* group,
 			QueuedRenderableCollection::OrganisationMode om);
         /** Render a group with the added complexity of modulative texture shadows. */
-		virtual void renderModulativeTextureShadowedQueueGroupObjects(RenderQueueGroup* group, 
+		virtual void renderModulativeTextureShadowedQueueGroupObjects(RenderQueueGroup* group,
 			QueuedRenderableCollection::OrganisationMode om);
 
 		/** Render a group with additive texture shadows. */
-		virtual void renderAdditiveTextureShadowedQueueGroupObjects(RenderQueueGroup* group, 
+		virtual void renderAdditiveTextureShadowedQueueGroupObjects(RenderQueueGroup* group,
 			QueuedRenderableCollection::OrganisationMode om);
 		/** Render a set of objects, see renderSingleObject for param definitions */
-		virtual void renderObjects(const QueuedRenderableCollection& objs, 
-			QueuedRenderableCollection::OrganisationMode om, 
+		virtual void renderObjects(const QueuedRenderableCollection& objs,
+			QueuedRenderableCollection::OrganisationMode om,
             bool doLightIteration, const LightList* manualLightList = 0);
 		/** Render those objects in the transparent pass list which have shadow casting forced on
 		@remarks
 			This function is intended to be used to render the shadows of transparent objects which have
 			transparency_casts_shadows set to 'on' in their material
 		*/
-		virtual void renderTransparentShadowCasterObjects(const QueuedRenderableCollection& objs, 
-			QueuedRenderableCollection::OrganisationMode om, 
+		virtual void renderTransparentShadowCasterObjects(const QueuedRenderableCollection& objs,
+			QueuedRenderableCollection::OrganisationMode om,
 			bool doLightIteration, const LightList* manualLightList = 0);
 
 		/** Update the state of the global render queue splitting based on a shadow
@@ -766,11 +766,11 @@ namespace Ogre {
 		virtual void updateRenderQueueSplitOptions(void);
 		/** Update the state of the render queue group splitting based on a shadow
 		option change. */
-		virtual void updateRenderQueueGroupSplitOptions(RenderQueueGroup* group, 
+		virtual void updateRenderQueueGroupSplitOptions(RenderQueueGroup* group,
 			bool suppressShadows, bool suppressRenderState);
 
 		/** Inner helper class to implement the visitor pattern for rendering objects
-			in a queue. 
+			in a queue.
 		*/
 		class _OgreExport SceneMgrQueuedRenderableVisitor : public QueuedRenderableVisitor
 		{
@@ -778,7 +778,7 @@ namespace Ogre {
 			/// Pass that was actually used at the grouping level
 			const Pass* mUsedPass;
 		public:
-			SceneMgrQueuedRenderableVisitor() 
+			SceneMgrQueuedRenderableVisitor()
 				:transparentShadowCastersMode(false) {}
 			~SceneMgrQueuedRenderableVisitor() {}
 			void visit(const Renderable* r);
@@ -816,24 +816,24 @@ namespace Ogre {
 			multiple threads.
 		@remarks
 			If you are updating the scene in a separate thread from the rendering
-			thread, then you should lock this mutex before making any changes to 
+			thread, then you should lock this mutex before making any changes to
 			the scene graph - that means creating, modifying or deleting a
-			scene node, or attaching / detaching objects. It is <b>your</b> 
+			scene node, or attaching / detaching objects. It is <b>your</b>
 			responsibility to take out this lock, the detail methods on the nodes
 			will not do it for you (for the reasons discussed below).
 		@par
-			Note that locking this mutex will prevent the scene being rendered until 
+			Note that locking this mutex will prevent the scene being rendered until
 			it is unlocked again. Therefore you should do this sparingly. Try
 			to create any objects you need separately and fully prepare them
 			before doing all your scene graph work in one go, thus keeping this
 			lock for the shortest time possible.
 		@note
-			A single global lock is used rather than a per-node lock since 
-			it keeps the number of locks required during rendering down to a 
+			A single global lock is used rather than a per-node lock since
+			it keeps the number of locks required during rendering down to a
 			minimum. Obtaining a lock, even if there is no contention, is not free
-			so for performance it is good to do it as little as possible. 
+			so for performance it is good to do it as little as possible.
 			Since modifying the scene in a separate thread is a fairly
-			rare occurrence (relative to rendering), it is better to keep the 
+			rare occurrence (relative to rendering), it is better to keep the
 			locking required during rendering lower than to make update locks
 			more granular.
 		*/
@@ -845,7 +845,7 @@ namespace Ogre {
 		/** Retrieve the type name of this scene manager.
 		@remarks
 			This method has to be implemented by subclasses. It should
-			return the type name of this SceneManager which agrees with 
+			return the type name of this SceneManager which agrees with
 			the type name of the SceneManagerFactory which created it.
 		*/
 		virtual const String& getTypeName(void) const = 0;
@@ -960,7 +960,7 @@ namespace Ogre {
         /** Get the list of lights which could be affecting the frustum.
         @remarks
             Note that default implementation of this method returns a cached light list,
-            which is populated when rendering the scene. So by default the list of lights 
+            which is populated when rendering the scene. So by default the list of lights
 			is only available during scene rendering.
         */
         virtual const LightList& _getLightsAffectingFrustum(void) const;
@@ -969,11 +969,11 @@ namespace Ogre {
         to the position specified.
         @remarks
             Note that since directional lights have no position, they are always considered
-            closer than any point lights and as such will always take precedence. 
+            closer than any point lights and as such will always take precedence.
         @par
             Subclasses of the default SceneManager may wish to take into account other issues
             such as possible visibility of the light if that information is included in their
-            data structures. This basic scenemanager simply orders by distance, eliminating 
+            data structures. This basic scenemanager simply orders by distance, eliminating
             those lights which are out of range or could not be affecting the frustum (i.e.
             only the lights returned by SceneManager::_getLightsAffectingFrustum are take into
             account).
@@ -983,7 +983,7 @@ namespace Ogre {
             be imposed by Pass::getMaxSimultaneousLights.
         @param position The position at which to evaluate the list of lights
         @param radius The bounding radius to test
-        @param destList List to be populated with ordered set of lights; will be cleared by 
+        @param destList List to be populated with ordered set of lights; will be cleared by
             this method before population.
         */
         virtual void _populateLightList(const Vector3& position, Real radius, LightList& destList);
@@ -1090,7 +1090,7 @@ namespace Ogre {
                 ptype The prefab type.
         */
         virtual Entity* createEntity(const String& entityName, PrefabType ptype);
-        /** Retrieves a pointer to the named Entity. 
+        /** Retrieves a pointer to the named Entity.
 		@note Throws an exception if the named instance does not exist
 		*/
         virtual Entity* getEntity(const String& name) const;
@@ -1135,7 +1135,7 @@ namespace Ogre {
             name The name to be given to the object (must be unique).
         */
         virtual ManualObject* createManualObject(const String& name);
-        /** Retrieves a pointer to the named ManualObject. 
+        /** Retrieves a pointer to the named ManualObject.
 		@note Throws an exception if the named instance does not exist
 		*/
         virtual ManualObject* getManualObject(const String& name) const;
@@ -1158,7 +1158,7 @@ namespace Ogre {
             name The name to be given to the object (must be unique).
         */
         virtual BillboardChain* createBillboardChain(const String& name);
-        /** Retrieves a pointer to the named BillboardChain. 
+        /** Retrieves a pointer to the named BillboardChain.
 		@note Throws an exception if the named instance does not exist
 		*/
         virtual BillboardChain* getBillboardChain(const String& name) const;
@@ -1174,14 +1174,14 @@ namespace Ogre {
 		virtual void destroyBillboardChain(const String& name);
 		/** Removes & destroys all BillboardChains from the SceneManager.
 		*/
-		virtual void destroyAllBillboardChains(void);		
+		virtual void destroyAllBillboardChains(void);
         /** Create a RibbonTrail, an object which you can use to render
             a linked chain of billboards which follows one or more nodes.
         @param
             name The name to be given to the object (must be unique).
         */
         virtual RibbonTrail* createRibbonTrail(const String& name);
-        /** Retrieves a pointer to the named RibbonTrail. 
+        /** Retrieves a pointer to the named RibbonTrail.
 		@note Throws an exception if the named instance does not exist
 		*/
         virtual RibbonTrail* getRibbonTrail(const String& name) const;
@@ -1197,26 +1197,26 @@ namespace Ogre {
 		virtual void destroyRibbonTrail(const String& name);
 		/** Removes & destroys all RibbonTrails from the SceneManager.
 		*/
-		virtual void destroyAllRibbonTrails(void);		
+		virtual void destroyAllRibbonTrails(void);
 
         /** Creates a particle system based on a template.
         @remarks
             This method creates a new ParticleSystem instance based on the named template
-			(defined through ParticleSystemManager::createTemplate) and returns a 
-            pointer to the caller. The caller should not delete this object, it will be freed at system shutdown, 
+			(defined through ParticleSystemManager::createTemplate) and returns a
+            pointer to the caller. The caller should not delete this object, it will be freed at system shutdown,
             or can be released earlier using the destroyParticleSystem method.
         @par
-            Each system created from a template takes the template's settings at the time of creation, 
-            but is completely separate from the template from there on. 
+            Each system created from a template takes the template's settings at the time of creation,
+            but is completely separate from the template from there on.
         @par
             Creating a particle system does not make it a part of the scene. As with other MovableObject
-            subclasses, a ParticleSystem is not rendered until it is attached to a SceneNode. 
+            subclasses, a ParticleSystem is not rendered until it is attached to a SceneNode.
         @par
             This is probably the more useful particle system creation method since it does not require manual
             setup of the system. Note that the initial quota is based on the template but may be changed later.
-        @param 
+        @param
             name The name to give the new particle system instance.
-        @param 
+        @param
             templateName The name of the template to base the new instance on.
         */
         virtual ParticleSystem* createParticleSystem(const String& name,
@@ -1228,22 +1228,22 @@ namespace Ogre {
             be released earlier using the destroyParticleSystem method.
         @par
             The instance returned from this method won't actually do anything because on creation a
-            particle system has no emitters. The caller should manipulate the instance through it's 
-            ParticleSystem methods to actually create a real particle effect. 
+            particle system has no emitters. The caller should manipulate the instance through it's
+            ParticleSystem methods to actually create a real particle effect.
         @par
             Creating a particle system does not make it a part of the scene. As with other MovableObject
-            subclasses, a ParticleSystem is not rendered until it is attached to a SceneNode. 
+            subclasses, a ParticleSystem is not rendered until it is attached to a SceneNode.
         @param
             name The name to give the ParticleSystem.
-        @param 
-            quota The maximum number of particles to allow in this system. 
+        @param
+            quota The maximum number of particles to allow in this system.
         @param
             resourceGroup The resource group which will be used to load dependent resources
         */
         virtual ParticleSystem* createParticleSystem(const String& name,
-			size_t quota = 500, 
+			size_t quota = 500,
             const String& resourceGroup = ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-        /** Retrieves a pointer to the named ParticleSystem. 
+        /** Retrieves a pointer to the named ParticleSystem.
 		@note Throws an exception if the named instance does not exist
 		*/
         virtual ParticleSystem* getParticleSystem(const String& name) const;
@@ -1259,9 +1259,9 @@ namespace Ogre {
 		virtual void destroyParticleSystem(const String& name);
 		/** Removes & destroys all ParticleSystems from the SceneManager.
 		*/
-		virtual void destroyAllParticleSystems(void);		
+		virtual void destroyAllParticleSystems(void);
 
-		/** Empties the entire scene, inluding all SceneNodes, Entities, Lights, 
+		/** Empties the entire scene, inluding all SceneNodes, Entities, Lights,
             BillboardSets etc. Cameras are not deleted at this stage since
             they are still referenced by viewports, which are not destroyed during
             this process.
@@ -1300,26 +1300,26 @@ namespace Ogre {
         */
         virtual void setWorldGeometry(const String& filename);
 
-        /** Sets the source of the 'world' geometry, i.e. the large, mainly 
+        /** Sets the source of the 'world' geometry, i.e. the large, mainly
 			static geometry making up the world e.g. rooms, landscape etc.
             @remarks
-                Depending on the type of SceneManager (subclasses will be 
-				specialised for particular world geometry types) you have 
-				requested via the Root or SceneManagerEnumerator classes, you 
-				can pass a stream to this method and it will attempt to load 
-				the world-level geometry for use. If the manager can only 
+                Depending on the type of SceneManager (subclasses will be
+				specialised for particular world geometry types) you have
+				requested via the Root or SceneManagerEnumerator classes, you
+				can pass a stream to this method and it will attempt to load
+				the world-level geometry for use. If the manager can only
 				handle one input format the typeName parameter is not required.
-				The stream passed will be read (and it's state updated). 
+				The stream passed will be read (and it's state updated).
 			@param stream Data stream containing data to load
 			@param typeName String identifying the type of world geometry
-				contained in the stream - not required if this manager only 
+				contained in the stream - not required if this manager only
 				supports one type of world geometry.
         */
-		virtual void setWorldGeometry(DataStreamPtr& stream, 
+		virtual void setWorldGeometry(DataStreamPtr& stream,
 			const String& typeName = StringUtil::BLANK);
 
         /** Estimate the number of loading stages required to load the named
-            world geometry. 
+            world geometry.
         @remarks
             This method should be overridden by SceneManagers that provide
             custom world geometry that can take some time to load. They should
@@ -1327,13 +1327,13 @@ namespace Ogre {
             they can report on whilst loading. During real loading (setWorldGeomtry),
             they should call ResourceGroupManager::_notifyWorldGeometryProgress exactly
             that number of times when loading the geometry for real.
-        @note 
-            The default is to return 0, ie to not report progress. 
+        @note
+            The default is to return 0, ie to not report progress.
         */
         virtual size_t estimateWorldGeometry(const String& filename) { return 0; }
 
         /** Estimate the number of loading stages required to load the named
-            world geometry. 
+            world geometry.
         @remarks
 			Operates just like the version of this method which takes a
 			filename, but operates on a stream instead. Note that since the
@@ -1341,10 +1341,10 @@ namespace Ogre {
 			when it comes to loading it for real.
 		@param stream Data stream containing data to load
 		@param typeName String identifying the type of world geometry
-			contained in the stream - not required if this manager only 
+			contained in the stream - not required if this manager only
 			supports one type of world geometry.
-		*/		
-        virtual size_t estimateWorldGeometry(DataStreamPtr& stream, 
+		*/
+        virtual size_t estimateWorldGeometry(DataStreamPtr& stream,
 			const String& typeName = StringUtil::BLANK) { return 0; }
         /** Asks the SceneManager to provide a suggested viewpoint from which the scene should be viewed.
             @remarks
@@ -1474,7 +1474,7 @@ namespace Ogre {
         */
         virtual void _renderScene(Camera* camera, Viewport* vp, bool includeOverlays);
 
-        /** Internal method for queueing the sky objects with the params as 
+        /** Internal method for queueing the sky objects with the params as
             previously set through setSkyBox, setSkyPlane and setSkyDome.
         */
         virtual void _queueSkiesForRendering(Camera* cam);
@@ -1534,7 +1534,7 @@ namespace Ogre {
 			@param
 				bow If zero, the plane will be completely flat (like previous
 				versions.  If above zero, the plane will be curved, allowing
-				the sky to appear below camera level.  Curved sky planes are 
+				the sky to appear below camera level.  Curved sky planes are
 				simular to skydomes, but are more compatable with fog.
             @param xsegments, ysegments
                 Determines the number of segments the plane will have to it. This
@@ -1546,8 +1546,8 @@ namespace Ogre {
         virtual void setSkyPlane(
             bool enable,
             const Plane& plane, const String& materialName, Real scale = 1000,
-            Real tiling = 10, bool drawFirst = true, Real bow = 0, 
-            int xsegments = 1, int ysegments = 1, 
+            Real tiling = 10, bool drawFirst = true, Real bow = 0,
+            int xsegments = 1, int ysegments = 1,
             const String& groupName = ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 		/** Return whether a key plane is enabled */
@@ -1699,7 +1699,7 @@ namespace Ogre {
                 skydome or skybox.
             @param
                 expDensity The density of the fog in FOG_EXP or FOG_EXP2
-                mode, as a value between 0 and 1. The default is 0.001. 
+                mode, as a value between 0 and 1. The default is 0.001.
             @param
                 linearStart Distance in world units at which linear fog starts to
                 encroach. Only applicable if mode is
@@ -1788,7 +1788,7 @@ namespace Ogre {
         */
         virtual void destroyAllBillboardSets(void);
 
-        /** Tells the SceneManager whether it should render the SceneNodes which 
+        /** Tells the SceneManager whether it should render the SceneNodes which
             make up the scene as well as the objects in the scene.
         @remarks
             This method is mainly for debugging purposes. If you set this to 'true',
@@ -1821,7 +1821,7 @@ namespace Ogre {
         */
         virtual Animation* createAnimation(const String& name, Real length);
 
-        /** Looks up an Animation object previously created with createAnimation. 
+        /** Looks up an Animation object previously created with createAnimation.
 		@note Throws an exception if the named instance does not exist
 		*/
         virtual Animation* getAnimation(const String& name) const;
@@ -1829,9 +1829,9 @@ namespace Ogre {
 		*/
 		virtual bool hasAnimation(const String& name) const;
 
-        /** Destroys an Animation. 
+        /** Destroys an Animation.
         @remarks
-            You should ensure that none of your code is referencing this animation objects since the 
+            You should ensure that none of your code is referencing this animation objects since the
             memory will be freed.
         */
         virtual void destroyAnimation(const String& name);
@@ -1848,17 +1848,17 @@ namespace Ogre {
             help track the current time position of animations, the AnimationState object
             is provided. </p>
             So if you don't want to control animation application manually, call this method,
-            update the returned object as you like every frame and let SceneManager apply 
+            update the returned object as you like every frame and let SceneManager apply
             the animation state for you.
         @par
-            Remember, AnimationState objects are disabled by default at creation time. 
+            Remember, AnimationState objects are disabled by default at creation time.
             Turn them on when you want them using their setEnabled method.
         @par
             Note that any SceneNode affected by this automatic animation will have it's state
             reset to it's initial position before application of the animation. Unless specifically
             modified using Node::setInitialState the Node assumes it's initial state is at the
             origin. If you want the base state of the SceneNode to be elsewhere, make your changes
-            to the node using the standard transform methods, then call setInitialState to 
+            to the node using the standard transform methods, then call setInitialState to
             'bake' this reference position into the node.
 		@par
 			If the target of your animation is to be a generic AnimableValue, you
@@ -1868,7 +1868,7 @@ namespace Ogre {
         */
         virtual AnimationState* createAnimationState(const String& animName);
 
-        /** Retrieves animation state as previously created using createAnimationState. 
+        /** Retrieves animation state as previously created using createAnimationState.
 		@note Throws an exception if the named instance does not exist
 		*/
         virtual AnimationState* getAnimationState(const String& animName) const;
@@ -1876,9 +1876,9 @@ namespace Ogre {
 		*/
 		virtual bool hasAnimationState(const String& name) const;
 
-        /** Destroys an AnimationState. 
+        /** Destroys an AnimationState.
         @remarks
-            You should ensure that none of your code is referencing this animation 
+            You should ensure that none of your code is referencing this animation
             state object since the memory will be freed.
         */
         virtual void destroyAnimationState(const String& name);
@@ -1894,10 +1894,10 @@ namespace Ogre {
             let it do. However, there are times where it may be useful to have this manual interface,
             for example overlaying something on top of the scene rendered by OGRE.
         @par
-            Because this is an instant rendering method, timing is important. The best 
+            Because this is an instant rendering method, timing is important. The best
             time to call it is from a RenderTargetListener event handler.
         @par
-            Don't call this method a lot, it's designed for rare (1 or 2 times per frame) use. 
+            Don't call this method a lot, it's designed for rare (1 or 2 times per frame) use.
             Calling it regularly per frame will cause frame rate drops!
         @param rend A RenderOperation object describing the rendering op
         @param pass The Pass to use for this render
@@ -1905,22 +1905,22 @@ namespace Ogre {
         @param worldMatrix The transform to apply from object to world space
         @param viewMatrix The transform to apply from world to view space
         @param projMatrix The transform to apply from view to screen space
-        @param doBeginEndFrame If true, beginFrame() and endFrame() are called, 
+        @param doBeginEndFrame If true, beginFrame() and endFrame() are called,
             otherwise not. You should leave this as false if you are calling
             this within the main render loop.
         */
-        virtual void manualRender(RenderOperation* rend, Pass* pass, Viewport* vp, 
-            const Matrix4& worldMatrix, const Matrix4& viewMatrix, const Matrix4& projMatrix, 
+        virtual void manualRender(RenderOperation* rend, Pass* pass, Viewport* vp,
+            const Matrix4& worldMatrix, const Matrix4& viewMatrix, const Matrix4& projMatrix,
             bool doBeginEndFrame = false) ;
 
         /** Retrieves the internal render queue, for advanced users only.
         @remarks
-            The render queue is mainly used internally to manage the scene object 
-			rendering queue, it also exports some methods to allow advanced users 
+            The render queue is mainly used internally to manage the scene object
+			rendering queue, it also exports some methods to allow advanced users
 			to configure the behavior of rendering process.
-            Most methods provided by RenderQueue are supposed to be used 
-			internally only, you should reference to the RenderQueue API for 
-			more information. Do not access this directly unless you know what 
+            Most methods provided by RenderQueue are supposed to be used
+			internally only, you should reference to the RenderQueue API for
+			more information. Do not access this directly unless you know what
 			you are doing.
         */
         virtual RenderQueue* getRenderQueue(void);
@@ -1935,9 +1935,9 @@ namespace Ogre {
 
 		/** Adds an item to the 'special case' render queue list.
 		@remarks
-			Normally all render queues are rendered, in their usual sequence, 
-			only varying if a RenderQueueListener nominates for the queue to be 
-			repeated or skipped. This method allows you to add a render queue to 
+			Normally all render queues are rendered, in their usual sequence,
+			only varying if a RenderQueueListener nominates for the queue to be
+			repeated or skipped. This method allows you to add a render queue to
 			a 'special case' list, which varies the behaviour. The effect of this
 			list depends on the 'mode' in which this list is in, which might be
 			to exclude these render queues, or to include them alone (excluding
@@ -1975,26 +1975,26 @@ namespace Ogre {
 		/** Sets the render queue that the world geometry (if any) this SceneManager
 			renders will be associated with.
 		@remarks
-			SceneManagers which provide 'world geometry' should place it in a 
-			specialised render queue in order to make it possible to enable / 
-			disable it easily using the addSpecialCaseRenderQueue method. Even 
-			if the SceneManager does not use the render queues to render the 
+			SceneManagers which provide 'world geometry' should place it in a
+			specialised render queue in order to make it possible to enable /
+			disable it easily using the addSpecialCaseRenderQueue method. Even
+			if the SceneManager does not use the render queues to render the
 			world geometry, it should still pick a queue to represent it's manual
 			rendering, and check isRenderQueueToBeProcessed before rendering.
 		@note
 			Setting this may not affect the actual ordering of rendering the
 			world geometry, if the world geometry is being rendered manually
 			by the SceneManager. If the SceneManager feeds world geometry into
-			the queues, however, the ordering will be affected. 
+			the queues, however, the ordering will be affected.
 		*/
 		virtual void setWorldGeometryRenderQueue(uint8 qid);
 		/** Gets the render queue that the world geometry (if any) this SceneManager
 			renders will be associated with.
 		@remarks
-			SceneManagers which provide 'world geometry' should place it in a 
-			specialised render queue in order to make it possible to enable / 
-			disable it easily using the addSpecialCaseRenderQueue method. Even 
-			if the SceneManager does not use the render queues to render the 
+			SceneManagers which provide 'world geometry' should place it in a
+			specialised render queue in order to make it possible to enable /
+			disable it easily using the addSpecialCaseRenderQueue method. Even
+			if the SceneManager does not use the render queues to render the
 			world geometry, it should still pick a queue to represent it's manual
 			rendering, and check isRenderQueueToBeProcessed before rendering.
 		*/
@@ -2009,11 +2009,11 @@ namespace Ogre {
         /** Internal method for notifying the manager that a SceneNode is autotracking. */
         virtual void _notifyAutotrackingSceneNode(SceneNode* node, bool autoTrack);
 
-        
-        /** Creates an AxisAlignedBoxSceneQuery for this scene manager. 
+
+        /** Creates an AxisAlignedBoxSceneQuery for this scene manager.
         @remarks
-            This method creates a new instance of a query object for this scene manager, 
-            for an axis aligned box region. See SceneQuery and AxisAlignedBoxSceneQuery 
+            This method creates a new instance of a query object for this scene manager,
+            for an axis aligned box region. See SceneQuery and AxisAlignedBoxSceneQuery
             for full details.
         @par
             The instance returned from this method must be destroyed by calling
@@ -2022,12 +2022,12 @@ namespace Ogre {
         @param mask The query mask to apply to this query; can be used to filter out
             certain objects; see SceneQuery for details.
         */
-        virtual AxisAlignedBoxSceneQuery* 
+        virtual AxisAlignedBoxSceneQuery*
             createAABBQuery(const AxisAlignedBox& box, unsigned long mask = 0xFFFFFFFF);
-        /** Creates a SphereSceneQuery for this scene manager. 
+        /** Creates a SphereSceneQuery for this scene manager.
         @remarks
-            This method creates a new instance of a query object for this scene manager, 
-            for a spherical region. See SceneQuery and SphereSceneQuery 
+            This method creates a new instance of a query object for this scene manager,
+            for a spherical region. See SceneQuery and SphereSceneQuery
             for full details.
         @par
             The instance returned from this method must be destroyed by calling
@@ -2036,12 +2036,12 @@ namespace Ogre {
         @param mask The query mask to apply to this query; can be used to filter out
             certain objects; see SceneQuery for details.
         */
-        virtual SphereSceneQuery* 
+        virtual SphereSceneQuery*
             createSphereQuery(const Sphere& sphere, unsigned long mask = 0xFFFFFFFF);
-        /** Creates a PlaneBoundedVolumeListSceneQuery for this scene manager. 
+        /** Creates a PlaneBoundedVolumeListSceneQuery for this scene manager.
         @remarks
-        This method creates a new instance of a query object for this scene manager, 
-        for a region enclosed by a set of planes (normals pointing inwards). 
+        This method creates a new instance of a query object for this scene manager,
+        for a region enclosed by a set of planes (normals pointing inwards).
         See SceneQuery and PlaneBoundedVolumeListSceneQuery for full details.
         @par
         The instance returned from this method must be destroyed by calling
@@ -2050,14 +2050,14 @@ namespace Ogre {
         @param mask The query mask to apply to this query; can be used to filter out
         certain objects; see SceneQuery for details.
         */
-        virtual PlaneBoundedVolumeListSceneQuery* 
+        virtual PlaneBoundedVolumeListSceneQuery*
             createPlaneBoundedVolumeQuery(const PlaneBoundedVolumeList& volumes, unsigned long mask = 0xFFFFFFFF);
 
 
-        /** Creates a RaySceneQuery for this scene manager. 
+        /** Creates a RaySceneQuery for this scene manager.
         @remarks
-            This method creates a new instance of a query object for this scene manager, 
-            looking for objects which fall along a ray. See SceneQuery and RaySceneQuery 
+            This method creates a new instance of a query object for this scene manager,
+            looking for objects which fall along a ray. See SceneQuery and RaySceneQuery
             for full details.
         @par
             The instance returned from this method must be destroyed by calling
@@ -2066,10 +2066,10 @@ namespace Ogre {
         @param mask The query mask to apply to this query; can be used to filter out
             certain objects; see SceneQuery for details.
         */
-        virtual RaySceneQuery* 
+        virtual RaySceneQuery*
             createRayQuery(const Ray& ray, unsigned long mask = 0xFFFFFFFF);
         //PyramidSceneQuery* createPyramidQuery(const Pyramid& p, unsigned long mask = 0xFFFFFFFF);
-        /** Creates an IntersectionSceneQuery for this scene manager. 
+        /** Creates an IntersectionSceneQuery for this scene manager.
         @remarks
             This method creates a new instance of a query object for locating
             intersecting objects. See SceneQuery and IntersectionSceneQuery
@@ -2080,7 +2080,7 @@ namespace Ogre {
         @param mask The query mask to apply to this query; can be used to filter out
             certain objects; see SceneQuery for details.
         */
-        virtual IntersectionSceneQuery* 
+        virtual IntersectionSceneQuery*
             createIntersectionQuery(unsigned long mask = 0xFFFFFFFF);
 
         /** Destroys a scene query of any type. */
@@ -2089,7 +2089,7 @@ namespace Ogre {
         typedef MapIterator<CameraList> CameraIterator;
         typedef MapIterator<AnimationList> AnimationIterator;
 
-        /** Returns a specialised MapIterator over all cameras in the scene. 
+        /** Returns a specialised MapIterator over all cameras in the scene.
 		*/
         CameraIterator getCameraIterator(void) {
             return CameraIterator(mCameras.begin(), mCameras.end());
@@ -2104,39 +2104,39 @@ namespace Ogre {
         }
 
         /** Sets the general shadow technique to be used in this scene.
-        @remarks   
-            There are multiple ways to generate shadows in a scene, and each has 
-            strengths and weaknesses. 
-            <ul><li>Stencil-based approaches can be used to 
+        @remarks
+            There are multiple ways to generate shadows in a scene, and each has
+            strengths and weaknesses.
+            <ul><li>Stencil-based approaches can be used to
             draw very long, extreme shadows without loss of precision and the 'additive'
             version can correctly show the shadowing of complex effects like bump mapping
             because they physically exclude the light from those areas. However, the edges
-            are very sharp and stencils cannot handle transparency, and they involve a 
+            are very sharp and stencils cannot handle transparency, and they involve a
             fair amount of CPU work in order to calculate the shadow volumes, especially
             when animated objects are involved.</li>
             <li>Texture-based approaches are good for handling transparency (they can, for
             example, correctly shadow a mesh which uses alpha to represent holes), and they
             require little CPU overhead, and can happily shadow geometry which is deformed
-            by a vertex program, unlike stencil shadows. However, they have a fixed precision 
+            by a vertex program, unlike stencil shadows. However, they have a fixed precision
             which can introduce 'jaggies' at long range and have fillrate issues of their own.</li>
             </ul>
         @par
             We support 2 kinds of stencil shadows, and 2 kinds of texture-based shadows, and one
-            simple decal approach. The 2 stencil approaches differ in the amount of multipass work 
-            that is required - the modulative approach simply 'darkens' areas in shadow after the 
-            main render, which is the least expensive, whilst the additive approach has to perform 
-            a render per light and adds the cumulative effect, whcih is more expensive but more 
+            simple decal approach. The 2 stencil approaches differ in the amount of multipass work
+            that is required - the modulative approach simply 'darkens' areas in shadow after the
+            main render, which is the least expensive, whilst the additive approach has to perform
+            a render per light and adds the cumulative effect, whcih is more expensive but more
             accurate. The texture based shadows both work in roughly the same way, the only difference is
             that the shadowmap approach is slightly more accurate, but requires a more recent
             graphics card.
         @par
             Note that because mixing many shadow techniques can cause problems, only one technique
-            is supported at once. Also, you should call this method at the start of the 
-            scene setup. 
+            is supported at once. Also, you should call this method at the start of the
+            scene setup.
         @param technique The shadowing technique to use for the scene.
         */
         virtual void setShadowTechnique(ShadowTechnique technique);
-        
+
         /** Gets the current shadow technique. */
         virtual ShadowTechnique getShadowTechnique(void) const { return mShadowTechnique; }
 
@@ -2145,16 +2145,16 @@ namespace Ogre {
         /** Are debug shadows shown? */
         virtual bool getShowDebugShadows(void ) const { return mDebugShadows; }
 
-        /** Set the colour used to modulate areas in shadow. 
-        @remarks This is only applicable for shadow techniques which involve 
-            darkening the area in shadow, as opposed to masking out the light. 
+        /** Set the colour used to modulate areas in shadow.
+        @remarks This is only applicable for shadow techniques which involve
+            darkening the area in shadow, as opposed to masking out the light.
             This colour provided is used as a modulative value to darken the
             areas.
         */
         virtual void setShadowColour(const ColourValue& colour);
-        /** Get the colour used to modulate areas in shadow. 
-        @remarks This is only applicable for shadow techniques which involve 
-        darkening the area in shadow, as opposed to masking out the light. 
+        /** Get the colour used to modulate areas in shadow.
+        @remarks This is only applicable for shadow techniques which involve
+        darkening the area in shadow, as opposed to masking out the light.
         This colour provided is used as a modulative value to darken the
         areas.
         */
@@ -2162,15 +2162,15 @@ namespace Ogre {
         /** Sets the distance a shadow volume is extruded for a directional light.
         @remarks
             Although directional lights are essentially infinite, there are many
-            reasons to limit the shadow extrusion distance to a finite number, 
+            reasons to limit the shadow extrusion distance to a finite number,
             not least of which is compatibility with older cards (which do not
             support infinite positions), and shadow caster elimination.
         @par
             The default value is 10,000 world units. This does not apply to
-            point lights or spotlights, since they extrude up to their 
+            point lights or spotlights, since they extrude up to their
             attenuation range.
         */
-        virtual void setShadowDirectionalLightExtrusionDistance(Real dist); 
+        virtual void setShadowDirectionalLightExtrusionDistance(Real dist);
         /** Gets the distance a shadow volume is extruded for a directional light.
         */
         virtual Real getShadowDirectionalLightExtrusionDistance(void) const;
@@ -2203,20 +2203,20 @@ namespace Ogre {
 			to render shadow primitives (including stencil shadow volumes). The
 			default size is 51,200 entries, which is 100k of GPU memory, or
 			enough to render approximately 17,000 triangles. You can reduce this
-			as long as you do not have any models / world geometry chunks which 
+			as long as you do not have any models / world geometry chunks which
 			could require more than the amount you set.
 		@par
-			The maximum number of triangles required to render a single shadow 
-			volume (including light and dark caps when needed) will be 3x the 
-			number of edges on the light silhouette, plus the number of 
-			light-facing triangles.	On average, half the 
-			triangles will be facing toward the light, but the number of 
-			triangles in the silhouette entirely depends on the mesh - 
+			The maximum number of triangles required to render a single shadow
+			volume (including light and dark caps when needed) will be 3x the
+			number of edges on the light silhouette, plus the number of
+			light-facing triangles.	On average, half the
+			triangles will be facing toward the light, but the number of
+			triangles in the silhouette entirely depends on the mesh -
 			angular meshes will have a higher silhouette tris/mesh tris
 			ratio than a smooth mesh. You can estimate the requirements for
 			your particular mesh by rendering it alone in a scene with shadows
 			enabled and a single light - rotate it or the light and make a note
-			of how high the triangle count goes (remembering to subtract the 
+			of how high the triangle count goes (remembering to subtract the
 			mesh triangle count)
 		@param size The number of indexes; divide this by 3 to determine the
 			number of triangles.
@@ -2227,10 +2227,10 @@ namespace Ogre {
 		{ return mShadowIndexBufferSize; }
         /** Set the size of the texture used for all texture-based shadows.
         @remarks
-            The larger the shadow texture, the better the detail on 
+            The larger the shadow texture, the better the detail on
             texture based shadows, but obviously this takes more memory.
             The default size is 512. Sizes must be a power of 2.
-		@note This is the simple form, see setShadowTextureConfig for the more 
+		@note This is the simple form, see setShadowTextureConfig for the more
 			complex form.
         */
         virtual void setShadowTextureSize(unsigned short size);
@@ -2241,14 +2241,14 @@ namespace Ogre {
 		@param width, height The dimensions of the texture
 		@param format The pixel format of the texture
 		*/
-		virtual void setShadowTextureConfig(size_t shadowIndex, unsigned short width, 
+		virtual void setShadowTextureConfig(size_t shadowIndex, unsigned short width,
 			unsigned short height, PixelFormat format);
 		/** Set the detailed configuration for a shadow texture.
 		@param shadowIndex The index of the texture to configure, must be < the
 			number of shadow textures setting
 		@param config Configuration structure
 		*/
-		virtual void setShadowTextureConfig(size_t shadowIndex, 
+		virtual void setShadowTextureConfig(size_t shadowIndex,
 			const ShadowTextureConfig& config);
 
 		/** Get an iterator over the current shadow texture settings. */
@@ -2257,12 +2257,12 @@ namespace Ogre {
         /** Set the pixel format of the textures used for texture-based shadows.
         @remarks
 			By default, a colour texture is used (PF_X8R8G8B8) for texture shadows,
-			but if you want to use more advanced texture shadow types you can 
+			but if you want to use more advanced texture shadow types you can
 			alter this. If you do, you will have to also call
 			setShadowTextureCasterMaterial and setShadowTextureReceiverMaterial
 			to provide shader-based materials to use these customised shadow
 			texture formats.
-		@note This is the simple form, see setShadowTextureConfig for the more 
+		@note This is the simple form, see setShadowTextureConfig for the more
 			complex form.
         */
         virtual void setShadowTexturePixelFormat(PixelFormat fmt);
@@ -2270,27 +2270,27 @@ namespace Ogre {
         @remarks
             The default number of textures assigned to deal with texture based
             shadows is 1; however this means you can only have one light casting
-            shadows at the same time. You can increase this number in order to 
+            shadows at the same time. You can increase this number in order to
             make this more flexible, but be aware of the texture memory it will use.
         */
         virtual void setShadowTextureCount(size_t count);
         /// Get the number of the textures allocated for texture based shadows
         size_t getShadowTextureCount(void) const {return mShadowTextureConfigList.size(); }
-        /** Sets the size and count of textures used in texture-based shadows. 
+        /** Sets the size and count of textures used in texture-based shadows.
         @remarks
             @see setShadowTextureSize and setShadowTextureCount for details, this
-            method just allows you to change both at once, which can save on 
+            method just allows you to change both at once, which can save on
             reallocation if the textures have already been created.
-		@note This is the simple form, see setShadowTextureConfig for the more 
+		@note This is the simple form, see setShadowTextureConfig for the more
 			complex form.
         */
-        virtual void setShadowTextureSettings(unsigned short size, unsigned short count, 
+        virtual void setShadowTextureSettings(unsigned short size, unsigned short count,
 			PixelFormat fmt = PF_X8R8G8B8);
 
 		/** Get a reference to the shadow texture currently in use at the given index.
 		@note
 			If you change shadow settings, this reference may no longer
-			be correct, so be sure not to hold the returned reference over 
+			be correct, so be sure not to hold the returned reference over
 			texture shadow configuration changes.
 		*/
 		virtual const TexturePtr& getShadowTexture(size_t shadowIndex);
@@ -2299,13 +2299,13 @@ namespace Ogre {
             directional light will be offset into the camera view to make best use of texture space.
         @remarks
             When generating a shadow texture from a directional light, an approximation is used
-            since it is not possible to render the entire scene to one texture. 
+            since it is not possible to render the entire scene to one texture.
             The texture is projected onto an area centred on the camera, and is
             the shadow far distance * 2 in length (it is square). This wastes
             a lot of texture space outside the frustum though, so this offset allows
             you to move the texture in front of the camera more. However, be aware
             that this can cause a little shadow 'jittering' during rotation, and
-            that if you move it too far then you'll start to get artefacts close 
+            that if you move it too far then you'll start to get artefacts close
             to the camera. The value is represented as a proportion of the shadow
             far distance, and the default is 0.6.
         */
@@ -2321,7 +2321,7 @@ namespace Ogre {
             distance of the entire shadow visibility distance at which the shadow
             begins to fade out. The default is 0.7
         */
-        virtual void setShadowTextureFadeStart(Real fadeStart) 
+        virtual void setShadowTextureFadeStart(Real fadeStart)
         { mShadowTextureFadeStart = fadeStart; }
         /** Sets the proportional distance at which texture shadows finish to fading out.
         @remarks
@@ -2330,25 +2330,25 @@ namespace Ogre {
         distance of the entire shadow visibility distance at which the shadow
         is completely invisible. The default is 0.9.
         */
-        virtual void setShadowTextureFadeEnd(Real fadeEnd) 
+        virtual void setShadowTextureFadeEnd(Real fadeEnd)
         { mShadowTextureFadeEnd = fadeEnd; }
 
 		/** Sets whether or not texture shadows should attempt to self-shadow.
 		@remarks
-			The default implementation of texture shadows uses a fixed-function 
-			colour texture projection approach for maximum compatibility, and 
-			as such cannot support self-shadowing. However, if you decide to 
-			implement a more complex shadowing technique using the 
-			setShadowTextureCasterMaterial and setShadowTextureReceiverMaterial 
-			there is a possibility you may be able to support 
-			self-shadowing (e.g by implementing a shader-based shadow map). In 
+			The default implementation of texture shadows uses a fixed-function
+			colour texture projection approach for maximum compatibility, and
+			as such cannot support self-shadowing. However, if you decide to
+			implement a more complex shadowing technique using the
+			setShadowTextureCasterMaterial and setShadowTextureReceiverMaterial
+			there is a possibility you may be able to support
+			self-shadowing (e.g by implementing a shader-based shadow map). In
 			this case you might want to enable this option.
 		@param selfShadow Whether to attempt self-shadowing with texture shadows
 		*/
-		virtual void setShadowTextureSelfShadow(bool selfShadow); 
+		virtual void setShadowTextureSelfShadow(bool selfShadow);
 
 		/// Gets whether or not texture shadows attempt to self-shadow.
-		virtual bool getShadowTextureSelfShadow(void) const 
+		virtual bool getShadowTextureSelfShadow(void) const
 		{ return mShadowTextureSelfShadow; }
 		/** Sets the default material to use for rendering shadow casters.
 		@remarks
@@ -2359,11 +2359,11 @@ namespace Ogre {
 			example providing vertex and fragment programs to implement shadow
 			maps.
 		@par
-			You can rely on the ambient light in the scene being set to the 
-			requested texture shadow colour, if that's useful. 
+			You can rely on the ambient light in the scene being set to the
+			requested texture shadow colour, if that's useful.
 		@note
 			Individual objects may also override the vertex program in
-			your default material if their materials include 
+			your default material if their materials include
 			shadow_caster_vertex_program_ref shadow_receiver_vertex_program_ref
 			entries, so if you use both make sure they are compatible.
 		@note
@@ -2374,18 +2374,18 @@ namespace Ogre {
 		/** Sets the default material to use for rendering shadow receivers.
 		@remarks
 			By default shadow receivers are rendered as a post-pass using basic
-			modulation. This allows basic projective texture shadows, but it's 
-			possible to use more advanced shadow techniques by overriding the 
-			caster and receiver materials, for example providing vertex and 
+			modulation. This allows basic projective texture shadows, but it's
+			possible to use more advanced shadow techniques by overriding the
+			caster and receiver materials, for example providing vertex and
 			fragment programs to implement shadow maps.
 		@par
-			You can rely on texture unit 0 containing the shadow texture, and 
-			for the unit to be set to use projective texturing from the light 
-			(only useful if you're using fixed-function, which is unlikely; 
+			You can rely on texture unit 0 containing the shadow texture, and
+			for the unit to be set to use projective texturing from the light
+			(only useful if you're using fixed-function, which is unlikely;
 			otherwise you should rely on the texture_viewproj_matrix auto binding)
 		@note
 			Individual objects may also override the vertex program in
-			your default material if their materials include 
+			your default material if their materials include
 			shadow_caster_vertex_program_ref shadow_receiver_vertex_program_ref
 			entries, so if you use both make sure they are compatible.
 		@note
@@ -2395,7 +2395,7 @@ namespace Ogre {
 		virtual void setShadowTextureReceiverMaterial(const String& name);
 
 		/** Sets whether or not shadow casters should be rendered into shadow
-			textures using their back faces rather than their front faces. 
+			textures using their back faces rather than their front faces.
 		@remarks
 			Rendering back faces rather than front faces into a shadow texture
 			can help minimise depth comparison issues, if you're using depth
@@ -2407,7 +2407,7 @@ namespace Ogre {
 		virtual void setShadowCasterRenderBackFaces(bool bf) { mShadowCasterRenderBackFaces = bf; }
 
 		/** Gets whether or not shadow casters should be rendered into shadow
-			textures using their back faces rather than their front faces. 
+			textures using their back faces rather than their front faces.
 		*/
 		virtual bool getShadowCasterRenderBackFaces() const { return mShadowCasterRenderBackFaces; }
 
@@ -2431,54 +2431,54 @@ namespace Ogre {
 			get a kind of 'negative' shadow effect. The best way to achieve
 			coherency is to move the far plane of the camera out to infinity,
 			thus preventing the far plane from clipping the shadow volumes.
-			When combined with vertex program extrusion of the volume to 
+			When combined with vertex program extrusion of the volume to
 			infinity, which	Ogre does when available, this results in very
-			robust shadow volumes. For this reason, when you enable stencil 
-			shadows, Ogre automatically changes your camera settings to 
+			robust shadow volumes. For this reason, when you enable stencil
+			shadows, Ogre automatically changes your camera settings to
 			project to infinity if the card supports it. You can disable this
-			behaviour if you like by calling this method; although you can 
+			behaviour if you like by calling this method; although you can
 			never enable infinite projection if the card does not support it.
-		@par	
-			If you disable infinite projection, or it is not available, 
+		@par
+			If you disable infinite projection, or it is not available,
 			you need to be far more careful with your light attenuation /
 			directional light extrusion distances to avoid clipping artefacts
 			at the far plane.
 		@note
 			Recent cards will generally support infinite far plane projection.
 			However, we have found some cases where they do not, especially
-			on Direct3D. There is no standard capability we can check to 
+			on Direct3D. There is no standard capability we can check to
 			validate this, so we use some heuristics based on experience:
 			<UL>
 			<LI>OpenGL always seems to support it no matter what the card</LI>
-			<LI>Direct3D on non-vertex program capable systems (including 
+			<LI>Direct3D on non-vertex program capable systems (including
 			vertex program capable cards on Direct3D7) does not
 			support it</LI>
 			<LI>Direct3D on GeForce3 and GeForce4 Ti does not seem to support
 			infinite projection<LI>
 			</UL>
 			Therefore in the RenderSystem implementation, we may veto the use
-			of an infinite far plane based on these heuristics. 
+			of an infinite far plane based on these heuristics.
 		*/
         virtual void setShadowUseInfiniteFarPlane(bool enable) {
             mShadowUseInfiniteFarPlane = enable; }
 
 		/** Is there a stencil shadow based shadowing technique in use? */
-		virtual bool isShadowTechniqueStencilBased(void) const 
+		virtual bool isShadowTechniqueStencilBased(void) const
 		{ return (mShadowTechnique & SHADOWDETAILTYPE_STENCIL) != 0; }
 		/** Is there a texture shadow based shadowing technique in use? */
-		virtual bool isShadowTechniqueTextureBased(void) const 
+		virtual bool isShadowTechniqueTextureBased(void) const
 		{ return (mShadowTechnique & SHADOWDETAILTYPE_TEXTURE) != 0; }
 		/** Is there a modulative shadowing technique in use? */
-		virtual bool isShadowTechniqueModulative(void) const 
+		virtual bool isShadowTechniqueModulative(void) const
 		{ return (mShadowTechnique & SHADOWDETAILTYPE_MODULATIVE) != 0; }
 		/** Is there an additive shadowing technique in use? */
-		virtual bool isShadowTechniqueAdditive(void) const 
+		virtual bool isShadowTechniqueAdditive(void) const
 		{ return (mShadowTechnique & SHADOWDETAILTYPE_ADDITIVE) != 0; }
 		/** Is the shadow technique integrated into primary materials? */
-		virtual bool isShadowTechniqueIntegrated(void) const 
+		virtual bool isShadowTechniqueIntegrated(void) const
 		{ return (mShadowTechnique & SHADOWDETAILTYPE_INTEGRATED) != 0; }
 		/** Is there any shadowing technique in use? */
-		virtual bool isShadowTechniqueInUse(void) const 
+		virtual bool isShadowTechniqueInUse(void) const
 		{ return mShadowTechnique != SHADOWTYPE_NONE; }
 
 		/** Add a shadow listener which will get called back on shadow
@@ -2492,14 +2492,14 @@ namespace Ogre {
 		/** Creates a StaticGeometry instance suitable for use with this
 			SceneManager.
 		@remarks
-			StaticGeometry is a way of batching up geometry into a more 
-			efficient form at the expense of being able to move it. Please 
+			StaticGeometry is a way of batching up geometry into a more
+			efficient form at the expense of being able to move it. Please
 			read the StaticGeometry class documentation for full information.
 		@param name The name to give the new object
 		@returns The new StaticGeometry instance
 		*/
 		virtual StaticGeometry* createStaticGeometry(const String& name);
-		/** Retrieve a previously created StaticGeometry instance. 
+		/** Retrieve a previously created StaticGeometry instance.
 		@note Throws an exception if the named instance does not exist
 		*/
 		virtual StaticGeometry* getStaticGeometry(const String& name) const;
@@ -2515,8 +2515,8 @@ namespace Ogre {
 		/** Creates a InstancedGeometry instance suitable for use with this
 			SceneManager.
 		@remarks
-			InstancedGeometry is a way of batching up geometry into a more 
-			efficient form, and still be able to move it. Please 
+			InstancedGeometry is a way of batching up geometry into a more
+			efficient form, and still be able to move it. Please
 			read the InstancedGeometry class documentation for full information.
 		@param name The name to give the new object
 		@returns The new InstancedGeometry instance
@@ -2542,7 +2542,7 @@ namespace Ogre {
 		@param params Optional name/value pair list to give extra parameters to
 			the created object.
 		*/
-		virtual MovableObject* createMovableObject(const String& name, 
+		virtual MovableObject* createMovableObject(const String& name,
 			const String& typeName, const NameValuePairList* params = 0);
 		/** Destroys a MovableObject with the name specified, of the type specified.
 		@remarks
@@ -2560,14 +2560,14 @@ namespace Ogre {
 		virtual void destroyAllMovableObjectsByType(const String& typeName);
 		/** Destroy all MovableObjects. */
 		virtual void destroyAllMovableObjects(void);
-		/** Get a reference to a previously created MovableObject. 
+		/** Get a reference to a previously created MovableObject.
 		@note Throws an exception if the named instance does not exist
 		*/
 		virtual MovableObject* getMovableObject(const String& name, const String& typeName) const;
 		/** Returns whether a movable object instance with the given name exists. */
 		virtual bool hasMovableObject(const String& name, const String& typeName) const;
 		typedef MapIterator<MovableObjectMap> MovableObjectIterator;
-		/** Get an iterator over all MovableObect instances of a given type. 
+		/** Get an iterator over all MovableObect instances of a given type.
 		@note
 			The iterator returned from this method is not thread safe, do not use this
 			if you are creating or deleting objects of this type in another thread.
@@ -2578,8 +2578,8 @@ namespace Ogre {
 			This method 'injects' a MovableObject instance created externally into
 			the MovableObject instance registry held in the SceneManager. You
 			might want to use this if you have a MovableObject which you don't
-			want to register a factory for; for example a MovableObject which 
-			cannot be generally constructed by clients. 
+			want to register a factory for; for example a MovableObject which
+			cannot be generally constructed by clients.
 		@note
 			It is important that the MovableObject has a unique name for the type,
 			and that its getMovableType() method returns a proper type name.
@@ -2601,8 +2601,8 @@ namespace Ogre {
 		virtual void extractMovableObject(MovableObject* m);
 		/** Extract all injected MovableObjects of a given type.
 		@remarks
-			Essentially this does the same as destroyAllMovableObjectsByType, 
-			but only removes the instances from the internal lists, it does not 
+			Essentially this does the same as destroyAllMovableObjectsByType,
+			but only removes the instances from the internal lists, it does not
 			attempt to destroy them.
 		*/
 		virtual void extractAllMovableObjectsByType(const String& typeName);
@@ -2649,12 +2649,12 @@ namespace Ogre {
 			the RenderSystem states when rendering objects.
 		@remarks
 			This method allows you to tell the SceneManager not to change any
-			RenderSystem state until you tell it to. This method is only 
-			intended for advanced use, don't use it if you're unsure of the 
-			effect. The only RenderSystems calls made are to set the world 
+			RenderSystem state until you tell it to. This method is only
+			intended for advanced use, don't use it if you're unsure of the
+			effect. The only RenderSystems calls made are to set the world
 			matrix for each object (note - view an projection matrices are NOT
-			SET - they are under your control) and to render the object; it is up to 
-			the caller to do everything else, including enabling any vertex / 
+			SET - they are under your control) and to render the object; it is up to
+			the caller to do everything else, including enabling any vertex /
 			fragment programs and updating their parameter state, and binding
 			parameters to the RenderSystem.
 		@note
@@ -2664,8 +2664,8 @@ namespace Ogre {
 			until this method is called again with a parameter of false.
 		*/
 		virtual void _suppressRenderStateChanges(bool suppress);
-		
-		/** Are render state changes suppressed? 
+
+		/** Are render state changes suppressed?
 		@see _suppressRenderStateChanges
 		*/
 		virtual bool _areRenderStateChangesSuppressed(void) const
@@ -2675,7 +2675,7 @@ namespace Ogre {
             @param pass The Pass details to set.
 			@param evenIfSuppressed Sets the pass details even if render state
 				changes are suppressed; if you are using this to manually set state
-				when render state changes are suppressed, you should set this to 
+				when render state changes are suppressed, you should set this to
 				true.
 			@param shadowDerivation If false, disables the derivation of shadow
 				passes from original passes
@@ -2683,46 +2683,46 @@ namespace Ogre {
                 A Pass object that was used instead of the one passed in, can
                 happen when rendering shadow passes
         */
-        virtual const Pass* _setPass(const Pass* pass, 
+        virtual const Pass* _setPass(const Pass* pass,
 			bool evenIfSuppressed = false, bool shadowDerivation = true);
 
 
-		/** Indicates to the SceneManager whether it should suppress the 
+		/** Indicates to the SceneManager whether it should suppress the
 			active shadow rendering technique until told otherwise.
 		@remarks
 			This is a temporary alternative to setShadowTechnique to suppress
-			the rendering of shadows and forcing all processing down the 
+			the rendering of shadows and forcing all processing down the
 			standard rendering path. This is intended for internal use only.
 		@param suppress If true, no shadow rendering will occur until this
 			method is called again with a parameter of false.
 		*/
-		virtual void _suppressShadows(bool suppress); 
+		virtual void _suppressShadows(bool suppress);
 
-		/** Are shadows suppressed? 
+		/** Are shadows suppressed?
 		@see _suppressShadows
 		*/
 		virtual bool _areShadowsSuppressed(void) const
 		{ return mSuppressShadows; }
 
-		/** Render the objects in a given queue group 
+		/** Render the objects in a given queue group
 		@remarks You should only call this from a RenderQueueInvocation implementation
 		*/
-		virtual void _renderQueueGroupObjects(RenderQueueGroup* group, 
+		virtual void _renderQueueGroupObjects(RenderQueueGroup* group,
 			QueuedRenderableCollection::OrganisationMode om);
 
 		/** Advanced method for supplying an alternative visitor, used for parsing the
 			render queues and sending the results to the renderer.
 		@remarks
-			You can use this method to insert your own implementation of the 
+			You can use this method to insert your own implementation of the
 			QueuedRenderableVisitor interface, which receives calls as the queued
 			renderables are parsed in a given order (determined by RenderQueueInvocationSequence)
 			and are sent to the renderer. If you provide your own implementation of
-			this visitor, you are responsible for either calling the rendersystem, 
+			this visitor, you are responsible for either calling the rendersystem,
 			or passing the calls on to the base class implementation.
 		@note
-			Ownership is not taken of this pointer, you are still required to 
+			Ownership is not taken of this pointer, you are still required to
 			delete it yourself once you're finished.
-		@param visitor Your implementation of SceneMgrQueuedRenderableVisitor. 
+		@param visitor Your implementation of SceneMgrQueuedRenderableVisitor.
 			If you pass 0, the default implementation will be used.
 		*/
 		void setQueuedRenderableVisitor(SceneMgrQueuedRenderableVisitor* visitor);
@@ -2736,7 +2736,7 @@ namespace Ogre {
 		*/
 		RenderSystem *getDestinationRenderSystem();
 
-		/** Gets the current viewport being rendered (advanced use only, only 
+		/** Gets the current viewport being rendered (advanced use only, only
 			valid during viewport update. */
 		Viewport* getCurrentViewport(void) const { return mCurrentViewport; }
 
@@ -2748,7 +2748,7 @@ namespace Ogre {
     };
 
     /** Default implementation of IntersectionSceneQuery. */
-    class _OgreExport DefaultIntersectionSceneQuery : 
+    class _OgreExport DefaultIntersectionSceneQuery :
         public IntersectionSceneQuery
     {
     public:
@@ -2799,7 +2799,7 @@ namespace Ogre {
         /** See RayScenQuery. */
         void execute(SceneQueryListener* listener);
     };
-    
+
 
 	/// Bitmask containing scene types
 	typedef uint16 SceneTypeMask;
@@ -2843,14 +2843,14 @@ namespace Ogre {
 		SceneManagerFactory() : mMetaDataInit(true) {}
 		virtual ~SceneManagerFactory() {}
 		/** Get information about the SceneManager type created by this factory. */
-		virtual const SceneManagerMetaData& getMetaData(void) const 
+		virtual const SceneManagerMetaData& getMetaData(void) const
 		{
 			if (mMetaDataInit)
 			{
 				initMetaData();
 				mMetaDataInit = false;
 			}
-			return mMetaData; 
+			return mMetaData;
 		}
 		/** Create a new instance of a SceneManager.
 		@remarks

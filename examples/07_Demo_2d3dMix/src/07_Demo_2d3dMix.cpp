@@ -3,7 +3,7 @@ CREATE_APPLICATION( "Vision Demo" );
 
 /*
  * This example shows of is possible to mix 2d and 3d rendering in the same scene
- * Keys 
+ * Keys
  *	- w,a,s,d,q,e,r and arrows: control the 3d camera
  * Mouse
  *	- move mouse to rotate the camera
@@ -25,14 +25,14 @@ void setup()
 
 	// set lighting
 	ambientLight( 30, 30, 30  );
-	light.init( 0, 255, 0, width/2 - 100, height / 2, -200 );	
+	light.init( 0, 255, 0, width/2 - 100, height / 2, -200 );
 	light.drawDebug( true );
 
 	// allow mouse control
 	useMouseCameraControl( true );
 }
 
-void draw()	
+void draw()
 {
 	img.draw2d( mouseX, mouseY, 100, 100 );
 }

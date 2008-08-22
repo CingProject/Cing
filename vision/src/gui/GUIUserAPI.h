@@ -28,7 +28,7 @@ namespace GUI
 {
 
 /**
- * @brief GUI functions that user can call 
+ * @brief GUI functions that user can call
  */
 
 // Debug output methods

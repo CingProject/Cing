@@ -4,7 +4,7 @@ CREATE_APPLICATION( "Vision Demo" );
 /*
  * This example shows of create 3d primitives and basic lighting
  * It applies a texture (from an image file) to the 3d primitives
- * Keys 
+ * Keys
  *	- 1, 2, 3 to control render mode
  *	- w,a,s,d,q,e,r and arrows: control the 3d camera
  * Mouse
@@ -41,8 +41,8 @@ void setup()
 
 	// Init lights and set the ambient light
 	ambientLight( 50, 50, 50 );
-	light.init( 255, 255, 255, width / 2, height / 2, -200 );	
-	
+	light.init( 255, 255, 255, width / 2, height / 2, -200 );
+
 	// Allow mouse control
 	useMouseCameraControl( true );
 
@@ -54,7 +54,7 @@ void draw()
 {
 	// move light
 	timeVar += 0.01f;
-	Vector pos = light.getPosition(); 
+	Vector pos = light.getPosition();
 	pos.x += cos( timeVar ) * 10;
 	light.setPosition( pos );
 }

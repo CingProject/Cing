@@ -32,7 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsBoxShape.h"
 #include "externLibs/OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsStaticPlaneShape.h"
 #include "externLibs/OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsSphereShape.h"
-#include "externLibs/OgreBullet/Dynamics/include/OgreBulletDynamicsRigidBody.h"
+#include "externLibs/OgreBullet/Dynamics/include/ogrebulletdynamicsrigidbody.h"
 
 
 namespace Physics
@@ -71,7 +71,7 @@ PhysicsManager::~PhysicsManager()
  * @param gravityVector	Gravity used in physics calculations
  * @param bounds				Bounds of the physics affected world
  */
-void PhysicsManager::init( Ogre::SceneManager&	sceneManager, 
+void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
 													 const Vector&				gravityVector /*= Vector3(0,9.81,0)*/,
 													 const AABox&					bounds				/*= AABox (Vector3 (-10000, -10000, -10000), Vector3 (10000,  10000,  10000))*/ )
 {
@@ -98,9 +98,9 @@ void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
- */	
+ */
 void PhysicsManager::end()
 {
 	// Release bullet related stuff
@@ -132,9 +132,9 @@ void PhysicsManager::drawPhysics( bool draw )
 
 
 /**
- * @internal 
+ * @internal
  * @brief Creates a collision shape based on a triangle mesh.
- * 
+ *
  * This method should be used when there is no primitive shape that fits well for a specific mesh
  *
  * @param object Object for which the shape will be created
@@ -150,7 +150,7 @@ OgreBulletCollisions::CollisionShape* PhysicsManager::buildTriMeshShape( Graphic
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Creates a collision for a Box object
  *
  * @param width		Width of the box
@@ -171,7 +171,7 @@ OgreBulletCollisions::CollisionShape* PhysicsManager::buildBoxShape( float width
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Creates a collision for a Plane object
  *
  * @param width		Width of the plane
@@ -203,7 +203,7 @@ OgreBulletCollisions::CollisionShape* PhysicsManager::buildStaticPlaneShape( flo
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Creates a collision for a Sphere object
  *
  * @param radius Radius of the collision sphere to be created
@@ -229,14 +229,14 @@ OgreBulletDynamics::RigidBody* PhysicsManager::createRigidBody( Graphics::Object
 {
 	// Create the rigid body
 	m_rigidObjectCounter++;
-	OgreBulletDynamics::RigidBody* rigidBody = new OgreBulletDynamics::RigidBody( object.getName() + "RigidBody" + Ogre::StringConverter::toString( m_rigidObjectCounter ), 
+	OgreBulletDynamics::RigidBody* rigidBody = new OgreBulletDynamics::RigidBody( object.getName() + "RigidBody" + Ogre::StringConverter::toString( m_rigidObjectCounter ),
 																																								m_physicsWorld );
 
 	// Attach the collision shape
 	if ( staticBody )
 	{
-		rigidBody->setStaticShape(	collisionShape, 
-																DEFAULT_DYNAMIC_BODY_RESTITUTION, 
+		rigidBody->setStaticShape(	collisionShape,
+																DEFAULT_DYNAMIC_BODY_RESTITUTION,
 																DEFAULT_DYNAMIC_BODY_FRICTION, object.getPosition(), object.getOrientation() );
 }
 	else
@@ -247,10 +247,10 @@ OgreBulletDynamics::RigidBody* PhysicsManager::createRigidBody( Graphics::Object
 		Vector pos = object.getPosition();
 		Quaternion orientation = object.getOrientation();
 
-		rigidBody->setShape(	object.getSceneNode(), 
-													collisionShape, 
-													DEFAULT_DYNAMIC_BODY_RESTITUTION, 
-													DEFAULT_DYNAMIC_BODY_FRICTION, 
+		rigidBody->setShape(	object.getSceneNode(),
+													collisionShape,
+													DEFAULT_DYNAMIC_BODY_RESTITUTION,
+													DEFAULT_DYNAMIC_BODY_FRICTION,
 													DEFAULT_DYNAMIC_BODY_MASS,
 													pos,
 													orientation );

@@ -46,7 +46,7 @@ public:
 
 	// Init / Release / Update
 	void	init 	();
-	void	end		();	
+	void	end		();
 
 	// Query  Methods
 	bool	isValid	() { return m_bIsValid; }
@@ -70,7 +70,7 @@ private:
 	void extractUserAppPathWIN		();
 	void extractUserAppPathLINUX	();
 	void extractUserAppPathMAC		();
-	
+
 	// Attributes
 	bool	m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 

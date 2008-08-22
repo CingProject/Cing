@@ -51,7 +51,7 @@ public:
 
 	// Query methods
 	bool      isValid             () const { return m_bIsValid; }
-	
+
   // Listeners
   void      addListener         ( Listener* pListener );
   void      removeListener      ( Listener* pListener );
@@ -74,11 +74,127 @@ private:
 
 };
 
+
+/**
+ * @internal
+ * @brief Constructor. Initializes class attributes.
+ */
+template< class Listener >
+BaseInputDevice< Listener >::BaseInputDevice():
+  m_bIsValid( false )
+{
+}
+
+/**
+ * @internal
+ * @brief Destructor. Class release.
+ */
+template< class Listener >
+BaseInputDevice< Listener >::~BaseInputDevice()
+{
+  // Release resources
+  end();
+}
+
+/**
+ * @internal
+ * @brief Initializes the class so it becomes valid.
+ *
+ * @return true if the initialization was ok | false otherwise
+ */
+template< class Listener >
+bool BaseInputDevice< Listener >::init()
+{
+  // Check if the class is already initialized
+  if ( isValid() )
+    return true;
+
+  removeAllListeners();
+
+	// The class is now initialized
+	m_bIsValid = true;
+
+	return true;
+}
+
+/**
+ * @internal
+ * @brief Releases the class resources.
+ * After this method is called the class is not valid anymore.
+ */
+template< class Listener >
+void BaseInputDevice< Listener >::end()
+{
+  // Check if the class is already released
+  if ( !isValid() )
+    return;
+
+  removeAllListeners();
+
+	// The class is not valid anymore
+	m_bIsValid = false;
+}
+
+/**
+ * @internal
+ * @brief Adds a listener for the events received in this input device
+ *
+ * @param[in] pListener Listener to register. It will receive the input events of this device.
+ *                      It must implement the Listener interface
+ */
+template< class Listener >
+void BaseInputDevice< Listener >::addListener( Listener* pListener )
+{
+  // Check if the class is already released
+  if ( !isValid() )
+    return;
+
+  // Store the listener
+  m_listeners[ pListener ] = pListener;
+}
+
+
+/**
+ * @internal
+ * @brief Removes a listener previously registered to receive the input events of this device
+ *
+ * @param[in] pListener pointer of the listener to remove
+ */
+template< class Listener >
+void BaseInputDevice< Listener >::removeListener( Listener* pListener )
+{
+  // Check if the class is already released
+  if ( !isValid() )
+    return;
+
+  // Search listener
+  ListenersIt it = m_listeners.find( pListener );
+
+  // Delete it if found
+  if( it != m_listeners.end() )
+    m_listeners.erase( it );
+}
+
+/**
+ * @internal
+ * @brief Removes all registered listeners
+ */
+template< class Listener >
+void BaseInputDevice< Listener >::removeAllListeners()
+{
+  // Check if the class is already released
+  if ( !isValid() )
+    return;
+
+  m_listeners.clear();
+}
+
+
 } // namespace Input
 
 
 // Include template method definitions
-#include "BaseInputDevice.inl"
+//#include "BaseInputDevice.inl"
 
 
 #endif // _BaseInputDevice_H_

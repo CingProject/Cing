@@ -60,7 +60,7 @@ BackgroundSubtraction::~BackgroundSubtraction()
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void BackgroundSubtraction::end()
@@ -119,7 +119,7 @@ void BackgroundSubtraction::update( const Graphics::Image& imgToAnalyze, Graphic
 void BackgroundSubtraction::storeBackground( const Graphics::Image& backgroundImage )
 {
 	// Create the image if necessary
-	if (	(!m_backgroundImage) || 
+	if (	(!m_backgroundImage) ||
 				( backgroundImage.getWidth()!= m_backgroundImage->width) ||
 				( backgroundImage.getHeight() != m_backgroundImage->height) ||
 				( backgroundImage.getNChannels() != m_backgroundImage->nChannels) )

@@ -23,8 +23,8 @@ CREATE_APPLICATION( "Vision Demo" );
 
 // 3d primitives
 PhysicsSphere		sphere[MAX_ELEMENTS];	// SphereS
-PhysicsBox			box[MAX_ELEMENTS];		// Boxes 
-PhysicsPlane		plane;								// Plane 
+PhysicsBox			box[MAX_ELEMENTS];		// Boxes
+PhysicsPlane		plane;								// Plane
 PointLight			light;								// Lights in the scene
 
 void setup()
@@ -58,7 +58,7 @@ void setup()
 
 	// Init lights and set the ambient light
 	ambientLight( 50, 50, 50 );
-	light.init( 255, 255, 255, 0, 0, 200 );	
+	light.init( 255, 255, 255, 0, 0, 200 );
 
 	// Allow mouse control
 	useMouseCameraControl( true );

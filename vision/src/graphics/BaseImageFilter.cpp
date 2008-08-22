@@ -78,7 +78,7 @@ bool BaseImageFilter::init( int width, int height, ImageFormat format )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void BaseImageFilter::end()

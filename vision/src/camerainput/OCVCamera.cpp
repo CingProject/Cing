@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "OCVCamera.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgrePixelFormat.h"
+#include "externLibs/Ogre3d/include/ogrepixelformat.h"
 #include "externLibs/Ogre3d/include/OgreImage.h"
 #include "externLibs/Ogre3d/include/OgreSceneManager.h"
 #include "externLibs/Ogre3d/include/OgreManualObject.h"
@@ -55,8 +55,8 @@ namespace CameraInput
 void OCVCamera::OCVCaptureThread::execute()
 {
   while( !get_signaled() )
-  {    
-    
+  {
+
     // Get camera frame from OpenCV -> Note: this is a blocking calle
     m_cvCaptureImage = cvQueryFrame( m_ocvCamera.m_capture );
     if ( !m_cvCaptureImage )
@@ -67,11 +67,11 @@ void OCVCamera::OCVCaptureThread::execute()
     // Copy the image
     cvCopy( m_cvCaptureImage, m_ocvCamera.m_cvResizedImage );
 
-    // New frame available    
+    // New frame available
     m_ocvCamera.setNewFrame( true );
 
     //m_ocvCamera.m_mutex.unlock();
-    
+
   }
 }
 
@@ -85,7 +85,7 @@ void OCVCamera::OCVCaptureThread::cleanup()
  * @brief Constructor. Initializes class attributes.
  */
 OCVCamera::OCVCamera():
-  m_capture         ( NULL  ),  
+  m_capture         ( NULL  ),
   m_cvResizedImage  ( NULL  ),
   m_ogreImage       ( NULL  ),
   m_captureThread   ( NULL  ),
@@ -155,7 +155,7 @@ bool OCVCamera::init( int width /*= 320*/, int height /*= 240*/, int fps /*= 25*
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void OCVCamera::end()
@@ -200,15 +200,15 @@ void OCVCamera::update()
   // cvResize( m_cvCaptureImage, m_cvResizedImage );
   // Copy to Ogre image
   //m_ogreImage->loadDynamicImage( (unsigned char*)m_cvCaptureImage->imageData, m_cvCaptureImage->width, m_cvCaptureImage->height, 1, Ogre::PF_R8G8B8 );
-  
+
   // Get the pixel buffer
   Ogre::HardwarePixelBufferSharedPtr pixelBuffer = m_ogreTexture->getBuffer();
-  
+
   // TODO - replace with lock/unlock
   //pixelBuffer->blitFromMemory( m_ogreImage->getPixelBox() );
-  
+
   // Lock the pixel buffer and get a pixel box (HBL_DISCARD for best peformance as we don't need to read the pixels
-  pixelBuffer->lock( Ogre::HardwareBuffer::HBL_DISCARD ); 
+  pixelBuffer->lock( Ogre::HardwareBuffer::HBL_DISCARD );
   const Ogre::PixelBox& pixelBox = pixelBuffer->getCurrentLock();
 
   Ogre::uint8* pDest = static_cast<Ogre::uint8*>(pixelBox.data);
@@ -221,7 +221,7 @@ void OCVCamera::update()
 
   // Fill in some pixel data. This will give a semi-transparent blue,
   // but this is of course dependent on the chosen pixel format.
-  size_t x = 0;
+  int x = 0;
   size_t y = 0;
   size_t idx = 0;
   size_t camIdx = 0;
@@ -279,11 +279,11 @@ void OCVCamera::createMesh()
   //manual->setUseIdentityProjection(true);
   //manual->setUseIdentityView(true);
   //manual->setQueryFlags(0);
-  
+
   // Generate the geometry
   manual->begin( MATERIAL_NAME, Ogre::RenderOperation::OT_TRIANGLE_LIST );
 
-    // Quad positions 
+    // Quad positions
     // TODO hacer normalizado y escalar
     manual->position( 0.0, 0.0, 0.0); manual->textureCoord( 0, 0 );
     manual->position( 320, 0.0, 0.0); manual->textureCoord( 1, 0 );

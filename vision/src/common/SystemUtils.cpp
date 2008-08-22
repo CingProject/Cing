@@ -38,7 +38,7 @@ bool fileExists( const std::string& fileName )
   //to the file, but if you don't have read, it
   //may as well not exist to begin with.
 
-  fopen_s( &fp, fileName.c_str(), "rb" );
+  fp = fopen( fileName.c_str(), "rb" );
   if( fp != NULL )
   {
       fclose( fp );

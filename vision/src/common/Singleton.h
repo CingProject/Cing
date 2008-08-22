@@ -33,14 +33,14 @@ namespace Common
 {
 
 /**
- * @internal 
+ * @internal
  * @brief Base class to create static singletons. This means that its creation/destruction cycle
  * is not controlled. If you need to control the creation/destruction of the singleton use
  * the Singleton class.
  */
 template < class T >
-class SingletonStatic 
-{  
+class SingletonStatic
+{
 public:
 
   virtual ~SingletonStatic() { m_bIsValid = false; }
@@ -55,9 +55,9 @@ public:
    * @brief Returns a pointer to the singleton instance
    * @return a reference to the singleton instance
    */
-	inline static T *getSingletonPtr() { return m_bIsValid? &m_singleton: NULL; }
+	inline static T *getSingletonPtr() { return m_bIsValid? &m_singleton: 0; }
 
-private: 
+private:
   static T		m_singleton; ///< Singleton
 	static bool	m_bIsValid;
 };
@@ -71,9 +71,9 @@ bool SingletonStatic<T>::m_bIsValid = true;
 
 
 /**
- * @internal 
+ * @internal
  * @brief Base class to create controlled singletons. In this class the creation and destruction of
- * the singleton are controlled. The creation occurs with the first getSingleton call, and the 
+ * the singleton are controlled. The creation occurs with the first getSingleton call, and the
  * destruction when the method destroySingleton is called
  */template < class T >
 class Singleton
@@ -87,11 +87,11 @@ public:
    * The first call will create the singleton
    * @return a reference to the singleton instance
    */
-  inline static T &getSingleton() { 
+  inline static T &getSingleton() {
     if ( !m_singleton ){
       m_singleton = new T();
     }
-    return *m_singleton; 
+    return *m_singleton;
   }
 
   /**
@@ -99,13 +99,13 @@ public:
    * The first call will create the singleton
    * @return a pointer to the singleton instance
    */
-  inline static T *getSingletonPtr() { 
+  inline static T *getSingletonPtr() {
     if ( !m_singleton ){
       m_singleton = new T();
     }
-    return m_singleton; 
+    return m_singleton;
   }
-  
+
   /// To destroy the singleton
   void static destroySingleton() { if(m_singleton) {delete m_singleton; m_singleton = 0; } }
 
@@ -113,7 +113,7 @@ private:
   static T *m_singleton; ///< Singleton
 };
 
-//Singleton 
+//Singleton
 template < class T >
 T *Singleton<T>::m_singleton = 0;
 

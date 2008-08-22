@@ -41,7 +41,7 @@ public:
 
 	// Init / Release / Update
 	void	init 	();
-	void	end		();	
+	void	end		();
 
 	// Text control
 	void	print			( const char* text );
@@ -58,9 +58,9 @@ public:
 	bool	isValid	() { return m_bIsValid; }
 
 	// Static const public members
-	static const int		DEFAULT_TEXT_BOX_HIGHT; ///< Hight in pixels of the text box (actually internally it is a listbox)
-	static const float	DEFAULT_TRANSPARENCY;		///< Default transparency of the text box: 0 means transparent, 1 means opaque
-	static const int		DEFAULT_MAX_MESSAGES;		///< Max number of messages that the text box will print. If the limit is reached older messages will be deleted as needed
+	static const int		        DEFAULT_TEXT_BOX_HIGHT;     ///< Hight in pixels of the text box (actually internally it is a listbox)
+	static const float	            DEFAULT_TRANSPARENCY;		///< Default transparency of the text box: 0 means transparent, 1 means opaque
+	static const unsigned int		DEFAULT_MAX_MESSAGES;		///< Max number of messages that the text box will print. If the limit is reached older messages will be deleted as needed
 
 private:
 

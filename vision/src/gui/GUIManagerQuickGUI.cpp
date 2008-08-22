@@ -21,7 +21,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "GUIManagerQuickGUI.h"
 
-// Common 
+// Common
 #include "common/Release.h"
 
 // Graphics
@@ -96,7 +96,7 @@ bool GUIManagerQuickGUI::init()
 
   // Create debug text label (hidden)
   m_debugLabelText = m_defaultSheet->createLabel();
-  m_debugLabelText->setPosition(QuickGUI::Point( 0, 0 ));  
+  m_debugLabelText->setPosition(QuickGUI::Point( 0, 0 ));
   m_debugLabelText->hide();
 
   // Hide mouse
@@ -116,7 +116,7 @@ bool GUIManagerQuickGUI::init()
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void GUIManagerQuickGUI::end()

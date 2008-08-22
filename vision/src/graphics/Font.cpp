@@ -79,7 +79,7 @@ bool Font::init( const std::string& name /*= DEFAULT_FONT_NAME*/, int size /*= D
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Font::end()

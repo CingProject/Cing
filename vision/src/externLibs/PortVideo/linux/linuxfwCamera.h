@@ -20,7 +20,7 @@
 #ifndef LINUXFWCAMERA_H
 #define LINUXFWCAMERA_H
 
-#include "../common/cameraEngine.h"
+#include "common/cameraEngine.h"
 #include <string.h>
 #include <libraw1394/raw1394.h>
 #include <libdc1394/dc1394_control.h>
@@ -51,10 +51,10 @@ private:
 	//dc1394_feature_set *features;
 	//dc1394_camerainfo *cameraInfo;
 	bool use_dma;
-	
+
 	int image_mode_;
 	int frame_rate_;
-	
+
 };
 
 #endif

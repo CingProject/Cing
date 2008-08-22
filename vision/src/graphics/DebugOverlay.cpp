@@ -69,7 +69,7 @@ bool DebugOverlay::init()
   // Get the overlay manager
   Ogre::OverlayManager& overlayMgr = Ogre::OverlayManager::getSingleton();
 
-  // Create the panel to show the debug info 
+  // Create the panel to show the debug info
   Ogre::OverlayContainer* panel = static_cast< Ogre::OverlayContainer* >( overlayMgr.createOverlayElement( "Panel", DEFAULT_DEBUG_PANEL_NAME ) );
   panel->setMetricsMode( Ogre::GMM_PIXELS );
 
@@ -89,7 +89,7 @@ bool DebugOverlay::init()
   textArea->setFontName( Font::DEFAULT_FONT_NAME );
 
   // say something
-  textArea->setCaption( "Hello, World!" ); 
+  textArea->setCaption( "Hello, World!" );
 
   // Create an overlay, and add the panel
   Ogre::Overlay* overlay = overlayMgr.create( "Overlay" );
@@ -109,7 +109,7 @@ bool DebugOverlay::init()
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void DebugOverlay::end()

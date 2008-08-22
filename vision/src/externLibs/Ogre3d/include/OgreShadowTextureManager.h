@@ -8,17 +8,17 @@ Copyright (c) 2000-2006 Torus Knot Software Ltd
 Also see acknowledgements in Readme.html
 
 This library is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License (LGPL) as 
-published by the Free Software Foundation; either version 2.1 of the 
+under the terms of the GNU Lesser General Public License (LGPL) as
+published by the Free Software Foundation; either version 2.1 of the
 License, or (at your option) any later version.
 
-This library is distributed in the hope that it will be useful, but 
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
-or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public 
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
 License for more details.
 
-You should have received a copy of the GNU Lesser General Public License 
-along with this library; if not, write to the Free Software Foundation, 
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 
@@ -32,7 +32,7 @@ Torus Knot Software Ltd.
 // Precompiler options
 #include "OgrePrerequisites.h"
 #include "OgreSingleton.h"
-#include "OgrePixelFormat.h"
+#include "ogrepixelformat.h"
 #include "OgreTexture.h"
 #include "OgreIteratorWrappers.h"
 
@@ -83,7 +83,7 @@ namespace Ogre
 		/** Populate an incoming list with shadow texture references as requested
 			in the configuration list.
 		*/
-		virtual void getShadowTextures(const ShadowTextureConfigList& config, 
+		virtual void getShadowTextures(const ShadowTextureConfigList& config,
 			ShadowTextureList& listToPopulate);
 
 		/** Get an appropriately defined 'null' texture, ie one which will always
@@ -93,12 +93,12 @@ namespace Ogre
 
 		/** Remove any shadow textures that are no longer being referenced.
 		@remarks
-			This should be called fairly regularly since references may take a 
+			This should be called fairly regularly since references may take a
 			little while to disappear in some cases (if referenced by materials)
 		*/
 		virtual void clearUnused();
 		/** Dereference all the shadow textures kept in this class and remove them
-			from TextureManager; note that it is up to the SceneManagers to clear 
+			from TextureManager; note that it is up to the SceneManagers to clear
 			their local references.
 		*/
 		virtual void clear();

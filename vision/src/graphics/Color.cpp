@@ -33,8 +33,8 @@ namespace Graphics
  *
  * @param gray Gray color. Red, green and blue with the same value
  */
-Color::Color( float gray /*= 255*/ ): 
-	m_lowRange( 0.0f ), 
+Color::Color( float gray /*= 255*/ ):
+	m_lowRange( 0.0f ),
 	m_hightRange( 255.0f )
 {
 	set( gray, gray, gray, m_hightRange );
@@ -47,8 +47,8 @@ Color::Color( float gray /*= 255*/ ):
  * @param gray	Gray color. Red, green and blue with the same value
  * @param alpha Alpha value. Represents transparency. Max value means opaque, min value means transparent.
  */
-Color::Color( float gray, float alpha ): 
-	m_lowRange( 0.0f ), 
+Color::Color( float gray, float alpha ):
+	m_lowRange( 0.0f ),
 	m_hightRange( 255.0f )
 {
 	set( gray, gray, gray, alpha );
@@ -62,8 +62,8 @@ Color::Color( float gray, float alpha ):
  * @param green	Green color value
  * @param blue	Blue color value
  */
-Color::Color( float  red, float green, float blue ): 
-	m_lowRange( 0.0f ), 
+Color::Color( float  red, float green, float blue ):
+	m_lowRange( 0.0f ),
 	m_hightRange( 255.0f )
 {
 	set( red, green, blue, m_hightRange );
@@ -78,8 +78,8 @@ Color::Color( float  red, float green, float blue ):
  * @param blue	Blue color value
  * @param alpha Alpha value. Represents transparency. Max value means opaque, min value means transparent.
  */
-Color::Color( float  red, float green, float blue, float alpha ): 
-	m_lowRange( 0.0f ), 
+Color::Color( float  red, float green, float blue, float alpha ):
+	m_lowRange( 0.0f ),
 	m_hightRange( 255.0f )
 {
 	set( red, green, blue, alpha );
@@ -102,7 +102,7 @@ void Color::set( float red, float green, float blue, float alpha /*= 255.0f*/ )
 	a = alpha;}
 
 /**
- * @internal 
+ * @internal
  * @brief Returns the color value normalized. This means, value will range from 0..1
  *
  * @return Normalized (0..1) color value
@@ -119,7 +119,7 @@ Color Color::normalized() const
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Normalizes the values of this color to range 0..1
  */
 void Color::normalize()

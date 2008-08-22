@@ -42,8 +42,8 @@ public:
 
 	// Init / Release / Update
 	void	init 	( Camera3D& cameraToControl );
-	void	end		();	
-	void	update();	
+	void	end		();
+	void	update();
 
 	// control methods
 	void	userKeyboard( bool value );
@@ -63,7 +63,7 @@ private:
 	Ogre::SceneNode*	m_cameraNode;
 	Ogre::SceneNode*	m_cameraYawNode;
 	Ogre::SceneNode*	m_cameraPitchNode;
-	Ogre::SceneNode*	m_cameraRollNode;	
+	Ogre::SceneNode*	m_cameraRollNode;
 	Vector						m_translateVector;
 	float							m_moveScale;
 	Ogre::Degree			m_rotateScale;

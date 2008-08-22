@@ -92,7 +92,7 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
 	//m_pOgreCamera->lookAt( 0, 0, 0 );
 
 	// Create camera scene node and add it to the scene manager
-	m_cameraSceneNode = pOgreSceneManager->getRootSceneNode()->createChildSceneNode();	
+	m_cameraSceneNode = pOgreSceneManager->getRootSceneNode()->createChildSceneNode();
 	m_cameraSceneNode->attachObject( m_pOgreCamera );
 
 	//TEST
@@ -108,7 +108,7 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Camera3D::end()
@@ -169,7 +169,7 @@ void Camera3D::set3DCameraProperties()
   m_cameraUpVector.x = 0.0f;
   m_cameraUpVector.y = -1.0f;
   m_cameraUpVector.z = 0.0f;
-  
+
   // Invert up vector
 	m_pOgreCamera->roll( Ogre::Radian( Ogre::Degree( 180 ) ) );
 

@@ -44,7 +44,7 @@ public:
 	~BackgroundSubtraction();
 
 	// Init / Release / Update
-	void	end		();	
+	void	end		();
 
 	// Operations
 	void	update					( const Graphics::Image& imgToAnalyze, Graphics::Image& output );

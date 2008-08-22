@@ -45,7 +45,7 @@ public:
 	virtual ~PhysicsObject();
 
 	// Init / Release / Update
-	void					end			();	
+	void					end			();
 
 	// Physics control
 	virtual void					enablePhysics				( bool staticObject );

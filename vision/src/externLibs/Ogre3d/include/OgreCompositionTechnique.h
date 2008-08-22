@@ -30,7 +30,7 @@ Torus Knot Software Ltd.
 #define __CompositionTechnique_H__
 
 #include "OgrePrerequisites.h"
-#include "OgrePixelFormat.h"
+#include "ogrepixelformat.h"
 #include "OgreIteratorWrappers.h"
 
 namespace Ogre {
@@ -41,7 +41,7 @@ namespace Ogre {
     public:
         CompositionTechnique(Compositor *parent);
         virtual ~CompositionTechnique();
-    
+
         /// Local texture definition
         class TextureDefinition
         {
@@ -58,71 +58,71 @@ namespace Ogre {
         typedef VectorIterator<TargetPasses> TargetPassIterator;
         typedef std::vector<TextureDefinition*> TextureDefinitions;
         typedef VectorIterator<TextureDefinitions> TextureDefinitionIterator;
-        
+
         /** Create a new local texture definition, and return a pointer to it.
             @param name     Name of the local texture
         */
         TextureDefinition *createTextureDefinition(const String &name);
-        
+
         /** Remove and destroy a local texture definition.
         */
         void removeTextureDefinition(size_t idx);
-        
+
         /** Get a local texture definition.
         */
         TextureDefinition *getTextureDefinition(size_t idx);
-        
+
         /** Get the number of local texture definitions.
         */
         size_t getNumTextureDefinitions();
-        
+
         /** Remove all Texture Definitions
         */
         void removeAllTextureDefinitions();
-        
+
         /** Get an iterator over the TextureDefinitions in this Technique. */
         TextureDefinitionIterator getTextureDefinitionIterator(void);
-        
+
         /** Create a new target pass, and return a pointer to it.
         */
         CompositionTargetPass *createTargetPass();
-        
+
         /** Remove a target pass. It will also be destroyed.
         */
         void removeTargetPass(size_t idx);
-        
+
         /** Get a target pass.
         */
         CompositionTargetPass *getTargetPass(size_t idx);
-        
+
         /** Get the number of target passes.
         */
         size_t getNumTargetPasses();
-        
+
         /** Remove all target passes.
         */
         void removeAllTargetPasses();
-        
+
         /** Get an iterator over the TargetPasses in this Technique. */
         TargetPassIterator getTargetPassIterator(void);
-        
+
         /** Get output (final) target pass
          */
         CompositionTargetPass *getOutputTargetPass();
-        
-        /** Determine if this technique is supported on the current rendering device. 
+
+        /** Determine if this technique is supported on the current rendering device.
 		@param allowTextureDegradation True to accept a reduction in texture depth
          */
         virtual bool isSupported(bool allowTextureDegradation);
-        
+
         /** Create an instance of this technique.
          */
         virtual CompositorInstance *createInstance(CompositorChain *chain);
-        
+
         /** Destroy an instance of this technique.
          */
         virtual void destroyInstance(CompositorInstance *instance);
-        
+
         /** Get parent object */
         Compositor *getParent();
     private:
@@ -130,11 +130,11 @@ namespace Ogre {
         Compositor *mParent;
         /// Local texture definitions
         TextureDefinitions mTextureDefinitions;
-        
+
         /// Intermediate target passes
         TargetPasses mTargetPasses;
         /// Output target pass (can be only one)
-        CompositionTargetPass *mOutputTarget;    
+        CompositionTargetPass *mOutputTarget;
 
 		/// List of instances
 		typedef std::vector<CompositorInstance *> Instances;

@@ -42,7 +42,7 @@ namespace Movies
 /**
  * Default constructor.
  */
-OCVMovie::OCVMovie() : 
+OCVMovie::OCVMovie() :
 		m_capture( NULL ),
 		m_width( 0 ),
 		m_height( 0 ),
@@ -79,12 +79,12 @@ bool OCVMovie::load(const char* fileName )
       LOG_ERROR("Error loading video, maybe it does not exist?, Is it AVI format?" );
 			return false;
 	}
-	
+
 	// Store the filename
 	m_fileName = fileName;
 
 	// Message
-	LOG( "Movie %s succesfully loaded", fileName );
+	//LOG( "Movie %s succesfully loaded", fileName ); //TODO solve the __VA_ARGS__ in LogManager.h
 
   // Store video data
   m_width     = static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_WIDTH ) );
@@ -118,8 +118,8 @@ void OCVMovie::play()
 {
 	m_playing			= true;
 	m_loop				= false;
-	m_firstFrame	= true;
-	m_finished		= false;
+	m_firstFrame	    = true;
+	m_finished		    = false;
 
 	// Start timer to control the playback speed
 	cvSetCaptureProperty( m_capture, CV_CAP_PROP_POS_FRAMES, 0 );
@@ -135,8 +135,8 @@ void OCVMovie::loop()
 {
 	m_playing			= true;
 	m_loop				= true;
-	m_firstFrame	= true;
-	m_finished		= false;
+	m_firstFrame	    = true;
+	m_finished		    = false;
 
 	// Start timer to control the playback speed
 	m_timer.reset();
@@ -207,9 +207,9 @@ void OCVMovie::read( Graphics::Image &image )
 	//	return;
 
 	// Set current frame to ensure correct synchronization
-	double elapsedMicroSecs = m_timer.getMicroseconds();
+	double elapsedMicroSecs     = m_timer.getMicroseconds();
 	double currentFrame			=  elapsedMicroSecs / m_timeBetweenFramesMs;
-	currentFrame						= constrain( currentFrame, 0, m_nFrames-1 );
+	currentFrame				= constrain( currentFrame, 0, m_nFrames-1 );
 	cvSetCaptureProperty( m_capture, CV_CAP_PROP_POS_FRAMES, currentFrame );
 
 	// Set first frame flag to false

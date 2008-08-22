@@ -165,8 +165,8 @@ void MicroFMOD::stop()
 	{
 		LOG_ERROR( "Micro not initialized. Must call init before using the microphone" );
 		return;
-	}    
-	
+	}
+
 	// Stop the pseudo-output
   stopPlayback();
 
@@ -323,7 +323,7 @@ void MicroFMOD::startPlayback()
 	}
 
   // Request a channel to play the sound so it can be processed
-  FMOD_RESULT result = FMOD_System_PlaySound( m_sysPtr, FMOD_CHANNEL_REUSE, m_sound, FALSE, &m_channel );
+  FMOD_RESULT result = FMOD_System_PlaySound( m_sysPtr, FMOD_CHANNEL_REUSE, m_sound, false, &m_channel );
 
   // Check for success
   if( failedFMODResultCode( result ) )

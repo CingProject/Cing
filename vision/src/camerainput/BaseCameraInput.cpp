@@ -40,10 +40,10 @@ namespace CameraInput
  * @brief Constructor. Initializes class attributes.
  */
 BaseCameraInput::BaseCameraInput():
-  m_newFrame          		( false ), 
-  m_width             		( 0     ), 
-  m_height            		( 0     ), 
-  m_fps               		( 0     ), 
+  m_newFrame          		( false ),
+  m_width             		( 0     ),
+  m_height            		( 0     ),
+  m_fps               		( 0     ),
   m_bIsValid          		( false )
 {
 }
@@ -106,7 +106,7 @@ void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void BaseCameraInput::end()
@@ -127,24 +127,24 @@ void BaseCameraInput::end()
  * @internal
  * @briefUpdates the data of the camera frame.
  * This method should be called by subclasses to update the captured images
- * 
+ *
  * @param[in] data  Image data to update (the just captured camera frame)
  * @param[in] width		Width in pixels
  * @param[in] height  Height in pixels
  * @param format			Format to the image passed
  */
-void BaseCameraInput::setNewFrameData( char* data, unsigned int width, unsigned int height, ImageFormat format )	
+void BaseCameraInput::setNewFrameData( char* data, int width, int height, ImageFormat format )
 {
 	// If the received image has the same format... copy it
-	if (	(width == m_currentCameraImage.getWidth() ) && 
-				(height == m_currentCameraImage.getHeight()) && 
+	if (	(width == m_currentCameraImage.getWidth() ) &&
+				(height == m_currentCameraImage.getHeight()) &&
 				(m_format == format) )
 	{
 		m_currentCameraImage.setData( data, width, height, format );
 	}
 	// If we are working in GRAYSCALE and the received image is RGB -> convert it, and then store it
-	else if ( (width == m_currentCameraImage.getWidth() ) && 
-						(height == m_currentCameraImage.getHeight()) && 
+	else if ( (width == m_currentCameraImage.getWidth() ) &&
+						(height == m_currentCameraImage.getHeight()) &&
 						(m_format == GRAYSCALE) && (format == RGB) )
 	{
 		// Set data to temp image to make the conversion

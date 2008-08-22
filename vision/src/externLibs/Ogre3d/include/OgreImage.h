@@ -31,7 +31,7 @@ Torus Knot Software Ltd.
 
 #include "OgrePrerequisites.h"
 #include "OgreCommon.h"
-#include "OgrePixelFormat.h"
+#include "ogrepixelformat.h"
 #include "OgreDataStream.h"
 
 namespace Ogre {
@@ -45,8 +45,8 @@ namespace Ogre {
     /** Class representing an image file.
         @remarks
             The Image class usually holds uncompressed image data and is the
-            only object that can be loaded in a texture. Image  objects handle 
-            image data decoding themselves by the means of locating the correct 
+            only object that can be loaded in a texture. Image  objects handle
+            image data decoding themselves by the means of locating the correct
             Codec object for each data type.
         @par
             Typically, you would want to use an Image object to load a texture
@@ -74,10 +74,10 @@ namespace Ogre {
         */
         Image & operator = ( const Image & img );
 
-        /** Flips (mirrors) the image around the Y-axis. 
+        /** Flips (mirrors) the image around the Y-axis.
             @remarks
                 An example of an original and flipped image:
-                <pre>                
+                <pre>
                 originalimg
                 00000000000
                 00000000000
@@ -108,19 +108,19 @@ namespace Ogre {
                 00000000000|00000000000
                 00000000000|00000000000
                 </pre>
-        */                 
+        */
         Image & flipAroundX();
 
         /** Stores a pointer to raw data in memory. The pixel format has to be specified.
             @remarks
-                This method loads an image into memory held in the object. The 
+                This method loads an image into memory held in the object. The
                 pixel format will be either greyscale or RGB with an optional
                 Alpha component.
-                The type can be determined by calling getFormat().             
+                The type can be determined by calling getFormat().
             @note
 				Whilst typically your image is likely to be a simple 2D image,
 				you can define complex images including cube maps, volume maps,
-				and images including custom mip levels. The layout of the 
+				and images including custom mip levels. The layout of the
 				internal memory should be:
 				<ul><li>face 0, mip 0 (top), width x height (x depth)</li>
 				<li>face 0, mip 1, width/2 x height/2 (x depth/2)</li>
@@ -151,24 +151,24 @@ namespace Ogre {
             @note
                  The memory associated with this buffer is NOT destroyed with the
                  Image object, unless autoDelete is set to true.
-			@remarks 
+			@remarks
 				The size of the buffer must be numFaces*PixelUtil::getMemorySize(width, height, depth, format)
          */
-		Image& loadDynamicImage( uchar* pData, size_t uWidth, size_t uHeight, 
+		Image& loadDynamicImage( uchar* pData, size_t uWidth, size_t uHeight,
 							size_t depth,
-							 PixelFormat eFormat, bool autoDelete = false, 
+							 PixelFormat eFormat, bool autoDelete = false,
 							 size_t numFaces = 1, size_t numMipMaps = 0);
-		
+
 		/** Stores a pointer to raw data in memory. The pixel format has to be specified.
             @remarks
-                This method loads an image into memory held in the object. The 
+                This method loads an image into memory held in the object. The
                 pixel format will be either greyscale or RGB with an optional
                 Alpha component.
-                The type can be determined by calling getFormat().             
+                The type can be determined by calling getFormat().
             @note
 				Whilst typically your image is likely to be a simple 2D image,
 				you can define complex images including cube maps
-				and images including custom mip levels. The layout of the 
+				and images including custom mip levels. The layout of the
 				internal memory should be:
 				<ul><li>face 0, mip 0 (top), width x height</li>
 				<li>face 0, mip 1, width/2 x height/2 </li>
@@ -201,12 +201,12 @@ namespace Ogre {
 		}
 		/** Loads raw data from a stream. See the function
 			loadDynamicImage for a description of the parameters.
-			@remarks 
+			@remarks
 				The size of the buffer must be numFaces*PixelUtil::getMemorySize(width, height, depth, format)
             @note
 				Whilst typically your image is likely to be a simple 2D image,
 				you can define complex images including cube maps
-				and images including custom mip levels. The layout of the 
+				and images including custom mip levels. The layout of the
 				internal memory should be:
 				<ul><li>face 0, mip 0 (top), width x height (x depth)</li>
 				<li>face 0, mip 1, width/2 x height/2 (x depth/2)</li>
@@ -218,19 +218,19 @@ namespace Ogre {
 				Of course, you will never have multiple faces (cube map) and
 				depth too.
         */
-        Image & loadRawData( 
-            DataStreamPtr& stream, 
+        Image & loadRawData(
+            DataStreamPtr& stream,
             size_t uWidth, size_t uHeight, size_t uDepth,
             PixelFormat eFormat,
 			size_t numFaces = 1, size_t numMipMaps = 0);
-        /** Loads raw data from a stream. The pixel format has to be specified. 
+        /** Loads raw data from a stream. The pixel format has to be specified.
 			@remarks This function is deprecated; one should really use the
 				Image::loadRawData(stream, width, height, depth, format, ...) to be compatible
 				with future Ogre versions.
             @note
 				Whilst typically your image is likely to be a simple 2D image,
 				you can define complex images including cube maps
-				and images including custom mip levels. The layout of the 
+				and images including custom mip levels. The layout of the
 				internal memory should be:
 				<ul><li>face 0, mip 0 (top), width x height</li>
 				<li>face 0, mip 1, width/2 x height/2 </li>
@@ -242,9 +242,9 @@ namespace Ogre {
 				Of course, you will never have multiple faces (cube map) and
 				depth too.
         */
-        Image & loadRawData( 
-            DataStreamPtr& stream, 
-            size_t uWidth, size_t uHeight, 
+        Image & loadRawData(
+            DataStreamPtr& stream,
+            size_t uWidth, size_t uHeight,
             PixelFormat eFormat )
 		{
 			return loadRawData(stream, uWidth, uHeight, 1, eFormat);
@@ -252,11 +252,11 @@ namespace Ogre {
 
         /** Loads an image file.
             @remarks
-                This method loads an image into memory. Any format for which 
-				and associated ImageCodec is registered can be loaded. 
-				This can include complex formats like DDS with embedded custom 
+                This method loads an image into memory. Any format for which
+				and associated ImageCodec is registered can be loaded.
+				This can include complex formats like DDS with embedded custom
 				mipmaps, cube faces and volume textures.
-                The type can be determined by calling getFormat().             
+                The type can be determined by calling getFormat().
             @param
                 strFileName Name of a file file to load.
             @param
@@ -269,15 +269,15 @@ namespace Ogre {
 
         /** Loads an image file from a stream.
             @remarks
-                This method works in the same way as the filename-based load 
-                method except it loads the image from a DataStream object. 
-				This DataStream is expected to contain the 
-                encoded data as it would be held in a file. 
-                Any format for which and associated ImageCodec is registered 
-				can be loaded. 
-				This can include complex formats like DDS with embedded custom 
+                This method works in the same way as the filename-based load
+                method except it loads the image from a DataStream object.
+				This DataStream is expected to contain the
+                encoded data as it would be held in a file.
+                Any format for which and associated ImageCodec is registered
+				can be loaded.
+				This can include complex formats like DDS with embedded custom
 				mipmaps, cube faces and volume textures.
-                The type can be determined by calling getFormat().             
+                The type can be determined by calling getFormat().
             @param
                 stream The source data.
             @param
@@ -287,7 +287,7 @@ namespace Ogre {
                 Image::load( const String& strFileName )
         */
         Image & load(DataStreamPtr& stream, const String& type );
-        
+
         /** Save the image as a file. */
         void save(const String& filename);
 
@@ -305,7 +305,7 @@ namespace Ogre {
 			prefer to use getPixelBox, especially with complex images
 			which include many faces or custom mipmaps.
         */
-        const uchar * getData() const;       
+        const uchar * getData() const;
 
         /** Returns the size of the data buffer.
         */
@@ -330,7 +330,7 @@ namespace Ogre {
         /** Gets the depth of the image.
         */
         size_t getDepth(void) const;
-		
+
 		/** Get the numer of faces of the image. This is usually 6 for a cubemap, and
 		    1 for a normal image.
 		*/
@@ -351,10 +351,10 @@ namespace Ogre {
         /** Returns true if the image has an alpha component.
         */
         bool getHasAlpha() const;
-		
+
 		/** Does gamma adjustment.
             @note
-                Basic algo taken from Titan Engine, copyright (c) 2000 Ignacio 
+                Basic algo taken from Titan Engine, copyright (c) 2000 Ignacio
                 Castano Iguado
         */
         static void applyGamma( uchar *buffer, Real gamma, size_t size, uchar bpp );
@@ -365,7 +365,7 @@ namespace Ogre {
          * mipmap.
          */
         ColourValue getColourAt(int x, int y, int z);
-        
+
         /**
          * Get a PixelBox encapsulating the image data of a mipmap
          */
@@ -380,7 +380,7 @@ namespace Ogre {
 			FILTER_TRIANGLE,
 			FILTER_BICUBIC
 		};
-		/** Scale a 1D, 2D or 3D image volume. 
+		/** Scale a 1D, 2D or 3D image volume.
 			@param 	src			PixelBox containing the source pointer, dimensions and format
 			@param 	dst			PixelBox containing the destination pointer, dimensions and format
 			@param 	filter		Which filter to use
@@ -388,10 +388,10 @@ namespace Ogre {
 			@note	dst and src can point to the same PixelBox object without any problem
 		*/
 		static void scale(const PixelBox &src, const PixelBox &dst, Filter filter = FILTER_BILINEAR);
-		
+
 		/** Resize a 2D image, applying the appropriate filter. */
 		void resize(ushort width, ushort height, Filter filter = FILTER_BILINEAR);
-		
+
         // Static function to calculate size in bytes from the number of mipmaps, faces and the dimensions
         static size_t calculateSize(size_t mipmaps, size_t faces, size_t width, size_t height, size_t depth, PixelFormat format);
     private:

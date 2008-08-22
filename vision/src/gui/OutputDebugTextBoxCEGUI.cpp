@@ -23,9 +23,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GUIManagerCEGUI.h"
 
 // CEGUI
-#include "externLibs/Ogre3d/include/cegui/CEGUI.h"
-#include "externLibs/Ogre3d/include/cegui/elements/CEGUIListbox.h"
-#include "externLibs/Ogre3d/include/cegui/elements/CEGUIListboxTextItem.h"
+#include "externLibs/Ogre3d/include/CEGUI/CEGUI.h"
+#include "externLibs/Ogre3d/include/CEGUI/elements/CEGUIListbox.h"
+#include "externLibs/Ogre3d/include/CEGUI/elements/CEGUIListboxTextItem.h"
 
 //  Common
 #include "common/CommonUtilsIncludes.h"
@@ -37,9 +37,9 @@ namespace GUI
 {
 
 // Static members init
-const int		OutputDebugTextBoxCEGUI::DEFAULT_TEXT_BOX_HIGHT	= 150;
-const float OutputDebugTextBoxCEGUI::DEFAULT_TRANSPARENCY		= 0.5f;
-const int		OutputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 300;
+const int		        OutputDebugTextBoxCEGUI::DEFAULT_TEXT_BOX_HIGHT	    = 150;
+const float             OutputDebugTextBoxCEGUI::DEFAULT_TRANSPARENCY		= 0.5f;
+const unsigned int		OutputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 300;
 
 /**
  * @internal
@@ -71,10 +71,10 @@ void OutputDebugTextBoxCEGUI::init()
 	CEGUI::WindowManager&	win = CEGUI::WindowManager::getSingleton();
 
 	// Create the listbox (will work as a text box)
-	m_listBox = static_cast<CEGUI::Listbox*>(win.createWindow("Vanilla/Listbox", "Vision/OutputDebugTextBoxCEGUI"));
-	m_listBox->setArea( CEGUI::URect(	cegui_absdim(0), 
-																		cegui_absdim(Globals::height-DEFAULT_TEXT_BOX_HIGHT), 
-																		cegui_absdim(Globals::width), 
+	m_listBox = static_cast<CEGUI::Listbox*>(win.createWindow("Vanilla/Listbox", "Vision/OutputDebugTextBoxCEGUI","Vision"));
+	m_listBox->setArea( CEGUI::URect(	cegui_absdim(0),
+																		cegui_absdim(Globals::height-DEFAULT_TEXT_BOX_HIGHT),
+																		cegui_absdim(Globals::width),
 																		cegui_absdim(Globals::height)));
 	m_listBox->setShowVertScrollbar( false );
 	m_listBox->setShowHorzScrollbar( false );
@@ -89,7 +89,7 @@ void OutputDebugTextBoxCEGUI::init()
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void OutputDebugTextBoxCEGUI::end()

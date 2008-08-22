@@ -60,7 +60,7 @@ struct ReleaseFunctor
 {
   void operator()( T*& ptr )
   {
-    delete p;
+    delete ptr;
     ptr = 0;
   }
 };

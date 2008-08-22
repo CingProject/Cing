@@ -26,10 +26,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "OutputDebugTextBoxCEGUI.h"
 
 // CEGUI
-#include "externLibs/Ogre3d/include/cegui/CEGUIInputEvent.h"
+#include "externLibs/Ogre3d/include/CEGUI/CEGUIInputEvent.h"
 
 // OIS
-#include "externLibs/Ogre3d/include/ois/OISMouse.h"
+#include "externLibs/Ogre3d/include/OIS/OISMouse.h"
 
 // Common
 #include "common/Singleton.h"

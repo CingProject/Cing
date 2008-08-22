@@ -26,20 +26,34 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreRoot.h"
 #include "externLibs/Ogre3d/include/OgreConfigFile.h"
 
-// Framework 
+// Framework
 #include "framework/UserAppGlobals.h"
 
 namespace Common
 {
 
+
 // Static const init
-std::string ResourceManager::resourcesFileName			= "resources.cfg";
-std::string ResourceManager::userResourcesDirName		= "..\\data\\";
-std::string ResourceManager::userResourcesGroupName	= "UserData";
-std::string ResourceManager::pluginsPath						= "Plugins\\plugins.cfg";
-std::string ResourceManager::libDataPath						= "..\\..\\..\\vision\\data\\";
-std::string ResourceManager::userDataPath						= "";
-std::string ResourceManager::userExecPath						= "";
+
+#ifdef WIN32
+    std::string ResourceManager::resourcesFileName			        = "resources.cfg";
+    std::string ResourceManager::userResourcesDirName		        = "..\\data\\";
+    std::string ResourceManager::userResourcesGroupName	            = "UserData";
+    std::string ResourceManager::pluginsPath						= "Plugins\\plugins.cfg";
+    std::string ResourceManager::libDataPath						= "..\\..\\..\\vision\\data\\";
+    std::string ResourceManager::userDataPath						= "";
+    std::string ResourceManager::userExecPath						= "";
+#endif
+
+#ifdef LINUX
+    std::string ResourceManager::resourcesFileName			        = "resources.cfg";
+    std::string ResourceManager::userResourcesDirName		        = "/../data/";
+    std::string ResourceManager::userResourcesGroupName         	= "UserData";
+    std::string ResourceManager::pluginsPath						= "Plugins/plugins.cfg";
+    std::string ResourceManager::libDataPath						= "/../../../vision/data/";
+    std::string ResourceManager::userDataPath						= "";
+    std::string ResourceManager::userExecPath						= "";
+#endif
 
 /**
  * @internal
@@ -112,7 +126,7 @@ void ResourceManager::init()
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void ResourceManager::end()
@@ -123,8 +137,8 @@ void ResourceManager::end()
 
 
 /**
- * @internal 
- * @brief Extracts the user data path and stores it in the attribute m_dataPath 
+ * @internal
+ * @brief Extracts the user data path and stores it in the attribute m_dataPath
  */
 void ResourceManager::extractUserAppPath()
 {
@@ -143,7 +157,7 @@ void ResourceManager::extractUserAppPath()
 #ifdef WIN32
 #include <Windows.h>
 /**
- * @internal 
+ * @internal
  * @brief Windows version. Extracts the user application execution and data path.
  *
  * They are stored in userDataPath and userExecPath attributes.
@@ -163,6 +177,33 @@ void ResourceManager::extractUserAppPathWIN()
 	// Store the user application and data path
 	userExecPath = userExecPath.substr(0, lastSlashPos);
 	userExecPath += "\\";
+	userDataPath = userExecPath + userResourcesDirName;
+}
+#endif
+
+
+// Linux specific code
+#ifdef LINUX
+#include <stdlib.h>
+
+#define _MAX_PATH 1024
+/**
+ * @internal
+ * @brief Linux version. Extracts the user application execution and data path.
+ *
+ * They are stored in userDataPath and userExecPath attributes.
+ */
+void ResourceManager::extractUserAppPathLINUX()
+{
+	// Get executable's name
+	char buffer[_MAX_PATH];
+	getcwd(buffer, _MAX_PATH);
+
+	// Find the extension position.
+	userExecPath = buffer;
+
+	// Store the user application and data path
+	libDataPath = userExecPath + libDataPath;
 	userDataPath = userExecPath + userResourcesDirName;
 }
 #endif

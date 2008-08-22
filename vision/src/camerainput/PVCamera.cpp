@@ -32,27 +32,27 @@ namespace CameraInput
 {
 
 void PVCamera::PVCaptureThread::execute()
-{  
+{
   unsigned char *cameraBuffer = NULL;
   unsigned char *cameraWriteBuffer = NULL;
 
   // Execute until the thread gets signaled
   while( !get_signaled() )
-  {    
+  {
     // Get new frame from the camera
     cameraBuffer = m_PVCamera.m_pvCamera->getFrame();
-    if ( cameraBuffer ) 
+    if ( cameraBuffer )
     {
       // Get buffer to write the image
       cameraWriteBuffer = m_PVCamera.m_ringBuffer->getNextBufferToWrite();
-      if ( cameraWriteBuffer ) 
+      if ( cameraWriteBuffer )
       {
         // Copy the new frame in the buffer, and notify it
         memcpy( cameraWriteBuffer, cameraBuffer, m_PVCamera.m_ringBuffer->size() );
         m_PVCamera.m_ringBuffer->writeFinished();
       }
     }
-  } 
+  }
 }
 
 
@@ -92,9 +92,9 @@ void PVCamera::init( int deviceId, int width, int height, int fps, ImageFormat f
   // Check if the class is already initialized
   if ( isValid() )
     return;
-  
+
   // Find a camera in the system
-  m_pvCamera = cameraTool::findCamera();	
+  m_pvCamera = cameraTool::findCamera();
   if ( !m_pvCamera )
     THROW_EXCEPTION( "No camera found in the system." );
 
@@ -103,14 +103,14 @@ void PVCamera::init( int deviceId, int width, int height, int fps, ImageFormat f
   bool success = m_pvCamera->initCamera( width, height, color );
 
   // Init ok
-  if(success) 
+  if(success)
   {
 		// Init base class (with actual capture resolution)
 		BaseCameraInput::init( deviceId, m_pvCamera->getWidth(), m_pvCamera->getHeight(), m_pvCamera->getFps(), format );
 
-  } 
+  }
   // Init error
-  else 
+  else
   {
     THROW_EXCEPTION( "Error initializing camera" );
     m_pvCamera->closeCamera();
@@ -134,7 +134,7 @@ void PVCamera::init( int deviceId, int width, int height, int fps, ImageFormat f
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void PVCamera::end()
@@ -144,7 +144,7 @@ void PVCamera::end()
     return;
 
   // Release thread
-  m_captureThread->signal();  
+  m_captureThread->signal();
 
   // Release resources
   //Common::Release( sourceBuffer_ );
@@ -169,9 +169,6 @@ void PVCamera::end()
  */
 void PVCamera::update()
 {
-  // Update parent class
-  BaseCameraInput::update();
-
   // Check if we have a new frame
   unsigned char *cameraReadBuffer = m_ringBuffer->getNextBufferToRead();
   if ( cameraReadBuffer == NULL )
@@ -181,7 +178,7 @@ void PVCamera::update()
   while( cameraReadBuffer != NULL )
   {
     // Copy current frame and notify it has been read to the ring buffer
-    setNewFrameData( (char*)cameraReadBuffer, getWidth(), getHeight(), getFormat() );    
+    setNewFrameData( (char*)cameraReadBuffer, getWidth(), getHeight(), getFormat() );
     m_ringBuffer->readFinished();
 
     // Check if there are more new frames

@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "UserAppFunctionDeclaration.h"
 #include "UserAppGlobals.h"
 
-// Graphics 
+// Graphics
 #include "graphics/GraphicsManager.h"
 
 // GUI
@@ -71,7 +71,7 @@ bool Application::initApp()
   // Check if the class is already initialized
   if ( isValid() )
     return true;
-  
+
   // Init random number generator seed
   //TODO: setRandomSeed( timeGetTime() )
 
@@ -91,31 +91,31 @@ bool Application::initApp()
   // Init input manager
   Input::InputManager::getSingleton().init();
 
-	// Register the application as listener for mouse and keyboard	
+	// Register the application as listener for mouse and keyboard
 	Input::InputManager::getSingleton().getMouse().addListener( this );
 	Input::InputManager::getSingleton().getKeyboard().addListener( this );
 
 	// Init GUI Manager
-	GUI::GUIManagerCEGUI::getSingleton().init( Graphics::GraphicsManager::getSingleton().getMainWindow().getOgreWindow(), 
+	GUI::GUIManagerCEGUI::getSingleton().init( Graphics::GraphicsManager::getSingleton().getMainWindow().getOgreWindow(),
 																						 &Graphics::GraphicsManager::getSingleton().getSceneManager() );
 
   // Init user application
   setup();
 
 	// Reset timer
-	m_timer.reset();	
+	m_timer.reset();
 	m_absTimer.reset();
 
 	// The class is now initialized
 	m_bIsValid = true;
-	
+
 	return true;
 
 }
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Application::endApp()
@@ -141,7 +141,7 @@ void Application::endApp()
 
 	// Release the resource manager
 	Common::ResourceManager::getSingleton().end();
-	
+
 	// Release the log manager
 	Common::LogManager::getSingleton().end();
 

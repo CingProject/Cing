@@ -63,7 +63,7 @@ public:
 	void                                  end                   ();
 	void                                  update                ();
 
-	// Query methods    
+	// Query methods
 	bool                                  isValid               () const { return m_bIsValid; }
 	bool                                  isClosed              () const;
 	bool                                  isFullScreen          () const;

@@ -28,14 +28,14 @@ namespace Graphics
 {
 
 /**
- * @brief Graphics related functions that user can call 
+ * @brief Graphics related functions that user can call
  */
 
 // Render related functions
 void setRenderMode( RenderMode mode );
 
-// 2d 
-void strokeWeight( int weight ); 
+// 2d
+void strokeWeight( int weight );
 
 // Color related functions
 void fill( int gray );

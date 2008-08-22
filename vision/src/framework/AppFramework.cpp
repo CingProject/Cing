@@ -18,9 +18,13 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   along with this program; if not, write to the Free Software Foundation,
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32      
-#include "windows.h"    
+
+#include "externLibs/Ogre3d/include/OgrePlatform.h"
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+    #include "windows.h"
 #endif
+
 
 #include "AppFramework.h"
 #include "Application.h"
@@ -58,7 +62,7 @@ void RunApplication( const char* appName )
     Application::getSingleton().endApp();
 
   }
-  catch( Ogre::Exception& e ) 
+  catch( Ogre::Exception& e )
   {
     // TODO: pasar esto a formto propio
     #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32

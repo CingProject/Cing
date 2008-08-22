@@ -12,7 +12,7 @@ void setup()
 	img.load( "BeachStones.jpg" );
 }
 
-void draw()	
+void draw()
 {
 	// Draw the image in 2d where the mouse is
 	img.draw2d( mouseX, mouseY, 100, 100 );

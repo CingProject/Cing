@@ -49,8 +49,8 @@ namespace OgreBulletCollisions
 		void setMaxDistance(Ogre::Real max_distance);
 
         inline const Ogre::Ray &getRay() const;
-		inline Ogre::Vector3 getRayStartPoint() const;
-		inline Ogre::Vector3 getRayEndPoint() const;
+		Ogre::Vector3 getRayStartPoint() const;
+		Ogre::Vector3 getRayEndPoint() const;
 
     protected:
 

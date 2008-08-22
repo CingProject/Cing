@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _InputPrereqs_H_
 
 /**
- * Prereqs File: This header file contains forward class declarations of the 
+ * Prereqs File: This header file contains forward class declarations of the
  * Input namespace  to speed up compiling.
  */
 
@@ -35,7 +35,7 @@ namespace Input
 {
   class InputManager;
   class Mouse;
-} 
+}
 
 // OIS Forward declarations
 namespace OIS

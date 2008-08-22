@@ -34,7 +34,7 @@ namespace Graphics
  * @internal
  * Applies the image difference filter
  * @note the result is stored in m_outputImage of the base filter class
- * 
+ *
  * @param[in] inImage1 First image to calculate the difference
  * @param[in] inImage2 Second image to calculate the difference
  * @param[out] output	 Image where the result will be stored

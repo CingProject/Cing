@@ -50,7 +50,7 @@ bool v4linuxCamera::initCamera(int width, int height, bool colour) {
 		fprintf(stderr,"This device does not support memory capture.\n");
 		return false;
 	}
-	
+
 	if (ioctl(cameraID, VIDIOCGWIN, &v4l_win) < 0) {
 		printf("Unable to query window settings: %s\n",
 		       strerror(errno));
@@ -66,13 +66,13 @@ bool v4linuxCamera::initCamera(int width, int height, bool colour) {
 	v4l_win.width  = width;
 	v4l_win.height = height;
 	v4l_win.clipcount = 0;
-	
+
 	fps = 15;
 	v4l_win.flags  = v4l_win.flags |= ( fps << 16 );
 	if (ioctl(cameraID, VIDIOCSWIN, &v4l_win) < 0) {
 			return false;
 	}
-	
+
 	/*while (fps>=15) {
 		v4l_win.flags  = ( fps << 16 );
 		if (ioctl(cameraID, VIDIOCSWIN, &v4l_win) < 0) {
@@ -89,7 +89,7 @@ bool v4linuxCamera::initCamera(int width, int height, bool colour) {
 		return false;
 	}
 
-	
+
 	if( ioctl(cameraID, VIDIOCGPICT, &v4l_pict) < 0 ) {
 		printf("Error: cannot get picture properties: %sºn" ,
 		       strerror(errno));
@@ -97,7 +97,7 @@ bool v4linuxCamera::initCamera(int width, int height, bool colour) {
 	}
 
 	v4l_pict.brightness = 32768;
-	v4l_pict.contrast = 32768; 
+	v4l_pict.contrast = 32768;
 	v4l_pict.hue = 32768;
 	v4l_pict.colour = 32768;
 	v4l_pict.palette = VIDEO_PALETTE_YUV420P;
@@ -128,7 +128,7 @@ bool v4linuxCamera::findCamera() {
 	if (ioctl(fd, VIDIOCGCAP, &v4l_caps) < 0) {
 		//fprintf(stderr,"Unable to query device capabilities: %s\n", strerror(errno));
 		sprintf(cameraName, "unknown camera");
-		
+
 	} else sprintf(cameraName, "%s", v4l_caps.name);
 
 	cameraID = fd;
@@ -136,7 +136,7 @@ bool v4linuxCamera::findCamera() {
 }
 
 bool v4linuxCamera::startCamera() {
-	camBuffer = (unsigned char *) mmap(0, v4l_buf.size, PROT_READ|PROT_WRITE, MAP_SHARED, cameraID, 0);	
+	camBuffer = (unsigned char *) mmap(0, v4l_buf.size, PROT_READ|PROT_WRITE, MAP_SHARED, cameraID, 0);
 	return true;
 }
 
@@ -150,20 +150,20 @@ unsigned char* v4linuxCamera::getFrame()  {
 		fprintf(stderr, "error in VIDIOCMCAPTURE\n");
 		return NULL;
 	}
-	
-	camBuffer = camBuffer + v4l_buf.offsets[frame];	
-	
+
+	camBuffer = camBuffer + v4l_buf.offsets[frame];
+
 	if (camBuffer==NULL) return NULL;
 
 	switch (colour) {
 		case false:
 			memcpy(buffer,camBuffer,width*height);
 			break;
-		case true: 
-			ccvt_420p_bgr24(width, height, camBuffer, buffer);
+		case true:
+//			ccvt_420p_bgr24(width, height, camBuffer, buffer);
 			break;
 	}
-	 
+
 	return buffer;
 }
 

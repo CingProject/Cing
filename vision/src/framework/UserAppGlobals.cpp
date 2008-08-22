@@ -35,7 +35,7 @@ std::string					dataFolder = "";
 // Input
 char								key;
 Input::MouseButton	mouseButton;
-int									mouseX = 0;	
+int									mouseX = 0;
 int									mouseY = 0;
 Input::Mouse&				mouse = Input::InputManager::m_mouse;
 

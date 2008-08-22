@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _VideoPrereqs_H_
 
 /**
- * Prereqs File: This header file contains forward class declarations of the 
+ * Prereqs File: This header file contains forward class declarations of the
  * Movie (playback) namespace  to speed up compiling.
  */
 

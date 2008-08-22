@@ -72,7 +72,7 @@ BlobFinder::~BlobFinder()
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void BlobFinder::end()
@@ -80,7 +80,7 @@ void BlobFinder::end()
   // Check if the class is already released
   if ( !isValid() )
     return;
-  
+
   // Release data
   cvReleaseMemStorage( &m_findContoursStorage );
 
@@ -91,9 +91,9 @@ void BlobFinder::end()
 /**
  * @internal
  * @brief Find the blobs in the received image.
- * What it looks for in an image is bright areas, so typically 
+ * What it looks for in an image is bright areas, so typically
  * the image result of a background subtraction is a good input.
- * 
+ *
  * @param[in] inImage image where the blobs will be searched
  */
 void BlobFinder::update( const Graphics::Image& inImage )
@@ -113,14 +113,14 @@ void BlobFinder::update( const Graphics::Image& inImage )
 	if ( inImage.getNChannels() == 3 )
 		cvConvertImage( &inImage.getCVImage(), cvTempImage );
   // just one channel -> Copy the input image
-	else 
+	else
 		cvCopy( &inImage.getCVImage(), cvTempImage );
 
-  // Find blobs (openCV contours)	
+  // Find blobs (openCV contours)
   int retrivalMode = CV_RETR_EXTERNAL; // CV_RETR_CCOMP
   cvFindContours( cvTempImage, m_findContoursStorage, &m_contour, sizeof(CvContour), retrivalMode, CV_CHAIN_APPROX_SIMPLE );
 
-  // Extract found contours    
+  // Extract found contours
 
   // Iterate through found contours and store them..
   m_blobs.clear();
@@ -143,7 +143,7 @@ void BlobFinder::update( const Graphics::Image& inImage )
   // Extract information of found blobs
   extractBlobsInformation();
 
-	// Clear OpenCV contours storage 
+	// Clear OpenCV contours storage
 	cvClearMemStorage( m_findContoursStorage );
 }
 

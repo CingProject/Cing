@@ -5,7 +5,7 @@ CREATE_APPLICATION( "Vision Demo" );
  * This example shows the computer vision technique background subtraction working.
  * It can be used to detect presence and extract properties about it (such as area, position...etc)
  * Here the background subtraction is performed over black & white camera images
- * Keys 
+ * Keys
  *	- space bar: store current camera image as background
  */
 
@@ -16,8 +16,8 @@ Image									img;					// Image to draw the result of the background subtraction
 void setup()
 {
 	// Init camera and image
-	camera.init( 0, 320, 240, 25, GRAYSCALE );
-	img.init( 320, 240, GRAYSCALE );
+	camera.init( 0, 640, 480, 25, GRAYSCALE );
+	img.init( 640, 480, GRAYSCALE );
 }
 
 void draw()

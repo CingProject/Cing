@@ -25,7 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GraphicsManager.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgrePixelFormat.h"
+#include "externLibs/Ogre3d/include/ogrepixelformat.h"
 #include "externLibs/Ogre3d/include/OgreImage.h"
 #include "externLibs/Ogre3d/include/OgreSceneManager.h"
 #include "externLibs/Ogre3d/include/OgreManualObject.h"
@@ -156,7 +156,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void TexturedQuad::end()
@@ -208,7 +208,7 @@ void TexturedQuad::setPosition2d( float x, float y )
 		LOG_ERROR( "Trying to set position in an invalid textured quad" );
 		return;
 	}
-	
+
 	// Simulate upper left corner to be 0,0 (although in ogre the 0,0 is the lower left corner
 	// That is why the y screen coordinate is inverted
 	m_2dXPos = (x / (float)Globals::width) * 2.0f - 1;
@@ -300,7 +300,7 @@ void TexturedQuad::draw( float x, float y, float z, float width, float height )
 
 /**
  * @brief Draws the texture quad in two dimensions, with the texture size
- * 
+ *
  * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
  * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
  */
@@ -311,7 +311,7 @@ void TexturedQuad::draw2d( float x, float y )
 
 /**
  * @brief Draws the texture quad in two dimensions, with a specific size
- * 
+ *
  * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
  * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
  * @param width		Width of the quad that will be rendered <b>in screen coordinates</b>
@@ -422,7 +422,7 @@ void TexturedQuad::operator=( const TexturedQuad& other )
 	other.m_ogreTexture->copyToTexture( m_ogreTexture );
 
 	// Copy attributes
-	const Vector& pos = other.m_quadSceneNode->getPosition(); 
+	const Vector& pos = other.m_quadSceneNode->getPosition();
 	setPosition( pos.x, pos.y, pos.z );
 	setVisible( other.m_visible );
 
@@ -440,12 +440,12 @@ void TexturedQuad::generateUniqueNames()
   // Manual object
   oss << MANUAL_OBJECT_NAME << m_quadCounter;
   m_ogreManualObjectName = oss.str();
-  oss.str( "" ); 
+  oss.str( "" );
 
   // Texture
   oss << TEXTURE_NAME << m_quadCounter;
   m_ogreTextureName = oss.str();
-  oss.str( "" ); 
+  oss.str( "" );
 
   // Material
   oss << MATERIAL_NAME << m_quadCounter;
@@ -453,7 +453,7 @@ void TexturedQuad::generateUniqueNames()
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Sets the necessary properties for the object to be rendered in 2d (in screen coordinates and size in pixels)
  */
 void TexturedQuad::set2dRendering()
@@ -471,7 +471,7 @@ void TexturedQuad::set2dRendering()
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Sets the necessary properties for the object to be rendered in 3d (in world coordinates and world units)
  */
 void TexturedQuad::set3dRendering()

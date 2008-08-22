@@ -39,7 +39,7 @@
 /**
  * @internal
  * @file This is the entry include file from applications
- * It should include all the necessary files for the vision library, so the users don't need to 
+ * It should include all the necessary files for the vision library, so the users don't need to
  * worry about including files or namespaces
  */
 
@@ -59,11 +59,14 @@
 #include "graphics/LightingUserAPI.h"
 
 // CameraInput
-#include "cameraInput/OCVCamera.h"
-#include "cameraInput/PVCamera.h"
-#include "cameraInput/VICamera.h"
+#include "camerainput/OCVCamera.h"
+#include "camerainput/PVCamera.h"
 
-// Framework 
+#ifdef WIN32
+    #include "camerainput/VICamera.h"
+#endif
+
+// Framework
 #include "framework/AppMain.h"
 #include "framework/AppFramework.h"
 #include "framework/UserAppGlobals.h"
@@ -104,7 +107,7 @@
 #include "externLibs/Ogre3d/include/OgreCamera.h"
 
 // Midi
-#include "midi/midiIO.h"
+#include "midi/MidiIO.h"
 
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;
@@ -123,7 +126,11 @@ using namespace Midi;
 // Classes used by user
 
 // Camera
-typedef	VICamera Capture;
+#if defined (WIN32)
+    typedef	VICamera Capture;
+#else
+    typedef	PVCamera Capture;
+#endif
 
 // Sound and Mic
 typedef SoundFMOD Sound;

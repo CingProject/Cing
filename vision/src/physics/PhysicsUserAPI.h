@@ -28,7 +28,7 @@ namespace Physics
 {
 
 /**
- * @brief Physics related functions that user can call 
+ * @brief Physics related functions that user can call
  */
 
 // Debugging functions
