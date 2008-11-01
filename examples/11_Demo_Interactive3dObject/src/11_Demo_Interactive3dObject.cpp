@@ -12,7 +12,7 @@ CREATE_APPLICATION( "Vision Demo" );
  * Keys 
  *	- b: shows camera input and background subtraction result 
  *	- space bar: store current camera image as background
- */
+*/
 
 // computer vision stuff
 BackgroundSubtraction bgSubtraction;				// Object to perform Background subtraction

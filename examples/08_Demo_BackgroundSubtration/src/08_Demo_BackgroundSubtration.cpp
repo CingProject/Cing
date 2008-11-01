@@ -9,6 +9,7 @@ CREATE_APPLICATION( "Vision Demo" );
  *	- space bar: store current camera image as background
  */
 
+
 BackgroundSubtraction bgSubtraction;// Object to perform Background subtraction
 Capture								camera;				// Camera to capture video input
 Image									img;					// Image to draw the result of the background subtraction

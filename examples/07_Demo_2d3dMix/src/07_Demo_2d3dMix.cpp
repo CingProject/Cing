@@ -20,21 +20,21 @@ void setup()
 
 	// set sphere properties
 	sphere.init( 100 );
-	sphere.setPosition( (width / 2) + 100, height / 2, 0 );
+	sphere.setPosition( (width / 2), height / 2, 0 );
 	sphere.setDiffuseColor( 100, 100, 100 );
 
 	// set lighting
 	ambientLight( 30, 30, 30  );
-	light.init( 0, 255, 0, width/2 - 100, height / 2, -200 );	
-	light.drawDebug( true );
+	light.init( 0, 255, 0, width/2 - 200, height / 2, -200 );	
+	//light.drawDebug( true );
 
 	// allow mouse control
-	useMouseCameraControl( true );
+	//useMouseCameraControl( true );
 }
 
 void draw()	
 {
-	img.draw2d( mouseX, mouseY, 100, 100 );
+	img.draw( mouseX, mouseY, 0, 100, 100 );
 }
 
 void end()
