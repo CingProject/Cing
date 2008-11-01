@@ -31,6 +31,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Common includes
 #include "common/Exception.h"
 #include "common/Release.h"
+#include "common/MathUtils.h"
 
 // Ogre includes
 #include "externLibs/Ogre3d/include/OgreRoot.h"
@@ -40,6 +41,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreBillboard.h"
 #include "externLibs/Ogre3d/include/OgreBillboardSet.h"
 #include "externLibs/Ogre3d/include/OgreStringConverter.h"
+
+// TEMP
+#include "externLibs/Ogre3d/include/OgreTextAreaOverlayElement.h"
 
 // GUI
 //#include "gui/GUIManager.h"
@@ -58,7 +62,9 @@ GraphicsManager::GraphicsManager():
 	m_strokeWeight( 1 ),
 	m_strokeColor( 255, 255, 255 ),
 	m_fillColor( 255, 255, 255 ),
-  m_pSceneManager( NULL )
+  m_pSceneManager( NULL ),
+	m_lines( NULL),
+	m_linesNode( NULL)
 {
 }
 
@@ -147,11 +153,35 @@ bool GraphicsManager::init()
 	Globals::ogreSceneManager	= m_pSceneManager;
 	Globals::ogreCamera				= m_activeCamera.getOgreCamera();
 
+	// Init objects to allow 3d simple primitives drawing (lines...)
+	m_lines     = new DynamicLines(Ogre::RenderOperation::OT_LINE_LIST);
+	m_linesNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode("Graphics::Lines");
+	m_linesNode->attachObject(m_lines);
+
+	m_lines->addPoint(0,0,0);
+	m_lines->update();
+	m_linesPoints.push_back( Ogre::Vector3(0,0,0));
+
 	// The class is now initialized
 	m_bIsValid = true;
 
 	return true;
 }
+
+
+/**
+* @internal 
+* @brief Add a new vertex to a vector of points (for line drawing)
+*
+* @param Vector
+*/
+void GraphicsManager::addVertex( Common::Vector newPos )
+{
+
+	m_linesPoints.push_back( (Ogre::Vector3) newPos);
+
+}
+
 
 /**
  * @internal
@@ -178,6 +208,11 @@ void GraphicsManager::end()
 	// Release image resource manager
 	ImageResourceManager::getSingleton().end();
 
+	// Release 3d lines...
+	m_lines     = NULL;
+	m_linesNode = NULL;
+
+
 	// The class is not valid anymore
 	m_bIsValid = false;
 }
@@ -188,6 +223,24 @@ void GraphicsManager::end()
  */
 void GraphicsManager::draw()
 {
+
+	// Update lines
+	if (m_lines->getNumPoints()!= m_linesPoints.size())
+	{
+		m_lines->clear();
+		for (int i=0; i<(int)m_linesPoints.size(); i++) {
+			m_lines->addPoint(m_linesPoints[i]);
+		}
+	}else{
+		for (int i=0; i<(int)m_linesPoints.size(); i++) {
+			m_lines->setPoint(i,m_linesPoints[i]);
+		}
+	}
+	m_lines->update();
+
+	// Clear the line points buffer
+	m_linesPoints.clear();
+
 	// Update default camera controller
 	m_defaultCamController.update();
 
@@ -206,12 +259,17 @@ void GraphicsManager::draw()
 		std::ostringstream oss;
 		oss << "FPS: " << frameStats.lastFPS;
 		m_defaultText.setText( oss.str() );	// Text to be displayed
+		m_defaultText.show( true );
 	}
+	else
+		m_defaultText.show( false );
 
 	// Mark all drawable images as not visible
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
 	for (; it != m_drawableImagesQueue.end(); ++it )
 		(*it)->setVisible( false );
+
+
 }
 
 

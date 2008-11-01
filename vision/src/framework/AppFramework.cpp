@@ -46,6 +46,7 @@ namespace Framework
  */
 void RunApplication( const char* appName )
 {
+
   try
   {
     // Init application

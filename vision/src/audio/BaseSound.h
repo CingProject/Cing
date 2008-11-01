@@ -40,6 +40,7 @@ namespace Audio
     {
     public:
 
+			virtual ~BaseSound() {}
 
         /**
          * @brief Loads a sound file.

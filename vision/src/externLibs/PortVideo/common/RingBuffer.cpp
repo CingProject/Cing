@@ -51,7 +51,6 @@ int RingBuffer::nextIndex( int index ) {
 unsigned char* RingBuffer::getNextBufferToWrite() {
 	int nextWriteIndex = nextIndex( writeIndex );
 	if( nextWriteIndex == readIndex ){
-    OutputDebugString( "Colisión\n" );
 		return NULL;
 	}else{
 		return buffer[ nextWriteIndex ];

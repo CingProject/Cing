@@ -27,6 +27,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Input
 #include "input/InputTypes.h"
+#include "input/Keyboard.h"
 
 // Forward declarations
 namespace	Input
@@ -50,14 +51,17 @@ extern std::string					dataFolder;			///< Path to user's application data folder
 
 // Input
 extern	char								key;						///< Key being currently pressed
+extern	Input::KeyCode			keyCode;				///< Key code being pressed (allow to detect also special keys such as the arrow or function keys)
 extern	Input::MouseButton	mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
 extern	int									mouseX;					///< X coordinate of the mouse (in screen coordinates)
 extern	int									mouseY;					///< Y coordinate of the mouse (in screen coordinates)
 extern	Input::Mouse&				mouse;					///< System mouse
+extern	Input::Keyboard&		keyboard;				///< System keyboard
 
 // Time
 extern double								elapsedSec;			///< Elapsed time in seconds from previous to current frame
 extern unsigned long				elapsedMillis;	///< Elapsed time in milliseconds from previous to current frame
+extern unsigned long				elapsedMicros;	///< Elapsed time in microseconds from previous to current frame
 extern double								secFromStart;		///< Seconds elapsed since application started
 extern unsigned long				millisFromStart;///< Milliseconds elapsed since application started
 

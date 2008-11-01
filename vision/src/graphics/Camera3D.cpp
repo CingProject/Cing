@@ -99,6 +99,9 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
 	set3DCameraProperties();
 
 
+	// Set Frustum
+	m_pOgreCamera->setNearClipDistance( 10 );
+	
 
 	// The class is now initialized
 	m_bIsValid = true;

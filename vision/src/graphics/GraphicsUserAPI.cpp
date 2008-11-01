@@ -208,4 +208,19 @@ void setBackgroundColor( const Color& color )
 	Graphics::GraphicsManager::getSingleton().getMainWindow().setBackgroundColor( color );
 }
 
+/**
+ * @brief Draws a line in 3d space
+ *
+ * @param x1 x, first point
+ * @param y1 y, first point
+ * @param z1 z, first point
+ * @param y2 y, second point
+ * @param x2 x, second point
+ * @param z2 z, second point
+ */
+void line( float x1, float y1, float z1, float x2, float y2, float z2)
+{
+	Graphics::GraphicsManager::getSingleton().addVertex( Vector(x1, y1, z1));
+	Graphics::GraphicsManager::getSingleton().addVertex( Vector(x2, y2, z2));
+};
 } // namespace Graphics

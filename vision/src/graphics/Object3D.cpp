@@ -78,7 +78,7 @@ Object3D::~Object3D()
  * @param[in] materialName  Name of the material (defines the visual aspect) of the object. If empty the object will have no material.
  * @return true if the initialization was ok | false otherwise
  */
-void Object3D::init( const std::string& meshName /*= ""*/, const std::string& materialName /*= ""*/ )
+void Object3D::init( const std::string& meshName /*= ""*/, const std::string& materialName /*= ""*/, Ogre::SceneNode* parent /*= NULL*/ )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -86,7 +86,10 @@ void Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
 
   // Create a node in the scene for the object
   Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
-  m_sceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
+	if ( parent )
+		m_sceneNode = parent->createChildSceneNode();
+	else
+		m_sceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
 
   // TODO: definir materiales básicos, y checkear hw capabilities según el que sea
 
@@ -111,18 +114,8 @@ void Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
     m_sceneNode->attachObject( m_entity );
   }
 
-	// Check if the material exist
-	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName );
-	if ( !material.isNull() )
-	{
-		// Assign material
-		if ( materialName != "" )
-			m_entity->setMaterialName( materialName );  
-	}
-	// TODO: Log -> material does not exist
-	else
-		LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName );
-
+	// Set the object's material
+	setMaterial( materialName );
 
 	// This is a triangle mesh type
 	m_type = TRIANGLE_MESH;
@@ -250,6 +243,36 @@ void Object3D::setOrientation( const Vector& axis, float angle )
 
 	Quaternion q( Ogre::Radian( Ogre::Degree( angle ) ), axis );
 	m_sceneNode->setOrientation( q );
+}
+
+/**
+ * @internal 
+ * @brief Rotates the object by a certain angle around an axis
+ *
+ * @param axis	Axis of rotation
+ * @param angle Angle of rotation in degrees around the specified axis
+ */
+void Object3D::rotate( const Vector& axis, float angle )
+{
+	if ( !isValid() )
+		THROW_EXCEPTION( "Error. Trying to rotate a Object3D not correctly initialized" );
+
+	Quaternion q( Ogre::Radian( Ogre::Degree( angle ) ), axis );
+	m_sceneNode->rotate( q );
+}
+
+/**
+ * @internal 
+ * @brief Rotates the object by a certain quaternion
+ *
+ * @param quat	Quaternion to rotate the object
+ */
+void Object3D::rotate( const Quaternion& quat )
+{
+	if ( !isValid() )
+		THROW_EXCEPTION( "Error. Trying to rotate a Object3D not correctly initialized" );
+
+	m_sceneNode->rotate( quat );
 }
 
 /**

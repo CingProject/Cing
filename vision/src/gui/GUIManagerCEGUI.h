@@ -30,6 +30,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // OIS
 #include "externLibs/Ogre3d/include/ois/OISMouse.h"
+#include "externLibs/Ogre3d/include/ois/OISKeyboard.h"
 
 // Common
 #include "common/Singleton.h"
@@ -41,7 +42,7 @@ namespace GUI
  * @internal
  * GUI Manager based on CEGUI library
  */
-class GUIManagerCEGUI: public Common::SingletonStatic< GUIManagerCEGUI >, public OIS::MouseListener
+class GUIManagerCEGUI: public Common::SingletonStatic< GUIManagerCEGUI >, public OIS::MouseListener, public OIS::KeyListener
 {
 public:
 
@@ -67,6 +68,14 @@ public:
 	bool mousePressed	( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 
+	// OIS Listeners interface
+	bool keyPressed( const OIS::KeyEvent &arg );
+	bool keyReleased( const OIS::KeyEvent &arg );	
+
+	void messageBox( const char* text, bool fullScreen = false );
+	bool isMessageBoxVisible();	
+	void hideMessageBox();
+
 
 private:
 
@@ -80,6 +89,7 @@ private:
 	CEGUI::OgreCEGUIRenderer*		m_CEGUIRenderer;	///< CEGUI Renderer. Connects gui system with render system
 	CEGUI::System*							m_CEGUISystem;		///< Main CEGUI object
 	CEGUI::Window*							m_mainSheet;			///< Main gui sheet: place where all gui elements will be placed<s
+	CEGUI::FrameWindow*					m_messageBoxWindow;
 	OutputDebugTextBoxCEGUI			m_debugOutput;		///< Text Box to output debug messages
 	bool												m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 

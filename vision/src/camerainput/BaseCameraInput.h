@@ -24,6 +24,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "CameraInputPrereqs.h"
 
+#include "common/MathUtils.h"
+
 // OpenCV
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
 
@@ -46,12 +48,13 @@ public:
   virtual ~BaseCameraInput();
   
 	// Init / Release / Update (to be implemented in subclasses)
-	virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, ImageFormat format = RGB );
+	virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, ImageFormat format = RGB, bool multithreaded = true );
 	virtual void    end             ();
   virtual void    update          () = 0;
 
   // Misc
-  void							draw();
+  void							draw		();
+	void							showFps	( bool showFps ) { m_showFps = showFps; }
 
 	// Query methods
 	bool            				isValid         () const { return m_bIsValid;   }
@@ -77,6 +80,9 @@ protected:
 
 private:
 	// Attributes
+	Ogre::Timer							m_timer;									///< Timer to check the capture fps
+	Average									m_realFpsAverage;					///< Real fps average
+	double									m_realFps;								///< Real captured fps
 	Graphics::Image					m_currentCameraImage; 		///< Image captured from the camera 
 	Graphics::Image					m_tempImage;					 		///< Image used to convert received frames to working format
   int                     m_width, m_height;    		///< Capture resolution
@@ -86,6 +92,7 @@ private:
 	ImageFormat							m_format;									///< Format of the frames (RGB or GRAYSCALE)
   bool                    m_newFrame;           		///< True when the camera has a new frame captured
 	bool                    m_bIsValid;	          		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool										m_showFps;								///< Show real capture fps
 
 };
 

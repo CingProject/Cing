@@ -34,10 +34,10 @@ namespace Common
 
 // Static const init
 std::string ResourceManager::resourcesFileName			= "resources.cfg";
-std::string ResourceManager::userResourcesDirName		= "..\\data\\";
+std::string ResourceManager::userResourcesDirName		= "../data/";
 std::string ResourceManager::userResourcesGroupName	= "UserData";
 std::string ResourceManager::pluginsPath						= "Plugins\\plugins.cfg";
-std::string ResourceManager::libDataPath						= "..\\..\\..\\vision\\data\\";
+std::string ResourceManager::libDataPath						= "../../../vision/data/";
 std::string ResourceManager::userDataPath						= "";
 std::string ResourceManager::userExecPath						= "";
 

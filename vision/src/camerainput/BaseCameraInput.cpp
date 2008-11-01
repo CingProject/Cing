@@ -40,11 +40,14 @@ namespace CameraInput
  * @brief Constructor. Initializes class attributes.
  */
 BaseCameraInput::BaseCameraInput():
+	m_realFps								( 0			),
   m_newFrame          		( false ), 
   m_width             		( 0     ), 
   m_height            		( 0     ), 
   m_fps               		( 0     ), 
-  m_bIsValid          		( false )
+	m_bIsValid          		( false ),
+	m_showFps          			( false ),
+	m_realFpsAverage				( 3			)
 {
 }
 
@@ -68,7 +71,7 @@ BaseCameraInput::~BaseCameraInput()
  * @param[in] fps				frames per second to capture
  * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, ImageFormat format )
+void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, ImageFormat format, bool multithreaded /*= true*/  )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -99,6 +102,9 @@ void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
 	// a RGB image, so we can convert it fast... or vice versa..
 	ImageFormat tempFormat	= format == RGB? GRAYSCALE: RGB;
 	m_tempImage.init( width, height, tempFormat );
+
+	// Reset fps timer
+	m_timer.reset();
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -135,6 +141,11 @@ void BaseCameraInput::end()
  */
 void BaseCameraInput::setNewFrameData( char* data, unsigned int width, unsigned int height, ImageFormat format )	
 {
+	// Get capture fps
+	unsigned long elapsedMicroseconds = m_timer.getMicroseconds();
+	m_realFps = (double)1000000 / (double)elapsedMicroseconds;
+	m_realFpsAverage.addValue( m_realFps );
+
 	// If the received image has the same format... copy it
 	if (	(width == m_currentCameraImage.getWidth() ) && 
 				(height == m_currentCameraImage.getHeight()) && 
@@ -156,6 +167,17 @@ void BaseCameraInput::setNewFrameData( char* data, unsigned int width, unsigned 
 	}
 	else
 		LOG_ERROR( "Trying to set camera image data with a wrong size or format" );
+
+	// Set fps?
+	if ( m_showFps )
+	{
+		std::ostringstream oss;
+		oss << "FPS: " << m_realFpsAverage.getValue();
+		m_currentCameraImage.text( 0, m_currentCameraImage.getHeight(), oss.str().c_str() );
+	}
+
+	// Reset fps timer
+	m_timer.reset();
 }
 
 

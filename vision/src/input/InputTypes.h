@@ -23,9 +23,12 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _InputTypes_h_
 
 #include "InputPrereqs.h"
+#include "externLibs/Ogre3d/include/ois/OISKeyboard.h"
 
 namespace Input
 {
+
+typedef OIS::KeyCode KeyCode;
 
 /// Mouse buttons
 enum MouseButton

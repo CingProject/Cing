@@ -42,8 +42,9 @@ struct Blob
 {
 	typedef std::vector<Point> BlobContourPoints; ///< Contour points of a blob
 
-    // Constructor
+    // Constructors
     Blob( float _area, CvSeq* _contour ) : area( _area ), contour( _contour ) {}
+		Blob(): area(0),contour( NULL ){}
 
     /// To compare two Blobs
     bool operator < ( const Blob& other ) const { return area < other.area; }
@@ -51,7 +52,7 @@ struct Blob
 
     float	            area;		  ///< Blob's area
     CvRect		        bbox;		  ///< Blob's bounding box
-    Point			        center;		///< Center of the Blob
+    Point							center;		///< Center of the Blob
 	  BlobContourPoints nodes;		///< Points of the Blob's contour
 
 private:
@@ -61,6 +62,21 @@ private:
     CvSeq*      contour;///< Internal stuff. OpenCv contour
 };
 
+/**
+ * This structure contains the data of a TrackedBlob in the scene.
+ * A Blob is an element with unique Id assigned, found in the scene (by computer vision analysis).
+ */
+struct TrackedBlob
+{
+	// Constructor
+	TrackedBlob( int _id) : id( _id ), isActive(false){}
+
+	Blob		blob;
+	int			id;            // id of contour
+	float		energy;				 // oldest blobs is more energized than other 
+	bool		isActive;		   // is active?
+	Vector  velocity;      // velocity = position-last_position
+};
 
 } // namespace ComputerVision
 

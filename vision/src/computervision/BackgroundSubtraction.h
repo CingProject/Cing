@@ -56,6 +56,9 @@ public:
 	// Query  Methods
 	bool	isValid	() { return m_backgroundImage != NULL; }
 
+	// Returns current background
+	_IplImage* getBackground() { return m_backgroundImage; }
+
 	// Constants
 	static const int DEFAULT_THRESHOLD; ///< Default threshold value to perform background subtraction
 

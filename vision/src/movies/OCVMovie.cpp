@@ -119,7 +119,7 @@ void OCVMovie::play()
 	m_playing			= true;
 	m_loop				= false;
 	m_firstFrame	= true;
-	m_finished		= false;
+	m_finished = false;
 
 	// Start timer to control the playback speed
 	cvSetCaptureProperty( m_capture, CV_CAP_PROP_POS_FRAMES, 0 );
@@ -136,7 +136,7 @@ void OCVMovie::loop()
 	m_playing			= true;
 	m_loop				= true;
 	m_firstFrame	= true;
-	m_finished		= false;
+	m_finished = false;
 
 	// Start timer to control the playback speed
 	m_timer.reset();
@@ -152,7 +152,7 @@ void OCVMovie::noLoop()
 	m_playing			= true;
 	m_loop				= false;
 	m_firstFrame	= true;
-	m_finished		= false;
+	m_finished = false;
 
 	// Start timer to control the playback speed
 	m_timer.reset();

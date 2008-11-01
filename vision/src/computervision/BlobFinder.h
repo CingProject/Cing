@@ -48,40 +48,40 @@ public:
   typedef std::vector< Blob > Blobs; ///< Contains a sequence of blobs
 
 	// Constructor / Destructor
-	 BlobFinder();
+	BlobFinder();
 	~BlobFinder();
 
 	// Init / Release
-	void          end           ();
+	virtual void  end           ();
 
   // Blob related methods
-	void          update				( const Graphics::Image& inImage );
+	virtual void  update				( const Graphics::Image& inImage );
 
   // Set methods
   void          setMinBlobArea( float minArea ) { m_minBlobArea = minArea; }
   void          setMaxBlobArea( float maxArea ) { m_maxBlobArea = maxArea; }
-  void          setMaxBlobs   ( float maxBlobs ) { m_maxBlobs = maxBlobs; }
+  virtual void  setMaxBlobs   ( unsigned int maxBlobs )	{ m_maxBlobs = maxBlobs; }
 
 	// Query methods
-	bool          isValid       () const { return m_bIsValid; }
+	virtual bool  isValid       () const { return m_bIsValid; }
   int						getNumBlobs   () const { return m_nBlobs; }
   
   // TODO check n valid
   Blob&					getBlobN      ( int n )  { return m_blobs[n]; }
 
-private:
+	// Constant / static attributes
+	static const float        BlobFinder::DEFAULT_MIN_AREA;
+	static const float        BlobFinder::DEFAULT_MAX_AREA;
+	static const unsigned int BlobFinder::DEFAULT_MAX_BLOBS;
+
+protected:
 
   // Private methods
   void          extractBlobsInformation();
 
-  // Constant / static attributes
-  static const float        BlobFinder::DEFAULT_MIN_AREA;
-  static const float        BlobFinder::DEFAULT_MAX_AREA;
-  static const unsigned int BlobFinder::DEFAULT_MAX_BLOBS;
-
 	// Attributes
   Blobs               m_blobs;                ///< To store the found blobs
-	int									m_nBlobs;								///< Number of detected blobs in the scene
+	int									m_nBlobs;
 	float               m_minBlobArea;          ///< Min area (in pixels) that a blob should have to be considered
   float               m_maxBlobArea;          ///< Max area (in pixels) that a blob should have to be considered
   unsigned int        m_maxBlobs;             ///< Max number of blos to look for
@@ -90,7 +90,7 @@ private:
   CvMemStorage*       m_findContoursStorage;  ///< To store contour data (by opencv)
   CvSeq*              m_contour;              ///< To store opencv contours
 
-  bool  m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+  bool								m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

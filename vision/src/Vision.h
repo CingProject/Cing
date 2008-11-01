@@ -67,6 +67,7 @@
 #include "framework/AppMain.h"
 #include "framework/AppFramework.h"
 #include "framework/UserAppGlobals.h"
+#include "framework/FrameworkUserAPI.h"
 
 // Common
 #include "common/CommonUserAPI.h"
@@ -79,6 +80,7 @@
 
 // Computer Vision
 #include "computervision/BlobFinder.h"
+#include "computervision/BlobTracker.h"
 #include "computervision/BackgroundSubtraction.h"
 
 // Physics

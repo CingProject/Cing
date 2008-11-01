@@ -66,8 +66,8 @@ public:
 	void				closeInput();
 
 	static void	onMessage( double deltatime, std::vector< unsigned char > *message, void *userData );
-	void	plug     ( void (*callbackFunction) ( double deltatime, std::vector< unsigned char > *message, void *userData )  );
-	RtMidiIn*    m_MidiIn;
+	void				plug     ( void (*callbackFunction) ( double deltatime, std::vector< unsigned char > *message, void *userData ) );
+	RtMidiIn*   m_MidiIn;
 
 private:
 

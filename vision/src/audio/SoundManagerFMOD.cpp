@@ -139,6 +139,7 @@ FMOD_SYSTEM* SoundManagerFMOD::init()
 
   // TODO Revise these parameters (set to default)
   result = FMOD_System_Init( m_system, 32, FMOD_INIT_NORMAL, 0 ); // Initialize FMOD.
+
   // Check for unrecoverable error
   if( failedFMODResultCode( result ) )
 	{

@@ -87,8 +87,8 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= false*/ )
 	m_ogreLog->setLogDetail( Ogre::LL_NORMAL );
 	m_log->setLogDetail( Ogre::LL_NORMAL );
 #else
-	m_ogreLog->setLogDetail( Ogre::LL_LOW );
-	m_log->setLogDetail( Ogre::LL_LOW );
+	m_ogreLog->setLogDetail( Ogre::LL_NORMAL );
+	m_log->setLogDetail( Ogre::LL_NORMAL );
 #endif
 
 	m_bIsValid = true;
@@ -153,7 +153,8 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	va_end		(args);
 
 	// Log message normally
-	m_log->logMessage( msgFormated, (Ogre::LogMessageLevel)level );
+	if ( m_log )
+		m_log->logMessage( msgFormated, (Ogre::LogMessageLevel)level );
 
 	// Send it to the debug console
 	// TODO: decide policy
@@ -161,15 +162,9 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	//	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
 
 	// If we are in windows and debug -> log to visual studio output
-#if defined(WIN32) && defined(_DEBUG)
-		OutputDebugString( msgFormated );	// In debug, output everything
-		OutputDebugString( "\n" );
-#elif defined(WIN32)
-	if ( level == LOG_ERROR )
-	{
+#if defined(WIN32)
 		OutputDebugString( msgFormated );	// In release, only critical messages
 		OutputDebugString( "\n" );
-	}
 #endif
 }
 

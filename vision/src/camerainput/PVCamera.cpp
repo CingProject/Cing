@@ -100,7 +100,7 @@ void PVCamera::init( int deviceId, int width, int height, int fps, ImageFormat f
 
   // Init the camera
 	bool color = Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format ) == 3? true: false;
-  bool success = m_pvCamera->initCamera( width, height, color );
+  bool success = m_pvCamera->initCamera( width, height, fps, color );
 
   // Init ok
   if(success) 
@@ -169,9 +169,6 @@ void PVCamera::end()
  */
 void PVCamera::update()
 {
-  // Update parent class
-  BaseCameraInput::update();
-
   // Check if we have a new frame
   unsigned char *cameraReadBuffer = m_ringBuffer->getNextBufferToRead();
   if ( cameraReadBuffer == NULL )

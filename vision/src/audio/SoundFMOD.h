@@ -57,6 +57,7 @@ public:
 	void	end					();
 
 	bool isValid			() const;
+	bool isLoaded			() const { return m_sound != 0 ; }
 
 
   // Parameters
@@ -68,12 +69,13 @@ public:
 	float getPan      ()              const;
 
   // Get info from played sound
-  float getCurrentLevel( int channelNum = 0 ) const;
+  float					getCurrentLevel	( int channelNum = 0 ) const;
+	unsigned int	getDuration			() const;
 
 private:
 
   // Sound
-  void createSound    ( const char* filename );
+  bool createSound    ( const char* filename );
   void destroySound   ();
 
   // Playback

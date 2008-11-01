@@ -21,7 +21,8 @@
 
 #include "DSVL.h"
 #include <stdio.h>
-#include "../cameraEngine.h"
+#include <sstream>
+#include "../common/cameraEngine.h"
 
 #define hibyte(x) (unsigned char)((x)>>8)
 
@@ -33,7 +34,7 @@ public:
 	~dslibCamera();
 
 	bool findCamera();
-	bool initCamera(int width, int height, bool colour);
+	bool initCamera(int width, int height, int fps, bool colour);
 	bool startCamera();
 	unsigned char* getFrame();
 	bool stopCamera();
@@ -45,11 +46,11 @@ public:
 
 private:
 
-	char* xml_config;
-	DSVL_VideoSource *dsvl_vs;
-	MemoryBufferHandle g_mbHandle;
-	LONGLONG g_Timestamp;
-	unsigned char *pbuffer;
+	std::ostringstream		xmlConfig;
+	DSVL_VideoSource*			dsvl_vs;
+	MemoryBufferHandle		g_mbHandle;
+	LONGLONG							g_Timestamp;
+	unsigned char*				pbuffer;
 };
 
 #endif

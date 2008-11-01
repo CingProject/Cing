@@ -28,7 +28,7 @@ public:
 	cameraEngine() {};
 	virtual ~cameraEngine() {};
 	virtual bool findCamera() = 0;
-	virtual bool initCamera(int width, int height, bool colour) = 0;
+	virtual bool initCamera(int width, int height, int fps, bool colour) = 0;
 	virtual bool startCamera() = 0;
 	virtual unsigned char* getFrame() = 0;
 	virtual bool stopCamera() = 0;

@@ -21,7 +21,7 @@
 
 #ifdef WIN32
 #include <windows.h>
-#include "win32/dslibCamera.h"
+#include "../win32/dslibCamera.h"
 #endif
 
 #ifdef LINUX

@@ -52,10 +52,13 @@ public:
 	void	setScale				( float xScale, float yScale, float zScale );
 	void	setScale2d			( float xScale, float yScale );
 	void  setVisible      ( bool visible );
-	
+	void  setAdditiveMode ( bool value );
 	// Drawing methods
 	void	draw						( float x, float y, float z );
 	void	draw						( float x, float y, float z, float width, float height );
+	void	draw				  	(	float x1, float y1, float z1,	float x2, float y2, float z2,
+													float x3, float y3, float z3,	float x4, float y4, float z4);
+
 	void	draw2d					( float x, float y );
 	void	draw2d					( float x, float y, float width, float height );
 
@@ -97,6 +100,7 @@ private:
 	Ogre::uint32							m_3dQueryFlags;							///< Query flags of ogre when the object is being renderd in 3d		
 
 	float											m_textWidth, m_textHeight;  ///< Width and height of the texture
+	float											m_textWidthP2, m_textHeightP2;  ///< Width and height of the texture
 	float											m_2dWidth, m_2dHeight;			///< Width and height of the object when it is being drawn in 2d (in screen coordinates)
 	float											m_2dXPos, m_2dYPos;					///< Position (in screen coordinates) of the object when it is being drawn in 2d
 

@@ -33,13 +33,13 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreLight.h"
 #include "externLibs/Ogre3d/include/ogrepixelformat.h"
 
-
 /// Image formats
 enum ImageFormat
 {
 	RGB				= Ogre::PF_R8G8B8,	///< Red, Green and Blue
 	COLOR 		= Ogre::PF_R8G8B8,	///< Same as RGB
 	RGBA			= Ogre::PF_R8G8B8A8,///< Red, Green, Blue and Alpha
+	ARGB			= Ogre::PF_A8R8G8B8,///< Alpha, Red, Green, and Blue
 	GRAYSCALE	= Ogre::PF_BYTE_L		///< Gray scale
 };
 
@@ -53,6 +53,14 @@ enum ImageProcessingFilters
 	THRESHOLD,		///< converts the image to black and white. 
 	DILATE,				///< grow white/light areas 
 	ERODE				  ///< shrink white/light areas 
+};
+
+/// Ink types
+enum ImageInkModes
+{
+	BLEND,			  ///< normal mode
+	ADD				   	///< additive mode
+
 };
 
 namespace Graphics

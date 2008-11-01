@@ -138,6 +138,21 @@ bool Keyboard::isKeyDown( OIS::KeyCode key ) const
 }
 
 /**
+ * @internal 
+ * @brief Returns true if the received key is down
+ *
+ * @param key key to check
+ * @return true if the received key is down
+ */
+bool	Keyboard::isModifierDown( OIS::Keyboard::Modifier modifier ) const
+{
+	if ( isValid() )
+		return m_pOISKeyboard->isModifierDown( modifier );
+
+	return false;
+}
+
+/**
  * @internal
  * @brief Receives an event of key pressed and informs all registered listeners
  *

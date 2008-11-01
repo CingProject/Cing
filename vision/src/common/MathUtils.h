@@ -244,7 +244,7 @@ struct Average
 	}
 
 	/// @brief ads a value to average
-	void addValue( float value )
+	void addValue( double value )
 	{
 		if ( values.size() < nValues )
 			values.push_back( value );
@@ -258,11 +258,11 @@ struct Average
 	/// @brief returns the ave
 	float getValue()
 	{
-		float sum = std::accumulate( values.begin(), values.end(), 0 );
-		return sum / (float)values.size();
+		double sum = std::accumulate( values.begin(), values.end(), 0.0 );
+		return sum / (double)values.size();
 	}
 
-	std::vector< float >	values;
+	std::vector< double >	values;
 	size_t								nValues;
 	size_t								index;
 };

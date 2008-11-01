@@ -40,6 +40,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/ResourceManager.h"
 #include "common/LogManager.h"
 
+
+
 namespace Framework
 {
 
@@ -48,7 +50,7 @@ namespace Framework
  * @brief Constructor. Initializes class attributes.
  */
 Application::Application():
-  m_bIsValid( false )
+  m_bIsValid( false ), m_finish( false )
 {
 }
 
@@ -59,6 +61,7 @@ Application::Application():
 Application::~Application()
 {
 }
+
 
 /**
  * @internal
@@ -131,7 +134,7 @@ void Application::endApp()
   Input::InputManager::getSingleton().end();
 
 	// Release physics manager
-	Physics::PhysicsManager::getSingleton().end();
+	//Physics::PhysicsManager::getSingleton().end();
 
 	// Release GUI Manager
 	GUI::GUIManagerCEGUI::getSingleton().end();
@@ -156,9 +159,10 @@ void Application::endApp()
 void Application::drawApp()
 {
   // Loop while window is open
-  while( Graphics::GraphicsManager::getSingleton().getMainWindow().isClosed() == false )
+  while( (Graphics::GraphicsManager::getSingleton().getMainWindow().isClosed() == false) && !m_finish )
   {
 		// Store elapsed from timers
+		Globals::elapsedMicros  = m_timer.getMicroseconds();	
 		Globals::elapsedMillis	= m_timer.getMilliseconds();
 		Globals::elapsedSec			=  Globals::elapsedMillis / 1000.0;
 		Globals::secFromStart		= m_absTimer.getMilliseconds() / 1000.0;
@@ -241,7 +245,8 @@ bool Application::mouseReleased( const OIS::MouseEvent& event, OIS::MouseButtonI
 bool Application::keyPressed( const OIS::KeyEvent& event )
 {
 	// Set global variable key
-	Globals::key = event.text;
+	Globals::key			= event.text;
+	Globals::keyCode	= event.key;
 
   // Call user mousepressed handler
 	::keyPressed();
@@ -259,6 +264,7 @@ bool Application::keyReleased( const OIS::KeyEvent& event )
 {
 	// Set global variable key
 	Globals::key = event.text;
+	Globals::keyCode	= event.key;
 
   // Call user mousepressed handler
 	// TODO: see a posibility to allow the user to define these handlers or not

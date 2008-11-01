@@ -34,14 +34,18 @@ std::string					dataFolder = "";
 
 // Input
 char								key;
+Input::KeyCode			keyCode;
 Input::MouseButton	mouseButton;
 int									mouseX = 0;	
 int									mouseY = 0;
-Input::Mouse&				mouse = Input::InputManager::m_mouse;
+Input::Mouse&				mouse			= Input::InputManager::m_mouse;
+Input::Keyboard&		keyboard	= Input::InputManager::m_keyboard;
+
 
 // Time
 double							elapsedSec			= 0;
 unsigned long				elapsedMillis		= 0;
+unsigned long				elapsedMicros		= 0;
 double							secFromStart		= 0;
 unsigned long	 			millisFromStart	= 0;
 

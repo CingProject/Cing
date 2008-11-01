@@ -30,6 +30,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Text.h"
 #include "CameraController.h"
 
+#include "DynamicLines.h"
+
 // OpenCv includes
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
 #include "externLibs/OpenCV/highgui/include/highgui.h"
@@ -67,7 +69,7 @@ public:
 	bool                      isValid                   () const { return m_bIsValid; }
 	const Window&             getMainWindow             () const { return m_mainWindow; }
 	Window&										getMainWindow             ()			 { return m_mainWindow; }
-	Camera3D&									getActiveCamera           ()			 { return m_activeCamera; }
+	Camera3D&									getActiveCamera           ()				{ return m_activeCamera; }
 	const Ogre::SceneManager& getSceneManager           () const { return *m_pSceneManager; }
 	Ogre::SceneManager&       getSceneManager           ()       { return *m_pSceneManager; }
 	Ogre::SceneManager*       getSceneManagerPtr        ()      { return m_pSceneManager; }
@@ -104,19 +106,22 @@ public:
 	void											addDrawableImage					( TexturedQuad* img );
 	void											removeDrawableImage				( TexturedQuad* img );
 
+  // Drawing 3d lines (Temp)
+	void											addVertex( Common::Vector newPos );
+
 private:
 
 	// private constructor to ensure singleton
 	GraphicsManager      ();
 
 	//TODO: poner decente
-	Ogre::Light*      pLight;
-	Ogre::SceneNode*  pLightSceneNode;
+	Ogre::Light*					pLight;
+	Ogre::SceneNode*			pLightSceneNode;
 
 	// Attributes
 
 	// Camera controller
-	CameraController m_defaultCamController;
+	CameraController			m_defaultCamController;
 
 	// Core
 	Ogre::SceneManager*   m_pSceneManager;  ///< Main scene manager
@@ -131,6 +136,11 @@ private:
 	Color									m_strokeColor;		///< Color used to draw shapes
 	int										m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
 	CvFont								m_cvFont;					///< Font used to draw text on images
+
+  // Simple primitives 3d related drawing ( lines, circles , ...)
+	DynamicLines*								m_lines;
+	Ogre::SceneNode*						m_linesNode;
+	std::vector <Ogre::Vector3> m_linesPoints;
 					
 	// To manage visibility of loaded images
 	// TODO optimize this

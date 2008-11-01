@@ -28,6 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Exception.h"
 #include "common/ResourceManager.h"
 #include "common/LogManager.h"
+#include "common/MathUtils.h"
 
 namespace Graphics
 {
@@ -271,6 +272,9 @@ int Image::getHeight() const
  */
 ImageFormat Image::getFormat() const
 {
+	if ( m_image.getFormat() != Ogre::PF_UNKNOWN )
+		return (ImageFormat)m_image.getFormat();
+
 	switch(m_nChannels)
 	{
 	case 1: return (ImageFormat)GRAYSCALE;
@@ -413,6 +417,38 @@ void Image::draw( float xPos, float yPos, float zPos, float width, float height 
 	}
 
 	m_quad.draw( xPos, yPos, zPos, width, height );
+}
+
+/**
+ * @brief Draws the image in a specific quad
+ *
+ * @param xPos x1 
+ * @param yPos y1 
+ * @param zPos z1 
+ * @param xPos x2 
+ * @param yPos y2 
+ * @param zPos z2 
+ * @param xPos x3 
+ * @param yPos y3 
+ * @param zPos z3 
+ * @param xPos x4 
+ * @param yPos y4 
+ * @param zPos z4 
+ */
+void Image::draw( float x1, float y1, float z1,
+								  float x2, float y2, float z2,
+									float x3, float y3, float z3,
+									float x4, float y4, float z4)
+{
+
+	// check if texture needs to be updated
+	if (m_bUpdateTexture)
+	{
+		updateTexture();
+		m_bUpdateTexture = false;
+	}
+
+	m_quad.draw( x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4);
 }
 
 /**
@@ -618,6 +654,7 @@ void Image::arc( float x, float y, float width, float height, float start, float
  */
 void Image::point( float x, float y )
 {
+
 	// Check the image is valid
 	if ( !isValid() )
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
@@ -720,7 +757,6 @@ void Image::text( float x1, float y1,  const char* text )
  */
 void Image::rect( float x1, float y1, float x2, float y2 )
 {
-
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
 	// Get Stroke and Fill Color
 	Color color        = graphManager.getStrokeColor();
@@ -773,6 +809,41 @@ void Image::ellipse( float x, float y, float width, float height )
  * @brief Method to apply a variety of basic filters to this image.
  *
  * @param ImageProcessingFilters type
+ * @param float
+ */
+void Image::filter( ImageProcessingFilters type, float param1 )
+{
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+
+	if (type == BLUR)
+		cvSmooth(m_cvImage, m_cvImage, CV_BLUR , 9);
+
+	if (type == ERODE)
+		cvErode( m_cvImage, m_cvImage, 0, 1 );
+
+	if (type == DILATE)
+		cvDilate( m_cvImage, m_cvImage, 0, 1 );
+
+	if (type == THRESHOLD)
+	{
+		m_imgThresholdFilter.setThreshold( (int) param1);
+		m_imgThresholdFilter.apply(  *m_cvImage , *m_cvImage);
+	}
+
+	if (type == INVERT)
+		cvNot( m_cvImage, m_cvImage);
+
+	// TODO
+	// Update texture when the next drawing call is made by the user
+	m_bUpdateTexture = true;
+}
+
+/**
+ * @brief Method to apply a variety of basic filters to this image.
+ *
+ * @param ImageProcessingFilters type
  */
 void Image::filter( ImageProcessingFilters type )
 {
@@ -789,8 +860,18 @@ void Image::filter( ImageProcessingFilters type )
 	if (type == DILATE)
 		cvDilate( m_cvImage, m_cvImage, 0, 1 );
 
+	if (type == THRESHOLD)
+	{
+		m_imgThresholdFilter.apply(  *m_cvImage , *m_cvImage);
+	}
+
+	if (type == INVERT)
+	{
+		cvNot( m_cvImage, m_cvImage);
+	}
 	// TODO
-	//m_imgThresholdFilter.apply(  *m_cvImage );
+	// Update texture when the next drawing call is made by the user
+	m_bUpdateTexture = true;
 }
 
 
@@ -888,5 +969,113 @@ void Image::toGray()
 	// Now this image is valid
 	m_bIsValid = true;
 }
+
+void Image::operator +=	( float scalar ){
+	switch( m_cvImage->nChannels )
+	{
+	case 1:
+	cvAddS( m_cvImage, cvScalar(scalar), m_cvImage );
+		break;
+	case 3:
+	cvAddS( m_cvImage, cvScalar(scalar,scalar,scalar), m_cvImage );
+		break;
+	case 4:
+	cvAddS( m_cvImage, cvScalar(scalar,scalar,scalar,scalar), m_cvImage );
+		break;
+	default:
+		THROW_EXCEPTION( "Invalid number of channels in image" )
+			break;
+	}
+}
+
+void Image::operator -=	( float scalar ){
+	switch( m_cvImage->nChannels )
+	{
+	case 1:
+		cvSubS( m_cvImage, cvScalar(scalar), m_cvImage );
+		break;
+	case 3:
+		cvSubS( m_cvImage, cvScalar(scalar,scalar,scalar), m_cvImage );
+		break;
+	case 4:
+		cvSubS( m_cvImage, cvScalar(scalar,scalar,scalar,scalar), m_cvImage );
+		break;
+	default:
+		THROW_EXCEPTION( "Invalid number of channels in image" )
+			break;
+	}
+}
+
+void Image::operator +=	( const Image& img ){
+
+	cvAdd( m_cvImage, &img.getCVImage(), m_cvImage );
+}
+
+void Image::operator -=	( const Image& img ){
+
+	cvSub( m_cvImage, &img.getCVImage(), m_cvImage );
+}
+
+void Image::blend( const Image& other, float percentage )
+{
+	percentage = constrain( percentage, 0.0f, 1.0f );
+	cvAddWeighted( m_cvImage, 1.0 - percentage, &other.getCVImage(), percentage, 0.0f, m_cvImage );
+}
+
+void Image::operator = ( float scalar)
+{
+	switch( m_cvImage->nChannels )
+	{
+		case 1:
+			cvSet( m_cvImage, cvScalar(scalar) );
+			break;
+		case 3:
+			cvSet( m_cvImage, cvScalar(scalar,scalar,scalar) );
+			break;
+		case 4:
+			cvSet( m_cvImage, cvScalar(scalar,scalar,scalar,scalar) );
+			break;
+		default:
+			THROW_EXCEPTION( "Invalid number of channels in image" )
+				break;
+	}
+}
+
+/**
+ * @brief Copy from image
+ * TODO: optimize
+ */
+void Image::copy( const Image& img )
+{
+	// TODO: add check size and formats
+	cvCopy( &img.getCVImage(), m_cvImage, NULL );
+	// Update texture when the next drawing call is made by the user
+	m_bUpdateTexture = true;
+}
+
+/**
+ * @brief Copy part of image to another
+ * TODO: optimize
+ */
+void Image::copy( const Image& img , int srcX, int srcY, int srcW, int srcH, int destX, int destY, int destW, int destH )
+{
+
+	// TODO: add check size and formats
+	cvCopy( &img.getCVImage(), m_cvImage, NULL );
+	// Update texture when the next drawing call is made by the user
+	m_bUpdateTexture = true;
+}
+
+// Ink modes
+void Image::setInkMode( ImageInkModes type )
+{
+
+	if (type == ADD)
+		m_quad.setAdditiveMode( true );
+
+	if (type == BLEND)
+		m_quad.setAdditiveMode( false );
+
+};
 
 } // namespace Graphics

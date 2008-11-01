@@ -55,10 +55,12 @@ public:
 	bool        isValid     () const	{ return m_bIsValid; }
   Mouse&      getMouse    ()				{ return m_mouse;    } 
   Keyboard&   getKeyboard ()				{ return m_keyboard; } 
+	
 
 	// Public input devices
 	static Mouse        m_mouse;            ///< System's mouse
 	static Keyboard     m_keyboard;         ///< System's keyboard
+
 
 private:
 

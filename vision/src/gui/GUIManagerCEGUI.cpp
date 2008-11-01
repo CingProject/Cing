@@ -48,6 +48,7 @@ GUIManagerCEGUI::GUIManagerCEGUI():
 	m_CEGUIRenderer( NULL ),
 	m_CEGUISystem( NULL ),
 	m_mainSheet( NULL ),
+	m_messageBoxWindow( NULL ),
 	m_bIsValid  ( false )
 {
 }
@@ -78,6 +79,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Register this class as OIS input listener to receive mouse notifications
 	// TODO: register also as keyBoardListener
 	Input::InputManager::getSingleton().getMouse().addListener( this );
+	Input::InputManager::getSingleton().getKeyboard().addListener( this );
 
 	// Select available skin sets
 	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"WindowsLook.scheme");
@@ -98,6 +100,20 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Now the gui managet is valid
 	m_bIsValid = true;
 
+	// Create the default message box
+	m_messageBoxWindow = (CEGUI::FrameWindow*)win.createWindow( "WindowsLook/StaticText", "MessageBox" );
+	m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(0) ) );
+	m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width), cegui_absdim(Globals::height) ) );	
+	m_messageBoxWindow->setProperty("VertFormatting", "TopAligned");
+	m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
+	m_messageBoxWindow->setProperty("TextColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF"); 
+	m_messageBoxWindow->setProperty("BackgroundColours", "tl:77777777 tr:77777777 bl:77777777 br:77777777"); 
+	m_messageBoxWindow->setVisible( false );
+
+	// Add it to the sheet
+	addGUIELement( m_messageBoxWindow );
+
+
 	// Init debug output
 	m_debugOutput.init();
 	m_debugOutput.setVisible( false );
@@ -111,6 +127,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 void GUIManagerCEGUI::end()
 {
 	m_debugOutput.end();
+	//CEGUI::WindowManager::getSingleton().destroyAllWindows();
 	Common::Release( m_CEGUISystem );
 	Common::Release( m_CEGUIRenderer );
 	m_bIsValid = false;
@@ -130,7 +147,8 @@ void GUIManagerCEGUI::addGUIELement( CEGUI::Window* guiElement )
 		return;
 	}
 
-	m_mainSheet->addChildWindow( guiElement );
+	if ( m_mainSheet )
+		m_mainSheet->addChildWindow( guiElement );
 }
 
 /**
@@ -189,6 +207,77 @@ bool GUIManagerCEGUI::mouseReleased( const OIS::MouseEvent& event, OIS::MouseBut
 
 	return true;
 }
+
+bool GUIManagerCEGUI::keyPressed( const OIS::KeyEvent &arg )
+{
+	if ( !isValid() )
+		return false;
+
+	// Notify CEGUI about the mouse event
+	m_CEGUISystem->injectKeyDown( arg.key );
+	m_CEGUISystem->injectChar( arg.text );
+	return true;
+}
+
+bool GUIManagerCEGUI::keyReleased( const OIS::KeyEvent &arg )
+{
+	if ( !isValid() )
+		return false;
+
+	// Notify CEGUI about the mouse event
+	m_CEGUISystem->injectKeyUp( arg.key );
+	return true;
+}
+
+
+
+/**
+ * @internal 
+ * @brief 
+ *
+ * @param
+ */
+void GUIManagerCEGUI::messageBox( const char* text, bool fullScreen /*= false*/ )
+{
+	if ( m_messageBoxWindow )
+	{
+		if ( fullScreen )
+		{
+			m_messageBoxWindow->setProperty("VertFormatting", "VertCentred");
+			m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
+			int margin = 20;
+			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(margin), cegui_absdim(margin) ) );
+			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width-margin*2), cegui_absdim(Globals::height-margin*2) ) );	
+		}
+		else
+		{
+			m_messageBoxWindow->setProperty("VertFormatting", "VertCentred");
+			m_messageBoxWindow->setProperty("HorzFormatting", "HorzCentred");
+			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(Globals::height/2) ) );
+			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width), cegui_absdim(50) ) );	
+		}
+		m_messageBoxWindow->setText( text );
+		m_messageBoxWindow->setVisible( true );
+	}
+}
+
+bool GUIManagerCEGUI::isMessageBoxVisible()
+{
+	if ( m_messageBoxWindow )
+		return m_messageBoxWindow->isVisible();
+	return false;
+}
+
+void GUIManagerCEGUI::hideMessageBox()
+{
+	if ( m_messageBoxWindow )
+	{
+		m_messageBoxWindow->setVisible( false );
+	}
+}
+
+
+
 
 /*
  * @internal

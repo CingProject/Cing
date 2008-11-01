@@ -93,7 +93,7 @@ protected:
 
 private:
 	long frames_;
-  	long lastTime_;
+  	time_t lastTime_;
 
 	bool fpson_;
 	void fpsCount();

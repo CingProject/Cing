@@ -425,6 +425,10 @@
 						RelativePath="..\..\..\src\computervision\BlobFinder.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\..\..\src\computervision\BlobTracker.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Header Files"
@@ -439,6 +443,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\computervision\BlobFinder.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\computervision\BlobTracker.h"
 						>
 					</File>
 					<File
@@ -494,6 +502,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\src\framework\FrameworkUserAPI.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\src\framework\UserAppGlobals.cpp"
 						>
 					</File>
@@ -515,6 +527,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\framework\FrameworkPrereqs.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\framework\FrameworkUserAPI.h"
 						>
 					</File>
 					<File
@@ -547,6 +563,14 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\graphics\DebugOverlay.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\DynamicLines.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\DynamicRenderable.h"
 						>
 					</File>
 					<File
@@ -682,6 +706,14 @@
 								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 							/>
 						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\DynamicLines.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\DynamicRenderable.cpp"
+						>
 					</File>
 					<File
 						RelativePath="..\..\..\src\graphics\Font.cpp"

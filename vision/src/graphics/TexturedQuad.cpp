@@ -94,6 +94,12 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
   if ( isValid() )
     return true;
 
+	// Get power of 2 texture size
+	//m_textWidthP2 = nextPowerOf2( textureWidth );
+	//m_textHeightP2 = nextPowerOf2( textureHeight );
+	m_textWidthP2 = textureWidth;
+	m_textHeightP2 = textureHeight;
+
   // Store the texture data
   m_textWidth     = textureWidth;
   m_textHeight    = textureHeight;
@@ -107,7 +113,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
   m_ogreTexture = Ogre::TextureManager::getSingleton().createManual( m_ogreTextureName,
                                                                     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
                                                                     Ogre::TEX_TYPE_2D,																		// type
-																																		(Ogre::uint)textureWidth, (Ogre::uint)textureHeight,  // resolution
+																																		(Ogre::uint)m_textWidthP2, (Ogre::uint)m_textHeightP2,  // resolution
                                                                     0,                                          					// number of mipmaps
 																																		(Ogre::PixelFormat)format,														// pixel format
                                                                     Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE );  					// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
@@ -129,9 +135,9 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
 	m_quad->begin( m_ogreMaterialName );
 
     // m_quad positions and texture coordinates
-    m_quad->position( 0.0, 0.0, 0.0);  m_quad->textureCoord( 0, 1 );
-    m_quad->position( 1.0, 0.0, 0.0);  m_quad->textureCoord( 1, 1 );
-    m_quad->position( 1.0, 1.0, 0.0);  m_quad->textureCoord( 1, 0 );
+    m_quad->position( 0.0, 0.0, 0.0);  m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+    m_quad->position( 1.0, 0.0, 0.0);  m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+    m_quad->position( 1.0, 1.0, 0.0);  m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
     m_quad->position( 0.0, 1.0, 0.0);  m_quad->textureCoord( 0, 0 );
 
     // m_quad indexes (two triangles)
@@ -153,6 +159,24 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format
 
 	return true;
 }
+/**
+ * @brief Change ink drawing mode 
+ */
+void  TexturedQuad::setAdditiveMode ( bool value )
+{
+
+	if ( value )
+	{
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+		material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_ADD);
+	} 
+	else
+	{
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+		material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+	}
+
+};
 
 /**
  * @internal
@@ -169,8 +193,15 @@ void TexturedQuad::end()
   Ogre::SceneManager* sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManagerPtr();
 	if ( sceneManager )
 	{
+		// Destroy the manual object
 		sceneManager->destroyManualObject( m_ogreManualObjectName );
 
+		// Destroy material
+		Ogre::MaterialManager::getSingleton().remove( m_ogreMaterialName );
+
+		// Destroy texture
+		Ogre::TextureManager::getSingleton().remove( m_ogreTextureName );
+		
 		// Unregister in graphics manager so that it is marked as invisible every frame
 		GraphicsManager::getSingleton().removeDrawableImage( this );
 	}
@@ -299,6 +330,58 @@ void TexturedQuad::draw( float x, float y, float z, float width, float height )
 }
 
 /**
+* @brief Draws the texture quad in three dimensions, specifying four points
+*
+* @param xPos x1 
+* @param yPos y1 
+* @param zPos z1 
+* @param xPos x2 
+* @param yPos y2 
+* @param zPos z2 
+* @param xPos x3 
+* @param yPos y3 
+* @param zPos z3 
+* @param xPos x4 
+* @param yPos y4 
+* @param zPos z4 
+*/
+void TexturedQuad::draw( float x1, float y1, float z1,
+												 float x2, float y2, float z2,
+												 float x3, float y3, float z3,
+												 float x4, float y4, float z4)
+{
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to draw a textured quad not initialized" );
+		return;
+	}
+
+	// If the object is set to render in 2d -> set it to render in 3d
+	if ( m_render2D )
+		set3dRendering();
+
+	// Generate the geometry of the quad
+	m_quad->beginUpdate( 0 );
+
+	// m_quad positions and texture coordinates
+	// TODO revisar esto...por qué hay q voltear las coordenadas uv?
+	m_quad->position( x1, y1, z1 );  m_quad->textureCoord( 0, -1 );
+	m_quad->position( x2, y2, z2 );  m_quad->textureCoord( 1, -1 );
+	m_quad->position( x3, y3, z3 );  m_quad->textureCoord( 1, 0 );
+	m_quad->position( x4, y4, z4 );  m_quad->textureCoord( 0, 0 );
+
+	// m_quad indexes (two triangles)
+	m_quad->triangle( 0, 2, 1 );
+	m_quad->triangle( 0, 3, 2 );
+
+	// Finish defining geometry
+	m_quad->end();
+
+	// Set properties of the quad, and set visible -> it will be rendered in the next render
+	m_quadSceneNode->setVisible( true );
+}
+
+/**
  * @brief Draws the texture quad in two dimensions, with the texture size
  * 
  * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
@@ -375,7 +458,10 @@ void TexturedQuad::updateTexture( unsigned char* textureData, int width, int hei
 		THROW_EXCEPTION( "Trying to update texture with different format" );
 
 	// Update texture
-	m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
+	//m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
+	Ogre::PixelBox newData( width, height, 1, (Ogre::PixelFormat)format, textureData );
+	Ogre::PixelBox dest( m_textWidth, m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
+	m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData, dest );
 }
 
 /**
@@ -396,8 +482,11 @@ void TexturedQuad::flipVertical()
 	m_quad->position( 0.0, 1.0, 0.0);  m_quad->textureCoord( 0, 1 );
 
 	// m_quad indexes (two triangles)
-	m_quad->triangle( 0, 1, 2 );
-	m_quad->triangle( 0, 2, 3 );
+	m_quad->triangle( 0, 2, 1 );
+	m_quad->triangle( 0, 3, 2 );
+// Versión que estaba en carpeta vision
+//	m_quad->triangle( 0, 1, 2 );
+//	m_quad->triangle( 0, 2, 3 );
 
 	// Finish updating geometry
 	m_quad->end();

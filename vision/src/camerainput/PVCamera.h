@@ -26,9 +26,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "BaseCameraInput.h"
 
 // PortVideo
-#include "externLibs/PortVideo/cameraTool.h"
-#include "externLibs/PortVideo/RingBuffer.h"
-#include "externLibs/PortVideo/FrameProcessor.h"
+#include "externLibs/PortVideo/common/cameraTool.h"
+#include "externLibs/PortVideo/common/RingBuffer.h"
+#include "externLibs/PortVideo/common/FrameProcessor.h"
 
 // STL
 #include <string>

@@ -53,7 +53,7 @@ public:
 	virtual ~Object3D();
 
 	// Init / Release / Update
-	virtual void      init        			( const std::string& meshName = "", const std::string& materialName = "" );
+	virtual void      init        			( const std::string& meshName = "", const std::string& materialName = "", Ogre::SceneNode* parent = NULL );
 	virtual void      end         			();
 
 	// Query methods
@@ -74,6 +74,9 @@ public:
 	
 	void							setOrientation		( const Quaternion& orientation );
 	void							setOrientation		( const Vector& axis, float angle );
+
+	void							rotate						( const Vector& axis, float angle );
+	void							rotate						( const Quaternion& quat );
 
 	void              setScale    			( float xScale, float yScale, float zScale );
 	void              setScale    			( float xScale, float yScale );

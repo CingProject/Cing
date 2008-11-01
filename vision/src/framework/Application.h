@@ -65,6 +65,9 @@ public:
 	bool keyPressed			( const OIS::KeyEvent& event );
 	bool keyReleased		( const OIS::KeyEvent& event);
 
+	// Control application flow
+	void	finishApp()		{ m_finish = true; }
+
 private:
 	// private constructor to ensure singleton
 	Application();
@@ -72,6 +75,7 @@ private:
 	// Attributes
 	Ogre::Timer		m_timer;				///< Application timer. Used to measure time between frames
 	Ogre::Timer		m_absTimer;			///< Time to control the total time elapsed since application started
+	bool					m_finish;				///< If true app will be closed in the next iteration of the app loop
 	bool					m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };

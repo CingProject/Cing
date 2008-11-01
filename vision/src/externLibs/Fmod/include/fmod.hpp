@@ -83,13 +83,15 @@ namespace FMOD
                                                 
         // Plug-in support                       
         FMOD_RESULT F_API setPluginPath          (const char *path);
-        FMOD_RESULT F_API loadPlugin             (const char *filename, FMOD_PLUGINTYPE *plugintype, int *index);
+        FMOD_RESULT F_API loadPlugin             (const char *filename, unsigned int *handle, unsigned int priority = 0);
+        FMOD_RESULT F_API unloadPlugin           (unsigned int handle);
         FMOD_RESULT F_API getNumPlugins          (FMOD_PLUGINTYPE plugintype, int *numplugins);
-        FMOD_RESULT F_API getPluginInfo          (FMOD_PLUGINTYPE plugintype, int index, char *name, int namelen, unsigned int *version);
-        FMOD_RESULT F_API unloadPlugin           (FMOD_PLUGINTYPE plugintype, int index);
-        FMOD_RESULT F_API setOutputByPlugin      (int index);
-        FMOD_RESULT F_API getOutputByPlugin      (int *index);
-        FMOD_RESULT F_API createCodec            (FMOD_CODEC_DESCRIPTION *description);
+        FMOD_RESULT F_API getPluginHandle        (FMOD_PLUGINTYPE plugintype, int index, unsigned int *handle);
+        FMOD_RESULT F_API getPluginInfo          (unsigned int handle, FMOD_PLUGINTYPE *plugintype, char *name, int namelen, unsigned int *version);
+        FMOD_RESULT F_API setOutputByPlugin      (unsigned int handle);
+        FMOD_RESULT F_API getOutputByPlugin      (unsigned int *handle);
+        FMOD_RESULT F_API createDSPByPlugin      (unsigned int handle, DSP **dsp);
+        FMOD_RESULT F_API createCodec            (FMOD_CODEC_DESCRIPTION *description, unsigned int priority = 0);
                                                  
         // Init/Close                            
         FMOD_RESULT F_API init                   (int maxchannels, FMOD_INITFLAGS flags, void *extradriverdata);
@@ -128,7 +130,6 @@ namespace FMOD
         FMOD_RESULT F_API createStream           (const char *name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO *exinfo, Sound **sound);
         FMOD_RESULT F_API createDSP              (FMOD_DSP_DESCRIPTION *description, DSP **dsp);
         FMOD_RESULT F_API createDSPByType        (FMOD_DSP_TYPE type, DSP **dsp);
-        FMOD_RESULT F_API createDSPByIndex       (int index, DSP **dsp);
         FMOD_RESULT F_API createChannelGroup     (const char *name, ChannelGroup **channelgroup);
         FMOD_RESULT F_API createSoundGroup       (const char *name, SoundGroup **soundgroup);
         FMOD_RESULT F_API createReverb           (Reverb **reverb); 

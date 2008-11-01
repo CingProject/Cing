@@ -67,6 +67,8 @@ public:
 	// Draw on scene
 	void	draw	( float xPos, float yPos, float zPos );
 	void	draw	( float xPos, float yPos, float zPos, float width, float height );
+	void	draw	( float x1, float y1, float z1,	float x2, float y2, float z2,
+								float x3, float y3, float z3,	float x4, float y4, float z4);
 	void	draw2d( float xPos, float yPos );
 	void	draw2d( float xPos, float yPos, float width, float height );
 
@@ -82,8 +84,12 @@ public:
 
 	// Image processing
 	void	filter	( ImageProcessingFilters type );
+	void	filter	( ImageProcessingFilters type, float param1 );
 	void	toColor	();
 	void	toGray	();
+
+	// Ink modes
+	void setInkMode( ImageInkModes type );
 
 	// Updates texture data
 	void updateTexture();
@@ -98,9 +104,18 @@ public:
 	int							getNChannels() const	{ return m_nChannels; }
 	Color						getPixel		( int x, int y );
 
-
 	// Operators and operations
-	void	operator=	( const Image& other );
+	void operator =	( const Image& other );
+	void operator = ( float scalar);
+	void operator -=	( float scalar );
+	void operator +=	( float scalar );
+	void operator -=	( const Image& img );
+	void operator +=	( const Image& img );
+	void blend				( const Image& other, float percentage );
+
+	// Other
+	void copy( const Image& img );
+	void copy( const Image& img , int srcX, int srcY, int srcW, int srcH, int destX, int destY, int destW, int destH);
 
 	// Texture update control
 	void					setUpdateTexture( bool updateTextureFlag );	

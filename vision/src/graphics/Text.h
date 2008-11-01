@@ -51,6 +51,7 @@ public:
 	void  setText (Ogre::String szString);
 	void  setPos  (float x,float y);
 	void  setCol  (float R,float G,float B,float I);
+	void	show		(bool show ) const;
 
 
 private:

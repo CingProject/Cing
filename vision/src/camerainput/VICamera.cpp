@@ -53,7 +53,7 @@ VICamera::~VICamera()
  * @param[in] fps				frames per second to capture
  * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-void VICamera::init( int deviceId, int width, int height, int fps, ImageFormat format )
+void VICamera::init( int deviceId, int width, int height, int fps, ImageFormat format, bool multithreaded /*= true*/ )
 {
 	// List connected devices
 	int numDevices = videoInput::listDevices();	
@@ -61,9 +61,12 @@ void VICamera::init( int deviceId, int width, int height, int fps, ImageFormat f
 	// uncomment for silent setup
 	//videoInput::setVerbose(false);
 
+	// multi threaded?
+	m_viCamera.setUseCallback( multithreaded );
+
 	// Setup camera
 	m_viCamera.setupDevice( deviceId, width, height, VI_COMPOSITE ); 
-
+	
 	// Init base class (with actual capture resolution)
 	BaseCameraInput::init( deviceId, m_viCamera.getWidth( deviceId ), m_viCamera.getHeight( deviceId ), fps, format );
 
@@ -78,6 +81,8 @@ void VICamera::init( int deviceId, int width, int height, int fps, ImageFormat f
  */
 void VICamera::update()
 {
+	setNewFrame( false );
+
 	// If we have a new frame
 	if( m_viCamera.isFrameNew( m_deviceId ) )	
 	{
@@ -91,6 +96,7 @@ void VICamera::update()
 											m_viCamera.getWidth( m_deviceId ), 
 											m_viCamera.getHeight( m_deviceId ),
 											format );
+		setNewFrame( true );
 	}
 }
 

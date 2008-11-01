@@ -117,7 +117,7 @@ void Text::setText(char *szString)
 	textArea->setDimensions(1.0f,1.0f);
 	textArea->setMetricsMode(Ogre::GMM_RELATIVE);
 	textArea->setFontName("BlueHighway");
-	textArea->setCharHeight(0.03f);
+	textArea->setCharHeight(0.02f);
 }
 void Text::setText(Ogre::String szString) // now You can use Ogre::String as text
 {
@@ -125,7 +125,7 @@ void Text::setText(Ogre::String szString) // now You can use Ogre::String as tex
 	textArea->setDimensions(1.0f,1.0f);
 	textArea->setMetricsMode(Ogre::GMM_RELATIVE);
 	textArea->setFontName("BlueHighway");
-	textArea->setCharHeight(0.03f);
+	textArea->setCharHeight(0.02f);
 }
 void Text::setPos(float x,float y)
 {
@@ -134,6 +134,23 @@ void Text::setPos(float x,float y)
 void Text::setCol(float R,float G,float B,float I)
 {
 	textArea->setColour(Ogre::ColourValue(R,G,B,I));
+}
+
+/**
+ * @internal 
+ * @brief Shows or hides the text
+ *
+ * @param
+ */
+void Text::show(bool show ) const
+{
+	if ( textArea )
+	{
+		if ( show )
+			textArea->show();
+		else
+			textArea->hide();
+	}
 }
 
 } // namespace Graphics

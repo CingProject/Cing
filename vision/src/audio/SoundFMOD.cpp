@@ -15,6 +15,7 @@
 #include "common/LogManager.h"
 #include "common/ResourceManager.h"
 #include "common/Exception.h"
+#include "common/SystemUtils.h"
 
 // Includes
 #include <string>
@@ -39,8 +40,9 @@ FMOD_SYSTEM* SoundFMOD::m_sysPtr = 0;
 SoundFMOD::SoundFMOD() :
   m_sound( 0 ),
   m_channel( 0 ),
+	m_initialFreq( 0 ),
   m_soundVolume( 1.0f ), // Max volume
-  m_soundPan( 0 ), // No pan
+  m_soundPan( 0.5f ), // No pan
   m_soundSpeed( 1.0f ) // Normal speed
 {
 
@@ -61,6 +63,19 @@ SoundFMOD::~SoundFMOD()
  */
 void SoundFMOD::load( const char* filename )
 {
+	// Check if the file exist
+	std::string completePath = Common::ResourceManager::userDataPath + filename;
+	if ( !Common::fileExists( completePath ) )
+	{
+		end();
+		LOG_ERROR( "Sound %s does NOT exist", completePath.c_str() );
+		return;
+	}
+
+	// If was initialized previously -> release it first
+	if( m_sound )
+		end();
+
   // Init shared audio if needed
   if( !m_sysPtr )
 		m_sysPtr = SoundManagerFMOD::getSingleton().init();
@@ -70,14 +85,13 @@ void SoundFMOD::load( const char* filename )
       end();
 
   // Log
-	std::string completePath = Common::ResourceManager::userDataPath + filename;
   LOG( "Loading sound file '%s'", completePath.c_str() );
 
   // Create the sound
-  createSound( completePath.c_str() );
-
-  // Message
-  LOG( "Sound %s successfully loaded", filename );
+  if ( createSound( completePath.c_str() ) )
+	  LOG( "Sound %s successfully loaded", filename );
+	else
+		LOG( "Error loading sound %s", filename );
 }
 
 /**
@@ -357,18 +371,39 @@ float SoundFMOD::getCurrentLevel( int channelNum /*= 0*/ ) const
   return fabsf( value );
 }
 
+unsigned int SoundFMOD::getDuration( ) const
+{
+	unsigned int value = 0;
+
+	// Check system
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to get duration of a Sound that was not properly loaded." );
+		return 0;
+	}
+	// Get the data from the sound 
+	FMOD_RESULT result = FMOD_Sound_GetLength( m_sound, &value, FMOD_TIMEUNIT_MS );
+
+	// Check for unrecoverable error
+	if( failedFMODResultCode( result ) )
+		LOG_ERROR( getFmodMessageFromCode( result ) );
+
+	// The value
+	return value;
+}
+
 /**
  * @brief Creates the fmod sound from filename
  * @param [in] filename Path to filename to load
  *
  */
-void SoundFMOD::createSound( const char* filename )
+bool SoundFMOD::createSound( const char* filename )
 {
 	// Already has a sound? ->Do not allow it!
   if( m_sound )
 	{
       LOG_ERROR( "Tried to reload a blocked sound" );
-			return;
+			return false;
 	}
 
   // Create sound
@@ -384,10 +419,13 @@ void SoundFMOD::createSound( const char* filename )
       message += "'";
       // Failed
       LOG_ERROR( message.c_str() );
+			return false;
   }
 
   // Register into audio shared
 	SoundManagerFMOD::getSingleton().registerSound( this );
+
+	return true;
 
 }
 
@@ -453,7 +491,7 @@ void SoundFMOD::startPlayback( bool loop )
 
 	// If frequency has not been set, get it now
 	if( m_initialFreq == 0 ) 
-	{
+	{ 
 			// Get frequency
 			FMOD_Channel_GetFrequency( m_channel, &m_initialFreq );
 			// Check for success
