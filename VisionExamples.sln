@@ -62,11 +62,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11_Demo_Interactive3dObject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BetaCairo", "examples\BetaCairo\BetaCairo.vcproj", "{933E8037-5027-4E2E-B1B0-0A948781D87C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
@@ -124,8 +125,16 @@ Global
 		{07E8F4C2-B3A5-4958-AC5E-18A35A5D5854}.Debug|Win32.Build.0 = Debug|Win32
 		{07E8F4C2-B3A5-4958-AC5E-18A35A5D5854}.Release|Win32.ActiveCfg = Release|Win32
 		{07E8F4C2-B3A5-4958-AC5E-18A35A5D5854}.Release|Win32.Build.0 = Release|Win32
+		{933E8037-5027-4E2E-B1B0-0A948781D87C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{933E8037-5027-4E2E-B1B0-0A948781D87C}.Debug|Win32.Build.0 = Debug|Win32
+		{933E8037-5027-4E2E-B1B0-0A948781D87C}.Release|Win32.ActiveCfg = Release|Win32
+		{933E8037-5027-4E2E-B1B0-0A948781D87C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
