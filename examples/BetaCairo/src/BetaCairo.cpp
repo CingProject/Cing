@@ -5,13 +5,12 @@
 using namespace Ogre;
 using namespace BetaCairo;
 
-BetaCairo::CairoManager* mCairo;
-BetaCairo::Drawing* mCanvas2d;
+CairoManager* mCairo;
+Drawing* mCanvas2d;
 
 MovablePlane* mPlane;
 Entity* mPlaneEnt;
 SceneNode* mPlaneNode;
-
 MaterialPtr VectorDrawingMaterial;
 
 CREATE_APPLICATION( "Vision Demo" );
@@ -27,35 +26,11 @@ void setup()
 	// Set the DPI to 96
 	mCairo->setDPI(96.0f);
 
-	// Create a widthxheightpx Drawing called "Vector Draw", With no alpha transparency (PF_RGB). It has 4 mipmap levels.
-	mCanvas2d = mCairo->createDrawing("Vector Draw", width/2,height/2, PF_RGB, 4);
-
-	// Set the drawing colour to a light gray.
-	mCanvas2d->setColour(Colour::fromRGB(88,129,183));
-
-	// Now fill the entire image with the colour.
-	mCanvas2d->paint();
+	// Create a widthXheight drawing called "Vector Draw", With no alpha transparency (PF_RGB). It has 4 mipmap levels.
+	mCanvas2d = mCairo->createDrawing("Vector Draw", width,height, PF_RGB, 0);
 
 	// Set our unit scale to pixels.
 	mCanvas2d->setScalar(PIXEL);
-
-	// Set the lines we stroke to have a 2 pixel width.
-	mCanvas2d->setLineThickness(2, PIXEL);
-
-	// Set the colour to a dark gray
-	mCanvas2d->setColour(Colour::fromRGB(210,144,183));
-
-	// Move halfway across the image, on the top.
-	mCanvas2d->moveTo(0,0);
-
-	// Draw a path downwards, to the bottom.
-	mCanvas2d->lineTo(10,10);
-
-	// Stroke the lines we just drew.
-	mCanvas2d->stroke();
-
-	// Commit the changes to the Texture.
-	mCanvas2d->update();
 
 	// Create a material named "GridMaterial", based on this Drawing.
 	VectorDrawingMaterial = mCairo->attachDrawingToANewMaterial("VectorDrawingMaterial", mCanvas2d);
@@ -74,18 +49,32 @@ void setup()
 	mPlaneNode->setDirection(0,-1,0);
 	// And attach the GridMaterial to it.
 	mPlaneEnt->setMaterialName("VectorDrawingMaterial");
-
 }
 
 void draw()
 { 
-	mCanvas2d->setOperator( BetaCairo::Operator_Clear ); 
-	// Draw a path downwards, to the bottom.
-	mCanvas2d->lineTo(random(100),mouseY);
+	// Clear drawing
+	mCanvas2d->setOperator( BetaCairo::Operator_Clear );
+	mCanvas2d->paint();
+	mCanvas2d->setOperator( BetaCairo::Operator_Add );
+	
+	// Set the drawing colour to a light gray.
+	mCanvas2d->setColour(Colour::fromRGB(88,129,183));
+	mCanvas2d->paint();
+  
 
-	// Stroke the lines we just drew.
-	mCanvas2d->stroke();
+	mCanvas2d->setColour(Colour::fromRGB(255,0,0));
+  
+	for (int i = 10; i<92; i ++)
+	{
+		for (int j = 10; j<96; j ++)
+		{
+			mCanvas2d->arc(i*10, j*10, 10.0, 0, 360);	
+		} 
+	} 
 
+
+	mCanvas2d->stroke();	
 	// Commit the changes to the Texture.
 	mCanvas2d->update();
 }
