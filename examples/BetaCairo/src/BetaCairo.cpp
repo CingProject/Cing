@@ -28,6 +28,7 @@ void setup()
 
 	// Create a widthXheight drawing called "Vector Draw", With no alpha transparency (PF_RGB). It has 4 mipmap levels.
 	mCanvas2d = mCairo->createDrawing("Vector Draw", width,height, PF_RGB, 0);
+	mCanvas2d->setAntiAliasing(AA_None);
 
 	// Set our unit scale to pixels.
 	mCanvas2d->setScalar(PIXEL);
@@ -49,6 +50,7 @@ void setup()
 	mPlaneNode->setDirection(0,-1,0);
 	// And attach the GridMaterial to it.
 	mPlaneEnt->setMaterialName("VectorDrawingMaterial");
+
 }
 
 void draw()
