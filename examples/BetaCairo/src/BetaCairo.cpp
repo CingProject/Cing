@@ -56,25 +56,32 @@ void draw()
 	// Clear drawing
 	mCanvas2d->setOperator( BetaCairo::Operator_Clear );
 	mCanvas2d->paint();
-	mCanvas2d->setOperator( BetaCairo::Operator_Add );
+	mCanvas2d->setOperator( BetaCairo::Operator_Source );
 	
 	// Set the drawing colour to a light gray.
-	mCanvas2d->setColour(Colour::fromRGB(88,129,183));
+	mCanvas2d->setColour(Colour::fromRGB(135,135,135));
 	mCanvas2d->paint();
   
 
-	mCanvas2d->setColour(Colour::fromRGB(255,0,0));
-  
+	mCanvas2d->setColour(Colour::fromRGB(0,0,0));
+	
+	// Set the lines we stroke to have a 2 pixel width.
+	mCanvas2d->setLineThickness(1, PIXEL);
+
 	for (int i = 10; i<92; i ++)
 	{
-		for (int j = 10; j<96; j ++)
+		for (int j = 10; j<66; j ++)
 		{
-			mCanvas2d->arc(i*10, j*10, 10.0, 0, 360);	
+			mCanvas2d->arc(i*10, j*10, 5.0, 0, 360);
+			mCanvas2d->stroke();	
 		} 
 	} 
 
+	mCanvas2d->setColour(Colour::fromRGB(0,0,0));
 
+	mCanvas2d->arc(width/2, height/2, 380.0, 0, 360);
 	mCanvas2d->stroke();	
+
 	// Commit the changes to the Texture.
 	mCanvas2d->update();
 }
