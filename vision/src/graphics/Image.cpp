@@ -567,16 +567,48 @@ void Image::triangle( float x1, float y1, float x2, float y2, float x3, float y3
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
-	// Get Stroke and Fill Color
-	Color color        = graphManager.getStrokeColor();
-	int   strokeWeight = graphManager.getStrokeWeight();
 
-	cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
-					strokeWeight,8,0); 
-	cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
-		strokeWeight,8,0);
-	cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x1,y1),CV_RGB(color.r,color.g,color.b),
-		strokeWeight,8,0);
+	if (graphManager.getFill())
+	{
+		// Get Fill Color
+		Color color        = graphManager.getFillColor();
+
+		CvPoint* pts = new CvPoint[3];
+		pts[0] = cvPoint(x1,y1);
+		pts[1] = cvPoint(x2,y2);
+		pts[2] = cvPoint(x3,y3);
+
+		if (graphManager.getSmooth())
+			cvFillConvexPoly( m_cvImage , pts, 3,	CV_RGB(color.r,color.g,color.b), 16, 0 );
+		else
+			cvFillConvexPoly( m_cvImage , pts, 3,	CV_RGB(color.r,color.g,color.b), 4, 0 );
+
+		delete []pts;
+	}
+
+	if (graphManager.getStroke())
+	{
+		// Get Stroke Color
+		Color color        = graphManager.getStrokeColor();
+		int   strokeWeight = graphManager.getStrokeWeight();
+
+		if (graphManager.getSmooth())
+		{
+			cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,16,0); 
+			cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,16,0);
+			cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x1,y1),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,16,0);
+		}else{
+			cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,4,0); 
+			cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,4,0);
+			cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x1,y1),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,4,0);
+		}
+	}
 
 	// Update texture when the next drawing call is made by the user
 	m_bUpdateTexture = true;
@@ -694,31 +726,57 @@ void Image::quad( float x1, float y1, float x2, float y2, float x3, float y3, fl
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
-	// Get Stroke and Fill Color
-	Color color        = graphManager.getStrokeColor();
-	int   strokeWeight = graphManager.getStrokeWeight();
 
-	// Draw a quad	
-	int count = 4;
-	CvPoint pt[4];
+	if (graphManager.getFill())
+	{
+		// Get Fill Color
+		Color color        = graphManager.getFillColor();
 
-	pt[0] = cvPoint(x1,y1);
-	pt[1] = cvPoint(x2,y2);
-	pt[2] = cvPoint(x3,y3);
-	pt[3] = cvPoint(x4,y4);
+		CvPoint* pts = new CvPoint[4];
+		pts[0] = cvPoint(x1,y1);
+		pts[1] = cvPoint(x2,y2);
+		pts[2] = cvPoint(x3,y3);
+		pts[3] = cvPoint(x4,y4);
 
-	CvPoint* rect = pt;
+		if (graphManager.getSmooth())
+			cvFillConvexPoly( m_cvImage , pts, 4,	CV_RGB(color.r,color.g,color.b), 16, 0 );
+		else
+			cvFillConvexPoly( m_cvImage , pts, 4,	CV_RGB(color.r,color.g,color.b), 4, 0 );
 
-	//TODO: Check this, error if use pt variable
-	cvPolyLine( m_cvImage,
-							(CvPoint**)&rect,
-							&count,
-							1,
-							1,
-							CV_RGB(color.r,color.g,color.b),
-							strokeWeight,
-							CV_AA,
-							0);
+		delete []pts;
+	}
+
+	if (graphManager.getStroke())
+	{
+		// Get Stroke Color
+		// Get Fill Color
+		Color color        = graphManager.getStrokeColor();
+		int   strokeWeight = graphManager.getStrokeWeight();	
+
+		if (graphManager.getSmooth())
+		{
+
+			cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,16,0); 
+			cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,16,0);
+			cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x4,y4),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,16,0);
+			cvLine( m_cvImage,cvPoint(x4,y4),cvPoint(x1,y1),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,16,0);
+
+		}else{
+
+			cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,4,0); 
+			cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,4,0);
+			cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x4,y4),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,4,0);
+			cvLine( m_cvImage,cvPoint(x4,y4),cvPoint(x1,y1),CV_RGB(color.r,color.g,color.b),
+				strokeWeight,4,0);
+		}
+	}
 
 	// Update texture when the next drawing call is made by the user
 	m_bUpdateTexture = true;
@@ -757,18 +815,90 @@ void Image::text( float x1, float y1,  const char* text )
  */
 void Image::rect( float x1, float y1, float x2, float y2 )
 {
-	GraphicsManager& graphManager = GraphicsManager::getSingleton();
-	// Get Stroke and Fill Color
-	Color color        = graphManager.getStrokeColor();
-	int   strokeWeight = graphManager.getStrokeWeight();
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-	// Draw a rectangle
-	cvRectangle(m_cvImage,
-							cvPoint(x1,y1),
-							cvPoint(x2,y2),
-							CV_RGB(color.r,color.g,color.b),
-							strokeWeight);		///-> Thickness.
-	
+	GraphicsManager& graphManager = GraphicsManager::getSingleton();
+
+	float widthDIV2 = x2/2;
+	float heightDIV2 = y2/2;
+
+	if (graphManager.getFill())
+	{
+		// Get Fill Color
+		Color color        = graphManager.getFillColor();
+
+		switch( graphManager.getRectMode() )
+		{
+		case CORNER: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+
+		case CORNERS: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+
+		case CENTER:
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+
+		case RADIUS: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+		}
+	}
+
+	if (graphManager.getStroke())
+	{
+		// Get Stroke Color
+		Color color        = graphManager.getStrokeColor();
+		int   strokeWeight = graphManager.getStrokeWeight();
+		switch( graphManager.getRectMode() )
+		{
+
+		case CORNER: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case CORNERS: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case CENTER: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case RADIUS: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+		}
+	}
+
 	// Update texture when the next drawing call is made by the user
 	m_bUpdateTexture = true;
 }
@@ -783,26 +913,97 @@ void Image::rect( float x1, float y1, float x2, float y2 )
  */
 void Image::ellipse( float x, float y, float width, float height )
 {
+	
 	// Check the image is valid
 	if ( !isValid() )
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
-	// Get Stroke and Fill Color
-	Color color        = graphManager.getStrokeColor();
-	int   strokeWeight = graphManager.getStrokeWeight();
 
-	cvEllipse(	m_cvImage,							///-> Image.
-							cvPoint(x,y),						///-> Center of the ellipse.
-							cvSize(width,height),		///-> Length of the ellipse axes. 
-							0,											///->	Rotation angle.
-							0,											///-> Starting angle of the elliptic arc.
-							360,										///-> Ending angle of the elliptic arc.
-							CV_RGB(color.r,color.g,color.b),///-> Ellipse color.
-							strokeWeight );										///-> Thickness of the ellipse arc.
-	
+//	float widthDIV2 = x2/2;
+//	float heightDIV2 = y2/2;
+
+		Color color        = graphManager.getFillColor();
+	cvEllipse(	m_cvImage, cvPoint(x,y), cvSize(width/2,height/2), 0,	0, 360,	CV_RGB(color.r,color.g,color.b),-1,16 );
+/*
+	if (graphManager.getFill())
+	{
+		// Get Fill Color
+
+
+		switch( graphManager.getRectMode() )
+		{
+		case CORNER: 
+			if (graphManager.getSmooth())
+
+			else
+				cvEllipse(	m_cvImage, cvPoint(x,y), cvSize(x1+width,y1+height), 0,	0, 360,	CV_RGB(color.r,color.g,color.b),-1,4 );
+			break;
+
+		case CORNERS: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+
+		case CENTER:
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+
+		case RADIUS: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+		}
+	}
+
+	if (graphManager.getStroke())
+	{
+		// Get Stroke Color
+		Color color        = graphManager.getStrokeColor();
+		int   strokeWeight = graphManager.getStrokeWeight();
+		switch( graphManager.getRectMode() )
+		{
+
+		case CORNER: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case CORNERS: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case CENTER: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case RADIUS: 
+			if (graphManager.getSmooth())
+				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+		}
+	}
+*/
 	// Update texture when the next drawing call is made by the user
 	m_bUpdateTexture = true;
+
 }
 
 /**

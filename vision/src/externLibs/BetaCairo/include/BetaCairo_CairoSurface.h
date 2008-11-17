@@ -131,13 +131,18 @@ namespace BetaCairo {
 			void SetLineJoin(LineJoin lj) {
 				cairo_set_line_join(mCR, (cairo_line_join_t) lj);}
 
+			cairo_surface_t* getSurface(){
+				return mSurface;
+			}
 
-
+			cairo_t* getCairoT(){
+				return mCR;
+			}
 
 		protected:
 
 			cairo_surface_t		*mSurface;
-			cairo_t				*mCR;
+			cairo_t				    *mCR;
 
 			unsigned int		mWidth;
 			unsigned int		mHeight;

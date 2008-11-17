@@ -69,11 +69,11 @@ public:
 	bool                      isValid                   () const { return m_bIsValid; }
 	const Window&             getMainWindow             () const { return m_mainWindow; }
 	Window&										getMainWindow             ()			 { return m_mainWindow; }
-	Camera3D&									getActiveCamera           ()				{ return m_activeCamera; }
+	Camera3D&									getActiveCamera           ()			 { return m_activeCamera; }
 	const Ogre::SceneManager& getSceneManager           () const { return *m_pSceneManager; }
 	Ogre::SceneManager&       getSceneManager           ()       { return *m_pSceneManager; }
-	Ogre::SceneManager*       getSceneManagerPtr        ()      { return m_pSceneManager; }
-	CameraController&					getDefaultCameraController()			{ return m_defaultCamController; }	
+	Ogre::SceneManager*       getSceneManagerPtr        ()       { return m_pSceneManager; }
+	CameraController&					getDefaultCameraController()			 { return m_defaultCamController; }	
 
 	// Common capabilities checking
 	bool                      hasVertexProgramsSupport  () const;
@@ -85,16 +85,28 @@ public:
 
 	// Color related methods
 	void											setFillColor							(  const Color& color );
+
 	void											setStrokeColor						(  const Color& color );
 	const Color&							getFillColor					  	() const { return m_fillColor; }
 	const Color&							getStrokeColor						() const { return m_strokeColor; }
+	void											setBackgroundColor ( const Color& color );
 
 	// Appearance drawing methods
 	void 											setStrokeWeight						(  int weight );
 	int  											getStrokeWeight						() { return m_strokeWeight; }
-	void 											noFill										();
 
-	const CvFont&							getCvFont									()const{ return  m_cvFont; }
+	void 											noFill										() { m_fill   = false; }
+	bool											getFill										() const { return m_fill; }
+	void 											noStroke									() { m_stroke = false; }
+	bool											getStroke									() const { return m_stroke; }
+	void 											smooth									  () { m_smooth = true; }
+	void 											noSmooth									() { m_smooth = false; }
+	bool											getSmooth 								() const { return m_smooth; }
+
+	const RectMode&						getRectMode								() const { return m_rectMode; }
+	void             					setRectMode								(  const  RectMode&	mode );
+
+	const CvFont&							getCvFont									() const { return  m_cvFont; }
 
 	// Debug methods
 	void											showFps										( bool show );
@@ -107,7 +119,16 @@ public:
 	void											removeDrawableImage				( TexturedQuad* img );
 
   // Drawing 3d lines (Temp)
-	void											addVertex( Common::Vector newPos );
+	void addVertex( Common::Vector newPos );
+  
+	// Drawing 2d primitives
+	void line			( float x1, float y1, float x2, float y2);
+	void point		( float x1, float y1 );
+  void triangle	( float x1, float y1, float x2, float y2, float x3, float y3 );
+  void rect			( float x1, float y1, float x2, float y2 );
+	void quad			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
+	void ellipse	( float x, float y, float width, float height);
+	void text			( float x1, float y1, const char* text );
 
 private:
 
@@ -132,16 +153,26 @@ private:
 	DebugOverlay          m_debugOverlay;   ///< Debug overlay used to show debug information
 	Font                  m_defaultFont;    ///< Default system font
 	Text                  m_defaultText;    ///< To print text to screen
-	Color									m_fillColor;			///< Color used to fill shapes
-	Color									m_strokeColor;		///< Color used to draw shapes
-	int										m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
-	CvFont								m_cvFont;					///< Font used to draw text on images
+
 
   // Simple primitives 3d related drawing ( lines, circles , ...)
 	DynamicLines*								m_lines;
 	Ogre::SceneNode*						m_linesNode;
 	std::vector <Ogre::Vector3> m_linesPoints;
-					
+
+	// 2D Canvas
+	Graphics::Image*			m_canvas;
+
+	Color									m_fillColor;			///< Color used to fill shapes
+	Color									m_strokeColor;		///< Color used to draw shapes
+	int										m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
+	Graphics::RectMode		m_rectMode;
+	bool									m_fill;
+	bool									m_stroke;
+	bool									m_smooth;
+
+	CvFont								m_cvFont;					///< Font used to draw text on images
+
 	// To manage visibility of loaded images
 	// TODO optimize this
 	std::list< TexturedQuad* >	m_drawableImagesQueue; ///< Images that are being drawn by the user ar maked as not visible every frame
@@ -149,7 +180,8 @@ private:
 
 	bool									m_showFps;				///< Indicates whether the frames per second should be shown or not
 	bool                  m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
-	};
+	
+};
 
 } // namespace Graphics
 

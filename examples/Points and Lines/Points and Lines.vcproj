@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="BetaCairo"
-	ProjectGUID="{933E8037-5027-4E2E-B1B0-0A948781D87C}"
-	RootNamespace="BetaCairo"
+	Name="Points and Lines"
+	ProjectGUID="{660A44A3-E028-4902-A0D1-53C317B0EBF8}"
+	RootNamespace="PointsandLines"
 	>
 	<Platforms>
 		<Platform
@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include;D:\workspace\Vision\trunk\vision\src\externLibs\BetaCairo\include"
+				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib videoInput_d.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib BetaCairo_d.lib"
+				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib videoInput_d.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
@@ -133,7 +133,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include;D:\workspace\Vision\trunk\vision\src\externLibs\BetaCairo\include;D:\workspace\Vision\trunk\vision\src\externLibs\cairo"
+				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -159,7 +159,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib BetaCairo.lib cairo.lib"
+				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
@@ -203,7 +203,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\src\BetaCairo.cpp"
+			RelativePath=".\src\Points and Lines.cpp"
 			>
 		</File>
 	</Files>

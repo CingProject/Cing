@@ -26,9 +26,12 @@ void setup()
 	// Set the DPI to 96
 	mCairo->setDPI(96.0f);
 
+	
 	// Create a widthXheight drawing called "Vector Draw", With no alpha transparency (PF_RGB). It has 4 mipmap levels.
 	mCanvas2d = mCairo->createDrawing("Vector Draw", width,height, PF_RGB, 0);
 	mCanvas2d->setAntiAliasing(AA_None);
+
+  cairo_set_tolerance (mCanvas2d->getCairoT(),1.0);
 
 	// Set our unit scale to pixels.
 	mCanvas2d->setScalar(PIXEL);

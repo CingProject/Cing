@@ -24,6 +24,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Window.h"
 #include "ImageResourceManager.h"
 #include "TexturedQuad.h"
+#include "Image.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -60,11 +61,16 @@ GraphicsManager::GraphicsManager():
   m_bIsValid    ( false ),
 	m_showFps			( false ),
 	m_strokeWeight( 1 ),
-	m_strokeColor( 255, 255, 255 ),
-	m_fillColor( 255, 255, 255 ),
+	m_strokeColor( 0, 0, 0 ),
+	m_fillColor( 200, 200, 200 ),
   m_pSceneManager( NULL ),
 	m_lines( NULL),
-	m_linesNode( NULL)
+	m_linesNode( NULL),
+	m_canvas( NULL ),
+	m_fill( true ),
+	m_stroke( true ),
+	m_smooth( false ),
+	m_rectMode( CORNER )
 {
 }
 
@@ -162,6 +168,9 @@ bool GraphicsManager::init()
 	m_lines->update();
 	m_linesPoints.push_back( Ogre::Vector3(0,0,0));
 
+	// Init 2dCanvas
+	m_canvas = new Image(Globals::width, Globals::height, RGB);
+
 	// The class is now initialized
 	m_bIsValid = true;
 
@@ -212,6 +221,9 @@ void GraphicsManager::end()
 	m_lines     = NULL;
 	m_linesNode = NULL;
 
+	// Release 2dCanvas...
+  m_canvas->end();
+	m_canvas = NULL;
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -223,6 +235,9 @@ void GraphicsManager::end()
  */
 void GraphicsManager::draw()
 {
+
+	// Draw 2d Canvas
+	m_canvas->draw2d(0,0);
 
 	// Update lines
 	if (m_lines->getNumPoints()!= m_linesPoints.size())
@@ -353,6 +368,8 @@ void GraphicsManager::setFillColor( const Color& color )
 	// We are using the emissive color to fake the fill color with lighting activated
 	// TODO dejar esto bien
 	m_pSceneManager->setAmbientLight( m_fillColor );
+
+	m_fill = true;
 }
 
 /**
@@ -363,6 +380,8 @@ void GraphicsManager::setFillColor( const Color& color )
 void GraphicsManager::setStrokeColor( const Color& color )
 {
 	m_strokeColor = color;
+
+	m_stroke = true;
 }
 
 /**
@@ -442,4 +461,118 @@ void GraphicsManager::removeDrawableImage( TexturedQuad* img)
 		}
 }
 
+
+/*
+ * @Draws a line (a direct path between two points) to the canvas
+ * 
+ * It specifies color for shapes not using textures or lighting. Value range is 0..255
+ * @param x1 int or float: x-coordinate of the first point
+ * @param y1 int or float: y-coordinate of the first point
+ * @param x2 int or float: x-coordinate of the second point
+ * @param y2 int or float: y-coordinate of the second point
+ */
+
+void GraphicsManager::line( float x1, float y1, float x2, float y2 )
+{
+	m_canvas->line( x1, y1, x2, y2 );
+};
+
+/*
+ * @Draws a point, a coordinate in space at the dimension of one pixel
+ * 
+ * It specifies color for shapes not using textures or lighting. Value range is 0..255
+ * @param x1 int or float: x-coordinate 
+ * @param y1 int or float: y-coordinate 
+ */
+
+void GraphicsManager::point( float x1, float y1 )
+{
+	m_canvas->point( x1, y1 );
+};
+
+/*
+ * @A triangle is a plane created by connecting three points. The first two arguments
+ * specify the first point, the middle two arguments specify the second point, and the
+ * last two arguments specify the third point.
+ * 
+ * @param x1 int or float: x-coordinate of the first point
+ * @param y1 int or float: y-coordinate of the first point
+ * @param x2 int or float: x-coordinate of the second point
+ * @param y2 int or float: y-coordinate of the second point
+ * @param x3 int or float: x-coordinate of the third point
+ * @param y3 int or float: y-coordinate of the third point
+ */
+
+void GraphicsManager::triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
+{
+	m_canvas->triangle( x1, y1, x2, y2, x3, y3 );
+};
+
+/**
+ * @brief Draws a rectangle inside an image
+ *
+ * @param x1 x, first point
+ * @param y1 y, first point
+ * @param x2 x, end point
+ * @param y2 y, end point
+ */
+void GraphicsManager::rect( float x1, float y1, float x2, float y2 )
+{
+	m_canvas->rect( x1, y1, x2, y2 );
+}
+
+/**
+ * @brief Draws a quad, defined by four points
+ *
+ * @param x1 x, first point
+ * @param y1 y, first point
+ * @param x2 x, second point
+ * @param y2 y, second point
+ * @param x3 x, third point
+ * @param y3 y, third point
+ * @param x4 x, fourth point
+ * @param y4 y, fourth point
+ */
+void GraphicsManager::quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
+{
+	m_canvas->quad( x1, y1, x2, y2, x3, y3, x4, y4 );
+}
+
+
+/**
+ * @brief Draws an ellipse
+ *
+ * @param x1 x, first point
+ * @param y1 y, first point
+ * @param width
+ * @param height
+ */
+void GraphicsManager::ellipse	( float x, float y, float width, float height)
+{
+	m_canvas->ellipse( x, y, width, height );
+}
+
+/**
+ * @brief Modifies the location from which rectangles draw
+ */
+void GraphicsManager::setRectMode( const  RectMode&	mode )
+{
+	m_rectMode = mode;
+}
+
+
+/**
+* @internal 
+ * @brief Modifies the background of the window 
+ * (really the main viewport in the window)
+ * @param[in] color Color to set to the background
+ */
+void GraphicsManager::setBackgroundColor( const Color& color )
+{
+  if ( !isValid() )
+    return;
+	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
+
+	cvSet( &m_canvas->getCVImage(), cvScalar(color.r,color.g,color.b) );
+}
 } // namespace Graphics

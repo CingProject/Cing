@@ -74,7 +74,16 @@ enum RenderMode
 	DRAW_SOLID				= Ogre::PM_SOLID
 };
 
-// Lights
+/// 2d Drawing
+enum RectMode
+{
+	CORNER,
+	CORNERS,
+	CENTER,
+	RADIUS
+};
+
+/// Lights
 typedef Ogre::Light       		Light;
 
 } // namespace Graphics

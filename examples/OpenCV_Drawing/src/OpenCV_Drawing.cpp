@@ -19,7 +19,7 @@ void draw()
 		for (int j = 10; j<66; j ++)
 		{		
 			//cvEllipse( &mCanvas.getCVImage(),cvPoint(i*10,j*10),cvSize(5,5),0,0,360,CV_RGB(255,255,255),-1 );
-			cvEllipse( &mCanvas.getCVImage(),cvPoint(i*10,j*10),cvSize(5,5),0,0,360,CV_RGB(0,0,0),1, 8, 0 );
+			cvEllipse( &mCanvas.getCVImage(),cvPoint(i*10,j*10),cvSize(5,5),0,0,360,CV_RGB(0,0,0),1, 0, 0 );
 /*
 				distance = Vector(i*10 - mouseX, j*10 - mouseY,0).length()/100.0;
 			  cvEllipse( &mCanvas.getCVImage(),cvPoint(i*10,j*10),cvSize(distance,distance),0,0,360,CV_RGB(255,255,255),-1 );
@@ -38,7 +38,7 @@ void draw()
 		} 
 	} 
 
-  cvEllipse( &mCanvas.getCVImage(),cvPoint(width/2,height/2),cvSize(360,360),0,0,360,CV_RGB(0,0,0),1, 8, 0 );
+  cvEllipse( &mCanvas.getCVImage(),cvPoint(width/2,height/2),cvSize(360,360),0,0,360,CV_RGB(0,0,0),1, 0, 0 );
 
 	mCanvas.updateTexture();
 	mCanvas.draw2d(0,0,width,height);
