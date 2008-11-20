@@ -179,6 +179,17 @@ inline float dist( const Vector& pos1, const Vector& pos2 )
 }
 
 /**
+ * @brief Calculates the distance between two points in space
+ * @param[in] pos1 first position
+ * @param[in] pos2 second position 
+ * @return the distance between two points in space
+ */
+inline float dist( float x1, float y1, float x2, float y2 )
+{
+  return sqrt((x1-x2)*(x1-x2) + ((y1-y2)*(y1-y2)));
+}
+
+/**
  * @brief Maps a value from one range to another.
  *
  * @param[in] value value to map
