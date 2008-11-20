@@ -54,6 +54,7 @@ Image::Image():
  * @param
  */
 Image::Image( const Image& img ):
+	m_bIsValid( false ),
 	m_cvImage(NULL),
 	m_bUpdateTexture( false )
 {
@@ -69,6 +70,7 @@ Image::Image( const Image& img ):
  * @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
  */
 Image::Image( int width, int height, ImageFormat format /*= RGB*/ ):
+	m_bIsValid( false ),
 	m_cvImage(NULL),
 	m_bUpdateTexture( false )
 {
@@ -82,6 +84,7 @@ Image::Image( int width, int height, ImageFormat format /*= RGB*/ ):
  * @param name  Name of the file to be loaded. It must be placed in the data directory.
  */
 Image::Image( const std::string& name ):
+	m_bIsValid( false ),
 	m_cvImage(NULL)
 {
 	load( name );
