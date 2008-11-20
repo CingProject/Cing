@@ -130,6 +130,9 @@ public:
 	void ellipse	( float x, float y, float width, float height);
 	void text			( float x1, float y1, const char* text );
 
+	// 2D Canvas
+	Graphics::Image*			m_canvas;
+
 private:
 
 	// private constructor to ensure singleton
@@ -159,9 +162,6 @@ private:
 	DynamicLines*								m_lines;
 	Ogre::SceneNode*						m_linesNode;
 	std::vector <Ogre::Vector3> m_linesPoints;
-
-	// 2D Canvas
-	Graphics::Image*			m_canvas;
 
 	Color									m_fillColor;			///< Color used to fill shapes
 	Color									m_strokeColor;		///< Color used to draw shapes

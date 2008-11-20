@@ -21,6 +21,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "GraphicsUserAPI.h"
 #include "GraphicsManager.h"
+#include "Image.h"
 
 namespace Graphics
 {
@@ -480,6 +481,11 @@ void quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4,
 void ellipse( float x, float y, float width, float height)
 {
 	Graphics::GraphicsManager::getSingleton().ellipse( x, y, width, height );
+}
+
+void arc( float x, float y,  float width, float height, float start, float stop )
+{
+	Graphics::GraphicsManager::getSingleton().m_canvas->arc( x, y, width, height, start, stop );
 }
 
 /**

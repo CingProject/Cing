@@ -82,6 +82,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shape Primitives", "example
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pie Chart", "examples\Pie Chart\Pie Chart.vcproj", "{5721A9E0-9A6D-4E8F-B8C0-E60060AC274F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -156,6 +161,10 @@ Global
 		{B031B9BC-3370-436E-BFD4-5D8C11074EC8}.Debug|Win32.Build.0 = Debug|Win32
 		{B031B9BC-3370-436E-BFD4-5D8C11074EC8}.Release|Win32.ActiveCfg = Release|Win32
 		{B031B9BC-3370-436E-BFD4-5D8C11074EC8}.Release|Win32.Build.0 = Release|Win32
+		{5721A9E0-9A6D-4E8F-B8C0-E60060AC274F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5721A9E0-9A6D-4E8F-B8C0-E60060AC274F}.Debug|Win32.Build.0 = Debug|Win32
+		{5721A9E0-9A6D-4E8F-B8C0-E60060AC274F}.Release|Win32.ActiveCfg = Release|Win32
+		{5721A9E0-9A6D-4E8F-B8C0-E60060AC274F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -662,18 +662,68 @@ void Image::arc( float x, float y, float width, float height, float start, float
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
-	// Get Stroke and Fill Color
-	Color color        = graphManager.getStrokeColor();
-	int   strokeWeight = graphManager.getStrokeWeight();
 
-	cvEllipse(	m_cvImage,							///-> Image.
-							cvPoint(x,y),						///-> Center of the ellipse.
-							cvSize(width,height),		///-> Length of the ellipse axes. 
-							0,											///->	Rotation angle.
-							start,											///-> Starting angle of the elliptic arc.
-							end,										///-> Ending angle of the elliptic arc.
-							CV_RGB(color.r,color.g,color.b),///-> Ellipse color.
-							strokeWeight );										///-> Thickness of the ellipse arc.
+	if (graphManager.getFill())
+	{
+		// Get Fill Color
+		Color color        = graphManager.getFillColor();
+		if (graphManager.getSmooth())
+		{
+			cvEllipse(	m_cvImage,							///-> Image.
+				cvPoint(x,y),						///-> Center of the ellipse.
+				cvSize(width,height),		///-> Length of the ellipse axes. 
+				0,											///->	Rotation angle.
+				start,											///-> Starting angle of the elliptic arc.
+				end,										///-> Ending angle of the elliptic arc.
+				CV_RGB(color.r,color.g,color.b),///-> Ellipse color.
+				-1,
+				16);										///-> Thickness of the ellipse arc.
+		}else{
+			cvEllipse(	m_cvImage,							///-> Image.
+				cvPoint(x,y),						///-> Center of the ellipse.
+				cvSize(width,height),		///-> Length of the ellipse axes. 
+				0,											///->	Rotation angle.
+				start,											///-> Starting angle of the elliptic arc.
+				end,										///-> Ending angle of the elliptic arc.
+				CV_RGB(color.r,color.g,color.b),///-> Ellipse color.
+				-1,
+				4);										///-> Thickness of the ellipse arc.
+		}
+	}
+
+	if (graphManager.getStroke())
+	{
+		// Get Stroke Color
+		// Get Fill Color
+		Color color        = graphManager.getStrokeColor();
+		int   strokeWeight = graphManager.getStrokeWeight();	
+
+		if (graphManager.getSmooth())
+		{
+			cvEllipse(	m_cvImage,							///-> Image.
+									cvPoint(x,y),						///-> Center of the ellipse.
+									cvSize(width,height),		///-> Length of the ellipse axes. 
+									0,											///->	Rotation angle.
+									start,											///-> Starting angle of the elliptic arc.
+									end,										///-> Ending angle of the elliptic arc.
+									CV_RGB(color.r,color.g,color.b),///-> Ellipse color.
+									strokeWeight,
+									16
+									);										///-> Thickness of the ellipse arc.
+		}else{
+			cvEllipse(	m_cvImage,							///-> Image.
+									cvPoint(x,y),						///-> Center of the ellipse.
+									cvSize(width,height),		///-> Length of the ellipse axes. 
+									0,											///->	Rotation angle.
+									start,											///-> Starting angle of the elliptic arc.
+									end,										///-> Ending angle of the elliptic arc.
+									CV_RGB(color.r,color.g,color.b),///-> Ellipse color.
+									strokeWeight,
+									4 );					///-> Thickness of the ellipse arc.
+
+		}
+	}
+
 
 	// Update texture when the next drawing call is made by the user
 	m_bUpdateTexture = true;

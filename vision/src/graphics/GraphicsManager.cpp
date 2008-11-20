@@ -552,6 +552,7 @@ void GraphicsManager::ellipse	( float x, float y, float width, float height)
 	m_canvas->ellipse( x, y, width, height );
 }
 
+
 /**
  * @brief Modifies the location from which rectangles draw
  */

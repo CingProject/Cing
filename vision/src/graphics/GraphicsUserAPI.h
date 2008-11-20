@@ -112,6 +112,7 @@ void rect			( float x1, float y1, float x2, float y2 );
 void quad			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
 void ellipse	( float x, float y, float width, float height);
 void text			( float x1, float y1, const char* text );
+void arc			( float x, float y,  float width, float height, float start, float stop );
 
 void rectMode ( RectMode mode );
 
