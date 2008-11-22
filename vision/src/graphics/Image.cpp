@@ -501,6 +501,18 @@ void Image::draw2d( float xPos, float yPos, float width, float height )
 	m_quad.draw2d( xPos, yPos, width, height );
 }
 
+void Image::drawBackground( float xPos, float yPos, float width, float height )
+	{
+		// check if texture needs to be updated
+		if (m_bUpdateTexture)
+		{
+			updateTexture();
+			m_bUpdateTexture = false;
+		}
+
+		m_quad.drawBackground (xPos, yPos, width, height );
+}
+
 /**
  * @brief Copies the received image into the current image
  *

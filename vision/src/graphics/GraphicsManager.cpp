@@ -62,7 +62,7 @@ GraphicsManager::GraphicsManager():
 	m_showFps			( false ),
 	m_strokeWeight( 1 ),
 	m_strokeColor( 0, 0, 0 ),
-	m_fillColor( 200, 200, 200 ),
+	m_fillColor( 255, 255, 255 ),
   m_pSceneManager( NULL ),
 	m_lines( NULL),
 	m_linesNode( NULL),
@@ -236,8 +236,11 @@ void GraphicsManager::end()
 void GraphicsManager::draw()
 {
 
-	// Draw 2d Canvas
-	m_canvas->draw2d(0,0);
+	// Draw 2d Canvas in the background
+	m_canvas->drawBackground(	0,
+														0,
+														m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
+														m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
 
 	// Update lines
 	if (m_lines->getNumPoints()!= m_linesPoints.size())

@@ -13,15 +13,7 @@ void setup()
 	int diameter = 150;
 	
 	// limpiar esto...
-	int* angs = new int[8];
-	angs[0] = 30;
-	angs[1] = 10;
-	angs[2] = 45;
-	angs[3] = 32;
-	angs[4] = 60;
-	angs[5] = 38;
-	angs[6] = 75;
-	angs[7] = 67;
+	int angs[] = {30, 10, 45, 35, 60, 38, 75, 67};
 
 	float lastAng = 0;
 

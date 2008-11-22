@@ -418,6 +418,39 @@ void TexturedQuad::draw2d( float x, float y, float width, float height )
 	m_quadSceneNode->setVisible( true );
 }
 
+/**
+ * @brief Draws the texture quad in two dimensions as a background
+ * 
+ * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
+ * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
+ */
+void TexturedQuad::drawBackground( float x, float y, float width, float height )
+{
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to draw a textured quad not initialized" );
+		return;
+	}
+
+	// Properties to be rendered in 2d
+	m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND);
+	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+	material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
+
+	m_quad->setUseIdentityProjection(true);
+	m_quad->setUseIdentityView(true);
+	Ogre::AxisAlignedBox aabb;
+	aabb.setInfinite();
+	m_quad->setBoundingBox(aabb);
+
+	// mark the object as 2d rendering
+	m_render2D = true;
+
+	// Set properties of the quad, and set visible -> it will be rendered in the next render
+	setScale2d( width, height );
+	setPosition2d( x, y );
+	m_quadSceneNode->setVisible( true );
+}
 
 /**
  * @brief Updates the texture pixel information from an Image
@@ -549,6 +582,8 @@ void TexturedQuad::set2dRendering()
 {
 	// Properties to be rendered in 2d
 	m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
+	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+  material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( true );
 	m_quad->setUseIdentityProjection(true);
 	m_quad->setUseIdentityView(true);
 	Ogre::AxisAlignedBox aabb;
@@ -567,6 +602,8 @@ void TexturedQuad::set3dRendering()
 {
 	// Set properties for 3d rendering
 	m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
+	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+  material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( true );
 	m_quad->setUseIdentityProjection( false );
 	m_quad->setUseIdentityView( false );
 	m_quad->setQueryFlags( m_3dQueryFlags );

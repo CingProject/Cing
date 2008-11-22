@@ -62,6 +62,8 @@ public:
 	void	draw2d					( float x, float y );
 	void	draw2d					( float x, float y, float width, float height );
 
+	void	drawBackground	( float x, float y , float width, float height );
+
 	// Texture update
 	void	updateTexture		( const Ogre::Image& img );
 	void  updateTexture   ( unsigned char* textureData, int width, int height, ImageFormat format );

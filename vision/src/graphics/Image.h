@@ -72,6 +72,8 @@ public:
 	void	draw2d( float xPos, float yPos );
 	void	draw2d( float xPos, float yPos, float width, float height );
 
+	void  drawBackground( float xPos, float yPos, float width, float height );
+
 	// 2D Image drawing methods
 	void  triangle	( float x1, float y1, float x2, float y2, float x3, float y3 );
 	void  line			( float x1, float y1, float x2, float y2 );
