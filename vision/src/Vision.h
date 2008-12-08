@@ -92,7 +92,7 @@
 
 // Audio
 #include "audio/SoundFMOD.h"
-#include "audio/MicroFMOD.h"
+#include "audio/AudioInputFMOD.h"
 
 // Movie
 #include "movies/OCVMovie.h"
@@ -129,8 +129,8 @@ typedef	VICamera Capture;
 
 // Sound and Mic
 typedef SoundFMOD Sound;
-typedef MicroFMOD	Micro;
-
+typedef AudioInputFMOD	AudioInput;
+  
 // Movie
 typedef OCVMovie	Movie;
 
