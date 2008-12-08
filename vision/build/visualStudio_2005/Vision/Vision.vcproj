@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="Vision"
 	ProjectGUID="{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 	RootNamespace="Vision"
@@ -174,19 +174,19 @@
 					Name="Header Files"
 					>
 					<File
+						RelativePath="..\..\..\src\audio\AudioInputFMOD.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\src\audio\AudioPrereqs.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\audio\BaseMicro.h"
+						RelativePath="..\..\..\src\audio\BaseAudioInput.h"
 						>
 					</File>
 					<File
 						RelativePath="..\..\..\src\audio\BaseSound.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\audio\MicroFMOD.h"
 						>
 					</File>
 					<File
@@ -202,7 +202,7 @@
 					Name="Source Files"
 					>
 					<File
-						RelativePath="..\..\..\src\audio\MicroFMOD.cpp"
+						RelativePath="..\..\..\src\audio\AudioInputFMOD.cpp"
 						>
 					</File>
 					<File
