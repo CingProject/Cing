@@ -2,12 +2,12 @@
 CREATE_APPLICATION( "Vision Demo" );
 
 /*
- * This example shows of to capture microphone input
+ * This example shows of to capture AudioInputphone input
  * It also uses the input volume of the mic to modify the intensity of a light in the scene
  */
 
 
-Micro				mic;
+AudioInput	mic;
 Sphere			sphere;
 Plane				plane;	
 PointLight	light;
@@ -16,7 +16,7 @@ Average			average( 15 );
 
 void setup()
 {
-	// start microphone
+	// start AudioInputphone
 	mic.startCapturing();
 
 	// setup plane and sphere
