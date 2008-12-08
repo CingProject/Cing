@@ -578,5 +578,6 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
 
 	cvSet( &m_canvas->getCVImage(), cvScalar(color.r,color.g,color.b) );
+	m_canvas->setUpdateTexture(true);
 }
 } // namespace Graphics
