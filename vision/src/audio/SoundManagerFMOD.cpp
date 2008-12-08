@@ -21,7 +21,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Includes from Audio
 #include "SoundManagerFMOD.h"
-#include "MicroFMOD.h"
+#include "AudioInputFMOD.h"
 #include "SoundFMOD.h"
 
 // Common
@@ -31,7 +31,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include <sstream>
 
 
-/// Audio functionality (load and play sounds, get micro input...etc)
+/// Audio functionality (load and play sounds, get AudioInput input...etc)
 namespace Audio
 {
 
