@@ -20,20 +20,64 @@
 */
 
 #include "FrameworkUserAPI.h"
+#include "UserAppGlobals.h"
 
 namespace Framework
 {
 
 	/**
-	* @internal 
-	* @brief Finishes the application
-	*
-	* @param
-	*/
-	void finishApp()
+	 * @internal 
+	 * @brief Finishes the application
+	 *
+	 * @param
+	 */
+	void exit()
 	{
-		Application::getSingleton().finishApp();
+		Application::getSingleton().exit();
 	}
 
+  /**
+	 * @internal 
+	 * @brief Force the application to stop running for a specified time in milliseconds
+	 *
+	 * @param milliseconds
+	 */
+	void delay( unsigned int milliseconds)
+	{
+		Application::getSingleton().delay( milliseconds );
+	}
+
+	/**
+	 * @internal 
+	 * @brief Force the application to continuosly call user draw() function 
+	 *
+	 * @param 
+	 */
+	void loop()
+	{
+		Application::getSingleton().loop();
+	}
+
+	/**
+	 * @internal 
+	 * @brief Force the application to stop call user draw() function 
+	 *
+	 * @param 
+	 */
+	void noLoop()
+	{
+		Application::getSingleton().noLoop();
+	}
+
+	/**
+	 * @internal 
+	 * @brief Force the application to  call user draw() function one time
+	 *
+	 * @param 
+	 */
+	void redraw()
+	{
+		Application::getSingleton().redraw();
+	}
 
 } // namespace Framework

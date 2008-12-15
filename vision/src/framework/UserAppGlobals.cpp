@@ -41,13 +41,16 @@ int									mouseY = 0;
 Input::Mouse&				mouse			= Input::InputManager::m_mouse;
 Input::Keyboard&		keyboard	= Input::InputManager::m_keyboard;
 
-
 // Time
 double							elapsedSec			= 0;
 unsigned long				elapsedMillis		= 0;
 unsigned long				elapsedMicros		= 0;
 double							secFromStart		= 0;
 unsigned long	 			millisFromStart	= 0;
+
+// Frame count
+int  								frameCount      = 0;
+float								frameRate       = 0.0f;   
 
 // Advanced
 Ogre::SceneManager*	ogreSceneManager	= NULL;

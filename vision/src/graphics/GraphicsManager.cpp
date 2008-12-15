@@ -271,7 +271,9 @@ void GraphicsManager::draw()
   // Get Frame stats
   const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
 
-  // Show fps
+	Globals::frameRate = frameStats.lastFPS;
+
+	// Show fps
 	if ( m_showFps )
 	{
 		std::ostringstream oss;
@@ -286,7 +288,6 @@ void GraphicsManager::draw()
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
 	for (; it != m_drawableImagesQueue.end(); ++it )
 		(*it)->setVisible( false );
-
 
 }
 

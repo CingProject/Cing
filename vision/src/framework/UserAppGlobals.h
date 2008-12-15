@@ -65,6 +65,9 @@ extern unsigned long				elapsedMicros;	///< Elapsed time in microseconds from pr
 extern double								secFromStart;		///< Seconds elapsed since application started
 extern unsigned long				millisFromStart;///< Milliseconds elapsed since application started
 
+// Frame count
+extern int  								frameCount;			///< Actual frameRate of app (aproximated)
+extern float								frameRate;
 // Advanced 
 extern Ogre::SceneManager*	ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object
 extern Ogre::Camera*				ogreCamera;				///< Ogre Camera used to render the scene

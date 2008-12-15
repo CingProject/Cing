@@ -50,7 +50,7 @@ namespace Framework
  * @brief Constructor. Initializes class attributes.
  */
 Application::Application():
-  m_bIsValid( false ), m_finish( false )
+  m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false )
 {
 }
 
@@ -108,6 +108,9 @@ bool Application::initApp()
 	// Reset timer
 	m_timer.reset();	
 	m_absTimer.reset();
+
+	// Set frameCount to zero
+	m_frameCount = 0;
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -171,15 +174,29 @@ void Application::drawApp()
 
     // Update input manager
     Input::InputManager::getSingleton().update();
+		
+		// Draw user app
+		if (m_loop)
+			draw();
 
-    // Draw user app
-    draw();
+		// Draw user app one time if the user calls redraw() function
+		if (m_needUpdate)
+		{
+			draw();
+			m_needUpdate = false;
+		}
 
 		// Update physics
 		Physics::PhysicsManager::getSingleton().update( Globals::elapsedMillis  );
 
     // Update rendering
     Graphics::GraphicsManager::getSingleton().draw();
+
+		// Update sound()???
+		
+		// Update frameCount
+		m_frameCount++;
+		Globals::frameCount  = getFrameCount();	
   }
 }
 
@@ -272,5 +289,22 @@ bool Application::keyReleased( const OIS::KeyEvent& event )
 
 	return true;
 }
+
+/**
+ * @internal 
+ * @brief Force the application to stop running for a specified time in milliseconds
+ *
+ * @param milliseconds
+ */
+void Application::delay( unsigned int milliseconds)
+{
+	unsigned long goal = Globals::millisFromStart + milliseconds;
+	while ( goal > Globals::millisFromStart )
+	{
+		Globals::millisFromStart = m_absTimer.getMilliseconds();
+	}
+}
+
+
 
 } // namespace Framework

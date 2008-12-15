@@ -29,8 +29,13 @@ namespace Framework
 {
 
 // Application control
-void finishApp();
+void exit();
 
+// Execution control
+void delay( unsigned int milliseconds );
+void loop();
+void noLoop();
+void redraw();
 
 } // namespace Framework
 
