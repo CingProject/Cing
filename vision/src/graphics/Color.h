@@ -55,14 +55,15 @@ public:
 	Color( float red,  float green, float blue, float alpha );
 
 	// To set values or range
-	void	set					( float red, float green, float blue, float alpha = 255.0f );
+	void	set	( float red, float green, float blue, float alpha = 255.0f );
 
 	// Color conversion
 	Color	normalized	() const;
 	void	normalize		();
 
 	// Color mode 
-	static void	colorMode ( ColorMode mode, float range1, float range2, float range3, float range4 );
+	static void				colorMode	( ColorMode mode, float range1, float range2, float range3, float range4 );
+	static const ColorMode	getColorMode(){ return m_colorMode; };
 
 private:
 
@@ -70,7 +71,10 @@ private:
 	float m_lowRange, m_hightRange; // Color values range. Default 0..255
 	
 	// Static attributes
-	static ColorMode  m_colorMode;
+	static ColorMode	m_colorMode;
+	static float		m_rRange;
+	static float		m_gRange;
+	static float		m_bRange;
 };
 
 } // namespace Graphics

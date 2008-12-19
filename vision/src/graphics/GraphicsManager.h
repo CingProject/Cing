@@ -158,14 +158,14 @@ private:
 	Text                  m_defaultText;    ///< To print text to screen
 
 
-  // Simple primitives 3d related drawing ( lines, circles , ...)
+	// Simple primitives 3d related drawing ( lines, circles , ...)
 	DynamicLines*								m_lines;
 	Ogre::SceneNode*						m_linesNode;
 	std::vector <Ogre::Vector3> m_linesPoints;
 
 	Color									m_fillColor;			///< Color used to fill shapes
-	Color									m_strokeColor;		///< Color used to draw shapes
-	int										m_strokeWeight;		///< Width of the stroke used for draw lines, points, and the border around shapes
+	Color									m_strokeColor;			///< Color used to draw shapes
+	int										m_strokeWeight;			///< Width of the stroke used for draw lines, points, and the border around shapes
 	Graphics::RectMode		m_rectMode;
 	bool									m_fill;
 	bool									m_stroke;

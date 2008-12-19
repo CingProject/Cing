@@ -384,7 +384,6 @@ void GraphicsManager::setFillColor( const Color& color )
 void GraphicsManager::setStrokeColor( const Color& color )
 {
 	m_strokeColor = color;
-
 	m_stroke = true;
 }
 
@@ -567,7 +566,7 @@ void GraphicsManager::setRectMode( const  RectMode&	mode )
 
 
 /**
-* @internal 
+ * @internal 
  * @brief Modifies the background of the window 
  * (really the main viewport in the window)
  * @param[in] color Color to set to the background

@@ -29,6 +29,9 @@ namespace Graphics
 
 /// Static member initialization
 	Color::ColorMode Color::m_colorMode = Color::RGB;
+	float  Color::m_rRange = 255.0f ;
+	float  Color::m_gRange = 255.0f ;
+	float  Color::m_bRange = 255.0f ;
 
 /**
  * @brief Initializes the color with a specific color values (depending on the color range

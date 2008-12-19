@@ -757,8 +757,24 @@ void Image::point( float x, float y )
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	GraphicsManager& graphManager = GraphicsManager::getSingleton();
+
 	// Get Stroke and Fill Color
-	Color color        = graphManager.getStrokeColor();
+	//Color color        = graphManager.getStrokeColor();
+
+	Color::ColorMode theColorMode = Color::getColorMode();
+	Color color;
+	switch( theColorMode )
+	{
+	case Color::RGB:
+		color        = graphManager.getStrokeColor();
+		break;
+	case Color::HSB:
+		color        = graphManager.getStrokeColor();
+		break;
+	default:
+		break;
+	}
+
 	int   strokeWeight = graphManager.getStrokeWeight();
 	
 	// Draw a pixel
