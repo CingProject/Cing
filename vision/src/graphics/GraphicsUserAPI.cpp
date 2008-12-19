@@ -507,5 +507,31 @@ void rectMode( RectMode mode )
 	Graphics::GraphicsManager::getSingleton().setRectMode( mode );
 }
 
+/**
+ * @brief  	Changes the colorMode and/or range of colors. Modes RGB and HSB
+ *			Default range is 0-255
+ *
+ * @param mode
+ */
+
+void colorMode( Color::ColorMode mode )
+{
+	Color::colorMode( mode, 255, 255, 255, 255 );
+};
+
+void colorMode( Color::ColorMode mode, float range )
+{
+
+};
+
+void colorMode( Color::ColorMode mode, float range1, float range2, float range3 )
+{
+
+};
+
+void colorMode( Color::ColorMode mode, float range1, float range2, float range3, float range4 )
+{
+
+};
 
 } // namespace Graphics

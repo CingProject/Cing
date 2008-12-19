@@ -35,6 +35,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/OpenCV/cv/include/cv.h"
 #include "externLibs/OpenCV/highgui/include/highgui.h"
 
+using namespace Graphics;
 
 namespace Movies
 {
@@ -224,7 +225,7 @@ void OCVMovie::read( Graphics::Image &image )
 	}
 
 	// Image format of the captured image
-	ImageFormat format = frame->nChannels == 1? GRAYSCALE: RGB;
+  Graphics::ImageFormat format = frame->nChannels == 1? GRAYSCALE: RGB;
 
 	// Check if the target image is valid (if not -> init it)
 	if ( !image.isValid() )

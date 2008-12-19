@@ -27,6 +27,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Graphics
 {
 
+/// Static member initialization
+	Color::ColorMode Color::m_colorMode = Color::RGB;
+
 /**
  * @brief Initializes the color with a specific color values (depending on the color range
  * which by default is 0..255, and RGB color model (red, green, blue).
@@ -129,6 +132,17 @@ void Color::normalize()
 	g = Common::map( g, m_lowRange, m_hightRange, 0.0f, 1.0f );
 	b = Common::map( b, m_lowRange, m_hightRange, 0.0f, 1.0f );
 	a = Common::map( a, m_lowRange, m_hightRange, 0.0f, 1.0f );
+}
+
+/**
+ * @internal 
+ * @brief Change the color mode and range
+ */
+void Color::colorMode( ColorMode mode, float range1, float range2, float range3, float range4 )
+{
+	m_colorMode  = mode;
+	//m_lowRange   = 0;
+	//m_hightRange = 255;
 }
 
 } // namespace Graphics

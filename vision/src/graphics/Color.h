@@ -41,11 +41,18 @@ class Color: public Ogre::ColourValue
 {
 public:
 
+	/// Color Mode types
+	enum ColorMode
+	{	
+		RGB,
+		HSB	
+	};
+
 	// Constructor: Transforms color to Ogre range
 	Color( float gray = 255 );
 	Color( float gray, float alpha );
-	Color( float  red, float green, float blue );
-	Color( float  red, float green, float blue, float alpha );
+	Color( float red,  float green, float blue );
+	Color( float red,  float green, float blue, float alpha );
 
 	// To set values or range
 	void	set					( float red, float green, float blue, float alpha = 255.0f );
@@ -54,10 +61,16 @@ public:
 	Color	normalized	() const;
 	void	normalize		();
 
+	// Color mode 
+	static void	colorMode ( ColorMode mode, float range1, float range2, float range3, float range4 );
+
 private:
 
 	// Attributes
 	float m_lowRange, m_hightRange; // Color values range. Default 0..255
+	
+	// Static attributes
+	static ColorMode  m_colorMode;
 };
 
 } // namespace Graphics

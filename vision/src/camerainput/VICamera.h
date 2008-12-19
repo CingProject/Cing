@@ -43,7 +43,7 @@ public:
 	~VICamera();
 
 	// Init / Release / Update
-	void	init 	( int deviceId, int width, int height, int fps, ImageFormat format, bool multithreaded = true );
+	void	init 	( int deviceId, int width, int height, int fps, Graphics::ImageFormat format, bool multithreaded = true );
 	void	update();
 	void	end		();	
 

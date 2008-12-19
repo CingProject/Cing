@@ -33,58 +33,67 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreLight.h"
 #include "externLibs/Ogre3d/include/ogrepixelformat.h"
 
-/// Image formats
-enum ImageFormat
-{
-	RGB				= Ogre::PF_R8G8B8,	///< Red, Green and Blue
-	COLOR 		= Ogre::PF_R8G8B8,	///< Same as RGB
-	RGBA			= Ogre::PF_R8G8B8A8,///< Red, Green, Blue and Alpha
-	ARGB			= Ogre::PF_A8R8G8B8,///< Alpha, Red, Green, and Blue
-	GRAYSCALE	= Ogre::PF_BYTE_L		///< Gray scale
-};
-
-/// Filter types
-enum ImageProcessingFilters
-{
-	BLUR,					///< provides a basic blur.
-	GRAY,					///< converts the image to grayscale based on luminance. 
-	INVERT,				///< will invert the color components in the image. 
-	//_OPAQUE,		///< set all the high bits in the image to opaque 
-	THRESHOLD,		///< converts the image to black and white. 
-	DILATE,				///< grow white/light areas 
-	ERODE				  ///< shrink white/light areas 
-};
-
-/// Ink types
-enum ImageInkModes
-{
-	BLEND,			  ///< normal mode
-	ADD				   	///< additive mode
-
-};
-
 namespace Graphics
 {
 
-/// Render modes
-enum RenderMode
-{
-	DRAW_POINTS				= Ogre::PM_POINTS,
-	DRAW_WIREFRAME		= Ogre::PM_WIREFRAME,
-	DRAW_SOLID				= Ogre::PM_SOLID
-};
+	/// Image formats
+	enum ImageFormat
+	{
+		RGB				= Ogre::PF_R8G8B8,	///< Red, Green and Blue
+		COLOR 			= Ogre::PF_R8G8B8,	///< Same as RGB
+		RGBA			= Ogre::PF_R8G8B8A8,///< Red, Green, Blue and Alpha
+		ARGB			= Ogre::PF_A8R8G8B8,///< Alpha, Red, Green, and Blue
+		GRAYSCALE		= Ogre::PF_BYTE_L	///< Gray scale
+	};
 
-/// 2d Drawing
-enum RectMode
-{
-	CORNER,
-	CORNERS,
-	CENTER,
-	RADIUS
-};
+	/// Filter types
+	enum ImageProcessingFilters
+	{
+		BLUR,				///< provides a basic blur.
+		GRAY,				///< converts the image to grayscale based on luminance. 
+		INVERT,				///< will invert the color components in the image. 
+		//_OPAQUE,			///< set all the high bits in the image to opaque 
+		THRESHOLD,			///< converts the image to black and white. 
+		DILATE,				///< grow white/light areas 
+		ERODE				///< shrink white/light areas 
+	};
 
-/// Lights
-typedef Ogre::Light       		Light;
+	/// Ink types
+	enum ImageInkModes
+	{
+		BLEND,				///< normal mode
+		ADD					///< additive mode
+
+	};
+	/// Render modes
+	enum RenderMode
+	{
+		DRAW_POINTS			= Ogre::PM_POINTS,
+		DRAW_WIREFRAME		= Ogre::PM_WIREFRAME,
+		DRAW_SOLID			= Ogre::PM_SOLID
+	};
+
+	/// 2d Drawing
+	enum RectMode
+	{
+		CORNER,
+		CORNERS,
+		CENTER,
+		RADIUS
+	};
+
+	enum EllipseMode
+	{
+		/*
+		CORNER,
+		CORNERS,
+		CENTER,
+		RADIUS
+		*/
+	};
+
+	/// Lights
+	typedef Ogre::Light       		Light;
 
 } // namespace Graphics
 

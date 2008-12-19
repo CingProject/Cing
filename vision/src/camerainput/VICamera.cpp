@@ -53,7 +53,7 @@ VICamera::~VICamera()
  * @param[in] fps				frames per second to capture
  * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-void VICamera::init( int deviceId, int width, int height, int fps, ImageFormat format, bool multithreaded /*= true*/ )
+void VICamera::init( int deviceId, int width, int height, int fps, Graphics::ImageFormat format, bool multithreaded /*= true*/ )
 {
 	// List connected devices
 	int numDevices = videoInput::listDevices();	
@@ -89,7 +89,7 @@ void VICamera::update()
 		// Calculate the format
 		int npixels				= m_viCamera.getWidth( m_deviceId ) * m_viCamera.getHeight( m_deviceId );
 		size_t frameSize	= m_viCamera.getSize( m_deviceId );
-		ImageFormat format = ( npixels == frameSize )? GRAYSCALE: RGB;
+		Graphics::ImageFormat format = ( npixels == frameSize )? Graphics::GRAYSCALE: Graphics::RGB;
 
 		// we get the pixels by passing in out buffer which gets 
 		setNewFrameData(	(char*)m_viCamera.getPixels( m_deviceId, false, true ), 

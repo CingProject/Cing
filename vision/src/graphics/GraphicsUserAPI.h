@@ -53,7 +53,7 @@ void setBackgroundColor( const Color& color );
 
 /* The stroke() function sets the color used to draw lines and borders around shapes. This color is either
    specified in terms of the RGB or HSB color depending on the current colorMode()
-	 (the default color space is RGB, with each value in the range from 0 to 255). 
+   (the default color space is RGB, with each value in the range from 0 to 255). 
 */
 
 void stroke( float gray );
@@ -66,22 +66,22 @@ void stroke( const Color& color );
 
 /* Changes the way Vision interprets color data. By default, the
    parameters for fill(), stroke(), background(), and color() are defined by values
-	 between 0 and 255 using the RGB color model. The colorMode() function is used to
-	 change the numerical range used for specifying colors and to switch color systems.
-	 For example, calling colorMode(RGB, 1.0) will specify that values are specified
-	 between 0 and 1. The limits for defining colors are altered by setting the
-	 parameters range1, range2, range3, and range 4.
+   between 0 and 255 using the RGB color model. The colorMode() function is used to
+   change the numerical range used for specifying colors and to switch color systems.
+   For example, calling colorMode(RGB, 1.0) will specify that values are specified
+   between 0 and 1. The limits for defining colors are altered by setting the
+   parameters range1, range2, range3, and range 4.
 */
 
-//void colorMode(mode);
-//void colorMode(mode, range);
-//void colorMode(mode, range1, range2, range3);
-//void colorMode(mode, range1, range2, range3, range4);
+void colorMode(Color::ColorMode mode);
+void colorMode(Color::ColorMode mode, float range);
+void colorMode(Color::ColorMode mode, float range1, float range2, float range3);
+void colorMode(Color::ColorMode mode, float range1, float range2, float range3, float range4);
 
 /* Sets the color used to fill shapes. For example, if you run fill(204, 102, 0),
    all subsequent shapes will be filled with orange. This color is either specified
-	 in terms of the RGB or HSB color depending on the current colorMode() (the default
-	 color space is RGB, with each value in the range from 0 to 255).
+   in terms of the RGB or HSB color depending on the current colorMode() (the default
+   color space is RGB, with each value in the range from 0 to 255).
 */
 
 void fill( int gray );
@@ -90,8 +90,8 @@ void fill( int value1, int value2, int value3 );
 void fill( int value1, int value2, int value3, int alpha );
 void fill( const Color& color );
 void fill( const Color& color, int alpha );
-//void fill(hex)																										NO HEX DATA TYPE
-//void fill(hex, alpha)																						  NO HEX DATA TYPE
+//void fill(hex)						NO HEX DATA TYPE
+//void fill(hex, alpha)					NO HEX DATA TYPE
 
 
 //----------------------------------------------------------------------------------- 
@@ -103,7 +103,7 @@ void strokeWeight( int weight );
 void noFill		();
 void noStroke	();
 void smooth		();
-void noSmooth ();
+void noSmooth	();
 
 void line			( float x1, float y1, float x2, float y2 );
 void point		( float x1, float y1 );
