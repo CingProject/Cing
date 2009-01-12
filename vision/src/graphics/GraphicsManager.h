@@ -103,8 +103,8 @@ public:
 	void 											noSmooth									() { m_smooth = false; }
 	bool											getSmooth 								() const { return m_smooth; }
 
-	const RectMode&						getRectMode								() const { return m_rectMode; }
-	void             					setRectMode								(  const  RectMode&	mode );
+	const DrawMode&						getRectMode								() const { return m_rectMode; }
+	void             					setRectMode								(  const  DrawMode&	mode );
 
 	const CvFont&							getCvFont									() const { return  m_cvFont; }
 
@@ -166,7 +166,7 @@ private:
 	Color									m_fillColor;			///< Color used to fill shapes
 	Color									m_strokeColor;			///< Color used to draw shapes
 	int										m_strokeWeight;			///< Width of the stroke used for draw lines, points, and the border around shapes
-	Graphics::RectMode		m_rectMode;
+	Graphics::DrawMode		m_rectMode;
 	bool									m_fill;
 	bool									m_stroke;
 	bool									m_smooth;

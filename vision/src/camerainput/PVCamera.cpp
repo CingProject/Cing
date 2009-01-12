@@ -87,7 +87,7 @@ PVCamera::~PVCamera()
  * @param[in] fps				frames per second to capture
  * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-void PVCamera::init( int deviceId, int width, int height, int fps, Graphics::ImageFormat format )
+void PVCamera::init( int deviceId, int width, int height, int fps, Graphics::GraphicsType format )
 {
   // Check if the class is already initialized
   if ( isValid() )

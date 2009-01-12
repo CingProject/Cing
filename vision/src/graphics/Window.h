@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _Window_H_
 
 #include "GraphicsPrereqs.h"
-
+#include "graphics/Color.h"
 // OGRE
 #include "externLibs/Ogre3d/include/OgreRenderTarget.h"
 

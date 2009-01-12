@@ -43,7 +43,7 @@ public:
 	~TexturedQuad();
 
 	// Init / Release 
-	bool  init            ( int textureWidth, int textureHeight, ImageFormat format );
+	bool  init            ( int textureWidth, int textureHeight, GraphicsType format );
 	void  end             ();
 
 	// Set methods
@@ -66,14 +66,14 @@ public:
 
 	// Texture update
 	void	updateTexture		( const Ogre::Image& img );
-	void  updateTexture   ( unsigned char* textureData, int width, int height, ImageFormat format );
-	void  updateTexture   ( char* textureData, int width, int height, ImageFormat format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
+	void  updateTexture   ( unsigned char* textureData, int width, int height, GraphicsType format );
+	void  updateTexture   ( char* textureData, int width, int height, GraphicsType format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
 
 	// Query methods
 	bool  			isValid         () const { return m_bIsValid; }
 	int					getTextWidth		() const { return m_textWidth;	}
 	int					getTextHeight		() const { return m_textHeight;	}
-	ImageFormat	getFormat				() const { return m_format;		}
+	GraphicsType	getFormat				() const { return m_format;		}
 
 	// Texture coordinate control
 	void				flipVertical		();
@@ -98,7 +98,7 @@ private:
   Ogre::TexturePtr          m_ogreTexture;          		///< Ogre texture (to render the quad with it)  
   Ogre::SceneNode*          m_quadSceneNode;        		///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
 	Ogre::ManualObject*				m_quad;											///< Ogre manual object that contains the geometry (vertex) of the quad
-	ImageFormat								m_format;										///< Format of the image
+	GraphicsType								m_format;										///< Format of the image
 	Ogre::uint32							m_3dQueryFlags;							///< Query flags of ogre when the object is being renderd in 3d		
 
 	float											m_textWidth, m_textHeight;  ///< Width and height of the texture

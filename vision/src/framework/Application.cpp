@@ -40,6 +40,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/ResourceManager.h"
 #include "common/LogManager.h"
 
+// Extern
+#include "externLibs/PTypes/include/pasync.h"
 
 
 namespace Framework
@@ -298,11 +300,7 @@ bool Application::keyReleased( const OIS::KeyEvent& event )
  */
 void Application::delay( unsigned int milliseconds)
 {
-	unsigned long goal = Globals::millisFromStart + milliseconds;
-	while ( goal > Globals::millisFromStart )
-	{
-		Globals::millisFromStart = m_absTimer.getMilliseconds();
-	}
+	pt::psleep( milliseconds );
 }
 
 

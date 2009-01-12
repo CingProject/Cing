@@ -55,7 +55,7 @@ BaseImageFilter::~BaseImageFilter()
  * @param[in] format		format of the image to analyze( RGB or GRAYSCALE)
  * @return true if the initialization was ok | false otherwise
  */
-bool BaseImageFilter::init( int width, int height, ImageFormat format )
+bool BaseImageFilter::init( int width, int height, GraphicsType format )
 {
   // Check if the class is already initialized
   if ( isValid() )

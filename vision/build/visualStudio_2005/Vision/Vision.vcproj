@@ -382,6 +382,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\src\common\String.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\src\common\SystemUtils.h"
 						>
 					</File>
@@ -403,6 +407,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\common\ResourceManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\String.cpp"
 						>
 					</File>
 					<File

@@ -41,13 +41,6 @@ class Color: public Ogre::ColourValue
 {
 public:
 
-	/// Color Mode types
-	enum ColorMode
-	{	
-		RGB,
-		HSB	
-	};
-
 	// Constructor: Transforms color to Ogre range
 	Color( float gray = 255 );
 	Color( float gray, float alpha );
@@ -62,8 +55,8 @@ public:
 	void	normalize		();
 
 	// Color mode 
-	static void				colorMode	( ColorMode mode, float range1, float range2, float range3, float range4 );
-	static const ColorMode	getColorMode(){ return m_colorMode; };
+	static void							colorMode	( GraphicsType mode, float range1, float range2, float range3, float range4 );
+	static const GraphicsType	getColorMode(){ return m_colorMode; };
 
 private:
 
@@ -71,10 +64,10 @@ private:
 	float m_lowRange, m_hightRange; // Color values range. Default 0..255
 	
 	// Static attributes
-	static ColorMode	m_colorMode;
-	static float		m_rRange;
-	static float		m_gRange;
-	static float		m_bRange;
+	static GraphicsType	m_colorMode;
+	static float				m_rRange;
+	static float				m_gRange;
+	static float				m_bRange;
 };
 
 } // namespace Graphics

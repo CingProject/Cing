@@ -28,6 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Graphics
 #include "graphics/GraphicsTypes.h"
+#include "graphics/Image.h"
 
 namespace ComputerVision
 {

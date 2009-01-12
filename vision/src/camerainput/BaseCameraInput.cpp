@@ -71,7 +71,7 @@ BaseCameraInput::~BaseCameraInput()
  * @param[in] fps				frames per second to capture
  * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, Graphics::ImageFormat format, bool multithreaded /*= true*/  )
+void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, Graphics::GraphicsType format, bool multithreaded /*= true*/  )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -100,7 +100,7 @@ void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
 	// Create a temp image of the opposite type to make conversions in case it is necessary.
 	// This means: if we are going to work in RGB, this image will be GRAYSCALE, just in case we receive a GRAYSCALE image instead of
 	// a RGB image, so we can convert it fast... or vice versa..
-	Graphics::ImageFormat tempFormat	= format == Graphics::RGB? Graphics::GRAYSCALE: Graphics::RGB;
+	Graphics::GraphicsType tempFormat	= format == Graphics::RGB? Graphics::GRAYSCALE: Graphics::RGB;
 	m_tempImage.init( width, height, tempFormat );
 
 	// Reset fps timer
@@ -139,7 +139,7 @@ void BaseCameraInput::end()
  * @param[in] height  Height in pixels
  * @param format			Format to the image passed
  */
-void BaseCameraInput::setNewFrameData( char* data, unsigned int width, unsigned int height, Graphics::ImageFormat format )	
+void BaseCameraInput::setNewFrameData( char* data, unsigned int width, unsigned int height, Graphics::GraphicsType format )	
 {
 	// Get capture fps
 	unsigned long elapsedMicroseconds = m_timer.getMicroseconds();

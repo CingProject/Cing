@@ -48,19 +48,19 @@ public:
 	// Constructor / Destructor
 	Image				();
 	Image				( const Image& img );
-	Image				( int width, int height, ImageFormat format = RGB );
+	Image				( int width, int height, GraphicsType format = RGB );
 	Image				( const std::string& name );
 	~Image			();
 
 	// Init / Release / Update / Save / Clone
-	void		init  ( int width, int height, ImageFormat format = RGB );
+	void		init  ( int width, int height, GraphicsType format = RGB );
 	void		init  ( const Image& img );
 	void		load  ( const std::string& name );
 	void		save	( const std::string& name );
 	void		end		();
 
 	// Image data
-	void		setData( char* imageData, int width, int height, ImageFormat format );
+	void		setData( char* imageData, int width, int height, GraphicsType format );
 	char*		getData() { return isValid()? m_cvImage->imageData: NULL; }
 	Image*	clone ();
 
@@ -102,7 +102,7 @@ public:
 	IplImage&				getCVImage	()				{ return *m_cvImage; }
 	int							getWidth		() const;
 	int							getHeight		() const;
-	ImageFormat			getFormat		() const;
+	GraphicsType			getFormat		() const;
 	int							getNChannels() const	{ return m_nChannels; }
 	Color						getPixel		( int x, int y );
 

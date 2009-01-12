@@ -19,46 +19,39 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _VICamera_h_
-#define _VICamera_h_
+#ifndef _String_H_
+#define _String_H_
 
-#include "CameraInputPrereqs.h"
-#include "BaseCameraInput.h"
-#include "externLibs/VideoInput/include/videoInput.h"
+#include <string>
 
 
-namespace CameraInput
+namespace Common
 {
 
 /**
  * @internal
- * @brief Class to capture camera input based on Video Input library
+ * Class to make easy work with strings. It is based on std::string
  */
-class VICamera: public BaseCameraInput
+class String: public std::string
 {
 public:
 
-	// Constructor / Destructor
-	VICamera();
-	~VICamera();
+	// Get string data
+	char		charAt		( int index );
+	int			indexOf		( const std::string& str );
+	int			indexOf		( const std::string& str, int fromIndex );
+	int			length		();
+	String	substring ( int beginIndex );
+	String	substring ( int beginIndex, int endIndex );
 
-	// Init / Release / Update
-	void	init 	( int deviceId, int width, int height, int fps, Graphics::GraphicsType format, bool multithreaded = true );
-	void	update();
-	void	end		();	
+	// Compare
+	bool		equals	( const std::string& str );
 
-	// Query  Methods
-	bool	isValid			() { return m_bIsValid; }
-	void	listDevices	();
-
-private:
-
-	// Attributes
-	videoInput			m_viCamera;		///< VideoInput object to communicate with the camera
-	bool						m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
-
+	// Modify string
+	void toLowerCase	();
+	void toUpperCase	();
 };
 
-} // namespace CameraInput
+} // namespace Common
 
-#endif // _VICamera_h_
+#endif // _String_H_

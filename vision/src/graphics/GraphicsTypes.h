@@ -27,23 +27,30 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
  * @file This file contains the common types of the Graphics namespace
  */
 
-#include "Color.h"
-
 // Ogre includes
 #include "externLibs/Ogre3d/include/OgreLight.h"
 #include "externLibs/Ogre3d/include/ogrepixelformat.h"
 
+//#include "graphics/Color.h"
+
 namespace Graphics
 {
 
+
+	
 	/// Image formats
-	enum ImageFormat
+	enum GraphicsType
 	{
-		RGB				= Ogre::PF_R8G8B8,	///< Red, Green and Blue
+		// Image Formats
+		RGB				= Ogre::PF_R8G8B8,		///< Red, Green and Blue
 		COLOR 			= Ogre::PF_R8G8B8,	///< Same as RGB
-		RGBA			= Ogre::PF_R8G8B8A8,///< Red, Green, Blue and Alpha
-		ARGB			= Ogre::PF_A8R8G8B8,///< Alpha, Red, Green, and Blue
-		GRAYSCALE		= Ogre::PF_BYTE_L	///< Gray scale
+		RGBA			= Ogre::PF_R8G8B8A8,	///< Red, Green, Blue and Alpha
+		ARGB			= Ogre::PF_A8R8G8B8,	///< Alpha, Red, Green, and Blue
+		GRAYSCALE		= Ogre::PF_BYTE_L,	///< Gray scale
+		
+		// Color Modes
+		// RGB,
+		HSB	
 	};
 
 	/// Filter types
@@ -74,22 +81,12 @@ namespace Graphics
 	};
 
 	/// 2d Drawing
-	enum RectMode
+	enum DrawMode
 	{
 		CORNER,
 		CORNERS,
 		CENTER,
 		RADIUS
-	};
-
-	enum EllipseMode
-	{
-		/*
-		CORNER,
-		CORNERS,
-		CENTER,
-		RADIUS
-		*/
 	};
 
 	/// Lights

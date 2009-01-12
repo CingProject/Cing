@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _Object3D_H_
 
 #include "GraphicsPrereqs.h"
-
+#include "graphics/Color.h"
 // Common
 #include "common/CommonTypes.h"
 

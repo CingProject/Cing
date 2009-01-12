@@ -23,6 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _GraphicsUserAPI_h_
 
 #include "GraphicsPrereqs.h"
+#include "graphics/Color.h"
 
 namespace Graphics
 {
@@ -73,10 +74,10 @@ void stroke( const Color& color );
    parameters range1, range2, range3, and range 4.
 */
 
-void colorMode(Color::ColorMode mode);
-void colorMode(Color::ColorMode mode, float range);
-void colorMode(Color::ColorMode mode, float range1, float range2, float range3);
-void colorMode(Color::ColorMode mode, float range1, float range2, float range3, float range4);
+void colorMode(GraphicsType mode);
+void colorMode(GraphicsType mode, float range);
+void colorMode(GraphicsType mode, float range1, float range2, float range3);
+void colorMode(GraphicsType mode, float range1, float range2, float range3, float range4);
 
 /* Sets the color used to fill shapes. For example, if you run fill(204, 102, 0),
    all subsequent shapes will be filled with orange. This color is either specified
@@ -114,7 +115,7 @@ void ellipse	( float x, float y, float width, float height);
 void text			( float x1, float y1, const char* text );
 void arc			( float x, float y,  float width, float height, float start, float stop );
 
-void rectMode ( RectMode mode );
+void rectMode ( DrawMode mode );
 
 //----------------------------------------------------------------------------------- 
 // Shape / 3D Primitives

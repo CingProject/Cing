@@ -47,7 +47,7 @@ public:
   virtual ~BaseImageFilter();
 
   // Init / Release
-  bool          init            ( int width, int height, ImageFormat format );
+  bool          init            ( int width, int height, GraphicsType format );
   void          end             ();
 
   // Query methods

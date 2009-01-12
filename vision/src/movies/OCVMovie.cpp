@@ -225,7 +225,7 @@ void OCVMovie::read( Graphics::Image &image )
 	}
 
 	// Image format of the captured image
-  Graphics::ImageFormat format = frame->nChannels == 1? GRAYSCALE: RGB;
+  Graphics::GraphicsType format = frame->nChannels == 1? GRAYSCALE: RGB;
 
 	// Check if the target image is valid (if not -> init it)
 	if ( !image.isValid() )

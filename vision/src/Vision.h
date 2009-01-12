@@ -134,4 +134,7 @@ typedef AudioInputFMOD	AudioInput;
 // Movie
 typedef OCVMovie	Movie;
 
+// Common
+typedef  bool boolean;
+typedef char byte;
 #endif // _Vision_H_

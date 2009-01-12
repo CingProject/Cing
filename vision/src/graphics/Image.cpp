@@ -69,7 +69,7 @@ Image::Image( const Image& img ):
  * @param height Height of the image to be created
  * @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
  */
-Image::Image( int width, int height, ImageFormat format /*= RGB*/ ):
+Image::Image( int width, int height, GraphicsType format /*= RGB*/ ):
 	m_bIsValid( false ),
 	m_cvImage(NULL),
 	m_bUpdateTexture( false )
@@ -108,7 +108,7 @@ Image::~Image()
  * @param height Height of the image to be created
  * @param format Format of the image to be created. Possible formats are: RGB, RGBA, GRAYSCALE
  */
-void Image::init( int width, int height, ImageFormat format /*= RGB*/  )
+void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -165,7 +165,7 @@ void Image::load( const std::string& name  )
 	m_cvImage->imageData = (char *)m_image.getData();
 
 	// Create the texture quad (to draw image)
-	m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), (ImageFormat)m_image.getFormat() );
+	m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), (GraphicsType)m_image.getFormat() );
   
 	// Load image data to texture
 	updateTexture();
@@ -227,7 +227,7 @@ void Image::end()
  * @param height		Height of the passed image data
  * @param format		format Format of the image passed
  */
-void Image::setData( char* imageData, int width, int height, ImageFormat format )
+void Image::setData( char* imageData, int width, int height, GraphicsType format )
 {
 	if ( !isValid() )
 	{
@@ -273,20 +273,20 @@ int Image::getHeight() const
  * @brief Returns image format 
  * @return the imageFomat of the image
  */
-ImageFormat Image::getFormat() const
+GraphicsType Image::getFormat() const
 {
 	if ( m_image.getFormat() != Ogre::PF_UNKNOWN )
-		return (ImageFormat)m_image.getFormat();
+		return (GraphicsType)m_image.getFormat();
 
 	switch(m_nChannels)
 	{
-	case 1: return (ImageFormat)GRAYSCALE;
+	case 1: return (GraphicsType)GRAYSCALE;
 		break;
-	case 3: return (ImageFormat)RGB;
+	case 3: return (GraphicsType)RGB;
 		break;
-	case 4: return (ImageFormat)RGBA;
+	case 4: return (GraphicsType)RGBA;
 		break;
-	default: THROW_EXCEPTION( "Error in ImageFormat" );
+	default: THROW_EXCEPTION( "Error in GraphicsType" );
 	}
 }
 
@@ -761,14 +761,14 @@ void Image::point( float x, float y )
 	// Get Stroke and Fill Color
 	//Color color        = graphManager.getStrokeColor();
 
-	Color::ColorMode theColorMode = Color::getColorMode();
+	GraphicsType theColorMode = Color::getColorMode();
 	Color color;
 	switch( theColorMode )
 	{
-	case Color::RGB:
+	case RGB:
 		color        = graphManager.getStrokeColor();
 		break;
-	case Color::HSB:
+	case HSB:
 		color        = graphManager.getStrokeColor();
 		break;
 	default:

@@ -559,7 +559,7 @@ void GraphicsManager::ellipse	( float x, float y, float width, float height)
 /**
  * @brief Modifies the location from which rectangles draw
  */
-void GraphicsManager::setRectMode( const  RectMode&	mode )
+void GraphicsManager::setRectMode( const  DrawMode&	mode )
 {
 	m_rectMode = mode;
 }

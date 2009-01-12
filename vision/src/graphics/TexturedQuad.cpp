@@ -88,7 +88,7 @@ TexturedQuad::~TexturedQuad()
  * GRAYSCALE for greyscale images, this is, black & white
  * @return true if the initialization was ok | false otherwise
  */
-bool TexturedQuad::init( int textureWidth, int textureHeight, ImageFormat format )
+bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -476,7 +476,7 @@ void TexturedQuad::updateTexture( const Ogre::Image& img )
  * @param[in] format  Format of the image. RGB for color images (red, green and blue), ARGB for color plus alpha channel for transparency
  * GRAYSCALE for grayscale images, this is, black & white
  */
-void TexturedQuad::updateTexture( unsigned char* textureData, int width, int height, ImageFormat format )
+void TexturedQuad::updateTexture( unsigned char* textureData, int width, int height, GraphicsType format )
 {
 	// Check if the object is valid
 	if ( !isValid() )

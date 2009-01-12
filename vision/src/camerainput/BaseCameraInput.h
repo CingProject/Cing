@@ -49,7 +49,7 @@ public:
   virtual ~BaseCameraInput();
   
 	// Init / Release / Update (to be implemented in subclasses)
-  virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, Graphics::ImageFormat format = Graphics::RGB, bool multithreaded = true );
+  virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, Graphics::GraphicsType format = Graphics::RGB, bool multithreaded = true );
 	virtual void    end             ();
   virtual void    update          () = 0;
 
@@ -65,12 +65,12 @@ public:
   int             				getFPS          () const { return m_fps;        }
   int             				getNumChannels  () const { return m_nChannels;  }
   Graphics::Image&				getImage        ()		 { return m_currentCameraImage; }
-  Graphics::ImageFormat			getFormat		() const { return m_format; }
+  Graphics::GraphicsType			getFormat		() const { return m_format; }
 	 
 protected:
 
   // Protected methods
-  void  setNewFrameData         ( char* data, unsigned int width, unsigned int height, Graphics::ImageFormat format );
+  void  setNewFrameData         ( char* data, unsigned int width, unsigned int height, Graphics::GraphicsType format );
   void  setNewFrame             ( bool newFrame ) { m_newFrame = newFrame;    }  
   void  setWidth                ( int width   )   { m_width   = width;  }
   void  setHeight               ( int height  )   { m_height  = height; }
@@ -90,7 +90,7 @@ private:
 	int                     m_fps;                		///< Capture frames per second
 	int                     m_frameSize;          		///< Size in bytes of a single frame
 	int                     m_nChannels;          		///< Number of channels of the captured image
-	Graphics::ImageFormat	m_format;					///< Format of the frames (RGB or GRAYSCALE)
+	Graphics::GraphicsType	m_format;					///< Format of the frames (RGB or GRAYSCALE)
 	bool                    m_newFrame;           		///< True when the camera has a new frame captured
 	bool                    m_bIsValid;	          		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 	bool					m_showFps;					///< Show real capture fps

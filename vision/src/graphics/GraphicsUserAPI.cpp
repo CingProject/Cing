@@ -502,7 +502,7 @@ void arc( float x, float y,  float width, float height, float start, float stop 
  *
  * @param mode
  */
-void rectMode( RectMode mode )
+void rectMode( DrawMode mode )
 {
 	Graphics::GraphicsManager::getSingleton().setRectMode( mode );
 }
@@ -514,22 +514,22 @@ void rectMode( RectMode mode )
  * @param mode
  */
 
-void colorMode( Color::ColorMode mode )
+void colorMode( GraphicsType mode )
 {
 	Color::colorMode( mode, 255, 255, 255, 255 );
 };
 
-void colorMode( Color::ColorMode mode, float range )
+void colorMode( GraphicsType mode, float range )
 {
 
 };
 
-void colorMode( Color::ColorMode mode, float range1, float range2, float range3 )
+void colorMode( GraphicsType mode, float range1, float range2, float range3 )
 {
 
 };
 
-void colorMode( Color::ColorMode mode, float range1, float range2, float range3, float range4 )
+void colorMode( GraphicsType mode, float range1, float range2, float range3, float range4 )
 {
 
 };

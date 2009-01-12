@@ -28,7 +28,7 @@ namespace Graphics
 {
 
 /// Static member initialization
-	Color::ColorMode Color::m_colorMode = Color::RGB;
+	GraphicsType Color::m_colorMode = RGB;
 	float  Color::m_rRange = 255.0f ;
 	float  Color::m_gRange = 255.0f ;
 	float  Color::m_bRange = 255.0f ;
@@ -141,7 +141,7 @@ void Color::normalize()
  * @internal 
  * @brief Change the color mode and range
  */
-void Color::colorMode( ColorMode mode, float range1, float range2, float range3, float range4 )
+void Color::colorMode( GraphicsType mode, float range1, float range2, float range3, float range4 )
 {
 	m_colorMode  = mode;
 	//m_lowRange   = 0;

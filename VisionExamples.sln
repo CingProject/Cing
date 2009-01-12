@@ -117,6 +117,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FluidSim", "examples\FluidS
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FFTAnalisys", "examples\FFTAnalisys\FFTAnalisys.vcproj", "{C4A9728D-814F-4859-8616-2A9AD7D746F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CirclesOverHead", "examples\CirclesOverHead\CirclesOverHead.vcproj", "{B349E8AD-011E-4E1E-923C-68D7A89F82F6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DPositional_Sound", "examples\3DPositional_Sound\3DPositional_Sound.vcproj", "{08078C23-DE8C-4F3A-83DC-208FB19DF507}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -219,6 +234,18 @@ Global
 		{21AEE94F-5450-4435-B2E1-EC74A571D2F0}.Debug|Win32.Build.0 = Debug|Win32
 		{21AEE94F-5450-4435-B2E1-EC74A571D2F0}.Release|Win32.ActiveCfg = Release|Win32
 		{21AEE94F-5450-4435-B2E1-EC74A571D2F0}.Release|Win32.Build.0 = Release|Win32
+		{C4A9728D-814F-4859-8616-2A9AD7D746F7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C4A9728D-814F-4859-8616-2A9AD7D746F7}.Debug|Win32.Build.0 = Debug|Win32
+		{C4A9728D-814F-4859-8616-2A9AD7D746F7}.Release|Win32.ActiveCfg = Release|Win32
+		{C4A9728D-814F-4859-8616-2A9AD7D746F7}.Release|Win32.Build.0 = Release|Win32
+		{B349E8AD-011E-4E1E-923C-68D7A89F82F6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B349E8AD-011E-4E1E-923C-68D7A89F82F6}.Debug|Win32.Build.0 = Debug|Win32
+		{B349E8AD-011E-4E1E-923C-68D7A89F82F6}.Release|Win32.ActiveCfg = Release|Win32
+		{B349E8AD-011E-4E1E-923C-68D7A89F82F6}.Release|Win32.Build.0 = Release|Win32
+		{08078C23-DE8C-4F3A-83DC-208FB19DF507}.Debug|Win32.ActiveCfg = Debug|Win32
+		{08078C23-DE8C-4F3A-83DC-208FB19DF507}.Debug|Win32.Build.0 = Debug|Win32
+		{08078C23-DE8C-4F3A-83DC-208FB19DF507}.Release|Win32.ActiveCfg = Release|Win32
+		{08078C23-DE8C-4F3A-83DC-208FB19DF507}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
