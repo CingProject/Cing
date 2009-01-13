@@ -49,9 +49,7 @@ int String::indexOf( const std::string& str , int fromIndex )
 {
 	return (int)this->rfind( str, fromIndex );
 }
-	//int			length		();
-	//String	substring ( int beginIndex );
-	//String	substring ( int beginIndex, int endIndex );
+
 
 	//// Compare
 
@@ -65,7 +63,8 @@ bool String::equals( const std::string& str )
 /**
  * @brief 
  */
-void String::toUpperCases() {
+void String::toUpperCases()
+{
 	std::string r = *this;
 	for(unsigned int i = 0;i < size(); i++)
 		r[i] = ::toupper( at( i ));
@@ -75,11 +74,29 @@ void String::toUpperCases() {
 /**
  * @brief 
  */
-void String::toLowerCases() {
+void String::toLowerCases()
+{
 	std::string r = *this;
 	for(unsigned int i = 0;i < size(); i++)
 		r[i] = ::tolower( at( i ));
 	*this = r.c_str();
+}
+
+/**
+ * @brief 
+ */
+String String::substring( int beginIndex )
+{
+	String result = this->substr( beginIndex).c_str();
+	return result;
+}
+
+/**
+ * @brief 
+ */
+String String::substring( int beginIndex, int endIndex ) {
+	String result = this->substr( beginIndex, endIndex).c_str();
+	return result;
 }
 
 }

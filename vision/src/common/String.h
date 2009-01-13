@@ -42,7 +42,7 @@ public:
 	char				charAt		( int index );
 	int					indexOf		( const std::string& str );
 	int					indexOf		( const std::string& str, int fromIndex );
-	int					length	  () { return size(); }
+	int					length	  () { return (int)size(); }
 	String			substring ( int beginIndex );
 	String			substring ( int beginIndex, int endIndex );
 	const char* toChar    () { return c_str(); }
