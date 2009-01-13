@@ -34,7 +34,6 @@ char String::charAt( int index )
 	return this->at( index );
 }
 
-
 /**
  * @brief 
  */
@@ -43,8 +42,13 @@ int String::indexOf( const std::string& str )
 	return (int)this->find_first_of( str );
 }
 	
-	//int			indexOf		( const std::string& str );
-	//int			indexOf		( const std::string& str, int fromIndex );
+/**
+ * @brief 
+ */
+int String::indexOf( const std::string& str , int fromIndex )
+{
+	return (int)this->rfind( str, fromIndex );
+}
 	//int			length		();
 	//String	substring ( int beginIndex );
 	//String	substring ( int beginIndex, int endIndex );
@@ -57,6 +61,26 @@ bool String::equals( const std::string& str )
 }
 
 	//// Modify string
-	//void toLowerCase	();
-	//void toUpperCases	();
+
+/**
+ * @brief 
+ */
+void String::toUpperCases() {
+	std::string r = *this;
+	for(unsigned int i = 0;i < size(); i++)
+		r[i] = ::toupper( at( i ));
+	*this = r.c_str();
 }
+
+/**
+ * @brief 
+ */
+void String::toLowerCases() {
+	std::string r = *this;
+	for(unsigned int i = 0;i < size(); i++)
+		r[i] = ::tolower( at( i ));
+	*this = r.c_str();
+}
+
+}
+

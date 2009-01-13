@@ -31,6 +31,7 @@
 #include "common/Release.h"
 #include "common/MathUtils.h"
 #include "common/SystemUtils.h"
+#include "common/String.h"
 
 // standard general utils
 #include <cstdio>

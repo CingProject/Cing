@@ -35,21 +35,25 @@ namespace Common
 class String: public std::string
 {
 public:
+	String() {}
+	String(const char * input) : std::string( input ) {}
 
 	// Get string data
-	char		charAt		( int index );
-	int			indexOf		( const std::string& str );
-	int			indexOf		( const std::string& str, int fromIndex );
-	int			length		();
-	String	substring ( int beginIndex );
-	String	substring ( int beginIndex, int endIndex );
+	char				charAt		( int index );
+	int					indexOf		( const std::string& str );
+	int					indexOf		( const std::string& str, int fromIndex );
+	int					length	  () { return size(); }
+	String			substring ( int beginIndex );
+	String			substring ( int beginIndex, int endIndex );
+	const char* toChar    () { return c_str(); }
 
 	// Compare
-	bool		equals	( const std::string& str );
+	bool equals ( const std::string& str );
 
 	// Modify string
-	void toLowerCase	();
-	void toUpperCase	();
+	void toLowerCases	();
+	void toUpperCases	();
+
 };
 
 } // namespace Common

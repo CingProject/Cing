@@ -132,6 +132,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DPositional_Sound", "examp
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Strings", "examples\Strings\Strings.vcproj", "{63E3346F-633C-4C17-BC19-E42DCFD00595}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -246,6 +251,10 @@ Global
 		{08078C23-DE8C-4F3A-83DC-208FB19DF507}.Debug|Win32.Build.0 = Debug|Win32
 		{08078C23-DE8C-4F3A-83DC-208FB19DF507}.Release|Win32.ActiveCfg = Release|Win32
 		{08078C23-DE8C-4F3A-83DC-208FB19DF507}.Release|Win32.Build.0 = Release|Win32
+		{63E3346F-633C-4C17-BC19-E42DCFD00595}.Debug|Win32.ActiveCfg = Debug|Win32
+		{63E3346F-633C-4C17-BC19-E42DCFD00595}.Debug|Win32.Build.0 = Debug|Win32
+		{63E3346F-633C-4C17-BC19-E42DCFD00595}.Release|Win32.ActiveCfg = Release|Win32
+		{63E3346F-633C-4C17-BC19-E42DCFD00595}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
