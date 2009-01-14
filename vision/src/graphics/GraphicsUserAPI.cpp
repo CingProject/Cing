@@ -508,6 +508,18 @@ void rectMode( DrawMode mode )
 }
 
 /**
+* @brief  The origin of the ellipse is modified by the ellipseMode() function. 
+*         The default configuration is ellipseMode(CENTER), which specifies the
+*					location of the ellipse as the center of the shape. 
+*
+* @param mode
+*/
+void ellipseMode( DrawMode mode )
+{
+	Graphics::GraphicsManager::getSingleton().setEllipseMode( mode );
+}
+
+/**
  * @brief  	Changes the colorMode and/or range of colors. Modes RGB and HSB
  *			Default range is 0-255
  *

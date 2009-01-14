@@ -36,8 +36,6 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Graphics
 {
 
-
-	
 	/// Image formats
 	enum GraphicsType
 	{
@@ -70,13 +68,12 @@ namespace Graphics
 	{
 		BLEND,				///< normal mode
 		ADD					///< additive mode
-
 	};
 	/// Render modes
 	enum RenderMode
 	{
 		DRAW_POINTS			= Ogre::PM_POINTS,
-		DRAW_WIREFRAME		= Ogre::PM_WIREFRAME,
+		DRAW_WIREFRAME  = Ogre::PM_WIREFRAME,
 		DRAW_SOLID			= Ogre::PM_SOLID
 	};
 

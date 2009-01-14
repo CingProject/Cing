@@ -45,6 +45,20 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Graphics
 {
 
+	// TODO: Is it the correct place to allocate this structure?
+	struct Style 
+	{
+		Style( Color fillColor, Color strokeColor, int strokeWeight) : m_fillColor( fillColor ),
+																																	 m_strokeColor(strokeColor),
+																																	 m_strokeWeight(strokeWeight)
+																																	 {};
+		// Styling properties
+		Color									m_fillColor;			  ///< Color used to fill shapes
+		Color									m_strokeColor;			///< Color used to draw shapes
+		int										m_strokeWeight;			///< Width of the stroke used for draw lines, points, and the border around shapes
+		Graphics::DrawMode		m_rectMode;
+	};
+
 /**
  * @internal
  * Manages the communication with the Graphics engine (OGRE)
@@ -106,6 +120,9 @@ public:
 	const DrawMode&						getRectMode								() const { return m_rectMode; }
 	void             					setRectMode								(  const  DrawMode&	mode );
 
+	const DrawMode&						getEllipseMode						() const { return m_ellipseMode; }
+	void             					setEllipseMode						(  const  DrawMode&	mode );
+
 	const CvFont&							getCvFont									() const { return  m_cvFont; }
 
 	// Debug methods
@@ -131,7 +148,10 @@ public:
 	void text			( float x1, float y1, const char* text );
 
 	// 2D Canvas
-	Graphics::Image*			m_canvas;
+	Graphics::Image*			 m_canvas;
+
+	// Styles
+	std::queue < Style >   m_styles;          ///< Queue to store style properties ( fill color, stroke weight, etc.)
 
 private:
 
@@ -163,10 +183,13 @@ private:
 	Ogre::SceneNode*						m_linesNode;
 	std::vector <Ogre::Vector3> m_linesPoints;
 
-	Color									m_fillColor;			///< Color used to fill shapes
+	// Styling properties
+	Color									m_fillColor;		   	///< Color used to fill shapes
 	Color									m_strokeColor;			///< Color used to draw shapes
 	int										m_strokeWeight;			///< Width of the stroke used for draw lines, points, and the border around shapes
-	Graphics::DrawMode		m_rectMode;
+	Graphics::DrawMode		m_rectMode;					///< Parameters input mode to draw rectangles
+	Graphics::DrawMode		m_ellipseMode;			///< Parameters input mode to draw ellipses
+
 	bool									m_fill;
 	bool									m_stroke;
 	bool									m_smooth;
@@ -176,7 +199,7 @@ private:
 	// To manage visibility of loaded images
 	// TODO optimize this
 	std::list< TexturedQuad* >	m_drawableImagesQueue; ///< Images that are being drawn by the user ar maked as not visible every frame
-																							// to if the user does not call the draw one frame the image is not drawn
+																							        // to if the user does not call the draw one frame the image is not drawn
 
 	bool									m_showFps;				///< Indicates whether the frames per second should be shown or not
 	bool                  m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called

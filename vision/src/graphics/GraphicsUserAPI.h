@@ -116,7 +116,10 @@ void text			( float x1, float y1, const char* text );
 void arc			( float x, float y,  float width, float height, float start, float stop );
 
 void rectMode ( DrawMode mode );
+void ellipseMode ( DrawMode mode );
 
+void pushStyle( );
+void popStyle( );
 //----------------------------------------------------------------------------------- 
 // Shape / 3D Primitives
 //----------------------------------------------------------------------------------- 

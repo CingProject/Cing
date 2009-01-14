@@ -70,7 +70,8 @@ GraphicsManager::GraphicsManager():
 	m_fill( true ),
 	m_stroke( true ),
 	m_smooth( false ),
-	m_rectMode( CORNER )
+	m_rectMode( CORNER ),
+	m_ellipseMode( CENTER )
 {
 }
 
@@ -170,6 +171,9 @@ bool GraphicsManager::init()
 
 	// Init 2dCanvas
 	m_canvas = new Image(Globals::width, Globals::height, RGB);
+
+	// Init style queue with the initial style
+	m_styles.push( Style(Color( 255, 255, 255 ),	Color( 0, 0, 0 ),	1) );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -368,6 +372,7 @@ void GraphicsManager::setRenderMode( RenderMode mode )
 void GraphicsManager::setFillColor( const Color& color )
 {
 	m_fillColor = color;
+	m_styles.front().m_fillColor = color;
 
 	// We are using the emissive color to fake the fill color with lighting activated
 	// TODO dejar esto bien
@@ -562,6 +567,14 @@ void GraphicsManager::ellipse	( float x, float y, float width, float height)
 void GraphicsManager::setRectMode( const  DrawMode&	mode )
 {
 	m_rectMode = mode;
+}
+
+/**
+ * @brief Modifies the location from which ellipses draw
+ */
+void GraphicsManager::setEllipseMode( const  DrawMode&	mode )
+{
+	m_ellipseMode = mode;
 }
 
 
