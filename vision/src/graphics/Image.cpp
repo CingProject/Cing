@@ -1028,9 +1028,9 @@ void Image::ellipse( float x1, float y1, float x2, float y2 )
 
 		case CENTER:
 			if (graphManager.getSmooth())
-				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
 			else
-				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), -1, 4);
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), -1, 4);
 			break;
 
 		case RADIUS: 
@@ -1066,9 +1066,9 @@ void Image::ellipse( float x1, float y1, float x2, float y2 )
 
 		case CENTER: 
 			if (graphManager.getSmooth())
-				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
-				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
 		case RADIUS: 

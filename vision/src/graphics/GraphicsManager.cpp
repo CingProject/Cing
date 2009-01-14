@@ -60,9 +60,6 @@ namespace Graphics
 GraphicsManager::GraphicsManager():
   m_bIsValid    ( false ),
 	m_showFps			( false ),
-	m_strokeWeight( 1 ),
-	m_strokeColor( 0, 0, 0 ),
-	m_fillColor( 255, 255, 255 ),
   m_pSceneManager( NULL ),
 	m_lines( NULL),
 	m_linesNode( NULL),
@@ -173,7 +170,7 @@ bool GraphicsManager::init()
 	m_canvas = new Image(Globals::width, Globals::height, RGB);
 
 	// Init style queue with the initial style
-	m_styles.push( Style(Color( 255, 255, 255 ),	Color( 0, 0, 0 ),	1) );
+	m_styles.push_front( Style() );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -371,12 +368,11 @@ void GraphicsManager::setRenderMode( RenderMode mode )
  */
 void GraphicsManager::setFillColor( const Color& color )
 {
-	m_fillColor = color;
 	m_styles.front().m_fillColor = color;
 
 	// We are using the emissive color to fake the fill color with lighting activated
 	// TODO dejar esto bien
-	m_pSceneManager->setAmbientLight( m_fillColor );
+	m_pSceneManager->setAmbientLight( m_styles.front().m_fillColor );
 
 	m_fill = true;
 }
@@ -388,7 +384,8 @@ void GraphicsManager::setFillColor( const Color& color )
  */
 void GraphicsManager::setStrokeColor( const Color& color )
 {
-	m_strokeColor = color;
+	m_styles.front().m_strokeColor = color;
+
 	m_stroke = true;
 }
 
@@ -399,7 +396,7 @@ void GraphicsManager::setStrokeColor( const Color& color )
  */
 void GraphicsManager::setStrokeWeight( int weight )
 {
-	m_strokeWeight = weight;
+	m_styles.front().m_strokeWeight = weight;
 }
 
 /**

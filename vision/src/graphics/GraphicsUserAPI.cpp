@@ -543,7 +543,19 @@ void colorMode( GraphicsType mode, float range1, float range2, float range3 )
 
 void colorMode( GraphicsType mode, float range1, float range2, float range3, float range4 )
 {
-
 };
+
+void pushStyle()
+{
+	// Add a new style, copying parameters from the last one.
+	Graphics::GraphicsManager::getSingleton().m_styles.push_front( Graphics::GraphicsManager::getSingleton().m_styles.front() );
+};
+
+void popStyle()
+{
+	// Pop the last style created
+	Graphics::GraphicsManager::getSingleton().m_styles.pop_front();
+};
+
 
 } // namespace Graphics

@@ -45,18 +45,22 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Graphics
 {
 
-	// TODO: Is it the correct place to allocate this structure?
+	// TODO: Is it the correct place to allocate this structure? Maybe a StylesManager ?
 	struct Style 
 	{
+		// Constructors
+		Style() :  m_fillColor( Color( 255, 255, 255 ) ),
+							 m_strokeColor( Color( 0, 0, 0 ) ),
+							 m_strokeWeight( 1 )
+							 {};
 		Style( Color fillColor, Color strokeColor, int strokeWeight) : m_fillColor( fillColor ),
-																																	 m_strokeColor(strokeColor),
-																																	 m_strokeWeight(strokeWeight)
+																																	 m_strokeColor( strokeColor ),
+																																	 m_strokeWeight( strokeWeight )
 																																	 {};
 		// Styling properties
 		Color									m_fillColor;			  ///< Color used to fill shapes
 		Color									m_strokeColor;			///< Color used to draw shapes
 		int										m_strokeWeight;			///< Width of the stroke used for draw lines, points, and the border around shapes
-		Graphics::DrawMode		m_rectMode;
 	};
 
 /**
@@ -101,21 +105,25 @@ public:
 	void											setFillColor							(  const Color& color );
 
 	void											setStrokeColor						(  const Color& color );
-	const Color&							getFillColor					  	() const { return m_fillColor; }
-	const Color&							getStrokeColor						() const { return m_strokeColor; }
+
+	const Color&							getFillColor						  () const { return 	m_styles.front().m_fillColor; }
+	const Color&							getStrokeColor					  () const { return 	m_styles.front().m_strokeColor; }
+
 	void											setBackgroundColor ( const Color& color );
 
 	// Appearance drawing methods
 	void 											setStrokeWeight						(  int weight );
-	int  											getStrokeWeight						() { return m_strokeWeight; }
+	int  											getStrokeWeight						() { return m_styles.front().m_strokeWeight; }
 
 	void 											noFill										() { m_fill   = false; }
-	bool											getFill										() const { return m_fill; }
 	void 											noStroke									() { m_stroke = false; }
-	bool											getStroke									() const { return m_stroke; }
-	void 											smooth									  () { m_smooth = true; }
 	void 											noSmooth									() { m_smooth = false; }
+
+	bool											getFill										() const { return m_fill; }
+	bool											getStroke									() const { return m_stroke; }
 	bool											getSmooth 								() const { return m_smooth; }
+
+	void 											smooth									  () { m_smooth = true; }
 
 	const DrawMode&						getRectMode								() const { return m_rectMode; }
 	void             					setRectMode								(  const  DrawMode&	mode );
@@ -151,7 +159,7 @@ public:
 	Graphics::Image*			 m_canvas;
 
 	// Styles
-	std::queue < Style >   m_styles;          ///< Queue to store style properties ( fill color, stroke weight, etc.)
+	std::deque < Style >   m_styles;          ///< Queue to store style properties ( fill color, stroke weight, etc.)
 
 private:
 
@@ -177,16 +185,12 @@ private:
 	Font                  m_defaultFont;    ///< Default system font
 	Text                  m_defaultText;    ///< To print text to screen
 
-
 	// Simple primitives 3d related drawing ( lines, circles , ...)
 	DynamicLines*								m_lines;
 	Ogre::SceneNode*						m_linesNode;
 	std::vector <Ogre::Vector3> m_linesPoints;
 
 	// Styling properties
-	Color									m_fillColor;		   	///< Color used to fill shapes
-	Color									m_strokeColor;			///< Color used to draw shapes
-	int										m_strokeWeight;			///< Width of the stroke used for draw lines, points, and the border around shapes
 	Graphics::DrawMode		m_rectMode;					///< Parameters input mode to draw rectangles
 	Graphics::DrawMode		m_ellipseMode;			///< Parameters input mode to draw ellipses
 
