@@ -37,6 +37,9 @@ namespace Common
 
 // Constants
 const float PI          = 3.14159265359f;
+const float HALF_PI     = 1.57079632679f;
+const float TWO_PI      = 6.28318530717f;
+
 const float EPSILON     = 0.00001f;
 
 
@@ -189,6 +192,31 @@ inline float dist( float x1, float y1, float x2, float y2 )
   return sqrt((x1-x2)*(x1-x2) + ((y1-y2)*(y1-y2)));
 }
 
+/**
+ * @brief Calculates the distance between two points in space
+ * @param[in] pos1 first position
+ * @param[in] pos2 second position 
+ * @return the distance between two points in space
+ */
+inline float dist( float x1, float y1, float z1,  float x2, float y2, float z2 )
+{
+  return sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) + (z1-z2)*(z1-z2));
+}
+
+/**
+* @brief TODO
+*/
+inline float mag( float x1, float y1)
+{
+	return sqrt((x1*x1) + (y1*y1) );
+}
+/**
+* @brief TODO
+*/
+inline float mag( float x1, float y1, float z1)
+{
+	return sqrt((x1*x1) + (y1*y1) + (z1*z1));
+}
 /**
  * @brief Maps a value from one range to another.
  *
