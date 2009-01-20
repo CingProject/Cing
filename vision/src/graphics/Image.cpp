@@ -121,8 +121,8 @@ void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
 	// Create the texture quad (to draw image)
 	m_quad.init( m_cvImage->width, m_cvImage->height, format );
 
-	// Load image data to texture
-	updateTexture();
+	// Load image data to texture -> No neccesary as it is an empty image
+	// updateTexture();
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -527,13 +527,13 @@ void Image::operator=( const Image& other )
 	if ( m_cvImage )
 		cvReleaseImage( &m_cvImage );
 
-	m_cvImage = cvCloneImage(other.m_cvImage);
-
 	// Check if the image is initialized
 	if ( !isValid() )
 		init( other.getWidth(), other.getHeight(), other.getFormat() );
 
-	m_quad    = other.m_quad;
+	// Copy the data
+	m_cvImage		= cvCloneImage(other.m_cvImage);
+	m_quad			= other.m_quad;
 	m_nChannels = other.m_nChannels;
 
 	// Load image data to texture
