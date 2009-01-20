@@ -22,6 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GraphicsUserAPI.h"
 #include "GraphicsManager.h"
 #include "Image.h"
+#include "Framework/UserAppGlobals.h"
 
 namespace Graphics
 {
@@ -531,31 +532,121 @@ void colorMode( GraphicsType mode )
 	Color::colorMode( mode, 255, 255, 255, 255 );
 };
 
+/**
+ * @brief  	
+ *
+ * @param mode
+ */
 void colorMode( GraphicsType mode, float range )
 {
 
 };
 
+/**
+ * @brief  	
+ *
+ * @param mode
+ */
 void colorMode( GraphicsType mode, float range1, float range2, float range3 )
 {
 
 };
-
+/**
+ * @brief  	
+ *
+ * @param mode
+ */
 void colorMode( GraphicsType mode, float range1, float range2, float range3, float range4 )
 {
 };
-
+/**
+ * @brief  	
+ *
+ * @param mode
+ */
 void pushStyle()
 {
 	// Add a new style, copying parameters from the last one.
 	Graphics::GraphicsManager::getSingleton().m_styles.push_front( Graphics::GraphicsManager::getSingleton().m_styles.front() );
 };
-
+/**
+ * @brief  	
+ *
+ * @param mode
+ */
 void popStyle()
 {
 	// Pop the last style created
 	Graphics::GraphicsManager::getSingleton().m_styles.pop_front();
 };
 
+//Create functions
+/**
+ * @brief  	
+ *
+ * @param mode
+ */
+Image createImage(int width, int height, GraphicsType format)
+{
+	return Image( width,  height,  format);
+};
+/**
+ * @brief  	
+ *
+ * @param mode
+ */
+Image loadImage( const std::string& name)
+{
+	Image newImage;
+	newImage.load( name );
+	return newImage;
+}
+/**
+ * @brief Loads the pixel data for the display window into the pixels[] vector.
+ *        This function must always be called before reading from or writing to pixels[].  	
+ *
+ * @param mode
+ */
+void loadPixels()
+{
+	// Create temporal image to allow an easy access to the data
+	Image* tempImage = GraphicsManager::getSingleton().m_canvas;
+	int    numPixels = tempImage->getWidth() * tempImage->getHeight();
+	int    imageWidth    = tempImage->getWidth();
+	int    yIndex    = 0;
 
+	// Read entire canvas image
+	for (int i = 0; i < numPixels ; i++)
+	{
+		if ( (i % imageWidth == 0) && (i != 0) )	
+		  yIndex++;
+		Globals::pixels[i] = tempImage->getPixel( i - imageWidth*yIndex, yIndex );
+	}
+  
+}
+/**
+ * @brief Updates the display window with the data in the pixels[] array. 
+ *        Use in conjunction with loadPixels()	
+ *
+ * @param mode
+ */
+void updatePixels()
+{
+	// Create temporal image to allow an easy access to the data
+	Image* tempImage = GraphicsManager::getSingleton().m_canvas;
+	int    numPixels = tempImage->getWidth() * tempImage->getHeight();
+	int    imageWidth    = tempImage->getWidth();
+	int    yIndex    = 0;
+
+	// Paint pixels in the canvas image
+	// TODO: Too slow! Optimize
+	for (int i = 0; i < numPixels ; i++)
+	{
+		if ( (i % imageWidth == 0) && (i != 0) )	
+			yIndex++;
+		stroke( Globals::pixels[i] );
+		tempImage->point( i - imageWidth*yIndex, yIndex);
+	}
+  
+}
 } // namespace Graphics

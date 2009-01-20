@@ -169,8 +169,12 @@ bool GraphicsManager::init()
 	// Init 2dCanvas
 	m_canvas = new Image(Globals::width, Globals::height, RGB);
 
-	// Init style queue with the initial style
+	// Init style queue
 	m_styles.push_front( Style() );
+
+	// Init Globals::pixels
+	for (int i = 0; i < m_canvas->getWidth() * m_canvas->getHeight(); i++)
+		Globals::pixels.push_back( Color::Black );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -587,7 +591,7 @@ void GraphicsManager::setBackgroundColor( const Color& color )
     return;
 	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
 
-	cvSet( &m_canvas->getCVImage(), cvScalar(color.r,color.g,color.b) );
+	cvSet( &m_canvas->getCVImage(), cvScalar(color.b,color.g,color.r) );
 	m_canvas->setUpdateTexture(true);
 }
 } // namespace Graphics

@@ -22,6 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "UserAppGlobals.h"
 #include "input/InputManager.h"
 
+
 namespace Globals
 {
 
@@ -55,5 +56,12 @@ float								frameRate       = 0.0f;
 // Advanced
 Ogre::SceneManager*	ogreSceneManager	= NULL;
 Ogre::Camera*				ogreCamera				= NULL;
+
+
+// Pixel manipulation
+std::vector < Graphics::Color > pixels;
+
+// Other
+PerlinNoise _noise = PerlinNoise(4,.63,1.6,0);
 
 } // namespace Globals

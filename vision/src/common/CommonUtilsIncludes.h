@@ -32,6 +32,7 @@
 #include "common/MathUtils.h"
 #include "common/SystemUtils.h"
 #include "common/String.h"
+#include "common/PerlinNoise.h"
 
 // standard general utils
 #include <cstdio>

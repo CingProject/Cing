@@ -25,6 +25,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "CommonPrereqs.h"
 #include "CommonTypes.h"
 
+#include "PerlinNoise.h"
+#include "framework/UserAppGlobals.h"
+
 #include <numeric>
 
 /**
@@ -93,11 +96,25 @@ T abs ( T value ) {  return static_cast< T >( fabs( value ) );  }
 inline float degToRad ( float deg )       {  return static_cast< float >( (PI * deg) / 180.0f );  }
 
 /**
+ * @brief Converts degrees into radians
+ * @param[in] deg Degrees to convert
+ * @return Radians equivalent to the degrees received
+ */
+inline float radians ( float deg )       {  return static_cast< float >( (PI * deg) / 180.0f );  }
+
+/**
  * @brief Converts radians into degrees
  * @param[in] rad Radians to convert
  * @return Degrees equivalent to the radians received
  */
 inline float radToDeg ( float rad )       {  return static_cast< float >( (180.0f * rad) / PI );  }
+
+/**
+* @brief Converts radians into degrees
+* @param[in] rad Radians to convert
+* @return Degrees equivalent to the radians received
+*/
+inline float degrees ( float rad )       {  return static_cast< float >( (180.0f * rad) / PI );  }
 
 /**
  * @internal
@@ -108,6 +125,17 @@ inline void setRandomSeed( unsigned int seed )
 {
     srand(seed);
 }
+
+/**
+ * @internal
+ * @brief Starts random number generator seed
+ * @param[in] seed Seed to set
+ */
+inline void randomSeed( int seed )
+{
+    srand( (unsigned int) seed);
+}
+
 
 /**
  * @brief Returns a random number in a range min..max (int version)
@@ -240,8 +268,9 @@ inline float map( float value, float low1, float hight1, float low2, float hight
     float v = (value-low1) / fabs(hight1-low1); 
 
     // Map to output range
-    return v * fabs(hight2-low2) + low2;
+    return v * fabs(hight2-low2) + low2;  
 }
+
 
 /*
  * @brief Constrains a value so it does not exceed a range
@@ -267,6 +296,65 @@ inline float constrain( float value, float min, float max )
 inline float angleBetweenVectors( const Vector& v1, const Vector& v2 )
 {
 	return acos( v1.dotProduct( v2 ) );
+}
+
+/**
+ * @brief Returns the Perlin noise value at specified coordinates
+ *				The resulting value will always be between 0.0 and 1.0
+ *
+ * @param  	float: x coordinate in noise space
+ */
+inline float noise( float x )
+{
+	return 1.0;
+}
+
+/**
+ * @brief Returns the Perlin noise value at specified coordinates
+ *				The resulting value will always be between 0.0 and 1.0
+ *
+ * @param  	float: x coordinate in noise space
+ */
+inline float noise( float x, float y )
+{
+	return abs(Globals::_noise.get(x,y));
+}
+
+/**
+ * @brief Returns the Perlin noise value at specified coordinates
+ *				The resulting value will always be between 0.0 and 1.0
+ *
+ * @param  	float: x coordinate in noise space
+ */
+inline float noise( float x, float y, float z )
+{
+	return 1.0;
+}
+
+/**
+ * @brief Calculates a number between two numbers at a specific increment
+ *				The resulting value will always be between 0.0 and 1.0
+ *
+ * @param  	float: value1
+ * @param  	float: value2
+ * @param  	float: amt   from 0 to 1
+ */
+inline float lerp( float value1, float value2, float amt )
+{
+	return  value1 + amt * (value2 - value1);
+}
+
+/**
+ * @brief Calculates a number between two numbers at a specific increment
+ *				The resulting value will always be between 0.0 and 1.0
+ *
+ * @param  	int: value1
+ * @param  	int: value2
+ * @param  	float: amt   from 0 to 1
+ */
+inline float lerp( int value1, int value2, float amt )
+{
+	return  value1 + amt * (value2 - value1);
 }
 
 /*
@@ -305,7 +393,6 @@ struct Average
 	size_t								nValues;
 	size_t								index;
 };
-
 
 } // namespace Common
 

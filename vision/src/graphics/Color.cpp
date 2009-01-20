@@ -92,6 +92,21 @@ Color::Color( float  red, float green, float blue, float alpha ):
 }
 
 /**
+ * @brief Initializes the color with a specific color values (depending on the color range
+ * which by default is 0..255, and RGB color model (red, green, blue).
+ *
+ * @param red		Red color value
+ * @param green	Green color value
+ * @param blue	Blue color value
+ * @param alpha Alpha value. Represents transparency. Max value means opaque, min value means transparent.
+ */
+Color::Color(  Ogre::ColourValue color ): 
+	m_lowRange( 0.0f ), 
+	m_hightRange( 255.0f )
+{
+	set( color.r, color.g, color.b, color.a );
+}
+/**
  * @brief Sets the color values of this Color object.
  *
  * @param red		Red color value

@@ -29,6 +29,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "input/InputTypes.h"
 #include "input/Keyboard.h"
 
+#include "graphics/Color.h"
+#include "common/PerlinNoise.h"
+
 // Forward declarations
 namespace	Input
 {
@@ -68,10 +71,16 @@ extern unsigned long				millisFromStart;///< Milliseconds elapsed since applicat
 // Frame count
 extern int  								frameCount;			///< Actual frameRate of app (aproximated)
 extern float								frameRate;
+
 // Advanced 
 extern Ogre::SceneManager*	ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object
 extern Ogre::Camera*				ogreCamera;				///< Ogre Camera used to render the scene
 
+// Pixel manipulation
+extern std::vector < Graphics::Color > pixels;
+
+// Other
+extern PerlinNoise _noise;
 }
 
 

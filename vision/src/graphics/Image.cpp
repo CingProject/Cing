@@ -292,7 +292,7 @@ GraphicsType Image::getFormat() const
 
 /**
  * @brief Method to get the color of a pixel at x-y position in this image.
- *
+ * TODO: too slow!
  * @param x x coordinate of the pixel that wants to be retrieved
  * @param y y coordinate of the pixel that wants to be retrieved
  */
@@ -303,15 +303,16 @@ Color Image::getPixel( int x, int y )
 	if ( !isValid() )
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-	// if we will read at incorrect position, correct it
+	// Check boundaries
 	if ( x < 0 )								x = 0;
 	if ( x > m_cvImage->width )	x = m_cvImage->width - 1;
 	if ( y < 0 )								y = 0;
 	if ( y > m_cvImage->height) y = m_cvImage->height -1 ;
 
+	// Read color
 	int		channels = m_cvImage->nChannels;
 	char* pixelPtr = m_cvImage->imageData + m_cvImage->widthStep * y;
-	char blue, red, green, alpha = 0;
+	unsigned char blue, red, green, alpha = 0;
 
 	switch( channels )
 	{
@@ -319,19 +320,17 @@ Color Image::getPixel( int x, int y )
 		blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
 		green = blue;
 		red   = blue;
-		alpha = 1;
+		alpha = 255;
 		break;
 	case 2:
 		THROW_EXCEPTION( "Invalid number of channels in image" );
 		break;
 	case 3:
-
-		blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
-		green = (abs)((int)pixelPtr[ x*channels + 1 ]);
-		red   = (abs)((int)pixelPtr[ x*channels + 2 ]);
-		alpha = 1;
-
-		break;
+		blue  = ((int)pixelPtr[ x*channels + 0 ]);
+		green = ((int)pixelPtr[ x*channels + 1 ]);
+		red   = ((int)pixelPtr[ x*channels + 2 ]);
+		alpha = 255;
+		break;  
 	case 4:
 		blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
 		green = (abs)((int)pixelPtr[ x*channels + 1 ]);
@@ -343,9 +342,8 @@ Color Image::getPixel( int x, int y )
 		break;
 	}
 
-	Color color = Color( red*255,green*255,blue*255,alpha*255 );
-
-	return color;
+	// Return read value
+	return Color( red, green, blue, alpha );
 }
 
 /**
@@ -530,6 +528,11 @@ void Image::operator=( const Image& other )
 		cvReleaseImage( &m_cvImage );
 
 	m_cvImage = cvCloneImage(other.m_cvImage);
+
+	// Check if the image is initialized
+	if ( !isValid() )
+		init( other.getWidth(), other.getHeight(), other.getFormat() );
+
 	m_quad    = other.m_quad;
 	m_nChannels = other.m_nChannels;
 

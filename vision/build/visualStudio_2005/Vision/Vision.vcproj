@@ -370,6 +370,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\src\common\PerlinNoise.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\src\common\Release.h"
 						>
 					</File>
@@ -403,6 +407,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\common\LogManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\PerlinNoise.cpp"
 						>
 					</File>
 					<File

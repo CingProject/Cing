@@ -23,7 +23,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _GraphicsUserAPI_h_
 
 #include "GraphicsPrereqs.h"
-#include "graphics/Color.h"
+#include "Color.h"
+#include "Image.h"
 
 namespace Graphics
 {
@@ -136,6 +137,14 @@ void	useKeyboardCameraControl	( bool value );
 
 // Debug methods
 void	showFps ( bool show );
+
+//Create functions
+Image createImage(int width, int height, GraphicsType format);
+Image loadImage(  const std::string& name);
+
+// Misc
+void  loadPixels();
+void  updatePixels();
 
 } // namespace Graphics
 

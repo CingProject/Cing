@@ -41,6 +41,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Common
 #include "common/Singleton.h"
+#include <vector>
 
 namespace Graphics
 {

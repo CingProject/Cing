@@ -136,5 +136,6 @@ typedef OCVMovie	Movie;
 
 // Common
 typedef  bool boolean;
-typedef char byte;
+typedef  char byte;
+
 #endif // _Vision_H_

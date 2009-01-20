@@ -46,6 +46,7 @@ public:
 	Color( float gray, float alpha );
 	Color( float red,  float green, float blue );
 	Color( float red,  float green, float blue, float alpha );
+	Color( Ogre::ColourValue color );
 
 	// To set values or range
 	void	set	( float red, float green, float blue, float alpha = 255.0f );
@@ -55,8 +56,11 @@ public:
 	void	normalize		();
 
 	// Color mode 
-	static void							colorMode	( GraphicsType mode, float range1, float range2, float range3, float range4 );
+	static void							  colorMode	( GraphicsType mode, float range1, float range2, float range3, float range4 );
 	static const GraphicsType	getColorMode(){ return m_colorMode; };
+
+	// TODO
+	// Operators
 
 private:
 

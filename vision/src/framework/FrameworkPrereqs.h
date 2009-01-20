@@ -30,7 +30,6 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 /// Contains the application framework to allow application execution within the library
 namespace Framework
 {
-
 } // namespace Framework
 
 // Ogre
@@ -38,6 +37,12 @@ namespace Ogre
 {
 	class SceneManager;
 	class Camera;
+}
+
+// Graphics
+namespace Graphics
+{
+  class Color;
 }
 
 #endif // _FrameworkPrereqs_H_

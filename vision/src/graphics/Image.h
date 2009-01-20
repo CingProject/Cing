@@ -102,7 +102,7 @@ public:
 	IplImage&				getCVImage	()				{ return *m_cvImage; }
 	int							getWidth		() const;
 	int							getHeight		() const;
-	GraphicsType			getFormat		() const;
+	GraphicsType	  getFormat		() const;
 	int							getNChannels() const	{ return m_nChannels; }
 	Color						getPixel		( int x, int y );
 
