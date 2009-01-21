@@ -647,6 +647,14 @@ void updatePixels()
 		stroke( Globals::pixels[i] );
 		tempImage->point( i - imageWidth*yIndex, yIndex);
 	}
-  
 }
+
+void pushMatrix()
+{
+}
+
+void popMatrix()
+{
+}
+
 } // namespace Graphics

@@ -126,6 +126,7 @@ using namespace Midi;
 
 // Camera
 typedef	VICamera Capture;
+//typedef	OCVCamera Capture;
 
 // Sound and Mic
 typedef SoundFMOD Sound;

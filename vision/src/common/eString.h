@@ -24,7 +24,6 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include <string>
 
-
 namespace Common
 {
 

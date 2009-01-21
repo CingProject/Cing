@@ -358,6 +358,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\src\common\eString.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\src\common\Exception.h"
 						>
 					</File>
@@ -386,10 +390,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\src\common\String.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\src\common\SystemUtils.h"
 						>
 					</File>
@@ -399,6 +399,10 @@
 					>
 					<File
 						RelativePath="..\..\..\src\common\CommonUserAPI.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\common\eString.cpp"
 						>
 					</File>
 					<File
@@ -415,10 +419,6 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\common\ResourceManager.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\src\common\String.cpp"
 						>
 					</File>
 					<File

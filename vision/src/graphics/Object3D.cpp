@@ -295,6 +295,7 @@ void Object3D::setScale( float xScale, float yScale, float zScale )
 	// -> do this, just when the scale is not 1
 	if ( !equal( xScale, 1.0f ) || !equal( yScale, 1.0f ) || !equal( zScale, 1.0f ) )
 		m_entity->setNormaliseNormals( true );
+
 }
 
 /**

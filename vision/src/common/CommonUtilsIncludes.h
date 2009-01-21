@@ -31,7 +31,7 @@
 #include "common/Release.h"
 #include "common/MathUtils.h"
 #include "common/SystemUtils.h"
-#include "common/String.h"
+#include "common/eString.h"
 #include "common/PerlinNoise.h"
 
 // standard general utils

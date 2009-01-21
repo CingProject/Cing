@@ -146,6 +146,9 @@ Image loadImage(  const std::string& name);
 void  loadPixels();
 void  updatePixels();
 
+// Transfomation
+void pushMatrix();
+void popMatrix();
 } // namespace Graphics
 
 #endif // _GraphicsUserAPI_h_

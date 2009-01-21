@@ -160,7 +160,10 @@ public:
 	Graphics::Image*			 m_canvas;
 
 	// Styles
-	std::deque < Style >   m_styles;          ///< Queue to store style properties ( fill color, stroke weight, etc.)
+	std::deque < Style >   m_styles;           ///< Queue to store style properties ( fill color, stroke weight, etc.)
+
+	// 2D / 3D Transforms
+	// std::deque < Transform > m_transformArray; ///< Queue to store style properties ( fill color, stroke weight, etc.)
 
 private:
 

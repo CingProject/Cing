@@ -64,9 +64,12 @@ void VICamera::init( int deviceId, int width, int height, int fps, Graphics::Gra
 	// multi threaded?
 	m_viCamera.setUseCallback( multithreaded );
 
+
+	m_viCamera.showSettingsWindow( deviceId ); 
+
 	// Setup camera
 	m_viCamera.setupDevice( deviceId, width, height, VI_COMPOSITE ); 
-	
+
 	// Init base class (with actual capture resolution)
 	BaseCameraInput::init( deviceId, m_viCamera.getWidth( deviceId ), m_viCamera.getHeight( deviceId ), fps, format );
 
