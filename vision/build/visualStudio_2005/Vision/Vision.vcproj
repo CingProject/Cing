@@ -618,6 +618,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\src\graphics\Transform.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\src\graphics\Window.h"
 						>
 					</File>
@@ -749,6 +753,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\src\graphics\Text.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\src\graphics\Transform.cpp"
 						>
 					</File>
 					<File
