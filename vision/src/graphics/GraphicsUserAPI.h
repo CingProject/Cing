@@ -131,16 +131,16 @@ void line( float x1, float y1, float z1, float x2, float y2, float z2);
 void setRenderMode( RenderMode mode );
 
 // Camera 3D related functions
-void	useDefault3DCameraControl	( bool useDefault );
-void	useMouseCameraControl			( bool value );
+void	useDefault3DCameraControl ( bool useDefault );
+void	useMouseCameraControl		  ( bool value );
 void	useKeyboardCameraControl	( bool value );
 
 // Debug methods
 void	showFps ( bool show );
 
 //Create functions
-Image createImage(int width, int height, GraphicsType format);
-Image loadImage(  const std::string& name);
+Image createImage( int width, int height, GraphicsType format );
+Image loadImage  ( const std::string& name );
 
 // Misc
 void  loadPixels();
@@ -149,6 +149,19 @@ void  updatePixels();
 // Transfomation
 void pushMatrix();
 void popMatrix();
+
+void translate( float x, float y );
+void translate( float x, float y, float z );
+
+void rotate		(	float x, float y, float z );
+void rotate		(	float x );
+
+void rotateX	(	float angle );
+void rotateY	(	float angle );
+void rotateZ	(	float angle );
+	
+void scale		(	float x, float y, float z );
+
 } // namespace Graphics
 
 #endif // _GraphicsUserAPI_h_

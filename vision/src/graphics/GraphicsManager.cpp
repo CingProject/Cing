@@ -172,6 +172,9 @@ bool GraphicsManager::init()
 	// Init style queue
 	m_styles.push_front( Style() );
 
+	// Init transform stack
+	m_transforms.push( Transform() );
+
 	// Init Globals::pixels
 	for (int i = 0; i < m_canvas->getWidth() * m_canvas->getHeight(); i++)
 		Globals::pixels.push_back( Color::Black );
@@ -185,15 +188,13 @@ bool GraphicsManager::init()
 
 /**
 * @internal 
-* @brief Add a new vertex to a vector of points (for line drawing)
+* @brief Add a new vertex (for line drawing)
 *
 * @param Vector
 */
 void GraphicsManager::addVertex( Common::Vector newPos )
 {
-
 	m_linesPoints.push_back( (Ogre::Vector3) newPos);
-
 }
 
 

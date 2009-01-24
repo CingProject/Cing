@@ -451,7 +451,34 @@ void triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
  */
 void rect( float x1, float y1, float x2, float y2 )
 {
-	Graphics::GraphicsManager::getSingleton().rect( x1, y1, x2, y2 );
+	// Transform vertex before the drawing  call 
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+/*
+	x' = x cos f - y sin f
+	y' = y cos f + x sin f
+*/
+	float angle = t.getRotation().z;
+
+	float cosAlpha = cos ( angle );
+	float sinAlpha = sin ( angle );
+
+	float x1Trans = x1 * cosAlpha - y1 * sinAlpha;
+	float y1Trans = y1 * cosAlpha + x1 * sinAlpha;
+
+	float x2Trans = x1+x2 * cosAlpha - y2 * sinAlpha;
+	float y2Trans = y2 * cosAlpha + x1+x2 * sinAlpha;
+
+	float x3Trans = x1+x2 * cosAlpha - y1+y2 * sinAlpha;
+	float y3Trans = y1+y2 * cosAlpha + x1+x2 * sinAlpha;
+
+	float x4Trans = x2 * cosAlpha - y2+y2 * sinAlpha;
+	float y4Trans = y2+y2 * cosAlpha + x2 * sinAlpha;
+
+	// TODO: + depende del modo de dibujo
+	//       + los rect dejan de ser rects
+	//			 + hay q optimizar, y evitar las transformaciones
+	//			   cuando no se hayan aplicado.
+	Graphics::GraphicsManager::getSingleton().quad( x1Trans,y1Trans,x2Trans,y2Trans ,x3Trans,y3Trans,x4Trans,y4Trans); 
 }
 
 /**
@@ -575,9 +602,10 @@ void pushStyle()
  * @param mode
  */
 void popStyle()
-{
+{	
 	// Pop the last style created
-	Graphics::GraphicsManager::getSingleton().m_styles.pop_front();
+	if ( Graphics::GraphicsManager::getSingleton().m_styles.size() > 0 )
+		Graphics::GraphicsManager::getSingleton().m_styles.pop_front();
 };
 
 //Create functions
@@ -633,10 +661,10 @@ void loadPixels()
 void updatePixels()
 {
 	// Create temporal image to allow an easy access to the data
-	Image* tempImage = GraphicsManager::getSingleton().m_canvas;
-	int    numPixels = tempImage->getWidth() * tempImage->getHeight();
-	int    imageWidth    = tempImage->getWidth();
-	int    yIndex    = 0;
+	Image* tempImage		= GraphicsManager::getSingleton().m_canvas;
+	int    numPixels		= tempImage->getWidth() * tempImage->getHeight();
+	int    imageWidth		= tempImage->getWidth();
+	int    yIndex				= 0;
 
 	// Paint pixels in the canvas image
 	// TODO: Too slow! Optimize
@@ -648,13 +676,97 @@ void updatePixels()
 		tempImage->point( i - imageWidth*yIndex, yIndex);
 	}
 }
-
+/**
+ * @brief 
+ *
+ * @param mode
+ */
 void pushMatrix()
 {
+	// Add new IDENTITY transform object to the stack
+	GraphicsManager::getSingleton().m_transforms.push( Transform() );
 }
-
+/**
+ * @brief 
+ *
+ * @param mode
+ */
 void popMatrix()
-{
+{	
+	// Pop the last transform 
+	if ( GraphicsManager::getSingleton().m_transforms.size() > 0 )
+		GraphicsManager::getSingleton().m_transforms.pop();
 }
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void translate( float x, float y )
+{
+	GraphicsManager::getSingleton().m_transforms.top().translate( x, y, 0);
+};
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void translate( float x, float y, float z )
+{
+	GraphicsManager::getSingleton().m_transforms.top().translate( x, y, z);
+};
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void rotate		(	float x, float y, float z )
+{
+	GraphicsManager::getSingleton().m_transforms.top().rotate( x, y, z);
+};
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void rotate		(	float angleX )
+{
+	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, 0, angleX );
+};
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void rotateX	(	float angle )
+{
 
+};
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void rotateY	(	float angle )
+{
+
+};
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void rotateZ	(	float angle )
+{
+
+};
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void scale		(	float x, float y, float z )
+{
+
+};
 } // namespace Graphics

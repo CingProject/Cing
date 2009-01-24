@@ -30,7 +30,7 @@ namespace Graphics
  */
 Transform::Transform() :	m_bIsValid( false )
 {
-
+	init();
 };
 
 
@@ -45,6 +45,11 @@ bool Transform::init()
 	// Check if the class is already initialized
 	if ( isValid() )
 		return true;
+
+	// Init values
+	m_position	= Vector( 0, 0, 0 );
+	m_rotation	= Vector( 0, 0, 0 );
+	m_scale			= Vector( 1.0, 1.0, 1.0 );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -72,10 +77,12 @@ void Transform::translate(  float x, float y, float z )
 {
 	m_position += Vector( x, y, z );
 }
+
 void Transform::rotate(  float x, float y, float z )
 {
 	m_rotation += Vector( x, y, z );
 }
+
 void Transform::scale(  float x, float y, float z )
 {
 	m_scale += Vector( x, y, z );

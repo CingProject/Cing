@@ -31,6 +31,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "CameraController.h"
 
 #include "DynamicLines.h"
+#include "Transform.h"
 
 // OpenCv includes
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
@@ -42,6 +43,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Common
 #include "common/Singleton.h"
 #include <vector>
+#include <stack>
 
 namespace Graphics
 {
@@ -160,10 +162,11 @@ public:
 	Graphics::Image*			 m_canvas;
 
 	// Styles
-	std::deque < Style >   m_styles;           ///< Queue to store style properties ( fill color, stroke weight, etc.)
+	std::deque < Style >     m_styles;     ///< Queue to store style properties ( fill color, stroke weight, etc.)
+																				 // TODO: change to stack
 
 	// 2D / 3D Transforms
-	// std::deque < Transform > m_transformArray; ///< Queue to store style properties ( fill color, stroke weight, etc.)
+	std::stack < Transform > m_transforms; ///< Stack to store transform objects
 
 private:
 

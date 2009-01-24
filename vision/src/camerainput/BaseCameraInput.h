@@ -23,7 +23,6 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _BaseCameraInput_H_
 
 #include "CameraInputPrereqs.h"
-
 #include "common/MathUtils.h"
 
 // OpenCV

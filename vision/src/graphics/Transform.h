@@ -23,11 +23,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define _Transform_H_
 
 #include "GraphicsPrereqs.h"
-#include "vision.h"
+#include "Common/CommonTypes.h"
 
 namespace Graphics
 {
-
 	/**
 	 * @internal
 	 * Class to make easy transformation on 3D/2D Graphics
@@ -57,23 +56,20 @@ namespace Graphics
 		Vector& getScale		() { return m_scale; }
 
 		// Set methods
-		void		setPosition	( Vector& newPos)  { m_position = newPos;   }
-		void		setRotation	( Vector& newRot)  { m_rotation = newRot;   }
-		void		setScale		( Vector& newScale){ m_scale    = newScale; }
+		void		setPosition	( Vector& newPos )  { m_position = newPos;   }
+		void		setRotation	( Vector& newRot )  { m_rotation = newRot;   }
+		void		setScale		( Vector& newScale ){ m_scale    = newScale; }
 
 		void		setPosition	( float x, float y, float z ) { m_position = Vector(x,y,z); }
 		void		setRotation	( float x, float y, float z ) { m_rotation = Vector(x,y,z); }
 		void		setScale		( float x, float y, float z ) { m_scale    = Vector(x,y,z); }
 
 	private:
+
 		// Euler notation
 		Vector						m_position;
 		Vector						m_rotation;
 		Vector						m_scale;
-
-		// Matrix 
-		Ogre::Matrix4			m_transform_mat;
-		Ogre::Quaternion	m_rotation_quat
 
 		bool							m_bIsValid;
 	};
