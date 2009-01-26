@@ -9,7 +9,7 @@ void setup()
 	//Image img = createImage(66, 66, RGB);
 
 	//img.load( "SIMO.jpg" );
-	//img = loadImage("SIMO.jpg");
+	img = loadImage("SIMO.jpg");
 
 	/*
 	for(int i=0; i < img.pixels.length; i++) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="Lerp"
 	ProjectGUID="{088F06A1-2C5E-49B7-99BC-F386E2C1FF8C}"
 	RootNamespace="Lerp"
@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include"
+				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\externLibs\OpenCV\cxcore\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -67,7 +67,7 @@
 				AdditionalDependencies="OgreMain_d.lib OIS_d.lib QuickGUI_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libGIMPACT_d.lib videoInput_d.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
+				AdditionalLibraryDirectories="..\..\vision\externLibs\BetaCairo\lib;..\..\vision\externLibs\Bullet\lib;..\..\vision\externLibs\cairo\lib;..\..\vision\externLibs\Fmod\lib;..\..\vision\externLibs\Ogre3d\lib;..\..\vision\externLibs\OgreBullet\lib;..\..\vision\externLibs\OpenCV\lib;..\..\vision\externLibs\PortVideo\lib;..\..\vision\externLibs\PTypes\lib;..\..\vision\externLibs\QuickGUI\lib;..\..\vision\externLibs\RtMidi\lib;..\..\vision\externLibs\VideoInput\lib"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(IntDir)\$(TargetName).pdb"
@@ -101,7 +101,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE..."
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -133,7 +133,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\src\externLibs\Ogre3d\include;..\..\vision\src\externLibs\Ogre3d\include\OIS;..\..\vision\src\externLibs\OpenCV\cxcore\include"
+				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\externLibs\OpenCV\cxcore\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -162,7 +162,7 @@
 				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\vision\lib\externLibs"
+				AdditionalLibraryDirectories="..\..\vision\externLibs\BetaCairo\lib;..\..\vision\externLibs\Bullet\lib;..\..\vision\externLibs\cairo\lib;..\..\vision\externLibs\Fmod\lib;..\..\vision\externLibs\Ogre3d\lib;..\..\vision\externLibs\OgreBullet\lib;..\..\vision\externLibs\OpenCV\lib;..\..\vision\externLibs\PortVideo\lib;..\..\vision\externLibs\PTypes\lib;..\..\vision\externLibs\QuickGUI\lib;..\..\vision\externLibs\RtMidi\lib;..\..\vision\externLibs\VideoInput\lib"
 				IgnoreDefaultLibraryNames="atlthunk"
 				GenerateDebugInformation="false"
 				SubSystem="2"
@@ -195,7 +195,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE..."
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

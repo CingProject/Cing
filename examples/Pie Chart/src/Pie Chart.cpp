@@ -12,7 +12,7 @@ void setup()
 
 	int diameter = 150;
 	
-	// limpiar esto...
+	// TODO: clean up
 	int angs[] = {30, 10, 45, 35, 60, 38, 75, 67};
 
 	float lastAng = 0;

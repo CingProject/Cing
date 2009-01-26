@@ -67,15 +67,6 @@ void setup()
 
 void draw()
 {
-	//for ( int i = 0; i < MAX_ELEMENTS; i++ ) {
- //   box[i].draw( 0, 0 );
-	//}
-
-	//box[0].draw( 10, 0 );
-	//box[0].draw( 100, 0 );
-
-	//translate(100, 0);
-	//box(100, 100, 10);
 
 }
 

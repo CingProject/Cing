@@ -8,7 +8,7 @@ void setup()
 	//size(200, 200); 
 	noStroke();
 	//colorMode(RGB, 255, 255, 255, 100);
-	rectMode(RectMode::CENTER);
+	rectMode(CENTER);
 }
 
 void draw() 
