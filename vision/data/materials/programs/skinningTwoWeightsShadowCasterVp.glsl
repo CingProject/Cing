@@ -1,5 +1,7 @@
 // Example GLSL program for skinning with two bone weights per vertex
 
+attribute vec4 vertex;
+attribute vec4 uv0;
 attribute vec4 blendIndices;
 attribute vec4 blendWeights;
 
@@ -28,7 +30,7 @@ void main()
 		worldMatrix[2] = worldMatrix3x4Array[idx + 2];
 		worldMatrix[3] = vec4(0);
 		// now weight this into final 
-		blendPos += (gl_Vertex * worldMatrix).xyz * blendWeights[bone];
+		blendPos += (vertex * worldMatrix).xyz * blendWeights[bone];
 	}
 
 	// apply view / projection to position
@@ -36,5 +38,5 @@ void main()
 	
 	gl_FrontSecondaryColor = vec4(0,0,0,0);
 	gl_FrontColor = ambient;
-	gl_TexCoord[0] = gl_MultiTexCoord0;
+	gl_TexCoord[0] = uv0;
 }

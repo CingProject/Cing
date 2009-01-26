@@ -1,5 +1,8 @@
 // Example GLSL program for skinning with two bone weights per vertex
 
+attribute vec4 vertex;
+attribute vec3 normal;
+attribute vec4 uv0;
 attribute vec4 blendIndices;
 attribute vec4 blendWeights;
 
@@ -31,10 +34,10 @@ void main()
 		worldMatrix[3] = vec4(0);
 		// now weight this into final 
 	    float weight = blendWeights[bone];
-		blendPos += (gl_Vertex * worldMatrix).xyz * weight;
+		blendPos += (vertex * worldMatrix).xyz * weight;
 		
 		mat3 worldRotMatrix = mat3(worldMatrix[0].xyz, worldMatrix[1].xyz, worldMatrix[2].xyz);
-		blendNorm += (gl_Normal * worldRotMatrix) * weight;
+		blendNorm += (normal * worldRotMatrix) * weight;
 
 	}
 
@@ -52,6 +55,6 @@ void main()
 		+ clamp(dot(lightDir0, blendNorm), 0.0, 1.0) * lightDiffuseColour[0]
 		+ clamp(dot(lightDir1, blendNorm), 0.0, 1.0) * lightDiffuseColour[1];
 
-	gl_TexCoord[0] = gl_MultiTexCoord0;
+	gl_TexCoord[0] = uv0;
 	
 }

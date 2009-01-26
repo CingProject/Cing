@@ -16,7 +16,7 @@ float3 expand(float3 v)
 void main_vp(float4 position	: POSITION,
 			 float3 normal		: NORMAL,
 			 float2 uv			: TEXCOORD0,
-			 float3 tangent     : TANGENT0,
+			 float4 tangent     : TANGENT0,
 			 // outputs
 			 out float4 oPosition    : POSITION,
 			 out float2 oUv			 : TEXCOORD0,
@@ -40,10 +40,16 @@ void main_vp(float4 position	: POSITION,
 	// already normalised)
 	// NB looks like nvidia cross params are BACKWARDS to what you'd expect
 	// this equates to NxT, not TxN
-	float3 binormal = cross(tangent, normal);
+
+#if TANGENTS_HAVE_PARITY
+	float3 binormal = cross(tangent.xyz, normal) * tangent.www;
+#else
+	// fixed handedness
+	float3 binormal = cross(tangent.xyz, normal);
+#endif
 	
 	// Form a rotation matrix out of the vectors
-	float3x3 rotation = float3x3(tangent, binormal, normal);
+	float3x3 rotation = float3x3(tangent.xyz, binormal, normal);
 	
 	// Transform the light vector according to this matrix
 	oTSLightDir = mul(rotation, lightDir);
@@ -92,7 +98,7 @@ void main_shadowreceiver_vp(float4 position	: POSITION,
 	float3 binormal = cross(tangent, normal);
 	
 	// Form a rotation matrix out of the vectors
-	float3x3 rotation = float3x3(tangent, binormal, normal);
+	float3x3 rotation = float3x3(tangent.xyz, binormal, normal);
 	
 	// Transform the light vector according to this matrix
 	oTSLightDir = mul(rotation, lightDir);
@@ -110,11 +116,10 @@ void main_fp( float2 uv			: TEXCOORD0,
 			  out float4 colour	: COLOR,
 
 			  uniform float4 lightDiffuse,
-			  uniform sampler2D   normalMap : register(s0),
-			  uniform samplerCUBE normalCubeMap : register(s1) )
+			  uniform sampler2D   normalMap : register(s0))
 {
 	// retrieve normalised light vector, expand from range-compressed
-	float3 lightVec = expand(texCUBE(normalCubeMap, TSlightDir).xyz);
+	float3 lightVec = normalize(TSlightDir).xyz;
 
 	// get bump map vector, again expand from range-compressed
 	float3 bumpVec = expand(tex2D(normalMap, uv).xyz);
@@ -133,13 +138,12 @@ void main_shadowreceiver_fp(
 
 			  uniform float4 lightDiffuse,
 			  uniform sampler2D   shadowMap : register(s0),
-			  uniform sampler2D   normalMap : register(s1),
-			  uniform samplerCUBE normalCubeMap : register(s2))
+			  uniform sampler2D   normalMap : register(s1))
 {
 
 
 	// retrieve normalised light vector, expand from range-compressed
-	float3 lightVec = expand(texCUBE(normalCubeMap, TSlightDir).xyz);
+	float3 lightVec = expand(normalize(TSlightDir).xyz);
 
 	// get bump map vector, again expand from range-compressed
 	float3 bumpVec = expand(tex2D(normalMap, uv).xyz);
@@ -206,26 +210,19 @@ void specular_fp( float2 uv			: TEXCOORD0,
 
 			  uniform float4 lightDiffuse,
 			  uniform float4 lightSpecular,
-			  uniform sampler2D   normalMap : register(s0),
-			  uniform samplerCUBE normalCubeMap : register(s1), 
-			  uniform samplerCUBE normalCubeMap2 : register(s2)) // we need this second binding to be compatible with ps_1_1, ps_2_0 could reuse the other
+			  uniform sampler2D   normalMap : register(s0)) 
 {
-	// retrieve normalised light vector, expand from range-compressed
-	float3 lightVec = expand(texCUBE(normalCubeMap, TSlightDir).xyz);
+	// retrieve normalised light vector
+	float3 lightVec = normalize(TSlightDir);
 
-	// retrieve half angle and normalise through cube map
-	float3 halfAngle = expand(texCUBE(normalCubeMap2, TShalfAngle).xyz);
+	// retrieve half angle and normalise
+	float3 halfAngle = normalize(TShalfAngle);
 
 	// get bump map vector, again expand from range-compressed
 	float3 bumpVec = expand(tex2D(normalMap, uv).xyz);
 
 	// Pre-raise the specular exponent to the eight power
-	// Note we have no 'pow' function in basic fragment programs, if we were willing to accept compatibility
-	// with ps_2_0 / arbfp1 and above, we could have a variable shininess parameter
-	// This is equivalent to 
-	float specFactor = dot(bumpVec, halfAngle);
-	for (int i = 0; i < 3; ++i)
-		specFactor *= specFactor;
+	float specFactor = pow(saturate(dot(bumpVec, halfAngle)), 4);
 	
 
 	// Calculate dot product for diffuse
