@@ -55,7 +55,7 @@ extern std::string					dataFolder;			///< Path to user's application data folder
 // Input
 extern	char								key;						///< Key being currently pressed
 extern	Input::KeyCode			keyCode;				///< Key code being pressed (allow to detect also special keys such as the arrow or function keys)
-extern	Input::MouseButton	mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
+extern	int									mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
 extern	int									mouseX;					///< X coordinate of the mouse (in screen coordinates)
 extern	int									mouseY;					///< Y coordinate of the mouse (in screen coordinates)
 extern	Input::Mouse&				mouse;					///< System mouse

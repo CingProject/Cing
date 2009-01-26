@@ -25,7 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/GraphicsManager.h"
 
 // OIS
-#include "OIS.h"
+#include "externLibs/Ogre3d/include/ois/OIS.h"
 
 // STL
 #include <sstream>

@@ -116,8 +116,8 @@ void ellipse	( float x, float y, float width, float height);
 void text			( float x1, float y1, const char* text );
 void arc			( float x, float y,  float width, float height, float start, float stop );
 
-void rectMode    ( DrawMode mode );
-void ellipseMode ( DrawMode mode );
+void rectMode    ( int mode );
+void ellipseMode ( int mode );
 
 void pushStyle();
 void popStyle ();
@@ -161,6 +161,7 @@ void rotateY	(	float angle );
 void rotateZ	(	float angle );
 	
 void scale		(	float x, float y, float z );
+void scale		(	float x, float y );
 
 } // namespace Graphics
 

@@ -26,7 +26,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "InputPrereqs.h"
 
 // OIS
-#include "OIS/OISMouse.h"
+#include "externLibs/Ogre3d/include/OIS/OISMouse.h"
 
 namespace Input
 {

@@ -20,6 +20,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 */
 
 #include "VICamera.h"
+#include "common/CommonUtilsIncludes.h"
 
 namespace CameraInput
 {
@@ -57,6 +58,7 @@ void VICamera::init( int deviceId, int width, int height, int fps, Graphics::Gra
 {
 	// List connected devices
 	int numDevices = videoInput::listDevices();	
+	LOG( "Num devs: %d", numDevices );
 
 	// uncomment for silent setup
 	//videoInput::setVerbose(false);

@@ -33,6 +33,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Exception.h"
 #include "common/Release.h"
 #include "common/MathUtils.h"
+#include "common/CommonConstants.h"
 
 // Ogre includes
 #include "externLibs/Ogre3d/include/OgreRoot.h"
@@ -566,7 +567,7 @@ void GraphicsManager::ellipse	( float x, float y, float width, float height)
 /**
  * @brief Modifies the location from which rectangles draw
  */
-void GraphicsManager::setRectMode( const  DrawMode&	mode )
+void GraphicsManager::setRectMode( int	mode )
 {
 	m_rectMode = mode;
 }
@@ -574,7 +575,7 @@ void GraphicsManager::setRectMode( const  DrawMode&	mode )
 /**
  * @brief Modifies the location from which ellipses draw
  */
-void GraphicsManager::setEllipseMode( const  DrawMode&	mode )
+void GraphicsManager::setEllipseMode( int	mode )
 {
 	m_ellipseMode = mode;
 }
@@ -594,5 +595,6 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 
 	cvSet( &m_canvas->getCVImage(), cvScalar(color.b,color.g,color.r) );
 	m_canvas->setUpdateTexture(true);
+	m_canvas->setUpdateTexture( true );
 }
 } // namespace Graphics

@@ -78,13 +78,13 @@ namespace Graphics
 	};
 
 	/// 2d Drawing
-	enum DrawMode
-	{
-		CORNER,
-		CORNERS,
-		CENTER,
-		RADIUS
-	};
+	//enum DrawMode -> Defined in CommonConstants.h File
+	//{
+	//	CORNER,
+	//	CORNERS,
+	//	CENTER,
+	//	RADIUS
+	//};
 
 	/// Lights
 	typedef Ogre::Light       		Light;

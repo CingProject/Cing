@@ -127,6 +127,9 @@ public:
 	void					flipVertical		();
 	bool					isVFlipped			() const { return m_bVFlip; }
 
+
+	TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
+
 private:
 	// Attributes
 	static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
@@ -134,7 +137,6 @@ private:
 
 	IplImage*		  m_cvImage;				///< Contains the image compatible with openCV
 	Ogre::Image		m_image;					///< Contains the image data (loaded from file or dynamically created)
-	TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
 	int						m_nChannels;			///< Number of channels of the image
 	bool					m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
 	bool					m_bVFlip;					///< True if the image texture coordinates are flipped vertically 

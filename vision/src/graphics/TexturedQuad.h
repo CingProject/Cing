@@ -81,6 +81,11 @@ public:
 	// Operators 
 	void operator=				( const TexturedQuad& other );
 
+	void	setbackgroundRendering			();
+	void	drawBackground					( float x, float y );
+
+
+
 private:
 
   // Private methods

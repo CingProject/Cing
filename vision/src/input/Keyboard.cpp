@@ -29,7 +29,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/GraphicsManager.h"
 
 // OIS
-#include "OISInputManager.h"
+#include "externLibs/Ogre3d/include/ois/OISInputManager.h"
 
 namespace Input
 {

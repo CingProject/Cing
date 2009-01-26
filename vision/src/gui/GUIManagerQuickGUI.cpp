@@ -29,7 +29,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/Camera3D.h"
 
 //QuickGUI
-#include "QuickGUI.h"
+#include "externLibs/QuickGUI/include/QuickGUI.h"
 
 namespace GUI
 {

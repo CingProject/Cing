@@ -128,11 +128,11 @@ public:
 
 	void 											smooth									  () { m_smooth = true; }
 
-	const DrawMode&						getRectMode								() const { return m_rectMode; }
-	void             					setRectMode								(  const  DrawMode&	mode );
+	int												getRectMode								() const { return m_rectMode; }
+	void             					setRectMode								(  const  int	mode );
 
-	const DrawMode&						getEllipseMode						() const { return m_ellipseMode; }
-	void             					setEllipseMode						(  const  DrawMode&	mode );
+	int												getEllipseMode						() const { return m_ellipseMode; }
+	void             					setEllipseMode						(  const  int	mode );
 
 	const CvFont&							getCvFont									() const { return  m_cvFont; }
 
@@ -198,8 +198,8 @@ private:
 	std::vector <Ogre::Vector3> m_linesPoints;
 
 	// Styling properties
-	Graphics::DrawMode		m_rectMode;					///< Parameters input mode to draw rectangles
-	Graphics::DrawMode		m_ellipseMode;			///< Parameters input mode to draw ellipses
+	int										m_rectMode;					///< Parameters input mode to draw rectangles
+	int										m_ellipseMode;			///< Parameters input mode to draw ellipses
 
 	bool									m_fill;
 	bool									m_stroke;

@@ -530,7 +530,7 @@ void arc( float x, float y,  float width, float height, float start, float stop 
  *
  * @param mode
  */
-void rectMode( DrawMode mode )
+void rectMode( int mode )
 {
 	Graphics::GraphicsManager::getSingleton().setRectMode( mode );
 }
@@ -542,7 +542,7 @@ void rectMode( DrawMode mode )
 *
 * @param mode
 */
-void ellipseMode( DrawMode mode )
+void ellipseMode( int mode )
 {
 	Graphics::GraphicsManager::getSingleton().setEllipseMode( mode );
 }
@@ -766,6 +766,16 @@ void rotateZ	(	float angle )
  * @param mode
  */
 void scale		(	float x, float y, float z )
+{
+
+};
+
+/**
+* @brief 
+*
+* @param mode
+*/
+void scale		(	float x, float y )
 {
 
 };

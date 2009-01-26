@@ -95,10 +95,10 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
     return true;
 
 	// Get power of 2 texture size
-	//m_textWidthP2 = nextPowerOf2( textureWidth );
-	//m_textHeightP2 = nextPowerOf2( textureHeight );
-	m_textWidthP2 = textureWidth;
-	m_textHeightP2 = textureHeight;
+	m_textWidthP2 = nextPowerOf2( textureWidth );
+	m_textHeightP2 = nextPowerOf2( textureHeight );
+	//m_textWidthP2 = textureWidth;
+	//m_textHeightP2 = textureHeight;
 
   // Store the texture data
   m_textWidth     = textureWidth;
@@ -392,6 +392,21 @@ void TexturedQuad::draw2d( float x, float y )
 	draw2d( x, y, m_textWidth, m_textHeight );
 }
 
+void TexturedQuad::drawBackground( float x, float y )
+{
+	if ( !isValid() )
+	{
+		LOG_ERROR( "Trying to draw a textured quad not initialized" );
+		return;
+	}
+
+	// Set properties of the quad, and set visible -> it will be rendered in the next render
+	setScale2d( m_textWidth, m_textHeight );
+	setPosition2d( x, y );
+	m_quadSceneNode->setVisible( true );
+
+}
+
 /**
  * @brief Draws the texture quad in two dimensions, with a specific size
  * 
@@ -572,6 +587,24 @@ void TexturedQuad::generateUniqueNames()
   // Material
   oss << MATERIAL_NAME << m_quadCounter;
   m_ogreMaterialName = oss.str();
+}
+
+/**
+ * @internal 
+ * @brief Sets the necessary properties for the object to be rendered in 2d (in screen coordinates and size in pixels)
+ */
+void TexturedQuad::setbackgroundRendering()
+{
+	// Properties to be rendered in 2d
+	m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND);
+	m_quad->setUseIdentityProjection(true);
+	m_quad->setUseIdentityView(true);
+	Ogre::AxisAlignedBox aabb;
+	aabb.setInfinite();
+	m_quad->setBoundingBox(aabb);
+
+	// mark the object as 2d rendering
+	m_render2D = true;
 }
 
 /**

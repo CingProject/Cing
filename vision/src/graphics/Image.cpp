@@ -29,6 +29,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/ResourceManager.h"
 #include "common/LogManager.h"
 #include "common/MathUtils.h"
+#include "common/CommonConstants.h"
 
 namespace Graphics
 {

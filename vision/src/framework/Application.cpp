@@ -229,7 +229,7 @@ bool Application::mouseMoved( const OIS::MouseEvent& event )
  */
 bool Application::mousePressed( const OIS::MouseEvent& event, OIS::MouseButtonID id  )
 {
-	Globals::mouseButton = (Input::MouseButton) id;
+	Globals::mouseButton = (int) id;
 
   // Call user mousepressed handler
 	::mousePressed();
@@ -247,7 +247,7 @@ bool Application::mousePressed( const OIS::MouseEvent& event, OIS::MouseButtonID
  */
 bool Application::mouseReleased( const OIS::MouseEvent& event, OIS::MouseButtonID id  )
 {
-	Globals::mouseButton = (Input::MouseButton) id;
+	Globals::mouseButton = (int) id;
 
   // Call user mousepressed handler
 	::mouseReleased();

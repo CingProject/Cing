@@ -2,7 +2,7 @@
   This source file is part of the Vision project
   For the latest info, see http://www.playthemagic.com/vision
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -19,25 +19,30 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _InputTypes_h_
-#define _InputTypes_h_
+#ifndef _CommonConstants_h_
+#define _CommonConstants_h_
 
-#include "InputPrereqs.h"
-#include "externLibs/Ogre3d/include/ois/OISKeyboard.h"
+// OIS
+#include "externLibs/Ogre3d/include/ois/OISMouse.h"
 
-namespace Input
+
+/**
+* @internal
+* @file This file contains common constant definitions
+*/
+namespace Common
 {
+	// Mouse buttons
+	static const int LEFT			= OIS::MB_Left;
+	static const int RIGHT		= OIS::MB_Right;
+	static const int CENTER		= OIS::MB_Middle;
 
-typedef OIS::KeyCode KeyCode;
+	// Drawing Modes
+	static const int CORNER		= 0;
+	static const int CORNERS	= 1;
+	//static const int CENTER		= 2;
+	static const int RADIUS		= 3;
+}
 
-///// Mouse buttons -> Defined in CommonConstants.h File
-//enum MouseButton
-//{
-//	LEFT,
-//	RIGHT,
-//	CENTER
-//};
 
-} // namespace Input
-
-#endif // _InputTypes_h_
+#endif // _CommonConstants_h_

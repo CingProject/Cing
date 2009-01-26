@@ -26,7 +26,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "BaseInputDevice.h"
 
 // OIS
-#include "OIS/OISKeyboard.h"
+#include "externLibs/Ogre3d/include/OIS/OISKeyboard.h"
 
 namespace Input
 {
