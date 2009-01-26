@@ -1,7 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vision", "vision\build\visualStudio_2005\Vision\Vision.vcproj", "{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "00_Demo_Image", "examples\00_Demo_Image\00_Demo_Image.vcproj", "{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
@@ -137,16 +135,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Transformations 1", "exampl
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vision", "vision\build\win\visualStudio_2005\Vision\Vision.vcproj", "{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
+EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Debug|Win32.Build.0 = Debug|Win32
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Release|Win32.ActiveCfg = Release|Win32
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Release|Win32.Build.0 = Release|Win32
 		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Debug|Win32.ActiveCfg = Debug|Win32
 		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Debug|Win32.Build.0 = Debug|Win32
 		{0C3885B7-0BA7-45CD-8F7E-9718DCC1E83F}.Release|Win32.ActiveCfg = Release|Win32
@@ -255,12 +255,12 @@ Global
 		{5F4701BC-D232-4CFD-BE64-4CF74C6E2C8B}.Debug|Win32.Build.0 = Debug|Win32
 		{5F4701BC-D232-4CFD-BE64-4CF74C6E2C8B}.Release|Win32.ActiveCfg = Release|Win32
 		{5F4701BC-D232-4CFD-BE64-4CF74C6E2C8B}.Release|Win32.Build.0 = Release|Win32
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Debug|Win32.Build.0 = Debug|Win32
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Release|Win32.ActiveCfg = Release|Win32
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
