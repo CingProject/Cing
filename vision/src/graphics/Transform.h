@@ -56,61 +56,25 @@ namespace Graphics
 		void		scale				( float x, float y, float z );
 
 		// Get methods
-		Vector getPosition	() 
-		{
-			return Vector( m_4x4[0][3], m_4x4[1][3], m_4x4[2][3] );
-		}
-
-		Vector getRotation	()
-		{
-			Ogre::Quaternion rot = m_4x4.extractQuaternion();
-			return Vector(	rot.getYaw().valueRadians(),
-											rot.getPitch().valueRadians(),
-											rot.getRoll().valueRadians() );
-		}
-
-		Vector getScale		()
-		{
-			//TODO: arreglar esto
-/*
-			Vector tempV;
-			tempV = Vector( m_4x4[0][0], m_4x4[0][1], m_4x4[0][2] );
-			float xScale = tempV.length();
-
-			tempV = Vector( m_4x4[1][0], m_4x4[1][1], m_4x4[1][2] );
-			float yScale = tempV.length();
-
-			tempV = Vector( m_4x4[2][0], m_4x4[2][1], m_4x4[2][2] );
-			float zScale = tempV.length();
-
-			return Vector(xScale, yScale, zScale);*/
-
-			return Vector( 1, 2, 1.0);
-		}
-
-		Vector applyTransform( Vector input )
-		{
-			return m_4x4*input;
-		};
+		Vector getPosition	(); 
+		Vector getRotation	();
+		Vector getScale		();
 
 		// Set methods
+		// Todo: Implementar
 		void		setPosition	( Vector& newPos );
-		void		setRotation	( Vector& newRot );
-		void		setScale		( Vector& newScale );
-
 		void		setPosition	( float x, float y, float z );
+		void		setRotation	( Vector& newRot );
 		void		setRotation	( float x, float y, float z );
+		void		setScale		( Vector& newScale );
 		void		setScale		( float x, float y, float z );
-   
+
+		// Other
+		Vector applyTransform( Vector input );
+
 	private:
-
-		// Euler notation
-		Vector						m_position;
-		Vector						m_rotation;
-		Vector						m_scale;
-		
+		// The transform data is stored here
 		Ogre::Matrix4     m_4x4;
-
 		bool							m_bIsValid;
 	};
 

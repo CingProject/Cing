@@ -924,6 +924,7 @@ void Image::rect( float x1, float y1, float x2, float y2 )
 
 		switch( graphManager.getRectMode() )
 		{
+
 		case CORNER: 
 			if (graphManager.getSmooth())
 				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 16);
@@ -1246,7 +1247,7 @@ void Image::filter( ImageProcessingFilters type )
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 	if (type == BLUR)
-		cvSmooth(m_cvImage, m_cvImage, CV_BLUR , 9);
+		cvSmooth(m_cvImage, m_cvImage, CV_BLUR , 3);
 
 	if (type == ERODE)
 		cvErode( m_cvImage, m_cvImage, 0, 1 );

@@ -137,11 +137,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Transformations 1", "exampl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vision", "vision\build\win\visualStudio_2005\Vision\Vision.vcproj", "{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Saving Images", "examples\Saving Images\Saving Images.vcproj", "{69CBDCF7-1EC8-4B90-80C2-0419423440F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
@@ -259,8 +260,16 @@ Global
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Debug|Win32.Build.0 = Debug|Win32
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Release|Win32.ActiveCfg = Release|Win32
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F}.Release|Win32.Build.0 = Release|Win32
+		{69CBDCF7-1EC8-4B90-80C2-0419423440F8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{69CBDCF7-1EC8-4B90-80C2-0419423440F8}.Debug|Win32.Build.0 = Debug|Win32
+		{69CBDCF7-1EC8-4B90-80C2-0419423440F8}.Release|Win32.ActiveCfg = Release|Win32
+		{69CBDCF7-1EC8-4B90-80C2-0419423440F8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

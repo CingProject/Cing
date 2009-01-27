@@ -48,10 +48,6 @@ bool Transform::init()
 		return true;
 
 	// Init values
-	m_position	= Vector( 0, 0, 0 );
-	m_rotation	= Vector( 0, 0, 0 );
-	m_scale			= Vector( 1.0, 1.0, 1.0 );
-
 	m_4x4 = Ogre::Matrix4::IDENTITY;
 
 	// The class is now initialized
@@ -100,5 +96,39 @@ void Transform::scale(  float x, float y, float z )
 	// Apply transform
 	m_4x4 = m_4x4.concatenate(Ogre::Matrix4::getScale( x, y, z ));
 }
+
+
+Vector Transform::getPosition	() 
+{
+	return Vector( m_4x4[0][3], m_4x4[1][3], m_4x4[2][3] );
+}
+
+Vector Transform::getRotation	()
+{
+	Ogre::Quaternion rot = m_4x4.extractQuaternion();
+	return Vector(	rot.getYaw().valueRadians(),
+		rot.getPitch().valueRadians(),
+		rot.getRoll().valueRadians() );
+}
+
+Vector Transform::getScale()
+{
+	Vector tempV;
+	tempV = Vector( m_4x4[0][0], m_4x4[0][1], m_4x4[0][2] );
+	float xScale = tempV.length();
+
+	tempV = Vector( m_4x4[1][0], m_4x4[1][1], m_4x4[1][2] );
+	float yScale = tempV.length();
+
+	tempV = Vector( m_4x4[2][0], m_4x4[2][1], m_4x4[2][2] );
+	float zScale = tempV.length();
+
+	return Vector(xScale, yScale, zScale);
+}
+
+Vector Transform::applyTransform( Vector input )
+{
+	return m_4x4*input;
+};
 
 } // namespace Graphics
