@@ -651,16 +651,24 @@ void Image::line( float x1, float y1, float x2, float y2 )
 	// Get Stroke and Fill Color
 	Color color        = graphManager.getStrokeColor();
 	int   strokeWeight = graphManager.getStrokeWeight();
-
-	// Draw a line
-	cvLine(m_cvImage,
-							cvPoint(x1,y1),
-							cvPoint(x2,y2),
-							CV_RGB(color.r,color.g,color.b),
-							strokeWeight,	///< Thickness.
-							8,	///< Type of the ellipse boundary, see cvLine description.
-							0); ///< Number of fractional bits in the center coordinates and axes' values.
-
+	if (graphManager.getSmooth())
+	{
+		cvLine(	m_cvImage,
+						cvPoint(x1,y1),
+						cvPoint(x2,y2),
+						CV_RGB(color.r,color.g,color.b),
+						strokeWeight,	///< Thickness.
+						16,	///< Type of the ellipse boundary, see cvLine description.
+						0); ///< Number of fractional bits in the center coordinates and axes' values.
+	}else{
+		cvLine(	m_cvImage,
+						cvPoint(x1,y1),
+						cvPoint(x2,y2),
+						CV_RGB(color.r,color.g,color.b),
+						strokeWeight,	///< Thickness.
+						4,	///< Type of the ellipse boundary, see cvLine description.
+						0); ///< Number of fractional bits in the center coordinates and axes' values.
+	}
 	// Update texture when the next drawing call is made by the user
 	m_bUpdateTexture = true;
 }
@@ -996,6 +1004,109 @@ void Image::rect( float x1, float y1, float x2, float y2 )
  * @param width  width
  * @param height height
  */
+void Image::ellipse( float x1, float y1, float x2, float y2, float angle )
+{
+
+	//TODO: Hay para cambiar de mod deg a rad?
+
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+
+	GraphicsManager& graphManager = GraphicsManager::getSingleton();
+
+	float widthDIV2 = x2/2;
+	float heightDIV2 = y2/2;
+
+	Color color        = graphManager.getFillColor();
+
+	if (graphManager.getFill())
+	{
+		// Get Fill Color
+
+		switch( graphManager.getEllipseMode() )
+		{
+		case CORNER: 
+			if (graphManager.getSmooth())
+				cvEllipse(	m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360,	CV_RGB(color.r,color.g,color.b),-1,16 );
+			else
+				cvEllipse(	m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360,	CV_RGB(color.r,color.g,color.b),-1,4 );
+			break;
+
+		case CORNERS: 
+			if (graphManager.getSmooth())
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+
+		case CENTER:
+			if (graphManager.getSmooth())
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+
+		case RADIUS: 
+			if (graphManager.getSmooth())
+				cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
+			else
+				cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 4);
+			break;
+		}
+	}
+
+	if (graphManager.getStroke())
+	{
+		// Get Stroke Color
+		Color color        = graphManager.getStrokeColor();
+		int   strokeWeight = graphManager.getStrokeWeight();
+		switch( graphManager.getEllipseMode() )
+		{
+
+		case CORNER: 
+			if (graphManager.getSmooth())
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case CORNERS: 
+			if (graphManager.getSmooth())
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case CENTER: 
+			if (graphManager.getSmooth())
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+
+		case RADIUS: 
+			if (graphManager.getSmooth())
+				cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+			else
+				cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+			break;
+		}
+	}
+
+	// Update texture when the next drawing call is made by the user
+	m_bUpdateTexture = true;
+
+}
+
+/**
+ * @brief Draws a ellipse inside an image
+ *
+ * @param x x, first point
+ * @param y y, first point
+ * @param width  width
+ * @param height height
+ */
 void Image::ellipse( float x1, float y1, float x2, float y2 )
 {
 	
@@ -1088,7 +1199,6 @@ void Image::ellipse( float x1, float y1, float x2, float y2 )
 	m_bUpdateTexture = true;
 
 }
-
 /**
  * @brief Method to apply a variety of basic filters to this image.
  *

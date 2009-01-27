@@ -20,6 +20,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 */
 
 #include "Transform.h"
+#include "common/MathUtils.h"
 
 namespace Graphics
 {
@@ -51,6 +52,8 @@ bool Transform::init()
 	m_rotation	= Vector( 0, 0, 0 );
 	m_scale			= Vector( 1.0, 1.0, 1.0 );
 
+	m_4x4 = Ogre::Matrix4::IDENTITY;
+
 	// The class is now initialized
 	m_bIsValid = true;
 
@@ -72,20 +75,30 @@ void Transform::end()
 	m_bIsValid = false;
 }
 
-// Simple transformations methods
+// Translate
 void Transform::translate(  float x, float y, float z )
 {
-	m_position += Vector( x, y, z );
+ 	// Apply transform
+	m_4x4 = m_4x4.concatenate( Ogre::Matrix4::getTrans(x,y,z) );
 }
 
+//Rotate
 void Transform::rotate(  float x, float y, float z )
 {
-	m_rotation += Vector( x, y, z );
+	// Make temporal transform
+	Ogre::Matrix3 m3Temp;
+	m3Temp.FromEulerAnglesXYZ( Ogre::Radian(x), Ogre::Radian(y), Ogre::Radian(z) );
+	Ogre::Matrix4 tMat = Ogre::Matrix4( m3Temp );
+
+	// Apply transform
+	m_4x4 = m_4x4.concatenate(tMat);
 }
 
+//Scale
 void Transform::scale(  float x, float y, float z )
 {
-	m_scale += Vector( x, y, z );
+	// Apply transform
+	m_4x4 = m_4x4.concatenate(Ogre::Matrix4::getScale( x, y, z ));
 }
 
 } // namespace Graphics

@@ -296,8 +296,28 @@ void GraphicsManager::draw()
 	for (; it != m_drawableImagesQueue.end(); ++it )
 		(*it)->setVisible( false );
 
+	// Reset matrix stacks
+	clearMatrixStack();
 }
-
+/**
+ * @internal
+ * @brief   Reset style stack
+ */
+void GraphicsManager::clearStyleStack()
+{
+	m_styles.clear();
+	m_styles.push_front(Style());
+};
+/**
+ * @internal
+ * @brief   Reset matrix stack
+ */
+void GraphicsManager::clearMatrixStack()
+{
+	while ( !m_transforms.empty() )
+		m_transforms.pop();
+	m_transforms.push(Transform());
+};
 
 /**
  * @internal
@@ -472,98 +492,6 @@ void GraphicsManager::removeDrawableImage( TexturedQuad* img)
 		}
 }
 
-
-/*
- * @Draws a line (a direct path between two points) to the canvas
- * 
- * It specifies color for shapes not using textures or lighting. Value range is 0..255
- * @param x1 int or float: x-coordinate of the first point
- * @param y1 int or float: y-coordinate of the first point
- * @param x2 int or float: x-coordinate of the second point
- * @param y2 int or float: y-coordinate of the second point
- */
-
-void GraphicsManager::line( float x1, float y1, float x2, float y2 )
-{
-	m_canvas->line( x1, y1, x2, y2 );
-};
-
-/*
- * @Draws a point, a coordinate in space at the dimension of one pixel
- * 
- * It specifies color for shapes not using textures or lighting. Value range is 0..255
- * @param x1 int or float: x-coordinate 
- * @param y1 int or float: y-coordinate 
- */
-
-void GraphicsManager::point( float x1, float y1 )
-{
-	m_canvas->point( x1, y1 );
-};
-
-/*
- * @A triangle is a plane created by connecting three points. The first two arguments
- * specify the first point, the middle two arguments specify the second point, and the
- * last two arguments specify the third point.
- * 
- * @param x1 int or float: x-coordinate of the first point
- * @param y1 int or float: y-coordinate of the first point
- * @param x2 int or float: x-coordinate of the second point
- * @param y2 int or float: y-coordinate of the second point
- * @param x3 int or float: x-coordinate of the third point
- * @param y3 int or float: y-coordinate of the third point
- */
-
-void GraphicsManager::triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
-{
-	m_canvas->triangle( x1, y1, x2, y2, x3, y3 );
-};
-
-/**
- * @brief Draws a rectangle inside an image
- *
- * @param x1 x, first point
- * @param y1 y, first point
- * @param x2 x, end point
- * @param y2 y, end point
- */
-void GraphicsManager::rect( float x1, float y1, float x2, float y2 )
-{
-	m_canvas->rect( x1, y1, x2, y2 );
-}
-
-/**
- * @brief Draws a quad, defined by four points
- *
- * @param x1 x, first point
- * @param y1 y, first point
- * @param x2 x, second point
- * @param y2 y, second point
- * @param x3 x, third point
- * @param y3 y, third point
- * @param x4 x, fourth point
- * @param y4 y, fourth point
- */
-void GraphicsManager::quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
-{
-	m_canvas->quad( x1, y1, x2, y2, x3, y3, x4, y4 );
-}
-
-
-/**
- * @brief Draws an ellipse
- *
- * @param x1 x, first point
- * @param y1 y, first point
- * @param width
- * @param height
- */
-void GraphicsManager::ellipse	( float x, float y, float width, float height)
-{
-	m_canvas->ellipse( x, y, width, height );
-}
-
-
 /**
  * @brief Modifies the location from which rectangles draw
  */
@@ -595,6 +523,5 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 
 	cvSet( &m_canvas->getCVImage(), cvScalar(color.b,color.g,color.r) );
 	m_canvas->setUpdateTexture(true);
-	m_canvas->setUpdateTexture( true );
 }
 } // namespace Graphics

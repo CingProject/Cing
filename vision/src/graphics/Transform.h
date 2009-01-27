@@ -25,6 +25,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "GraphicsPrereqs.h"
 #include "Common/CommonTypes.h"
 
+#include "externlibs/ogre3d/include/OgreMatrix3.h"
+#include "externlibs/ogre3d/include/OgreMatrix4.h"
+
+#include "common/CommonTypes.h"
+
 namespace Graphics
 {
 	/**
@@ -51,25 +56,60 @@ namespace Graphics
 		void		scale				( float x, float y, float z );
 
 		// Get methods
-		Vector& getPosition	() { return m_position; }
-		Vector& getRotation	() { return m_rotation; }
-		Vector& getScale		() { return m_scale; }
+		Vector getPosition	() 
+		{
+			return Vector( m_4x4[0][3], m_4x4[1][3], m_4x4[2][3] );
+		}
+
+		Vector getRotation	()
+		{
+			Ogre::Quaternion rot = m_4x4.extractQuaternion();
+			return Vector(	rot.getYaw().valueRadians(),
+											rot.getPitch().valueRadians(),
+											rot.getRoll().valueRadians() );
+		}
+
+		Vector getScale		()
+		{
+			//TODO: arreglar esto
+/*
+			Vector tempV;
+			tempV = Vector( m_4x4[0][0], m_4x4[0][1], m_4x4[0][2] );
+			float xScale = tempV.length();
+
+			tempV = Vector( m_4x4[1][0], m_4x4[1][1], m_4x4[1][2] );
+			float yScale = tempV.length();
+
+			tempV = Vector( m_4x4[2][0], m_4x4[2][1], m_4x4[2][2] );
+			float zScale = tempV.length();
+
+			return Vector(xScale, yScale, zScale);*/
+
+			return Vector( 1, 2, 1.0);
+		}
+
+		Vector applyTransform( Vector input )
+		{
+			return m_4x4*input;
+		};
 
 		// Set methods
-		void		setPosition	( Vector& newPos )  { m_position = newPos;   }
-		void		setRotation	( Vector& newRot )  { m_rotation = newRot;   }
-		void		setScale		( Vector& newScale ){ m_scale    = newScale; }
+		void		setPosition	( Vector& newPos );
+		void		setRotation	( Vector& newRot );
+		void		setScale		( Vector& newScale );
 
-		void		setPosition	( float x, float y, float z ) { m_position = Vector(x,y,z); }
-		void		setRotation	( float x, float y, float z ) { m_rotation = Vector(x,y,z); }
-		void		setScale		( float x, float y, float z ) { m_scale    = Vector(x,y,z); }
-
+		void		setPosition	( float x, float y, float z );
+		void		setRotation	( float x, float y, float z );
+		void		setScale		( float x, float y, float z );
+   
 	private:
 
 		// Euler notation
 		Vector						m_position;
 		Vector						m_rotation;
 		Vector						m_scale;
+		
+		Ogre::Matrix4     m_4x4;
 
 		bool							m_bIsValid;
 	};

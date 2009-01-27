@@ -48,7 +48,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Graphics
 {
 
-	// TODO: Is it the correct place to allocate this structure? Maybe a StylesManager ?
+	// TODO: Is it the correct place to allocate this structure?
 	struct Style 
 	{
 		// Constructors
@@ -129,10 +129,10 @@ public:
 	void 											smooth									  () { m_smooth = true; }
 
 	int												getRectMode								() const { return m_rectMode; }
-	void             					setRectMode								(  const  int	mode );
+	void             					setRectMode								(  int	mode );
 
 	int												getEllipseMode						() const { return m_ellipseMode; }
-	void             					setEllipseMode						(  const  int	mode );
+	void             					setEllipseMode						(  int	mode );
 
 	const CvFont&							getCvFont									() const { return  m_cvFont; }
 
@@ -148,25 +148,18 @@ public:
 
   // Drawing 3d lines (Temp)
 	void addVertex( Common::Vector newPos );
-  
-	// Drawing 2d primitives
-	void line			( float x1, float y1, float x2, float y2);
-	void point		( float x1, float y1 );
-  void triangle	( float x1, float y1, float x2, float y2, float x3, float y3 );
-  void rect			( float x1, float y1, float x2, float y2 );
-	void quad			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
-	void ellipse	( float x, float y, float width, float height);
-	void text			( float x1, float y1, const char* text );
 
 	// 2D Canvas
-	Graphics::Image*			 m_canvas;
+	Graphics::Image*				m_canvas;
 
 	// Styles
 	std::deque < Style >     m_styles;     ///< Queue to store style properties ( fill color, stroke weight, etc.)
 																				 // TODO: change to stack
+	void clearStyleStack();
 
 	// 2D / 3D Transforms
 	std::stack < Transform > m_transforms; ///< Stack to store transform objects
+	void clearMatrixStack();
 
 private:
 

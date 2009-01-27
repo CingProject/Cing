@@ -407,7 +407,13 @@ void line( float x1, float y1, float z1, float x2, float y2, float z2)
 
 void line( float x1, float y1, float x2, float y2 )
 {
-	Graphics::GraphicsManager::getSingleton().line( x1, y1, x2, y2 );
+	// Transform vertex before the drawing  call 
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+
+	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
+	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
+
+	Graphics::GraphicsManager::getSingleton().m_canvas->line( v1.x, v1.y, v2.x, v2.y );
 };
 
 /*
@@ -420,7 +426,12 @@ void line( float x1, float y1, float x2, float y2 )
 
 void point( float x1, float y1 )
 {
-	Graphics::GraphicsManager::getSingleton().point( x1, y1 );
+	// Transform vertex before the drawing  call 
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+
+	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
+
+	Graphics::GraphicsManager::getSingleton().m_canvas->point( v1.x, v1.y );
 };
 
 /*
@@ -438,7 +449,14 @@ void point( float x1, float y1 )
 
 void triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
 {
-	Graphics::GraphicsManager::getSingleton().triangle( x1, y1, x2, y2, x3, y3 );
+	// Transform vertex before the drawing  call 
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+
+	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
+	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
+	Vector v3 = t.applyTransform( Vector( x3, y3, 0) );
+
+	Graphics::GraphicsManager::getSingleton().m_canvas->triangle( v1.x, v1.y, v2.x, v2.y, v3.x, v3.y );
 };
 
 /**
@@ -451,34 +469,22 @@ void triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
  */
 void rect( float x1, float y1, float x2, float y2 )
 {
+
 	// Transform vertex before the drawing  call 
 	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
-/*
-	x' = x cos f - y sin f
-	y' = y cos f + x sin f
-*/
-	float angle = t.getRotation().z;
 
-	float cosAlpha = cos ( angle );
-	float sinAlpha = sin ( angle );
-
-	float x1Trans = x1 * cosAlpha - y1 * sinAlpha;
-	float y1Trans = y1 * cosAlpha + x1 * sinAlpha;
-
-	float x2Trans = x1+x2 * cosAlpha - y2 * sinAlpha;
-	float y2Trans = y2 * cosAlpha + x1+x2 * sinAlpha;
-
-	float x3Trans = x1+x2 * cosAlpha - y1+y2 * sinAlpha;
-	float y3Trans = y1+y2 * cosAlpha + x1+x2 * sinAlpha;
-
-	float x4Trans = x2 * cosAlpha - y2+y2 * sinAlpha;
-	float y4Trans = y2+y2 * cosAlpha + x2 * sinAlpha;
+	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
+	Vector v2 = t.applyTransform( Vector( x1+x2, y1, 0) );
+	Vector v3 = t.applyTransform( Vector( x1+x2, y1+y2, 0) );
+	Vector v4 = t.applyTransform( Vector( x1, y1+y2, 0) );
 
 	// TODO: + depende del modo de dibujo
 	//       + los rect dejan de ser rects
 	//			 + hay q optimizar, y evitar las transformaciones
 	//			   cuando no se hayan aplicado.
-	Graphics::GraphicsManager::getSingleton().quad( x1Trans,y1Trans,x2Trans,y2Trans ,x3Trans,y3Trans,x4Trans,y4Trans); 
+	//Graphics::GraphicsManager::getSingleton().quad( x1Trans , y1Trans , x2Trans, y2Trans, x3Trans, y3Trans, x4Trans, y4Trans ); 
+
+	Graphics::GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y ); 
 }
 
 /**
@@ -495,7 +501,15 @@ void rect( float x1, float y1, float x2, float y2 )
  */
 void quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
 {
-	Graphics::GraphicsManager::getSingleton().quad( x1, y1, x2, y2, x3, y3, x4, y4 );
+	// Transform vertex before the drawing  call 
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+
+	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
+	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
+	Vector v3 = t.applyTransform( Vector( x3, y3, 0) );
+	Vector v4 = t.applyTransform( Vector( x4, y4, 0) );
+
+	Graphics::GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y ); 
 }
 
 /**
@@ -508,11 +522,17 @@ void quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4,
  */
 void ellipse( float x, float y, float width, float height)
 {
-	Graphics::GraphicsManager::getSingleton().ellipse( x, y, width, height );
+	//TODO: Manage transforms
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Vector v1 = t.applyTransform( Vector( x, y, 0) );
+	Graphics::GraphicsManager::getSingleton().m_canvas->ellipse( v1.x, v1.y, width, height, t.getRotation().z );
 }
 
 void arc( float x, float y,  float width, float height, float start, float stop )
 {
+	//TODO: Manage transforms
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Vector v1 = t.applyTransform( Vector( x, y, 0) );
 	Graphics::GraphicsManager::getSingleton().m_canvas->arc( x, y, width, height, start, stop );
 }
 
@@ -684,7 +704,7 @@ void updatePixels()
 void pushMatrix()
 {
 	// Add new IDENTITY transform object to the stack
-	GraphicsManager::getSingleton().m_transforms.push( Transform() );
+	GraphicsManager::getSingleton().m_transforms.push( GraphicsManager::getSingleton().m_transforms.top() );
 }
 /**
  * @brief 
@@ -740,7 +760,7 @@ void rotate		(	float angleX )
  */
 void rotateX	(	float angle )
 {
-
+	GraphicsManager::getSingleton().m_transforms.top().rotate( angle, 0, 0 );
 };
 /**
  * @brief 
@@ -749,7 +769,7 @@ void rotateX	(	float angle )
  */
 void rotateY	(	float angle )
 {
-
+	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, angle, 0 );
 };
 /**
  * @brief 
@@ -758,7 +778,7 @@ void rotateY	(	float angle )
  */
 void rotateZ	(	float angle )
 {
-
+	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, 0, angle );
 };
 /**
  * @brief 
@@ -767,16 +787,16 @@ void rotateZ	(	float angle )
  */
 void scale		(	float x, float y, float z )
 {
-
+	GraphicsManager::getSingleton().m_transforms.top().scale( x, y, z );
 };
 
 /**
-* @brief 
-*
-* @param mode
-*/
-void scale		(	float x, float y )
+ * @brief 
+ *
+ * @param mode
+ */
+void scale		(	float x, float y)
 {
-
+	GraphicsManager::getSingleton().m_transforms.top().scale( x, y, 0 );
 };
 } // namespace Graphics

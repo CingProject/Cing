@@ -81,6 +81,7 @@ public:
 	void  point			( float x, float y);
 	void  quad			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
 	void  ellipse		( float x, float y, float x2, float y2);
+	void  ellipse		( float x, float y, float x2, float y2, float angle);
 	void  rect			( float x1, float y1, float x2, float y2 );
 	void  text			( float x1, float y1, const char* text );
 
@@ -127,9 +128,7 @@ public:
 	void					flipVertical		();
 	bool					isVFlipped			() const { return m_bVFlip; }
 
-
 	TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
-
 private:
 	// Attributes
 	static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
