@@ -66,11 +66,12 @@ public:
 	bool keyReleased		( const OIS::KeyEvent& event);
 
 	// Control application flow
-	void exit  () { m_finish = true; }
-	void delay ( unsigned int milliseconds );
-	void loop  () { m_loop = true;  };
-	void noLoop() { m_loop = false; };
-	void redraw() { m_needUpdate = true; };
+	void exit  		() { m_finish = true; }
+	void delay 		( unsigned int milliseconds );
+	void loop  		() { m_loop = true;  };
+	void noLoop		() { m_loop = false; };
+	void redraw		() { m_needUpdate = true; };
+	void frameRate( int forcedFrameRate );
 
 	// Get methods
 	unsigned int getFrameCount() { return m_frameCount; };
@@ -80,13 +81,15 @@ private:
 	Application();
 
 	// Attributes
-	Ogre::Timer		m_timer;				///< Application timer. Used to measure time between frames
-	Ogre::Timer		m_absTimer;			///< Time to control the total time elapsed since application started
-	unsigned int  m_frameCount;   ///< Number of frames since application started
-	bool					m_finish;				///< If true app will be closed in the next iteration of the app loop
-	bool					m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
-	bool					m_loop;         ///< If true app will be call draw() user funtion continuosly
-	bool					m_needUpdate;   ///< If true app will be call draw() user funtion one time
+	Ogre::Timer		m_timer;									///< Application timer. Used to measure time between frames
+	Ogre::Timer		m_absTimer;								///< Timer to control the total time elapsed since application started
+	unsigned int  m_frameCount;   					///< Number of frames since application started
+	int						m_forcedFrameRate;				////< If != 0, the application will try to execute at this frame rate
+	double				m_timePerFrameMillis;			///< Time that will take every frame to execute if the fps is forced (in microseconds)
+	bool					m_finish;									///< If true app will be closed in the next iteration of the app loop
+	bool					m_bIsValid;								///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool					m_loop;         					///< If true app will be call draw() user funtion continuosly
+	bool					m_needUpdate;   					///< If true app will be call draw() user funtion one time
 };
 
 } // namespace Framework

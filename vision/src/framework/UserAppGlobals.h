@@ -69,7 +69,7 @@ extern double								secFromStart;		///< Seconds elapsed since application start
 extern unsigned long				millisFromStart;///< Milliseconds elapsed since application started
 
 // Frame count
-extern int  								frameCount;			///< Actual frameRate of app (aproximated)
+extern unsigned long  			frameCount;			///< Actual frameRate of app (aproximated)
 extern float								frameRate;
 
 // Advanced 

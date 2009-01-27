@@ -36,6 +36,7 @@ void delay( unsigned int milliseconds );
 void loop();
 void noLoop();
 void redraw();
+void setFrameRate( int frameRate );
 
 } // namespace Framework
 

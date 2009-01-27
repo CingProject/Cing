@@ -50,7 +50,7 @@ double							secFromStart		= 0;
 unsigned long	 			millisFromStart	= 0;
 
 // Frame count
-int  								frameCount      = 0;
+unsigned long  			frameCount      = 0;
 float								frameRate       = 0.0f;   
 
 // Advanced

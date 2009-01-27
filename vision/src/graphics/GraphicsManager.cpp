@@ -278,7 +278,7 @@ void GraphicsManager::draw()
   // Get Frame stats
   const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
 
-	Globals::frameRate = frameStats.lastFPS;
+	Globals::frameRate = frameStats.avgFPS;
 
 	// Show fps
 	if ( m_showFps )

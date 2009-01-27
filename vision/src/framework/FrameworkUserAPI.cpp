@@ -80,4 +80,15 @@ namespace Framework
 		Application::getSingleton().redraw();
 	}
 
+	/**
+	 * @brief Forces the application to execute at a specific frame rate( if possible)
+	 *
+	 * @param forcedFrameRate new frame rate that the application will try to achieve
+	 */
+	void setFrameRate( int frameRate )
+	{
+		Application::getSingleton().frameRate( frameRate );	
+	}
+
+
 } // namespace Framework

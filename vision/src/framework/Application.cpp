@@ -36,9 +36,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "physics/PhysicsManager.h"
 
 // Common
-#include "common/Exception.h"
+#include "common/CommonUtilsIncludes.h"
 #include "common/ResourceManager.h"
-#include "common/LogManager.h"
+#include "common/CommonUserAPI.h"
 
 // Extern
 #include "externLibs/PTypes/include/pasync.h"
@@ -52,7 +52,7 @@ namespace Framework
  * @brief Constructor. Initializes class attributes.
  */
 Application::Application():
-  m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false )
+  m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ) 
 {
 }
 
@@ -199,6 +199,32 @@ void Application::drawApp()
 		// Update frameCount
 		m_frameCount++;
 		Globals::frameCount  = getFrameCount();	
+
+		// Check if we need have a forced frame rate
+		if ( m_forcedFrameRate != 0 ) 
+		{
+	
+		if ( Globals::millisFromStart < (m_timePerFrameMillis * Globals::frameCount) )
+		{
+			unsigned long millisToSleep = (m_timePerFrameMillis * Globals::frameCount) - Globals::millisFromStart;
+			if ( millisToSleep > 0 )
+				pt::psleep( millisToSleep );
+		}
+
+
+			//m_accumulatedMicros = 0;
+			//if ( Globals::elapsedMillis < ( m_timePerFrameMillis + m_accumulatedMicros ) )
+			//{
+			//	unsigned long sleepMillis = (m_timePerFrameMillis + m_accumulatedMicros) - Globals::elapsedMillis;
+			//	//div_t result = div( sleepMicros, 1000 );
+			//	//unsigned long sleepMillis = result.quot;
+			//	//m_accumulatedMicros = 0; //result.rem;
+			//	if ( sleepMillis > 0 )
+			//	{
+			//		pt::psleep( sleepMillis );
+			//	}
+			//}
+		}
   }
 }
 
@@ -303,6 +329,19 @@ void Application::delay( unsigned int milliseconds)
 	pt::psleep( milliseconds );
 }
 
+
+/**
+ * @brief Forces the application to execute at a specific frame rate (if possible).
+ *
+ * @param forcedFrameRate new frame rate for the application execution
+ */
+void Application::frameRate( int forcedFrameRate )
+{
+	m_forcedFrameRate = forcedFrameRate;
+
+	// Calculate the time per frame (in microseconds) to have the specified frame rate
+	m_timePerFrameMillis = 1000.0 / (double)m_forcedFrameRate;
+}
 
 
 } // namespace Framework
