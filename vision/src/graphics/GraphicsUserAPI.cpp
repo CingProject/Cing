@@ -830,4 +830,14 @@ void scale(	float x, float y)
 {
 	GraphicsManager::getSingleton().m_transforms.top().scale( x, y, 1 );
 };
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void save( const String& name )
+{
+	GraphicsManager::getSingleton().save( name );
+};
+
 } // namespace Graphics

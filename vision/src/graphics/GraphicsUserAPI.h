@@ -25,6 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GraphicsPrereqs.h"
 #include "Color.h"
 #include "Image.h"
+#include "Common\eString.h"
 
 namespace Graphics
 {
@@ -162,6 +163,10 @@ void rotateZ	(	float angle );
 	
 void scale		(	float x, float y, float z );
 void scale		(	float x, float y );
+
+//Save frames
+void save( const Common::String& name );
+
 
 } // namespace Graphics
 

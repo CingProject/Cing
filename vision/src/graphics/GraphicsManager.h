@@ -44,6 +44,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Singleton.h"
 #include <vector>
 #include <stack>
+#include "common/eString.h"
 
 namespace Graphics
 {
@@ -161,6 +162,14 @@ public:
 	std::stack < Transform > m_transforms; ///< Stack to store transform objects
 	void clearMatrixStack();
 
+	//Save frames
+	void save( const Common::String& name )
+	{
+		m_saveFrame = true;
+		m_frameName = name;
+	};
+
+
 private:
 
 	// private constructor to ensure singleton
@@ -173,17 +182,17 @@ private:
 	// Attributes
 
 	// Camera controller
-	CameraController			m_defaultCamController;
+	CameraController						m_defaultCamController;
 
 	// Core
-	Ogre::SceneManager*   m_pSceneManager;  ///< Main scene manager
-	Window                m_mainWindow;     ///< Main application window
-	Camera3D              m_activeCamera;   ///< Active camera
+	Ogre::SceneManager*					m_pSceneManager;  ///< Main scene manager
+	Window											m_mainWindow;     ///< Main application window
+	Camera3D										m_activeCamera;   ///< Active camera
 	
 	// Misc
-	DebugOverlay          m_debugOverlay;   ///< Debug overlay used to show debug information
-	Font                  m_defaultFont;    ///< Default system font
-	Text                  m_defaultText;    ///< To print text to screen
+	DebugOverlay								m_debugOverlay;   ///< Debug overlay used to show debug information
+	Font												m_defaultFont;    ///< Default system font
+	Text												m_defaultText;    ///< To print text to screen
 
 	// Simple primitives 3d related drawing ( lines, circles , ...)
 	DynamicLines*								m_lines;
@@ -191,19 +200,24 @@ private:
 	std::vector <Ogre::Vector3> m_linesPoints;
 
 	// Styling properties
-	int										m_rectMode;					///< Parameters input mode to draw rectangles
-	int										m_ellipseMode;			///< Parameters input mode to draw ellipses
+	// TODO: Eliminates this. Change styles que to stack
+	int													m_rectMode;					///< Parameters input mode to draw rectangles
+	int													m_ellipseMode;			///< Parameters input mode to draw ellipses
+	bool												m_fill;
+	bool												m_stroke;
+	bool												m_smooth;
 
-	bool									m_fill;
-	bool									m_stroke;
-	bool									m_smooth;
-
-	CvFont								m_cvFont;					///< Font used to draw text on images
+	CvFont											m_cvFont;					///< Font used to draw text on images
 
 	// To manage visibility of loaded images
 	// TODO optimize this
 	std::list< TexturedQuad* >	m_drawableImagesQueue; ///< Images that are being drawn by the user ar maked as not visible every frame
 																							        // to if the user does not call the draw one frame the image is not drawn
+
+	//to allow screen capture and effects
+	Ogre::TexturePtr			m_RttTexture;
+	bool									m_saveFrame;
+	Common::String				m_frameName;
 
 	bool									m_showFps;				///< Indicates whether the frames per second should be shown or not
 	bool                  m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called

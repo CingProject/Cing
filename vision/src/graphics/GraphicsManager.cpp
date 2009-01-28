@@ -34,6 +34,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Release.h"
 #include "common/MathUtils.h"
 #include "common/CommonConstants.h"
+#include "common/ResourceManager.h"
 
 // Ogre includes
 #include "externLibs/Ogre3d/include/OgreRoot.h"
@@ -43,6 +44,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreBillboard.h"
 #include "externLibs/Ogre3d/include/OgreBillboardSet.h"
 #include "externLibs/Ogre3d/include/OgreStringConverter.h"
+#include "externLibs/Ogre3d/include/OgreStringConverter.h"
+#include "externLibs/Ogre3d/include/OgreHardwarePixelBuffer.h"
 
 // TEMP
 #include "externLibs/Ogre3d/include/OgreTextAreaOverlayElement.h"
@@ -69,7 +72,8 @@ GraphicsManager::GraphicsManager():
 	m_stroke( true ),
 	m_smooth( false ),
 	m_rectMode( CORNER ),
-	m_ellipseMode( CENTER )
+	m_ellipseMode( CENTER ),
+	m_saveFrame(false)
 {
 }
 
@@ -180,6 +184,13 @@ bool GraphicsManager::init()
 	for (int i = 0; i < m_canvas->getWidth() * m_canvas->getHeight(); i++)
 		Globals::pixels.push_back( Color::Black );
 
+	// Init RTT texture and setup viewport
+	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_R8G8B8, Ogre::TU_RENDERTARGET);
+	Ogre::RenderTarget *rttTex	= m_RttTexture->getBuffer()->getRenderTarget();
+	rttTex->setAutoUpdated(false);
+	Ogre::Viewport* vp	= rttTex->addViewport( m_activeCamera.getOgreCamera() );
+	vp->setOverlaysEnabled(true);
+
 	// The class is now initialized
 	m_bIsValid = true;
 
@@ -275,6 +286,7 @@ void GraphicsManager::draw()
   // Update window
   m_mainWindow.update();
 
+
   // Get Frame stats
   const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
 
@@ -291,6 +303,15 @@ void GraphicsManager::draw()
 	else
 		m_defaultText.show( false );
 
+	// Render the viewport to texture and save to disk
+	if ( m_saveFrame )
+	{
+		m_RttTexture->getBuffer()->getRenderTarget()->update();
+		//m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToTimestampedFile( "../data/test", ".jpg" );
+		m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(Common::ResourceManager::userDataPath + m_frameName );
+		m_saveFrame =false;
+	}
+
 	// Mark all drawable images as not visible
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
 	for (; it != m_drawableImagesQueue.end(); ++it )
@@ -298,6 +319,8 @@ void GraphicsManager::draw()
 
 	// Reset matrix stacks
 	clearMatrixStack();
+
+
 }
 /**
  * @internal
