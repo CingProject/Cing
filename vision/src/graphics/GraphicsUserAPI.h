@@ -139,18 +139,23 @@ void	useKeyboardCameraControl	( bool value );
 // Debug methods
 void	showFps ( bool show );
 
-//Create functions
+// Image Create functions
 Image createImage( int width, int height, GraphicsType format );
 Image loadImage  ( const std::string& name );
 
-// Misc
+// Read and writes to the global pixels variable.( slooooow for now!)  
 void  loadPixels();
 void  updatePixels();
 
-// Transfomation
+// To control at a global level the 2D/3D Transforms
 void pushMatrix();
 void popMatrix();
 void resetMatrix();
+void printMatrix();
+void applyMatrix( float m00, float m01, float m02, float m03,
+								  float m10, float m11, float m12, float m13,
+									float m20, float m21, float m22, float m23,
+									float m30, float m31, float m32, float m33 );
 
 void translate( float x, float y );
 void translate( float x, float y, float z );

@@ -21,6 +21,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "Transform.h"
 #include "common/MathUtils.h"
+#include "common/CommonUserApi.h"
 
 namespace Graphics
 {
@@ -161,5 +162,36 @@ void Transform::identity()
 {
 	m_4x4 = Ogre::Matrix4::IDENTITY;
 };
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void Transform::printMatrix()
+{
+	for ( int i = 0; i<4; i++ )
+	{
+		for ( int j = 0; j<4; j++ )
+		{
+			print("%f ", m_4x4[i][j]);
+		}
+		println("");
+	}
+};
 
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void Transform::applyMatrix( float m00, float m01, float m02, float m03,
+														 float m10, float m11, float m12, float m13,
+														 float m20, float m21, float m22, float m23,
+														 float m30, float m31, float m32, float m33 )
+{
+	Ogre::Matrix4 tMat = Ogre::Matrix4( m00, m01, m02, m03,
+																			m10, m11, m12, m13,
+																			m20, m21, m22, m23,
+																			m30, m31, m32, m33);
+};
 } // namespace Graphics

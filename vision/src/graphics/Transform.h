@@ -71,8 +71,12 @@ namespace Graphics
 
 		// Other
 		Vector applyTransform( Vector input );
-		void	identity();
-
+		void	 identity();
+		void	 printMatrix();
+		void   applyMatrix( float m00, float m01, float m02, float m03,
+												float m10, float m11, float m12, float m13,
+												float m20, float m21, float m22, float m23,
+												float m30, float m31, float m32, float m33 );
 	private:
 		// The transform data is stored here
 		Ogre::Matrix4     m_4x4;
