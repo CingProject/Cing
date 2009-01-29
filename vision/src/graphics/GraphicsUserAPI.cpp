@@ -748,6 +748,17 @@ void popMatrix()
 	if ( GraphicsManager::getSingleton().m_transforms.size() > 0 )
 		GraphicsManager::getSingleton().m_transforms.pop();
 }
+
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void resetMatrix()
+{	
+	GraphicsManager::getSingleton().m_transforms.top().identity();
+}
+
 /**
  * @brief 
  *

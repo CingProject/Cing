@@ -71,14 +71,22 @@ void Transform::end()
 	m_bIsValid = false;
 }
 
-// Translate
+/**
+ * @brief 
+ *
+ * @param mode
+ */
 void Transform::translate(  float x, float y, float z )
 {
  	// Apply transform
 	m_4x4 = m_4x4.concatenate( Ogre::Matrix4::getTrans(x,y,z) );
 }
 
-//Rotate
+/**
+ * @brief 
+ *
+ * @param mode
+ */
 void Transform::rotate(  float x, float y, float z )
 {
 	// Make temporal transform
@@ -90,45 +98,68 @@ void Transform::rotate(  float x, float y, float z )
 	m_4x4 = m_4x4.concatenate(tMat);
 }
 
-//Scale
+/**
+ * @brief 
+ *
+ * @param mode
+ */
 void Transform::scale(  float x, float y, float z )
 {
 	// Apply transform
 	m_4x4 = m_4x4.concatenate(Ogre::Matrix4::getScale( x, y, z ));
 }
 
-
+/**
+ * @brief Returns the translation Vector
+ *
+ * @param mode
+ */
 Vector Transform::getPosition	() 
 {
 	return Vector( m_4x4[0][3], m_4x4[1][3], m_4x4[2][3] );
 }
-
+/**
+ * @brief Returns the rotation Vector
+ *
+ * @param mode
+ */
 Vector Transform::getRotation	()
 {
 	Ogre::Quaternion rot = m_4x4.extractQuaternion();
-	return Vector(	rot.getYaw().valueRadians(),
-		rot.getPitch().valueRadians(),
-		rot.getRoll().valueRadians() );
+	return Vector(	rot.getYaw().valueRadians(), rot.getPitch().valueRadians(),	rot.getRoll().valueRadians() );
 }
-
+/**
+ * @brief Returns the scale Vector
+ *
+ * @param mode
+ */
 Vector Transform::getScale()
 {
-	Vector tempV;
-	tempV = Vector( m_4x4[0][0], m_4x4[0][1], m_4x4[0][2] );
-	float xScale = tempV.length();
-
-	tempV = Vector( m_4x4[1][0], m_4x4[1][1], m_4x4[1][2] );
-	float yScale = tempV.length();
-
-	tempV = Vector( m_4x4[2][0], m_4x4[2][1], m_4x4[2][2] );
-	float zScale = tempV.length();
-
-	return Vector(xScale, yScale, zScale);
+	Vector  tempV;
+	float xS, yS, zS = 0.0f;
+	tempV = Vector( m_4x4[0][0], m_4x4[0][1], m_4x4[0][2] );	 xS = tempV.length();
+	tempV = Vector( m_4x4[1][0], m_4x4[1][1], m_4x4[1][2] );	 yS = tempV.length();
+	tempV = Vector( m_4x4[2][0], m_4x4[2][1], m_4x4[2][2] );	 zS = tempV.length();
+	return Vector(xS, yS, zS);
 }
-
+/**
+ * @brief Apply this transform to an input Vector and returns the transformed Vector
+ *				TODO: Optimize.
+ *
+ * @param mode
+ */
 Vector Transform::applyTransform( Vector input )
 {
 	return m_4x4*input;
+};
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+void Transform::identity()
+{
+	m_4x4 = Ogre::Matrix4::IDENTITY;
 };
 
 } // namespace Graphics

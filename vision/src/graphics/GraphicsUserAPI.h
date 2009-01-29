@@ -150,6 +150,7 @@ void  updatePixels();
 // Transfomation
 void pushMatrix();
 void popMatrix();
+void resetMatrix();
 
 void translate( float x, float y );
 void translate( float x, float y, float z );

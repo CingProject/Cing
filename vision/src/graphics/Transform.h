@@ -71,6 +71,7 @@ namespace Graphics
 
 		// Other
 		Vector applyTransform( Vector input );
+		void	identity();
 
 	private:
 		// The transform data is stored here
