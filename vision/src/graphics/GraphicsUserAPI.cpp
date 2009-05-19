@@ -400,7 +400,7 @@ void line( float x1, float y1, float z1, float x2, float y2, float z2)
 //------------------------------------------------------------------------------------
 void beginShape()
 {
-	Graphics::ShapeManager::getSingleton().beginShape(GraphicsType::TRIANGLE_STRIP);
+	Graphics::ShapeManager::getSingleton().beginShape(TRIANGLE_STRIP);
 };
 
 //------------------------------------------------------------------------------------

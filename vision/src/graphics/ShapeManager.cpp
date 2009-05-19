@@ -50,7 +50,7 @@ ShapeManager::~ShapeManager()
 bool ShapeManager::init()
 {
 	// Init line data
-	m_lines = Shape(GraphicsType::LINES);
+	m_lines = Shape(LINES);
 
 	// Init manual objects to allow 3d simple primitives drawing (lines...)
 	int estimatedVertexCount = 10000;
@@ -82,7 +82,7 @@ void ShapeManager::update()
 	// TODO: Si hay que dibujar el mismo número de vértices que en el fotograma anterior,
 	// usar beginUpdate() en lugar de begin()
 	// Draw shapes
-	for (int i = 0; i < m_shapes.size() ; i++)
+	for (unsigned int i = 0; i < m_shapes.size() ; i++)
 	{
 		Ogre::RenderOperation renderOp;
 		switch(	m_shapes[i].m_renderOp )
@@ -221,7 +221,7 @@ void ShapeManager::line(  float x1, float y1, float z1, float x2, float y2, floa
 void ShapeManager::beginShape()
 {
 	// Add a new shape 
-	Shape newShape = Shape( Style(GraphicsManager::getSingleton().getFillColor(), GraphicsManager::getSingleton().getStrokeColor(), GraphicsManager::getSingleton().getStrokeWeight()), GraphicsType::TRIANGLE_FAN );
+	Shape newShape = Shape( Style(GraphicsManager::getSingleton().getFillColor(), GraphicsManager::getSingleton().getStrokeColor(), GraphicsManager::getSingleton().getStrokeWeight()), TRIANGLE_FAN );
 	
 	// Check if the user select fill and/or stroke
 	newShape.m_isFill   = GraphicsManager::getSingleton().getFill();

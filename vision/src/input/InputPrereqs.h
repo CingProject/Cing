@@ -29,7 +29,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // General includes
 #include <cstdio>
-
+    
 /// Contains all communication with input devices
 namespace Input
 {

@@ -263,7 +263,10 @@ void MediaPlayerVLC::update()
  **/
 bool MediaPlayerVLC::isPlaying()
 {
-  return libvlc_media_player_is_playing( m_mediaPlayer, &m_vlcException );
+	bool result = false;
+	if ( libvlc_media_player_is_playing( m_mediaPlayer, &m_vlcException ) == 1 )
+		result = true;
+  return result;
 }
 
 
