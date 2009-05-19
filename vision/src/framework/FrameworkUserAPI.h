@@ -24,9 +24,15 @@
 
 #include "FrameworkPrereqs.h"
 #include "Application.h"
+#include "graphics/GraphicsTypes.h"
+
+using namespace Graphics;
 
 namespace Framework
 {
+// Application setup
+void fullscreen ();
+void size       ( int width, int height, GraphicMode mode = OPENGL );
 
 // Application control
 void exit();

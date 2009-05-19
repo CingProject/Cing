@@ -26,6 +26,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Framework
 #include "framework/UserAppGlobals.h"
+#include "framework/Application.h"
+
 
 // Common
 #include "common/Exception.h"
@@ -83,6 +85,9 @@ void Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
   // Check if the class is already initialized
   if ( isValid() )
     return;
+
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
 
   // Create a node in the scene for the object
   Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();

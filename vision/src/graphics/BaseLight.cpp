@@ -31,6 +31,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Common
 #include "common/Exception.h"
 
+// Framework
+#include "framework/Application.h"
+
 namespace Graphics
 {
 
@@ -78,6 +81,9 @@ bool BaseLight::init( float r, float g, float b, float x, float y, float z )
   // Check if the class is already initialized
   if ( isValid() )
     return true;
+
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
 
   // Get the scene manager
   Ogre::SceneManager& scenaManager = GraphicsManager::getSingleton().getSceneManager();

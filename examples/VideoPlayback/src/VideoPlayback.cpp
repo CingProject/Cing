@@ -6,6 +6,8 @@ MediaPlayerVLC mediaPlayer, mediaPlayer2;
 
 void setup()
 {
+  size ( 800, 600 );
+
   // Local file
   mediaPlayer.load( "test.avi" );
   mediaPlayer.play();
@@ -18,15 +20,18 @@ void draw()
 {
   // Draw video 1 (local)
   mediaPlayer.update( );
-  mediaPlayer.getImage().draw2d( 0, 0 );
+  mediaPlayer.getImage().draw2d( mouseX, mouseY );
 
   // When video 1 finishes -> start video 2 (online)
   if ( mediaPlayer.isPlaying() == false )
     mediaPlayer2.loop();
 
   // Draw video 2 (online)
-  mediaPlayer2.update();
-  mediaPlayer2.getImage().draw2d( 0,  mediaPlayer2.getHeight() );
+  if ( mediaPlayer2.isPlaying() )
+  {
+    mediaPlayer2.update();
+    mediaPlayer2.getImage().draw2d( 0,  mediaPlayer2.getHeight() );
+  }
 }
 
 void end()

@@ -40,10 +40,10 @@ namespace Graphics
 	enum GraphicsType
 	{
 		// Image Formats
-		RGB				= Ogre::PF_R8G8B8,		///< Red, Green and Blue
+		RGB				  = Ogre::PF_R8G8B8,		///< Red, Green and Blue
 		COLOR 			= Ogre::PF_R8G8B8,	///< Same as RGB
-		RGBA			= Ogre::PF_R8G8B8A8,	///< Red, Green, Blue and Alpha
-		ARGB			= Ogre::PF_A8R8G8B8,	///< Alpha, Red, Green, and Blue
+		RGBA			  = Ogre::PF_R8G8B8A8,	///< Red, Green, Blue and Alpha
+		ARGB			  = Ogre::PF_A8R8G8B8,	///< Alpha, Red, Green, and Blue
 		GRAYSCALE		= Ogre::PF_BYTE_L,	///< Gray scale
 		
 		// Color Modes
@@ -85,6 +85,14 @@ namespace Graphics
 	//	CENTER,
 	//	RADIUS
 	//};
+
+  // Types of Graphic modes
+  enum GraphicMode
+  {
+    OPENGL, ///< Open GL used to render
+    DIRECTX ///< DirectX used to render (Only available in windows)
+  };
+
 
 	/// Lights
 	typedef Ogre::Light       		Light;

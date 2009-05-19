@@ -80,32 +80,21 @@ bool Application::initApp()
   // Init random number generator seed
   //TODO: setRandomSeed( timeGetTime() )
 
-	// Init the resource manager
-	Common::ResourceManager::getSingleton().init();
+  // First, init the subsystems needed by any user call (the rest will be init in the initSubSystems method
+  // called when the user calls the size function
 
-	// Init the log manager
-	// Note: If the log manager is initalized before the Resource Manager, Ogre.log file won't be created
-	Common::LogManager::getSingleton().init();
+  // Init the resource manager
+  Common::ResourceManager::getSingleton().init();
 
-  // Init graphics manager
-  Graphics::GraphicsManager::getSingleton().init();
-
-	// Init physics manager
-	Physics::PhysicsManager::getSingleton().init( Graphics::GraphicsManager::getSingleton().getSceneManager() );
-
-  // Init input manager
-  Input::InputManager::getSingleton().init();
-
-	// Register the application as listener for mouse and keyboard	
-	Input::InputManager::getSingleton().getMouse().addListener( this );
-	Input::InputManager::getSingleton().getKeyboard().addListener( this );
-
-	// Init GUI Manager
-	GUI::GUIManagerCEGUI::getSingleton().init( Graphics::GraphicsManager::getSingleton().getMainWindow().getOgreWindow(), 
-																						 &Graphics::GraphicsManager::getSingleton().getSceneManager() );
+  // Init the log manager
+  // Note: If the log manager is initalized before the Resource Manager, Ogre.log file won't be created
+  Common::LogManager::getSingleton().init();
 
   // Init user application
   setup();
+
+  // Check subsystems init ok
+  checkSubsystemsInit();
 
 	// Reset timer
 	m_timer.reset();	
@@ -113,9 +102,6 @@ bool Application::initApp()
 
 	// Set frameCount to zero
 	m_frameCount = 0;
-
-	// The class is now initialized
-	m_bIsValid = true;
 	
 	return true;
 
@@ -226,6 +212,45 @@ void Application::drawApp()
 			//}
 		}
   }
+}
+
+/**
+ * @brief Initializes the subsystems needed by the application
+ */
+void Application::initSubSystems()
+{
+  // The class is now initialized (it is called now to avoid recursion lock if this function is called from
+  // any of the subsystems initialized below).
+  m_bIsValid = true;
+
+  // Init graphics manager
+  Graphics::GraphicsManager::getSingleton().init();
+
+  // Init physics manager
+  Physics::PhysicsManager::getSingleton().init( Graphics::GraphicsManager::getSingleton().getSceneManager() );
+
+  // Init input manager
+  Input::InputManager::getSingleton().init();
+
+  // Register the application as listener for mouse and keyboard	
+  Input::InputManager::getSingleton().getMouse().addListener( this );
+  Input::InputManager::getSingleton().getKeyboard().addListener( this );
+
+  // Init GUI Manager
+  GUI::GUIManagerCEGUI::getSingleton().init( Graphics::GraphicsManager::getSingleton().getMainWindow().getOgreWindow(), 
+    &Graphics::GraphicsManager::getSingleton().getSceneManager() );
+}
+
+/**
+ * @brief Checks if the necessary subsystems for the application to run are correctly init
+ * If they are not -> it inits them.
+ */
+void Application::checkSubsystemsInit()
+{
+  if ( isValid() )
+    return;
+
+  initSubSystems();
 }
 
 /**

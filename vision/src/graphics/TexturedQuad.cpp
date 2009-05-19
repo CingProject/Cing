@@ -38,6 +38,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Framework
 #include "framework/UserAppGlobals.h"
+#include "framework/Application.h"
 
 // Common
 #include "common/Exception.h"
@@ -93,6 +94,9 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
   // Check if the class is already initialized
   if ( isValid() )
     return true;
+
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
 
 	// Get power of 2 texture size
 	m_textWidthP2 = nextPowerOf2( textureWidth );

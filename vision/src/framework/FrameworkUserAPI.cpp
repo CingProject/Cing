@@ -21,9 +21,35 @@
 
 #include "FrameworkUserAPI.h"
 #include "UserAppGlobals.h"
+#include "graphics/GraphicsManager.h"
 
 namespace Framework
 {
+
+  /**
+   * @brief Makes the application run in full screen mode
+   */
+  void fullscreen()
+  {
+    Graphics::GraphicsManager::getSingleton().fullscreen();
+  }
+
+  /**
+   * @brief Configures the application window size and render system used
+   * @note It should be called first to any other graphics related function
+   * @param windowWidth   width of the application's window
+   * @param windowHeight  height of the application's window
+   * @param mode          specifies the render driver to use. Default OPENGL
+   */
+  void size( int width, int height, GraphicMode mode )
+  {
+    // Set up window and render system configuration
+    Graphics::GraphicsManager::getSingleton().setup( width, height, mode );
+
+    // Init application subsystems (necessary for the user to load any graphic resource)
+    Application::getSingleton().initSubSystems();
+  }
+
 
 	/**
 	 * @internal 

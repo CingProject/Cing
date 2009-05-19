@@ -25,6 +25,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Ogre
 #include "externLibs/Ogre3d/include/OgreSceneManager.h"
 
+// Framework
+#include "framework/Application.h"
+
 namespace Graphics
 {
 
@@ -35,6 +38,9 @@ namespace Graphics
  */
 void ambientLight( float gray )
 {
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(gray , gray , gray).normalized() );
 }
 
@@ -47,6 +53,9 @@ void ambientLight( float gray )
  */
 void ambientLight( float red, float green, float blue )
 {
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(red , green , blue).normalized() );
 }
 

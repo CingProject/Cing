@@ -55,6 +55,10 @@ public:
 	void  endApp    ();
 	void  drawApp   ();
 
+  // Initialize application required subsystems
+  void  initSubSystems      ();
+  void  checkSubsystemsInit ();
+
 	// Query methods
 	bool  isValid() const { return m_bIsValid; }
 	

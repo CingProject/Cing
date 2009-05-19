@@ -87,6 +87,10 @@ public:
 	void                      end                       ();
 	void                      draw                      ();
 
+  // App window setup
+  void                      setup                     ( int windowWidth, int windowHeight, GraphicMode mode = OPENGL );
+  void                      fullscreen                () { m_fullscreen = true; }
+
 	// Query methods
 	bool                      isValid                   () const { return m_bIsValid; }
 	const Window&             getMainWindow             () const { return m_mainWindow; }
@@ -189,6 +193,13 @@ private:
 	Window											m_mainWindow;     ///< Main application window
 	Camera3D										m_activeCamera;   ///< Active camera
 	
+  // Graphics system setup 
+  int                         m_defaultWindowWidth;
+  int                         m_defaultWindowHeight;
+  GraphicMode                 m_defaultGraphicMode;
+  bool                        m_setupCalled;        ///< True when the setup method has been already called
+  bool                        m_fullscreen;         ///< If true, the applcation will run in full screen mode
+
 	// Misc
 	DebugOverlay								m_debugOverlay;   ///< Debug overlay used to show debug information
 	Font												m_defaultFont;    ///< Default system font

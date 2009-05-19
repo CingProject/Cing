@@ -9,6 +9,7 @@ Image		img; // image to load from disk and draw
 
 void setup()
 {
+  size( 800, 600 );
 	img.load( "BeachStones.jpg" );
 }
 

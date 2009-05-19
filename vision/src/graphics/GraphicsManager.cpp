@@ -73,6 +73,11 @@ GraphicsManager::GraphicsManager():
 	m_smooth( false ),
 	m_rectMode( CORNER ),
 	m_ellipseMode( CENTER ),
+  m_setupCalled( false ),
+  m_defaultWindowWidth( 640 ),
+  m_defaultWindowHeight( 480 ),
+  m_defaultGraphicMode( OPENGL ),
+  m_fullscreen( false ),
 	m_saveFrame(false)
 {
 }
@@ -103,8 +108,12 @@ bool GraphicsManager::init()
 	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
 
   // Show config dialog
-  if ( /*!ogreRoot.restoreConfig() &&*/ !ogreRoot.showConfigDialog() )
-    THROW_EXCEPTION( "User canceled the config dialog!" );
+  //if ( /*!ogreRoot.restoreConfig() &&*/ !ogreRoot.showConfigDialog() )
+  //  return false;
+  //  //THROW_EXCEPTION( "User canceled the config dialog!" );
+
+  // Setup default values if user didn't call setup
+  setup( m_defaultWindowWidth, m_defaultWindowHeight );
 
   // Init rendering engine and create main window
   Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Vision Library Demo" );       
@@ -322,6 +331,90 @@ void GraphicsManager::draw()
 
 
 }
+
+/**
+ * @brief Configures the render system and window for the application.
+ * @note It should be called first to any other graphics related function
+ * @param windowWidth   width of the application's window
+ * @param windowHeight  height of the application's window
+ * @param mode          specifies the render driver to use. Default OPENGL
+ */
+void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode )
+{
+  // Check if setup has already been called
+  if ( m_setupCalled )
+    return;
+
+  // Get ogre root to configure it
+  Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
+
+  // Name of the chosen render system
+  std::string rendererName = "NO_NAME";
+  if ( mode == OPENGL )
+    rendererName = "OpenGL Rendering Subsystem";
+  else if ( mode == DIRECTX )
+    rendererName = "Direct3D9 Rendering Subsystem";
+  else
+    THROW_EXCEPTION( "Critital Error: Graphics Mode in size() call does not exist" );
+    
+  // Get list of render systems
+  Ogre::RenderSystemList  *availableRenderers = ogreRoot.getAvailableRenderers();
+  Ogre::RenderSystem      *selectedRenderSystem = NULL;
+  if ( !availableRenderers || ( availableRenderers->size() == 0 ) )
+    THROW_EXCEPTION( "Critical Error: No available render systems. Please re-install the application" );
+
+  // Select the render system
+  for ( size_t i = 0; i < availableRenderers->size(); ++i )
+  {
+    if ( availableRenderers->at( i )->getName().compare( rendererName ) == 0 )
+    {
+      selectedRenderSystem = availableRenderers->at( i );
+      break;
+    }
+  }
+
+  // Set render system to ogre
+  ogreRoot.setRenderSystem( selectedRenderSystem );
+
+  // Configure rest of the settings depending on the rendering system selected
+  if ( mode == OPENGL )
+  {
+    // Generate the video mode string
+    std::ostringstream videoMode;
+    videoMode << windowWidth << " x " << windowHeight;;
+
+    // Set render system settings
+    selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );  
+    if ( !m_fullscreen )
+      selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
+
+    // Set render system settings specified by user
+    // TODO: Make all options available to user
+    selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
+    selectedRenderSystem->setConfigOption( "VSync","Yes" );
+
+  }
+  else if ( mode == DIRECTX )
+  {
+    // Generate the video mode string
+    std::ostringstream videoMode;
+    videoMode << windowWidth << " x " << windowHeight << " @ 32-bit colour";
+
+    // Set render system settings specified by user
+    selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );  
+    if ( !m_fullscreen )
+      selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
+
+    // Rest options with default values
+    selectedRenderSystem->setConfigOption("VSync","Yes");
+
+  }
+
+
+  // Set up done
+  m_setupCalled = true;
+}
+
 /**
  * @internal
  * @brief   Reset style stack
@@ -542,6 +635,7 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 {
   if ( !isValid() )
     return;
+
 	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
 
 	cvSet( &m_canvas->getCVImage(), cvScalar(color.b,color.g,color.r) );

@@ -31,6 +31,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/MathUtils.h"
 #include "common/CommonConstants.h"
 
+// Framework
+#include "framework/Application.h"
+
+
 namespace Graphics
 {
 
@@ -115,6 +119,9 @@ void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
   if ( isValid() )
    THROW_EXCEPTION( "Image already initialized" );
 
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	// Create the empty IplImage image
 	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 	m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
@@ -137,6 +144,9 @@ void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
  */
 void Image::init( const Image& img )
 {
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	this->operator=( img );
 
 	m_bIsValid = true;
@@ -154,6 +164,10 @@ void Image::init( const Image& img )
  */
 void Image::load( const std::string& name  )
 {
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
+
 	// Load file from disk
 	m_image.load( name, Common::ResourceManager::userResourcesGroupName );
 	
@@ -522,6 +536,10 @@ void Image::operator=( const Image& other )
 	// Check the other image is valid
 	if ( !other.isValid() )
 		THROW_EXCEPTION( "Trying to copy an invalid image" );
+
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 
 	// TODO: Check speed of cvCloneImage, maybe is faster to use memcpy?
 	// and solve a bug when the loaded image has different size.

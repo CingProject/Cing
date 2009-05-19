@@ -28,6 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Graphics
 {
 
+
 /**
  * @brief Set the background to a grayscale value, based on the current colorMode. 
  *

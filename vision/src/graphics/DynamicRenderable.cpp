@@ -27,6 +27,9 @@ Code from: http://www.ogre3d.org/wiki/index.php/DynamicLineDrawing
 #include "externLibs/Ogre3d/include/OgreCamera.h"
 #include "externLibs/Ogre3d/include/OgreHardwareBufferManager.h"
 
+// Framework
+#include "framework/Application.h"
+
 using namespace Ogre;
 namespace Graphics
 {
@@ -43,6 +46,9 @@ DynamicRenderable::~DynamicRenderable()
 void DynamicRenderable::initialize(RenderOperation::OperationType operationType,
 																	 bool useIndices)
 {
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	// Initialize render operation
 	mRenderOp.operationType = operationType;
 	mRenderOp.useIndexes = useIndices;

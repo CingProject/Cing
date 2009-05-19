@@ -23,6 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Framework
 #include "framework/UserAppGlobals.h"
+#include "framework/Application.h"
 
 // Ogre includes
 #include "externLibs/Ogre3d/include/OgreCamera.h"
@@ -76,6 +77,9 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
   // Check if the class is already initialized
   if ( isValid() )
     return true;
+
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
 
   // Check scene manager
   if ( !pOgreSceneManager )

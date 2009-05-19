@@ -22,6 +22,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "DebugOverlay.h"
 #include "Font.h"
 
+// Framework
+#include "framework/Application.h"
 
 // Ogre
 #include "externLibs/Ogre3d/include/OgreOverlayManager.h"
@@ -65,6 +67,9 @@ bool DebugOverlay::init()
   // Check if the class is already initialized
   if ( isValid() )
     return true;
+
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
 
   // Get the overlay manager
   Ogre::OverlayManager& overlayMgr = Ogre::OverlayManager::getSingleton();
