@@ -30,10 +30,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // General includes
 #include <cstdio>
 
-/// Contains all functionality related to video playback
-namespace Movies
+/// Contains all functionality related to media playback
+namespace Video
 {
-
+  class MediaPlayerVLC;
 }
 
 // Graphics

@@ -122,7 +122,7 @@ void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
 	// Create the texture quad (to draw image)
 	m_quad.init( m_cvImage->width, m_cvImage->height, format );
 
-	// Load image data to texture -> No neccesary as it is an empty image
+	// Load image data to texture -> No necessary as it is an empty image
 	// updateTexture();
 
 	// The class is now initialized
@@ -258,7 +258,7 @@ void Image::setData( char* imageData, int width, int height, GraphicsType format
  */
 int Image::getWidth() const
 {
-	return (int)m_cvImage->width;
+  return m_cvImage? (int)m_cvImage->width: 0;
 }
 
 /**
@@ -267,7 +267,7 @@ int Image::getWidth() const
  */
 int Image::getHeight() const
 {
-	return (int)m_cvImage->height;
+  return m_cvImage? (int)m_cvImage->height: 0;
 }
 
 /**

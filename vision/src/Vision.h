@@ -96,8 +96,8 @@
 #include "audio/SoundFMOD.h"
 #include "audio/AudioInputFMOD.h"
 
-// Movie
-#include "movies/OCVMovie.h"
+// Video
+#include "Video/MediaPlayerVLC.h"
 
 // GUI
 #include "gui/GUIUserAPI.h"
@@ -120,7 +120,7 @@ using namespace Common;
 using namespace Input;
 using namespace Physics;
 using namespace Audio;
-using namespace	Movies;
+using namespace	Video;
 using namespace GUI;
 using namespace Midi;
 
@@ -134,8 +134,8 @@ typedef	VICamera Capture;
 typedef SoundFMOD Sound;
 typedef AudioInputFMOD	AudioInput;
   
-// Movie
-typedef OCVMovie	Movie;
+// Video
+typedef MediaPlayerVLC MediaPlayer;
 
 // Common
 typedef  bool boolean;

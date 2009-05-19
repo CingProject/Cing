@@ -142,6 +142,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Saving Images", "examples\S
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VideoPlayback", "examples\VideoPlayback\VideoPlayback.vcproj", "{73FD1BCC-DCD3-4770-B4D2-1CB84F01AD16}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -264,6 +269,10 @@ Global
 		{69CBDCF7-1EC8-4B90-80C2-0419423440F8}.Debug|Win32.Build.0 = Debug|Win32
 		{69CBDCF7-1EC8-4B90-80C2-0419423440F8}.Release|Win32.ActiveCfg = Release|Win32
 		{69CBDCF7-1EC8-4B90-80C2-0419423440F8}.Release|Win32.Build.0 = Release|Win32
+		{73FD1BCC-DCD3-4770-B4D2-1CB84F01AD16}.Debug|Win32.ActiveCfg = Debug|Win32
+		{73FD1BCC-DCD3-4770-B4D2-1CB84F01AD16}.Debug|Win32.Build.0 = Debug|Win32
+		{73FD1BCC-DCD3-4770-B4D2-1CB84F01AD16}.Release|Win32.ActiveCfg = Release|Win32
+		{73FD1BCC-DCD3-4770-B4D2-1CB84F01AD16}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

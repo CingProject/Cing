@@ -21,7 +21,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #ifndef VIDEO_H_
 #define VIDEO_H_
 
-#include "MoviePrereqs.h"
+#include "VideoPrereqs.h"
 
 // Ogre
 #include "externLibs/Ogre3d/include/OgreTimer.h"
