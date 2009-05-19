@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\OgreBullet\Collisions\include;..\..\..\..\externLibs\Bullet\src;..\..\..\..\externLibs\Ogre3d\include;..\..\..\..\externLibs\OpenCV\cxcore\include;..\..\..\..\externLibs\OpenCV\cv\include;..\..\..\..\externLibs\OpenCV\cvaux\include;..\..\..\..\externLibs\OpenCV\highgui\include"
+				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\OgreBullet\Collisions\include;..\..\..\..\externLibs\Bullet\src;..\..\..\..\externLibs\Ogre3d\include;..\..\..\..\externLibs\OpenCV\cxcore\include;..\..\..\..\externLibs\OpenCV\cv\include;..\..\..\..\externLibs\OpenCV\cvaux\include;..\..\..\..\externLibs\OpenCV\highgui\include;..\..\..\..\externLibs\LibVLC\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;__WINDOWS_ASIO__;__LITTLE_ENDIAN__;__WINDOWS_MM__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,6 +63,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				OutputFile="$(OutDir)$(ProjectName)_d.lib"
+				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -105,7 +106,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\OgreBullet\Collisions\include;..\..\..\..\externLibs\Bullet\src;..\..\..\..\externLibs\Ogre3d\include;..\..\..\..\externLibs\OpenCV\cxcore\include;..\..\..\..\externLibs\OpenCV\cv\include;..\..\..\..\externLibs\OpenCV\cvaux\include;..\..\..\..\externLibs\OpenCV\highgui\include"
+				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\OgreBullet\Collisions\include;..\..\..\..\externLibs\Bullet\src;..\..\..\..\externLibs\Ogre3d\include;..\..\..\..\externLibs\OpenCV\cxcore\include;..\..\..\..\externLibs\OpenCV\cv\include;..\..\..\..\externLibs\OpenCV\cvaux\include;..\..\..\..\externLibs\OpenCV\highgui\include;..\..\..\..\externLibs\LibVLC\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -966,13 +967,13 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="Movies"
+				Name="Video"
 				>
 				<Filter
 					Name="Source Files"
 					>
 					<File
-						RelativePath="..\..\..\..\src\movies\OCVMovie.cpp"
+						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.cpp"
 						>
 					</File>
 				</Filter>
@@ -980,11 +981,11 @@
 					Name="Header Files"
 					>
 					<File
-						RelativePath="..\..\..\..\src\movies\MoviePrereqs.h"
+						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\movies\OCVMovie.h"
+						RelativePath="..\..\..\..\src\video\VideoPrereqs.h"
 						>
 					</File>
 				</Filter>
