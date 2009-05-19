@@ -57,11 +57,17 @@ public:
 	// Get / Set methods
   virtual void  setMaxBlobs   ( float maxBlobs );
 
+	void setCallback(void (*callback)){ m_callback = callback; };
+
 private:
 	// Attributes
 	TrackedBlobs      m_trackedBlobs;                ///< To store the found blobs
 	int								m_nTrackedBlobs;
+	
+	void*							m_callback;
 	bool							m_bIsValid;
+
+
 };
 
 } // namespace ComputerVision

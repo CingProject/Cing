@@ -23,6 +23,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _String_H_
 
 #include <string>
+#include <iostream>
+#include <sstream>
+
 
 namespace Common
 {
@@ -44,7 +47,7 @@ public:
 	int					length	  () { return (int)size(); }
 	String			substring ( int beginIndex );
 	String			substring ( int beginIndex, int endIndex );
-	const char* toChar    () { return c_str(); }
+	const char*	toChar    () { return c_str(); }
 
 	// Compare
 	bool equals ( const std::string& str );
@@ -52,6 +55,14 @@ public:
 	// Modify string
 	void toLowerCases	();
 	void toUpperCases	();
+
+	// Static Members
+	static std::string intToString(int inputNumber)
+	{
+		std::stringstream s;
+		s << inputNumber;
+		return s.str();
+	}
 
 };
 

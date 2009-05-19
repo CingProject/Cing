@@ -71,6 +71,7 @@ private:
   OIS::InputManager*  m_pOISInputManager; ///< Pointer to the OIS input manager
 	bool                m_bIsValid;	        ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
+
 };
 
 

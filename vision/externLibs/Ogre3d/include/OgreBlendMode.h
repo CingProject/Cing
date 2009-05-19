@@ -215,8 +215,8 @@ namespace Ogre {
         SBT_TRANSPARENT_COLOUR,
         /// Add the texture values to the existing scene content
         SBT_ADD,
-		/// Multiply the 2 colours together
-		SBT_MODULATE,
+				/// Multiply the 2 colours together
+				SBT_MODULATE,
         /// The default blend mode where source replaces destination
         SBT_REPLACE
         // TODO : more

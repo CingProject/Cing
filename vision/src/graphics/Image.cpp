@@ -504,6 +504,12 @@ void Image::draw2d( float xPos, float yPos )
  */
 void Image::draw2d( float xPos, float yPos, float width, float height )
 {
+	// check if image needs to be mirrored
+	if (m_bVFlip)
+	{
+		cvFlip(m_cvImage, NULL, 0);
+	}
+
 	// check if texture needs to be updated
 	if (m_bUpdateTexture)
 	{
@@ -1363,8 +1369,8 @@ void Image::toGray()
 	m_nChannels = 1;
 
 	// Release current image
-	if ( m_cvImage )
-		cvReleaseImage( &m_cvImage );
+	//if ( m_cvImage )
+	cvReleaseImage( &m_cvImage );
 
 	// Release and recreate the quad
 	m_quad.end();

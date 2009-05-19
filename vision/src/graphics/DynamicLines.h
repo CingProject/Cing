@@ -43,7 +43,7 @@ class DynamicLines : public DynamicRenderable
 
 public:
 	/// Constructor - see setOperationType() for description of argument.
-	DynamicLines(OperationType opType=Ogre::RenderOperation::OT_LINE_STRIP);
+	DynamicLines(OperationType opType=Ogre::RenderOperation::OT_POINT_LIST);
 	virtual ~DynamicLines();
 
 	/// Add a point to the point list

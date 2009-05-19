@@ -48,8 +48,9 @@ public:
 	void	end		();	
 
 	// Query  Methods
-	bool	isValid			() { return m_bIsValid; }
-	void	listDevices	();
+	bool							isValid			 () { return m_bIsValid; }
+	void							listDevices	 ();
+	videoInput&				getVideoInput() { return m_viCamera; }
 
 private:
 

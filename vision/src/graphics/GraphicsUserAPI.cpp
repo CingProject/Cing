@@ -21,6 +21,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "GraphicsUserAPI.h"
 #include "GraphicsManager.h"
+#include "ShapeManager.h"
 #include "Image.h"
 #include "Framework/UserAppGlobals.h"
 #include "common/CommonConstants.h"
@@ -232,7 +233,7 @@ void fill( int gray, int alpha )
  */
 void fill( int value1 , int value2, int value3 )
 {
-	fill( Color( value1, value2, value3, 1 ) );
+	fill( Color( value1, value2, value3, 255 ) );
 }
 
 /*
@@ -257,6 +258,7 @@ void fill( int value1 , int value2, int value3, int alpha )
  */
 void fill( const Color& color )
 {
+
 	GraphicsManager::getSingleton().setFillColor( color );
 }
 
@@ -392,8 +394,43 @@ void showFps( bool show )
  */
 void line( float x1, float y1, float z1, float x2, float y2, float z2)
 {
-	Graphics::GraphicsManager::getSingleton().addVertex( Vector(x1, y1, z1));
-	Graphics::GraphicsManager::getSingleton().addVertex( Vector(x2, y2, z2));
+	Graphics::ShapeManager::getSingleton().line( x1,  y1,  z1, x2,  y2,  z2 );
+};
+
+//------------------------------------------------------------------------------------
+void beginShape()
+{
+	Graphics::ShapeManager::getSingleton().beginShape(GraphicsType::TRIANGLE_STRIP);
+};
+
+//------------------------------------------------------------------------------------
+void beginShape(GraphicsType operation)
+{
+	Graphics::ShapeManager::getSingleton().beginShape(operation);
+};
+
+//------------------------------------------------------------------------------------
+void vertex( float x, float y)
+{
+	Graphics::ShapeManager::getSingleton().vertex(x,y);
+};
+
+//------------------------------------------------------------------------------------
+void vertex( float x, float y, float z)
+{
+	Graphics::ShapeManager::getSingleton().vertex(x,y,z);
+};
+
+//------------------------------------------------------------------------------------
+void endShape()
+{
+	Graphics::ShapeManager::getSingleton().endShape();
+};
+
+//------------------------------------------------------------------------------------
+void endShape(GraphicsType operation)
+{
+	Graphics::ShapeManager::getSingleton().endShape(operation);
 };
 
 

@@ -41,7 +41,7 @@ enum {
 DynamicLines::DynamicLines(OperationType opType)
 {
 	initialize(opType,false);
-	setMaterial("BaseWhiteNoLighting");
+	setMaterial("VertexColorMaterial");
 	mDirty = true;
 }
 

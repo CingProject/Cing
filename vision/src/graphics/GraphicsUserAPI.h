@@ -130,6 +130,13 @@ void popStyle ();
 
 void line( float x1, float y1, float z1, float x2, float y2, float z2);
 
+void beginShape	();
+void beginShape	(GraphicsType operation);
+void endShape		();
+void endShape		(GraphicsType operation);
+void vertex			(float x, float y);
+void vertex			(float x, float y, float z);
+
 // Render related functions
 void setRenderMode( RenderMode mode );
 

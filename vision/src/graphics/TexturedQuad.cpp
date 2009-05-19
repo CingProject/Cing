@@ -131,6 +131,27 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
   material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 	material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
 
+	/*
+
+	TODO: We need an easy way to change images transparency!!
+	//Modified by Jorge 25/feb/2009
+	material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setColourOperationEx(	Ogre::LBX_BLEND_MANUAL,
+																																												Ogre::LBS_TEXTURE,
+																																												Ogre::LBS_CURRENT,
+																																												Ogre::ColourValue(1,1,1,1.0),
+																																												Ogre::ColourValue(1,1,0,1.0),
+																																												0.1	); 
+
+	//material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
+  //material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_COLOUR );
+	//material->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(1,1,0.5,0.5));
+
+	
+  static_cast<MaterialPtr>( MaterialManager::getSingleton( ).getByName( "Overlay/TwoTextures" ) ) 
+	->getTechnique(0)->getPass(0)->getTextureUnitState("MixTexture")-> 
+	setColourOperationEx(LBX_BLEND_MANUAL, LBS_TEXTURE, LBS_CURRENT, 1,1, add); 
+  */
+
   // Create the manual object (is used to define geometry on the fly)
   Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
 	m_quad = sceneManager.createManualObject( m_ogreManualObjectName );
@@ -369,10 +390,10 @@ void TexturedQuad::draw( float x1, float y1, float z1,
 
 	// m_quad positions and texture coordinates
 	// TODO revisar esto...por qué hay q voltear las coordenadas uv?
-	m_quad->position( x1, y1, z1 );  m_quad->textureCoord( 0, -1 );
-	m_quad->position( x2, y2, z2 );  m_quad->textureCoord( 1, -1 );
-	m_quad->position( x3, y3, z3 );  m_quad->textureCoord( 1, 0 );
-	m_quad->position( x4, y4, z4 );  m_quad->textureCoord( 0, 0 );
+	m_quad->position( x1, y1, z1 );  m_quad->textureCoord( 0, 0 );
+	m_quad->position( x2, y2, z2 );  m_quad->textureCoord( 1, 0 );
+	m_quad->position( x3, y3, z3 );  m_quad->textureCoord( 1, 1 );
+	m_quad->position( x4, y4, z4 );  m_quad->textureCoord( 0, 1 );
 
 	// m_quad indexes (two triangles)
 	m_quad->triangle( 0, 2, 1 );

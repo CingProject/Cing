@@ -35,7 +35,8 @@ namespace ComputerVision
  * @brief Constructor. Initializes class attributes.
  */
 BlobTracker::BlobTracker():
-	m_bIsValid            ( false )
+	m_bIsValid            ( false ),
+	m_callback						( NULL)
 {
 	// Init TrackedBlobs
 	for (int i=0; i< (int) BlobFinder::DEFAULT_MAX_BLOBS;i++){
@@ -94,10 +95,8 @@ void BlobTracker::update( const Graphics::Image& inImage )
 			m_trackedBlobs[i].isActive = false;
 		};
 		//restamos energia y mantenemos la posicion anterior + TODO:(la velocidad!???)
-		if (m_trackedBlobs[i].isActive == true) {
+		if (m_trackedBlobs[i].isActive == true) 
 			m_trackedBlobs[i].energy -=0.5;			
-		};
-
 	};
 
 	float dD        = 5;   //distancia en pixels a la que se considera el mismo blob
@@ -135,12 +134,15 @@ void BlobTracker::update( const Graphics::Image& inImage )
 					m_trackedBlobs[j].isActive = true;
 					if (m_trackedBlobs[j].energy < maxEnergy) m_trackedBlobs[j].energy +=1.0;
 					// TODO: revisar
+					if (m_callback != NULL)
+						m_callback;
 					//callBack(j);					
 					break;
 				};
 			};
 		};
 	};
+	m_callback;
 };
 
 /**

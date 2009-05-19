@@ -60,8 +60,9 @@ public:
 	void	addGUIELement	( CEGUI::Window* guiElement );
 
 	// Query methods
-	bool										isValid       () const { return m_bIsValid; }
-	OutputDebugTextBoxCEGUI&	getDebugOutput()			 { return m_debugOutput; }
+	bool											isValid       () const	{ return m_bIsValid; }
+	OutputDebugTextBoxCEGUI&	getDebugOutput()				{ return m_debugOutput; }
+	CEGUI::Window*						getCEGUIWindow()				{ return m_mainSheet; };
 
 	// OIS Listeners interface
 	bool mouseMoved		( const OIS::MouseEvent &arg );

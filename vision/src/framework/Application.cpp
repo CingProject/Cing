@@ -197,19 +197,20 @@ void Application::drawApp()
 				pt::psleep( millisToSleep );
 		}
 
-
-			//m_accumulatedMicros = 0;
-			//if ( Globals::elapsedMillis < ( m_timePerFrameMillis + m_accumulatedMicros ) )
-			//{
-			//	unsigned long sleepMillis = (m_timePerFrameMillis + m_accumulatedMicros) - Globals::elapsedMillis;
-			//	//div_t result = div( sleepMicros, 1000 );
-			//	//unsigned long sleepMillis = result.quot;
-			//	//m_accumulatedMicros = 0; //result.rem;
-			//	if ( sleepMillis > 0 )
-			//	{
-			//		pt::psleep( sleepMillis );
-			//	}
-			//}
+			/*
+			m_accumulatedMicros = 0;
+			if ( Globals::elapsedMillis < ( m_timePerFrameMillis + m_accumulatedMicros ) )
+			{
+				unsigned long sleepMillis = (m_timePerFrameMillis + m_accumulatedMicros) - Globals::elapsedMillis;
+				//div_t result = div( sleepMicros, 1000 );
+				//unsigned long sleepMillis = result.quot;
+				//m_accumulatedMicros = 0; //result.rem;
+				if ( sleepMillis > 0 )
+				{
+					pt::psleep( sleepMillis );
+				}
+			}
+			*/
 		}
   }
 }

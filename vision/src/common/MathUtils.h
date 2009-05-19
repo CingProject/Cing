@@ -29,7 +29,6 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "framework/UserAppGlobals.h"
 
 #include <numeric>
-
 /**
  * @file
  * This file contains several mathematical util functions
@@ -344,24 +343,17 @@ inline float lerp( float value1, float value2, float amt )
 	return  value1 + amt * (value2 - value1);
 }
 
-/**
- * @brief Calculates a number between two numbers at a specific increment
- *				The resulting value will always be between 0.0 and 1.0
- *
- * @param  	int: value1
- * @param  	int: value2
- * @param  	float: amt   from 0 to 1
- */
-inline float lerp( int value1, int value2, float amt )
-{
-	return  value1 + amt * (value2 - value1);
-}
-
 /*
  * @brief Stores values and returns the average of all of them
  */
 struct Average
 {
+	Average()
+	{	
+		nValues = 3;
+		values.reserve( nValues ); 
+		index = 0;
+	}
 	/// @param nValues number of values to store
 	Average( int _nValues ) 
 	{ 

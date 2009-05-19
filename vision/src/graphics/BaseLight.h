@@ -68,9 +68,9 @@ public:
 	void	drawDebug					( bool draw );
 
 	// Query methods
-	bool						isValid     () const { return m_bIsValid; }
-	const Vector&		getPosition () const;
-
+	bool						  isValid       () const { return m_bIsValid; }
+	const Vector&		  getPosition () const;
+	Ogre::SceneNode*  getSceneNode() { return m_sceneNode;			}
 	
 
 private:

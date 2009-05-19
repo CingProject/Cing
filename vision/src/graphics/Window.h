@@ -73,6 +73,7 @@ public:
 	size_t                                getWindowHandle       () const;
 	const Ogre::RenderTarget::FrameStats& getFrameStats         () const { return *m_stats; }
 	Ogre::RenderWindow*										getOgreWindow					() { return m_pOgreWindow; }
+	const Ogre::ColourValue&							getBackgroundColor		();
 
 	// Various
 	void                                  attachCameraToWindow  ( Camera3D& camera );

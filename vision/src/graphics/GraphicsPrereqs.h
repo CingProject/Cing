@@ -43,6 +43,9 @@ namespace Graphics
 	class ImageResourceManager;
 	class Image;
 	class TexturedQuad;
+	class Style;
+	class ShapeManager;
+	class Shape;
 }
 
 // Ogre Forward declarations

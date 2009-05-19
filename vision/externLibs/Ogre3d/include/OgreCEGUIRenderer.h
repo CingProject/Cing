@@ -29,13 +29,20 @@
 #ifndef _OgreCEGUIRenderer_h_
 #define _OgreCEGUIRenderer_h_
 
-#include <CEGUI/CEGUIBase.h>
-#include <CEGUI/CEGUIRenderer.h>
-#include <CEGUI/CEGUITexture.h>
+//#include <CEGUI/CEGUIBase.h>
+//#include <CEGUI/CEGUIRenderer.h>
+//#include <CEGUI/CEGUITexture.h>
+#include <externLibs/Ogre3d/include/cegui/CEGUIBase.h>
+#include <externLibs/Ogre3d/include/cegui/CEGUIRenderer.h>
+#include <externLibs/Ogre3d/include/cegui/CEGUITexture.h>
 
-#include <OgreRenderQueueListener.h>
-#include <OgreSceneManagerEnumerator.h>
-#include <OgreTextureUnitState.h>
+//#include <OgreRenderQueueListener.h>
+//#include <OgreSceneManagerEnumerator.h>
+//#include <OgreTextureUnitState.h>
+#include "OgreRenderQueueListener.h"
+#include "OgreSceneManagerEnumerator.h"
+#include "OgreTextureUnitState.h"
+
 
 #if (OGRE_PLATFORM == OGRE_PLATFORM_WIN32) && !defined(OGRE_STATIC_LIB)
 #   ifdef OGRE_GUIRENDERER_EXPORTS

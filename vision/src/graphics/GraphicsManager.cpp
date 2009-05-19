@@ -25,6 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "ImageResourceManager.h"
 #include "TexturedQuad.h"
 #include "Image.h"
+#include "ShapeManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -65,8 +66,6 @@ GraphicsManager::GraphicsManager():
   m_bIsValid    ( false ),
 	m_showFps			( false ),
   m_pSceneManager( NULL ),
-	m_lines( NULL),
-	m_linesNode( NULL),
 	m_canvas( NULL ),
 	m_fill( true ),
 	m_stroke( true ),
@@ -129,7 +128,7 @@ bool GraphicsManager::init()
 
   // Create the scene manager
   m_pSceneManager = ogreRoot.createSceneManager( Ogre::ST_GENERIC );
-  
+
   // PreInit GUI Manager (QuickGUI requirements)
   //GUI::GUIManager::getSingleton().preInit();
 
@@ -138,6 +137,9 @@ bool GraphicsManager::init()
 
 	// Init ImageResourceManager 
 	ImageResourceManager::getSingleton().init();
+
+	// Init ShapeManager
+	ShapeManager::getSingleton().init();
 
   // Init the main camera
    m_activeCamera.init( m_pSceneManager );
@@ -171,20 +173,11 @@ bool GraphicsManager::init()
 	Globals::ogreSceneManager	= m_pSceneManager;
 	Globals::ogreCamera				= m_activeCamera.getOgreCamera();
 
-	// Init objects to allow 3d simple primitives drawing (lines...)
-	m_lines     = new DynamicLines(Ogre::RenderOperation::OT_LINE_LIST);
-	m_linesNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode("Graphics::Lines");
-	m_linesNode->attachObject(m_lines);
-
-	m_lines->addPoint(0,0,0);
-	m_lines->update();
-	m_linesPoints.push_back( Ogre::Vector3(0,0,0));
-
 	// Init 2dCanvas
 	m_canvas = new Image(Globals::width, Globals::height, RGB);
 
 	// Init style queue
-	m_styles.push_front( Style() );
+	m_styles.push_front( Style(Color(255,255,255), Color(0,0,0), 1) );
 
 	// Init transform stack
 	m_transforms.push( Transform() );
@@ -205,19 +198,6 @@ bool GraphicsManager::init()
 
 	return true;
 }
-
-
-/**
-* @internal 
-* @brief Add a new vertex (for line drawing)
-*
-* @param Vector
-*/
-void GraphicsManager::addVertex( Common::Vector newPos )
-{
-	m_linesPoints.push_back( (Ogre::Vector3) newPos);
-}
-
 
 /**
  * @internal
@@ -244,9 +224,8 @@ void GraphicsManager::end()
 	// Release image resource manager
 	ImageResourceManager::getSingleton().end();
 
-	// Release 3d lines...
-	m_lines     = NULL;
-	m_linesNode = NULL;
+	// Release the Shape Manager
+	ShapeManager::getSingleton().end();
 
 	// Release 2dCanvas...
   m_canvas->end();
@@ -263,28 +242,14 @@ void GraphicsManager::end()
 void GraphicsManager::draw()
 {
 
-	// Draw 2d Canvas in the background
+	// Update the background image
 	m_canvas->drawBackground(	0,
 														0,
 														m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
 														m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
 
-	// Update lines
-	if (m_lines->getNumPoints()!= m_linesPoints.size())
-	{
-		m_lines->clear();
-		for (int i=0; i<(int)m_linesPoints.size(); i++) {
-			m_lines->addPoint(m_linesPoints[i]);
-		}
-	}else{
-		for (int i=0; i<(int)m_linesPoints.size(); i++) {
-			m_lines->setPoint(i,m_linesPoints[i]);
-		}
-	}
-	m_lines->update();
-
-	// Clear the line points buffer
-	m_linesPoints.clear();
+  // Update 3d primitive drawing	( shape, lines,...)
+	ShapeManager::getSingleton().update();
 
 	// Update default camera controller
 	m_defaultCamController.update();
@@ -294,7 +259,6 @@ void GraphicsManager::draw()
 
   // Update window
   m_mainWindow.update();
-
 
   // Get Frame stats
   const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
@@ -312,13 +276,12 @@ void GraphicsManager::draw()
 	else
 		m_defaultText.show( false );
 
-	// Render the viewport to texture and save to disk
+	// Render the viewport to texture and save to disk if required
 	if ( m_saveFrame )
 	{
 		m_RttTexture->getBuffer()->getRenderTarget()->update();
-		//m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToTimestampedFile( "../data/test", ".jpg" );
 		m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(Common::ResourceManager::userDataPath + m_frameName );
-		m_saveFrame =false;
+		m_saveFrame = false;
 	}
 
 	// Mark all drawable images as not visible
@@ -326,9 +289,8 @@ void GraphicsManager::draw()
 	for (; it != m_drawableImagesQueue.end(); ++it )
 		(*it)->setVisible( false );
 
-	// Reset matrix stacks
+	// Reset the "global" matrix stack
 	clearMatrixStack();
-
 
 }
 
@@ -422,11 +384,11 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 void GraphicsManager::clearStyleStack()
 {
 	m_styles.clear();
-	m_styles.push_front(Style());
+	m_styles.push_front(Style(Color(255,255,255), Color(0,0,0), 1));
 };
 /**
  * @internal
- * @brief   Reset matrix stack
+ * @brief   Reset matrix stack (Clear and add one identity transform)
  */
 void GraphicsManager::clearMatrixStack()
 {
@@ -514,7 +476,7 @@ void GraphicsManager::setFillColor( const Color& color )
 
 	// We are using the emissive color to fake the fill color with lighting activated
 	// TODO dejar esto bien
-	m_pSceneManager->setAmbientLight( m_styles.front().m_fillColor );
+	//m_pSceneManager->setAmbientLight( m_styles.front().m_fillColor );
 
 	m_fill = true;
 }

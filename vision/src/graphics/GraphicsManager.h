@@ -2,7 +2,7 @@
   This source file is part of the Vision project
   For the latest info, see http://www.playthemagic.com/vision
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -29,9 +29,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Font.h"
 #include "Text.h"
 #include "CameraController.h"
-
-#include "DynamicLines.h"
+#include "externLibs/Ogre3d/include/OgreManualObject.h"
 #include "Transform.h"
+#include "Style.h"
+#include "Shape.h"
 
 // OpenCv includes
 #include "externLibs/OpenCV/cxcore/include/cxtypes.h"
@@ -48,25 +49,6 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 namespace Graphics
 {
-
-	// TODO: Is it the correct place to allocate this structure?
-	struct Style 
-	{
-		// Constructors
-		Style() :  m_fillColor( Color( 255, 255, 255 ) ),
-							 m_strokeColor( Color( 0, 0, 0 ) ),
-							 m_strokeWeight( 1 )
-							 {};
-		Style( Color fillColor, Color strokeColor, int strokeWeight) : m_fillColor( fillColor ),
-																																	 m_strokeColor( strokeColor ),
-																																	 m_strokeWeight( strokeWeight )
-																																	 {};
-		// Styling properties
-		Color									m_fillColor;			  ///< Color used to fill shapes
-		Color									m_strokeColor;			///< Color used to draw shapes
-		int										m_strokeWeight;			///< Width of the stroke used for draw lines, points, and the border around shapes
-	};
-
 /**
  * @internal
  * Manages the communication with the Graphics engine (OGRE)
@@ -98,6 +80,13 @@ public:
 	Camera3D&									getActiveCamera           ()			 { return m_activeCamera; }
 	const Ogre::SceneManager& getSceneManager           () const { return *m_pSceneManager; }
 	Ogre::SceneManager&       getSceneManager           ()       { return *m_pSceneManager; }
+
+	// TODO: Experimental
+	void											setSceneManager           ( Ogre::SceneManager* sm )
+																											{ 
+																												m_pSceneManager =  sm;
+																											};
+
 	Ogre::SceneManager*       getSceneManagerPtr        ()       { return m_pSceneManager; }
 	CameraController&					getDefaultCameraController()			 { return m_defaultCamController; }	
 
@@ -111,9 +100,7 @@ public:
 
 	// Color related methods
 	void											setFillColor							(  const Color& color );
-
 	void											setStrokeColor						(  const Color& color );
-
 	const Color&							getFillColor						  () const { return 	m_styles.front().m_fillColor; }
 	const Color&							getStrokeColor					  () const { return 	m_styles.front().m_strokeColor; }
 
@@ -151,19 +138,10 @@ public:
 	void											addDrawableImage					( TexturedQuad* img );
 	void											removeDrawableImage				( TexturedQuad* img );
 
-  // Drawing 3d lines (Temp)
-	void addVertex( Common::Vector newPos );
-
 	// 2D Canvas
 	Graphics::Image*				m_canvas;
 
-	// Styles
-	std::deque < Style >     m_styles;     ///< Queue to store style properties ( fill color, stroke weight, etc.)
-																				 // TODO: change to stack
 	void clearStyleStack();
-
-	// 2D / 3D Transforms
-	std::stack < Transform > m_transforms; ///< Stack to store transform objects
 	void clearMatrixStack();
 
 	//Save frames
@@ -173,6 +151,9 @@ public:
 		m_frameName = name;
 	};
 
+	// 2D / 3D Transforms
+	std::stack < Transform >		m_transforms; ///< Stack to store transform objects
+	std::deque < Style >				m_styles;     ///< Deque to store style properties ( fill color, stroke weight, etc.)
 
 private:
 
@@ -185,11 +166,13 @@ private:
 
 	// Attributes
 
+	// Core
+	Ogre::SceneManager*					m_pSceneManager;  ///< Main scene manager
+	
 	// Camera controller
 	CameraController						m_defaultCamController;
 
-	// Core
-	Ogre::SceneManager*					m_pSceneManager;  ///< Main scene manager
+
 	Window											m_mainWindow;     ///< Main application window
 	Camera3D										m_activeCamera;   ///< Active camera
 	
@@ -204,11 +187,6 @@ private:
 	DebugOverlay								m_debugOverlay;   ///< Debug overlay used to show debug information
 	Font												m_defaultFont;    ///< Default system font
 	Text												m_defaultText;    ///< To print text to screen
-
-	// Simple primitives 3d related drawing ( lines, circles , ...)
-	DynamicLines*								m_lines;
-	Ogre::SceneNode*						m_linesNode;
-	std::vector <Ogre::Vector3> m_linesPoints;
 
 	// Styling properties
 	// TODO: Eliminates this. Change styles que to stack

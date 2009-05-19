@@ -39,6 +39,7 @@ void	println( const char* msg, ... );
 void	logNormalMsgsToDebugOutput( bool value );
 void	logErrorMsgsToDebugOutput	( bool value );
 
+
 } // namespace Common
 
 #endif // _CommonUserAPI_h_
