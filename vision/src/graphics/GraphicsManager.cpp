@@ -29,6 +29,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Framework
 #include "framework/UserAppGlobals.h"
+#include "framework/Application.h"
+
+
 
 // Common includes
 #include "common/Exception.h"
@@ -462,6 +465,9 @@ bool GraphicsManager::hasBumpMappingSupport() const
  */
 void GraphicsManager::setRenderMode( RenderMode mode )
 {
+  // Check application correctly initialized (could not be if the user didn't call size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	m_activeCamera.getOgreCamera()->setPolygonMode( (Ogre::PolygonMode) mode );
 }
 
@@ -472,6 +478,9 @@ void GraphicsManager::setRenderMode( RenderMode mode )
  */
 void GraphicsManager::setFillColor( const Color& color )
 {
+  // Check application correctly initialized (could not be if the user didn't call size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	m_styles.front().m_fillColor = color;
 
 	// We are using the emissive color to fake the fill color with lighting activated
@@ -488,6 +497,9 @@ void GraphicsManager::setFillColor( const Color& color )
  */
 void GraphicsManager::setStrokeColor( const Color& color )
 {
+  // Check application correctly initialized (could not be if the user didn't call size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	m_styles.front().m_strokeColor = color;
 
 	m_stroke = true;
@@ -500,6 +512,9 @@ void GraphicsManager::setStrokeColor( const Color& color )
  */
 void GraphicsManager::setStrokeWeight( int weight )
 {
+  // Check application correctly initialized (could not be if the user didn't call size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	m_styles.front().m_strokeWeight = weight;
 }
 
@@ -531,6 +546,9 @@ void GraphicsManager::showFps( bool show )
  */
 void GraphicsManager::useDefault3DCameraControl( bool useDefault )
 {
+  // Check application correctly initialized (could not be if the user didn't call size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
 	// Enable controller
 	if ( useDefault )
 		m_defaultCamController.init( m_activeCamera );
@@ -595,6 +613,9 @@ void GraphicsManager::setEllipseMode( int	mode )
  */
 void GraphicsManager::setBackgroundColor( const Color& color )
 {
+  // Check application correctly initialized (could not be if the user didn't call size function)
+  Framework::Application::getSingleton().checkSubsystemsInit();
+
   if ( !isValid() )
     return;
 

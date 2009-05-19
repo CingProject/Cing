@@ -5,8 +5,6 @@ CREATE_APPLICATION( "Vision Demo" );
 
 void setup()
 {
-
-	//size(200, 200);
 	smooth();
 	background(0);
 	noStroke();

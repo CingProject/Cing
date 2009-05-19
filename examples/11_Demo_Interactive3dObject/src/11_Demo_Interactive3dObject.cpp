@@ -38,7 +38,7 @@ void setup()
 	// Load 3d object of a head
 	head.init( "head.mesh", "Examples/BumpMapping/MultiLight" );
 	head.setPosition( width/2, height/2, -200 );
-	head.setOrientation( Vector::UNIT_Z, 180 );
+	//head.setOrientation( Vector::UNIT_Z, 180 );
 
 	// Init object that will be used to represent the position of the user -> no mesh and no material
 	user.init();
@@ -56,7 +56,7 @@ void setup()
 }
 
 void draw()
-{
+{return;
 	// Update the camera
 	camera.update();
 
