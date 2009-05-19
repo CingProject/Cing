@@ -9,7 +9,7 @@ vertex_program HLSL/OceanVS hlsl
 	{
 		param_named_auto worldViewProj_matrix worldviewproj_matrix
 		param_named_auto eyePosition camera_position_object_space
-		param_named scale float3 0.012 0.005 0.03
+		param_named scale float3 0.002 0.005 0.03
 		param_named_auto time_0_X time_0_x 100.0
 	}
 }
@@ -29,7 +29,7 @@ vertex_program GLSL/OceanVS glsl
 	default_params
 	{
 		param_named_auto eyePosition camera_position_object_space
-		param_named scale float3 0.012 0.005 0.03
+		param_named scale float3 1.2 1.2 1.2
 		param_named_auto time_0_X time_0_x 100.0
 	}
 }
@@ -283,11 +283,20 @@ vertex_program GLSL/Ocean2VS glsl
 	source Ocean2GLSL.vert
 
 }
-
-fragment_program GLSL/Ocean2FS glsl
+fragment_program GLSL/Ocean3FS glsl
 {
-	source Ocean2GLSL.frag
+	source Ocean3GLSL.frag
 }
+
+fragment_program GLSL/Ocean4VS glsl
+{
+	source Ocean2GLSL.vert
+}
+fragment_program GLSL/Ocean4FS glsl
+{
+	source Ocean4GLSL.frag
+}
+
 
 material Ocean2_HLSL_GLSL
 {
@@ -348,18 +357,18 @@ material Ocean2_HLSL_GLSL
 				param_named BumpScale float 0.2
 				param_named textureScale float2 25 26
 				param_named bumpSpeed float2 0.015 0.005
-				param_named waveFreq float 0.028
+				param_named waveFreq float 0.28
 				param_named waveAmp float 1.8
 			}
 
-			fragment_program_ref GLSL/Ocean2FS
+			fragment_program_ref GLSL/Ocean3FS
 			{
 				param_named deepColor float4 0 0.3 0.5 1.0
 				param_named shallowColor float4 0 1 1 1.0
 				param_named reflectionColor float4 0.95 1 1 1.0
 				param_named reflectionAmount float 1.0
 				param_named reflectionBlur float 0.0
-				param_named waterAmount float 0.3
+				param_named waterAmount float 0.7
 				param_named fresnelPower float 5.0
 				param_named fresnelBias float 0.328
 				param_named hdrMultiplier float 0.471

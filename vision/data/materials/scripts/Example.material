@@ -1,4 +1,4 @@
-
+﻿
 material Examples/EnvMappedRustySteel
 {
 	technique
@@ -1348,6 +1348,10 @@ material Examples/Rockwall
 			{
 				texture rockwall.tga
 			}
+			texture_unit
+      {
+        content_type shadow
+      }
 		}
 	}
 }
