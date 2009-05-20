@@ -21,6 +21,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "CommonUserAPI.h"
 #include "LogManager.h"
+#include "eString.h"
 
 #include <stdarg.h>
 #include <sstream>
@@ -95,6 +96,27 @@ void println( const char* msg, ... )
 	OutputDebugString( "\n" );
 #endif
 }
+
+/**
+ * @brief Prints a message on console
+ *
+ * @param message Message to print.
+ */
+void print( String &msg )
+{
+  print( msg.toChar() );
+}
+
+/**
+ * @brief Prints a message on console
+ *
+ * @param message Message to print.
+ */
+void println( String &msg )
+{
+  println( msg.toChar() );
+}
+
 
 /**
  * @brief Indicates whether the informative system messages should be output to the debug output

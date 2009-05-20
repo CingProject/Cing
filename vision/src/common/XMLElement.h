@@ -23,6 +23,7 @@
 #define _XMLElement_h_
 
 #include "CommonPrereqs.h"
+#include "eString.h"
 
 #include <string>
 
@@ -44,6 +45,7 @@ public:
 	// Constructor / Destructor
 	XMLElement	();
 	XMLElement	( const std::string& xmlFileName );
+  XMLElement	( TiXmlElement* root, TiXmlDocument* xmlDoc );
 	~XMLElement	();
 
 	// Init / Release / Update
@@ -54,14 +56,16 @@ public:
 	int						getChildCount	();
 	XMLElement		getChild			( int index );
 	XMLElement		getChild			( const std::string& path );
+  String        getContent    ();
+  String        getName       ();
 	bool					isValid				() { return m_bIsValid; }
 
 private:
 
 	// Attributes
 	TiXmlDocument*	m_xmlDoc;			///< Xml document
-	TiXmlElement*	m_rootElem;		///< Xml's root element
-	bool			m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	TiXmlElement*	  m_rootElem;		///< Xml's root element
+	bool			      m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

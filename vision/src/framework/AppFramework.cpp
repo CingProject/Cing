@@ -30,6 +30,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Common includes
 #include "common/Exception.h"
+#include "common/LogManager.h"
 
 
 namespace Framework
@@ -63,14 +64,14 @@ void RunApplication( const char* appName )
   {
     // TODO: pasar esto a formto propio
     #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-      MessageBox( NULL, e.getFullDescription().c_str(), "An exception has occurred!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
+      LOG_ERROR( "Internal Exception: %s", e.getFullDescription().c_str() );
     #else
       std::cerr << "An exception has occurred: " << e.getFullDescription();
     #endif
   }
   catch ( Common::Exception& e ) {
     #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-      MessageBox( NULL, e.getErrorMessage().c_str(), "An exception has occurred!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
+      LOG_ERROR( "Internal Exception: %s", e.getErrorMessage().c_str() );
     #else
       std::cerr << "An exception has occurred: " << e.getErrorMessage();
     #endif

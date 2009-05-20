@@ -35,6 +35,9 @@ namespace Common
 void	print( const char* msg, ... );
 void	println( const char* msg, ... );
 
+void	print( String &msg );
+void	println( String &msg );
+
 // System log level control
 void	logNormalMsgsToDebugOutput( bool value );
 void	logErrorMsgsToDebugOutput	( bool value );

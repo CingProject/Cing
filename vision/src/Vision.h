@@ -74,6 +74,7 @@
 #include "common/CommonUserAPI.h"
 #include "common/CommonUtilsIncludes.h"
 #include "common/CommonConstants.h"
+#include "common/XMLElement.h"
 
 // Input
 #include "input/InputTypes.h"

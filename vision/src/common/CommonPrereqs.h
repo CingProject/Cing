@@ -32,6 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Common
 {
   class Exception;
+  class String;
 
 } // namespace Common
 

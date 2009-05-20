@@ -147,6 +147,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3d_Drawing", "examples\3d_D
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XmlLoad", "examples\XmlLoad\XmlLoad.vcproj", "{85726011-51A8-4B67-ABC6-BE2924C174E3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DObjectImport", "examples\3DObjectImport\3DObjectImport.vcproj", "{3D44AF44-2883-4B3A-B8DB-1607BB953F15}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -273,6 +283,14 @@ Global
 		{AEF19AFB-0056-4EA7-A8D2-CE85C3ACC530}.Debug|Win32.Build.0 = Debug|Win32
 		{AEF19AFB-0056-4EA7-A8D2-CE85C3ACC530}.Release|Win32.ActiveCfg = Release|Win32
 		{AEF19AFB-0056-4EA7-A8D2-CE85C3ACC530}.Release|Win32.Build.0 = Release|Win32
+		{85726011-51A8-4B67-ABC6-BE2924C174E3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{85726011-51A8-4B67-ABC6-BE2924C174E3}.Debug|Win32.Build.0 = Debug|Win32
+		{85726011-51A8-4B67-ABC6-BE2924C174E3}.Release|Win32.ActiveCfg = Release|Win32
+		{85726011-51A8-4B67-ABC6-BE2924C174E3}.Release|Win32.Build.0 = Release|Win32
+		{3D44AF44-2883-4B3A-B8DB-1607BB953F15}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3D44AF44-2883-4B3A-B8DB-1607BB953F15}.Debug|Win32.Build.0 = Debug|Win32
+		{3D44AF44-2883-4B3A-B8DB-1607BB953F15}.Release|Win32.ActiveCfg = Release|Win32
+		{3D44AF44-2883-4B3A-B8DB-1607BB953F15}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
