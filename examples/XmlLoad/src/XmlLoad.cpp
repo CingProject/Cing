@@ -29,7 +29,9 @@ void setup()
   // Find elements by index
   XMLElement site = websites.getChild(0);
   String siteText = site.getContent();
-  println(siteText);    
+  print(siteText);
+  print ( " id = %d ",  site.getIntAttribute( "id" ) );
+  println( "url = %s", site.getStringAttribute( "url" ).toChar() );    
 
 
   // Find elements by path (from root node, var called xml)
@@ -39,6 +41,17 @@ void setup()
 
   // Get the name of the root noe
   println( xml.getName() );
+
+
+  // Get all the sites
+  XMLElementArray xmlElements;
+  xml.getChildren( xmlElements, "websites/site" );
+
+  // Print all children
+  for (int i = 0; i < xmlElements.size(); i++) {
+    println(xmlElements[i].getContent());
+  }
+
 
 }
 

@@ -47,7 +47,7 @@ public:
 	int					length	  () { return (int)size(); }
 	String			substring ( int beginIndex );
 	String			substring ( int beginIndex, int endIndex );
-	const char*	toChar    () { return c_str(); }
+	const char*	toChar    () const { return c_str(); }
 
 	// Compare
 	bool equals ( const std::string& str );

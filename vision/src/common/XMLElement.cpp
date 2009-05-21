@@ -22,6 +22,7 @@
 #include "XMLElement.h"
 #include "LogManager.h"
 #include "Release.h"
+#include "XMLVisitor.h"
 
 // Tiny xml
 #include "externLibs/TinyXML/include/tinyxml.h"
@@ -41,7 +42,7 @@ namespace Common
  * @brief Constructor. Initializes class attributes.
  */
 XMLElement::XMLElement():
-	m_xmlDoc( NULL ), m_rootElem( NULL ), m_bIsValid  ( false )
+  m_rootElem( NULL ), m_bIsValid  ( false )
 {
 }
 
@@ -52,7 +53,7 @@ XMLElement::XMLElement():
  * @param xmlFileName  Name of the xml file to load. It must be in the application data folder
  */
 XMLElement::XMLElement( const std::string& xmlFileName ):
-	m_xmlDoc( NULL ), m_rootElem( NULL ), m_bIsValid  ( false )
+	m_rootElem( NULL ), m_bIsValid  ( false )
 {
 	load( xmlFileName );
 }
@@ -60,10 +61,10 @@ XMLElement::XMLElement( const std::string& xmlFileName ):
 /**
  * @internal
  * @brief Constructor. Builds an xml element from a parent xml element
- * @param root    Xml root element
- * @param xmlDoc  Xml doc associated
+ * @param root    root root element
+ * @param xmlDoc  xmlDoc doc associated
  */
-XMLElement::XMLElement( TiXmlElement* root, TiXmlDocument* xmlDoc )
+XMLElement::XMLElement( TiXmlElement* root, XMLDocSharedPtr &xmlDoc )
 {
   m_xmlDoc    = xmlDoc;
   m_rootElem  = root;
@@ -87,7 +88,12 @@ XMLElement::~XMLElement()
  */
 void XMLElement::load( const std::string& xmlFileName )
 {
-  m_xmlDoc = new TiXmlDocument( Globals::dataFolder + xmlFileName.c_str() );
+  // Check if load has already been called
+  if ( isValid() )
+    end();
+
+  // Load the xml file
+  m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( Globals::dataFolder + xmlFileName.c_str() ) );
 	m_xmlDoc->LoadFile();
 
 	// Error loading file?
@@ -99,7 +105,7 @@ void XMLElement::load( const std::string& xmlFileName )
 
 	// Get root element
 	m_rootElem = m_xmlDoc->RootElement();
-	if ( !m_xmlDoc )
+	if ( !m_rootElem )
 		LOG_ERROR( "Error loading %s, There is no root element", xmlFileName.c_str() );
 
 
@@ -113,7 +119,7 @@ void XMLElement::load( const std::string& xmlFileName )
  */
 void XMLElement::end()
 {
-	Common::Release( m_xmlDoc );
+  // @note The xmlDoc is not deleted because it is a shared pointer (as it can be shared among many XMLElement)
 	m_bIsValid = false;
 }
 
@@ -234,6 +240,24 @@ XMLElement XMLElement::getChild( const std::string& path )
   return XMLElement( child, m_xmlDoc );
 }
 
+/**
+ * @brief Fills an array of XMLElemnt with all the xml elements of the file
+ * @param children Array where the children will be stored
+ * @param path If path is specified, only children that match that path will be stored (optional parameter)
+ */
+void XMLElement::getChildren( XMLElementArray& children, const String& path /*= "NO_PATH"*/ )
+{
+  // Check state
+  if ( !isValid() )
+  {
+    LOG_ERROR( "Trying to call getChildren() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+    return;
+  }
+
+  // Visit all the nodes to fill the children array 
+  XMLVisitor visitor( m_xmlDoc, children, path );
+  m_rootElem->Accept( &visitor );
+}
 
 /**
  * @brief Returns the text content of an xml element
@@ -248,9 +272,66 @@ String XMLElement::getContent()
     return String();
   }
 
-  return m_rootElem->GetText();
+  return m_rootElem->GetText()? m_rootElem->GetText(): "";
 }
 
+/**
+ * @brief Returns an int attribute of the xml Element.
+ * @param name    Name of the attribute to be returned
+ * @param default Default value that will be returned in case the attribute does not exist
+ * @return        an int attribute of the xml Element.
+ */
+int XMLElement::getIntAttribute( const String& name, int default /*= 0 */)
+{
+  // Check state
+  if ( !isValid() )
+  {
+    LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+    return default;
+  }
+
+  int value = default;
+  m_rootElem->QueryIntAttribute( name, &value );
+  return value;
+}
+
+/**
+ * @brief Returns a float attribute of the xml Element.
+ * @param name    Name of the attribute to be returned
+ * @param default Default value that will be returned in case the attribute does not exist
+ * @return        a float attribute of the xml Element.
+ */
+float XMLElement::getFloatAttribute( const String& name, float default /*= 0.0f*/ )
+{
+  // Check state
+  if ( !isValid() )
+  {
+    LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+    return default;
+  }
+
+  float value = default;
+  m_rootElem->QueryFloatAttribute( name.toChar(), &value );
+  return value;
+}
+
+/**
+ * @brief Returns a String attribute of the xml Element.
+ * @param name    Name of the attribute to be returned
+ * @param default Default value that will be returned in case the attribute does not exist
+ * @return        a String attribute of the xml Element.
+ */
+String XMLElement::getStringAttribute( const String& name, String default /*= "0"*/ )
+{
+  // Check state
+  if ( !isValid() )
+  {
+    LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+    return default;
+  }
+
+  return m_rootElem->Attribute( name.toChar() );
+}
 
 /**
  * @brief Returns the name of the elemtn

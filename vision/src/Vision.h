@@ -125,6 +125,9 @@ using namespace	Video;
 using namespace GUI;
 using namespace Midi;
 
+// Types to make user live easier
+typedef XMLElement::XMLElementArray XMLElementArray;
+
 // Classes used by user
 
 // Camera

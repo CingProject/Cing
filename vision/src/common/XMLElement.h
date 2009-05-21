@@ -25,14 +25,14 @@
 #include "CommonPrereqs.h"
 #include "eString.h"
 
-#include <string>
+#include "externLibs/Ogre3d/include/OgreSharedPtr.h"
+#include "externLibs/TinyXML/include/tinyxml.h"
 
-// Forward declarations
-class TiXmlDocument;
-class TiXmlElement;
+#include <string>
 
 namespace Common
 {
+
 
 /**
  * @internal
@@ -42,10 +42,16 @@ class XMLElement
 {
 public:
 
+  // XMLElement Array type
+  typedef std::vector< XMLElement > XMLElementArray;
+
+  // Shared pointer for the xml doc (it can be shared among many XMLElement)
+  typedef Ogre::SharedPtr<TiXmlDocument> XMLDocSharedPtr;
+
 	// Constructor / Destructor
 	XMLElement	();
 	XMLElement	( const std::string& xmlFileName );
-  XMLElement	( TiXmlElement* root, TiXmlDocument* xmlDoc );
+  XMLElement	( TiXmlElement* root, XMLDocSharedPtr& xmlDoc );
 	~XMLElement	();
 
 	// Init / Release / Update
@@ -53,21 +59,28 @@ public:
 	void	end		();	
 
 	// Query  Methods
-	int						getChildCount	();
-	XMLElement		getChild			( int index );
-	XMLElement		getChild			( const std::string& path );
-  String        getContent    ();
-  String        getName       ();
-	bool					isValid				() { return m_bIsValid; }
+	int						getChildCount	    ();
+	XMLElement		getChild			    ( int index );
+	XMLElement		getChild			    ( const std::string& path );
+  void          getChildren       ( XMLElementArray& children, const String& path = "NO_PATH" );
+  String        getContent        ();
+  int           getIntAttribute   ( const String& name, int default = 0 );
+  float         getFloatAttribute ( const String& name, float default = 0.0f );
+  String        getStringAttribute( const String& name, String default = "0" );
+  String        getName           ();
+	bool					isValid				    () { return m_bIsValid; }
 
 private:
 
 	// Attributes
-	TiXmlDocument*	m_xmlDoc;			///< Xml document
-	TiXmlElement*	  m_rootElem;		///< Xml's root element
-	bool			      m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+  XMLDocSharedPtr   m_xmlDoc;
+	TiXmlElement*	    m_rootElem;		///< Xml's root element
+	bool			        m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
+
+
+
 
 } // namespace Common
 
