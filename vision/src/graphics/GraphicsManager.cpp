@@ -32,13 +32,13 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "framework/Application.h"
 
 
-
 // Common includes
 #include "common/Exception.h"
 #include "common/Release.h"
 #include "common/MathUtils.h"
 #include "common/CommonConstants.h"
 #include "common/ResourceManager.h"
+#include "common/LogManager.h"
 
 // Ogre includes
 #include "externLibs/Ogre3d/include/OgreRoot.h"
@@ -57,6 +57,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // GUI
 //#include "gui/GUIManager.h"
 
+// Collada
+#include "externLibs/OgreCollada/include/OgreCollada.h"
 
 namespace Graphics
 {
@@ -624,4 +626,25 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 	cvSet( &m_canvas->getCVImage(), cvScalar(color.b,color.g,color.r) );
 	m_canvas->setUpdateTexture(true);
 }
+
+/**
+ * @brief 
+ *
+ * @param mode
+ */
+bool GraphicsManager::loadCollada( const Common::String& fileName )
+{
+	// Create importer
+	OgreCollada::ImpExp *pImporterExporter = OgreCollada::CreateImpExp(Ogre::Root::getSingletonPtr(), m_pSceneManager);
+
+	// Import collada file and check result
+	bool success = pImporterExporter->importCollada( Globals::dataFolder + fileName, "import1" );
+	if ( !success )
+		LOG_ERROR( "Error loading %s. It should be in the data folder", fileName.c_str() );
+
+	OgreCollada::DestroyImpExp(pImporterExporter);
+
+	return success;
+	// TODO: Añadir generacion de nombres únicos
+};
 } // namespace Graphics

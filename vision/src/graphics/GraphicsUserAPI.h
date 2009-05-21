@@ -182,6 +182,8 @@ void scale		(	float x, float y );
 //Save frames
 void save( const Common::String& name );
 
+// Import 3d ( Collada )
+bool loadCollada( const Common::String& fileName );
 
 } // namespace Graphics
 

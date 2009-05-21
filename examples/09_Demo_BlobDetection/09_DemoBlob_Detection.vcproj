@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="09_Demo_BlobDetection"
 	ProjectGUID="{6E9D505C-607A-40F1-A14B-001519DAEE4C}"
 	RootNamespace="My10_DemoBlobDetection"

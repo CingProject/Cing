@@ -12,13 +12,12 @@ CREATE_APPLICATION( "Vision Demo" );
 BackgroundSubtraction bgSubtraction;	// Object to perform Background subtraction
 BlobFinder						bfinder;				// Object to perform blob finding
 Capture								camera;					// Camera to capture video input
-
 Image									img;						// Image to draw the result of the background subtraction
 
 void setup()
 {
 	// Init camera and image
-	camera.init( 1, 320, 240, 25, RGB );
+	camera.init( 1, 320, 240, 15, RGB, false );
 	img.init( 320, 240, RGB );
 }
 
@@ -48,7 +47,8 @@ void draw()
 
 	// Draw images
 	camera.getImage().draw2d( 0, 0 );
-	img.draw2d( 320, 0 );
+	img.draw2d( 640, 0 );
+
 }
 
 void end()

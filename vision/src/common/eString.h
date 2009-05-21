@@ -59,9 +59,12 @@ public:
 	// Static Members
 	static std::string intToString(int inputNumber)
 	{
+		
 		std::stringstream s;
 		s << inputNumber;
 		return s.str();
+		
+		//Ogre::StringConverter::toString( inputNumber );
 	}
 
 };

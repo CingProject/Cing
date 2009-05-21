@@ -151,6 +151,9 @@ public:
 		m_frameName = name;
 	};
 
+	// Import Collada
+	bool loadCollada( const Common::String& fileName );
+
 	// 2D / 3D Transforms
 	std::stack < Transform >		m_transforms; ///< Stack to store transform objects
 	std::deque < Style >				m_styles;     ///< Deque to store style properties ( fill color, stroke weight, etc.)
