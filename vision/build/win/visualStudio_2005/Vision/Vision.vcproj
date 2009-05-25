@@ -1016,12 +1016,20 @@
 						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\..\..\..\src\video\OCVMovie.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Header Files"
 					>
 					<File
 						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\video\OCVMovie.h"
 						>
 					</File>
 					<File

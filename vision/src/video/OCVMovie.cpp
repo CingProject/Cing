@@ -37,7 +37,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 using namespace Graphics;
 
-namespace Movies
+namespace Video
 {
 
 /**

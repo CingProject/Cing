@@ -98,7 +98,9 @@
 #include "audio/AudioInputFMOD.h"
 
 // Video
-#include "Video/MediaPlayerVLC.h"
+#include "video/MediaPlayerVLC.h"
+#include "video/OCVMovie.h"
+
 
 // GUI
 #include "gui/GUIUserAPI.h"
