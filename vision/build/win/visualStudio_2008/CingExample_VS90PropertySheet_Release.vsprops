@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="CingExample_VS90PropertySheet_Release"
+	OutputDirectory="$(ProjectDir)$(ConfigurationName)"
+	IntermediateDirectory="obj\$(ConfigurationName)"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		Optimization="2"
+		EnableIntrinsicFunctions="true"
+		FavorSizeOrSpeed="1"
+		OmitFramePointers="true"
+		WholeProgramOptimization="true"
+		AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\externLibs\OpenCV\cxcore\include;..\..\vision\externLibs\LibVLC\include"
+		PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+		StringPooling="true"
+		RuntimeLibrary="2"
+		WarningLevel="3"
+		DebugInformationFormat="0"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="OgreMain.lib OIS.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libconvexdecomposition.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib tinyxml_STL.lib OgreCollada.lib FCollada.lib LibXML.lib libvlc.dll.a libvlccore.dll.a"
+		AdditionalLibraryDirectories="..\..\vision\externLibs\BetaCairo\lib;..\..\vision\externLibs\Bullet\lib;..\..\vision\externLibs\cairo\lib;..\..\vision\externLibs\Fmod\lib;..\..\vision\externLibs\Ogre3d\lib;..\..\vision\externLibs\OgreBullet\lib;..\..\vision\externLibs\OpenCV\lib;..\..\vision\externLibs\PortVideo\lib;..\..\vision\externLibs\PTypes\lib;..\..\vision\externLibs\RtMidi\lib;..\..\vision\externLibs\VideoInput\lib;..\..\vision\externLibs\OgreCollada\lib;..\..\vision\externLibs\LibVLC\lib;..\..\vision\externLibs\TinyXML\lib"
+		IgnoreDefaultLibraryNames="atlthunk;libc.lib;libcmt.lib;libcd.lib;libcmtd.lib;msvcrtd.lib"
+		GenerateDebugInformation="false"
+		SubSystem="0"
+		OptimizeReferences="1"
+		EnableCOMDATFolding="2"
+	/>
+</VisualStudioPropertySheet>
