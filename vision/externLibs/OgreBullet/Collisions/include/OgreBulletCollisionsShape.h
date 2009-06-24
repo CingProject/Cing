@@ -33,8 +33,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 namespace OgreBulletCollisions
 {
     // -------------------------------------------------------------------------
-    // basic Shape
-    class CollisionShape 
+	// basic Shape
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	class __declspec( dllexport ) CollisionShape
+#else
+	class CollisionShape 
+#endif
     {
 
     public:
@@ -47,9 +51,11 @@ namespace OgreBulletCollisions
             const Ogre::Vector3 &pos = Ogre::Vector3::ZERO, 
             const Ogre::Quaternion &quat= Ogre::Quaternion::IDENTITY) const;
 
+		bool drawConvexWireFrame(DebugLines *wire, const Ogre::Vector3 &pos, const Ogre::Quaternion &quat) const;
+
+
     protected:
         btCollisionShape*       mShape;        
-        bool drawConvexWireFrame(DebugLines *wire, const Ogre::Vector3 &pos, const Ogre::Quaternion &quat) const;
 
     };
 }

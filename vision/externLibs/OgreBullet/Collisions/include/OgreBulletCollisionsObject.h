@@ -49,11 +49,7 @@ namespace OgreBulletCollisions
 	class Object : public Ogre::MovableObject, public Ogre::UserDefinedObject
     {
     public:
-
-
-
         Object(const Ogre::String &name,  CollisionsWorld *world, bool init);
-
 
         virtual ~Object();
 

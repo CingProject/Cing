@@ -36,6 +36,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "OgreBulletDynamicsWorld.h"
 
 #include "Constraints/OgreBulletDynamicsRaycastVehicle.h"
+#include "BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.h"
 
 namespace OgreBulletDynamics
 {
@@ -65,6 +66,14 @@ namespace OgreBulletDynamics
             const float      bodyFriction,
             const Ogre::Vector3 &pos = Ogre::Vector3::ZERO, 
             const Ogre::Quaternion &quat = Ogre::Quaternion::IDENTITY);
+
+
+		   void setStaticShape(btScaledBvhTriangleMeshShape *shape,
+		           const float      bodyRestitution,
+		           const float      bodyFriction,
+		           const Ogre::Vector3 &pos = Ogre::Vector3::ZERO,
+		           const Ogre::Quaternion &quat = Ogre::Quaternion::IDENTITY);
+
 
         void setStaticShape(OgreBulletCollisions::CollisionShape *shape,
             const float      bodyRestitution,

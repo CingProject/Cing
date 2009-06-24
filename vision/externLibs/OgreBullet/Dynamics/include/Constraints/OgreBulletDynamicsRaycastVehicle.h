@@ -84,7 +84,7 @@ namespace OgreBulletDynamics
     };
     // -------------------------------------------------------------------------
     // RaycastVehicle  class
-    class RaycastVehicle : public TypedConstraint
+    class RaycastVehicle : public ActionInterface
     {
     public:
         RaycastVehicle(WheeledRigidBody *body,  
@@ -94,7 +94,7 @@ namespace OgreBulletDynamics
         virtual ~RaycastVehicle();
 
         btRaycastVehicle *getBulletVehicle()
-        {return static_cast<btRaycastVehicle *> (mConstraint);};
+        {return static_cast<btRaycastVehicle *> (mActionInterface);};
         void setCoordinateSystem(int rightIndex,int upIndex,int forwardIndex);
 
         void addWheel(

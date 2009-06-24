@@ -38,7 +38,8 @@ namespace OgreBulletCollisions
     class CompoundCollisionShape : public CollisionShape
     {
     public:
-        CompoundCollisionShape();
+		CompoundCollisionShape();
+		CompoundCollisionShape(btCompoundShape *);
 	    virtual ~CompoundCollisionShape();
 
         void addChildShape(CollisionShape *shape, 

@@ -40,6 +40,7 @@ namespace OgreBulletCollisions
     public:
         ConvexHullCollisionShape(const Ogre::Real* points, int numPoints, int stride);
         ConvexHullCollisionShape();
+		ConvexHullCollisionShape(btConvexHullShape *shape);
 
 	    virtual ~ConvexHullCollisionShape();
 

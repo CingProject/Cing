@@ -2,7 +2,7 @@
 #define _OGREBULLET_HEIGHTMAP_
 
 
-#include "OgreBulletCollisionsPrerequisites.h"
+#include "OgreBulletCollisionsPreRequisites.h"
 
 #include "OgreBulletCollisionsShape.h"
 #include "Debug/OgreBulletCollisionsDebugLines.h"

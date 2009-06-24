@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include "OgreBulletCollisionsPreRequisites.h"
 
-#include "GIMPACT/Bullet/btGImpactShape.h"
-#include "GIMPACT/Bullet/btGImpactCollisionAlgorithm.h"
+#include "BulletCollision/Gimpact/btGImpactShape.h"
+#include "BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
 
 #include "OgreBulletCollisionsShape.h"
 

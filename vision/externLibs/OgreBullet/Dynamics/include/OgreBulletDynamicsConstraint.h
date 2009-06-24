@@ -53,6 +53,26 @@ namespace OgreBulletDynamics
         DynamicsWorld           *mWorld;
         RigidBody               *mBodyA;
         RigidBody               *mBodyB;
-    };
+	}; 
+	// basic constraint action class
+	class ActionInterface
+	{
+	public:
+		ActionInterface(DynamicsWorld *world);
+		ActionInterface(RigidBody *bodyA);
+		ActionInterface(RigidBody *bodyA, RigidBody *bodyB); 
+
+		virtual ~ActionInterface();
+
+
+		inline btActionInterface* getBulletActionInterface() const {return static_cast <btActionInterface*> (mActionInterface);};
+
+	protected:
+		btActionInterface       *mActionInterface;
+
+		DynamicsWorld           *mWorld;
+		RigidBody               *mBodyA;
+		RigidBody               *mBodyB;
+	};
 }
 #endif //_OGREBULLETDYNAMICS_TypedConstraint_H

@@ -61,7 +61,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
     #include "Shapes/OgreBulletCollisionsConvexHullShape.h"
     #include "Shapes/OgreBulletCollisionsMinkowskiSumShape.h"
 
-    #include "Shapes/OgreBulletCollisionsTrimeshShape.h"
+	#include "Shapes/OgreBulletCollisionsTrimeshShape.h"
+	#include "Shapes/OgreBulletCollisionsGImpactShape.h"
 
     //Utils
     #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"

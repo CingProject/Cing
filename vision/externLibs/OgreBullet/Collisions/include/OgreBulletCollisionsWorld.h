@@ -40,7 +40,7 @@ namespace OgreBulletCollisions
         CollisionsWorld(Ogre::SceneManager *scn, const Ogre::AxisAlignedBox &bounds, bool init = true, bool set32bitsAxisSweep = true);
 	    virtual ~CollisionsWorld();
 
-        void addObject(Object *obj);
+        void addObject(Object *obj, int filterGrp = 1, short int collisionFilter = -1);
 
 		/// Returns false if obj was not found.
 		bool removeObject(Object *obj);
@@ -60,6 +60,13 @@ namespace OgreBulletCollisions
         bool getShowDebugShapes() const { return mShowDebugShapes; }
         // mShowDebugShapes setter
         void setShowDebugShapes(bool val);
+
+		DebugDrawer *getDebugDrawer(){return mDebugDrawer;};
+		void setDebugDrawer(DebugDrawer *debugdrawer);
+
+		DebugLines *getDebugContactPoints(){return mDebugContactPoints;};
+		void setDebugContactPoints(DebugLines *debugcontacts);
+
 
         Ogre::SceneManager *getSceneManager() const {return mScnMgr;}
         btCollisionWorld *getBulletCollisionWorld() const {return mWorld;}
@@ -83,6 +90,7 @@ namespace OgreBulletCollisions
         DebugLines *                mDebugContactPoints;
 
         Ogre::SceneManager *        mScnMgr;
+		OgreBulletCollisions::DebugDrawer *mDebugDrawer;
     };
 }
 #endif //_OGREBULLETCOLLISIONS_CollisionWorld_H

@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include "btBulletCollisionCommon.h"
 
-#include "GIMPACT/Bullet/btGImpactShape.h"
-#include "GIMPACT/Bullet/btGImpactCollisionAlgorithm.h"
+#include "BulletCollision/Gimpact/btGImpactShape.h"
+#include "BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
 
 #include "Ogre.h"
 
@@ -85,8 +85,10 @@ namespace OgreBulletCollisions
 
     class ObjectState;
 
+	class CollisionShapebject;
+
     typedef std::vector<Ogre::Vector3> Vector3Array;
-    typedef std::map<unsigned char, Vector3Array* > BoneIndex;
+    typedef std::map<unsigned short, Vector3Array* > BoneIndex;
     typedef std::pair<unsigned short, Vector3Array* > BoneKeyIndex;
 
 }

@@ -40,6 +40,8 @@ namespace OgreBulletDynamics
     class PhysicState;
     class DynamicsWorld;
 
+	class ActionInterface;
+
     class TypedConstraint;
     class HingeConstraint;
     class SixDofConstraint;

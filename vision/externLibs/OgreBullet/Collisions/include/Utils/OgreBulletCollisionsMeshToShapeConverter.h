@@ -45,6 +45,14 @@ namespace OgreBulletCollisions
 		TriangleMeshCollisionShape*     createTrimesh();
 		CylinderCollisionShape*         createCylinder();
 		ConvexHullCollisionShape*       createConvex();
+		GImpactConcaveShape*			createConcave();
+		CompoundCollisionShape*		createConvexDecomposition(
+		  unsigned int depth = 5 // depth to split, a maximum of 10, generally not over 7.
+		, float cpercent     = 5 	// the concavity threshold percentage.  0=20 is reasonable.
+		, float ppercent     = 15 // the percentage volume conservation threshold to collapse hulls. 0-30 is reasonable.
+		, unsigned int maxv  = 32 // maximum number of vertices in the output hull. Recommended 32 or less.
+		, float skinWidth    = 0.0 // a skin width to apply to the output hulls.
+			);
 
 
 		const Ogre::Vector3*    getVertices();
@@ -88,9 +96,9 @@ namespace OgreBulletCollisions
 
 		~StaticMeshToShapeConverter();
 
-		void addEntity(Ogre::Entity *entity,const Ogre::Matrix4 &transform = Ogre::Matrix4::IDENTITY);
+		virtual void addEntity(Ogre::Entity *entity,const Ogre::Matrix4 &transform = Ogre::Matrix4::IDENTITY);
 		
-		void addMesh(const Ogre::MeshPtr &mesh, const Ogre::Matrix4 &transform = Ogre::Matrix4::IDENTITY);
+		virtual void addMesh(const Ogre::MeshPtr &mesh, const Ogre::Matrix4 &transform = Ogre::Matrix4::IDENTITY);
 
 
 	protected:
