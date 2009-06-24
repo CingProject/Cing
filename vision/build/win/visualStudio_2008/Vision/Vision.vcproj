@@ -44,7 +44,7 @@
 				Optimization="0"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\OgreBullet\Collisions\include;..\..\..\..\externLibs\Bullet\src;..\..\..\..\externLibs\Ogre3d\include;..\..\..\..\externLibs\OpenCV\cxcore\include;..\..\..\..\externLibs\OpenCV\cv\include;..\..\..\..\externLibs\OpenCV\cvaux\include;..\..\..\..\externLibs\OpenCV\highgui\include;..\..\..\..\externLibs\LibVLC\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				MinimalRebuild="true"
 				ExceptionHandling="2"
 				BasicRuntimeChecks="3"
@@ -116,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\OgreBullet\Collisions\include;..\..\..\..\externLibs\Bullet\src;..\..\..\..\externLibs\Ogre3d\include;..\..\..\..\externLibs\OpenCV\cxcore\include;..\..\..\..\externLibs\OpenCV\cv\include;..\..\..\..\externLibs\OpenCV\cvaux\include;..\..\..\..\externLibs\OpenCV\highgui\include;..\..\..\..\externLibs\LibVLC\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				StringPooling="false"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
@@ -603,10 +603,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\graphics\Font.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\..\src\graphics\GraphicsManager.h"
 						>
 					</File>
@@ -636,10 +632,6 @@
 					</File>
 					<File
 						RelativePath="..\..\..\..\src\graphics\Style.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\..\src\graphics\Text.h"
 						>
 					</File>
 					<File
@@ -714,6 +706,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="Typography"
+						>
+						<File
+							RelativePath="..\..\..\..\src\graphics\Font.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\Text.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Source Files"
@@ -753,10 +757,6 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\graphics\Font.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\..\src\graphics\GraphicsManager.cpp"
 						>
 					</File>
@@ -778,10 +778,6 @@
 					</File>
 					<File
 						RelativePath="..\..\..\..\src\graphics\Style.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\..\src\graphics\Text.cpp"
 						>
 					</File>
 					<File
@@ -871,6 +867,18 @@
 						</File>
 						<File
 							RelativePath="..\..\..\..\src\graphics\ImageThresholdFilter.cpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Typography"
+						>
+						<File
+							RelativePath="..\..\..\..\src\graphics\Font.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\Text.cpp"
 							>
 						</File>
 					</Filter>
