@@ -1,26 +1,26 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Vision project
+For the latest info, see http://www.playthemagic.com/vision
 
 Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software Foundation,
-  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _String_H_
-#define _String_H_
+#ifndef _Cing_String_H_
+#define _Cing_String_H_
 
 #include <string>
 #include <iostream>
@@ -30,44 +30,45 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Common
 {
 
-/**
- * @internal
- * Class to make easy work with strings. It is based on std::string
- */
-class String: public std::string
-{
-public:
-	String() {}
-	String(const char * input) : std::string( input ) {}
-
-	// Get string data
-	char				charAt		( int index );
-	int					indexOf		( const std::string& str );
-	int					indexOf		( const std::string& str, int fromIndex );
-	int					length	  () { return (int)size(); }
-	String			substring ( int beginIndex );
-	String			substring ( int beginIndex, int endIndex );
-	const char*	toChar    () const { return c_str(); }
-
-	// Compare
-	bool equals ( const std::string& str );
-
-	// Modify string
-	void toLowerCases	();
-	void toUpperCases	();
-
-	// Static Members
-	static std::string intToString(int inputNumber)
+	/**
+	* @internal
+	* Class to make easy work with strings. It is based on std::string
+	*/
+	class String: public std::string
 	{
-		
-		std::stringstream s;
-		s << inputNumber;
-		return s.str();
-		
-		//Ogre::StringConverter::toString( inputNumber );
-	}
+	public:
+		String() {}
+		String(const std::string& input) : std::string( input ) {} // for automatic cast when using operator =
+		String(const char * input) : std::string( input ) {}
 
-};
+		// Get string data
+		char				charAt		( int index );
+		int					indexOf		( const std::string& str );
+		int					indexOf		( const std::string& str, int fromIndex );
+		int					length	  () { return (int)size(); }
+		String			substring ( int beginIndex );
+		String			substring ( int beginIndex, int endIndex );
+		const char*	toChar    () const { return c_str(); }
+
+		// Compare
+		bool equals ( const std::string& str );
+
+		// Modify string
+		void toLowerCases	();
+		void toUpperCases	();
+
+		// Static Members
+		static std::string intToString(int inputNumber)
+		{
+
+			std::stringstream s;
+			s << inputNumber;
+			return s.str();
+
+			//Ogre::StringConverter::toString( inputNumber );
+		}
+
+	};
 
 } // namespace Common
 

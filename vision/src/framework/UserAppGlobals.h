@@ -48,9 +48,12 @@ namespace Globals
 // Window
 extern unsigned short				width;					///< Window's width
 extern unsigned short				height;					///< Window's height
+extern String						appName;				///< Name of the application (window's title)
 
 // Data folder
-extern std::string					dataFolder;			///< Path to user's application data folder
+extern String						dataFolder;			///< Path to user's application data folder
+extern String						cingDataFolder;		///< Cing data folder (required for the user apps to run)
+
 
 // Input
 extern	char								key;						///< Key being currently pressed

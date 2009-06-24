@@ -30,7 +30,7 @@ class SoundFMOD;
 // Error checking
 bool    failedFMODResultCode        ( FMOD_RESULT result );
 bool    controledFMODChannelFailure ( FMOD_RESULT result );
-char*   getFmodMessageFromCode      ( FMOD_RESULT result );
+const char*   getFmodMessageFromCode      ( FMOD_RESULT result );
 
 // TODO Drivers information
 //void ShowOutputDriversInformation ();

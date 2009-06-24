@@ -157,7 +157,7 @@ bool GraphicsManager::init()
 
   // Init the default font / text
   m_defaultFont.init();  
-  m_defaultText.init();
+  m_defaultText.load( "BlueHighway" );
   m_defaultText.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
   m_defaultText.setCol( 0.3f, 0.3f, 0.3f, 1.0f );	// Text color (Red, Green, Blue, Alpha)  
 

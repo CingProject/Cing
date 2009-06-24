@@ -66,8 +66,8 @@ void VICamera::init( int deviceId, int width, int height, int fps, Graphics::Gra
 	// multi threaded?
 	m_viCamera.setUseCallback( multithreaded );
 
-
-	m_viCamera.showSettingsWindow( deviceId ); 
+	// Capture  fps (not waranteed)
+	m_viCamera.setIdealFramerate(deviceId, fps);
 
 	// Setup camera
 	m_viCamera.setupDevice( deviceId, width, height, VI_COMPOSITE ); 

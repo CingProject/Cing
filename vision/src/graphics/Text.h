@@ -40,7 +40,7 @@ public:
 	~Text();
 
 	// Init / Release / Update
-	bool  init   ();
+	bool  load   ( const char* ttfName );
 	void  end    ();
 
 	// Query methods
@@ -56,14 +56,20 @@ public:
 
 private:
 
+	// Static Attributes
+	static int count; ///< Used to have unique names for the textAreas
+
 	// Attributes
+	std::string						m_fontName;
+	Ogre::String					m_uniqueName;
+	
+	// Ogre related attributes
+	Ogre::OverlayManager*			m_overlayManager;
+	Ogre::OverlayContainer*			m_panel ;
+	Ogre::Overlay*					m_overlay;
+	Ogre::TextAreaOverlayElement*	m_textArea;
+
 	bool  m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
-	Ogre::OverlayManager *olm;
-	Ogre::OverlayContainer *panel ;
-	Ogre::Overlay *overlay;
-	Ogre::TextAreaOverlayElement *textArea;
-	static int count;
-	Ogre::String szElement;
 
 };
 

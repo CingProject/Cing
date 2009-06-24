@@ -71,7 +71,7 @@ bool controledFMODChannelFailure( FMOD_RESULT result )
  *
  * @return Returns a string with the error description
  **/
-char* getFmodMessageFromCode( FMOD_RESULT result )
+const char* getFmodMessageFromCode( FMOD_RESULT result )
 {
    return FMOD_ErrorString(result);
 }

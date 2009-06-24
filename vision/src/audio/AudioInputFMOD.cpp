@@ -192,7 +192,7 @@ bool AudioInputFMOD::isRunning() const
 
   // Get state
   FMOD_BOOL rec;
-  FMOD_RESULT result = FMOD_System_IsRecording( m_sysPtr, &rec );
+  FMOD_RESULT result = FMOD_System_IsRecording( m_sysPtr, 0, &rec );
 
   // If fails
   if( failedFMODResultCode( result ) )
@@ -370,7 +370,7 @@ void AudioInputFMOD::startRecord()
 	}
 
   // Try to start recording
-  FMOD_RESULT result = FMOD_System_RecordStart( m_sysPtr, m_sound, true ); // loop
+  FMOD_RESULT result = FMOD_System_RecordStart( m_sysPtr, 0, m_sound, true ); // loop
 
   // If cannot capture
   if( failedFMODResultCode( result ) )
@@ -381,7 +381,7 @@ void AudioInputFMOD::startRecord()
 void AudioInputFMOD::stopRecord()
 {
     // Try to stop recording
-    FMOD_RESULT result = FMOD_System_RecordStop( m_sysPtr );
+    FMOD_RESULT result = FMOD_System_RecordStop( m_sysPtr, 0 );
 
     // Check success
     if( failedFMODResultCode( result ) )

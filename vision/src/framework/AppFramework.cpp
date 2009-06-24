@@ -24,6 +24,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "AppFramework.h"
 #include "Application.h"
+#include "UserAppGlobals.h"
 
 // Ogre
 #include "externLibs/Ogre3d/include/OgreException.h"
@@ -31,6 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Common includes
 #include "common/Exception.h"
 #include "common/LogManager.h"
+#include "common/eString.h"
 
 
 namespace Framework
@@ -50,7 +52,10 @@ void RunApplication( const char* appName )
 
   try
   {
-    // Init application
+	// Store app name
+	Globals::appName = appName;
+    
+	// Init application
     Application::getSingleton().initApp();
 
     // Enter the application loop (will finish when the application should be closed)

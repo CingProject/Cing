@@ -21,6 +21,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "UserAppGlobals.h"
 #include "input/InputManager.h"
+#include "common/eString.h"
 
 
 namespace Globals
@@ -29,9 +30,11 @@ namespace Globals
 // Window
 unsigned short 	 		width  = -1;
 unsigned short 	 		height = -1;
+String					appName = "Cing Demo";
 
 // Data folder
-std::string					dataFolder = "";
+String					dataFolder = "";
+String					cingDataFolder = "";
 
 // Input
 char								key;

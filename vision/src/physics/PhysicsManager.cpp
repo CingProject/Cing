@@ -104,6 +104,8 @@ void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
 void PhysicsManager::end()
 {
 	// Release bullet related stuff
+	delete m_physicsWorld->getDebugDrawer();
+    m_physicsWorld->setDebugDrawer(0);
 	Common::Release( m_physicsWorld );
 
 	m_bIsValid = false;

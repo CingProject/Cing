@@ -437,7 +437,7 @@ bool SoundFMOD::createSound( const char* filename )
 void SoundFMOD::destroySound()
 {
   // No sound to release?
-  if( !m_sound )
+  if( !m_sound  || !SoundManagerFMOD::getSingleton().isValid(m_sysPtr) )
       return; // Then skip
 
   // Unregister from audio shared
