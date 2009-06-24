@@ -17,7 +17,7 @@ Image									img;						// Image to draw the result of the background subtractio
 void setup()
 {
 	// Init camera and image
-	camera.init( 1, 320, 240, 15, RGB, false );
+	camera.init( 0, 320, 240, 30, RGB, false );
 	img.init( 320, 240, RGB );
 }
 
@@ -46,8 +46,8 @@ void draw()
 	}
 
 	// Draw images
-	camera.getImage().draw2d( 0, 0 );
-	img.draw2d( 640, 0 );
+	camera.getImage().draw( 0, 0, 0);
+	img.draw( 640, 0, 0 );
 
 }
 

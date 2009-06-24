@@ -16,41 +16,41 @@ CREATE_APPLICATION( "Vision Demo" );
 
 void setup()
 {
-  
-  XMLElement xml;
+
+	XMLElement xml;
 	xml.load( "xmlFileTest.xml" );
 
-  // Get element "websites" (the root is xmlTest)
-  XMLElement websites = xml.getChild(0);
+	// Get element "websites" (the root is xmlTest)
+	XMLElement websites = xml.getChild(0);
 
-  // Number of websites
+	// Number of websites
 	int nElems = websites.getChildCount();
 
-  // Find elements by index
-  XMLElement site = websites.getChild(0);
-  String siteText = site.getContent();
-  print(siteText);
-  print ( " id = %d ",  site.getIntAttribute( "id" ) );
-  println( "url = %s", site.getStringAttribute( "url" ).toChar() );    
+	// Find elements by index
+	XMLElement site = websites.getChild(0);
+	String siteText = site.getContent();
+	print(siteText);
+	print ( " id = %d ",  site.getIntAttribute( "id" ) );
+	println( "url = %s", site.getStringAttribute( "url" ).toChar() );    
 
 
-  // Find elements by path (from root node, var called xml)
-  XMLElement site2 = xml.getChild("websites/site");
-  String site2Text = site2.getContent();
-  println(site2Text);    
+	// Find elements by path (from root node, var called xml)
+	XMLElement site2 = xml.getChild("websites/site");
+	String site2Text = site2.getContent();
+	println(site2Text);    
 
-  // Get the name of the root noe
-  println( xml.getName() );
+	// Get the name of the root noe
+	println( xml.getName() );
 
 
-  // Get all the sites
-  XMLElementArray xmlElements;
-  xml.getChildren( xmlElements, "websites/site" );
+	// Get all the sites
+	XMLElementArray xmlElements;
+	xml.getChildren( xmlElements, "websites/site" );
 
-  // Print all children
-  for (int i = 0; i < xmlElements.size(); i++) {
-    println(xmlElements[i].getContent());
-  }
+	// Print all children
+	for (int i = 0; i < xmlElements.size(); i++) {
+		println(xmlElements[i].getContent());
+	}
 
 
 }

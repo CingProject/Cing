@@ -20,7 +20,7 @@ void draw()
 {
   // Draw video 1 (local)
   mediaPlayer.update( );
-  mediaPlayer.getImage().draw2d( mouseX, mouseY );
+  mediaPlayer.getImage().draw( mouseX, mouseY, 0 );
 
   // When video 1 finishes -> start video 2 (online)
   if ( mediaPlayer.isPlaying() == false )

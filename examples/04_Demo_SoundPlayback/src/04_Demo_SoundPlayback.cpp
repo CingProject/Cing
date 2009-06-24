@@ -15,6 +15,7 @@ Average			average( 10 );	// To average the levels of the sound
 
 void setup()
 {
+	size( 1024, 768 );
 	// load sound
 	sound.load( "loop.ogg" );
 	sound.play( true );

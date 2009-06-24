@@ -8,7 +8,7 @@ CREATE_APPLICATION( "Vision Demo" );
  *  - Right button plays the video at 30 fps (original speed)
  */
 
-Movie myMovie;
+OCVMovie myMovie;
 Image	img;
 
 void setup()
