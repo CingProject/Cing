@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -13,6 +13,7 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
+
 #ifndef BT_DISCRETE_DYNAMICS_WORLD_H
 #define BT_DISCRETE_DYNAMICS_WORLD_H
 
@@ -23,9 +24,8 @@ class btOverlappingPairCache;
 class btConstraintSolver;
 class btSimulationIslandManager;
 class btTypedConstraint;
+class btActionInterface;
 
-
-class btRaycastVehicle;
 class btIDebugDraw;
 #include "LinearMath/btAlignedObjectArray.h"
 
@@ -42,6 +42,7 @@ protected:
 
 	btAlignedObjectArray<btTypedConstraint*> m_constraints;
 
+	btAlignedObjectArray<btRigidBody*> m_nonStaticRigidBodies;
 
 	btVector3	m_gravity;
 
@@ -51,33 +52,33 @@ protected:
 
 	bool	m_ownsIslandManager;
 	bool	m_ownsConstraintSolver;
+	bool	m_synchronizeAllMotionStates;
 
+	btAlignedObjectArray<btActionInterface*>	m_actions;
 	
-	btAlignedObjectArray<btRaycastVehicle*>	m_vehicles;
-
 	int	m_profileTimings;
 
 	virtual void	predictUnconstraintMotion(btScalar timeStep);
 	
-	void	integrateTransforms(btScalar timeStep);
+	virtual void	integrateTransforms(btScalar timeStep);
 		
-	void	calculateSimulationIslands();
+	virtual void	calculateSimulationIslands();
 
-	void	solveConstraints(btContactSolverInfo& solverInfo);
+	virtual void	solveConstraints(btContactSolverInfo& solverInfo);
 	
 	void	updateActivationState(btScalar timeStep);
 
-	void	updateVehicles(btScalar timeStep);
+	void	updateActions(btScalar timeStep);
 
 	void	startProfiling(btScalar timeStep);
 
 	virtual void	internalSingleStepSimulation( btScalar timeStep);
 
-	void	synchronizeMotionStates();
 
-	void	saveKinematicState(btScalar timeStep);
+	virtual void	saveKinematicState(btScalar timeStep);
 
 	void	debugDrawSphere(btScalar radius, const btTransform& transform, const btVector3& color);
+
 
 public:
 
@@ -91,14 +92,19 @@ public:
 	virtual int	stepSimulation( btScalar timeStep,int maxSubSteps=1, btScalar fixedTimeStep=btScalar(1.)/btScalar(60.));
 
 
-	void	addConstraint(btTypedConstraint* constraint, bool disableCollisionsBetweenLinkedBodies=false);
+	virtual void	synchronizeMotionStates();
 
-	void	removeConstraint(btTypedConstraint* constraint);
+	///this can be useful to synchronize a single rigid body -> graphics object
+	void	synchronizeSingleMotionState(btRigidBody* body);
 
-	void	addVehicle(btRaycastVehicle* vehicle);
+	virtual void	addConstraint(btTypedConstraint* constraint, bool disableCollisionsBetweenLinkedBodies=false);
 
-	void	removeVehicle(btRaycastVehicle* vehicle);
+	virtual void	removeConstraint(btTypedConstraint* constraint);
 
+	virtual void	addAction(btActionInterface*);
+
+	virtual void	removeAction(btActionInterface*);
+	
 	btSimulationIslandManager*	getSimulationIslandManager()
 	{
 		return m_islandManager;
@@ -114,8 +120,8 @@ public:
 		return this;
 	}
 
-
 	virtual void	setGravity(const btVector3& gravity);
+
 	virtual btVector3 getGravity () const;
 
 	virtual void	addRigidBody(btRigidBody* body);
@@ -125,6 +131,8 @@ public:
 	virtual void	removeRigidBody(btRigidBody* body);
 
 	void	debugDrawObject(const btTransform& worldTransform, const btCollisionShape* shape, const btVector3& color);
+
+	void	debugDrawConstraint(btTypedConstraint* constraint);
 
 	virtual void	debugDrawWorld();
 
@@ -150,6 +158,34 @@ public:
 	///apply gravity, call this once per timestep
 	virtual void	applyGravity();
 
+	virtual void	setNumTasks(int numTasks)
+	{
+        (void) numTasks;
+	}
+
+	///obsolete, use updateActions instead
+	virtual void updateVehicles(btScalar timeStep)
+	{
+		updateActions(timeStep);
+	}
+
+	///obsolete, use addAction instead
+	virtual void	addVehicle(btActionInterface* vehicle);
+	///obsolete, use removeAction instead
+	virtual void	removeVehicle(btActionInterface* vehicle);
+	///obsolete, use addAction instead
+	virtual void	addCharacter(btActionInterface* character);
+	///obsolete, use removeAction instead
+	virtual void	removeCharacter(btActionInterface* character);
+
+	void	setSynchronizeAllMotionStates(bool synchronizeAll)
+	{
+		m_synchronizeAllMotionStates = synchronizeAll;
+	}
+	bool getSynchronizeAllMotionStates() const
+	{
+		return m_synchronizeAllMotionStates;
+	}
 
 };
 

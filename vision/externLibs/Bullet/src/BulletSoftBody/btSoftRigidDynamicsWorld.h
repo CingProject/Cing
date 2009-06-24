@@ -13,43 +13,60 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-
 #ifndef BT_SOFT_RIGID_DYNAMICS_WORLD_H
 #define BT_SOFT_RIGID_DYNAMICS_WORLD_H
 
-class btSoftBody;
+#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "btSoftBody.h"
+
 typedef	btAlignedObjectArray<btSoftBody*> btSoftBodyArray;
 
 class btSoftRigidDynamicsWorld : public btDiscreteDynamicsWorld
 {
-	
+
 	btSoftBodyArray	m_softBodies;
-		
+	int				m_drawFlags;
+	bool			m_drawNodeTree;
+	bool			m_drawFaceTree;
+	bool			m_drawClusterTree;
+	btSoftBodyWorldInfo m_sbi;
+
 protected:
-	
+
 	virtual void	predictUnconstraintMotion(btScalar timeStep);
-	
+
 	virtual void	internalSingleStepSimulation( btScalar timeStep);
 
 	void	updateSoftBodies();
 
 	void	solveSoftBodiesConstraints();
 
-	virtual void	debugDrawWorld();
 
 public:
-	
+
 	btSoftRigidDynamicsWorld(btDispatcher* dispatcher,btBroadphaseInterface* pairCache,btConstraintSolver* constraintSolver,btCollisionConfiguration* collisionConfiguration);
 
 	virtual ~btSoftRigidDynamicsWorld();
-		
-			
+
+	virtual void	debugDrawWorld();
+
 	void	addSoftBody(btSoftBody* body);
 
 	void	removeSoftBody(btSoftBody* body);
 
-			
+	int		getDrawFlags() const { return(m_drawFlags); }
+	void	setDrawFlags(int f)	{ m_drawFlags=f; }
+
+	btSoftBodyWorldInfo&	getWorldInfo()
+	{
+		return m_sbi;
+	}
+	const btSoftBodyWorldInfo&	getWorldInfo() const
+	{
+		return m_sbi;
+	}
+
+
 	btSoftBodyArray& getSoftBodyArray()
 	{
 		return m_softBodies;
@@ -59,7 +76,7 @@ public:
 	{
 		return m_softBodies;
 	}
-		
+
 };
 
 #endif //BT_SOFT_RIGID_DYNAMICS_WORLD_H

@@ -25,6 +25,39 @@ class btDispatcher;
 #include "BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
 #include "BulletCollision/CollisionDispatch/btCollisionCreateFunc.h"
 class btSoftBody;
+class btCollisionShape;
+
+#include "LinearMath/btHashMap.h"
+
+#include "BulletCollision/BroadphaseCollision/btQuantizedBvh.h" //for definition of MAX_NUM_PARTS_IN_BITS
+
+struct btTriIndex
+{
+	int m_PartIdTriangleIndex;
+	class btCollisionShape*	m_childShape;
+
+	btTriIndex(int partId,int triangleIndex,btCollisionShape* shape)
+	{
+		m_PartIdTriangleIndex = (partId<<(31-MAX_NUM_PARTS_IN_BITS)) | triangleIndex;
+		m_childShape = shape;
+	}
+
+	int	getTriangleIndex() const
+	{
+		// Get only the lower bits where the triangle index is stored
+		return (m_PartIdTriangleIndex&~((~0)<<(31-MAX_NUM_PARTS_IN_BITS)));
+	}
+	int	getPartId() const
+	{
+		// Get only the highest bits where the part index is stored
+		return (m_PartIdTriangleIndex>>(31-MAX_NUM_PARTS_IN_BITS));
+	}
+	int	getUid() const
+	{
+		return m_PartIdTriangleIndex;
+	}
+};
+
 
 ///For each triangle in the concave mesh that overlaps with the AABB of a soft body (m_softBody), processTriangle is called.
 class btSoftBodyTriangleCallback : public btTriangleCallback
@@ -40,11 +73,13 @@ class btSoftBodyTriangleCallback : public btTriangleCallback
 	btDispatcher*	m_dispatcher;
 	const btDispatcherInfo* m_dispatchInfoPtr;
 	btScalar m_collisionMarginTriangle;
-	
+
+	btHashMap<btHashKey<btTriIndex>,btTriIndex> m_shapeCache;
+
 public:
-int	m_triangleCount;
-	
-//	btPersistentManifold*	m_manifoldPtr;
+	int	m_triangleCount;
+
+	//	btPersistentManifold*	m_manifoldPtr;
 
 	btSoftBodyTriangleCallback(btDispatcher* dispatcher,btCollisionObject* body0,btCollisionObject* body1,bool isSwapped);
 
@@ -53,7 +88,7 @@ int	m_triangleCount;
 	virtual ~btSoftBodyTriangleCallback();
 
 	virtual void processTriangle(btVector3* triangle, int partId, int triangleIndex);
-	
+
 	void clearCache();
 
 	SIMD_FORCE_INLINE const btVector3& getAabbMin() const

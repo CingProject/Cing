@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -19,8 +19,7 @@ subject to the following restrictions:
 #include "btConcaveShape.h"
 
 
-///StaticPlaneShape simulates an 'infinite' plane by dynamically reporting triangles approximated by intersection of the plane with the AABB.
-///Assumed is that the other objects is not also infinite, so a reasonable sized AABB.
+///The btStaticPlaneShape simulates an infinite non-moving (static) collision plane.
 class btStaticPlaneShape : public btConcaveShape
 {
 protected:
@@ -36,11 +35,6 @@ public:
 
 	virtual ~btStaticPlaneShape();
 
-
-	virtual int	getShapeType() const
-	{
-		return STATIC_PLANE_PROXYTYPE;
-	}
 
 	virtual void getAabb(const btTransform& t,btVector3& aabbMin,btVector3& aabbMax) const;
 

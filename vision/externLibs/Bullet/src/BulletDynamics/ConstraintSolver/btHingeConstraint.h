@@ -53,27 +53,37 @@ public:
 	btScalar	m_correction;
 
 	btScalar	m_accLimitImpulse;
+	btScalar	m_hingeAngle;
+	btScalar    m_referenceSign;
 
 	bool		m_angularOnly;
 	bool		m_enableAngularMotor;
 	bool		m_solveLimit;
+	bool		m_useSolveConstraintObsolete;
+	bool		m_useReferenceFrameA;
+
+	btScalar	m_accMotorImpulse;
 
 	
 public:
 
-	btHingeConstraint(btRigidBody& rbA,btRigidBody& rbB, const btVector3& pivotInA,const btVector3& pivotInB, btVector3& axisInA,btVector3& axisInB);
+	btHingeConstraint(btRigidBody& rbA,btRigidBody& rbB, const btVector3& pivotInA,const btVector3& pivotInB, btVector3& axisInA,btVector3& axisInB, bool useReferenceFrameA = false);
 
-	btHingeConstraint(btRigidBody& rbA,const btVector3& pivotInA,btVector3& axisInA);
+	btHingeConstraint(btRigidBody& rbA,const btVector3& pivotInA,btVector3& axisInA, bool useReferenceFrameA = false);
 	
-	btHingeConstraint(btRigidBody& rbA,btRigidBody& rbB, const btTransform& rbAFrame, const btTransform& rbBFrame);
+	btHingeConstraint(btRigidBody& rbA,btRigidBody& rbB, const btTransform& rbAFrame, const btTransform& rbBFrame, bool useReferenceFrameA = false);
 
-	btHingeConstraint(btRigidBody& rbA,const btTransform& rbAFrame);
+	btHingeConstraint(btRigidBody& rbA,const btTransform& rbAFrame, bool useReferenceFrameA = false);
 
 	btHingeConstraint();
 
 	virtual void	buildJacobian();
 
-	virtual	void	solveConstraint(btScalar	timeStep);
+	virtual void getInfo1 (btConstraintInfo1* info);
+
+	virtual void getInfo2 (btConstraintInfo2* info);
+	
+	virtual	void	solveConstraintObsolete(btSolverBody& bodyA,btSolverBody& bodyB,btScalar	timeStep);
 
 	void	updateRHS(btScalar	timeStep);
 
@@ -86,6 +96,16 @@ public:
 		return m_rbB;
 	}
 
+	btRigidBody& getRigidBodyA()	
+	{		
+		return m_rbA;	
+	}	
+
+	btRigidBody& getRigidBodyB()	
+	{		
+		return m_rbB;	
+	}	
+	
 	void	setAngularOnly(bool angularOnly)
 	{
 		m_angularOnly = angularOnly;
@@ -98,6 +118,15 @@ public:
 		m_maxMotorImpulse = maxMotorImpulse;
 	}
 
+	// extra motor API, including ability to set a target rotation (as opposed to angular velocity)
+	// note: setMotorTarget sets angular velocity under the hood, so you must call it every tick to
+	//       maintain a given angular target.
+	void enableMotor(bool enableMotor) 	{ m_enableAngularMotor = enableMotor; }
+	void setMaxMotorImpulse(btScalar maxMotorImpulse) { m_maxMotorImpulse = maxMotorImpulse; }
+	void setMotorTarget(const btQuaternion& qAinB, btScalar dt); // qAinB is rotation of body A wrt body B.
+	void setMotorTarget(btScalar targetAngle, btScalar dt);
+
+
 	void	setLimit(btScalar low,btScalar high,btScalar _softness = 0.9f, btScalar _biasFactor = 0.3f, btScalar _relaxationFactor = 1.0f)
 	{
 		m_lowerLimit = low;
@@ -107,6 +136,29 @@ public:
 		m_biasFactor = _biasFactor;
 		m_relaxationFactor = _relaxationFactor;
 
+	}
+
+	void	setAxis(btVector3& axisInA)
+	{
+		btVector3 rbAxisA1, rbAxisA2;
+		btPlaneSpace1(axisInA, rbAxisA1, rbAxisA2);
+		btVector3 pivotInA = m_rbAFrame.getOrigin();
+//		m_rbAFrame.getOrigin() = pivotInA;
+		m_rbAFrame.getBasis().setValue( rbAxisA1.getX(),rbAxisA2.getX(),axisInA.getX(),
+										rbAxisA1.getY(),rbAxisA2.getY(),axisInA.getY(),
+										rbAxisA1.getZ(),rbAxisA2.getZ(),axisInA.getZ() );
+
+		btVector3 axisInB = m_rbA.getCenterOfMassTransform().getBasis() * axisInA;
+
+		btQuaternion rotationArc = shortestArcQuat(axisInA,axisInB);
+		btVector3 rbAxisB1 =  quatRotate(rotationArc,rbAxisA1);
+		btVector3 rbAxisB2 = axisInB.cross(rbAxisB1);
+
+
+		m_rbBFrame.getOrigin() = m_rbA.getCenterOfMassTransform()(pivotInA);
+		m_rbBFrame.getBasis().setValue( rbAxisB1.getX(),rbAxisB2.getX(),axisInB.getX(),
+										rbAxisB1.getY(),rbAxisB2.getY(),axisInB.getY(),
+										rbAxisB1.getZ(),rbAxisB2.getZ(),axisInB.getZ() );
 	}
 
 	btScalar	getLowerLimit() const
@@ -122,9 +174,14 @@ public:
 
 	btScalar getHingeAngle();
 
+	void testLimit();
 
-	const btTransform& getAFrame() { return m_rbAFrame; };	
-	const btTransform& getBFrame() { return m_rbBFrame; };
+
+	const btTransform& getAFrame() const { return m_rbAFrame; };	
+	const btTransform& getBFrame() const { return m_rbBFrame; };
+
+	btTransform& getAFrame() { return m_rbAFrame; };	
+	btTransform& getBFrame() { return m_rbBFrame; };
 
 	inline int getSolveLimit()
 	{
@@ -135,7 +192,24 @@ public:
 	{
 		return m_limitSign;
 	}
-		
+
+	inline bool getAngularOnly() 
+	{ 
+		return m_angularOnly; 
+	}
+	inline bool getEnableAngularMotor() 
+	{ 
+		return m_enableAngularMotor; 
+	}
+	inline btScalar getMotorTargetVelosity() 
+	{ 
+		return m_motorTargetVelocity; 
+	}
+	inline btScalar getMaxMotorImpulse() 
+	{ 
+		return m_maxMotorImpulse; 
+	}
+
 };
 
 #endif //HINGECONSTRAINT_H

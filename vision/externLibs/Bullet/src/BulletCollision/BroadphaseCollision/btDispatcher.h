@@ -44,25 +44,31 @@ struct btDispatcherInfo
 		m_debugDraw(0),
 		m_enableSatConvex(false),
 		m_enableSPU(true),
+		m_useEpa(true),
+		m_allowedCcdPenetration(btScalar(0.04)),
+		m_useConvexConservativeDistanceUtil(true),
+		m_convexConservativeDistanceThreshold(0.0f),
 		m_stackAllocator(0)
 	{
 
 	}
 	btScalar	m_timeStep;
-	int		m_stepCount;
-	int		m_dispatchFunc;
-	btScalar	m_timeOfImpact;
-	bool	m_useContinuous;
+	int			m_stepCount;
+	int			m_dispatchFunc;
+	mutable btScalar	m_timeOfImpact;
+	bool		m_useContinuous;
 	class btIDebugDraw*	m_debugDraw;
-	bool	m_enableSatConvex;
-	bool	m_enableSPU;
-	bool	m_useEpa;
+	bool		m_enableSatConvex;
+	bool		m_enableSPU;
+	bool		m_useEpa;
+	btScalar	m_allowedCcdPenetration;
+	bool		m_useConvexConservativeDistanceUtil;
+	btScalar	m_convexConservativeDistanceThreshold;
 	btStackAlloc*	m_stackAllocator;
-	
 };
 
-/// btDispatcher can be used in combination with broadphase to dispatch overlapping pairs.
-/// For example for pairwise collision detection or user callbacks (game logic).
+///The btDispatcher interface class can be used in combination with broadphase to dispatch calculations for overlapping pairs.
+///For example for pairwise collision detection, calculating contact points stored in btPersistentManifold or user callbacks (game logic).
 class btDispatcher
 {
 
@@ -82,7 +88,7 @@ public:
 
 	virtual bool	needsResponse(btCollisionObject* body0,btCollisionObject* body1)=0;
 
-	virtual void	dispatchAllCollisionPairs(btOverlappingPairCache* pairCache,btDispatcherInfo& dispatchInfo,btDispatcher* dispatcher)=0;
+	virtual void	dispatchAllCollisionPairs(btOverlappingPairCache* pairCache,const btDispatcherInfo& dispatchInfo,btDispatcher* dispatcher)  =0;
 
 	virtual int getNumManifolds() const = 0;
 
@@ -90,7 +96,7 @@ public:
 
 	virtual	btPersistentManifold**	getInternalManifoldPointer() = 0;
 
-	virtual	void* allocateCollisionAlgorithm(int size) = 0;
+	virtual	void* allocateCollisionAlgorithm(int size)  = 0;
 
 	virtual	void freeCollisionAlgorithm(void* ptr) = 0;
 

@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -12,8 +12,10 @@ subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
-
 #include "BulletCollision/CollisionShapes/btCollisionShape.h"
+
+
+btScalar gContactThresholdFactor=btScalar(0.02);
 
 
 /*
@@ -42,8 +44,14 @@ void	btCollisionShape::getBoundingSphere(btVector3& center,btScalar& radius) con
 	center = (aabbMin+aabbMax)*btScalar(0.5);
 }
 
+
+btScalar	btCollisionShape::getContactBreakingThreshold() const
+{
+	return getAngularMotionDisc() * gContactThresholdFactor;
+}
 btScalar	btCollisionShape::getAngularMotionDisc() const
 {
+	///@todo cache this value, to improve performance
 	btVector3	center;
 	btScalar disc;
 	getBoundingSphere(center,disc);
@@ -65,7 +73,7 @@ void btCollisionShape::calculateTemporalAabb(const btTransform& curTrans,const b
 
 	// add linear motion
 	btVector3 linMotion = linvel*timeStep;
-	//todo: simd would have a vector max/min operation, instead of per-element access
+	///@todo: simd would have a vector max/min operation, instead of per-element access
 	if (linMotion.x() > btScalar(0.))
 		temporalAabbMaxx += linMotion.x(); 
 	else

@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -20,9 +20,9 @@ subject to the following restrictions:
 #include "BulletCollision/BroadphaseCollision/btBroadphaseProxy.h" // for the types
 
 
-///btCapsuleShape represents a capsule around the Y axis
-///A more general solution that can represent capsules is the btMultiSphereShape
-///the total height is height+2*radius, so the height is just the height between the center of each 'sphere' of the capsule caps.
+///The btCapsuleShape represents a capsule around the Y axis, there is also the btCapsuleShapeX aligned around the X axis and btCapsuleShapeZ around the Z axis.
+///The total height is height+2*radius, so the height is just the height between the center of each 'sphere' of the capsule caps.
+///The btCapsuleShape is a convex hull of two spheres. The btMultiSphereShape is a more general collision shape that takes the convex hull of multiple sphere, so it can also represent a capsule when just using two spheres.
 class btCapsuleShape : public btConvexInternalShape
 {
 protected:
@@ -30,7 +30,7 @@ protected:
 
 protected:
 	///only used for btCapsuleShapeZ and btCapsuleShapeX subclasses.
-	btCapsuleShape() {};
+	btCapsuleShape() : btConvexInternalShape() {m_shapeType = CAPSULE_SHAPE_PROXYTYPE;};
 
 public:
 	btCapsuleShape(btScalar radius,btScalar height);
@@ -43,16 +43,15 @@ public:
 
 	virtual void	batchedUnitVectorGetSupportingVertexWithoutMargin(const btVector3* vectors,btVector3* supportVerticesOut,int numVectors) const;
 	
-	virtual int	getShapeType() const { return CAPSULE_SHAPE_PROXYTYPE; }
-
 	virtual void getAabb (const btTransform& t, btVector3& aabbMin, btVector3& aabbMax) const
 	{
 			btVector3 halfExtents(getRadius(),getRadius(),getRadius());
 			halfExtents[m_upAxis] = getRadius() + getHalfHeight();
+			halfExtents += btVector3(getMargin(),getMargin(),getMargin());
 			btMatrix3x3 abs_b = t.getBasis().absolute();  
-			btPoint3 center = t.getOrigin();
+			btVector3 center = t.getOrigin();
 			btVector3 extent = btVector3(abs_b[0].dot(halfExtents),abs_b[1].dot(halfExtents),abs_b[2].dot(halfExtents));		  
-			extent += btVector3(getMargin(),getMargin(),getMargin());
+			
 			aabbMin = center - extent;
 			aabbMax = center + extent;
 	}
@@ -78,6 +77,17 @@ public:
 		return m_implicitShapeDimensions[m_upAxis];
 	}
 
+	virtual void	setLocalScaling(const btVector3& scaling)
+	{
+		btVector3 oldMargin(getMargin(),getMargin(),getMargin());
+		btVector3 implicitShapeDimensionsWithMargin = m_implicitShapeDimensions+oldMargin;
+		btVector3 unScaledImplicitShapeDimensionsWithMargin = implicitShapeDimensionsWithMargin / m_localScaling;
+
+		btConvexInternalShape::setLocalScaling(scaling);
+
+		m_implicitShapeDimensions = (unScaledImplicitShapeDimensionsWithMargin * m_localScaling) - oldMargin;
+
+	}
 };
 
 ///btCapsuleShapeX represents a capsule around the Z axis

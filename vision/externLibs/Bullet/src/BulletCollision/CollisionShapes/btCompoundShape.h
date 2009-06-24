@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -24,8 +24,8 @@ subject to the following restrictions:
 #include "btCollisionMargin.h"
 #include "LinearMath/btAlignedObjectArray.h"
 
-class btOptimizedBvh;
-
+//class btOptimizedBvh;
+struct btDbvt;
 
 ATTRIBUTE_ALIGNED16(struct) btCompoundShapeChild
 {
@@ -35,28 +35,47 @@ ATTRIBUTE_ALIGNED16(struct) btCompoundShapeChild
 	btCollisionShape*	m_childShape;
 	int					m_childShapeType;
 	btScalar			m_childMargin;
+	struct btDbvtNode*	m_node;
 };
-	
-/// btCompoundShape allows to store multiple other btCollisionShapes
-/// This allows for concave collision objects. This is more general then the Static Concave btTriangleMeshShape.
+
+SIMD_FORCE_INLINE bool operator==(const btCompoundShapeChild& c1, const btCompoundShapeChild& c2)
+{
+	return  ( c1.m_transform      == c2.m_transform &&
+		c1.m_childShape     == c2.m_childShape &&
+		c1.m_childShapeType == c2.m_childShapeType &&
+		c1.m_childMargin    == c2.m_childMargin );
+}
+
+/// The btCompoundShape allows to store multiple other btCollisionShapes
+/// This allows for moving concave collision objects. This is more general then the static concave btBvhTriangleMeshShape.
+/// It has an (optional) dynamic aabb tree to accelerate early rejection tests. 
+/// @todo: This aabb tree can also be use to speed up ray tests on btCompoundShape, see http://code.google.com/p/bullet/issues/detail?id=25
+/// Currently, removal of child shapes is only supported when disabling the aabb tree (pass 'false' in the constructor of btCompoundShape)
 ATTRIBUTE_ALIGNED16(class) btCompoundShape	: public btCollisionShape
 {
-	//btAlignedObjectArray<btTransform>		m_childTransforms;
-	//btAlignedObjectArray<btCollisionShape*>	m_childShapes;
 	btAlignedObjectArray<btCompoundShapeChild> m_children;
 	btVector3						m_localAabbMin;
 	btVector3						m_localAabbMax;
 
-	btOptimizedBvh*					m_aabbTree;
+	btDbvt*							m_dynamicAabbTree;
+
+	///increment m_updateRevision when adding/removing/replacing child shapes, so that some caches can be updated
+	int								m_updateRevision;
 
 public:
 	BT_DECLARE_ALIGNED_ALLOCATOR();
 
-	btCompoundShape();
+	btCompoundShape(bool enableDynamicAabbTree = true);
 
 	virtual ~btCompoundShape();
 
 	void	addChildShape(const btTransform& localTransform,btCollisionShape* shape);
+
+	/// Remove all children shapes that contain the specified shape
+	virtual void removeChildShape(btCollisionShape* shape);
+
+	void removeChildShapeByIndex(int childShapeindex);
+
 
 	int		getNumChildShapes() const
 	{
@@ -72,14 +91,17 @@ public:
 		return m_children[index].m_childShape;
 	}
 
-	btTransform	getChildTransform(int index)
+	btTransform&	getChildTransform(int index)
 	{
 		return m_children[index].m_transform;
 	}
-	const btTransform	getChildTransform(int index) const
+	const btTransform&	getChildTransform(int index) const
 	{
 		return m_children[index].m_transform;
 	}
+
+	///set a new transform for a child, and update internal data structures (local aabb and dynamic tree)
+	void	updateChildTransform(int childIndex, const btTransform& newChildTransform);
 
 
 	btCompoundShapeChild* getChildList()
@@ -88,8 +110,11 @@ public:
 	}
 
 	///getAabb's default implementation is brute force, expected derived classes to implement a fast dedicated version
-	void getAabb(const btTransform& t,btVector3& aabbMin,btVector3& aabbMax) const;
+	virtual	void getAabb(const btTransform& t,btVector3& aabbMin,btVector3& aabbMax) const;
 
+	/** Re-calculate the local Aabb. Is called at the end of removeChildShapes. 
+	Use this yourself if you modify the children or their transforms. */
+	virtual void recalculateLocalAabb(); 
 
 	virtual void	setLocalScaling(const btVector3& scaling)
 	{
@@ -101,8 +126,6 @@ public:
 	}
 
 	virtual void	calculateLocalInertia(btScalar mass,btVector3& inertia) const;
-	
-	virtual int	getShapeType() const { return COMPOUND_SHAPE_PROXYTYPE;}
 
 	virtual void	setMargin(btScalar margin)
 	{
@@ -120,9 +143,21 @@ public:
 	//this is optional, but should make collision queries faster, by culling non-overlapping nodes
 	void	createAabbTreeFromChildren();
 
-	const btOptimizedBvh*					getAabbTree() const
+	btDbvt*							getDynamicAabbTree()
 	{
-		return m_aabbTree;
+		return m_dynamicAabbTree;
+	}
+
+	///computes the exact moment of inertia and the transform from the coordinate system defined by the principal axes of the moment of inertia
+	///and the center of mass to the current coordinate system. "masses" points to an array of masses of the children. The resulting transform
+	///"principal" has to be applied inversely to all children transforms in order for the local coordinate system of the compound
+	///shape to be centered at the center of mass and to coincide with the principal axes. This also necessitates a correction of the world transform
+	///of the collision object by the principal transform.
+	void calculatePrincipalAxisTransform(btScalar* masses, btTransform& principal, btVector3& inertia) const;
+
+	int	getUpdateRevision() const
+	{
+		return m_updateRevision;
 	}
 
 private:

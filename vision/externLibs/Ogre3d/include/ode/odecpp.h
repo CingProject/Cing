@@ -70,29 +70,69 @@ public:
     { dWorldStepFast1 (_id,stepsize,maxiterations); }
   void setAutoEnableDepthSF1(dWorldID, int depth)
     { dWorldSetAutoEnableDepthSF1 (_id, depth); }
-  int getAutoEnableDepthSF1(dWorldID)
+  int getAutoEnableDepthSF1(dWorldID) const
     { return dWorldGetAutoEnableDepthSF1 (_id); }
+
+  void quickStep(dReal stepsize)
+    { dWorldQuickStep (_id, stepsize); }
+  void setQuickStepNumIterations(int num)
+    { dWorldSetQuickStepNumIterations (_id, num); }
+  int getQuickStepNumIterations() const
+    { return dWorldGetQuickStepNumIterations (_id); }
+  void setQuickStepW(dReal over_relaxation)
+    { dWorldSetQuickStepW (_id, over_relaxation); }
+  dReal getQuickStepW() const
+    { return dWorldGetQuickStepW (_id); }
 
   void  setAutoDisableLinearThreshold (dReal threshold) 
     { dWorldSetAutoDisableLinearThreshold (_id,threshold); }
-  dReal getAutoDisableLinearThreshold()
+  dReal getAutoDisableLinearThreshold() const
     { return dWorldGetAutoDisableLinearThreshold (_id); }
   void setAutoDisableAngularThreshold (dReal threshold)
     { dWorldSetAutoDisableAngularThreshold (_id,threshold); }
-  dReal getAutoDisableAngularThreshold()
+  dReal getAutoDisableAngularThreshold() const
     { return dWorldGetAutoDisableAngularThreshold (_id); }
   void setAutoDisableSteps (int steps)
     { dWorldSetAutoDisableSteps (_id,steps); }
-  int getAutoDisableSteps()
+  int getAutoDisableSteps() const
     { return dWorldGetAutoDisableSteps (_id); }
   void setAutoDisableTime (dReal time)
     { dWorldSetAutoDisableTime (_id,time); }
-  dReal getAutoDisableTime()
+  dReal getAutoDisableTime() const
     { return dWorldGetAutoDisableTime (_id); }
   void setAutoDisableFlag (int do_auto_disable)
     { dWorldSetAutoDisableFlag (_id,do_auto_disable); }
-  int getAutoDisableFlag()
+  int getAutoDisableFlag() const
     { return dWorldGetAutoDisableFlag (_id); }
+
+  dReal getLinearDampingThreshold() const
+    { return dWorldGetLinearDampingThreshold(_id); }
+  void setLinearDampingThreshold(dReal threshold)
+    { dWorldSetLinearDampingThreshold(_id, threshold); }
+  dReal getAngularDampingThreshold() const
+    { return dWorldGetAngularDampingThreshold(_id); }
+  void setAngularDampingThreshold(dReal threshold)
+    { dWorldSetAngularDampingThreshold(_id, threshold); }
+  dReal getLinearDamping() const
+    { return dWorldGetLinearDamping(_id); }
+  void setLinearDamping(dReal scale)
+    { dWorldSetLinearDamping(_id, scale); }
+  dReal getAngularDamping() const
+    { return dWorldGetAngularDamping(_id); }
+  void setAngularDamping(dReal scale)
+    { dWorldSetAngularDamping(_id, scale); }
+  void setDamping(dReal linear_scale, dReal angular_scale)
+    { dWorldSetDamping(_id, linear_scale, angular_scale); }
+
+  dReal getMaxAngularSpeed() const
+    { return dWorldGetMaxAngularSpeed(_id); }
+  void setMaxAngularSpeed(dReal max_speed)
+    { dWorldSetMaxAngularSpeed(_id, max_speed); }
+
+  void setContactSurfaceLayer(dReal depth)
+    { dWorldSetContactSurfaceLayer (_id, depth); }
+  dReal getContactSurfaceLayer() const
+    { return dWorldGetContactSurfaceLayer (_id); }
 
   void impulseToForce (dReal stepsize, dReal ix, dReal iy, dReal iz,
 		       dVector3 force)
@@ -232,24 +272,51 @@ public:
 
   void  setAutoDisableLinearThreshold (dReal threshold) 
     { dBodySetAutoDisableLinearThreshold (_id,threshold); }
-  dReal getAutoDisableLinearThreshold()
+  dReal getAutoDisableLinearThreshold() const
     { return dBodyGetAutoDisableLinearThreshold (_id); }
   void setAutoDisableAngularThreshold (dReal threshold)
     { dBodySetAutoDisableAngularThreshold (_id,threshold); }
-  dReal getAutoDisableAngularThreshold()
+  dReal getAutoDisableAngularThreshold() const
     { return dBodyGetAutoDisableAngularThreshold (_id); }
   void setAutoDisableSteps (int steps)
     { dBodySetAutoDisableSteps (_id,steps); }
-  int getAutoDisableSteps()
+  int getAutoDisableSteps() const
     { return dBodyGetAutoDisableSteps (_id); }
   void setAutoDisableTime (dReal time)
     { dBodySetAutoDisableTime (_id,time); }
-  dReal getAutoDisableTime()
+  dReal getAutoDisableTime() const
     { return dBodyGetAutoDisableTime (_id); }
   void setAutoDisableFlag (int do_auto_disable)
     { dBodySetAutoDisableFlag (_id,do_auto_disable); }
-  int getAutoDisableFlag()
+  int getAutoDisableFlag() const
     { return dBodyGetAutoDisableFlag (_id); }
+
+  dReal getLinearDamping() const
+    { return dBodyGetLinearDamping(_id); }
+  void setLinearDamping(dReal scale)
+    { dBodySetLinearDamping(_id, scale); }
+  dReal getAngularDamping() const
+    { return dBodyGetAngularDamping(_id); }
+  void setAngularDamping(dReal scale)
+    { dBodySetAngularDamping(_id, scale); }
+  void setDamping(dReal linear_scale, dReal angular_scale)
+    { dBodySetDamping(_id, linear_scale, angular_scale); }
+   dReal getLinearDampingThreshold() const
+    { return dBodyGetLinearDampingThreshold(_id); }
+   void setLinearDampingThreshold(dReal threshold) const
+    { dBodySetLinearDampingThreshold(_id, threshold); }
+   dReal getAngularDampingThreshold() const
+    { return dBodyGetAngularDampingThreshold(_id); }
+   void setAngularDampingThreshold(dReal threshold)
+    { dBodySetAngularDampingThreshold(_id, threshold); }
+   void setDampingDefaults()
+    { dBodySetDampingDefaults(_id); }
+
+   dReal getMaxAngularSpeed() const
+    { return dBodyGetMaxAngularSpeed(_id); }
+   void setMaxAngularSpeed(dReal max_speed)
+    { dBodySetMaxAngularSpeed(_id, max_speed); }
+
 };
 
 
@@ -318,6 +385,10 @@ public:
     { dJointSetFeedback(_id, fb); }
   dJointFeedback *getFeedback() const
     { return dJointGetFeedback(_id); }
+
+  // If not implemented it will do nothing as describe in the doc
+  virtual void setParam (int, dReal) {};
+  virtual dReal getParam (int) const { return 0; }
 };
 
 
@@ -343,6 +414,10 @@ public:
     { dJointGetBallAnchor (_id, result); }
   void getAnchor2 (dVector3 result) const
     { dJointGetBallAnchor2 (_id, result); }
+  virtual void setParam (int parameter, dReal value)
+    { dJointSetBallParam (_id, parameter, value); }
+  virtual dReal getParam (int parameter) const
+    { return dJointGetBallParam (_id, parameter); }
 } ;
 
 
@@ -378,9 +453,9 @@ public:
   dReal getAngleRate() const
     { return dJointGetHingeAngleRate (_id); }
 
-  void setParam (int parameter, dReal value)
+  virtual void setParam (int parameter, dReal value)
     { dJointSetHingeParam (_id, parameter, value); }
-  dReal getParam (int parameter) const
+  virtual dReal getParam (int parameter) const
     { return dJointGetHingeParam (_id, parameter); }
 
   void addTorque (dReal torque)
@@ -413,9 +488,9 @@ public:
   dReal getPositionRate() const
     { return dJointGetSliderPositionRate (_id); }
 
-  void setParam (int parameter, dReal value)
+  virtual void setParam (int parameter, dReal value)
     { dJointSetSliderParam (_id, parameter, value); }
-  dReal getParam (int parameter) const
+  virtual dReal getParam (int parameter) const
     { return dJointGetSliderParam (_id, parameter); }
 
   void addForce (dReal force)
@@ -444,7 +519,7 @@ public:
     { dJointSetUniversalAxis1 (_id, x, y, z); }
   void setAxis2 (dReal x, dReal y, dReal z)
     { dJointSetUniversalAxis2 (_id, x, y, z); }
-  void setParam (int parameter, dReal value)
+  virtual void setParam (int parameter, dReal value)
     { dJointSetUniversalParam (_id, parameter, value); }
 
   void getAnchor (dVector3 result) const
@@ -455,9 +530,9 @@ public:
     { dJointGetUniversalAxis1 (_id, result); }
   void getAxis2 (dVector3 result) const
     { dJointGetUniversalAxis2 (_id, result); }
-  dReal getParam (int parameter) const
+  virtual dReal getParam (int parameter) const
     { return dJointGetUniversalParam (_id, parameter); }
- void getAngles(dReal *angle1, dReal *angle2) const
+  void getAngles(dReal *angle1, dReal *angle2) const
     { dJointGetUniversalAngles (_id, angle1, angle2); }
 
   dReal getAngle1() const
@@ -512,9 +587,9 @@ public:
   dReal getAngle2Rate() const
     { return dJointGetHinge2Angle2Rate (_id); }
 
-  void setParam (int parameter, dReal value)
+  virtual void setParam (int parameter, dReal value)
     { dJointSetHinge2Param (_id, parameter, value); }
-  dReal getParam (int parameter) const
+  virtual dReal getParam (int parameter) const
     { return dJointGetHinge2Param (_id, parameter); }
 
   void addTorques(dReal torque1, dReal torque2)
@@ -555,14 +630,65 @@ public:
   dReal getPositionRate() const
     { return dJointGetPRPositionRate (_id); }
 
-  void setParam (int parameter, dReal value)
+  virtual void setParam (int parameter, dReal value)
     { dJointSetPRParam (_id, parameter, value); }
-  dReal getParam (int parameter) const
+  virtual dReal getParam (int parameter) const
     { return dJointGetPRParam (_id, parameter); }
 };
 
 
-class dFixedJoint : public dJoint {
+
+
+
+
+
+class dPistonJoint : public dJoint
+{
+  // intentionally undefined, don't use these
+  dPistonJoint (const dPistonJoint &);
+  void operator = (const dPistonJoint &);
+
+public:
+  dPistonJoint() { }
+  dPistonJoint (dWorldID world, dJointGroupID group=0)
+  { _id = dJointCreatePiston (world, group); }
+
+  void create (dWorldID world, dJointGroupID group=0)
+  {
+    if (_id) dJointDestroy (_id);
+    _id = dJointCreatePiston (world, group);
+  }
+
+  void setAnchor (dReal x, dReal y, dReal z)
+    { dJointSetPistonAnchor (_id, x, y, z); }
+  void getAnchor (dVector3 result) const
+    { dJointGetPistonAnchor (_id, result); }
+  void getAnchor2 (dVector3 result) const
+    { dJointGetPistonAnchor2 (_id, result); }
+
+  void setAxis (dReal x, dReal y, dReal z)
+    { dJointSetPistonAxis (_id, x, y, z); }
+  void getAxis (dVector3 result) const
+    { dJointGetPistonAxis (_id, result); }
+
+  dReal getPosition() const
+    { return dJointGetPistonPosition (_id); }
+  dReal getPositionRate() const
+    { return dJointGetPistonPositionRate (_id); }
+
+  virtual void setParam (int parameter, dReal value)
+  { dJointSetPistonParam (_id, parameter, value); }
+  virtual dReal getParam (int parameter) const
+    { return dJointGetPistonParam (_id, parameter); }
+
+  void addForce (dReal force)
+  { dJointAddPistonForce (_id, force); }
+};
+
+
+
+class dFixedJoint : public dJoint
+{
   // intentionally undefined, don't use these
   dFixedJoint (const dFixedJoint &);
   void operator = (const dFixedJoint &);
@@ -579,6 +705,12 @@ public:
 
   void set()
     { dJointSetFixed (_id); }
+
+  virtual void setParam (int parameter, dReal value)
+    { dJointSetFixedParam (_id, parameter, value); }
+
+  virtual dReal getParam (int parameter) const
+    { return dJointGetFixedParam (_id, parameter); }
 };
 
 

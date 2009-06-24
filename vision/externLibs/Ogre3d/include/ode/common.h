@@ -92,6 +92,9 @@ msg " in %s() File %s Line %d", __FUNCTION__, __FILE__,__LINE__);
 #endif
 #define dAASSERT(a) dUASSERT(a,"Bad argument(s)")
 
+// Macro used to suppress unused variable warning
+#define dVARIABLEUSED(a) ((void)a)
+
 /* floating point data type, vector, matrix and quaternion types */
 
 #if defined(dSINGLE)
@@ -105,6 +108,24 @@ typedef double dReal;
 #error You must #define dSINGLE or dDOUBLE
 #endif
 
+// Detect if we've got both trimesh engines enabled.
+#if dTRIMESH_ENABLED
+#if dTRIMESH_OPCODE && dTRIMESH_GIMPACT
+#error You can only #define dTRIMESH_OPCODE or dTRIMESH_GIMPACT, not both.
+#endif
+#endif // dTRIMESH_ENABLED
+
+// Define a type for indices, either 16 or 32 bit, based on build option
+// TODO: Currently GIMPACT only supports 32 bit indices.
+#if dTRIMESH_16BIT_INDICES
+#if dTRIMESH_GIMPACT
+typedef uint32 dTriIndex;
+#else // dTRIMESH_GIMPACT
+typedef uint16 dTriIndex;
+#endif // dTRIMESH_GIMPACT
+#else // dTRIMESH_16BIT_INDICES
+typedef uint32 dTriIndex;
+#endif // dTRIMESH_16BIT_INDICES
 
 /* round an integer up to a multiple of 4, except that 0 and 1 are unmodified
  * (used to compute matrix leading dimensions)
@@ -133,6 +154,7 @@ typedef dReal dQuaternion[4];
 #define dFabs(x) (fabsf(x))			/* absolute value */
 #define dAtan2(y,x) (atan2f(y,x))		/* arc tangent with 2 args */
 #define dFMod(a,b) (fmodf(a,b))		/* modulo */
+#define dFloor(x) floorf(x)			/* floor */
 
 #ifdef HAVE___ISNANF
 #define dIsNan(x) (__isnanf(x))
@@ -166,6 +188,8 @@ typedef dReal dQuaternion[4];
 #define dFabs(x) fabs(x)
 #define dAtan2(y,x) atan2((y),(x))
 #define dFMod(a,b) (fmod((a),(b)))
+#define dFloor(x) floor(x)
+
 #ifdef HAVE___ISNAN
 #define dIsNan(x) (__isnan(x))
 #elif defined(HAVE__ISNAN)
@@ -259,7 +283,8 @@ enum {
   dJointTypeAMotor,
   dJointTypeLMotor,
   dJointTypePlane2D,
-  dJointTypePR
+  dJointTypePR,
+  dJointTypePiston
 };
 
 
@@ -309,9 +334,19 @@ enum {
   dParamStopCFM, \
   /* parameters for suspension */ \
   dParamSuspensionERP, \
-  dParamSuspensionCFM,
+  dParamSuspensionCFM, \
+  dParamERP, \
 
+  //////////////////////////////////////////////////////////////////////////////
+  /// \enum  D_ALL_PARAM_NAMES_X
+  ///
+  /// \var dParamGroup This is the starting value of the different group
+  ///                  (i.e. dParamGroup1, dParamGroup2, dParamGroup3)
+  ///                  It also helps in the use of parameter
+  ///                  (dParamGroup2 | dParamFMax) == dParamFMax2
+  //////////////////////////////////////////////////////////////////////////////
 #define D_ALL_PARAM_NAMES_X(start,x) \
+  dParamGroup ## x = start, \
   /* parameters for limits and motors */ \
   dParamLoStop ## x = start, \
   dParamHiStop ## x, \
@@ -324,10 +359,13 @@ enum {
   dParamStopCFM ## x, \
   /* parameters for suspension */ \
   dParamSuspensionERP ## x, \
-  dParamSuspensionCFM ## x,
+  dParamSuspensionCFM ## x, \
+  dParamERP ## x,
 
 enum {
   D_ALL_PARAM_NAMES(0)
+  dParamsInGroup,     ///< Number of parameter in a group
+  D_ALL_PARAM_NAMES_X(0x000,1)
   D_ALL_PARAM_NAMES_X(0x100,2)
   D_ALL_PARAM_NAMES_X(0x200,3)
 

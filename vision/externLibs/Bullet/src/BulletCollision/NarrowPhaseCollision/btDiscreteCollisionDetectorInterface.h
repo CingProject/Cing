@@ -41,7 +41,7 @@ struct btDiscreteCollisionDetectorInterface
 	struct ClosestPointInput
 	{
 		ClosestPointInput()
-			:m_maximumDistanceSquared(btScalar(1e30)),
+			:m_maximumDistanceSquared(btScalar(BT_LARGE_FLOAT)),
 			m_stackAlloc(0)
 		{
 		}
@@ -58,7 +58,7 @@ struct btDiscreteCollisionDetectorInterface
 	// give either closest points (distance > 0) or penetration (distance)
 	// the normal always points from B towards A
 	//
-	virtual void	getClosestPoints(const ClosestPointInput& input,Result& output,class btIDebugDraw* debugDraw) = 0;
+	virtual void	getClosestPoints(const ClosestPointInput& input,Result& output,class btIDebugDraw* debugDraw,bool swapResults=false) = 0;
 
 };
 
@@ -68,7 +68,7 @@ struct btStorageResult : public btDiscreteCollisionDetectorInterface::Result
 		btVector3	m_closestPointInB;
 		btScalar	m_distance; //negative means penetration !
 
-		btStorageResult() : m_distance(btScalar(1e30))
+		btStorageResult() : m_distance(btScalar(BT_LARGE_FLOAT))
 		{
 
 		}

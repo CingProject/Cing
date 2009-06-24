@@ -14,11 +14,23 @@
  *   dTRIMESH_ENABLED  - enable/disable trimesh support
  *   dTRIMESH_OPCODE   - use the OPCODE trimesh engine
  *   dTRIMESH_GIMPACT  - use the GIMPACT trimesh engine
+ *                       Only one trimesh engine should be enabled.
  *
- *   dUSE_MALLOC_FOR_ALLOCA (experimental)- 
- *                       Use malloc() instead of alloca(). Slower, 
- *                       but allows for larger systems and more 
+ *   dTRIMESH_16BIT_INDICES (todo: opcode only)
+ *                       Setup the trimesh engine to use 16 bit
+ *                       triangle indices. The default is to use
+ *                       32 bit indices. Use the dTriIndex type to
+ *                       detect the correct index size.
+ *
+ *   dUSE_MALLOC_FOR_ALLOCA (experimental)-
+ *                       Use malloc() instead of alloca(). Slower,
+ *                       but allows for larger systems and more
  *                       graceful out-of-memory handling.
+ *
+ *   dTRIMESH_OPCODE_USE_NEW_TRIMESH_TRIMESH_COLLIDER (experimental)-
+ *                       Use an alternative trimesh-trimesh collider
+ *                       which should yield better results.
+ *
  ******************************************************************/
 
 #define dSINGLE
@@ -26,6 +38,9 @@
 
 #define dTRIMESH_ENABLED 1
 #define dTRIMESH_OPCODE 1
+#define dTRIMESH_16BIT_INDICES 0
+
+#define dTRIMESH_OPCODE_USE_NEW_TRIMESH_TRIMESH_COLLIDER 0
 
 /* #define dUSE_MALLOC_FOR_ALLOCA */
 
@@ -90,7 +105,7 @@
 #include <string.h>
 #include <float.h>
 
-#if !defined(ODE_PLATFORM_PS3)
+#if !defined(ODE_PLATFORM_OSX) && !defined(ODE_PLATFORM_PS3)
   #include <malloc.h>
 #endif
 

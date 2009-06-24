@@ -41,7 +41,7 @@
  * Macro to test for valid floating point values
  */
 #define dVALIDVEC3(v) (!(dIsNan(v[0]) || dIsNan(v[1]) || dIsNan(v[2])))
-#define dVALIDVEC4(v) (!(dIsNan(v[0]) || dIsNan(v[2]) || dIsNan(v[2]) || dIsNan(v[3])))
+#define dVALIDVEC4(v) (!(dIsNan(v[0]) || dIsNan(v[1]) || dIsNan(v[2]) || dIsNan(v[3])))
 #define dVALIDMAT3(m) (!(dIsNan(m[0]) || dIsNan(m[1]) || dIsNan(m[2]) || dIsNan(m[3]) || dIsNan(m[4]) || dIsNan(m[5]) || dIsNan(m[6]) || dIsNan(m[7]) || dIsNan(m[8]) || dIsNan(m[9]) || dIsNan(m[10]) || dIsNan(m[11])))
 #define dVALIDMAT4(m) (!(dIsNan(m[0]) || dIsNan(m[1]) || dIsNan(m[2]) || dIsNan(m[3]) || dIsNan(m[4]) || dIsNan(m[5]) || dIsNan(m[6]) || dIsNan(m[7]) || dIsNan(m[8]) || dIsNan(m[9]) || dIsNan(m[10]) || dIsNan(m[11]) || dIsNan(m[12]) || dIsNan(m[13]) || dIsNan(m[14]) || dIsNan(m[15]) ))
 
@@ -68,6 +68,16 @@
     (a)[1] op (c); \
     (a)[2] op (c);
 
+/// Define an equation with operatos
+/// For example this function can be used to replace
+/// <PRE>
+/// for (int i=0; i<3; ++i)
+///   a[i] += b[i] + c[i];
+/// </PRE>
+#define dOPE2(a,op1,b,op2,c) \
+    (a)[0] op1 ((b)[0]) op2 ((c)[0]); \
+    (a)[1] op1 ((b)[1]) op2 ((c)[1]); \
+    (a)[2] op1 ((b)[2]) op2 ((c)[2]);
 
 /*
  * Length, and squared length helpers. dLENGTH returns the length of a dVector3.
@@ -287,9 +297,31 @@ extern "C" {
 /*
  * normalize 3x1 and 4x1 vectors (i.e. scale them to unit length)
  */
-ODE_API void dNormalize3 (dVector3 a);
-ODE_API void dNormalize4 (dVector4 a);
+ODE_API int  dSafeNormalize3 (dVector3 a);
+ODE_API int  dSafeNormalize4 (dVector4 a);
 
+// For some reason demo_chain1.c does not understand "inline" keyword.
+static __inline void _dNormalize3(dVector3 a)
+{
+	int bNormalizationResult = dSafeNormalize3(a);
+	dIASSERT(bNormalizationResult);
+	dVARIABLEUSED(bNormalizationResult);
+}
+
+static __inline void _dNormalize4(dVector4 a)
+{
+	int bNormalizationResult = dSafeNormalize4(a);
+	dIASSERT(bNormalizationResult);
+	dVARIABLEUSED(bNormalizationResult);
+}
+
+// For DLL export
+ODE_API void dNormalize3 (dVector3 a); // Potentially asserts on zero vec
+ODE_API void dNormalize4 (dVector4 a); // Potentially asserts on zero vec
+
+// For internal use
+#define dNormalize3(a) _dNormalize3(a)
+#define dNormalize4(a) _dNormalize4(a)
 
 /*
  * given a unit length "normal" vector n, generate vectors p and q vectors

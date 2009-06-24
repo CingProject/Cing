@@ -119,6 +119,8 @@ bool	btSubsimplexConvexCast::calcTimeOfImpact(
 		{
 			dist2 = v.length2();
 			hasResult = true;
+			//todo: check this normal for validity
+			//n=v;
 			//printf("V=%f , %f, %f\n",v[0],v[1],v[2]);
 			//printf("DIST2=%f\n",dist2);
 			//printf("numverts = %i\n",m_simplexSolver->numVertices());
@@ -130,13 +132,26 @@ bool	btSubsimplexConvexCast::calcTimeOfImpact(
 
 	//int numiter = MAX_ITERATIONS - maxIter;
 //	printf("number of iterations: %d", numiter);
+	
+	//don't report a time of impact when moving 'away' from the hitnormal
+	
+
 	result.m_fraction = lambda;
-	result.m_normal = n.normalized();
+	if (n.length2() >= (SIMD_EPSILON*SIMD_EPSILON))
+		result.m_normal = n.normalized();
+	else
+		result.m_normal = btVector3(btScalar(0.0), btScalar(0.0), btScalar(0.0));
+
+	//don't report time of impact for motion away from the contact normal (or causes minor penetration)
+	if (result.m_normal.dot(r)>=-result.m_allowedPenetration)
+		return false;
+
 	btVector3 hitA,hitB;
 	m_simplexSolver->compute_points(hitA,hitB);
 	result.m_hitPoint=hitB;
 	return true;
 }
+
 
 
 
