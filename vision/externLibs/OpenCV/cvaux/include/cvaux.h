@@ -42,7 +42,7 @@
 #ifndef __CVAUX__H__
 #define __CVAUX__H__
 
-#include "externLibs/OpenCV/cv/include/cv.h"
+#include "cv.h"
 
 #ifdef __cplusplus
 extern "C" {
