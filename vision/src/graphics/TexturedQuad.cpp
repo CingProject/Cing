@@ -99,8 +99,8 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
   Framework::Application::getSingleton().checkSubsystemsInit();
 
 	// Get power of 2 texture size
-	m_textWidthP2 = nextPowerOf2( textureWidth );
-	m_textHeightP2 = nextPowerOf2( textureHeight );
+	m_textWidthP2 = firstPO2From( textureWidth );
+	m_textHeightP2 = firstPO2From( textureHeight );
 	//m_textWidthP2 = textureWidth;
 	//m_textHeightP2 = textureHeight;
 
@@ -130,7 +130,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
   material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
   material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
   material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
-  material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_ANTICLOCKWISE );
+  //material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_ANTICLOCKWISE );
 
 
 	/*

@@ -1,22 +1,22 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Vision project
+For the latest info, see http://www.playthemagic.com/vision
 
 Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software Foundation,
-  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 #ifndef _TexturedQuad_H_
@@ -30,96 +30,98 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace Graphics
 {
 
-/**
- * @internal
- * Represents a quad (two triangles) with a texture (dynamically update possible)
- */
-class TexturedQuad
-{
-public:
+	/**
+	* @internal
+	* Represents a quad (two triangles) with a texture (dynamically update possible)
+	*/
+	class TexturedQuad
+	{
+	public:
 
-	// Constructor / Destructor
-	 TexturedQuad();
-	~TexturedQuad();
+		// Constructor / Destructor
+		TexturedQuad();
+		~TexturedQuad();
 
-	// Init / Release 
-	bool  init            ( int textureWidth, int textureHeight, GraphicsType format );
-	void  end             ();
+		// Init / Release 
+		bool  init            ( int textureWidth, int textureHeight, GraphicsType format );
+		void  end             ();
 
-	// Set methods
-	void  setPosition     ( float x, float y, float z );
-	void  setPosition2d   ( float x, float y );
-	void	setScale				( float xScale, float yScale, float zScale );
-	void	setScale2d			( float xScale, float yScale );
-	void  setVisible      ( bool visible );
-	void  setAdditiveMode ( bool value );
-	// Drawing methods
-	void	draw						( float x, float y, float z );
-	void	draw						( float x, float y, float z, float width, float height );
-	void	draw				  	(	float x1, float y1, float z1,	float x2, float y2, float z2,
-													float x3, float y3, float z3,	float x4, float y4, float z4);
+		// Set methods
+		void  	setPosition     ( float x, float y, float z );
+		void  	setPosition2d   ( float x, float y );
+		void	setScale		( float xScale, float yScale, float zScale );
+		void	setScale2d		( float xScale, float yScale );
+		void  	setVisible      ( bool visible );
+		void  	setAdditiveMode ( bool value );
 
-	void	draw2d					( float x, float y );
-	void	draw2d					( float x, float y, float width, float height );
+		// Drawing methods
+		void	draw			( float x, float y, float z );
+		void	draw			( float x, float y, float z, float width, float height );
+		void	draw			(	float x1, float y1, float z1,	float x2, float y2, float z2,
+									float x3, float y3, float z3,	float x4, float y4, float z4);
 
-	void	drawBackground	( float x, float y , float width, float height );
+		void	draw2d			( float x, float y );
+		void	draw2d			( float x, float y, float width, float height );
 
-	// Texture update
-	void	updateTexture		( const Ogre::Image& img );
-	void  updateTexture   ( unsigned char* textureData, int width, int height, GraphicsType format );
-	void  updateTexture   ( char* textureData, int width, int height, GraphicsType format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
+		void	drawBackground	( float x, float y , float width, float height );
 
-	// Query methods
-	bool  			isValid         () const { return m_bIsValid; }
-	int					getTextWidth		() const { return m_textWidth;	}
-	int					getTextHeight		() const { return m_textHeight;	}
-	GraphicsType	getFormat				() const { return m_format;		}
+		// Texture update
+		void	updateTexture	( const Ogre::Image& img );
+		void	updateTexture	( unsigned char* textureData, int width, int height, GraphicsType format );
+		void	updateTexture	( char* textureData, int width, int height, GraphicsType format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
 
-	// Texture coordinate control
-	void				flipVertical		();
+		// Query methods
+		bool  				isValid         () const { return m_bIsValid; }
+		int					getTextWidth	() const { return m_textWidth;	}
+		int					getTextHeight	() const { return m_textHeight;	}
+		GraphicsType		getFormat		() const { return m_format;		}
+		Ogre::TexturePtr	getOgreTexture	() const { return m_ogreTexture; }
 
-	// Operators 
-	void operator=				( const TexturedQuad& other );
+		// Texture coordinate control
+		void			flipVertical	();
 
-	void	setbackgroundRendering			();
-	void	drawBackground					( float x, float y );
+		// Operators 
+		void			operator=		( const TexturedQuad& other );
+
+		void	setbackgroundRendering			();
+		void	drawBackground					( float x, float y );
 
 
 
-private:
+	private:
 
-  // Private methods
-  void	generateUniqueNames	();
-	void	set2dRendering			();
-	void	set3dRendering			();
+		// Private methods
+		void	generateUniqueNames	();
+		void	set2dRendering			();
+		void	set3dRendering			();
 
-  // Constant / static attributes
-  static const std::string  MANUAL_OBJECT_NAME;     		///< Name of the manual object (which is the quad)
-  static const std::string  MATERIAL_NAME;          		///< Name of the material where the texture will be placed
-  static const std::string  TEXTURE_NAME;           		///< Name of the texture
-  static long               m_quadCounter;          		///< Used to generate unique names for the quad materials, textures and ogre manual objects
+		// Constant / static attributes
+		static const std::string  MANUAL_OBJECT_NAME;     		///< Name of the manual object (which is the quad)
+		static const std::string  MATERIAL_NAME;          		///< Name of the material where the texture will be placed
+		static const std::string  TEXTURE_NAME;           		///< Name of the texture
+		static long               m_quadCounter;          		///< Used to generate unique names for the quad materials, textures and ogre manual objects
 
-	// Attributes
-  Ogre::TexturePtr          m_ogreTexture;          		///< Ogre texture (to render the quad with it)  
-  Ogre::SceneNode*          m_quadSceneNode;        		///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
-	Ogre::ManualObject*				m_quad;											///< Ogre manual object that contains the geometry (vertex) of the quad
-	GraphicsType								m_format;										///< Format of the image
-	Ogre::uint32							m_3dQueryFlags;							///< Query flags of ogre when the object is being renderd in 3d		
+		// Attributes
+		Ogre::TexturePtr          m_ogreTexture;          		///< Ogre texture (to render the quad with it)  
+		Ogre::SceneNode*          m_quadSceneNode;        		///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
+		Ogre::ManualObject*				m_quad;											///< Ogre manual object that contains the geometry (vertex) of the quad
+		GraphicsType								m_format;										///< Format of the image
+		Ogre::uint32							m_3dQueryFlags;							///< Query flags of ogre when the object is being renderd in 3d		
 
-	float											m_textWidth, m_textHeight;  ///< Width and height of the texture
-	float											m_textWidthP2, m_textHeightP2;  ///< Width and height of the texture
-	float											m_2dWidth, m_2dHeight;			///< Width and height of the object when it is being drawn in 2d (in screen coordinates)
-	float											m_2dXPos, m_2dYPos;					///< Position (in screen coordinates) of the object when it is being drawn in 2d
+		float											m_textWidth, m_textHeight;  ///< Width and height of the texture
+		float											m_textWidthP2, m_textHeightP2;  ///< Width and height of the texture
+		float											m_2dWidth, m_2dHeight;			///< Width and height of the object when it is being drawn in 2d (in screen coordinates)
+		float											m_2dXPos, m_2dYPos;					///< Position (in screen coordinates) of the object when it is being drawn in 2d
 
-	std::string               m_ogreManualObjectName; 		///< Unique object name
-  std::string               m_ogreTextureName;      		///< Unique texture name
-  std::string               m_ogreMaterialName;     		///< Unique material name
+		std::string               m_ogreManualObjectName; 		///< Unique object name
+		std::string               m_ogreTextureName;      		///< Unique texture name
+		std::string               m_ogreMaterialName;     		///< Unique material name
 
-	bool											m_visible;									///< Tells if the object is visible or not
-  bool                      m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene
-	bool                      m_bIsValid;	            		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+		bool											m_visible;									///< Tells if the object is visible or not
+		bool                      m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene
+		bool                      m_bIsValid;	            		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
-};
+	};
 
 } // namespace Graphics
 

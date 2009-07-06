@@ -23,9 +23,14 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _GraphicsUserAPI_h_
 
 #include "GraphicsPrereqs.h"
+#include "MovableText.h"
+
 #include "Color.h"
 #include "Image.h"
-#include "Common\eString.h"
+#include "common/eString.h"
+#include "common/CommonConstants.h"
+
+#include <sstream>
 
 namespace Graphics
 {
@@ -116,7 +121,6 @@ void triangle	( float x1, float y1, float x2, float y2, float x3, float y3 );
 void rect			( float x1, float y1, float x2, float y2 );
 void quad			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
 void ellipse	( float x, float y, float width, float height);
-void text			( float x1, float y1, const char* text );
 void arc			( float x, float y,  float width, float height, float start, float stop );
 
 void rectMode    ( int mode );
@@ -184,6 +188,30 @@ void save( const Common::String& name );
 
 // Import 3d ( Collada )
 bool loadCollada( const Common::String& fileName );
+
+//----------------------------------------------------------------------------------- 
+// Typography
+//----------------------------------------------------------------------------------- 
+void text( const String& text, float x, float y );
+void text( const String& text, float x, float y, float width, float height );
+
+
+
+void text( const std::ostringstream& text, float x, float y );
+void text( int	text, float x, float y );
+void text( float text, float x, float y );
+//void text(data, x, y, z)
+//void text(stringdata, x, y, width, height)
+//void text(stringdata, x, y, width, height, z)
+
+
+ 	
+void textFont		(const Font& font);
+void textFont		(const Font& font, int size);
+void textAlign		(int halign, int valign = TOP);
+void textMode		(TextMode mode);
+void textSize		(float size);
+
 
 } // namespace Graphics
 

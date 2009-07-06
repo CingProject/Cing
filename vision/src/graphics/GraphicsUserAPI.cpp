@@ -25,6 +25,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Image.h"
 #include "Framework/UserAppGlobals.h"
 #include "common/CommonConstants.h"
+#include "graphics/FontProperties.h"
+#include "graphics/FontManager.h"
 
 namespace Graphics
 {
@@ -520,14 +522,14 @@ void rect( float x1, float y1, float x2, float y2 )
 	// Calculate transformed points
 	switch( GraphicsManager::getSingleton().getRectMode() )
 	{
-	case CORNER: 
+	case Common::CORNER: 
 		v1 = t.applyTransform( Vector( x1, y1, 0) );
 		v2 = t.applyTransform( Vector( x1+x2, y1, 0) );
 		v3 = t.applyTransform( Vector( x1+x2, y1+y2, 0) );
 		v4 = t.applyTransform( Vector( x1, y1+y2, 0) );
 		break;
 
-	case CORNERS: 
+	case Common::CORNERS: 
 		rectWidth  = x2 - x1;
 		rectHeight = y2 - y1;
 		v1 = t.applyTransform( Vector( x1, y1, 0) );
@@ -536,7 +538,7 @@ void rect( float x1, float y1, float x2, float y2 )
 		v4 = t.applyTransform( Vector( x1, y1 + rectHeight, 0) );
 		break;
 
-	case CENTER:
+	case Common::CENTER:
 		widthDIV2  = x2/2;
 		heightDIV2 = y2/2;
 		v1 = t.applyTransform( Vector( x1 - widthDIV2, y1 - heightDIV2, 0) );
@@ -545,7 +547,7 @@ void rect( float x1, float y1, float x2, float y2 )
 		v4 = t.applyTransform( Vector( x1 - widthDIV2, y1 + heightDIV2, 0) );
 		break;
 
-	case RADIUS: 
+	case Common::RADIUS: 
 		v1 = t.applyTransform( Vector( x1-x2,y1-y2, 0) );
 		v2 = t.applyTransform( Vector( x1+x2,y1-y2, 0) );
 		v3 = t.applyTransform( Vector( x1+x2,y1+y2, 0) );
@@ -921,5 +923,108 @@ bool loadCollada( const Common::String& fileName )
 {
 	return GraphicsManager::getSingleton().loadCollada( fileName );
 };
+
+
+//----------------------------------------------------------------------------------- 
+// Typography
+//----------------------------------------------------------------------------------- 
+
+/**
+ * Draws text to the screen
+ * @param text	text to print on screen
+ * @param x		x coordinate where the text will be printed
+ * @param y		y coordinate where the text will be printed
+ */
+void text( const String& text, float x, float y )
+{
+	// Set the font properties
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.text				= text;
+	currentFontProperties.x					= x;
+	currentFontProperties.y					= y;
+	
+	// Add the text to the manager so that it gets rendered in the next draw 
+	FontManager::getSingleton().addText();
+}
+
+/**
+ * Draws text to the screen
+ * @param text	text to print on screen
+ * @param x			x coordinate where the text will be printed
+ * @param y			y coordinate where the text will be printed
+ * @param width		width of the text box that will be printed
+ * @param height	height of the text box that will be printed
+ */
+void text( const String& text, float x, float y, float width, float height )
+{
+	// Set the font properties
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.text				= text;
+	currentFontProperties.x					= x;
+	currentFontProperties.y					= y;
+	currentFontProperties.width				= width;
+	currentFontProperties.height			= height;
+	
+	// Add the text to the manager so that it gets rendered in the next draw 
+	FontManager::getSingleton().addText();
+}
+
+/**
+ * Sets the font used to draw from now on
+ * @param font	font used to draw in future calls to text
+ */
+void textFont(const Font& font)
+{
+	textFont( font, font.getFontSize() );
+}
+
+/**
+ * Sets the font used to draw from now on
+ * @param font	font used to draw in future calls to text
+ * @param size	size that will be used to draw the text. It is best to specify the size in the font.load call.
+ */
+void textFont(const Font& font, int size)
+{
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.fontName			= font.getFontName();
+	currentFontProperties.size				= size;
+
+	FontManager::getSingleton().setActiveFont( font );
+}
+
+
+/**
+ * Sets the horizontal and vertical alignment for the text drawn from now on
+ * @param halign	Horizontal alignment
+ * @param valign	Vertical alignment
+ */
+void textAlign(int halign, int valign)
+{
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.halign			= halign;
+	currentFontProperties.valign			= valign;
+}
+
+/**
+ * Sets rendering mode for the text calls in the future
+ * @param mode	Mode to render future text. MODEL: 3d space, SCREEN: 2d space, on top of all 3d stuff
+ */
+void textMode(TextMode mode)
+{
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.mode				= mode;
+}
+
+/**
+ * Sets font size in pixels of the subsequent text calls
+ * @param size	size in pixels of the subsequent text calls. Always is better to specify the size in the Font.load
+ * to ensuze best rendering quality
+ */
+void textSize(float size)
+{
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.size				= size;
+}
+
 
 } // namespace Graphics

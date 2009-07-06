@@ -58,6 +58,7 @@
 #include "graphics/GraphicsUserAPI.h"
 #include "graphics/LightingUserAPI.h"
 #include "graphics/Transform.h"
+#include "graphics/Font.h"
 
 // CameraInput
 #include "cameraInput/OCVCamera.h"

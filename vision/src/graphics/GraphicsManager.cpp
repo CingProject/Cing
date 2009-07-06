@@ -1,22 +1,22 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Vision project
+For the latest info, see http://www.playthemagic.com/vision
 
 Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software Foundation,
-  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 // Graphics includes
@@ -26,6 +26,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "TexturedQuad.h"
 #include "Image.h"
 #include "ShapeManager.h"
+#include "FontManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -62,83 +63,87 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 namespace Graphics
 {
-  
+
 /**
- * @internal
- * @brief Constructor. Initializes class attributes.
- */
+* @internal
+* @brief Constructor. Initializes class attributes.
+*/
 GraphicsManager::GraphicsManager():
-  m_bIsValid    ( false ),
+	m_bIsValid    ( false ),
 	m_showFps			( false ),
-  m_pSceneManager( NULL ),
+	m_pSceneManager( NULL ),
 	m_canvas( NULL ),
 	m_fill( true ),
 	m_stroke( true ),
 	m_smooth( false ),
 	m_rectMode( CORNER ),
 	m_ellipseMode( CENTER ),
-  m_setupCalled( false ),
-  m_defaultWindowWidth( 640 ),
-  m_defaultWindowHeight( 480 ),
-  m_defaultGraphicMode( OPENGL ),
-  m_fullscreen( false ),
+	m_setupCalled( false ),
+	m_defaultWindowWidth( 640 ),
+	m_defaultWindowHeight( 480 ),
+	m_defaultGraphicMode( OPENGL ),
+	m_fullscreen( false ),
 	m_saveFrame(false)
 {
 }
 
 /**
- * @internal
- * @brief Destructor. Class release.
- */
+* @internal
+* @brief Destructor. Class release.
+*/
 GraphicsManager::~GraphicsManager()
 {
-  // Release resources
-  end();
+	// Release resources
+	end();
 }
 
 /**
- * @internal
- * @brief Initializes the class so it becomes valid.
- *
- * @return true if the initialization was ok | false otherwise
- */
+* @internal
+* @brief Initializes the class so it becomes valid.
+*
+* @return true if the initialization was ok | false otherwise
+*/
 bool GraphicsManager::init()
 {
-  // Check if the class is already initialized
-  if ( isValid() )
-    return true;
+	// Check if the class is already initialized
+	if ( isValid() )
+		return true;
 
 	// Get reference to Ogre Root
 	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
 
-  // Show config dialog
-  //if ( /*!ogreRoot.restoreConfig() &&*/ !ogreRoot.showConfigDialog() )
-  //  return false;
-  //  //THROW_EXCEPTION( "User canceled the config dialog!" );
+	// Show config dialog
+	//if ( /*!ogreRoot.restoreConfig() &&*/ !ogreRoot.showConfigDialog() )
+	//  return false;
+	//  //THROW_EXCEPTION( "User canceled the config dialog!" );
 
-  // Setup default values if user didn't call setup
-  setup( m_defaultWindowWidth, m_defaultWindowHeight );
+	// Setup default values if user didn't call setup
+	setup( m_defaultWindowWidth, m_defaultWindowHeight );
 
-  // Init rendering engine and create main window
-  Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Vision Library Demo" );       
-	  if ( !ogreWindow )
-    THROW_EXCEPTION( "Error creating application window" );
+	// Init rendering engine and create main window
+	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Vision Library Demo" );       
+	if ( !ogreWindow )
+		THROW_EXCEPTION( "Error creating application window" );
 
-  // Create main window
-  m_mainWindow.init( ogreWindow );
+	// Create main window
+	m_mainWindow.init( ogreWindow );
 
 	// Set global window size variables
 	Globals::width = m_mainWindow.getWidth();
 	Globals::height = m_mainWindow.getHeight();
 
-  // Create the scene manager
-  m_pSceneManager = ogreRoot.createSceneManager( Ogre::ST_GENERIC );
+	// Create the scene manager
+	m_pSceneManager = ogreRoot.createSceneManager( Ogre::ST_GENERIC );
 
-  // PreInit GUI Manager (QuickGUI requirements)
-  //GUI::GUIManager::getSingleton().preInit();
+	// Set the global pointer to the scene manager
+	Globals::ogreSceneManager	= m_pSceneManager;
+
+	// PreInit GUI Manager (QuickGUI requirements)
+	//GUI::GUIManager::getSingleton().preInit();
 
 	// Initialize graphics resources, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
 
 	// Init ImageResourceManager 
 	ImageResourceManager::getSingleton().init();
@@ -146,24 +151,24 @@ bool GraphicsManager::init()
 	// Init ShapeManager
 	ShapeManager::getSingleton().init();
 
-  // Init the main camera
-   m_activeCamera.init( m_pSceneManager );
+	// Init the Font Manager
+	FontManager::getSingleton().init();
 
-  // Make the camera render in the main window
-  m_mainWindow.attachCameraToWindow( m_activeCamera );
+	// Init the main camera
+	m_activeCamera.init( m_pSceneManager );
 
-  // Background color
-  m_mainWindow.setBackgroundColor( Color( 200, 200, 200 ) );
+	// Set the global pointer to the camera
+	Globals::ogreCamera	= m_activeCamera.getOgreCamera();
 
-  // Init the default font / text
-  m_defaultFont.init();  
-  m_defaultText.load( "BlueHighway" );
-  m_defaultText.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
-  m_defaultText.setCol( 0.3f, 0.3f, 0.3f, 1.0f );	// Text color (Red, Green, Blue, Alpha)  
+	// Make the camera render in the main window
+	m_mainWindow.attachCameraToWindow( m_activeCamera );
+
+	// Background color
+	m_mainWindow.setBackgroundColor( Color( 200, 200, 200 ) );
 
 	// Init the debug overlay
-  // TODO
-  //m_debugOverlay.init();
+	// TODO
+	//m_debugOverlay.init();
 
 	// Use default camera controller
 	useDefault3DCameraControl( true );
@@ -171,12 +176,8 @@ bool GraphicsManager::init()
 	// Init the cvFont
 	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
 
-  // Init GUI Manager
+	// Init GUI Manager
 	//GUI::GUIManager::getSingleton().init();
-
-	// Set the global pointer to the scene manager and camera
-	Globals::ogreSceneManager	= m_pSceneManager;
-	Globals::ogreCamera				= m_activeCamera.getOgreCamera();
 
 	// Init 2dCanvas
 	m_canvas = new Image(Globals::width, Globals::height, RGB);
@@ -198,6 +199,12 @@ bool GraphicsManager::init()
 	Ogre::Viewport* vp	= rttTex->addViewport( m_activeCamera.getOgreCamera() );
 	vp->setOverlaysEnabled(true);
 
+	// Init the default font / text
+	m_systemFont.init( Globals::width, Globals::height);
+	m_systemFont.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
+	m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
+
+
 	// The class is now initialized
 	m_bIsValid = true;
 
@@ -205,35 +212,38 @@ bool GraphicsManager::init()
 }
 
 /**
- * @internal
- * @brief Releases the class resources. 
- * After this method is called the class is not valid anymore.
- */
+* @internal
+* @brief Releases the class resources. 
+* After this method is called the class is not valid anymore.
+*/
 void GraphicsManager::end()
 {
-  // Check if the class is already released
-  if ( !isValid() )
-    return;
-  
-  // Release GUI Manager
-  //GUI::GUIManager::getSingleton().end();
+	// Check if the class is already released
+	if ( !isValid() )
+		return;
+
+	// Release GUI Manager
+	//GUI::GUIManager::getSingleton().end();
 
 	// Release camera stuff
 	m_defaultCamController.end();
 	m_activeCamera.end();
 
-  // Release scene manager
+	// Release scene manager
 	Ogre::Root::getSingleton().destroySceneManager( m_pSceneManager );
 	m_pSceneManager = NULL;
 
 	// Release image resource manager
 	ImageResourceManager::getSingleton().end();
 
+	// Release the Font Manager
+	FontManager::getSingleton().end();
+
 	// Release the Shape Manager
 	ShapeManager::getSingleton().end();
 
 	// Release 2dCanvas...
-  m_canvas->end();
+	m_canvas->end();
 	m_canvas = NULL;
 
 	// The class is not valid anymore
@@ -241,32 +251,36 @@ void GraphicsManager::end()
 }
 
 /**
- * @internal
- * @brief Renders everything in the scene
- */
+* @internal
+* @brief Renders everything in the scene
+*/
 void GraphicsManager::draw()
 {
 
 	// Update the background image
 	m_canvas->drawBackground(	0,
-														0,
-														m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
-														m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
+		0,
+		m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
+		m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
 
-  // Update 3d primitive drawing	( shape, lines,...)
+	// Update 3d primitive drawing	( shape, lines,...)
 	ShapeManager::getSingleton().update();
 
 	// Update default camera controller
 	m_defaultCamController.update();
 
-  // Render scene
+	// Render scene
 	Ogre::Root::getSingleton().renderOneFrame();
 
-  // Update window
-  m_mainWindow.update();
+	// Update the Font Manager post render
+	FontManager::getSingleton().postRender();
 
-  // Get Frame stats
-  const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
+
+	// Update window
+	m_mainWindow.update();
+
+	// Get Frame stats
+	const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
 
 	Globals::frameRate = frameStats.avgFPS;
 
@@ -275,11 +289,11 @@ void GraphicsManager::draw()
 	{
 		std::ostringstream oss;
 		oss << "FPS: " << frameStats.lastFPS;
-		m_defaultText.setText( oss.str() );	// Text to be displayed
-		m_defaultText.show( true );
+		m_systemFont.setText( oss.str() );	// Text to be displayed
+		m_systemFont.show( true );
 	}
 	else
-		m_defaultText.show( false );
+		m_systemFont.show( false );
 
 	// Render the viewport to texture and save to disk if required
 	if ( m_saveFrame )
@@ -300,101 +314,101 @@ void GraphicsManager::draw()
 }
 
 /**
- * @brief Configures the render system and window for the application.
- * @note It should be called first to any other graphics related function
- * @param windowWidth   width of the application's window
- * @param windowHeight  height of the application's window
- * @param mode          specifies the render driver to use. Default OPENGL
- */
+* @brief Configures the render system and window for the application.
+* @note It should be called first to any other graphics related function
+* @param windowWidth   width of the application's window
+* @param windowHeight  height of the application's window
+* @param mode          specifies the render driver to use. Default OPENGL
+*/
 void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode )
 {
-  // Check if setup has already been called
-  if ( m_setupCalled )
-    return;
+	// Check if setup has already been called
+	if ( m_setupCalled )
+		return;
 
-  // Get ogre root to configure it
-  Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
+	// Get ogre root to configure it
+	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
 
-  // Name of the chosen render system
-  std::string rendererName = "NO_NAME";
-  if ( mode == OPENGL )
-    rendererName = "OpenGL Rendering Subsystem";
-  else if ( mode == DIRECTX )
-    rendererName = "Direct3D9 Rendering Subsystem";
-  else
-    THROW_EXCEPTION( "Critital Error: Graphics Mode in size() call does not exist" );
-    
-  // Get list of render systems
-  Ogre::RenderSystemList  *availableRenderers = ogreRoot.getAvailableRenderers();
-  Ogre::RenderSystem      *selectedRenderSystem = NULL;
-  if ( !availableRenderers || ( availableRenderers->size() == 0 ) )
-    THROW_EXCEPTION( "Critical Error: No available render systems. Please re-install the application" );
+	// Name of the chosen render system
+	std::string rendererName = "NO_NAME";
+	if ( mode == OPENGL )
+		rendererName = "OpenGL Rendering Subsystem";
+	else if ( mode == DIRECTX )
+		rendererName = "Direct3D9 Rendering Subsystem";
+	else
+		THROW_EXCEPTION( "Critital Error: Graphics Mode in size() call does not exist" );
 
-  // Select the render system
-  for ( size_t i = 0; i < availableRenderers->size(); ++i )
-  {
-    if ( availableRenderers->at( i )->getName().compare( rendererName ) == 0 )
-    {
-      selectedRenderSystem = availableRenderers->at( i );
-      break;
-    }
-  }
+	// Get list of render systems
+	Ogre::RenderSystemList  *availableRenderers = ogreRoot.getAvailableRenderers();
+	Ogre::RenderSystem      *selectedRenderSystem = NULL;
+	if ( !availableRenderers || ( availableRenderers->size() == 0 ) )
+		THROW_EXCEPTION( "Critical Error: No available render systems. Please re-install the application" );
 
-  // Set render system to ogre
-  ogreRoot.setRenderSystem( selectedRenderSystem );
+	// Select the render system
+	for ( size_t i = 0; i < availableRenderers->size(); ++i )
+	{
+		if ( availableRenderers->at( i )->getName().compare( rendererName ) == 0 )
+		{
+			selectedRenderSystem = availableRenderers->at( i );
+			break;
+		}
+	}
 
-  // Configure rest of the settings depending on the rendering system selected
-  if ( mode == OPENGL )
-  {
-    // Generate the video mode string
-    std::ostringstream videoMode;
-    videoMode << windowWidth << " x " << windowHeight;;
+	// Set render system to ogre
+	ogreRoot.setRenderSystem( selectedRenderSystem );
 
-    // Set render system settings
-    selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );  
-    if ( !m_fullscreen )
-      selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
+	// Configure rest of the settings depending on the rendering system selected
+	if ( mode == OPENGL )
+	{
+		// Generate the video mode string
+		std::ostringstream videoMode;
+		videoMode << windowWidth << " x " << windowHeight;;
 
-    // Set render system settings specified by user
-    // TODO: Make all options available to user
-    selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
-    selectedRenderSystem->setConfigOption( "VSync","Yes" );
+		// Set render system settings
+		selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );  
+		if ( !m_fullscreen )
+			selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
 
-  }
-  else if ( mode == DIRECTX )
-  {
-    // Generate the video mode string
-    std::ostringstream videoMode;
-    videoMode << windowWidth << " x " << windowHeight << " @ 32-bit colour";
+		// Set render system settings specified by user
+		// TODO: Make all options available to user
+		selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
+		selectedRenderSystem->setConfigOption( "VSync","Yes" );
 
-    // Set render system settings specified by user
-    selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );  
-    if ( !m_fullscreen )
-      selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
+	}
+	else if ( mode == DIRECTX )
+	{
+		// Generate the video mode string
+		std::ostringstream videoMode;
+		videoMode << windowWidth << " x " << windowHeight << " @ 32-bit colour";
 
-    // Rest options with default values
-    selectedRenderSystem->setConfigOption("VSync","Yes");
+		// Set render system settings specified by user
+		selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );  
+		if ( !m_fullscreen )
+			selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
 
-  }
+		// Rest options with default values
+		selectedRenderSystem->setConfigOption("VSync","Yes");
+
+	}
 
 
-  // Set up done
-  m_setupCalled = true;
+	// Set up done
+	m_setupCalled = true;
 }
 
 /**
- * @internal
- * @brief   Reset style stack
- */
+* @internal
+* @brief   Reset style stack
+*/
 void GraphicsManager::clearStyleStack()
 {
 	m_styles.clear();
 	m_styles.push_front(Style(Color(255,255,255), Color(0,0,0), 1));
 };
 /**
- * @internal
- * @brief   Reset matrix stack (Clear and add one identity transform)
- */
+* @internal
+* @brief   Reset matrix stack (Clear and add one identity transform)
+*/
 void GraphicsManager::clearMatrixStack()
 {
 	while ( !m_transforms.empty() )
@@ -403,85 +417,85 @@ void GraphicsManager::clearMatrixStack()
 };
 
 /**
- * @internal
- * @brief   Returns true if the system supports vertex programs (vertex shaders)
- * @return  true if the system supports vertex programs (vertex shaders)
- */
+* @internal
+* @brief   Returns true if the system supports vertex programs (vertex shaders)
+* @return  true if the system supports vertex programs (vertex shaders)
+*/
 bool GraphicsManager::hasVertexProgramsSupport() const
 {
-  // Get system capabilities
-  const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
+	// Get system capabilities
+	const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
 
-  // Check vertex programs
-  if ( caps->hasCapability( Ogre::RSC_VERTEX_PROGRAM ) )
-    return true;
+	// Check vertex programs
+	if ( caps->hasCapability( Ogre::RSC_VERTEX_PROGRAM ) )
+		return true;
 
-  // Not supported
-  return false;
+	// Not supported
+	return false;
 }
 
 /**
- * @internal
- * @brief   Returns true if the system supports fragment programs (pixel shaders)
- * @return  true if the system supports pixel programs (pixel shaders)
- */
+* @internal
+* @brief   Returns true if the system supports fragment programs (pixel shaders)
+* @return  true if the system supports pixel programs (pixel shaders)
+*/
 bool GraphicsManager::hasFragmentProgramsSupport() const
 {
-  // Get system capabilities
-  const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
+	// Get system capabilities
+	const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
 
-  // Check fragment programs
-  if ( caps->hasCapability( Ogre::RSC_FRAGMENT_PROGRAM ) )
-    return true;
+	// Check fragment programs
+	if ( caps->hasCapability( Ogre::RSC_FRAGMENT_PROGRAM ) )
+		return true;
 
-  // Not supported
-  return false;
+	// Not supported
+	return false;
 }
 
 
 /**
- * @internal
- * @brief   Returns true if the system supports bump mapping.
- * To support bump mapping the system need support of: vertex programs, and (fragment programs or dot3 texture
- * in the fixed-function pipeline)
- * @return  true if the system supports bump mapping
- */
+* @internal
+* @brief   Returns true if the system supports bump mapping.
+* To support bump mapping the system need support of: vertex programs, and (fragment programs or dot3 texture
+* in the fixed-function pipeline)
+* @return  true if the system supports bump mapping
+*/
 bool GraphicsManager::hasBumpMappingSupport() const
 {
-  // Get system capabilities
-  const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
+	// Get system capabilities
+	const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
 
-  // Check capabilities programs
-  if (  caps->hasCapability( Ogre::RSC_VERTEX_PROGRAM ) && 
-        ( caps->hasCapability( Ogre::RSC_FRAGMENT_PROGRAM ) || caps->hasCapability( Ogre::RSC_DOT3 ) ) )
-    return true;
+	// Check capabilities programs
+	if (  caps->hasCapability( Ogre::RSC_VERTEX_PROGRAM ) && 
+		( caps->hasCapability( Ogre::RSC_FRAGMENT_PROGRAM ) || caps->hasCapability( Ogre::RSC_DOT3 ) ) )
+		return true;
 
-  // Not supported
-  return false;
+	// Not supported
+	return false;
 }
 
 /**
- * @brief Sets the render mode used to draw the objects in the scene
- *
- * @param mode Active render mode. Possible values: POINTS, WIREFRAME, SOLID
- */
+* @brief Sets the render mode used to draw the objects in the scene
+*
+* @param mode Active render mode. Possible values: POINTS, WIREFRAME, SOLID
+*/
 void GraphicsManager::setRenderMode( RenderMode mode )
 {
-  // Check application correctly initialized (could not be if the user didn't call size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Framework::Application::getSingleton().checkSubsystemsInit();
 
 	m_activeCamera.getOgreCamera()->setPolygonMode( (Ogre::PolygonMode) mode );
 }
 
 /**
- * @brief Sets the fill color used to draw all shapes rendered after this call.
- *
- * @param Color color to use to fill shapes
- */
+* @brief Sets the fill color used to draw all shapes rendered after this call.
+*
+* @param Color color to use to fill shapes
+*/
 void GraphicsManager::setFillColor( const Color& color )
 {
-  // Check application correctly initialized (could not be if the user didn't call size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Framework::Application::getSingleton().checkSubsystemsInit();
 
 	m_styles.front().m_fillColor = color;
 
@@ -493,14 +507,14 @@ void GraphicsManager::setFillColor( const Color& color )
 }
 
 /**
- * @brief Sets the border color used to draw shapes after this call.
- *
- * @param Color color to use to draw the border of shapes
- */
+* @brief Sets the border color used to draw shapes after this call.
+*
+* @param Color color to use to draw the border of shapes
+*/
 void GraphicsManager::setStrokeColor( const Color& color )
 {
-  // Check application correctly initialized (could not be if the user didn't call size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Framework::Application::getSingleton().checkSubsystemsInit();
 
 	m_styles.front().m_strokeColor = color;
 
@@ -508,24 +522,24 @@ void GraphicsManager::setStrokeColor( const Color& color )
 }
 
 /**
- * @brief Sets the border color used to draw shapes after this call.
- *
- * @param Color color to use to draw the border of shapes
- */
+* @brief Sets the border color used to draw shapes after this call.
+*
+* @param Color color to use to draw the border of shapes
+*/
 void GraphicsManager::setStrokeWeight( int weight )
 {
-  // Check application correctly initialized (could not be if the user didn't call size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Framework::Application::getSingleton().checkSubsystemsInit();
 
 	m_styles.front().m_strokeWeight = weight;
 }
 
 /**
- * @internal 
- * @brief Makes the frames per second to be printed on the screen or not
- *
- * @param show if true the current fps wil be printed on screen, if false, it won't be printed
- */
+* @internal 
+* @brief Makes the frames per second to be printed on the screen or not
+*
+* @param show if true the current fps wil be printed on screen, if false, it won't be printed
+*/
 void GraphicsManager::showFps( bool show )
 {
 	m_showFps = show;
@@ -533,23 +547,23 @@ void GraphicsManager::showFps( bool show )
 
 
 /**
- * @brief Allows to enable or disable the default 3d camera control
- *
- * @param useDefault If true, the default camera control will be enabled. 
- * If false, it will be disable, so the user will be reposible to control the 3d camera
- * if it is required.
- *
- * @note The default camera control is composed by:
- * - mouse: controls rotation
- * - keyboard:
- *		- arrow keys: moves forward/backward/left/right
- *		- pg up/down: moves camera up and down
- *		- r: restore camera rotation to initial settings
- */
+* @brief Allows to enable or disable the default 3d camera control
+*
+* @param useDefault If true, the default camera control will be enabled. 
+* If false, it will be disable, so the user will be reposible to control the 3d camera
+* if it is required.
+*
+* @note The default camera control is composed by:
+* - mouse: controls rotation
+* - keyboard:
+*		- arrow keys: moves forward/backward/left/right
+*		- pg up/down: moves camera up and down
+*		- r: restore camera rotation to initial settings
+*/
 void GraphicsManager::useDefault3DCameraControl( bool useDefault )
 {
-  // Check application correctly initialized (could not be if the user didn't call size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Framework::Application::getSingleton().checkSubsystemsInit();
 
 	// Enable controller
 	if ( useDefault )
@@ -560,25 +574,25 @@ void GraphicsManager::useDefault3DCameraControl( bool useDefault )
 }
 
 /**
- * @internal 
- * @brief Informs that an image is created (so it can be be drawn), it will be made invisible after each frame is rendered.
- * This way, if the user does not call the draw method for the same image in any frame, it won't be rendered
- * @note This is a bit triky, but allows to emulate software rendering (this is, the image is renderd just when the draw method
- * is called), when it is really working with ogre's 3d scene manager
- *
- * @param img Image that is going to be rendered
- */
+* @internal 
+* @brief Informs that an image is created (so it can be be drawn), it will be made invisible after each frame is rendered.
+* This way, if the user does not call the draw method for the same image in any frame, it won't be rendered
+* @note This is a bit triky, but allows to emulate software rendering (this is, the image is renderd just when the draw method
+* is called), when it is really working with ogre's 3d scene manager
+*
+* @param img Image that is going to be rendered
+*/
 void GraphicsManager::addDrawableImage( TexturedQuad* img)
 {
 	m_drawableImagesQueue.push_back( img );
 }
 
 /**
- * @internal 
- * @brief Informs that an image that was added as drawable image (@sa addDrawableImage) is being released
- *
- * @param img Image that is going to be rendered
- */
+* @internal 
+* @brief Informs that an image that was added as drawable image (@sa addDrawableImage) is being released
+*
+* @param img Image that is going to be rendered
+*/
 void GraphicsManager::removeDrawableImage( TexturedQuad* img)
 {
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
@@ -591,16 +605,16 @@ void GraphicsManager::removeDrawableImage( TexturedQuad* img)
 }
 
 /**
- * @brief Modifies the location from which rectangles draw
- */
+* @brief Modifies the location from which rectangles draw
+*/
 void GraphicsManager::setRectMode( int	mode )
 {
 	m_rectMode = mode;
 }
 
 /**
- * @brief Modifies the location from which ellipses draw
- */
+* @brief Modifies the location from which ellipses draw
+*/
 void GraphicsManager::setEllipseMode( int	mode )
 {
 	m_ellipseMode = mode;
@@ -608,18 +622,18 @@ void GraphicsManager::setEllipseMode( int	mode )
 
 
 /**
- * @internal 
- * @brief Modifies the background of the window 
- * (really the main viewport in the window)
- * @param[in] color Color to set to the background
- */
+* @internal 
+* @brief Modifies the background of the window 
+* (really the main viewport in the window)
+* @param[in] color Color to set to the background
+*/
 void GraphicsManager::setBackgroundColor( const Color& color )
 {
-  // Check application correctly initialized (could not be if the user didn't call size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Framework::Application::getSingleton().checkSubsystemsInit();
 
-  if ( !isValid() )
-    return;
+	if ( !isValid() )
+		return;
 
 	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
 
@@ -628,10 +642,10 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 }
 
 /**
- * @brief 
- *
- * @param mode
- */
+* @brief 
+*
+* @param mode
+*/
 bool GraphicsManager::loadCollada( const Common::String& fileName )
 {
 	// Create importer

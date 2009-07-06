@@ -25,6 +25,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <string>
 #include <iostream>
 #include <sstream>
+#include "externLibs/Ogre3d/include/OgreUTFString.h"
 
 
 namespace Common
@@ -45,10 +46,12 @@ namespace Common
 		char				charAt		( int index );
 		int					indexOf		( const std::string& str );
 		int					indexOf		( const std::string& str, int fromIndex );
-		int					length	  () { return (int)size(); }
-		String			substring ( int beginIndex );
-		String			substring ( int beginIndex, int endIndex );
-		const char*	toChar    () const { return c_str(); }
+		int					length		() { return (int)size(); }
+		String				substring	( int beginIndex );
+		String				substring	( int beginIndex, int endIndex );
+		const char*			toChar		() const { return c_str(); }
+		Ogre::UTFString		toUTF		() const;		
+
 
 		// Compare
 		bool equals ( const std::string& str );

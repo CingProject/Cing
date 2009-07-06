@@ -35,17 +35,18 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 /// Contains all communication with 3d graphics system (Ogre Library) and rendering management
 namespace Graphics
 {
-  class GraphicsManager;
-  class Window;
-  class Camera3D;
-  class Font;
-  class Text;
+	class GraphicsManager;
+	class Window;
+	class Camera3D;
+	class Font;
+	class TextArea;
 	class ImageResourceManager;
 	class Image;
 	class TexturedQuad;
 	class Style;
 	class ShapeManager;
 	class Shape;
+	class Color;
 }
 
 // Ogre Forward declarations

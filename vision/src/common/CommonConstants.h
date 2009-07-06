@@ -32,16 +32,39 @@
 */
 namespace Common
 {
+// Input
+
 	// Mouse buttons
-	static const int LEFT			= OIS::MB_Left;
-	static const int RIGHT		= OIS::MB_Right;
-	static const int CENTER		= OIS::MB_Middle;
+	const int LEFT		= OIS::MB_Left;
+	const int RIGHT		= OIS::MB_Right;
+	const int CENTER	= OIS::MB_Middle;
 
 	// Drawing Modes
-	static const int CORNER		= 0;
-	static const int CORNERS	= 1;
-	//static const int CENTER		= 2;
-	static const int RADIUS		= 3;
+	const int CORNER	= 0;
+	const int CORNERS	= 1;
+	//const int CENTER	= 2;
+	const int RADIUS	= 3;
+
+
+// Typography
+
+	/// Mode in which the text will be rendered 
+	enum TextMode 
+	{ 
+		MODEL,	///< Render in 3d space (although it can have only 2d coordinates, but it will be rendered in 3d space)
+		SCREEN	///< Screen space (it will be rendered over all 3d stuff)	
+	};
+	
+	/// Allightment of text (in relation to its center coordinates)
+	//const int LEFT		= 0;	// Shared with mouse
+	//const int RIGHT		= 1;	// Shared with mouse
+	//const int CENTER		= 2;	// Shared with mouse
+
+	/// Vertical alignment
+	const int TOP			= 1; 
+	//const int CENTER		= 2;	// Shared with mouse
+	const int BOTTOM		= 3; 
+	
 }
 
 

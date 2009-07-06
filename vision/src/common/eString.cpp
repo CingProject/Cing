@@ -99,5 +99,19 @@ String String::substring( int beginIndex, int endIndex ) {
 	return result;
 }
 
+Ogre::UTFString String::toUTF() const
+{
+   Ogre::UTFString UTFString;
+   int i;
+   Ogre::UTFString::code_point cp;
+   for (i=0; i<(int)this->size(); ++i)
+   {
+      cp = (*this)[i];
+      cp &= 0xFF;
+      UTFString.append(1, cp);
+   }
+   return UTFString;
+}
+
 }
 

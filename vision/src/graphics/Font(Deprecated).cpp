@@ -1,4 +1,4 @@
-/*
+/**
   This source file is part of the Vision project
   For the latest info, see http://www.playthemagic.com/vision
 
@@ -19,29 +19,27 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "DebugOverlay.h"
-#include "Font.h"
+#include "Font(Deprecated).h"
+
+// Ogre
+#include "externLibs/Ogre3d/include/OgreFontManager.h"
 
 // Framework
 #include "framework/Application.h"
-
-// Ogre
-#include "externLibs/Ogre3d/include/OgreOverlayManager.h"
-#include "externLibs/Ogre3d/include/OgreOverlayContainer.h"
-#include "externLibs/Ogre3d/include/OgreTextAreaOverlayElement.h"
 
 namespace Graphics
 {
 
 // Static member definition
-const std::string DebugOverlay::DEFAULT_DEBUG_PANEL_NAME    = "DebugPanel";
-const std::string DebugOverlay::DEFAULT_DEBUG_TEXTAREA_NAME = "DebugTextArea";
+const std::string Font_Deprecated::DEFAULT_FONT_NAME       = "DefaultFont";
+const int         Font_Deprecated::DEFAULT_FONT_SIZE       = 16;
+const int         Font_Deprecated::DEFAULT_FONT_RESOLUTION = 96;
 
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-DebugOverlay::DebugOverlay():
+Font_Deprecated::Font_Deprecated():
   m_bIsValid( false )
 {
 }
@@ -50,7 +48,7 @@ DebugOverlay::DebugOverlay():
  * @internal
  * @brief Destructor. Class release.
  */
-DebugOverlay::~DebugOverlay()
+Font_Deprecated::~Font_Deprecated()
 {
   // Release resources
   end();
@@ -62,7 +60,7 @@ DebugOverlay::~DebugOverlay()
  *
  * @return true if the initialization was ok | false otherwise
  */
-bool DebugOverlay::init()
+bool Font_Deprecated::init( const std::string& name /*= DEFAULT_FONT_NAME*/, int size /*= DEFAULT_FONT_SIZE*/, int resolution /*= DEFAULT_FONT_RESOLUTION*/ )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -71,40 +69,13 @@ bool DebugOverlay::init()
   // Check application correctly initialized (could not be if the user didn't calle size function)
   Framework::Application::getSingleton().checkSubsystemsInit();
 
-  // Get the overlay manager
-  Ogre::OverlayManager& overlayMgr = Ogre::OverlayManager::getSingleton();
+  // Get the font manager
+  Ogre::FontManager &fontMgr = Ogre::FontManager::getSingleton();
 
-  // Create the panel to show the debug info 
-  Ogre::OverlayContainer* panel = static_cast< Ogre::OverlayContainer* >( overlayMgr.createOverlayElement( "Panel", DEFAULT_DEBUG_PANEL_NAME ) );
-  panel->setMetricsMode( Ogre::GMM_PIXELS );
+  // Load the font
+  Ogre::ResourcePtr font = fontMgr.getByName( DEFAULT_FONT_NAME );
+  font->load();
 
-  // Set panel properties
-  // TODO poner defaults
-  panel->setPosition( 10, 10 );
-  panel->setDimensions( 300, 120 );
-
-  // Create a text area to show the debug text
-  Ogre::TextAreaOverlayElement* textArea = static_cast< Ogre:: TextAreaOverlayElement* >( overlayMgr.createOverlayElement( "Font", DEFAULT_DEBUG_TEXTAREA_NAME ) );
-  textArea->setMetricsMode(Ogre::GMM_PIXELS);
-  textArea->setPosition(0, 0);
-  textArea->setDimensions(300, 120);
-  textArea->setCharHeight(26);
-
-  // set the font name to the font resource that you just created.
-  textArea->setFontName( "DefaultFont" );
-
-  // say something
-  textArea->setCaption( "Hello, World!" ); 
-
-  // Create an overlay, and add the panel
-  Ogre::Overlay* overlay = overlayMgr.create( "Overlay" );
-  overlay->add2D(panel);
-
-  // Add the text area to the panel
-  panel->addChild(textArea);
-
-  // Show the overlay
-  overlay->show();
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -117,7 +88,7 @@ bool DebugOverlay::init()
  * @brief Releases the class resources. 
  * After this method is called the class is not valid anymore.
  */
-void DebugOverlay::end()
+void Font_Deprecated::end()
 {
   // Check if the class is already released
   if ( !isValid() )
@@ -131,7 +102,7 @@ void DebugOverlay::end()
  * @internal
  * @brief Updates the class state
  */
-void DebugOverlay::update()
+void Font_Deprecated::update()
 {
 
 }

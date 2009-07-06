@@ -19,60 +19,49 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _Text_H_
-#define _Text_H_
+#ifndef _Font_Deprecated_H_
+#define _Font_Deprecated_H_
 
 #include "GraphicsPrereqs.h"
+
+// STL
+#include <string>
 
 namespace Graphics
 {
 
 /**
  * @internal
- * Class to print text to screen
+ * Class to create and control the properties of a font to print text on screen
  */
-class Text
+class Font_Deprecated
 {
 public:
 
 	// Constructor / Destructor
-	 Text();
-	~Text();
+	 Font_Deprecated();
+	~Font_Deprecated();
 
 	// Init / Release / Update
-	bool  load   ( const char* ttfName );
-	void  end    ();
+	bool init     ( const std::string& name = DEFAULT_FONT_NAME, int size = DEFAULT_FONT_SIZE, int resolution = DEFAULT_FONT_RESOLUTION );
+	void  end     ();
+	void  update  ();
 
 	// Query methods
-	bool  isValid() const { return m_bIsValid; }
+	bool  isValid () const { return m_bIsValid; }
 
-	// Set Methods
-	void  setText (char *szString);
-	void  setText (Ogre::String szString);
-	void  setPos  (float x,float y);
-	void  setCol  (float R,float G,float B,float I);
-	void	show		(bool show ) const;
-
+	// Const static attributes
+	static const std::string DEFAULT_FONT_NAME;       ///< Default font name
+	static const int         DEFAULT_FONT_SIZE;       ///< Default font size
+	static const int         DEFAULT_FONT_RESOLUTION; ///< Default font resolution
 
 private:
 
-	// Static Attributes
-	static int count; ///< Used to have unique names for the textAreas
-
 	// Attributes
-	std::string						m_fontName;
-	Ogre::String					m_uniqueName;
-	
-	// Ogre related attributes
-	Ogre::OverlayManager*			m_overlayManager;
-	Ogre::OverlayContainer*			m_panel ;
-	Ogre::Overlay*					m_overlay;
-	Ogre::TextAreaOverlayElement*	m_textArea;
-
 	bool  m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 
 } // namespace Graphics
 
-#endif // _Text_H_
+#endif // _Font_H_

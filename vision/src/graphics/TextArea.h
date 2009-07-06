@@ -19,13 +19,10 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _Font_H_
-#define _Font_H_
+#ifndef _TextArea_H_
+#define _TextArea_H_
 
 #include "GraphicsPrereqs.h"
-
-// Ogre
-#include "externLibs/Ogre3d/include/OgreFont.h"
 
 // Common
 #include "common/eString.h"
@@ -39,39 +36,48 @@ namespace Graphics
 	* @internal
 	* Class to print text to screen
 	*/
-	class Font
+	class TextArea
 	{
 	public:
 
 		// Constructor / Destructor
-		Font();
-		~Font();
+		TextArea();
+		~TextArea();
 
 		// Init / Release / Update
-		bool  load   ( const String& ttfName = DEFAULT_FONT_NAME, int size = DEFAULT_FONT_SIZE,  int resolution = DEFAULT_FONT_RESOLUTION );
+		bool  init   ( float width, float height );
 		void  end    ();
 
 		// Query methods
-		const String&	getFontName			() const { return m_fontName; }
-		int				getFontSize			() const { return m_fontSize; }
-		int				getFontResolution	() const { return m_fontRes; }
-		float			getTextWitdhInPixels() const;
-		Ogre::FontPtr	getOgreFont			() const { return Ogre::FontPtr( m_font ); }				
-		bool			isValid				() const { return m_bIsValid; }
+		const String&	getFontName	() const;
+		const String&	getText		() const;
+		bool			isValid		() const { return m_bIsValid; }
 
-		// Const static attributes
-		static const std::string DEFAULT_FONT_NAME;       ///< Default font name
-		static const int         DEFAULT_FONT_SIZE;       ///< Default font size
-		static const int         DEFAULT_FONT_RESOLUTION; ///< Default font resolution
-
+		// Set Methods
+		void	setText		(const String& str);
+		void	setFontName	(const String& fontName);
+		void	setPos  	(float x,float y);
+		void	setCol  	(const Color& color);
+		void	setSize		(float size);
+		void	show		(bool show ) const;
 
 	private:
 
+		// Static Attributes
+		static long		count; ///< Used to have unique names for the textAreas
+		static String	m_panelName;
+		static String	m_overlayName;
+
 		// Attributes
-		Ogre::FontPtr					m_font;
+		String							m_textAreaName;
 		String							m_fontName;
-		int								m_fontSize;
-		int								m_fontRes;
+		String							m_text;
+
+		// Ogre related attributes
+		Ogre::OverlayManager*			m_overlayManager;
+		Ogre::OverlayContainer*			m_panel ;
+		Ogre::Overlay*					m_overlay;
+		Ogre::TextAreaOverlayElement*	m_textArea;
 
 		bool  m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 

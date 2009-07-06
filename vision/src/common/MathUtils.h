@@ -28,6 +28,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "PerlinNoise.h"
 #include "framework/UserAppGlobals.h"
 
+#include "externLibs/Ogre3d/include/OgreBitwise.h"
+
 #include <numeric>
 /**
  * @file
@@ -50,12 +52,9 @@ const float EPSILON     = 0.00001f;
  * @param[in] number Number from which the next power of two will be returned
  * @return the next power of 2 of a given number
  */
-inline int nextPowerOf2( int number )
+inline int firstPO2From( int number )
 {
-	int rval = 1;
-	while( rval < number )
-        rval <<= 1;
-	return rval;
+	return Ogre::Bitwise::firstPO2From(number);
 }
 
 /*
