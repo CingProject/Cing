@@ -714,7 +714,23 @@
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\..\src\graphics\Text.h"
+							RelativePath="..\..\..\..\src\graphics\FontManager.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\FontProperties.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\MovableText.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\OgreFontHelper.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\TextArea.h"
 							>
 						</File>
 					</Filter>
@@ -878,7 +894,15 @@
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\..\src\graphics\Text.cpp"
+							RelativePath="..\..\..\..\src\graphics\FontManager.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\MovableText.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\TextArea.cpp"
 							>
 						</File>
 					</Filter>

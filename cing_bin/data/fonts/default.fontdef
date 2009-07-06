@@ -1,9 +1,9 @@
 DefaultFont
 {
-	type 		    truetype
-	source 		  CALIBRI.TTF
+	type			truetype
+	source 			CALIBRI.TTF
 	size 		    16
-	resolution 	96
+	resolution 		96
 }
 
 
