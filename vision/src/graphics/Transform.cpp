@@ -129,6 +129,17 @@ Vector Transform::getRotation	()
 	Ogre::Quaternion rot = m_4x4.extractQuaternion();
 	return Vector(	rot.getYaw().valueRadians(), rot.getPitch().valueRadians(),	rot.getRoll().valueRadians() );
 }
+
+/**
+ * @brief Returns the rotation Quaternion
+ *
+ * @param mode
+ */
+Quaternion Transform::getRotQuaternion()
+{
+	return m_4x4.extractQuaternion();
+}
+
 /**
  * @brief Returns the scale Vector
  *

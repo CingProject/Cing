@@ -14,7 +14,7 @@
 // Common
 #include "common/CommonUtilsIncludes.h"
 #include "common/CommonConstants.h"
-
+#include "common/CommonTypes.h"
 
 // Ogre
 #include "externLibs/Ogre3d/include/Ogre.h"
@@ -91,8 +91,17 @@ namespace Graphics
 			// Note: Vertex buffer will be created in checkMemoryAllocation
 			checkMemoryAllocation( DEFAULT_INITIAL_CHARS );
 
+			// Set default font for now
+			setFontName( "DefaultFont" );
+
 			m_bIsValid = true;
 		}
+
+		// Reset vars
+		mLocalTranslation	= Vector::ZERO;
+		mGlobalTranslation	= Vector::ZERO;
+		mScale				= Vector::UNIT_SCALE;
+		mLocalRotation		= Matrix3::IDENTITY;
 	}
 
 	void MovableText::end()
@@ -198,14 +207,31 @@ namespace Graphics
 		}
 	}
 
-	void MovableText::setGlobalTranslation( Vector trans )
+	void MovableText::setGlobalTranslation( const Vector& trans )
 	{
 		mGlobalTranslation = trans;
 	}
 
-	void MovableText::setLocalTranslation( Vector trans )
+	void MovableText::setLocalTranslation( const Vector& trans )
 	{
 		mLocalTranslation = trans;
+	}
+
+	void MovableText::setRotation( const Vector& rotation )
+	{
+		// Build quaterniotn to build then rot matrix
+		Quaternion q( &rotation );
+		q.ToRotationMatrix( mLocalRotation );
+	}
+
+	void MovableText::setRotation( const Quaternion& quat )
+	{
+		quat.ToRotationMatrix( mLocalRotation );
+	}
+
+	void MovableText::setScale( const Vector& scale )
+	{
+		mScale = scale;
 	}
 
 	void MovableText::show( bool show /*= true*/ )
@@ -512,12 +538,12 @@ namespace Graphics
 			ppos += rot3x3*mLocalTranslation;
 
 			// apply scale
-			scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2;
-			scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2;
-			scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2;
+			scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2 * mScale.x;
+			scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2 * mScale.y;
+			scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2 * mScale.z;
 
 			// apply all transforms to xform       
-			*xform = (rot3x3 * scale3x3);
+			*xform = (rot3x3 * mLocalRotation * scale3x3);
 			xform->setTrans(ppos);
 		}
 		// 3d -> rotations allowed
@@ -525,23 +551,26 @@ namespace Graphics
 		{
 			// apply scale from parent (divided by 2... TODO: not sure why is necessary)
 			Matrix3 rot3x3, scale3x3 = Matrix3::IDENTITY;
-			scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2;
-			scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2;
-			scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2;
+			scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2 * mScale.x;
+			scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2 * mScale.y;
+			scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2 * mScale.z;
 
 			// parent node rotation
 			mParentNode->_getDerivedOrientation().ToRotationMatrix(rot3x3);
 
+			// TEMP hasta que se ajuste sistema de coordenadas global!!!
+			mpCam->getDerivedOrientation().ToRotationMatrix(rot3x3);
+
 			// parent node position
 			Vector ppos = mParentNode->_getDerivedPosition() + mGlobalTranslation;
-			ppos += mLocalTranslation;
+			ppos += rot3x3*mLocalTranslation;
 
 			// apply all transforms (scale + translation)to xform       
-			*xform = (rot3x3 * scale3x3);
+			*xform = (rot3x3 * mLocalRotation * scale3x3);
 			xform->setTrans(ppos);
 
+			// FIRST TIME TRIED (Working)
 			//*xform = mParentNode->_getFullTransform();
-
 		}	
 	}
 

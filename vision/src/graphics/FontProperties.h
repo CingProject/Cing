@@ -52,7 +52,7 @@ namespace Graphics
 		{
 			// Default values
 			fontName	= Font::DEFAULT_FONT_NAME;
-			size		= -1;		// Use default size (the one specified in the ttf when loaed)
+			size		= 25;		// Use default size (the one specified in the ttf when loaed)
 			x			= 0;
 			y			= 0;
 			z			= 0;

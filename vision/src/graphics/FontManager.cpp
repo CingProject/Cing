@@ -130,17 +130,31 @@ namespace Graphics
 		
 		// Set properties for the new text
 		newText->init();
+
+		// Font properties
 		newText->setFontName( m_activeFontProperties.fontName );
 		newText->setCharacterHeight( m_activeFontProperties.size );
 		newText->setColor( GraphicsManager::getSingleton().getFillColor().normalized() );
 		newText->setTextAreaWidth( m_activeFontProperties.width );
 		newText->setTextAreaHeight( m_activeFontProperties.height );
-		newText->showOnTop();
-		newText->setAlwaysFaceCamera( true );
-		newText->show();
 		newText->setTextAlignment(m_activeFontProperties.halign, m_activeFontProperties.valign);
 		newText->setCaption( m_activeFontProperties.text.toUTF() );
+
+		// Text display properties
+		newText->showOnTop();
+		newText->setAlwaysFaceCamera( false );
+		newText->show();
+
+		// Text transformation properties
+		Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+		newText->setGlobalTranslation(  t.getPosition() );
+		newText->setRotation( t.getRotQuaternion() );
+		newText->setScale( t.getScale() );
+
+		// Set text area local transformation (transformation passed to the text function)
 		newText->setGlobalTranslation( Vector( m_activeFontProperties.x, m_activeFontProperties.y, m_activeFontProperties.z ) );
+
+		// Setup text geometry for render
 		newText->_setupGeometry();
 	}
 

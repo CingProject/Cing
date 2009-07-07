@@ -54,14 +54,17 @@ namespace Graphics
 			
 		// Set settings
 		void    setFontName				(const String &fontName);
-		void    setCaption				(const Ogre::DisplayString &caption);
-		void    setColor				(const Color &color);
+		void    setCaption				(const Ogre::DisplayString& caption);
+		void    setColor				(const Color& color);
 		void    setCharacterHeight		(float height);
 		void    setSpaceWidth			(float width);
 		void	setWordWrap				(bool wordWrap) { mwordWrap = wordWrap; }
 		void    setTextAlignment		(int horizontalAlignment, int verticalAlignment);
-		void    setGlobalTranslation	( Vector trans );
-		void    setLocalTranslation		( Vector trans );
+		void    setGlobalTranslation	( const Vector& trans );
+		void    setLocalTranslation		( const Vector& trans );
+		void	setRotation				( const Vector& rotation );
+		void	setRotation				( const Quaternion& quat );
+		void	setScale				( const Vector& scale );
 		void	show					( bool show = true );
 		void    showOnTop				( bool show = true );
 		void	setAlwaysFaceCamera		( bool alwaysFaceCamera ) { mAlwaysFaceCamera = alwaysFaceCamera; }
@@ -165,6 +168,8 @@ namespace Graphics
 
 		Vector            			mGlobalTranslation;
 		Vector            			mLocalTranslation;
+		Vector						mScale;
+		Matrix3						mLocalRotation;
 
 		Ogre::Camera				*mpCam;
 		Ogre::RenderWindow			*mpWin;
