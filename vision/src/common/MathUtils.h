@@ -31,6 +31,15 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "externLibs/Ogre3d/include/OgreBitwise.h"
 
 #include <numeric>
+
+// Undefine previous min/max definitions ( from other libs ) 
+#ifdef max
+#undef max
+#endif // max
+#ifdef min
+#undef min
+#endif // min
+
 /**
  * @file
  * This file contains several mathematical util functions

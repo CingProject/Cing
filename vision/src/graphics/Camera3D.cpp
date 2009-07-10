@@ -91,17 +91,21 @@ bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& c
 	// Create the camera scene and sets its initial properties
 	m_pOgreCamera = pOgreSceneManager->createCamera( cameraName );
 
-	// Set properties
-	//m_pOgreCamera->setPosition( 0, 0, 2000 );
-	//m_pOgreCamera->lookAt( 0, 0, 0 );
-
 	// Create camera scene node and add it to the scene manager
 	m_cameraSceneNode = pOgreSceneManager->getRootSceneNode()->createChildSceneNode();	
 	m_cameraSceneNode->attachObject( m_pOgreCamera );
 
+    // Set initial properties:
+	m_aspectRatio = static_cast< float >( Globals::width ) / static_cast< float >( Globals::height );
+	m_pOgreCamera->setAspectRatio( 1.33333 );
+	m_pOgreCamera->setFOVy(Ogre::Radian(degToRad(Camera3D::V_FOV_DEG)));
+	m_cameraSceneNode->setPosition( 0, 0, 2000 );
+	m_cameraSceneNode->lookAt( Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD );
+
+	/*
 	//TEST
 	set3DCameraProperties();
-
+    */
 
 	// Set Frustum
 	m_pOgreCamera->setNearClipDistance( 10 );
@@ -154,6 +158,7 @@ void Camera3D::moveRelative( const Vector& move )
  * @brief Sets the camera in a way that the coordinate system of the scene is the same for 3d and 2d, this is
  * origin is upper left corner
  */
+/*
 void Camera3D::set3DCameraProperties()
 {
   // Calculate the camera distance
@@ -189,4 +194,6 @@ void Camera3D::set3DCameraProperties()
   m_cameraSceneNode->lookAt( m_cameraLookAt, Ogre::Node::TS_WORLD );
 
 }
+*/
+
 } // namespace Graphics

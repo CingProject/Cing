@@ -58,7 +58,7 @@ void print( const char* msg, ... )
 
 	// Print it to debug output
 	// TODO Decide policy
-	//GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( msgFormated );
+	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( msgFormated );
 
 	// If in windows, output it to the output debug string of the visual studio
 	// TODO: decide policy
@@ -87,7 +87,7 @@ void println( const char* msg, ... )
 
 	// Print it to debug output
 	// TODO: decide policy
-	//GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
+	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
 
 	// If in windows, output it to the output debug string of the visual studio
 	// TODO: decide policy

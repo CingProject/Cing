@@ -914,16 +914,6 @@ void save( const String& name )
 {
 	GraphicsManager::getSingleton().save( name );
 };
-/**
- * @brief 
- *
- * @param mode
- */
-bool loadCollada( const Common::String& fileName )
-{
-	return GraphicsManager::getSingleton().loadCollada( fileName );
-};
-
 
 //----------------------------------------------------------------------------------- 
 // Typography

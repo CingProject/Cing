@@ -130,8 +130,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
   material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
   material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
   material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
-  //material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_ANTICLOCKWISE );
-
+  material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
 
 	/*
 
@@ -349,10 +348,17 @@ void TexturedQuad::draw( float x, float y, float z, float width, float height )
 	// If the object is set to render in 2d -> set it to render in 3d
 	if ( m_render2D )
 		set3dRendering();
+    
+	// Finally, set coordinates in the selected system
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+	{
+		m_quadSceneNode->setPosition( x, y + height, z );
+		m_quadSceneNode->setScale( width, -height, 1 );
+	}else{
+		m_quadSceneNode->setPosition( x, y, z );
+		m_quadSceneNode->setScale( width, height, 1 );
+	}
 
-	// Set properties of the quad, and set visible -> it will be rendered in the next render
-	m_quadSceneNode->setPosition( x, y, z );
-	m_quadSceneNode->setScale( width, height, 1 );
 	m_quadSceneNode->setVisible( true );
 }
 
@@ -390,6 +396,14 @@ void TexturedQuad::draw( float x1, float y1, float z1,
 	// Generate the geometry of the quad
 	m_quad->beginUpdate( 0 );
 
+	// Coordinate systems
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+	{
+		y1 = Globals::height - y1;
+		y2 = Globals::height - y2;
+		y3 = Globals::height - y3;
+		y4 = Globals::height - y4;
+	}
 	// m_quad positions and texture coordinates
 	// TODO revisar esto...por qué hay q voltear las coordenadas uv?
 	m_quad->position( x1, y1, z1 );  m_quad->textureCoord( 0, 0 );
@@ -426,12 +440,18 @@ void TexturedQuad::drawBackground( float x, float y )
 		LOG_ERROR( "Trying to draw a textured quad not initialized" );
 		return;
 	}
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+	{
+		// Set properties of the quad, and set visible -> it will be rendered in the next render
+		setScale2d( m_textWidth, -m_textHeight );
+		setPosition2d( x, Globals::height-y );
+	}else{
+		// Set properties of the quad, and set visible -> it will be rendered in the next render
+		setScale2d( m_textWidth, m_textHeight );
+		setPosition2d( x, Globals::height-y );
+	}
 
-	// Set properties of the quad, and set visible -> it will be rendered in the next render
-	setScale2d( m_textWidth, m_textHeight );
-	setPosition2d( x, y );
 	m_quadSceneNode->setVisible( true );
-
 }
 
 /**
@@ -455,17 +475,25 @@ void TexturedQuad::draw2d( float x, float y, float width, float height )
 		set2dRendering();
 
 	// Set properties of the quad, and set visible -> it will be rendered in the next render
-	setScale2d( width, height );
-	setPosition2d( x, y );
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+	{
+		// Set properties of the quad, and set visible -> it will be rendered in the next render
+		setScale2d( width, -height );
+		setPosition2d( x, Globals::height-y );
+	}else{
+		// Set properties of the quad, and set visible -> it will be rendered in the next render
+		setScale2d( width, height );
+		setPosition2d( x, Globals::height-y );
+	}
 	m_quadSceneNode->setVisible( true );
 }
 
 /**
- * @brief Draws the texture quad in two dimensions as a background
- * 
- * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
- * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
- */
+* @brief Draws the texture quad in two dimensions as a background
+* 
+* @param x X coordinate where it will be drawn <b>in screen coordinates</b>
+* @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
+*/
 void TexturedQuad::drawBackground( float x, float y, float width, float height )
 {
 	if ( !isValid() )
@@ -489,8 +517,17 @@ void TexturedQuad::drawBackground( float x, float y, float width, float height )
 	m_render2D = true;
 
 	// Set properties of the quad, and set visible -> it will be rendered in the next render
-	setScale2d( width, height );
-	setPosition2d( x, y );
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+	{
+		// Set properties of the quad, and set visible -> it will be rendered in the next render
+		setScale2d( m_textWidth, -m_textHeight );
+		setPosition2d( x, Globals::height-y );
+	}else{
+		// Set properties of the quad, and set visible -> it will be rendered in the next render
+		setScale2d( m_textWidth, m_textHeight );
+		setPosition2d( x, Globals::height-y );
+	}
+
 	m_quadSceneNode->setVisible( true );
 }
 

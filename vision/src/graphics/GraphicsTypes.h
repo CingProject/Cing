@@ -58,7 +58,10 @@ namespace Graphics
 		QUADS,
 		QUAD_STRIP,
 		// Other
-		CLOSE
+		CLOSE,
+	    // Coordinate systems
+		NORMAL,
+		PROCESSING
 	};
 
 	/// Filter types

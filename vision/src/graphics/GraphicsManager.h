@@ -148,9 +148,9 @@ namespace Graphics
 			m_frameName = name;
 		};
 
-		// Import Collada
-		bool loadCollada( const Common::String& fileName );
-
+		// Coordinate systems
+		bool isProcessingMode() { return ( m_coordSystem == PROCESSING );	}	
+		void applyCoordinateSystemTransform( GraphicsType coordSystem );
 
 		// 2D Canvas
 		Graphics::Image*			m_canvas;
@@ -211,9 +211,9 @@ namespace Graphics
 		bool							m_saveFrame;
 		Common::String					m_frameName;
 
+	    GraphicsType					m_coordSystem;
 		bool							m_showFps;				///< Indicates whether the frames per second should be shown or not
 		bool							m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
-
 	};
 
 } // namespace Graphics

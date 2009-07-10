@@ -64,26 +64,26 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 namespace Graphics
 {
 
-/**
-* @internal
-* @brief Constructor. Initializes class attributes.
-*/
-GraphicsManager::GraphicsManager():
-	m_bIsValid    ( false ),
-	m_showFps			( false ),
-	m_pSceneManager( NULL ),
-	m_canvas( NULL ),
-	m_fill( true ),
-	m_stroke( true ),
-	m_smooth( false ),
-	m_rectMode( CORNER ),
-	m_ellipseMode( CENTER ),
-	m_setupCalled( false ),
-	m_defaultWindowWidth( 640 ),
-	m_defaultWindowHeight( 480 ),
-	m_defaultGraphicMode( OPENGL ),
-	m_fullscreen( false ),
-	m_saveFrame(false)
+	/**
+	* @internal
+	* @brief Constructor. Initializes class attributes.
+	*/
+	GraphicsManager::GraphicsManager():
+m_bIsValid    ( false ),
+m_showFps			( false ),
+m_pSceneManager( NULL ),
+m_canvas( NULL ),
+m_fill( true ),
+m_stroke( true ),
+m_smooth( false ),
+m_rectMode( CORNER ),
+m_ellipseMode( CENTER ),
+m_setupCalled( false ),
+m_defaultWindowWidth( 640 ),
+m_defaultWindowHeight( 480 ),
+m_defaultGraphicMode( OPENGL ),
+m_fullscreen( false ),
+m_saveFrame(false)
 {
 }
 
@@ -204,6 +204,11 @@ bool GraphicsManager::init()
 	m_systemFont.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
 	m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
 
+	// Set default coordinate system:
+	m_coordSystem = NORMAL;
+
+	// This is to adjust 2d and 3d coordinates like in Processing:
+	applyCoordinateSystemTransform(Graphics::PROCESSING);
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -642,23 +647,44 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 }
 
 /**
-* @brief 
+* @brief Apply coordinate system transforms to subsequent rendering and camera
 *
-* @param mode
+* @param coordSystem
 */
-bool GraphicsManager::loadCollada( const Common::String& fileName )
+void GraphicsManager::applyCoordinateSystemTransform( GraphicsType coordSystem )
 {
-	// Create importer
-	OgreCollada::ImpExp *pImporterExporter = OgreCollada::CreateImpExp(Ogre::Root::getSingletonPtr(), m_pSceneManager);
+	if ( coordSystem == m_coordSystem)
+		return;
 
-	// Import collada file and check result
-	bool success = pImporterExporter->importCollada( Globals::dataFolder + fileName, "import1" );
-	if ( !success )
-		LOG_ERROR( "Error loading %s. It should be in the data folder", fileName.c_str() );
+	m_coordSystem = coordSystem;
+	switch(m_coordSystem)
+	{
+	case NORMAL:
+		{
+			// Reset camera position (and orientation?)
+			m_activeCamera.getSceneNode()->setPosition( Ogre::Vector3( 0, 0, 2000.0 ) );
+			// Reset applied simmetry to y-world axis
+			m_pSceneManager->getRootSceneNode()->setScale(1,1,1);
+		}
+		break;
+	case PROCESSING:
+		{
+			// Calculate new camera position 
+			float cameraDistance    =  (Globals::height / 2.0f ) / tanf( (m_activeCamera.getOgreCamera()->getFOVy().valueRadians()) / 2.0f );
 
-	OgreCollada::DestroyImpExp(pImporterExporter);
+			Ogre::Vector3 camPos = Ogre::Vector3( Globals::width/2.0, Globals::height/2.0, cameraDistance );
+			// Set the camera position
 
-	return success;
-	// TODO: Añadir generacion de nombres únicos
-};
+			m_activeCamera.getSceneNode()->setPosition( camPos );
+			m_activeCamera.getSceneNode()->lookAt( Ogre::Vector3(Globals::width/2.0, Globals::height/2.0, 0), Ogre::Node::TS_WORLD );
+
+			// Apply simmetry to y-world axis
+			m_pSceneManager->getRootSceneNode()->setScale(1,-1,1);
+		}	
+		break;
+	default:
+		break;
+	}
+
+}
 } // namespace Graphics
