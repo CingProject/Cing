@@ -84,6 +84,7 @@ namespace Graphics
 		void  ellipse		( float x, float y, float x2, float y2, float angle);
 		void  rect			( float x1, float y1, float x2, float y2 );
 		void  text			( float x1, float y1, const char* text );
+		void  fill          ( Graphics::Color theColor );
 
 		// Image processing
 		void	filter	( ImageProcessingFilters type );

@@ -1125,6 +1125,24 @@ void Image::ellipse( float x1, float y1, float x2, float y2, float angle )
 }
 
 /**
+ * @brief Fill the image woth input color
+ *
+ * @param Color
+ */
+void Image::fill( Graphics::Color theColor )
+{
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+
+	CvScalar tempColor = cvScalar(theColor.r, theColor.g, theColor.b);
+	cvSet(m_cvImage, tempColor );
+
+	// Update texture when the next drawing call is made by the user
+	m_bUpdateTexture = true;
+
+}
+/**
  * @brief Draws a ellipse inside an image
  *
  * @param x x, first point
