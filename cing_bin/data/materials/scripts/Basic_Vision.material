@@ -26,3 +26,20 @@ material EmptyMaterialNoCulling
       }   
    }
 }
+
+// This material allow to render the vertex color
+material VertexColorMaterial
+{
+    technique
+    {
+        pass
+        {
+         		cull_hardware none
+        		scene_blend alpha_blend
+        		lighting off
+            ambient  vertexcolour
+            diffuse  vertexcolour
+            emissive vertexcolour
+        }
+    }
+}
