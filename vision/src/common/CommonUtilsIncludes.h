@@ -19,8 +19,8 @@
   Inc., 59 Temple Place, Su ite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _CommonUtilsIncludes_h_
-#define _CommonUtilsIncludes_h_
+#ifndef _Cing_CommonUtilsIncludes_h_
+#define _Cing_CommonUtilsIncludes_h_
 
 /// @file This file contains the includes of all the common system utils of the library
 

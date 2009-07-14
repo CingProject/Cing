@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "ImageResourceManager.h"
 
 // Open CV
-#include "externLibs/OpenCV/cv/include/cv.h"
+#include "OpenCV/cv/include/cv.h"
 
 // Common
 #include "common/Exception.h"
@@ -125,7 +125,7 @@ void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
 	// Create the empty IplImage image
 	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 	m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
-		
+
 	// Create the texture quad (to draw image)
 	m_quad.init( m_cvImage->width, m_cvImage->height, format );
 
@@ -155,7 +155,7 @@ void Image::init( const Image& img )
 
 /**
  * @brief Creates an image from a file. The image loaded can be modified afterwards.
- * 
+ *
  * @note The image file specified should be placed on the data directory of the application
  *
  * @note Supported image formats are: .bmp, .jpg, .gif, .raw, .png, .tga and .dds.
@@ -170,9 +170,13 @@ void Image::load( const std::string& name  )
 
 	// Load file from disk
 	m_image.load( name, Common::ResourceManager::userResourcesGroupName );
-	
-	//Copy pixels from the OgreImage to the IplImage	
-	if ( m_cvImage != NULL ) 
+	if ( m_image.getData() )
+		LOG( "Image %s succesfully loaded", name.c_str() );
+	else
+		LOG( "Error loading Image %s", name.c_str() );
+
+	//Copy pixels from the OgreImage to the IplImage
+	if ( m_cvImage != NULL )
 		cvReleaseImage( &m_cvImage );
 
 	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( m_image.getFormat() );
@@ -181,7 +185,7 @@ void Image::load( const std::string& name  )
 
 	// Create the texture quad (to draw image)
 	m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), (GraphicsType)m_image.getFormat() );
-  
+
 	// Load image data to texture
 	updateTexture();
 
@@ -213,7 +217,7 @@ void Image::save( const std::string& name )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Image::end()
@@ -225,7 +229,7 @@ void Image::end()
 	m_quad.end();
 
 	//Release IplImage
-	// TODO check why this crashes.. 
+	// TODO check why this crashes..
 	//cvReleaseImage(&m_cvImage);
 	m_cvImage = NULL;
 
@@ -235,7 +239,7 @@ void Image::end()
 }
 
 /**
- * @brief Sets the data of the image 
+ * @brief Sets the data of the image
  *
  * @param imageData Data to set to the image
  * @param width			Width of the passed image data
@@ -267,7 +271,7 @@ void Image::setData( char* imageData, int width, int height, GraphicsType format
 
 
 /**
- * @brief Returns image width 
+ * @brief Returns image width
  * @return the height of the image
  */
 int Image::getWidth() const
@@ -285,7 +289,7 @@ int Image::getHeight() const
 }
 
 /**
- * @brief Returns image format 
+ * @brief Returns image format
  * @return the imageFomat of the image
  */
 GraphicsType Image::getFormat() const
@@ -345,7 +349,7 @@ Color Image::getPixel( int x, int y )
 		green = ((int)pixelPtr[ x*channels + 1 ]);
 		red   = ((int)pixelPtr[ x*channels + 2 ]);
 		alpha = 255;
-		break;  
+		break;
 	case 4:
 		blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
 		green = (abs)((int)pixelPtr[ x*channels + 1 ]);
@@ -390,7 +394,7 @@ void Image::flipVertical()
 /**
  * @brief Set if texture updates automatically every frame
  */
-void	Image::setUpdateTexture(bool updateTextureFlag ) 
+void	Image::setUpdateTexture(bool updateTextureFlag )
 {
 	m_bUpdateTexture = updateTextureFlag;
 }
@@ -438,18 +442,18 @@ void Image::draw( float xPos, float yPos, float zPos, float width, float height 
 /**
  * @brief Draws the image in a specific quad
  *
- * @param xPos x1 
- * @param yPos y1 
- * @param zPos z1 
- * @param xPos x2 
- * @param yPos y2 
- * @param zPos z2 
- * @param xPos x3 
- * @param yPos y3 
- * @param zPos z3 
- * @param xPos x4 
- * @param yPos y4 
- * @param zPos z4 
+ * @param xPos x1
+ * @param yPos y1
+ * @param zPos z1
+ * @param xPos x2
+ * @param yPos y2
+ * @param zPos z2
+ * @param xPos x3
+ * @param yPos y3
+ * @param zPos z3
+ * @param xPos x4
+ * @param yPos y4
+ * @param zPos z4
  */
 void Image::draw( float x1, float y1, float z1,
 								  float x2, float y2, float z2,
@@ -468,7 +472,7 @@ void Image::draw( float x1, float y1, float z1,
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Draws the image in 2d -> screen coordinates
  *
  * @param xPos x coordinate where the image should be drawn
@@ -494,7 +498,7 @@ void Image::draw2d( float xPos, float yPos )
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Draws the image in 2d -> screen coordinates
  *
  * @param xPos x coordinate where the image should be drawn
@@ -576,7 +580,7 @@ void Image::operator=( const Image& other )
 Image* Image::clone()
 {
 	// Check the other image is valid
-	if ( !isValid() )	
+	if ( !isValid() )
 		THROW_EXCEPTION( "Trying to copy an invalid image" );
 
 	return new Image( *this );
@@ -638,14 +642,14 @@ void Image::triangle( float x1, float y1, float x2, float y2, float x3, float y3
 		if (graphManager.getSmooth())
 		{
 			cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
-				strokeWeight,16,0); 
+				strokeWeight,16,0);
 			cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
 				strokeWeight,16,0);
 			cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x1,y1),CV_RGB(color.r,color.g,color.b),
 				strokeWeight,16,0);
 		}else{
 			cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
-				strokeWeight,4,0); 
+				strokeWeight,4,0);
 			cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
 				strokeWeight,4,0);
 			cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x1,y1),CV_RGB(color.r,color.g,color.b),
@@ -722,7 +726,7 @@ void Image::arc( float x, float y, float width, float height, float start, float
 		{
 			cvEllipse(	m_cvImage,							///-> Image.
 				cvPoint(x,y),						///-> Center of the ellipse.
-				cvSize(width,height),		///-> Length of the ellipse axes. 
+				cvSize(width,height),		///-> Length of the ellipse axes.
 				0,											///->	Rotation angle.
 				start,											///-> Starting angle of the elliptic arc.
 				end,										///-> Ending angle of the elliptic arc.
@@ -732,7 +736,7 @@ void Image::arc( float x, float y, float width, float height, float start, float
 		}else{
 			cvEllipse(	m_cvImage,							///-> Image.
 				cvPoint(x,y),						///-> Center of the ellipse.
-				cvSize(width,height),		///-> Length of the ellipse axes. 
+				cvSize(width,height),		///-> Length of the ellipse axes.
 				0,											///->	Rotation angle.
 				start,											///-> Starting angle of the elliptic arc.
 				end,										///-> Ending angle of the elliptic arc.
@@ -747,13 +751,13 @@ void Image::arc( float x, float y, float width, float height, float start, float
 		// Get Stroke Color
 		// Get Fill Color
 		Color color        = graphManager.getStrokeColor();
-		int   strokeWeight = graphManager.getStrokeWeight();	
+		int   strokeWeight = graphManager.getStrokeWeight();
 
 		if (graphManager.getSmooth())
 		{
 			cvEllipse(	m_cvImage,							///-> Image.
 									cvPoint(x,y),						///-> Center of the ellipse.
-									cvSize(width,height),		///-> Length of the ellipse axes. 
+									cvSize(width,height),		///-> Length of the ellipse axes.
 									0,											///->	Rotation angle.
 									start,											///-> Starting angle of the elliptic arc.
 									end,										///-> Ending angle of the elliptic arc.
@@ -764,7 +768,7 @@ void Image::arc( float x, float y, float width, float height, float start, float
 		}else{
 			cvEllipse(	m_cvImage,							///-> Image.
 									cvPoint(x,y),						///-> Center of the ellipse.
-									cvSize(width,height),		///-> Length of the ellipse axes. 
+									cvSize(width,height),		///-> Length of the ellipse axes.
 									0,											///->	Rotation angle.
 									start,											///-> Starting angle of the elliptic arc.
 									end,										///-> Ending angle of the elliptic arc.
@@ -812,7 +816,7 @@ void Image::point( float x, float y )
 	}
 
 	int   strokeWeight = graphManager.getStrokeWeight();
-	
+
 	// Draw a pixel
 	cvRectangle( m_cvImage,
 							 cvPoint(x,y),
@@ -868,13 +872,13 @@ void Image::quad( float x1, float y1, float x2, float y2, float x3, float y3, fl
 		// Get Stroke Color
 		// Get Fill Color
 		Color color        = graphManager.getStrokeColor();
-		int   strokeWeight = graphManager.getStrokeWeight();	
+		int   strokeWeight = graphManager.getStrokeWeight();
 
 		if (graphManager.getSmooth())
 		{
 
 			cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
-				strokeWeight,16,0); 
+				strokeWeight,16,0);
 			cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
 				strokeWeight,16,0);
 			cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x4,y4),CV_RGB(color.r,color.g,color.b),
@@ -885,7 +889,7 @@ void Image::quad( float x1, float y1, float x2, float y2, float x3, float y3, fl
 		}else{
 
 			cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),CV_RGB(color.r,color.g,color.b),
-				strokeWeight,4,0); 
+				strokeWeight,4,0);
 			cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),CV_RGB(color.r,color.g,color.b),
 				strokeWeight,4,0);
 			cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x4,y4),CV_RGB(color.r,color.g,color.b),
@@ -949,14 +953,14 @@ void Image::rect( float x1, float y1, float x2, float y2 )
 		switch( graphManager.getRectMode() )
 		{
 
-		case CORNER: 
+		case CORNER:
 			if (graphManager.getSmooth())
 				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 16);
 			else
 				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 4);
 			break;
 
-		case CORNERS: 
+		case CORNERS:
 			if (graphManager.getSmooth())
 				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), -1, 16);
 			else
@@ -970,7 +974,7 @@ void Image::rect( float x1, float y1, float x2, float y2 )
 				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), -1, 4);
 			break;
 
-		case RADIUS: 
+		case RADIUS:
 			if (graphManager.getSmooth())
 				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), -1, 16);
 			else
@@ -987,28 +991,28 @@ void Image::rect( float x1, float y1, float x2, float y2 )
 		switch( graphManager.getRectMode() )
 		{
 
-		case CORNER: 
+		case CORNER:
 			if (graphManager.getSmooth())
 				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case CORNERS: 
+		case CORNERS:
 			if (graphManager.getSmooth())
 				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case CENTER: 
+		case CENTER:
 			if (graphManager.getSmooth())
 				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvRectangle( m_cvImage, cvPoint(x1-widthDIV2,y1-heightDIV2), cvPoint(x1+widthDIV2,y1+heightDIV2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case RADIUS: 
+		case RADIUS:
 			if (graphManager.getSmooth())
 				cvRectangle( m_cvImage, cvPoint(x1-x2,y1-y2), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
@@ -1051,14 +1055,14 @@ void Image::ellipse( float x1, float y1, float x2, float y2, float angle )
 
 		switch( graphManager.getEllipseMode() )
 		{
-		case CORNER: 
+		case CORNER:
 			if (graphManager.getSmooth())
 				cvEllipse(	m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360,	CV_RGB(color.r,color.g,color.b),-1,16 );
 			else
 				cvEllipse(	m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360,	CV_RGB(color.r,color.g,color.b),-1,4 );
 			break;
 
-		case CORNERS: 
+		case CORNERS:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
 			else
@@ -1072,7 +1076,7 @@ void Image::ellipse( float x1, float y1, float x2, float y2, float angle )
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 4);
 			break;
 
-		case RADIUS: 
+		case RADIUS:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
 			else
@@ -1089,28 +1093,28 @@ void Image::ellipse( float x1, float y1, float x2, float y2, float angle )
 		switch( graphManager.getEllipseMode() )
 		{
 
-		case CORNER: 
+		case CORNER:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case CORNERS: 
+		case CORNERS:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case CENTER: 
+		case CENTER:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case RADIUS: 
+		case RADIUS:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), degrees(angle),	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
@@ -1134,7 +1138,7 @@ void Image::ellipse( float x1, float y1, float x2, float y2, float angle )
  */
 void Image::ellipse( float x1, float y1, float x2, float y2 )
 {
-	
+
 	// Check the image is valid
 	if ( !isValid() )
 		THROW_EXCEPTION( "Trying to paint in an invalid image" );
@@ -1152,14 +1156,14 @@ void Image::ellipse( float x1, float y1, float x2, float y2 )
 
 		switch( graphManager.getEllipseMode() )
 		{
-		case CORNER: 
+		case CORNER:
 			if (graphManager.getSmooth())
 				cvEllipse(	m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), 0,	0, 360,	CV_RGB(color.r,color.g,color.b),-1,16 );
 			else
 				cvEllipse(	m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), 0,	0, 360,	CV_RGB(color.r,color.g,color.b),-1,4 );
 			break;
 
-		case CORNERS: 
+		case CORNERS:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
 			else
@@ -1173,7 +1177,7 @@ void Image::ellipse( float x1, float y1, float x2, float y2 )
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), -1, 4);
 			break;
 
-		case RADIUS: 
+		case RADIUS:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), -1, 16);
 			else
@@ -1190,28 +1194,28 @@ void Image::ellipse( float x1, float y1, float x2, float y2 )
 		switch( graphManager.getEllipseMode() )
 		{
 
-		case CORNER: 
+		case CORNER:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case CORNERS: 
+		case CORNERS:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case CENTER: 
+		case CENTER:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
 				cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(widthDIV2,heightDIV2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
-		case RADIUS: 
+		case RADIUS:
 			if (graphManager.getSmooth())
 				cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), 0,	0, 360, CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
@@ -1333,7 +1337,7 @@ void Image::toColor()
 
 	// Mark texture to be updated in the next draw call
 	setUpdateTexture( true );
-	
+
 	// Release temp image
 	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
 
@@ -1381,7 +1385,7 @@ void Image::toGray()
 
 	// Mark texture to be updated in the next draw call
 	setUpdateTexture( true );
-	
+
 	// Release temp image
 	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
 

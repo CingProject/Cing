@@ -31,10 +31,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/CommonUtilsIncludes.h"
 
 // CEGUI
-#include "externLibs/Ogre3d/include/OgreCEGUIRenderer.h"
-#include "externLibs/Ogre3d/include/cegui/CEGUI.h"
-#include "externLibs/Ogre3d/include/cegui/elements/CEGUIScrollablePane.h"
-#include "externLibs/Ogre3d/include/cegui/elements/CEGUIListbox.h"
+#include "Ogre3d/include/OgreCEGUIRenderer.h"
+#include "Ogre3d/include/cegui/CEGUI.h"
+#include "Ogre3d/include/cegui/elements/CEGUIScrollablePane.h"
+#include "Ogre3d/include/cegui/elements/CEGUIListbox.h"
 
 
 namespace GUI
@@ -66,25 +66,36 @@ GUIManagerCEGUI::~GUIManagerCEGUI()
 /**
  * @internal
  * @brief  Initializes the gui system
- * 
+ *
  * @param ogreWindow Ogre Window where the application will be rendered
  * @param ogreSceneManager Ogre Scene manager where the gui syste will insert its stuff
  */
 void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* ogreSceneManager )
 {
 	// Init CEGUI
+	std::cout << "---EclipseTest: creating OgreCEGUIRenderer\n";
 	m_CEGUIRenderer = new CEGUI::OgreCEGUIRenderer( ogreWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, ogreSceneManager );
+
+	std::cout << "---EclipseTest: creating CEGUI::System\n";
+
 	m_CEGUISystem = new CEGUI::System( m_CEGUIRenderer );
+
+	std::cout << "---EclipseTest: adding listeners de gui manager\n";
+
 
 	// Register this class as OIS input listener to receive mouse notifications
 	// TODO: register also as keyBoardListener
 	Input::InputManager::getSingleton().getMouse().addListener( this );
 	Input::InputManager::getSingleton().getKeyboard().addListener( this );
 
+	std::cout << "---EclipseTest: loading skins\n";
+
 	// Select available skin sets
 	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"WindowsLook.scheme");
 	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"VanillaSkin.scheme");
 	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
+
+	std::cout << "---EclipseTest: creating font Iconified-12.font\n";
 
 	// Set mouse cursor and font
 	//m_CEGUISystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
@@ -94,7 +105,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Create default sheet to place GUI elements
 	CEGUI::WindowManager&	win = CEGUI::WindowManager::getSingleton();
 	m_mainSheet = win.createWindow( "DefaultGUISheet", "Vision/DefaultGUISheet");
-	m_mainSheet->setSize( CEGUI::UVector2(CEGUI::UDim(0, Globals::width), CEGUI::UDim(0, Globals::height) ) ); 
+	m_mainSheet->setSize( CEGUI::UVector2(CEGUI::UDim(0, Globals::width), CEGUI::UDim(0, Globals::height) ) );
 	m_CEGUISystem->setGUISheet( m_mainSheet );
 
 	// Now the gui managet is valid
@@ -103,11 +114,11 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Create the default message box
 	m_messageBoxWindow = (CEGUI::FrameWindow*)win.createWindow( "WindowsLook/StaticText", "MessageBox" );
 	m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(0) ) );
-	m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width), cegui_absdim(Globals::height) ) );	
+	m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width), cegui_absdim(Globals::height) ) );
 	m_messageBoxWindow->setProperty("VertFormatting", "TopAligned");
 	m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
-	m_messageBoxWindow->setProperty("TextColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF"); 
-	m_messageBoxWindow->setProperty("BackgroundColours", "tl:77777777 tr:77777777 bl:77777777 br:77777777"); 
+	m_messageBoxWindow->setProperty("TextColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF");
+	m_messageBoxWindow->setProperty("BackgroundColours", "tl:77777777 tr:77777777 bl:77777777 br:77777777");
 	m_messageBoxWindow->setVisible( false );
 
 	// Add it to the sheet
@@ -121,7 +132,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void GUIManagerCEGUI::end()
@@ -134,8 +145,8 @@ void GUIManagerCEGUI::end()
 }
 
 /**
- * @internal 
- * @brief 
+ * @internal
+ * @brief
  *
  * @param
  */
@@ -232,8 +243,8 @@ bool GUIManagerCEGUI::keyReleased( const OIS::KeyEvent &arg )
 
 
 /**
- * @internal 
- * @brief 
+ * @internal
+ * @brief
  *
  * @param
  */
@@ -247,14 +258,14 @@ void GUIManagerCEGUI::messageBox( const char* text, bool fullScreen /*= false*/ 
 			m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
 			int margin = 20;
 			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(margin), cegui_absdim(margin) ) );
-			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width-margin*2), cegui_absdim(Globals::height-margin*2) ) );	
+			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width-margin*2), cegui_absdim(Globals::height-margin*2) ) );
 		}
 		else
 		{
 			m_messageBoxWindow->setProperty("VertFormatting", "VertCentred");
 			m_messageBoxWindow->setProperty("HorzFormatting", "HorzCentred");
 			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(Globals::height/2) ) );
-			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width), cegui_absdim(50) ) );	
+			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width), cegui_absdim(50) ) );
 		}
 		m_messageBoxWindow->setText( text );
 		m_messageBoxWindow->setVisible( true );

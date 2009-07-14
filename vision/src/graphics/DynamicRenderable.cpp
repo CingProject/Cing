@@ -24,8 +24,8 @@ Code from: http://www.ogre3d.org/wiki/index.php/DynamicLineDrawing
 */
 
 #include "DynamicRenderable.h"
-#include "externLibs/Ogre3d/include/OgreCamera.h"
-#include "externLibs/Ogre3d/include/OgreHardwareBufferManager.h"
+#include "Ogre3d/include/OgreCamera.h"
+#include "Ogre3d/include/OgreHardwareBufferManager.h"
 
 // Framework
 #include "framework/Application.h"

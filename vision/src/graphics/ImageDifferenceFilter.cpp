@@ -25,7 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Exception.h"
 
 // OpenCv
-#include "externLibs/OpenCV/cxcore/include/cxcore.h"
+#include "OpenCV/cxcore/include/cxcore.h"
 
 namespace Graphics
 {

@@ -24,7 +24,7 @@ Code from: http://www.ogre3d.org/wiki/index.php/DynamicLineDrawing
 */
 
 #include "DynamicLines.h"
-#include "externLibs/Ogre3d/include/Ogre.h"
+#include "Ogre3d/include/Ogre.h"
 
 #include <cassert>
 #include <cmath>

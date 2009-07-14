@@ -24,11 +24,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 // OGRE
-#include "externLibs/Ogre3d/include/OgreOverlayManager.h"
-#include "externLibs/Ogre3d/include/OgreOverlayContainer.h"
-#include "externLibs/Ogre3d/include/OgreStringConverter.h"
-#include "externLibs/Ogre3d/include/OgreTextAreaOverlayElement.h"
-#include "externLibs/Ogre3d/include/OgreFontManager.h"
+#include "Ogre3d/include/OgreOverlayManager.h"
+#include "Ogre3d/include/OgreOverlayContainer.h"
+#include "Ogre3d/include/OgreStringConverter.h"
+#include "Ogre3d/include/OgreTextAreaOverlayElement.h"
+#include "Ogre3d/include/OgreFontManager.h"
 
 namespace Graphics
 {
@@ -113,6 +113,7 @@ namespace Graphics
 			m_font->setTrueTypeResolution( resolution );
 
 			// Generate all character range
+			// Complete character set -> until 255
 			m_font->addCodePointRange(Ogre::Font::CodePointRange(33, 255));
 
 			// load the ttf (creates the texture with the font characters)
@@ -127,7 +128,7 @@ namespace Graphics
 
 	/**
 	* @internal
-	* @brief Releases the class resources. 
+	* @brief Releases the class resources.
 	* After this method is called the class is not valid anymore.
 	*/
 	void Font::end()
@@ -151,7 +152,7 @@ namespace Graphics
 
 		float pixelWidth = 0;
 		for(String::const_iterator i = m_fontName.begin(); i < m_fontName.end();i++)
-		{   
+		{
 			if (*i == 0x0020)
 				pixelWidth += m_font->getGlyphAspectRatio(0x0030);
 			else

@@ -27,7 +27,7 @@
 #include "common/LogManager.h"
 
 // Extern libs
-#include "externLibs/PTypes/include/pasync.h" // for portable sleep
+#include "PTypes/include/pasync.h" // for portable sleep
 
 namespace Audio
 {
@@ -165,8 +165,8 @@ void AudioInputFMOD::stop()
 	{
 		LOG_ERROR( "AudioInput not initialized. Must call init before using the AudioInputphone" );
 		return;
-	}    
-	
+	}
+
 	// Stop the pseudo-output
   stopPlayback();
 

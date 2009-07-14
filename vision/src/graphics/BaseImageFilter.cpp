@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "BaseImageFilter.h"
 
 // OpenCv
-#include "externLibs/OpenCV/cxcore/include/cxcore.h"
+#include "OpenCV/cxcore/include/cxcore.h"
 
 namespace Graphics
 {

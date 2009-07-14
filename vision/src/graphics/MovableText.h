@@ -2,7 +2,7 @@
 * File: MovableText.h
 *
 * description: This create create a billboarding object that display a text.
-* 
+*
 * @author	2003 by cTh see gavocanov@rambler.ru
 * @update	2006 by barraq see nospam@barraquand.com
 * @update	2009 by Cing team for the Cing project
@@ -22,8 +22,8 @@
 using namespace Common;
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreFont.h"
-#include "externLibs/Ogre3d/include/OgreOverlayElement.h"
+#include "Ogre3d/include/OgreFont.h"
+#include "Ogre3d/include/OgreOverlayElement.h"
 
 
 #define POS_TEX_BINDING			0
@@ -51,7 +51,7 @@ namespace Graphics
 		// Init / End
 		void init	(/*const String& caption, const String& fontName = Font::DEFAULT_FONT_NAME, float charHeight = 1.0, const Color& color = Color::White*/);
 		void end	();
-			
+
 		// Set settings
 		void    setFontName				(const String &fontName);
 		void    setCaption				(const Ogre::DisplayString& caption);
@@ -97,7 +97,7 @@ namespace Graphics
 		// Add to build on Shoggoth (Ogre)
 		virtual void visitRenderables(Ogre::Renderable::Visitor* visitor, bool debugRenderables = false);
 
-	// protected methods and overload 
+	// protected methods and overload
 	//protected:
 
 		// from MovableText, create the object
@@ -132,12 +132,12 @@ namespace Graphics
 
 		// internal methods
 		void	calculateLineBreaks	( ForcedLineBreaks& forcedLineBreaks );
-		float	getWordLength		( Ogre::DisplayString::iterator it, Ogre::DisplayString::iterator& end  );
-		void	advanceWord			( Ogre::DisplayString::iterator& it, Ogre::DisplayString::iterator& end  );
+		float	getWordLength		( Ogre::DisplayString::iterator it, const Ogre::DisplayString::iterator& end  );
+		void	advanceWord			( Ogre::DisplayString::iterator& it, const Ogre::DisplayString::iterator& end  );
 		void	calculateLineLeft	( const Ogre::DisplayString::iterator& currentIt, const Ogre::DisplayString::iterator& iend, const ForcedLineBreaks& forcedLineBreaks, float& left, float& lineLength );
 		void	drawCharacter		( float*& pVert, const Ogre::Font::CodePoint& character, float& top, float& left, float& lineLength );
 
-	
+
 		// Static attributes
 		static long					count; ///< Used to create unique names
 

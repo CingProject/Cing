@@ -35,15 +35,15 @@ char String::charAt( int index )
 }
 
 /**
- * @brief 
+ * @brief
  */
 int String::indexOf( const std::string& str )
 {
 	return (int)this->find_first_of( str );
 }
-	
+
 /**
- * @brief 
+ * @brief
  */
 int String::indexOf( const std::string& str , int fromIndex )
 {
@@ -61,7 +61,7 @@ bool String::equals( const std::string& str )
 	//// Modify string
 
 /**
- * @brief 
+ * @brief
  */
 void String::toUpperCases()
 {
@@ -72,7 +72,7 @@ void String::toUpperCases()
 }
 
 /**
- * @brief 
+ * @brief
  */
 void String::toLowerCases()
 {
@@ -83,7 +83,7 @@ void String::toLowerCases()
 }
 
 /**
- * @brief 
+ * @brief
  */
 String String::substring( int beginIndex )
 {
@@ -92,14 +92,14 @@ String String::substring( int beginIndex )
 }
 
 /**
- * @brief 
+ * @brief
  */
 String String::substring( int beginIndex, int endIndex ) {
 	String result = this->substr( beginIndex, endIndex).c_str();
 	return result;
 }
 
-Ogre::UTFString String::toUTF() const
+/*Ogre::UTFString String::toUTF() const
 {
    Ogre::UTFString UTFString;
    int i;
@@ -111,7 +111,7 @@ Ogre::UTFString String::toUTF() const
       UTFString.append(1, cp);
    }
    return UTFString;
-}
+}*/
 
 }
 

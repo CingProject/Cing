@@ -26,9 +26,9 @@ Inc.
 
 
 // TEST
-#include "externLibs/Ogre3d/include/OgreTechnique.h"
-#include "externLibs/Ogre3d/include/OgreTextureUnitState.h"
-#include "externLibs/Ogre3d/include/OgreSceneManager.h"
+#include "Ogre3d/include/OgreTechnique.h"
+#include "Ogre3d/include/OgreTextureUnitState.h"
+#include "Ogre3d/include/OgreSceneManager.h"
 
 
 namespace Graphics
@@ -125,9 +125,9 @@ namespace Graphics
 		}
 
 		// Add a new font (to be rendered later)
-		//m_activeFontsToRender.push_back( TextArea() );	
+		//m_activeFontsToRender.push_back( TextArea() );
 		MovableText* newText = getNewText();
-		
+
 		// Set properties for the new text
 		newText->init();
 
@@ -138,7 +138,7 @@ namespace Graphics
 		newText->setTextAreaWidth( m_activeFontProperties.width );
 		newText->setTextAreaHeight( m_activeFontProperties.height );
 		newText->setTextAlignment(m_activeFontProperties.halign, m_activeFontProperties.valign);
-		newText->setCaption( m_activeFontProperties.text.toUTF() );
+		newText->setCaption( m_activeFontProperties.text.toChar() );
 
 		// Text display properties
 		newText->showOnTop();
@@ -158,7 +158,7 @@ namespace Graphics
 		newText->_setupGeometry();
 	}
 
-	
+
 	/**
 	* @brief Retunrs a new text (actually it tries to reuse a text from previous frames, but if all are used or
 	* there is no text created, it creates a new one).

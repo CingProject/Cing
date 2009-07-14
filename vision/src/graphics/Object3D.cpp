@@ -36,12 +36,12 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/LogManager.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreSceneManager.h"
-#include "externLibs/Ogre3d/include/OgreEntity.h"
-#include "externLibs/Ogre3d/include/OgreSubEntity.h"
-#include "externLibs/Ogre3d/include/OgreMeshManager.h"
-#include "externLibs/Ogre3d/include/OgreMaterialManager.h"
-#include "externLibs/Ogre3d/include/OgreStringConverter.h"
+#include "Ogre3d/include/OgreSceneManager.h"
+#include "Ogre3d/include/OgreEntity.h"
+#include "Ogre3d/include/OgreSubEntity.h"
+#include "Ogre3d/include/OgreMeshManager.h"
+#include "Ogre3d/include/OgreMaterialManager.h"
+#include "Ogre3d/include/OgreStringConverter.h"
 
 
 namespace Graphics

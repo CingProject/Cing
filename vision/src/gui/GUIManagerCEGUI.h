@@ -26,11 +26,11 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "OutputDebugTextBoxCEGUI.h"
 
 // CEGUI
-#include "externLibs/Ogre3d/include/cegui/CEGUIInputEvent.h"
+#include "Ogre3d/include/cegui/CEGUIInputEvent.h"
 
 // OIS
-#include "externLibs/Ogre3d/include/ois/OISMouse.h"
-#include "externLibs/Ogre3d/include/ois/OISKeyboard.h"
+#include "Ogre3d/include/OIS/OISMouse.h"
+#include "Ogre3d/include/OIS/OISKeyboard.h"
 
 // Common
 #include "common/Singleton.h"
@@ -71,10 +71,10 @@ public:
 
 	// OIS Listeners interface
 	bool keyPressed( const OIS::KeyEvent &arg );
-	bool keyReleased( const OIS::KeyEvent &arg );	
+	bool keyReleased( const OIS::KeyEvent &arg );
 
 	void messageBox( const char* text, bool fullScreen = false );
-	bool isMessageBoxVisible();	
+	bool isMessageBoxVisible();
 	void hideMessageBox();
 
 

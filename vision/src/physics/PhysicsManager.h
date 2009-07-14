@@ -48,8 +48,8 @@ const float				DEFAULT_DYNAMIC_BODY_RESTITUTION  = 0.6f;
 const float				DEFAULT_DYNAMIC_BODY_FRICTION     = 0.6f;
 const float				DEFAULT_DYNAMIC_BODY_MASS         = 1.0f;
 
-const int					MAX_SIMULATION_SUBSTEPS						= 3;
-const float				FIXED_TIME_STEP										= 1.0f / 60.f;
+const int				MAX_SIMULATION_SUBSTEPS				= 3;
+const float				FIXED_TIME_STEP						= 1.0f / 60.f;
 
 
 /**
@@ -68,10 +68,10 @@ public:
 
 	// Init / Release / Update
 	void	init		( Ogre::SceneManager& sceneManager, const Vector& gravityVector = Vector(0 , 9.81, 0), const AABox &bounds = AABox (Vector (-10000, -10000, -10000), Vector (10000,  10000,  10000)));
-	void	end			();	
+	void	end			();
 	void	update	( unsigned long elapsedMillis );
-	
-	// Collision shape construction 
+
+	// Collision shape construction
 	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Graphics::Object3D& object );
 	OgreBulletCollisions::CollisionShape*		buildBoxShape					( float width, float heigh, float depth );
 	OgreBulletCollisions::CollisionShape*		buildStaticPlaneShape	( float width, float heigh );

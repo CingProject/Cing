@@ -37,7 +37,7 @@ namespace ComputerVision
 /**
  * @internal
  * Class that analyzes an image to finds blobs (elements).
- * What it looks for in an image is bright areas, so typically 
+ * What it looks for in an image is bright areas, so typically
  * the image result of a background subtraction is a good input.
  * It also gives information about the found blobs.
  */
@@ -59,21 +59,21 @@ public:
 	virtual void  update				( const Graphics::Image& inImage );
 
   // Set methods
-  void          setMinBlobArea( float minArea ) { m_minBlobArea = minArea; }
-  void          setMaxBlobArea( float maxArea ) { m_maxBlobArea = maxArea; }
-  virtual void  setMaxBlobs   ( unsigned int maxBlobs )	{ m_maxBlobs = maxBlobs; }
+  void          setMinBlobArea	( float minArea ) { m_minBlobArea = minArea; }
+  void          setMaxBlobArea	( float maxArea ) { m_maxBlobArea = maxArea; }
+  virtual void  setMaxBlobs   	( unsigned int maxBlobs )	{ m_maxBlobs = maxBlobs; }
 
-	// Query methods
-	virtual bool  isValid       () const { return m_bIsValid; }
-  int						getNumBlobs   () const { return m_nBlobs; }
-  
+// Query methods
+  virtual bool  isValid       () const { return m_bIsValid; }
+  int			getNumBlobs   	() const { return m_nBlobs; }
+
   // TODO check n valid
-  Blob&					getBlobN      ( int n )  { return m_blobs[n]; }
+  Blob&			getBlobN      ( int n )  { return m_blobs[n]; }
 
 	// Constant / static attributes
-	static const float        BlobFinder::DEFAULT_MIN_AREA;
-	static const float        BlobFinder::DEFAULT_MAX_AREA;
-	static const unsigned int BlobFinder::DEFAULT_MAX_BLOBS;
+	static const float        DEFAULT_MIN_AREA;
+	static const float        DEFAULT_MAX_AREA;
+	static const unsigned int DEFAULT_MAX_BLOBS;
 
 protected:
 

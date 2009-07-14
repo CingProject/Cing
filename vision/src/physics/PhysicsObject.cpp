@@ -32,7 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/Sphere.h"
 
 // Ogre bullet
-#include "externLibs/OgreBullet/Dynamics/include/OgreBulletDynamicsRigidBody.h"
+#include "OgreBullet/Dynamics/include/OgreBulletDynamicsRigidBody.h"
 
 namespace Physics
 {

@@ -19,11 +19,11 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _GraphicsPrereqs_H_
-#define _GraphicsPrereqs_H_
+#ifndef _Cing_GraphicsPrereqs_H_
+#define _Cing_GraphicsPrereqs_H_
 
 /**
- * Prereqs File: This header file contains forward class declarations of the 
+ * Prereqs File: This header file contains forward class declarations of the
  * Graphics namespace  to speed up compiling.
  */
 

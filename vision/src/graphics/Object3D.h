@@ -19,11 +19,12 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _Object3D_H_
-#define _Object3D_H_
+#ifndef _Cing_Object3D_H_
+#define _Cing_Object3D_H_
 
 #include "GraphicsPrereqs.h"
 #include "graphics/Color.h"
+
 // Common
 #include "common/CommonTypes.h"
 
@@ -69,9 +70,9 @@ public:
 	void							setType						( Object3DType type ) { m_type = type; }
 
 	void              setPosition 			( float x, float y, float z );
-	void              setPosition 			( float x, float y );  
+	void              setPosition 			( float x, float y );
 	void              setPosition 			( const Vector& pos );
-	
+
 	void							setOrientation		( const Quaternion& orientation );
 	void							setOrientation		( const Vector& axis, float angle );
 
@@ -137,7 +138,7 @@ private:
 	// Attributes
 	Ogre::SceneNode* 					m_sceneNode;		///< Node in the scene manager where the object is placed
 	Ogre::Entity*    					m_entity;				///< Ogre entity that represents the model
-	Ogre::MaterialPtr					m_materialCopy;	///< Entity's material copy (to allow this object to have a specific color) 
+	Ogre::MaterialPtr					m_materialCopy;	///< Entity's material copy (to allow this object to have a specific color)
 	std::string       				m_objectName;		///< Unique object name
 	Object3DType							m_type;					///< Type of 3d object
 	bool              				m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.

@@ -23,9 +23,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GUIManagerCEGUI.h"
 
 // CEGUI
-#include "externLibs/Ogre3d/include/cegui/CEGUI.h"
-#include "externLibs/Ogre3d/include/cegui/elements/CEGUIListbox.h"
-#include "externLibs/Ogre3d/include/cegui/elements/CEGUIListboxTextItem.h"
+#include "Ogre3d/include/cegui/CEGUI.h"
+#include "Ogre3d/include/cegui/elements/CEGUIListbox.h"
+#include "Ogre3d/include/cegui/elements/CEGUIListboxTextItem.h"
 
 //  Common
 #include "common/CommonUtilsIncludes.h"

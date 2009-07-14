@@ -108,8 +108,8 @@
 
 // OGRE -> this is included because some Ogre objects are exposed to user application
 // just in case an advanced user wants to use them...
-#include "externLibs/Ogre3d/include/OgreSceneManager.h"
-#include "externLibs/Ogre3d/include/OgreCamera.h"
+#include "Ogre3d/include/OgreSceneManager.h"
+#include "Ogre3d/include/OgreCamera.h"
 
 // Midi
 #include "midi/midiIO.h"

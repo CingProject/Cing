@@ -43,16 +43,20 @@ namespace Framework
    */
   void size( int width, int height, GraphicMode mode )
   {
+	  std::cout << "---EclipseTest: en setup antes de ->setup del graphics manager\n";
     // Set up window and render system configuration
     Graphics::GraphicsManager::getSingleton().setup( width, height, mode );
 
+    std::cout << "---EclipseTest: en setup antes de ->setup del graphics manager\n";
     // Init application subsystems (necessary for the user to load any graphic resource)
     Application::getSingleton().initSubSystems();
+
+    std::cout << "---EclipseTest: en setup despues de init subsystems\n";
   }
 
 
 	/**
-	 * @internal 
+	 * @internal
 	 * @brief Finishes the application
 	 *
 	 * @param
@@ -63,7 +67,7 @@ namespace Framework
 	}
 
   /**
-	 * @internal 
+	 * @internal
 	 * @brief Force the application to stop running for a specified time in milliseconds
 	 *
 	 * @param milliseconds
@@ -74,10 +78,10 @@ namespace Framework
 	}
 
 	/**
-	 * @internal 
-	 * @brief Force the application to continuosly call user draw() function 
+	 * @internal
+	 * @brief Force the application to continuosly call user draw() function
 	 *
-	 * @param 
+	 * @param
 	 */
 	void loop()
 	{
@@ -85,10 +89,10 @@ namespace Framework
 	}
 
 	/**
-	 * @internal 
-	 * @brief Force the application to stop call user draw() function 
+	 * @internal
+	 * @brief Force the application to stop call user draw() function
 	 *
-	 * @param 
+	 * @param
 	 */
 	void noLoop()
 	{
@@ -96,10 +100,10 @@ namespace Framework
 	}
 
 	/**
-	 * @internal 
+	 * @internal
 	 * @brief Force the application to  call user draw() function one time
 	 *
-	 * @param 
+	 * @param
 	 */
 	void redraw()
 	{
@@ -113,7 +117,7 @@ namespace Framework
 	 */
 	void setFrameRate( int frameRate )
 	{
-		Application::getSingleton().frameRate( frameRate );	
+		Application::getSingleton().frameRate( frameRate );
 	}
 
 

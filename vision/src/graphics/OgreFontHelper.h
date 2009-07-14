@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define LUGRE_OGREFONTHELPER_H
 
 /// ogre font utils, work in progress
+#define OGRE_UNICODE_SUPPORT 1
 #include <Ogre.h>
 #include <OgreFont.h>
 #include <OgreTextAreaOverlayElement.h>
@@ -38,14 +39,14 @@ namespace Graphics {
 class cOgreFontHelper { public:
 	typedef Ogre::UTFString::unicode_char	unicode_char;
 	typedef Ogre::UTFString::iterator	itor;
-	
+
 	/// aligning text for drawing, around 0
 	enum eAlignment {
 		Align_Left,
 		Align_Center,
 		Align_Right,
 	};
-	
+
     Ogre::FontPtr	mpFont;
 	eAlignment 		mAlign;
 	float			mfCharHeight;
@@ -54,16 +55,16 @@ class cOgreFontHelper { public:
 	float			mfTabWidth;
 	float			mfGlyphWidthFactor;
 	float			mfWrapMaxW;
-	
+
 	/// mfGlyphWidthFactor is something like mCharHeight * 2.0 * mViewportAspectCoef for overlay elements
 	/// mfCharHeight is the height of a character (same for all characters), may be negative depending on coordinate system
 	cOgreFontHelper	(Ogre::FontPtr mpFont,const float mfGlyphWidthFactor,const float mfCharHeight,
 					const float mfSpaceWidth,const float mfWrapMaxW=0,eAlignment mAlign=Align_Left)
-		: mpFont(mpFont), mfGlyphWidthFactor(mfGlyphWidthFactor), mfCharHeight(mfCharHeight), 
+		: mpFont(mpFont), mfGlyphWidthFactor(mfGlyphWidthFactor), mfCharHeight(mfCharHeight),
 		  mfSpaceWidth(mfSpaceWidth), mfLineHeight(mfCharHeight), mfWrapMaxW(mfWrapMaxW), mAlign(mAlign) {
 		mfTabWidth = 4*mfSpaceWidth; // only simple tabs for now
 	}
-	
+
 	/// translates alignment from TextAreaOverlayElement
 	static eAlignment	Alignment	(Ogre::TextAreaOverlayElement::Alignment align) {
 		switch (align) {
@@ -72,7 +73,7 @@ class cOgreFontHelper { public:
 			default: return Align_Left;
 		}
 	}
-	
+
 	/// translates alignment from GuiHorizontalAlignment
 	static eAlignment	Alignment	(Ogre::GuiHorizontalAlignment align) {
 		switch (align) {
@@ -81,7 +82,7 @@ class cOgreFontHelper { public:
 			default: return Align_Left;
 		}
 	}
-	
+
 	/// important control chars
 	enum {
 		UNICODE_NEL		= 0x0085,
@@ -91,26 +92,26 @@ class cOgreFontHelper { public:
 		UNICODE_SPACE	= 0x0020,
 		UNICODE_ZERO	= 0x0030,
 	};
-	
+
 	static inline bool	IsTab			(unicode_char c) { return c == UNICODE_TAB; }
 	static inline bool	IsSpace			(unicode_char c) { return c == UNICODE_SPACE; }
 	static inline bool	IsNewLine		(unicode_char c) { return c == UNICODE_CR || c == UNICODE_LF || c == UNICODE_NEL; }
 	static inline bool	IsWhiteSpace	(unicode_char c) { return IsTab(c) || IsSpace(c) || IsNewLine(c); }
 	static inline bool	IsCRLF			(unicode_char a,unicode_char b) { return a == UNICODE_CR && b == UNICODE_LF; }
-	
+
 	static inline bool	IsTab			(itor i) { return IsTab(		i.getCharacter()); }
 	static inline bool	IsSpace			(itor i) { return IsSpace(		i.getCharacter()); }
 	static inline bool	IsNewLine		(itor i) { return IsNewLine(	i.getCharacter()); }
 	static inline bool	IsWhiteSpace	(itor i) { return IsWhiteSpace(	i.getCharacter()); }
-	
-	// measurement 
-	
+
+	// measurement
+
 	inline float GetCharWidth(unicode_char c) {
 		if (IsNewLine(c)) return 0;
 		if (IsTab(c)) return mfTabWidth;
 		return IsSpace(c) ? mfSpaceWidth : (mpFont->getGlyphAspectRatio(c) * mfGlyphWidthFactor);
 	}
-	
+
 	inline float	CalcLineLen	(itor i,const itor iEnd) {
 		float len = 0.0;
 		unicode_char c = 0;
@@ -126,7 +127,7 @@ class cOgreFontHelper { public:
 		}
 		return len;
 	}
-	
+
 	/// can be used for autowrap
 	inline float	CalcWordLen	(itor i,const itor iEnd) {
 		float len = 0.0;
@@ -137,7 +138,7 @@ class cOgreFontHelper { public:
 		}
 		return len;
 	}
-	
+
 	bool	TestAutoWrap	(itor i,const itor iEnd,const float x,const bool bKeepWords) {
 		if (i == iEnd) return false;
 		bool bDebug = false;
@@ -156,13 +157,13 @@ class cOgreFontHelper { public:
 					return true;
 				}
 			}
-		}	
+		}
 		if (bDebug) printf("\n");
 		return false;
 	}
-	
+
 	// drawing
-	
+
 	static inline void	WriteVertex	(float* &pVert,const float x,const float y,const float z,const float u,const float v) {
 		*pVert++ = x;
 		*pVert++ = y;
@@ -170,7 +171,7 @@ class cOgreFontHelper { public:
 		*pVert++ = u;
 		*pVert++ = v;
 	}
-		
+
 	/// writes 6 vertices to the vertexbuffer, for use without index buffer
 	/// each vert is (x, y, z, u, v)
 	/// returns char width = mfGlyphWidthFactor * mpFont->getGlyphAspectRatio(c);
@@ -178,7 +179,7 @@ class cOgreFontHelper { public:
 		const Ogre::Font::UVRect& uvRect = mpFont->getGlyphTexCoords(c);
 		float h = mfCharHeight;
 		float w = mfGlyphWidthFactor * mpFont->getGlyphAspectRatio(c);
-		
+
 		// First tri
 		WriteVertex(pVert,left  ,top  ,z,uvRect.left, uvRect.top);		// Upper left
 		WriteVertex(pVert,left  ,top+h,z,uvRect.left, uvRect.bottom);	// Bottom left
@@ -190,52 +191,52 @@ class cOgreFontHelper { public:
 		WriteVertex(pVert,left+w,top+h,z,uvRect.right,uvRect.bottom);	// Bottom left (again)
 		return w;
 	}
-	
+
 	/// iterates over text and manages positioning (alignment and newlines)
 	class cTextIterator { public:
 		float x,y; /// current plotter position, start = (0,0)
-		
+
 		cTextIterator	(cOgreFontHelper& mFontHelper, Ogre::UTFString& sText)
-			: mFontHelper(mFontHelper), mCur(sText.begin()), mEnd(sText.end()), 
-				x(0),y(0),c(0),mfLineStartX(0), mbFirstChar(true), mbLineFeed(false) { 
+			: mFontHelper(mFontHelper), mCur(sText.begin()), mEnd(sText.end()),
+				x(0),y(0),c(0),mfLineStartX(0), mbFirstChar(true), mbLineFeed(false) {
 			StartLine();
 		}
-		
+
 		cTextIterator	(cOgreFontHelper& mFontHelper,itor mCur,itor mEnd)
-			: mFontHelper(mFontHelper), mCur(mCur), mEnd(mEnd), 
-				x(0),y(0),c(0),mfLineStartX(0), mbFirstChar(true), mbLineFeed(false) { 
+			: mFontHelper(mFontHelper), mCur(mCur), mEnd(mEnd),
+				x(0),y(0),c(0),mfLineStartX(0), mbFirstChar(true), mbLineFeed(false) {
 			StartLine();
 		}
-				
+
 		inline	bool	HasNext	() { return mCur != mEnd; }
-		
+
 		/// call this BEFORE processing each char
-		inline	unicode_char	Next	() { 
+		inline	unicode_char	Next	() {
 			if (mCur == mEnd) return 0;
 			unicode_char lastc = c;
 			c = mCur.getCharacter();
-			
+
 			if (!mbFirstChar) x += mFontHelper.GetCharWidth(lastc);
-			
+
 			// only execute linefeed AFTER the user has had the chance to draw something at the end of the last line
 			if (mbLineFeed) {
 				mbLineFeed = false;
 				LineFeed(); // in case of CRLF, mCur points to the first char AFTER both CR and LF here
 			}
-			
+
 			// execute autowrap
-			if (mFontHelper.mfWrapMaxW > 0 && !mbFirstChar && mFontHelper.TestAutoWrap(mCur,mEnd,x-mfLineStartX,IsWhiteSpace(lastc))) 
-				LineFeed(); 
-				
+			if (mFontHelper.mfWrapMaxW > 0 && !mbFirstChar && mFontHelper.TestAutoWrap(mCur,mEnd,x-mfLineStartX,IsWhiteSpace(lastc)))
+				LineFeed();
+
 			++mCur;
-			
+
 			// if c is the beginning of a CRLF, skip first part without doing anything
 			mbLineFeed = IsNewLine(c) && (mCur == mEnd || !IsCRLF(c,mCur.getCharacter()));
-			
+
 			mbFirstChar = false;
 			return c;
 		}
-		
+
 		/// reset the write position to the beginning of the line
 		/// if this is called after encountering a newline, mCur should point to the first char AFTER the newline
 		/// if this is called after encountering a CRLF, mCur should point to the first char AFTER both CR and LF
@@ -248,13 +249,13 @@ class cOgreFontHelper { public:
 			}
 			mfLineStartX = x;
 		}
-		
+
 		inline void	LineFeed	() {
 			StartLine();
 			y += mFontHelper.mfLineHeight;
 		}
-		
-		
+
+
 		private:
 		cOgreFontHelper&	mFontHelper;
 		itor				mCur;
@@ -264,11 +265,11 @@ class cOgreFontHelper { public:
 		float				mfLineStartX;
 		unicode_char 		c;
 	};
-	
-	// TODO : operator +  == != ......, copy constructor ? 
+
+	// TODO : operator +  == != ......, copy constructor ?
 	// derive from Ogre::UTFString::_const_fwd_iterator ?
-	// comparison with normal ogre iterators :    != == 
-	
+	// comparison with normal ogre iterators :    != ==
+
 	// TODO : real tab support : align across multiple line
 	// TODO : default : mCharHeight = 0.02; mPixelCharHeight = 12;
 	// TODO : calc linelen for centering
@@ -278,9 +279,9 @@ class cOgreFontHelper { public:
 		//mpMaterial->setDepthCheckEnabled(false);
 		//mpMaterial->setLightingEnabled(false);
 	// TODO : clone font for 3d material ?
-	
+
 	// ***** ***** ***** ***** ***** utils
-	
+
 	/// (e.g. centered text, buttons that automatically scale to fit their label )
 	/// returns result in w and h
 	void	GetTextBounds	( Ogre::UTFString& text,Ogre::Real& w,Ogre::Real &h) {
@@ -347,11 +348,11 @@ class cOgreFontHelper { public:
         mpMaterial = mpFont->getMaterial();
         mpMaterial->setDepthCheckEnabled(false);
         mpMaterial->setLightingEnabled(false);
-		
+
 		mGeomPositionsOutOfDate = true;
 		mGeomUVsOutOfDate = true;
     }
-	
+
 	#if OGRE_UNICODE_SUPPORT
 		typedef UTFString DisplayString;
 	#	define OGRE_DEREF_DISPLAYSTRING_ITERATOR(it) it.getCharacter()
@@ -359,19 +360,19 @@ class cOgreFontHelper { public:
 		typedef String DisplayString;
 	#	define OGRE_DEREF_DISPLAYSTRING_ITERATOR(it) *it
 	#endif
-	
+
 	/*
-	suggestion for Ogre::UTFString::_base_iterator : stuff like 
+	suggestion for Ogre::UTFString::_base_iterator : stuff like
 		IsTab IsSpace IsNewLine IsWhiteSpace IsCRLF
-	
+
 	suggestion for TextAreaOverlayElement::updatePositionGeometry() :
 	at the beginning of a line is the linelength is calculated even if is not needed (mAlignment == left)
-	
+
 	// WARNING ! MISSING second mRenderOp.vertexData->vertexCount -= 6; IN OGRE CODE for CR/LF ? (only one for CR)
 	*/
 #endif
 
 };
-	
+
 #endif
 

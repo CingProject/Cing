@@ -25,14 +25,14 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Release.h"
 
 // Ogre bullet
-#include "externLibs/OgreBullet/Dynamics/include/OgreBulletDynamicsWorld.h"
-#include "externLibs/OgreBullet/Collisions/include/Utils/OgreBulletCollisionsMeshToShapeConverter.h"
-#include "externLibs/OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsTrimeshShape.h"
-#include "externLibs/OgreBullet/Collisions/include/OgreBulletCollisionsShape.h"
-#include "externLibs/OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsBoxShape.h"
-#include "externLibs/OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsStaticPlaneShape.h"
-#include "externLibs/OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsSphereShape.h"
-#include "externLibs/OgreBullet/Dynamics/include/OgreBulletDynamicsRigidBody.h"
+#include "OgreBullet/Dynamics/include/OgreBulletDynamicsWorld.h"
+#include "OgreBullet/Collisions/include/Utils/OgreBulletCollisionsMeshToShapeConverter.h"
+#include "OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsTrimeshShape.h"
+#include "OgreBullet/Collisions/include/OgreBulletCollisionsShape.h"
+#include "OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsBoxShape.h"
+#include "OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsStaticPlaneShape.h"
+#include "OgreBullet/Collisions/include/Shapes/OgreBulletCollisionsSphereShape.h"
+#include "OgreBullet/Dynamics/include/OgreBulletDynamicsRigidBody.h"
 
 
 namespace Physics

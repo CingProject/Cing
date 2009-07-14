@@ -21,20 +21,22 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "TexturedQuad.h"
 
+#include <limits.h>
+
 // Graphics
 #include "GraphicsManager.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgrePixelFormat.h"
-#include "externLibs/Ogre3d/include/OgreImage.h"
-#include "externLibs/Ogre3d/include/OgreSceneManager.h"
-#include "externLibs/Ogre3d/include/OgreManualObject.h"
-#include "externLibs/Ogre3d/include/OgreRenderOperation.h"
-#include "externLibs/Ogre3d/include/OgreHardwarePixelBuffer.h"
-#include "externLibs/Ogre3d/include/OgreTextureManager.h"
-#include "externLibs/Ogre3d/include/OgreTexture.h"
-#include "externLibs/Ogre3d/include/OgreMaterial.h"
-#include "externLibs/Ogre3d/include/OgreMaterialManager.h"
+#include "Ogre3d/include/OgrePixelFormat.h"
+#include "Ogre3d/include/OgreImage.h"
+#include "Ogre3d/include/OgreSceneManager.h"
+#include "Ogre3d/include/OgreManualObject.h"
+#include "Ogre3d/include/OgreRenderOperation.h"
+#include "Ogre3d/include/OgreHardwarePixelBuffer.h"
+#include "Ogre3d/include/OgreTextureManager.h"
+#include "Ogre3d/include/OgreTexture.h"
+#include "Ogre3d/include/OgreMaterial.h"
+#include "Ogre3d/include/OgreMaterialManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -130,7 +132,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
   material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
   material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
   material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
-  //material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_ANTICLOCKWISE );
+  material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
 
 
 	/*
@@ -142,16 +144,16 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
 																																												Ogre::LBS_CURRENT,
 																																												Ogre::ColourValue(1,1,1,1.0),
 																																												Ogre::ColourValue(1,1,0,1.0),
-																																												0.1	); 
+																																												0.1	);
 
 	//material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
   //material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_COLOUR );
 	//material->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(1,1,0.5,0.5));
 
-	
-  static_cast<MaterialPtr>( MaterialManager::getSingleton( ).getByName( "Overlay/TwoTextures" ) ) 
-	->getTechnique(0)->getPass(0)->getTextureUnitState("MixTexture")-> 
-	setColourOperationEx(LBX_BLEND_MANUAL, LBS_TEXTURE, LBS_CURRENT, 1,1, add); 
+
+  static_cast<MaterialPtr>( MaterialManager::getSingleton( ).getByName( "Overlay/TwoTextures" ) )
+	->getTechnique(0)->getPass(0)->getTextureUnitState("MixTexture")->
+	setColourOperationEx(LBX_BLEND_MANUAL, LBS_TEXTURE, LBS_CURRENT, 1,1, add);
   */
 
   // Create the manual object (is used to define geometry on the fly)
@@ -187,7 +189,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
 	return true;
 }
 /**
- * @brief Change ink drawing mode 
+ * @brief Change ink drawing mode
  */
 void  TexturedQuad::setAdditiveMode ( bool value )
 {
@@ -196,7 +198,7 @@ void  TexturedQuad::setAdditiveMode ( bool value )
 	{
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_ADD);
-	} 
+	}
 	else
 	{
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
@@ -207,7 +209,7 @@ void  TexturedQuad::setAdditiveMode ( bool value )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void TexturedQuad::end()
@@ -228,7 +230,7 @@ void TexturedQuad::end()
 
 		// Destroy texture
 		Ogre::TextureManager::getSingleton().remove( m_ogreTextureName );
-		
+
 		// Unregister in graphics manager so that it is marked as invisible every frame
 		GraphicsManager::getSingleton().removeDrawableImage( this );
 	}
@@ -266,7 +268,7 @@ void TexturedQuad::setPosition2d( float x, float y )
 		LOG_ERROR( "Trying to set position in an invalid textured quad" );
 		return;
 	}
-	
+
 	// Simulate upper left corner to be 0,0 (although in ogre the 0,0 is the lower left corner
 	// That is why the y screen coordinate is inverted
 	m_2dXPos = (x / (float)Globals::width) * 2.0f - 1;
@@ -359,18 +361,18 @@ void TexturedQuad::draw( float x, float y, float z, float width, float height )
 /**
 * @brief Draws the texture quad in three dimensions, specifying four points
 *
-* @param xPos x1 
-* @param yPos y1 
-* @param zPos z1 
-* @param xPos x2 
-* @param yPos y2 
-* @param zPos z2 
-* @param xPos x3 
-* @param yPos y3 
-* @param zPos z3 
-* @param xPos x4 
-* @param yPos y4 
-* @param zPos z4 
+* @param xPos x1
+* @param yPos y1
+* @param zPos z1
+* @param xPos x2
+* @param yPos y2
+* @param zPos z2
+* @param xPos x3
+* @param yPos y3
+* @param zPos z3
+* @param xPos x4
+* @param yPos y4
+* @param zPos z4
 */
 void TexturedQuad::draw( float x1, float y1, float z1,
 												 float x2, float y2, float z2,
@@ -410,7 +412,7 @@ void TexturedQuad::draw( float x1, float y1, float z1,
 
 /**
  * @brief Draws the texture quad in two dimensions, with the texture size
- * 
+ *
  * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
  * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
  */
@@ -436,7 +438,7 @@ void TexturedQuad::drawBackground( float x, float y )
 
 /**
  * @brief Draws the texture quad in two dimensions, with a specific size
- * 
+ *
  * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
  * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
  * @param width		Width of the quad that will be rendered <b>in screen coordinates</b>
@@ -462,7 +464,7 @@ void TexturedQuad::draw2d( float x, float y, float width, float height )
 
 /**
  * @brief Draws the texture quad in two dimensions as a background
- * 
+ *
  * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
  * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
  */
@@ -586,7 +588,7 @@ void TexturedQuad::operator=( const TexturedQuad& other )
 	other.m_ogreTexture->copyToTexture( m_ogreTexture );
 
 	// Copy attributes
-	const Vector& pos = other.m_quadSceneNode->getPosition(); 
+	const Vector& pos = other.m_quadSceneNode->getPosition();
 	setPosition( pos.x, pos.y, pos.z );
 	setVisible( other.m_visible );
 
@@ -604,12 +606,12 @@ void TexturedQuad::generateUniqueNames()
   // Manual object
   oss << MANUAL_OBJECT_NAME << m_quadCounter;
   m_ogreManualObjectName = oss.str();
-  oss.str( "" ); 
+  oss.str( "" );
 
   // Texture
   oss << TEXTURE_NAME << m_quadCounter;
   m_ogreTextureName = oss.str();
-  oss.str( "" ); 
+  oss.str( "" );
 
   // Material
   oss << MATERIAL_NAME << m_quadCounter;
@@ -617,7 +619,7 @@ void TexturedQuad::generateUniqueNames()
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Sets the necessary properties for the object to be rendered in 2d (in screen coordinates and size in pixels)
  */
 void TexturedQuad::setbackgroundRendering()
@@ -635,7 +637,7 @@ void TexturedQuad::setbackgroundRendering()
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Sets the necessary properties for the object to be rendered in 2d (in screen coordinates and size in pixels)
  */
 void TexturedQuad::set2dRendering()
@@ -655,7 +657,7 @@ void TexturedQuad::set2dRendering()
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Sets the necessary properties for the object to be rendered in 3d (in world coordinates and world units)
  */
 void TexturedQuad::set3dRendering()

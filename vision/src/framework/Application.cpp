@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "UserAppFunctionDeclaration.h"
 #include "UserAppGlobals.h"
 
-// Graphics 
+// Graphics
 #include "graphics/GraphicsManager.h"
 
 // GUI
@@ -41,7 +41,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/CommonUserAPI.h"
 
 // Extern
-#include "externLibs/PTypes/include/pasync.h"
+#include "PTypes/include/pasync.h"
 
 
 namespace Framework
@@ -52,7 +52,7 @@ namespace Framework
  * @brief Constructor. Initializes class attributes.
  */
 Application::Application():
-  m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ) 
+  m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 )
 {
 }
 
@@ -76,7 +76,7 @@ bool Application::initApp()
   // Check if the class is already initialized
   if ( isValid() )
     return true;
-  
+
   // Init random number generator seed
   //TODO: setRandomSeed( timeGetTime() )
 
@@ -90,6 +90,9 @@ bool Application::initApp()
   // Note: If the log manager is initalized before the Resource Manager, Ogre.log file won't be created
   Common::LogManager::getSingleton().init();
 
+  std::cout << "---EclipseTest: Despues init logmanager\n";
+
+
   // Init user application
   setup();
 
@@ -97,19 +100,19 @@ bool Application::initApp()
   checkSubsystemsInit();
 
 	// Reset timer
-	m_timer.reset();	
+	m_timer.reset();
 	m_absTimer.reset();
 
 	// Set frameCount to zero
 	m_frameCount = 0;
-	
+
 	return true;
 
 }
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Application::endApp()
@@ -135,7 +138,7 @@ void Application::endApp()
 
 	// Release the resource manager
 	Common::ResourceManager::getSingleton().end();
-	
+
 	// Release the log manager
 	Common::LogManager::getSingleton().end();
 
@@ -153,7 +156,7 @@ void Application::drawApp()
   while( (Graphics::GraphicsManager::getSingleton().getMainWindow().isClosed() == false) && !m_finish )
   {
 		// Store elapsed from timers
-		Globals::elapsedMicros  = m_timer.getMicroseconds();	
+		Globals::elapsedMicros  = m_timer.getMicroseconds();
 		Globals::elapsedMillis	= m_timer.getMilliseconds();
 		Globals::elapsedSec			=  Globals::elapsedMillis / 1000.0;
 		Globals::secFromStart		= m_absTimer.getMilliseconds() / 1000.0;
@@ -162,7 +165,7 @@ void Application::drawApp()
 
     // Update input manager
     Input::InputManager::getSingleton().update();
-		
+
 		// Draw user app
 		if (m_loop)
 			draw();
@@ -181,15 +184,15 @@ void Application::drawApp()
     Graphics::GraphicsManager::getSingleton().draw();
 
 		// Update sound()???
-		
+
 		// Update frameCount
 		m_frameCount++;
-		Globals::frameCount  = getFrameCount();	
+		Globals::frameCount  = getFrameCount();
 
 		// Check if we need have a forced frame rate
-		if ( m_forcedFrameRate != 0 ) 
+		if ( m_forcedFrameRate != 0 )
 		{
-	
+
 		if ( Globals::millisFromStart < (m_timePerFrameMillis * Globals::frameCount) )
 		{
 			unsigned long millisToSleep = (m_timePerFrameMillis * Globals::frameCount) - Globals::millisFromStart;
@@ -224,22 +227,31 @@ void Application::initSubSystems()
   // any of the subsystems initialized below).
   m_bIsValid = true;
 
+  std::cout << "---EclipseTest: en setup antes init graphics manager\n";
+
   // Init graphics manager
   Graphics::GraphicsManager::getSingleton().init();
+
+  std::cout << "---EclipseTest: en setup antes init physics manager\n";
 
   // Init physics manager
   Physics::PhysicsManager::getSingleton().init( Graphics::GraphicsManager::getSingleton().getSceneManager() );
 
+  std::cout << "---EclipseTest: en setup antes init input manager\n";
+
   // Init input manager
   Input::InputManager::getSingleton().init();
 
-  // Register the application as listener for mouse and keyboard	
+  std::cout << "---EclipseTest: adding listeners input\n";
+
+  // Register the application as listener for mouse and keyboard
   Input::InputManager::getSingleton().getMouse().addListener( this );
   Input::InputManager::getSingleton().getKeyboard().addListener( this );
 
+  std::cout << "---EclipseTest: init gui manager\n";
+
   // Init GUI Manager
-  GUI::GUIManagerCEGUI::getSingleton().init( Graphics::GraphicsManager::getSingleton().getMainWindow().getOgreWindow(), 
-    &Graphics::GraphicsManager::getSingleton().getSceneManager() );
+ GUI::GUIManagerCEGUI::getSingleton().init( Graphics::GraphicsManager::getSingleton().getMainWindow().getOgreWindow(),&Graphics::GraphicsManager::getSingleton().getSceneManager() );
 }
 
 /**
@@ -345,7 +357,7 @@ bool Application::keyReleased( const OIS::KeyEvent& event )
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Force the application to stop running for a specified time in milliseconds
  *
  * @param milliseconds

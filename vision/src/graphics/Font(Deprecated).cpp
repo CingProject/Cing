@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Font(Deprecated).h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreFontManager.h"
+#include "Ogre3d/include/OgreFontManager.h"
 
 // Framework
 #include "framework/Application.h"

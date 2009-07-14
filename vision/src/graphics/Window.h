@@ -25,7 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GraphicsPrereqs.h"
 #include "graphics/Color.h"
 // OGRE
-#include "externLibs/Ogre3d/include/OgreRenderTarget.h"
+#include "Ogre3d/include/OgreRenderTarget.h"
 
 namespace Graphics
 {

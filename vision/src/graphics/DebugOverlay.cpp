@@ -26,9 +26,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "framework/Application.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreOverlayManager.h"
-#include "externLibs/Ogre3d/include/OgreOverlayContainer.h"
-#include "externLibs/Ogre3d/include/OgreTextAreaOverlayElement.h"
+#include "Ogre3d/include/OgreOverlayManager.h"
+#include "Ogre3d/include/OgreOverlayContainer.h"
+#include "Ogre3d/include/OgreTextAreaOverlayElement.h"
 
 namespace Graphics
 {

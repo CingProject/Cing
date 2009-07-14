@@ -25,8 +25,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "CommonPrereqs.h"
 #include "eString.h"
 
-#include "externLibs/Ogre3d/include/OgreSharedPtr.h"
-#include "externLibs/TinyXML/include/tinyxml.h"
+#include "Ogre3d/include/OgreSharedPtr.h"
+#include "TinyXML/include/tinyxml.h"
 
 #include <string>
 
@@ -36,7 +36,7 @@ namespace Common
 
 	/**
 	* @internal
-	* @brief 
+	* @brief
 	*/
 	class XMLElement
 	{
@@ -56,7 +56,7 @@ namespace Common
 
 		// Init / Release / Update
 		void	load 	( const std::string& xmlFileName );
-		void	end		();	
+		void	end		();
 
 		// Query  Methods
 		int						getChildCount	    ();
@@ -64,9 +64,9 @@ namespace Common
 		XMLElement		getChild			    ( const std::string& path );
 		void          getChildren       ( XMLElementArray& children, const String& path = "NO_PATH" );
 		String        getContent        ();
-		int           getIntAttribute   ( const String& name, int default = 0 );
-		float         getFloatAttribute ( const String& name, float default = 0.0f );
-		String        getStringAttribute( const String& name, String default = "0" );
+		int           getIntAttribute   ( const String& name, int defaultValue = 0 );
+		float         getFloatAttribute ( const String& name, float defaultValue = 0.0f );
+		String        getStringAttribute( const String& name, String defaultValue = "0" );
 		String        getName           ();
 		bool					isValid				    () { return m_bIsValid; }
 

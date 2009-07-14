@@ -25,7 +25,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "GraphicsPrereqs.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreTexture.h"
+#include "Ogre3d/include/OgreTexture.h"
 
 namespace Graphics
 {

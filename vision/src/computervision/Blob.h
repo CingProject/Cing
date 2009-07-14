@@ -26,7 +26,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include <vector>
 
 // Open CV
-#include "externLibs/OpenCV/cv/include/cv.h"
+#include "OpenCV/cv/include/cv.h"
 
 // Common
 #include "common/CommonTypes.h"

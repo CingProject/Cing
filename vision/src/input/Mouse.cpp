@@ -33,7 +33,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "input/InputTypes.h"
 
 // OIS
-#include "externLibs/Ogre3d/include/ois/OISInputManager.h"
+#include "Ogre3d/include/ois/OISInputManager.h"
 
 namespace Input
 {
@@ -43,7 +43,7 @@ namespace Input
  * @brief Constructor. Initializes class attributes.
  */
 Mouse::Mouse():
-  BaseInputDevice(),
+  BaseInputDevice< OIS::MouseListener >(),
   m_pOISMouse( NULL ),
   m_bIsValid( false )
 {
@@ -73,7 +73,7 @@ bool Mouse::init( OIS::InputManager* pOISInputManager )
     return true;
 
 	// Init base input device
-	BaseInputDevice::init();
+	BaseInputDevice< OIS::MouseListener >::init();
 
   // Create the buffered mouse
   if ( pOISInputManager && ( pOISInputManager->numMice() > 0 ) )
@@ -104,7 +104,7 @@ bool Mouse::init( OIS::InputManager* pOISInputManager )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Mouse::end()

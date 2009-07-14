@@ -19,8 +19,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _SystemUtils_H_
-#define _SystemUtils_H_
+#ifndef _Cing_SystemUtils_H_
+#define _Cing_SystemUtils_H_
 
 #include "CommonPrereqs.h"
 

@@ -27,10 +27,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreRoot.h"
-#include "externLibs/Ogre3d/include/OgreConfigFile.h"
+#include "Ogre3d/include/OgreRoot.h"
+#include "Ogre3d/include/OgreConfigFile.h"
 
-// Framework 
+// Framework
 #include "framework/UserAppGlobals.h"
 
 namespace Common
@@ -78,9 +78,11 @@ namespace Common
 		extractUserAppPath();
 
 		// Init Ogre Root
+		 std::cout << "---EclipseTest: Antes crear Ogre::Root\n";
 		new Ogre::Root( pluginsPath );
+		std::cout << "---EclipseTest: Despues crear Ogre::Root\n";
 
-		// Store user data path in globals
+		 // Store user data path in globals
 		Globals::dataFolder = userDataPath;
 
 		// Load Cing Config file
@@ -99,6 +101,8 @@ namespace Common
 		// Get Cing data path
 		if ( Globals::cingDataFolder != "" )
 			libDataPath = Globals::cingDataFolder;
+
+		std::cout << "---EclipseTest: Antes cargar resources.cfg file\n";
 
 		// Load resource paths from config file
 		Ogre::ConfigFile  cf;
@@ -128,13 +132,14 @@ namespace Common
 		// Add the resource location of the user data
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation( userDataPath, typeName, userResourcesGroupName, true );
 
+		std::cout << "---EclipseTest: Fin cargar recursos\n";
 
 		m_bIsValid = true;
 	}
 
 	/**
 	* @internal
-	* @brief Releases the class resources. 
+	* @brief Releases the class resources.
 	* After this call no method of this object can be called without calling init method again.
 	*/
 	void ResourceManager::end()
@@ -145,8 +150,8 @@ namespace Common
 
 
 	/**
-	* @internal 
-	* @brief Extracts the user data path and stores it in the attribute m_dataPath 
+	* @internal
+	* @brief Extracts the user data path and stores it in the attribute m_dataPath
 	*/
 	void ResourceManager::extractUserAppPath()
 	{
@@ -165,7 +170,7 @@ namespace Common
 #ifdef WIN32
 #include <Windows.h>
 	/**
-	* @internal 
+	* @internal
 	* @brief Windows version. Extracts the user application execution and data path.
 	*
 	* They are stored in userDataPath and userExecPath attributes.

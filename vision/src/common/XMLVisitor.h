@@ -24,7 +24,7 @@ Copyright (c) 2008-2009 Julio Obelleiro and Jorge Cano
 
 #include "CommonPrereqs.h"
 #include "XMLElement.h"
-#include "externLibs/TinyXML/include/tinyxml.h"
+#include "TinyXML/include/tinyxml.h"
 
 
 namespace Common

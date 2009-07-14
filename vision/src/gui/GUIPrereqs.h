@@ -19,11 +19,11 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _GUIPrereqs_H_
-#define _GUIPrereqs_H_
+#ifndef _Cing_GUIPrereqs_H_
+#define _Cing_GUIPrereqs_H_
 
 /**
- * Prereqs File: This header file contains forward class declarations of the 
+ * Prereqs File: This header file contains forward class declarations of the
  * GUI namespace to speed up compiling.
  */
 
@@ -31,7 +31,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 namespace GUI
 {
 
-} 
+}
 
 namespace CEGUI
 {

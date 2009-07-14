@@ -19,8 +19,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _Release_H_
-#define _Release_H_
+#ifndef _Cing_Release_H_
+#define _Cing_Release_H_
 
 /**
  * @internal

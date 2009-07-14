@@ -26,9 +26,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/LogManager.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreSceneNode.h"
-#include "externLibs/Ogre3d/include/OgreCamera.h"
-#include "externLibs/Ogre3d/include/ois/OISKeyboard.h"
+#include "Ogre3d/include/OgreSceneNode.h"
+#include "Ogre3d/include/OgreCamera.h"
+#include "Ogre3d/include/ois/OISKeyboard.h"
 
 // Input
 #include "input/Mouse.h"

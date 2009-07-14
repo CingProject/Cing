@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #ifndef _MidiPrereqs_H_
 #define _MidiPrereqs_H_
 
-#include "externLibs/RtMidi/include/RtMidi.h"
+#include "RtMidi/include/RtMidi.h"
 
 /**
  * Prereqs File: This header file contains forward class declarations of the 

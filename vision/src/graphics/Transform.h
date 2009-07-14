@@ -19,14 +19,14 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _Transform_H_
-#define _Transform_H_
+#ifndef _Cing_Transform_H_
+#define _Cing_Transform_H_
 
 #include "GraphicsPrereqs.h"
 #include "Common/CommonTypes.h"
 
-#include "externlibs/ogre3d/include/OgreMatrix3.h"
-#include "externlibs/ogre3d/include/OgreMatrix4.h"
+#include "ogre3d/include/OgreMatrix3.h"
+#include "ogre3d/include/OgreMatrix4.h"
 
 #include "common/CommonTypes.h"
 
@@ -56,7 +56,7 @@ namespace Graphics
 		void		scale			( float x, float y, float z );
 
 		// Get methods
-		Vector			getPosition	(); 
+		Vector			getPosition	();
 		Vector			getRotation	();
 		Quaternion		getRotQuaternion();
 		Vector			getScale	();

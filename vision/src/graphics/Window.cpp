@@ -23,9 +23,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Camera3D.h"
 
 // Ogre includes
-#include "externLibs/Ogre3d/include/OgreRenderWindow.h"
-#include "externLibs/Ogre3d/include/OgreWindowEventUtilities.h"
-#include "externLibs/Ogre3d/include/OgreCamera.h"
+#include "Ogre3d/include/OgreRenderWindow.h"
+#include "Ogre3d/include/OgreWindowEventUtilities.h"
+#include "Ogre3d/include/OgreCamera.h"
 
 // Common includes
 #include "common/Exception.h"

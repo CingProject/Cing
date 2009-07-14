@@ -19,14 +19,15 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _CommonTypes_H_
-#define _CommonTypes_H_
+#ifndef _Cing_CommonTypes_H_
+#define _Cing_CommonTypes_H_
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreVector2.h"
-#include "externLibs/Ogre3d/include/OgreVector3.h"
-#include "externLibs/Ogre3d/include/OgreCommon.h"
-#include "externLibs/Ogre3d/include/OgreAxisAlignedBox.h"
+#include "Ogre3d/include/OgreVector2.h"
+#include "Ogre3d/include/OgreVector3.h"
+#include "Ogre3d/include/OgreCommon.h"
+#include "Ogre3d/include/OgreAxisAlignedBox.h"
+#include "Ogre3d/include/OgreMath.h"
 
 /**
 * @internal

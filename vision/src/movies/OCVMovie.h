@@ -24,7 +24,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "MoviePrereqs.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreTimer.h"
+#include "Ogre3d/include/OgreTimer.h"
 
 #include <string>
 
