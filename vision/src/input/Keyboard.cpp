@@ -29,7 +29,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/GraphicsManager.h"
 
 // OIS
-#include "externLibs/Ogre3d/include/ois/OISInputManager.h"
+#include "Ogre3d/include/ois/OISInputManager.h"
 
 namespace Input
 {
@@ -39,7 +39,7 @@ namespace Input
  * @brief Constructor. Initializes class attributes.
  */
 Keyboard::Keyboard():
-  BaseInputDevice(),
+  BaseInputDevice< OIS::KeyListener >(),
   m_pOISKeyboard( NULL ),
   m_bIsValid    ( false )
 {
@@ -60,7 +60,7 @@ Keyboard::~Keyboard()
  * @brief Initializes the class so it becomes valid.
  *
  * @param[in] pOISInputManager OIS Input manager. Allows to create and destroy the OIS Keyboard
- * @return true if the initialization was ok | false otherwise 
+ * @return true if the initialization was ok | false otherwise
  */
 bool Keyboard::init( OIS::InputManager* pOISInputManager )
 {
@@ -69,10 +69,10 @@ bool Keyboard::init( OIS::InputManager* pOISInputManager )
     return true;
 
 	// Init base input device
-	BaseInputDevice::init();
+	BaseInputDevice< OIS::KeyListener >::init();
 
   // If possible create a buffered keyboard
-  if ( pOISInputManager && ( pOISInputManager->numKeyboards() > 0 ) )
+  if ( pOISInputManager && ( pOISInputManager->numKeyBoards() > 0 ) )
   {
     m_pOISKeyboard = static_cast<OIS::Keyboard*>( pOISInputManager->createInputObject( OIS::OISKeyboard, true ) );
     m_pOISKeyboard->setEventCallback( this );
@@ -93,7 +93,7 @@ bool Keyboard::init( OIS::InputManager* pOISInputManager )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
 void Keyboard::end()
@@ -123,7 +123,7 @@ void Keyboard::update()
 
 
 /**
- * @internal 
+ * @internal
  * @brief Returns true if the received key is down
  *
  * @param key key to check
@@ -138,7 +138,7 @@ bool Keyboard::isKeyDown( OIS::KeyCode key ) const
 }
 
 /**
- * @internal 
+ * @internal
  * @brief Returns true if the received key is down
  *
  * @param key key to check
@@ -162,7 +162,7 @@ bool Keyboard::keyPressed( const OIS::KeyEvent &event )
 {
 	// TODO: install boost, tr1 c++ or create binders that support rederence parameters!
 	//std::for_each( m_listeners.begin(), m_listeners.end(), std::bind2nd( std::mem_fun( &OIS::KeyListener::keyPressed ), event ) );
-	
+
 	// Tell registered listeners
 	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
 		it->second->keyPressed( event );

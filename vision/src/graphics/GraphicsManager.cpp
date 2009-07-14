@@ -43,24 +43,24 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/LogManager.h"
 
 // Ogre includes
-#include "externLibs/Ogre3d/include/OgreRoot.h"
-#include "externLibs/Ogre3d/include/OgreConfigFile.h"
-#include "externLibs/Ogre3d/include/OgreRenderWindow.h"
-#include "externLibs/Ogre3d/include/OgreRenderSystem.h"
-#include "externLibs/Ogre3d/include/OgreBillboard.h"
-#include "externLibs/Ogre3d/include/OgreBillboardSet.h"
-#include "externLibs/Ogre3d/include/OgreStringConverter.h"
-#include "externLibs/Ogre3d/include/OgreStringConverter.h"
-#include "externLibs/Ogre3d/include/OgreHardwarePixelBuffer.h"
+#include "Ogre3d/include/OgreRoot.h"
+#include "Ogre3d/include/OgreConfigFile.h"
+#include "Ogre3d/include/OgreRenderWindow.h"
+#include "Ogre3d/include/OgreRenderSystem.h"
+#include "Ogre3d/include/OgreBillboard.h"
+#include "Ogre3d/include/OgreBillboardSet.h"
+#include "Ogre3d/include/OgreStringConverter.h"
+#include "Ogre3d/include/OgreStringConverter.h"
+#include "Ogre3d/include/OgreHardwarePixelBuffer.h"
 
 // TEMP
-#include "externLibs/Ogre3d/include/OgreTextAreaOverlayElement.h"
+#include "Ogre3d/include/OgreTextAreaOverlayElement.h"
 
 // GUI
 //#include "gui/GUIManager.h"
 
 // Collada
-#include "externLibs/OgreCollada/include/OgreCollada.h"
+#include "OgreCollada/include/OgreCollada.h"
 
 namespace Graphics
 {
@@ -122,7 +122,7 @@ bool GraphicsManager::init()
 	setup( m_defaultWindowWidth, m_defaultWindowHeight );
 
 	// Init rendering engine and create main window
-	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Vision Library Demo" );       
+	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Vision Library Demo" );
 	if ( !ogreWindow )
 		THROW_EXCEPTION( "Error creating application window" );
 
@@ -146,7 +146,7 @@ bool GraphicsManager::init()
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 
-	// Init ImageResourceManager 
+	// Init ImageResourceManager
 	ImageResourceManager::getSingleton().init();
 
 	// Init ShapeManager
@@ -222,7 +222,7 @@ bool GraphicsManager::init()
 
 /**
 * @internal
-* @brief Releases the class resources. 
+* @brief Releases the class resources.
 * After this method is called the class is not valid anymore.
 */
 void GraphicsManager::end()
@@ -375,7 +375,7 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		videoMode << windowWidth << " x " << windowHeight;;
 
 		// Set render system settings
-		selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );  
+		selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );
 		if ( !m_fullscreen )
 			selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
 
@@ -392,7 +392,7 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		videoMode << windowWidth << " x " << windowHeight << " @ 32-bit colour";
 
 		// Set render system settings specified by user
-		selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );  
+		selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );
 		if ( !m_fullscreen )
 			selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
 
@@ -476,7 +476,7 @@ bool GraphicsManager::hasBumpMappingSupport() const
 	const Ogre::RenderSystemCapabilities* caps = Ogre::Root::getSingleton().getRenderSystem()->getCapabilities();
 
 	// Check capabilities programs
-	if (  caps->hasCapability( Ogre::RSC_VERTEX_PROGRAM ) && 
+	if (  caps->hasCapability( Ogre::RSC_VERTEX_PROGRAM ) &&
 		( caps->hasCapability( Ogre::RSC_FRAGMENT_PROGRAM ) || caps->hasCapability( Ogre::RSC_DOT3 ) ) )
 		return true;
 
@@ -545,7 +545,7 @@ void GraphicsManager::setStrokeWeight( int weight )
 }
 
 /**
-* @internal 
+* @internal
 * @brief Makes the frames per second to be printed on the screen or not
 *
 * @param show if true the current fps wil be printed on screen, if false, it won't be printed
@@ -559,7 +559,7 @@ void GraphicsManager::showFps( bool show )
 /**
 * @brief Allows to enable or disable the default 3d camera control
 *
-* @param useDefault If true, the default camera control will be enabled. 
+* @param useDefault If true, the default camera control will be enabled.
 * If false, it will be disable, so the user will be reposible to control the 3d camera
 * if it is required.
 *
@@ -580,11 +580,11 @@ void GraphicsManager::useDefault3DCameraControl( bool useDefault )
 		m_defaultCamController.init( m_activeCamera );
 	// Enable controller
 	else
-		m_defaultCamController.end();	
+		m_defaultCamController.end();
 }
 
 /**
-* @internal 
+* @internal
 * @brief Informs that an image is created (so it can be be drawn), it will be made invisible after each frame is rendered.
 * This way, if the user does not call the draw method for the same image in any frame, it won't be rendered
 * @note This is a bit triky, but allows to emulate software rendering (this is, the image is renderd just when the draw method
@@ -598,7 +598,7 @@ void GraphicsManager::addDrawableImage( TexturedQuad* img)
 }
 
 /**
-* @internal 
+* @internal
 * @brief Informs that an image that was added as drawable image (@sa addDrawableImage) is being released
 *
 * @param img Image that is going to be rendered
@@ -632,8 +632,8 @@ void GraphicsManager::setEllipseMode( int	mode )
 
 
 /**
-* @internal 
-* @brief Modifies the background of the window 
+* @internal
+* @brief Modifies the background of the window
 * (really the main viewport in the window)
 * @param[in] color Color to set to the background
 */
@@ -692,4 +692,5 @@ void GraphicsManager::applyCoordinateSystemTransform( GraphicsType coordSystem )
 	}
 
 }
+*/
 } // namespace Graphics

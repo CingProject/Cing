@@ -19,8 +19,8 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _GraphicsTypes_H_
-#define _GraphicsTypes_H_
+#ifndef _Cing_GraphicsTypes_H_
+#define _Cing_GraphicsTypes_H_
 
 /**
 * @internal
@@ -28,8 +28,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 // Ogre includes
-#include "externLibs/Ogre3d/include/OgreLight.h"   
-#include "externLibs/Ogre3d/include/ogrepixelformat.h"
+#include "Ogre3d/include/OgreLight.h"
+#include "Ogre3d/include/OgrePixelFormat.h"
 
 //#include "graphics/Color.h"
 
@@ -48,7 +48,7 @@ namespace Graphics
 
 		// Color Modes
 		//RGB,
-		HSB,	
+		HSB,
 		// Drawing modes
 		POINTS,
 		LINES,
@@ -68,12 +68,12 @@ namespace Graphics
 	enum ImageProcessingFilters
 	{
 		BLUR,				///< provides a basic blur.
-		GRAY,				///< converts the image to grayscale based on luminance. 
-		INVERT,			///< will invert the color components in the image. 
-		//_OPAQUE,	///< set all the high bits in the image to opaque 
-		THRESHOLD,	///< converts the image to black and white. 
-		DILATE,			///< grow white/light areas 
-		ERODE				///< shrink white/light areas 
+		GRAY,				///< converts the image to grayscale based on luminance.
+		INVERT,			///< will invert the color components in the image.
+		//_OPAQUE,	///< set all the high bits in the image to opaque
+		THRESHOLD,	///< converts the image to black and white.
+		DILATE,			///< grow white/light areas
+		ERODE				///< shrink white/light areas
 	};
 
 	/// Ink types

@@ -19,13 +19,13 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _Color_h_
-#define _Color_h_
+#ifndef _Cing_Color_h_
+#define _Cing_Color_h_
 
 #include "GraphicsPrereqs.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreColourValue.h"
+#include "Ogre3d/include/OgreColourValue.h"
 
 namespace Graphics
 {
@@ -55,7 +55,7 @@ public:
 	Color	normalized	() const;
 	void	normalize		();
 
-	// Color mode 
+	// Color mode
 	static void							  colorMode	( GraphicsType mode, float range1, float range2, float range3, float range4 );
 	static const GraphicsType	getColorMode(){ return m_colorMode; };
 
@@ -66,7 +66,7 @@ private:
 
 	// Attributes
 	float m_lowRange, m_hightRange; // Color values range. Default 0..255
-	
+
 	// Static attributes
 	static GraphicsType	m_colorMode;
 	static float				m_rRange;

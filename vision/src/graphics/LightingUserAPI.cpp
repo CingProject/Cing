@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "GraphicsManager.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreSceneManager.h"
+#include "Ogre3d/include/OgreSceneManager.h"
 
 // Framework
 #include "framework/Application.h"

@@ -28,14 +28,15 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "DebugOverlay.h"
 #include "TextArea.h"
 #include "CameraController.h"
-#include "externLibs/Ogre3d/include/OgreManualObject.h"
+#include "Ogre3d/include/OgreManualObject.h"
 #include "Transform.h"
 #include "Style.h"
 #include "Shape.h"
 
 // OpenCv includes
-#include "externLibs/OpenCV/cxcore/include/cxtypes.h"
-#include "externLibs/OpenCV/highgui/include/highgui.h"
+#include "OpenCV/cxcore/include/cxtypes.h"
+#include "OpenCV/cxcore/include/cxcore.h"
+#include "OpenCV/highgui/include/highgui.h"
 
 //TEMP
 #include "input/InputPrereqs.h"
@@ -82,12 +83,12 @@ namespace Graphics
 
 		// TODO: Experimental
 		void setSceneManager           ( Ogre::SceneManager* sm )
-		{ 
+		{
 			m_pSceneManager =  sm;
 		};
 
 		Ogre::SceneManager*			getSceneManagerPtr			()       { return m_pSceneManager; }
-		CameraController&			getDefaultCameraController	()		 { return m_defaultCamController; }	
+		CameraController&			getDefaultCameraController	()		 { return m_defaultCamController; }
 
 		// Common capabilities checking
 		bool                      	hasVertexProgramsSupport	() const;
@@ -148,6 +149,8 @@ namespace Graphics
 			m_frameName = name;
 		};
 
+		// Import Collada
+		bool loadCollada( const Common::String& fileName );
 		// Coordinate systems
 		bool isProcessingMode() { return ( m_coordSystem == PROCESSING );	}	
 		void applyCoordinateSystemTransform( GraphicsType coordSystem );
@@ -180,7 +183,7 @@ namespace Graphics
 		Window							m_mainWindow;     ///< Main application window
 		Camera3D						m_activeCamera;   ///< Active camera
 
-		// Graphics system setup 
+		// Graphics system setup
 		int                        		m_defaultWindowWidth;
 		int                        		m_defaultWindowHeight;
 		GraphicMode                		m_defaultGraphicMode;

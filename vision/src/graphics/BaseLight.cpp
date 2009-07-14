@@ -23,10 +23,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/GraphicsManager.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreStringConverter.h"
-#include "externLibs/Ogre3d/include/OgreSceneManager.h"
-#include "externLibs/Ogre3d/include/OgreBillboardSet.h"
-#include "externLibs/Ogre3d/include/OgreBillboard.h"
+#include "Ogre3d/include/OgreStringConverter.h"
+#include "Ogre3d/include/OgreSceneManager.h"
+#include "Ogre3d/include/OgreBillboardSet.h"
+#include "Ogre3d/include/OgreBillboard.h"
 
 // Common
 #include "common/Exception.h"
