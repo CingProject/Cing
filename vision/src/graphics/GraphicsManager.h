@@ -189,7 +189,7 @@ namespace Graphics
 
 		// Misc
 		DebugOverlay					m_debugOverlay;   ///< Debug overlay used to show debug information
-		TextArea						m_systemFont;    ///< To print system info to screen
+		//MovableText						m_systemFont;    ///< To print system info to screen
 
 		// Styling properties
 		// TODO: Eliminates this. Change styles que to stack

@@ -27,6 +27,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Image.h"
 #include "ShapeManager.h"
 #include "FontManager.h"
+#include "GraphicsUserApi.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -203,9 +204,9 @@ bool GraphicsManager::init()
 	vp->setOverlaysEnabled(true);
 
 	// Init the default font / text
-	m_systemFont.init( Globals::width, Globals::height);
-	m_systemFont.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
-	m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
+	//m_systemFont.init( Globals::width, Globals::height);
+	//m_systemFont.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
+	//m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
 
 	// Set default coordinate system:
 	m_coordSystem = NORMAL;
@@ -297,11 +298,12 @@ void GraphicsManager::draw()
 	{
 		std::ostringstream oss;
 		oss << "FPS: " << frameStats.lastFPS;
-		m_systemFont.setText( oss.str() );	// Text to be displayed
-		m_systemFont.show( true );
+		text( oss.str(), 10, 0 );
+		//m_systemFont.setText( oss.str() );	// Text to be displayed
+		//m_systemFont.show( true );
 	}
-	else
-		m_systemFont.show( false );
+	//else
+	//	m_systemFont.show( false );
 
 	// Render the viewport to texture and save to disk if required
 	if ( m_saveFrame )

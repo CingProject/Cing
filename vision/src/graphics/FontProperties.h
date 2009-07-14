@@ -51,7 +51,7 @@ namespace Graphics
 		FontProperties() 
 		{
 			// Default values
-			fontName	= Font::DEFAULT_FONT_NAME;
+			fontName	= "DefaultFont";
 			size		= 25;		// Use default size (the one specified in the ttf when loaed)
 			x			= 0;
 			y			= 0;

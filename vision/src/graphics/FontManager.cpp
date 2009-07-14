@@ -154,6 +154,20 @@ namespace Graphics
 		// Set text area local transformation (transformation passed to the text function)
 		newText->setGlobalTranslation( Vector( m_activeFontProperties.x, m_activeFontProperties.y, m_activeFontProperties.z ) );
 
+		// Control current coordinate system
+		if ( GraphicsManager::getSingleton().isProcessingMode() )
+		{
+			newText->getParentNode()->setPosition( 0, Globals::height, 0 );
+			newText->getParentNode()->setScale( Globals::width, -Globals::height, 1 );
+		}
+		else
+		{
+			newText->getParentNode()->setPosition( 0, 0, 0 );
+			newText->getParentNode()->setScale( Globals::width, Globals::height, 1 );
+		}
+
+	
+
 		// Setup text geometry for render
 		newText->_setupGeometry();
 	}
@@ -174,7 +188,13 @@ namespace Graphics
 		m_nextFontToUse++;
 
 		// Make new text area child of the root node (so we dont create so many nodes)
-		Globals::ogreSceneManager->getRootSceneNode()->attachObject( m_activeFontsToRender.back() );
+
+		// Using root scene node as parent node
+		//Globals::ogreSceneManager->getRootSceneNode()->attachObject( m_activeFontsToRender.back() );
+
+		// Using individual scene nodes
+		Ogre::SceneNode* parentNode = Globals::ogreSceneManager->getRootSceneNode()->createChildSceneNode();
+		parentNode->attachObject( m_activeFontsToRender.back() );
 
 		// Return it
 		return m_activeFontsToRender.back();

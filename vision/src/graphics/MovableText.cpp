@@ -297,6 +297,7 @@ namespace Graphics
 		if (mpFont.isNull())
 		{
 			// not initialised yet, probably due to the order of creation in a template
+			LOG_ERROR( "Internal Font error: no font loaded" );
 			return;
 		}
 
@@ -343,7 +344,7 @@ namespace Graphics
 			verticalOffset = 0.0f;
 			break;
 		}
-
+				
 		// Raise the first line 
 		top += verticalOffset * 2;
 
@@ -469,6 +470,7 @@ namespace Graphics
 			// This is a normal character -> setup its geometry
 			drawCharacter( pVert, character, top, left, lineLength );
 		}
+
 		// Unlock vertex buffer
 		vbuf->unlock();
 
@@ -637,6 +639,7 @@ namespace Graphics
 					if ( mwordWrap )
 					{
 						float nextWordLength = getWordLength( i, mCaption.end() );
+				
 						// have to break the line?
 						if ( ( lineLength + nextWordLength ) > m_textAreaWidth )
 							breakToWrapWord = true;
