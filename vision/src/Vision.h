@@ -102,17 +102,16 @@
 #include "video/MediaPlayerVLC.h"
 #include "video/OCVMovie.h"
 
-
 // GUI
 #include "gui/GUIUserAPI.h"
+
+// Midi
+#include "midi/midiIO.h"
 
 // OGRE -> this is included because some Ogre objects are exposed to user application
 // just in case an advanced user wants to use them...
 #include "externLibs/Ogre3d/include/OgreSceneManager.h"
 #include "externLibs/Ogre3d/include/OgreCamera.h"
-
-// Midi
-#include "midi/midiIO.h"
 
 // namespaces (the library user don't need to know about them...)
 using namespace Framework;

@@ -57,7 +57,8 @@ void background( float x, float y, float z );
 void background( float x, float y, float z, float a );
 void background( int rgb );
 void background( int rgb, float alpha );
-void background( const Image& image );	
+void background( const Color& theColor  );
+void background( const Image& image ); // TODO: not implemented yet!	
 
 void setBackgroundColor( const Color& color );
 

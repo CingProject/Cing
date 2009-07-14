@@ -99,7 +99,15 @@ void background( int rgb, float a )
 	setBackgroundColor( Color(rgb, rgb, rgb, a ) );
 }
 
-void background( const Image& image );
+/**
+ * @brief Set the background to a color, based on the current colorMode. 
+ *
+ * @param[in] theColor Color to set to the background
+ */
+void background(  const Color& theColor  )
+{
+	setBackgroundColor( theColor );
+}
 
 /**
  * @brief Modifies the background of the window (really the main viewport in the window). For compatibility.
@@ -396,7 +404,12 @@ void showFps( bool show )
  */
 void line( float x1, float y1, float z1, float x2, float y2, float z2)
 {
-	Graphics::ShapeManager::getSingleton().line( x1,  y1,  z1, x2,  y2,  z2 );
+    // Transform vertices before the drawing  call 
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Vector v1 = t.applyTransform( Vector( x1, y1, z1) );
+	Vector v2 = t.applyTransform( Vector( x2, y2, z2) );
+
+	Graphics::ShapeManager::getSingleton().line( v1.x,  v1.y,  v1.z, v2.x,  v2.y,  v2.z );
 };
 
 //------------------------------------------------------------------------------------
@@ -414,13 +427,21 @@ void beginShape(GraphicsType operation)
 //------------------------------------------------------------------------------------
 void vertex( float x, float y)
 {
-	Graphics::ShapeManager::getSingleton().vertex(x,y);
+	// Transform vertices before the drawing  call 
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Vector v1 = t.applyTransform( Vector( x, y, 0) );
+
+	Graphics::ShapeManager::getSingleton().vertex(v1.x,v1.y);
 };
 
 //------------------------------------------------------------------------------------
 void vertex( float x, float y, float z)
 {
-	Graphics::ShapeManager::getSingleton().vertex(x,y,z);
+	// Transform vertices before the drawing  call 
+	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Vector v1 = t.applyTransform( Vector( x, y, z) );
+
+	Graphics::ShapeManager::getSingleton().vertex(v1.x,v1.y,v1.z);
 };
 
 //------------------------------------------------------------------------------------

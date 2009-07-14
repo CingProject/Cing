@@ -48,7 +48,8 @@ void draw()
 	rotate( angle);
 	scale(2,3);
 	translate (100,100);
-	ellipse(0,0,50,80);
+	//ellipse(0,0,50,80);
+	rect(0,0,50,50);
 }
 
 void end()

@@ -99,7 +99,7 @@ void BlobTracker::update( const Graphics::Image& inImage )
 			m_trackedBlobs[i].energy -=0.5;			
 	};
 
-	float dD        = 5;   //distancia en pixels a la que se considera el mismo blob
+	float dD        = 5;    //distancia en pixels a la que se considera el mismo blob
 	float maxEnergy = 10.0;	//max energia de cada tracked blob
 	float dist      = 0.0;
 	//para cada blob capturado por el contourFinder...

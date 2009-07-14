@@ -85,11 +85,11 @@ namespace Audio
 		void stopRecord     ();
 
 		// Attributes
-		FMOD_SYSTEM*		m_sysPtr;			///< Owns a copy to shared system (should be synchronized)
-		FMOD_SOUND*			m_sound;			///< Sound when capturing/recording
-		FMOD_CHANNEL*		m_channel;		///< Use a channel for processing
-		int							m_samples;		///< Number of time samples
-		int							m_sampleRate; ///< Sample rate
+		FMOD_SYSTEM*    m_sysPtr;      ///< Owns a copy to shared system (should be synchronized)
+		FMOD_SOUND*     m_sound;       ///< Sound when capturing/recording
+		FMOD_CHANNEL*   m_channel;     ///< Use a channel for processing
+		int             m_samples;     ///< Number of time samples
+		int             m_sampleRate;  ///< Sample rate
 
 	}; // class AudioInputFMOD
 

@@ -316,7 +316,7 @@ Color Image::getPixel( int x, int y )
 
 	// Check the image is valid
 	if ( !isValid() )
-		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+		THROW_EXCEPTION( "Trying to get a pixel from an invalid image" );
 
 	// Check boundaries
 	if ( x < 0 )								x = 0;
@@ -1125,24 +1125,6 @@ void Image::ellipse( float x1, float y1, float x2, float y2, float angle )
 }
 
 /**
- * @brief Fill the image woth input color
- *
- * @param Color
- */
-void Image::fill( Graphics::Color theColor )
-{
-	// Check the image is valid
-	if ( !isValid() )
-		THROW_EXCEPTION( "Trying to paint in an invalid image" );
-
-	CvScalar tempColor = cvScalar(theColor.r, theColor.g, theColor.b);
-	cvSet(m_cvImage, tempColor );
-
-	// Update texture when the next drawing call is made by the user
-	m_bUpdateTexture = true;
-
-}
-/**
  * @brief Draws a ellipse inside an image
  *
  * @param x x, first point
@@ -1408,6 +1390,8 @@ void Image::toGray()
 }
 
 void Image::operator +=	( float scalar ){
+
+
 	switch( m_cvImage->nChannels )
 	{
 	case 1:
@@ -1453,31 +1437,85 @@ void Image::operator -=	( const Image& img ){
 	cvSub( m_cvImage, &img.getCVImage(), m_cvImage );
 }
 
+/**
+ * @brief Blend two images
+ *
+ * @param Image& other
+ * @param float  percentage
+ */
 void Image::blend( const Image& other, float percentage )
 {
-	percentage = constrain( percentage, 0.0f, 1.0f );
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to blend an image without initialization" );
+
+	if ( other.getFormat() != getFormat() )
+		THROW_EXCEPTION( "Images with different format" );
+
+	if ( other.getWidth() != getWidth() || other.getHeight() != getHeight())
+		THROW_EXCEPTION( "Images with different sizes" );
+
+	percentage = map( percentage, 0, 100, 0.0f, 1.0f );
 	cvAddWeighted( m_cvImage, 1.0 - percentage, &other.getCVImage(), percentage, 0.0f, m_cvImage );
+
 }
 
 void Image::operator = ( float scalar)
 {
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+
 	switch( m_cvImage->nChannels )
 	{
-		case 1:
-			cvSet( m_cvImage, cvScalar(scalar) );
+	case 1:
+		cvSet( m_cvImage, cvScalar(scalar) );
+		break;
+	case 3:
+		cvSet( m_cvImage, cvScalar(scalar,scalar,scalar) );
+		break;
+	case 4:
+		cvSet( m_cvImage, cvScalar(scalar,scalar,scalar,scalar) );
+		break;
+	default:
+		THROW_EXCEPTION( "Invalid number of channels in image" )
 			break;
-		case 3:
-			cvSet( m_cvImage, cvScalar(scalar,scalar,scalar) );
-			break;
-		case 4:
-			cvSet( m_cvImage, cvScalar(scalar,scalar,scalar,scalar) );
-			break;
-		default:
-			THROW_EXCEPTION( "Invalid number of channels in image" )
-				break;
 	}
 }
 
+/**
+ * @brief Fill the image with an input color
+ *
+ * @param Color
+ */
+void Image::fill( Graphics::Color theColor )
+{
+
+	// Check the image is valid
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+
+	// Set the entire image 
+	switch( m_cvImage->nChannels )
+	{
+	case 1:
+		cvSet( m_cvImage, cvScalar(theColor.r) );
+		break;
+	case 3:
+		cvSet( m_cvImage, cvScalar(theColor.r, theColor.g, theColor.b) );
+		break;
+	case 4:
+		cvSet( m_cvImage, cvScalar(theColor.r, theColor.g, theColor.b, theColor.a) );
+		break;
+	default:
+		THROW_EXCEPTION( "Invalid number of channels in image" )
+			break;
+	}
+
+	// Update texture when the next drawing call is made by the user
+	m_bUpdateTexture = true;
+
+}
 /**
  * @brief Copy from image
  * TODO: optimize
