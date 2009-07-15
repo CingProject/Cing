@@ -9,7 +9,7 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		Optimization="0"
-		AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\externLibs\OpenCV\cxcore\include;..\..\vision\externLibs\LibVLC\include"
+		AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\externLibs\win\visualStudio2008\OpenCV\cxcore\include;..\..\vision\externLibs\win\visualStudio2008\LibVLC\include;..\..\vision\externLibs\win\visualStudio2008"
 		PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 		RuntimeLibrary="3"
 		WarningLevel="3"
@@ -18,7 +18,7 @@
 	<Tool
 		Name="VCLinkerTool"
 		AdditionalDependencies="OgreMain_d.lib OIS_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libconvexdecomposition_d.lib videoInput.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib OgreCollada_d.lib LibXML_d.lib FCollada_d.lib libvlc.dll.a libvlccore.dll.a tinyxml_STL_d.lib"
-		AdditionalLibraryDirectories="..\..\vision\externLibs\BetaCairo\lib;..\..\vision\externLibs\Bullet\lib;..\..\vision\externLibs\cairo\lib;..\..\vision\externLibs\Fmod\lib;..\..\vision\externLibs\Ogre3d\lib;..\..\vision\externLibs\OgreBullet\lib;..\..\vision\externLibs\OpenCV\lib;..\..\vision\externLibs\PortVideo\lib;..\..\vision\externLibs\PTypes\lib;..\..\vision\externLibs\RtMidi\lib;..\..\vision\externLibs\VideoInput\lib;..\..\vision\externLibs\OgreCollada\lib;..\..\vision\externLibs\LibVLC\lib;..\..\vision\externLibs\TinyXML\lib"
+		AdditionalLibraryDirectories="..\..\vision\externLibs\win\visualStudio2008\BetaCairo\lib;..\..\vision\externLibs\win\visualStudio2008\Bullet\lib;..\..\vision\externLibs\win\visualStudio2008\cairo\lib;..\..\vision\externLibs\win\visualStudio2008\Fmod\lib;..\..\vision\externLibs\win\visualStudio2008\Ogre3d\lib;..\..\vision\externLibs\win\visualStudio2008\OgreBullet\lib;..\..\vision\externLibs\win\visualStudio2008\OpenCV\lib;..\..\vision\externLibs\win\visualStudio2008\PortVideo\lib;..\..\vision\externLibs\win\visualStudio2008\PTypes\lib;..\..\vision\externLibs\win\visualStudio2008\RtMidi\lib;..\..\vision\externLibs\win\visualStudio2008\VideoInput\lib;..\..\vision\externLibs\win\visualStudio2008\OgreCollada\lib;..\..\vision\externLibs\win\visualStudio2008\LibVLC\lib;..\..\vision\externLibs\win\visualStudio2008\TinyXML\lib"
 		IgnoreDefaultLibraryNames="atlthunk;libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib;"
 		GenerateDebugInformation="true"
 	/>
