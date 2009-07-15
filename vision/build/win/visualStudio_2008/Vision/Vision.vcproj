@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\OgreBullet\Collisions\include;..\..\..\..\externLibs\Bullet\src;..\..\..\..\externLibs\Ogre3d\include;..\..\..\..\externLibs\OpenCV\cxcore\include;..\..\..\..\externLibs\OpenCV\cv\include;..\..\..\..\externLibs\OpenCV\cvaux\include;..\..\..\..\externLibs\OpenCV\highgui\include;..\..\..\..\externLibs\LibVLC\include"
+				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\win\visualStudio2008;..\..\..\..\externLibs\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\externLibs\win\visualStudio2008\Bullet\src;..\..\..\..\externLibs\win\visualStudio2008\Ogre3d\include;..\..\..\..\externLibs\win\visualStudio2008\OpenCV\cxcore\include;..\..\..\..\externLibs\win\visualStudio2008\OpenCV\cv\include;..\..\..\..\externLibs\win\visualStudio2008\OpenCV\cvaux\include;..\..\..\..\externLibs\win\visualStudio2008\OpenCV\highgui\include;..\..\..\..\externLibs\win\visualStudio2008\LibVLC\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				MinimalRebuild="true"
 				ExceptionHandling="2"
@@ -115,7 +115,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\OgreBullet\Collisions\include;..\..\..\..\externLibs\Bullet\src;..\..\..\..\externLibs\Ogre3d\include;..\..\..\..\externLibs\OpenCV\cxcore\include;..\..\..\..\externLibs\OpenCV\cv\include;..\..\..\..\externLibs\OpenCV\cvaux\include;..\..\..\..\externLibs\OpenCV\highgui\include;..\..\..\..\externLibs\LibVLC\include"
+				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\externLibs\win\visualStudio2008;..\..\..\..\externLibs\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\externLibs\win\visualStudio2008\Bullet\src;..\..\..\..\externLibs\win\visualStudio2008\Ogre3d\include;..\..\..\..\externLibs\win\visualStudio2008\OpenCV\cxcore\include;..\..\..\..\externLibs\win\visualStudio2008\OpenCV\cv\include;..\..\..\..\externLibs\win\visualStudio2008\OpenCV\cvaux\include;..\..\..\..\externLibs\win\visualStudio2008\OpenCV\highgui\include;..\..\..\..\externLibs\win\visualStudio2008\LibVLC\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				StringPooling="false"
 				MinimalRebuild="false"
