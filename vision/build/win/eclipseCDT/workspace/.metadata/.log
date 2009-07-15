@@ -1,0 +1,24 @@
+!SESSION 2009-07-15 09:34:51.969 -----------------------------------------------
+eclipse.buildId=M20080911-1700
+java.version=1.6.0_14
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86 -data C:\LibVision\_Dev\_Vision\trunk_reorganizacionvs2008\vision\build\win\eclipseCDT\workspace
+
+!ENTRY org.eclipse.cdt.make.core 4 -1 2009-07-15 09:35:22.672
+!MESSAGE Missing Builder: org.eclipse.cdt.make.core.ScannerConfigBuilder
+
+!ENTRY org.eclipse.cdt.make.core 4 -1 2009-07-15 09:35:22.672
+!MESSAGE Missing Builder: org.eclipse.cdt.make.core.ScannerConfigBuilder
+
+!ENTRY org.eclipse.cdt.make.core 4 -1 2009-07-15 09:35:22.672
+!MESSAGE Missing Builder: org.eclipse.cdt.make.core.ScannerConfigBuilder
+
+!ENTRY org.eclipse.cdt.make.core 4 -1 2009-07-15 09:35:22.672
+!MESSAGE Missing Builder: org.eclipse.cdt.make.core.ScannerConfigBuilder
+
+!ENTRY org.eclipse.cdt.make.core 4 -1 2009-07-15 09:35:22.672
+!MESSAGE Missing Builder: org.eclipse.cdt.make.core.ScannerConfigBuilder
+
+!ENTRY org.eclipse.cdt.core 1 0 2009-07-15 09:35:26.234
+!MESSAGE Indexed 'Cing' (0 sources, 8 headers) in 0.81 sec: 63 declarations; 110 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
