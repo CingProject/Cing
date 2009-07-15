@@ -3,12 +3,12 @@
 #include "Vision.h"
 
 // OGRE and Collada includes
-#include "externLibs/Ogre3d/include/OgreAnimation.h"  
-#include "externLibs/Ogre3d/include/OgreRoot.h"  
-#include "externLibs/Ogre3d/include/OgreEntity.h"  
+#include "Ogre3d/include/OgreAnimation.h"  
+#include "Ogre3d/include/OgreRoot.h"  
+#include "Ogre3d/include/OgreEntity.h"  
 
 // Collada includes
-#include "externLibs/OgreCollada/include/OgreCollada.h"
+#include "OgreCollada/include/OgreCollada.h"
 
 CREATE_APPLICATION( "Vision Demo" );
 

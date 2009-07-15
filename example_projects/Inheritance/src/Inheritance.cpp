@@ -1,5 +1,5 @@
 #include "Vision.h"
-#include "externlibs/Ogre3d/include/OgreMatrix4.h"
+#include "Ogre3d/include/OgreMatrix4.h"
 CREATE_APPLICATION( "Vision Demo" );
 
 

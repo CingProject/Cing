@@ -1,7 +1,7 @@
 #include "Vision.h"
 #include <gl\gl.h>
-#include "externLibs\Ogre3d\include\OgreRenderSystem.h"
-#include "externLibs\Ogre3d\include\OgreMaterialManager.h"
+#include "Ogre3d\include\OgreRenderSystem.h"
+#include "Ogre3d\include\OgreMaterialManager.h"
 
 
 CREATE_APPLICATION( "Vision Demo" );
