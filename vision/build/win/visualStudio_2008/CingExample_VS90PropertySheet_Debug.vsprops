@@ -9,7 +9,7 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		Optimization="0"
-		AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\externLibs\win\visualStudio2008\OpenCV\cxcore\include;..\..\vision\externLibs\win\visualStudio2008\LibVLC\include"
+		AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\externLibs\win\visualStudio2008\OpenCV\cxcore\include;..\..\vision\externLibs\win\visualStudio2008\LibVLC\include;..\..\vision\externLibs\win\visualStudio2008\"
 		PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 		RuntimeLibrary="3"
 		WarningLevel="3"
