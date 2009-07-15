@@ -23,7 +23,7 @@
 #define _CommonConstants_h_
 
 // OIS
-#include "externLibs/Ogre3d/include/ois/OISMouse.h"
+#include "Ogre3d/include/ois/OISMouse.h"
 
 
 /**

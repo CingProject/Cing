@@ -692,5 +692,5 @@ void GraphicsManager::applyCoordinateSystemTransform( GraphicsType coordSystem )
 	}
 
 }
-*/
+
 } // namespace Graphics

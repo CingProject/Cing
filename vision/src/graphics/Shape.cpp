@@ -20,6 +20,7 @@
 */
 
 #include "Shape.h"
+#include "common/CommonTypes.h"
 
 namespace Graphics
 {

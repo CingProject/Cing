@@ -26,18 +26,18 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "BaseCameraInput.h"
 
 // PortVideo
-#include "externLibs/PortVideo/common/cameraTool.h"
-#include "externLibs/PortVideo/common/RingBuffer.h"
-#include "externLibs/PortVideo/common/FrameProcessor.h"
+#include "PortVideo/common/cameraTool.h"
+#include "PortVideo/common/RingBuffer.h"
+#include "PortVideo/common/FrameProcessor.h"
 
 // STL
 #include <string>
 
 // OpenCV
-#include "externLibs/OpenCV/cxcore/include/cxtypes.h"
+#include "OpenCV/cxcore/include/cxtypes.h"
 
 // PTypes
-#include "externLibs/PTypes/include/pasync.h"
+#include "PTypes/include/pasync.h"
 
 namespace CameraInput
 {

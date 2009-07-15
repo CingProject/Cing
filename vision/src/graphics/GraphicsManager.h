@@ -150,7 +150,7 @@ namespace Graphics
 		};
 
 		// Import Collada
-		bool loadCollada( const Common::String& fileName );
+		//bool loadCollada( const Common::String& fileName );
 		// Coordinate systems
 		bool isProcessingMode() { return ( m_coordSystem == PROCESSING );	}	
 		void applyCoordinateSystemTransform( GraphicsType coordSystem );

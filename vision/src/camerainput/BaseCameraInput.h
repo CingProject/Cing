@@ -26,7 +26,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/MathUtils.h"
 
 // OpenCV
-#include "externLibs/OpenCV/cxcore/include/cxtypes.h"
+#include "OpenCV/cxcore/include/cxtypes.h"
 
 // Graphics
 #include "graphics/Image.h"

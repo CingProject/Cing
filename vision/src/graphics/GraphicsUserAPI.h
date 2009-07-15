@@ -36,19 +36,19 @@ namespace Graphics
 {
 
 /**
- * @brief Graphics related functions that user can call 
+ * @brief Graphics related functions that user can call
  */
 
 
 
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 // Color/Settings
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 
 
 /* The background() function sets the color used for the background of the window.
    The default background is light gray. In the draw() function, the background color
-   is used to clear the display window at the beginning of each frame. 
+   is used to clear the display window at the beginning of each frame.
 */
 
 void background( float gray );
@@ -64,7 +64,7 @@ void setBackgroundColor( const Color& color );
 
 /* The stroke() function sets the color used to draw lines and borders around shapes. This color is either
    specified in terms of the RGB or HSB color depending on the current colorMode()
-   (the default color space is RGB, with each value in the range from 0 to 255). 
+   (the default color space is RGB, with each value in the range from 0 to 255).
 */
 
 void stroke( float gray );
@@ -105,9 +105,9 @@ void fill( const Color& color, int alpha );
 //void fill(hex, alpha)					NO HEX DATA TYPE
 
 
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 // Shape / 2D Primitives
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 
 void strokeWeight( int weight );
 
@@ -129,9 +129,9 @@ void ellipseMode ( int mode );
 
 void pushStyle();
 void popStyle ();
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 // Shape / 3D Primitives
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 
 void line( float x1, float y1, float z1, float x2, float y2, float z2);
 
@@ -157,7 +157,7 @@ void	showFps ( bool show );
 Image createImage( int width, int height, GraphicsType format );
 Image loadImage  ( const std::string& name );
 
-// Read and writes to the global pixels variable.( slooooow for now!)  
+// Read and writes to the global pixels variable.( slooooow for now!)
 void  loadPixels();
 void  updatePixels();
 
@@ -180,15 +180,15 @@ void rotate		(	float x );
 void rotateX	(	float angle );
 void rotateY	(	float angle );
 void rotateZ	(	float angle );
-	
+
 void scale		(	float x, float y, float z );
 void scale		(	float x, float y );
 
 //Save frames
 void save( const Common::String& name );
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 // Typography
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 void text( const String& text, float x, float y );
 void text( const String& text, float x, float y, float width, float height );
 
@@ -202,7 +202,7 @@ void text( float text, float x, float y );
 //void text(stringdata, x, y, width, height, z)
 
 
- 	
+
 void textFont		(const Font& font);
 void textFont		(const Font& font, int size);
 void textAlign		(int halign, int valign = TOP);

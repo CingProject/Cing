@@ -19,13 +19,13 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _Font_H_
-#define _Font_H_
+#ifndef _Cing_Font_H_
+#define _Cing_Font_H_
 
 #include "GraphicsPrereqs.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreFont.h"
+#include "Ogre3d/include/OgreFont.h"
 
 // Common
 #include "common/eString.h"
@@ -56,7 +56,7 @@ namespace Graphics
 		int				getFontSize			() const { return m_fontSize; }
 		int				getFontResolution	() const { return m_fontRes; }
 		float			getTextWitdhInPixels() const;
-		Ogre::FontPtr	getOgreFont			() const { return Ogre::FontPtr( m_font ); }				
+		Ogre::FontPtr	getOgreFont			() const { return Ogre::FontPtr( m_font ); }
 		bool			isValid				() const { return m_bIsValid; }
 
 		// Const static attributes

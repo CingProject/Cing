@@ -32,8 +32,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/Image.h"
 
 // Open CV for video capture
-#include "externLibs/OpenCV/cv/include/cv.h"
-#include "externLibs/OpenCV/highgui/include/highgui.h"
+#include "OpenCV/cv/include/cv.h"
+#include "OpenCV/highgui/include/highgui.h"
 
 using namespace Graphics;
 

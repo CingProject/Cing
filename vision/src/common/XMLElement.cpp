@@ -25,7 +25,7 @@
 #include "XMLVisitor.h"
 
 // Tiny xml
-#include "externLibs/TinyXML/include/tinyxml.h"
+#include "TinyXML/include/tinyxml.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -114,7 +114,7 @@ void XMLElement::load( const std::string& xmlFileName )
 
 /**
  * @internal
- * @brief Releases the class resources. 
+ * @brief Releases the class resources.
  * After this call no method of this object can be called without calling init method again.
  */
 void XMLElement::end()
@@ -135,11 +135,11 @@ int XMLElement::getChildCount()
 		LOG_ERROR( "Trying to call getChildCount() in a XMLElement no correctly initialized. You should call load() before using this object)" );
 		return 0;
 	}
-	
+
 	// TODO: check a proper way to do this (maybe tinyxml has something inside)
-	int count = 0;  
-	for( TiXmlNode* node = m_rootElem->FirstChild(); node != NULL; node = node->NextSibling() )  
-			++count;  
+	int count = 0;
+	for( TiXmlNode* node = m_rootElem->FirstChild(); node != NULL; node = node->NextSibling() )
+			++count;
 
 	return count;
 }
@@ -154,7 +154,7 @@ XMLElement XMLElement::getChild( int index )
 	if ( !isValid() )
 	{
 		LOG_ERROR( "Trying to call getChild() in a XMLElement no correctly initialized. You should call load() before using this object)" );
-		return 0;
+		return XMLElement();
 	}
 
   // Check number of children
@@ -171,7 +171,7 @@ XMLElement XMLElement::getChild( int index )
   {
     // Go to next child
     child = child->NextSibling()->ToElement();
-  
+
     // Check if child is ok
     if ( child == NULL )
     {
@@ -196,7 +196,7 @@ XMLElement XMLElement::getChild( const std::string& path )
 	if ( !isValid() )
 	{
 		LOG_ERROR( "Trying to call getChild() in a XMLElement no correctly initialized. You should call load() before using this object)" );
-		return 0;
+		return XMLElement();
 	}
 
   // Find the requested element
@@ -254,7 +254,7 @@ void XMLElement::getChildren( XMLElementArray& children, const String& path /*= 
     return;
   }
 
-  // Visit all the nodes to fill the children array 
+  // Visit all the nodes to fill the children array
   XMLVisitor visitor( m_xmlDoc, children, path );
   m_rootElem->Accept( &visitor );
 }
@@ -278,19 +278,19 @@ String XMLElement::getContent()
 /**
  * @brief Returns an int attribute of the xml Element.
  * @param name    Name of the attribute to be returned
- * @param default Default value that will be returned in case the attribute does not exist
+ * @param defaultValue Default value that will be returned in case the attribute does not exist
  * @return        an int attribute of the xml Element.
  */
-int XMLElement::getIntAttribute( const String& name, int default /*= 0 */)
+int XMLElement::getIntAttribute( const String& name, int defaultValue /*= 0 */)
 {
   // Check state
   if ( !isValid() )
   {
     LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
-    return default;
+    return defaultValue;
   }
 
-  int value = default;
+  int value = defaultValue;
   m_rootElem->QueryIntAttribute( name, &value );
   return value;
 }
@@ -298,19 +298,19 @@ int XMLElement::getIntAttribute( const String& name, int default /*= 0 */)
 /**
  * @brief Returns a float attribute of the xml Element.
  * @param name    Name of the attribute to be returned
- * @param default Default value that will be returned in case the attribute does not exist
+ * @param defaultValue Default value that will be returned in case the attribute does not exist
  * @return        a float attribute of the xml Element.
  */
-float XMLElement::getFloatAttribute( const String& name, float default /*= 0.0f*/ )
+float XMLElement::getFloatAttribute( const String& name, float defaultValue /*= 0.0f*/ )
 {
   // Check state
   if ( !isValid() )
   {
     LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
-    return default;
+    return defaultValue;
   }
 
-  float value = default;
+  float value = defaultValue;
   m_rootElem->QueryFloatAttribute( name.toChar(), &value );
   return value;
 }
@@ -318,16 +318,16 @@ float XMLElement::getFloatAttribute( const String& name, float default /*= 0.0f*
 /**
  * @brief Returns a String attribute of the xml Element.
  * @param name    Name of the attribute to be returned
- * @param default Default value that will be returned in case the attribute does not exist
+ * @param defaultValue Default value that will be returned in case the attribute does not exist
  * @return        a String attribute of the xml Element.
  */
-String XMLElement::getStringAttribute( const String& name, String default /*= "0"*/ )
+String XMLElement::getStringAttribute( const String& name, String defaultValue /*= "0"*/ )
 {
   // Check state
   if ( !isValid() )
   {
     LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
-    return default;
+    return defaultValue;
   }
 
   return m_rootElem->Attribute( name.toChar() );

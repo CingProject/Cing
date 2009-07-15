@@ -29,13 +29,13 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include <string>
 
 // OpenCV
-#include "externLibs/OpenCV/cxcore/include/cxtypes.h"
+#include "OpenCV/cxcore/include/cxtypes.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreTexture.h"
+#include "Ogre3d/include/OgreTexture.h"
 
 // PTypes
-#include "externLibs/PTypes/include/pasync.h"
+#include "PTypes/include/pasync.h"
 
 namespace CameraInput
 {

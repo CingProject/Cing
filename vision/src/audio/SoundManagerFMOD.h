@@ -20,7 +20,7 @@
 #include "common/Singleton.h"
 
 // Fmod
-#include "externLibs/Fmod/include/fmod_errors.h"
+#include "Fmod/include/fmod_errors.h"
 
 namespace Audio
 {

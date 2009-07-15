@@ -72,7 +72,7 @@ bool Keyboard::init( OIS::InputManager* pOISInputManager )
 	BaseInputDevice< OIS::KeyListener >::init();
 
   // If possible create a buffered keyboard
-  if ( pOISInputManager && ( pOISInputManager->numKeyBoards() > 0 ) )
+  if ( pOISInputManager && ( pOISInputManager->numKeyboards() > 0 ) )
   {
     m_pOISKeyboard = static_cast<OIS::Keyboard*>( pOISInputManager->createInputObject( OIS::OISKeyboard, true ) );
     m_pOISKeyboard->setEventCallback( this );

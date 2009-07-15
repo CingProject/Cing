@@ -24,6 +24,9 @@ using namespace Common;
 // Ogre
 #include "Ogre3d/include/OgreFont.h"
 #include "Ogre3d/include/OgreOverlayElement.h"
+#include "Ogre3d/include/OgreMovableObject.h"
+
+
 
 
 #define POS_TEX_BINDING			0

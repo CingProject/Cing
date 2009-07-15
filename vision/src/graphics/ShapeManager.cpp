@@ -21,7 +21,8 @@
 
 #include "ShapeManager.h"
 #include "GraphicsManager.h"
-#include "OgreSceneManager.h"
+#include "Ogre3d/include/OgreSceneManager.h"
+
 namespace Graphics
 {
 
@@ -76,9 +77,9 @@ bool ShapeManager::init()
 void ShapeManager::update()
 {
 	// Clear old geometry
-	m_shapesManualObject->clear();		
+	m_shapesManualObject->clear();
 
-	
+
 	// TODO: Si hay que dibujar el mismo número de vértices que en el fotograma anterior,
 	// usar beginUpdate() en lugar de begin()
 	// Draw shapes
@@ -122,7 +123,7 @@ void ShapeManager::update()
 				m_shapesManualObject->colour(		m_shapes[i].m_FillColor.r/255.0f,
 																				m_shapes[i].m_FillColor.g/255.0f,
 																				m_shapes[i].m_FillColor.b/255.0f,
-																				m_shapes[i].m_FillColor.a/255.0f   );	
+																				m_shapes[i].m_FillColor.a/255.0f   );
 			}
 			m_shapesManualObject->end();
 
@@ -137,11 +138,11 @@ void ShapeManager::update()
 					m_shapesManualObject->colour(		m_shapes[i].m_FillColor.r/255.0f,
 						m_shapes[i].m_FillColor.g/255.0f,
 						m_shapes[i].m_FillColor.b/255.0f,
-						m_shapes[i].m_FillColor.a/255.0f   );	
+						m_shapes[i].m_FillColor.a/255.0f   );
 				}
 				m_shapesManualObject->end();
 			}
-      
+
 		}
 
 		// Draw borders
@@ -154,14 +155,14 @@ void ShapeManager::update()
 				m_shapesManualObject->colour(		m_shapes[i].m_StrokeColor.r/255.0f,
 																				m_shapes[i].m_StrokeColor.g/255.0f,
 																				m_shapes[i].m_StrokeColor.b/255.0f,
-																				m_shapes[i].m_StrokeColor.a/255.0f   );	
+																				m_shapes[i].m_StrokeColor.a/255.0f   );
 				m_shapesManualObject->position(	m_shapes[i].m_vertexData[j+1] );
 				m_shapesManualObject->colour(		m_shapes[i].m_StrokeColor.r/255.0f,
 																				m_shapes[i].m_StrokeColor.g/255.0f,
 																				m_shapes[i].m_StrokeColor.b/255.0f,
-																				m_shapes[i].m_StrokeColor.a/255.0f   );	
+																				m_shapes[i].m_StrokeColor.a/255.0f   );
 			}
-			m_shapesManualObject->end();	
+			m_shapesManualObject->end();
 		}
 
 		// Clear the shape
@@ -177,7 +178,7 @@ void ShapeManager::update()
 		m_shapesManualObject->colour  (	m_lines.m_vertexColors[i].r/255.0f,
 																		m_lines.m_vertexColors[i].g/255.0f,
 																		m_lines.m_vertexColors[i].b/255.0f,
-																		m_lines.m_vertexColors[i].a/255.0f);	
+																		m_lines.m_vertexColors[i].a/255.0f);
 	}
 	m_shapesManualObject->end();
 
@@ -197,7 +198,7 @@ void ShapeManager::end()
 
 /**
  * @internal
- * @brief 
+ * @brief
  */
 void ShapeManager::line( float x1, float y1, float z1, float x2, float y2, float z2)
 {
@@ -206,7 +207,7 @@ void ShapeManager::line( float x1, float y1, float z1, float x2, float y2, float
 };
 /**
  * @internal
- * @brief 
+ * @brief
  */
 void ShapeManager::line(  float x1, float y1, float z1, float x2, float y2, float z2, Color theColor )
 {
@@ -216,13 +217,13 @@ void ShapeManager::line(  float x1, float y1, float z1, float x2, float y2, floa
 
 /**
  * @internal
- * @brief 
+ * @brief
  */
 void ShapeManager::beginShape()
 {
-	// Add a new shape 
+	// Add a new shape
 	Shape newShape = Shape( Style(GraphicsManager::getSingleton().getFillColor(), GraphicsManager::getSingleton().getStrokeColor(), GraphicsManager::getSingleton().getStrokeWeight()), TRIANGLE_FAN );
-	
+
 	// Check if the user select fill and/or stroke
 	newShape.m_isFill   = GraphicsManager::getSingleton().getFill();
 	newShape.m_isStroke = GraphicsManager::getSingleton().getStroke();
@@ -236,11 +237,11 @@ void ShapeManager::beginShape()
 
 /**
  * @internal
- * @brief 
+ * @brief
  */
 void ShapeManager::beginShape(GraphicsType operation)
-{	
-	// Create a new shape 
+{
+	// Create a new shape
 	Shape newShape = Shape( operation );
 
 	// Check if the user select fill and/or stroke
@@ -283,7 +284,7 @@ void ShapeManager::beginShape(GraphicsType operation)
 
 /**
  * @internal
- * @brief 
+ * @brief
  */
 void ShapeManager::endShape()
 {
@@ -292,11 +293,11 @@ void ShapeManager::endShape()
 
 /**
  * @internal
- * @brief 
+ * @brief
  */
 void ShapeManager::endShape(GraphicsType operation)
 {
-	
+
 	if (operation == CLOSE)
 	{
 		Ogre::Vector3 firstVertex = m_shapes.back().m_vertexData[0];
@@ -304,12 +305,12 @@ void ShapeManager::endShape(GraphicsType operation)
 		//m_lines.addVertex(firstVertex.x,firstVertex.y,firstVertex.z, GraphicsManager::getSingleton().getStrokeColor());
 		m_shapes.back().m_isClose = true;
 	}
-	
+
 };
 
 /**
  * @internal
- * @brief 
+ * @brief
  */
 void ShapeManager::vertex(float x, float y)
 {
@@ -320,7 +321,7 @@ void ShapeManager::vertex(float x, float y)
 
 /**
  * @internal
- * @brief 
+ * @brief
  */
 void ShapeManager::vertex(float x, float y, float z)
 {

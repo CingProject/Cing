@@ -18,8 +18,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   along with this program; if not, write to the Free Software Foundation,
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32      
-#include "windows.h"    
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#include "windows.h"
 #endif
 
 #include "AppFramework.h"
@@ -27,7 +27,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "UserAppGlobals.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreException.h"
+#include "Ogre3d/include/OgreException.h"
 
 // Common includes
 #include "common/Exception.h"
@@ -54,7 +54,7 @@ void RunApplication( const char* appName )
   {
 	// Store app name
 	Globals::appName = appName;
-    
+
 	// Init application
     Application::getSingleton().initApp();
 
@@ -65,11 +65,19 @@ void RunApplication( const char* appName )
     Application::getSingleton().endApp();
 
   }
-  catch( Ogre::Exception& e ) 
+  catch( Ogre::Exception& e )
   {
     // TODO: pasar esto a formto propio
     #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-      LOG_ERROR( "Internal Exception: %s", e.getFullDescription().c_str() );
+	  if ( e.getNumber() == Ogre::Exception::ERR_FILE_NOT_FOUND)
+	  {
+		  LOG_ERROR( "Error: File not found: %s", e.getDescription().c_str());
+	  }
+	  // Non specific exception
+	  else
+	  {
+		  LOG_ERROR( "Internal Exception: %s", e.getFullDescription().c_str() );
+	  }
     #else
       std::cerr << "An exception has occurred: " << e.getFullDescription();
     #endif

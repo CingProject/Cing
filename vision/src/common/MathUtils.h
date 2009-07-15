@@ -19,8 +19,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _MathUtils_H_
-#define _MathUtils_H_
+#ifndef _Cing_MathUtils_H_
+#define _Cing_MathUtils_H_
 
 #include "CommonPrereqs.h"
 #include "CommonTypes.h"
@@ -28,7 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "PerlinNoise.h"
 #include "framework/UserAppGlobals.h"
 
-#include "externLibs/Ogre3d/include/OgreBitwise.h"
+#include "Ogre3d/include/OgreBitwise.h"
 
 #include <numeric>
 
@@ -70,7 +70,7 @@ inline int firstPO2From( int number )
  * @brief Returns the min of the two received values
  * @return the min of the two received values
  */
-template < typename T > 
+template < typename T >
 T min( T value1, T value2 )
 {
 	return (value1 < value2)? value1: value2;
@@ -91,7 +91,7 @@ T max( T value1, T value2 )
  * @param[in] number Number to get the absolute value
  * @return the absolute value of the received number
  */
-template< typename T > 
+template< typename T >
 T abs ( T value ) {  return static_cast< T >( fabs( value ) );  }
 
 
@@ -208,7 +208,7 @@ inline bool equal( float f1, float f2 )
 /**
  * @brief Calculates the distance between two points in space
  * @param[in] pos1 first position
- * @param[in] pos2 second position 
+ * @param[in] pos2 second position
  * @return the distance between two points in space
  */
 inline float dist( const Vector& pos1, const Vector& pos2 )
@@ -219,7 +219,7 @@ inline float dist( const Vector& pos1, const Vector& pos2 )
 /**
  * @brief Calculates the distance between two points in space
  * @param[in] pos1 first position
- * @param[in] pos2 second position 
+ * @param[in] pos2 second position
  * @return the distance between two points in space
  */
 inline float dist( float x1, float y1, float x2, float y2 )
@@ -230,7 +230,7 @@ inline float dist( float x1, float y1, float x2, float y2 )
 /**
  * @brief Calculates the distance between two points in space
  * @param[in] pos1 first position
- * @param[in] pos2 second position 
+ * @param[in] pos2 second position
  * @return the distance between two points in space
  */
 inline float dist( float x1, float y1, float z1,  float x2, float y2, float z2 )
@@ -272,16 +272,16 @@ inline float map( float value, float low1, float hight1, float low2, float hight
     value = (value > hight1) ?  hight1 : value;
 
     // Map to range 0..1
-    float v = (value-low1) / fabs(hight1-low1); 
+    float v = (value-low1) / fabs(hight1-low1);
 
     // Map to output range
-    return v * fabs(hight2-low2) + low2;  
+    return v * fabs(hight2-low2) + low2;
 }
 
 
 /*
  * @brief Constrains a value so it does not exceed a range
- * 
+ *
  * @param value value to constrain
  * @param min   min value of the valid range
  * @param min   min value of the valid range
@@ -357,16 +357,16 @@ inline float lerp( float value1, float value2, float amt )
 struct Average
 {
 	Average()
-	{	
+	{
 		nValues = 3;
-		values.reserve( nValues ); 
+		values.reserve( nValues );
 		index = 0;
 	}
 	/// @param nValues number of values to store
-	Average( int _nValues ) 
-	{ 
+	Average( int _nValues )
+	{
 		nValues = _nValues;
-		values.reserve( nValues ); 
+		values.reserve( nValues );
 		index = 0;
 	}
 
@@ -375,7 +375,7 @@ struct Average
 	{
 		if ( values.size() < nValues )
 			values.push_back( value );
-		else 
+		else
 			values[index] = value;
 
 		// calculate new index

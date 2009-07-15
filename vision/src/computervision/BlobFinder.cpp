@@ -26,7 +26,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/MathUtils.h"
 
 // opencv
-#include "externLibs/OpenCV/highgui/include/highgui.h"
+#include "OpenCV/highgui/include/highgui.h"
 
 // Graphics
 #include "graphics/Image.h"

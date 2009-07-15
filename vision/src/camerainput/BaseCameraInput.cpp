@@ -25,9 +25,9 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/LogManager.h"
 
 // OpenCV
-#include "externLibs/OpenCV/cxcore/include/cxcore.h"
-#include "externLibs/OpenCV/highgui/include/highgui.h"
-#include "externLibs/OpenCV/cv/include/cv.h"
+#include "OpenCV/cxcore/include/cxcore.h"
+#include "OpenCV/highgui/include/highgui.h"
+#include "OpenCV/cv/include/cv.h"
 
 // Common
 #include "common/Exception.h"

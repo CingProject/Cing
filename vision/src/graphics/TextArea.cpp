@@ -27,11 +27,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 // OGRE
-#include "externLibs/Ogre3d/include/OgreOverlayManager.h"
-#include "externLibs/Ogre3d/include/OgreOverlayContainer.h"
-#include "externLibs/Ogre3d/include/OgreStringConverter.h"
-#include "externLibs/Ogre3d/include/OgreTextAreaOverlayElement.h"
-#include "externLibs/Ogre3d/include/OgreFontManager.h"
+#include "Ogre3d/include/OgreOverlayManager.h"
+#include "Ogre3d/include/OgreOverlayContainer.h"
+#include "Ogre3d/include/OgreStringConverter.h"
+#include "Ogre3d/include/OgreTextAreaOverlayElement.h"
+#include "Ogre3d/include/OgreFontManager.h"
 
 namespace Graphics
 {
@@ -118,14 +118,14 @@ namespace Graphics
 		// This is not the first -> reuse overlay and panel
 		else
 		{
-			// Get overlay and panel references 
+			// Get overlay and panel references
 			m_overlay = m_overlayManager->getByName("TEXT_OVERLAY");
 			m_panel	= static_cast<Ogre::OverlayContainer*>(m_overlayManager->getOverlayElement("TEXT_PANEL"));
 		}
 
 		//m_overlay->rotate(Ogre::Radian( Ogre::Degree( 45 ) ));
-		
-	
+
+
 		// Create the text area (it will cover the whole screen)
 		m_textArea = static_cast<Ogre::TextAreaOverlayElement*>(m_overlayManager->createOverlayElement( "TextArea", m_textAreaName ));
 		m_textArea->setMetricsMode(Ogre::GMM_PIXELS);
@@ -146,7 +146,7 @@ namespace Graphics
 
 	/**
 	* @internal
-	* @brief Releases the class resources. 
+	* @brief Releases the class resources.
 	* After this method is called the class is not valid anymore.
 	*/
 	void TextArea::end()
@@ -185,12 +185,14 @@ namespace Graphics
 	void TextArea::setText(const String& str)
 	{
 		m_text = str;
-		m_textArea->setCaption(str.toUTF());
+		// Julio
+		//m_textArea->setCaption(str.toUTF());
+		m_textArea->setCaption(str);
 
 		//m_textArea->rotate(Ogre::Radian( Ogre::Degree( 90 ) ));
 	}
 
-	
+
 	void TextArea::setFontName(const String& fontName)
 	{
 		m_fontName = fontName;
@@ -207,14 +209,14 @@ namespace Graphics
 		m_textArea->setColour( color.normalized() );
 	}
 
-	
+
 	void TextArea::setSize(float size)
 	{
 		m_textArea->setCharHeight(size);
 	}
 
 	/**
-	* @internal 
+	* @internal
 	* @brief Shows or hides the text
 	*
 	* @param

@@ -27,7 +27,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "GraphicsManager.h"
 
 // Ogre
-#include "externLibs/Ogre3d/include/OgreImage.h"
+#include "Ogre3d/include/OgreImage.h"
 
 // Image processing
 #include "ImageThresholdFilter.h"

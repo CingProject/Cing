@@ -24,7 +24,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "CameraInputPrereqs.h"
 #include "BaseCameraInput.h"
-#include "externLibs/VideoInput/include/videoInput.h"
+#include "VideoInput/include/videoInput.h"
 
 
 namespace CameraInput

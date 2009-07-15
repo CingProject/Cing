@@ -32,7 +32,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using namespace Graphics;
 
 // Extern libs
-#include "externLibs/PTypes/include/pasync.h" // for portable mutex
+#include "PTypes/include/pasync.h" // for portable mutex
 
 namespace Video
 {

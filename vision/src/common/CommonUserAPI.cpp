@@ -50,7 +50,7 @@ void print( const char* msg, ... )
 	char			msgFormated[1024];
 	va_list		args;
 	va_start	(args, msg);
-	vsprintf_s	(msgFormated, msg, args);
+	vsprintf	(msgFormated, msg, args);
 	va_end		(args);
 
 	// Print it to console
@@ -79,7 +79,7 @@ void println( const char* msg, ... )
 	char			msgFormated[1024];
 	va_list		args;
 	va_start	(args, msg);
-	vsprintf_s	(msgFormated, msg, args);
+	vsprintf	(msgFormated, msg, args);
 	va_end		(args);
 
 	// Print it

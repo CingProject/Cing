@@ -33,7 +33,7 @@ namespace Graphics
 
 
 /**
- * @brief Set the background to a grayscale value, based on the current colorMode. 
+ * @brief Set the background to a grayscale value, based on the current colorMode.
  *
  * @param[in] gray Float to set to the background
  */
@@ -43,7 +43,7 @@ void background(  float gray  )
 }
 
 /**
- * @brief Set the background to a grayscale value, based on the current colorMode. 
+ * @brief Set the background to a grayscale value, based on the current colorMode.
  *
  * @param[in] gray  Float to set the background
  * @param[in] alpha Float to set the background
@@ -54,7 +54,7 @@ void background(  float gray, float alpha )
 }
 
 /**
- * @brief Set the background to a grayscale value, based on the current colorMode. 
+ * @brief Set the background to a grayscale value, based on the current colorMode.
  *
  * @param[in] x Float to set the background
  * @param[in] y Float to set the background
@@ -66,7 +66,7 @@ void background( float x, float y, float z )
 }
 
 /**
- * @brief Set the background to a grayscale value, based on the current colorMode. 
+ * @brief Set the background to a grayscale value, based on the current colorMode.
  *
  * @param[in] x Float to set the background
  * @param[in] y Float to set the background
@@ -79,7 +79,7 @@ void background( float x, float y, float z, float a )
 }
 
 /**
- * @brief Set the background to a grayscale value, based on the current colorMode. 
+ * @brief Set the background to a grayscale value, based on the current colorMode.
  *
  * @param[in] rgb Int to set the background
  */
@@ -89,7 +89,7 @@ void background( int rgb )
 }
 
 /**
- * @brief Set the background to a grayscale value, based on the current colorMode. 
+ * @brief Set the background to a grayscale value, based on the current colorMode.
  *
  * @param[in] rgb Int to set the background
  * @param[in] a   Float to set the background
@@ -111,7 +111,7 @@ void background(  const Color& theColor  )
 
 /**
  * @brief Modifies the background of the window (really the main viewport in the window). For compatibility.
- * 
+ *
  * @param[in] color Color to set to the background
  */
 void setBackgroundColor( const Color& color )
@@ -169,7 +169,7 @@ void stroke( float x, float y, float z, float a )
 /**
  * @brief Sets the color used to draw lines and border around shapes.
  *
- * @param[in] rgb Int 
+ * @param[in] rgb Int
  */
 void stroke( int rgb )
 {
@@ -179,7 +179,7 @@ void stroke( int rgb )
 /**
  * @brief Sets the color used to draw lines and border around shapes.
  *
- * @param[in] rgb Int 
+ * @param[in] rgb Int
  * @param[in] a   Float
  */
 void stroke( int rgb, float a )
@@ -189,7 +189,7 @@ void stroke( int rgb, float a )
 
 /*
  * @brief Sets the color used to draw border of shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
  */
@@ -210,8 +210,8 @@ void setRenderMode( RenderMode mode )
 
 
 /*
- * @brief Sets the color used to fill the shapes drawn after this call. 
- * 
+ * @brief Sets the color used to fill the shapes drawn after this call.
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param gray Gray level. A value of 0 means black, and 255 means white.
  */
@@ -222,7 +222,7 @@ void fill( int gray )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param gray Gray level. A value of 0 means black, and 255 means white.
  * @param alpha Alpha level. A value of 0 means transparent, and 255 means opaque.
@@ -235,7 +235,7 @@ void fill( int gray, int alpha )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param value1 Specifies the red value
  * @param value2 Specifies the green value
@@ -248,7 +248,7 @@ void fill( int value1 , int value2, int value3 )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param value1 Specifies the red value
  * @param value2 Specifies the green value
@@ -262,7 +262,7 @@ void fill( int value1 , int value2, int value3, int alpha )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
  */
@@ -274,7 +274,7 @@ void fill( const Color& color )
 
 /*
  * @brief Sets the color used to fill the shapes drawn after this call.
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
  * @param alpha Specifies the alpha value. A value of 0 means transparent, and 255 means opaque.
@@ -290,8 +290,8 @@ void fill( const Color& color, int alpha )
 
 
 /*
- * @brief Sets the width of the stroke used for lines, points, and the border around shapes. 
- * 
+ * @brief Sets the width of the stroke used for lines, points, and the border around shapes.
+ *
  * @param width Variable of type Int containing the weight (in pixels) of the stroke
  */
 void strokeWeight( int weight )
@@ -302,7 +302,7 @@ void strokeWeight( int weight )
 /*
  * @brief Disables filling geometry. If both noStroke() and noFill() are called, nothing
  * will be drawn to the screen.
- * 
+ *
  * @param none
  */
 void noFill()
@@ -312,7 +312,7 @@ void noFill()
 
 /*
  * @brief Disables drawing the stroke (outline).
- * 
+ *
  * @param none
  */
 void noStroke()
@@ -323,7 +323,7 @@ void noStroke()
 /*
  * @brief Draws all geometry with smooth (anti-aliased) edges. This will slow down the
  * frame rate of the application, but will enhance the visual refinement.
- * 
+ *
  * @param none
  */
 void smooth()
@@ -333,7 +333,7 @@ void smooth()
 
 /*
  * @brief Draws all geometry with jagged (aliased) edges.
- * 
+ *
  * @param none
  */
 void noSmooth()
@@ -344,7 +344,7 @@ void noSmooth()
 /**
  * @brief Allows to enable or disable the default 3d camera control
  *
- * @param useDefault If true, the default camera control will be enabled. 
+ * @param useDefault If true, the default camera control will be enabled.
  * If false, it will be disable, so the user will be responsible to control the 3d camera
  * if it is required.
  *
@@ -459,7 +459,7 @@ void endShape(GraphicsType operation)
 
 /*
 * @Draws a line (a direct path between two points) to the screen
-* 
+*
 * It specifies color for shapes not using textures or lighting. Value range is 0..255
 * @param x1 int or float: x-coordinate of the first point
 * @param y1 int or float: y-coordinate of the first point
@@ -469,7 +469,7 @@ void endShape(GraphicsType operation)
 
 void line( float x1, float y1, float x2, float y2 )
 {
-	// Transform vertex before the drawing  call 
+	// Transform vertex before the drawing  call
 	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
@@ -480,7 +480,7 @@ void line( float x1, float y1, float x2, float y2 )
 
 /*
  * @Draws a point, a coordinate in space at the dimension of one pixel
- * 
+ *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param x1 int or float: x-coordinate of the point
  * @param y1 int or float: y-coordinate of the point
@@ -488,7 +488,7 @@ void line( float x1, float y1, float x2, float y2 )
 
 void point( float x1, float y1 )
 {
-	// Transform vertex before the drawing  call 
+	// Transform vertex before the drawing  call
 	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
@@ -500,7 +500,7 @@ void point( float x1, float y1 )
  * @A triangle is a plane created by connecting three points. The first two arguments
  * specify the first point, the middle two arguments specify the second point, and the
  * last two arguments specify the third point.
- * 
+ *
  * @param x1 int or float: x-coordinate of the first point
  * @param y1 int or float: y-coordinate of the first point
  * @param x2 int or float: x-coordinate of the second point
@@ -511,7 +511,7 @@ void point( float x1, float y1 )
 
 void triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
 {
-	// Transform vertex before the drawing  call 
+	// Transform vertex before the drawing  call
 	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
@@ -536,21 +536,21 @@ void rect( float x1, float y1, float x2, float y2 )
 	// Store the top of the matrix stack
 	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
 
-	Vector v1, v2, v3, v4; 
+	Vector v1, v2, v3, v4;
 	float rectWidth, rectHeight;
 	float widthDIV2, heightDIV2;
 
 	// Calculate transformed points
 	switch( GraphicsManager::getSingleton().getRectMode() )
 	{
-	case Common::CORNER: 
+	case Common::CORNER:
 		v1 = t.applyTransform( Vector( x1, y1, 0) );
 		v2 = t.applyTransform( Vector( x1+x2, y1, 0) );
 		v3 = t.applyTransform( Vector( x1+x2, y1+y2, 0) );
 		v4 = t.applyTransform( Vector( x1, y1+y2, 0) );
 		break;
 
-	case Common::CORNERS: 
+	case Common::CORNERS:
 		rectWidth  = x2 - x1;
 		rectHeight = y2 - y1;
 		v1 = t.applyTransform( Vector( x1, y1, 0) );
@@ -568,7 +568,7 @@ void rect( float x1, float y1, float x2, float y2 )
 		v4 = t.applyTransform( Vector( x1 - widthDIV2, y1 + heightDIV2, 0) );
 		break;
 
-	case Common::RADIUS: 
+	case Common::RADIUS:
 		v1 = t.applyTransform( Vector( x1-x2,y1-y2, 0) );
 		v2 = t.applyTransform( Vector( x1+x2,y1-y2, 0) );
 		v3 = t.applyTransform( Vector( x1+x2,y1+y2, 0) );
@@ -576,7 +576,7 @@ void rect( float x1, float y1, float x2, float y2 )
 		break;
 	}
 
-	Graphics::GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y ); 
+	Graphics::GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y );
 }
 
 /**
@@ -593,7 +593,7 @@ void rect( float x1, float y1, float x2, float y2 )
  */
 void quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
 {
-	// Transform vertex before the drawing  call 
+	// Transform vertex before the drawing  call
 	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
@@ -601,7 +601,7 @@ void quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4,
 	Vector v3 = t.applyTransform( Vector( x3, y3, 0) );
 	Vector v4 = t.applyTransform( Vector( x4, y4, 0) );
 
-	Graphics::GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y ); 
+	Graphics::GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y );
 }
 
 /**
@@ -648,9 +648,9 @@ void rectMode( int mode )
 }
 
 /**
-* @brief  The origin of the ellipse is modified by the ellipseMode() function. 
+* @brief  The origin of the ellipse is modified by the ellipseMode() function.
 *         The default configuration is ellipseMode(CENTER), which specifies the
-*					location of the ellipse as the center of the shape. 
+*					location of the ellipse as the center of the shape.
 *
 * @param mode
 */
@@ -672,7 +672,7 @@ void colorMode( GraphicsType mode )
 };
 
 /**
- * @brief  	
+ * @brief
  *
  * @param mode
  */
@@ -682,7 +682,7 @@ void colorMode( GraphicsType mode, float range )
 };
 
 /**
- * @brief  	
+ * @brief
  *
  * @param mode
  */
@@ -691,7 +691,7 @@ void colorMode( GraphicsType mode, float range1, float range2, float range3 )
 
 };
 /**
- * @brief  	
+ * @brief
  *
  * @param mode
  */
@@ -699,7 +699,7 @@ void colorMode( GraphicsType mode, float range1, float range2, float range3, flo
 {
 };
 /**
- * @brief  	
+ * @brief
  *
  * @param mode
  */
@@ -709,12 +709,12 @@ void pushStyle()
 	Graphics::GraphicsManager::getSingleton().m_styles.push_front( Graphics::GraphicsManager::getSingleton().m_styles.front() );
 };
 /**
- * @brief  	
+ * @brief
  *
  * @param mode
  */
 void popStyle()
-{	
+{
 	// Pop the last style created
 	if ( Graphics::GraphicsManager::getSingleton().m_styles.size() > 0 )
 		Graphics::GraphicsManager::getSingleton().m_styles.pop_front();
@@ -722,7 +722,7 @@ void popStyle()
 
 //Create functions
 /**
- * @brief  	
+ * @brief
  *
  * @param mode
  */
@@ -731,7 +731,7 @@ Image createImage(int width, int height, GraphicsType format)
 	return Image( width,  height,  format);
 };
 /**
- * @brief  	
+ * @brief
  *
  * @param mode
  */
@@ -743,7 +743,7 @@ Image loadImage( const std::string& name)
 }
 /**
  * @brief Loads the pixel data for the display window into the pixels[] vector.
- *        This function must always be called before reading from or writing to pixels[].  	
+ *        This function must always be called before reading from or writing to pixels[].
  *
  * @param mode
  */
@@ -758,15 +758,15 @@ void loadPixels()
 	// Read entire canvas image
 	for (int i = 0; i < numPixels ; i++)
 	{
-		if ( (i % imageWidth == 0) && (i != 0) )	
+		if ( (i % imageWidth == 0) && (i != 0) )
 		  yIndex++;
 		Globals::pixels[i] = tempImage->getPixel( i - imageWidth*yIndex, yIndex );
 	}
-  
+
 }
 /**
- * @brief Updates the display window with the data in the pixels[] array. 
- *        Use in conjunction with loadPixels()	
+ * @brief Updates the display window with the data in the pixels[] array.
+ *        Use in conjunction with loadPixels()
  *
  * @param mode
  */
@@ -782,14 +782,14 @@ void updatePixels()
 	// TODO: Too slow! Optimize
 	for (int i = 0; i < numPixels ; i++)
 	{
-		if ( (i % imageWidth == 0) && (i != 0) )	
+		if ( (i % imageWidth == 0) && (i != 0) )
 			yIndex++;
 		stroke( Globals::pixels[i] );
 		tempImage->point( i - imageWidth*yIndex, yIndex);
 	}
 }
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -799,38 +799,38 @@ void pushMatrix()
 	GraphicsManager::getSingleton().m_transforms.push( GraphicsManager::getSingleton().m_transforms.top() );
 }
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
 void popMatrix()
-{	
-	// Pop the last transform 
+{
+	// Pop the last transform
 	if ( GraphicsManager::getSingleton().m_transforms.size() > 0 )
 		GraphicsManager::getSingleton().m_transforms.pop();
 }
 
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
 void resetMatrix()
-{	
+{
 	GraphicsManager::getSingleton().m_transforms.top().identity();
 }
 
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
 void printMatrix()
-{	
+{
 	GraphicsManager::getSingleton().m_transforms.top().printMatrix();
 }
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -845,7 +845,7 @@ void applyMatrix( float m00, float m01, float m02, float m03,
 																																	m30, m31, m32, m33);
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -854,7 +854,7 @@ void translate( float x, float y )
 	GraphicsManager::getSingleton().m_transforms.top().translate( x, y, 0);
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -863,7 +863,7 @@ void translate( float x, float y, float z )
 	GraphicsManager::getSingleton().m_transforms.top().translate( x, y, z);
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -872,7 +872,7 @@ void rotate( float x, float y, float z )
 	GraphicsManager::getSingleton().m_transforms.top().rotate( x, y, z);
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -881,7 +881,7 @@ void rotate( float angleX )
 	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, 0, angleX );
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -890,7 +890,7 @@ void rotateX(	float angle )
 	GraphicsManager::getSingleton().m_transforms.top().rotate( angle, 0, 0 );
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -899,7 +899,7 @@ void rotateY(	float angle )
 	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, angle, 0 );
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -908,7 +908,7 @@ void rotateZ(	float angle )
 	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, 0, angle );
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -918,7 +918,7 @@ void scale(	float x, float y, float z )
 };
 
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -927,7 +927,7 @@ void scale(	float x, float y)
 	GraphicsManager::getSingleton().m_transforms.top().scale( x, y, 1 );
 };
 /**
- * @brief 
+ * @brief
  *
  * @param mode
  */
@@ -938,7 +938,7 @@ void save( const String& name )
 
 //----------------------------------------------------------------------------------- 
 // Typography
-//----------------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------------
 
 /**
  * Draws text to the screen
@@ -953,8 +953,8 @@ void text( const String& text, float x, float y )
 	currentFontProperties.text				= text;
 	currentFontProperties.x					= x;
 	currentFontProperties.y					= y;
-	
-	// Add the text to the manager so that it gets rendered in the next draw 
+
+	// Add the text to the manager so that it gets rendered in the next draw
 	FontManager::getSingleton().addText();
 }
 
@@ -975,8 +975,8 @@ void text( const String& text, float x, float y, float width, float height )
 	currentFontProperties.y					= y;
 	currentFontProperties.width				= width;
 	currentFontProperties.height			= height;
-	
-	// Add the text to the manager so that it gets rendered in the next draw 
+
+	// Add the text to the manager so that it gets rendered in the next draw
 	FontManager::getSingleton().addText();
 }
 

@@ -22,7 +22,7 @@
 #include <sstream>
 
 // Ignore warning of converting to bool -> FMOD_BOOL
-#ifdef WIN32
+#if defined(WIN32) && defined(_MSC_VER)
 #pragma warning(disable:4800)
 #endif
 
@@ -34,7 +34,7 @@ FMOD_SYSTEM* SoundFMOD::m_sysPtr = 0;
 
 
 /**
- * @internal 
+ * @internal
  * @brief Constructor. Clears attributes
  */
 SoundFMOD::SoundFMOD() :
@@ -381,7 +381,7 @@ unsigned int SoundFMOD::getDuration( ) const
 		LOG_ERROR( "Trying to get duration of a Sound that was not properly loaded." );
 		return 0;
 	}
-	// Get the data from the sound 
+	// Get the data from the sound
 	FMOD_RESULT result = FMOD_Sound_GetLength( m_sound, &value, FMOD_TIMEUNIT_MS );
 
 	// Check for unrecoverable error
@@ -490,12 +490,12 @@ void SoundFMOD::startPlayback( bool loop )
 			LOG_ERROR( getFmodMessageFromCode( result ) );
 
 	// If frequency has not been set, get it now
-	if( m_initialFreq == 0 ) 
-	{ 
+	if( m_initialFreq == 0 )
+	{
 			// Get frequency
 			FMOD_Channel_GetFrequency( m_channel, &m_initialFreq );
 			// Check for success
-			if( failedFMODResultCode( result ) ) 
+			if( failedFMODResultCode( result ) )
 			{
 					// Better with the filename
 					std::string message = "Could not get sound frequency. ";

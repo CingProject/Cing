@@ -25,7 +25,16 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "externLibs/Ogre3d/include/OgreUTFString.h"
+
+// Ogre Unicode support
+//#undef OGRE_UNICODE_SUPPORT
+//#define OGRE_UNICODE_SUPPORT 1
+
+//#define INT32 int
+//#define UINT32 unsigned short
+//#include <iterator>
+//#include <string>
+#include "Ogre3d/include/OgreUTFString.h"
 
 
 namespace Common
@@ -50,7 +59,7 @@ namespace Common
 		String				substring	( int beginIndex );
 		String				substring	( int beginIndex, int endIndex );
 		const char*			toChar		() const { return c_str(); }
-		Ogre::UTFString		toUTF		() const;		
+		//Ogre::UTFString		toUTF		() const;
 
 
 		// Compare

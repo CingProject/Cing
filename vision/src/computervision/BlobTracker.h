@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #define _BlobTracker_H_
 
 #include "computerVision/BlobFinder.h"
-#include "Blob.h"
+#include "computerVision/Blob.h"
 
 namespace ComputerVision
 {
@@ -31,7 +31,7 @@ namespace ComputerVision
 /**
  * @internal
  * Class that analyzes an image to track blobs (elements).
- * What it looks for in an image is bright areas, so typically 
+ * What it looks for in an image is bright areas, so typically
  * the image result of a background subtraction is a good input.
  * It also gives information about the found blobs .
  */
@@ -50,7 +50,7 @@ public:
 	void          end           ();
 	// Blob related methods
 	void          update				( const Graphics::Image& inImage );
-	
+
 	// TODO check n valid
 	TrackedBlob&	getTrackedBlobN      ( int n )  { return m_trackedBlobs[n]; }
 
@@ -63,7 +63,7 @@ private:
 	// Attributes
 	TrackedBlobs      m_trackedBlobs;                ///< To store the found blobs
 	int								m_nTrackedBlobs;
-	
+
 	void*							m_callback;
 	bool							m_bIsValid;
 
