@@ -79,7 +79,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE..."
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK"
 			/>
 		</Configuration>
 		<Configuration
@@ -143,7 +143,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE..."
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK"
 			/>
 		</Configuration>
 	</Configurations>

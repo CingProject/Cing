@@ -91,6 +91,8 @@ void updateAnimations()
 	}
 }
 
+PointLight	light;	
+
 void setup()
 {
 	size( 800, 600, OPENGL );
@@ -98,6 +100,10 @@ void setup()
 	// Enables camera control
 	useKeyboardCameraControl(true);
 	showDebugOutput(true);
+
+	// Init lights and set the ambient light
+	ambientLight( 255, 255, 255 );
+	light.init( 255, 255, 255, width / 2, height / 2, -200 );	
 
 	// Loads collada a file
 	bool success = loadCollada( "DoorAnimation.dae" );

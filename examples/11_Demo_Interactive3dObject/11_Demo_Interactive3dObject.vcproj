@@ -101,7 +101,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE..."
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK"
 			/>
 		</Configuration>
 		<Configuration
@@ -109,6 +109,7 @@
 			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ProjectDir)\temp\$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="..\..\vision\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Release.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -159,7 +160,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib OIS.lib QuickGUI.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libGIMPACT.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\vision\externLibs\BetaCairo\lib;..\..\vision\externLibs\Bullet\lib;..\..\vision\externLibs\cairo\lib;..\..\vision\externLibs\Fmod\lib;..\..\vision\externLibs\Ogre3d\lib;..\..\vision\externLibs\OgreBullet\lib;..\..\vision\externLibs\OpenCV\lib;..\..\vision\externLibs\PortVideo\lib;..\..\vision\externLibs\PTypes\lib;..\..\vision\externLibs\QuickGUI\lib;..\..\vision\externLibs\RtMidi\lib;..\..\vision\externLibs\VideoInput\lib"
@@ -194,7 +194,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE..."
-				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
+				CommandLine="echo Copying required files to execute Project: $(ProjectName)&#x0D;&#x0A;REM Copy the files necessary to execute&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK"
 			/>
 		</Configuration>
 	</Configurations>
