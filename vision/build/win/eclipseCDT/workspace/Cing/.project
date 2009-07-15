@@ -71,22 +71,22 @@
 		<link>
 			<name>bin</name>
 			<type>2</type>
-			<locationURI>${CING_HOME}//vision/bin/win/eclipseCDT/</locationURI>
+			<location>C:/LibVision/_Dev/_Vision/trunk_reorganizacionvs2008/vision/bin/win/eclipseCDT</location>
 		</link>
 		<link>
 			<name>externLibs</name>
 			<type>2</type>
-			<locationURI>${CING_HOME}//vision/externLibs/win/eclipseCDT</locationURI>
+			<location>C:/LibVision/_Dev/_Vision/trunk_reorganizacionvs2008/vision/externLibs/win/eclipseCDT</location>
 		</link>
 		<link>
 			<name>lib</name>
 			<type>2</type>
-			<locationURI>${CING_HOME}//vision/lib</locationURI>
+			<location>C:/LibVision/_Dev/_Vision/trunk_reorganizacionvs2008/vision/lib</location>
 		</link>
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<locationURI>${CING_HOME}//vision/src</locationURI>
+			<location>C:/LibVision/_Dev/_Vision/trunk_reorganizacionvs2008/vision/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>

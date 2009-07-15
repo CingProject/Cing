@@ -1,0 +1,1 @@
+As Eclipse does not work with relative paths, its necessary to change the abs paths of the linked folders in the .project file
