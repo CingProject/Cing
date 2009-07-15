@@ -101,7 +101,6 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE..."
-				CommandLine="copy &quot;$(OutDir)\$(TargetFileName)&quot; &quot;$(SolutionDir)\examples\bin\$(ConfigurationName)&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -194,7 +193,6 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="COPYING REQUIRED FILES TO EXECUTE..."
-				CommandLine="copy &quot;$(OutDir)\$(TargetFileName)&quot; &quot;$(SolutionDir)\examples\bin\$(ConfigurationName)&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)vision\bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

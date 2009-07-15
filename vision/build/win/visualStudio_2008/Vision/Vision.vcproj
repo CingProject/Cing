@@ -168,11 +168,11 @@
 				Name="Scripts"
 				>
 				<File
-					RelativePath="..\..\..\..\data\materials\scripts\Basic_Vision.material"
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Basic_Vision.material"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\data\materials\scripts\Example.material"
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Example.material"
 					>
 				</File>
 			</Filter>
