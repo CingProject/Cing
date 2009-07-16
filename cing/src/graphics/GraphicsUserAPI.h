@@ -75,7 +75,7 @@ void stroke( int rgb );
 void stroke( int rgb, float alpha );
 void stroke( const Color& color );
 
-/* Changes the way Vision interprets color data. By default, the
+/* Changes the way Cing interprets color data. By default, the
    parameters for fill(), stroke(), background(), and color() are defined by values
    between 0 and 255 using the RGB color model. The colorMode() function is used to
    change the numerical range used for specifying colors and to switch color systems.

@@ -30,8 +30,8 @@ namespace Cing
 		 * @internal
      * BaseSound
      * Interface to deal with sounds (load, play...etc).
-     * @note Please note this interface is called Sound, instead
-     * of Sound. If you are using Vision to build your application
+     * @note Please note this interface is called BaseSound, instead
+     * of Sound. If you are using Cing to build your application
      * you should use Sound type directly instead of Sound, which is for
      * internal definition purposes.
      *

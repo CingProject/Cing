@@ -24,22 +24,24 @@
   
 
 /**
- * \mainpage Vision Documentation
+ * \mainpage Cing Documentation
  *
  * \section intro Introduction
- * Vision can be used to create interactive audiovisual applications involving: audio, video, 2d and 3d graphics,
- * computer vision...
+ * Cing is an open source C++ programming libary that can be used to create interactive audiovisual applications 
+ * involving: audio, video, 2d and 3d graphics, computer vision... and much more.
  *
- * See the <b>examples</b> to have an idea about how the code looks like.
+ * Check the <b>CingExamples.sln</b> Visual Studio solution to have an idea about how the code looks like.
  *
  * To see the documentatio of the main library areas go to the <b>namespaces</b> section.
+ * 
+ * More into: www.cing.cc
  */
 
 
 /**
  * @internal
  * @file This is the entry include file from applications
- * It should include all the necessary files for the vision library, so the users don't need to 
+ * It should include all the necessary files to access Cing functionality, so the users don't need to 
  * worry about including files or namespaces
  */
 

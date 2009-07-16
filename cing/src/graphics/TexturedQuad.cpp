@@ -598,7 +598,7 @@ void TexturedQuad::flipVertical()
 	// m_quad indexes (two triangles)
 	m_quad->triangle( 0, 2, 1 );
 	m_quad->triangle( 0, 3, 2 );
-// Versión que estaba en carpeta vision
+// Versión que estaba en carpeta cing
 //	m_quad->triangle( 0, 1, 2 );
 //	m_quad->triangle( 0, 2, 3 );
 

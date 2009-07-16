@@ -197,14 +197,6 @@
 			RelativePath=".\src\01_Drawing_and_Transformations.cpp"
 			>
 		</File>
-		<File
-			RelativePath=".\data\CingConfig.xml"
-			>
-		</File>
-		<File
-			RelativePath=".\data\ReadMe.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
