@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/GraphicsTypes.h"
 #include "graphics/Image.h"
 
-namespace ComputerVision
+namespace Cing
 {
 
 
@@ -56,7 +56,7 @@ public:
 	virtual void  end           ();
 
   // Blob related methods
-	virtual void  update				( const Graphics::Image& inImage );
+	virtual void  update				( const Image& inImage );
 
   // Set methods
   void          setMinBlobArea	( float minArea ) { m_minBlobArea = minArea; }
@@ -95,6 +95,6 @@ protected:
 
 };
 
-} // namespace ComputerVision
+} // namespace Cing
 
 #endif // _BlobFinder_H_

@@ -1,8 +1,8 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ Inc.
 #include "Ogre3d/include/OgreSceneManager.h"
 
 
-namespace Graphics
+namespace Cing
 {
 
 
@@ -77,7 +77,7 @@ namespace Graphics
 	void FontManager::end()
 	{
 		// Release the fonts
-		std::for_each( m_activeFontsToRender.begin(), m_activeFontsToRender.end(), Common::ReleaseFunctor<MovableText>() );
+		std::for_each( m_activeFontsToRender.begin(), m_activeFontsToRender.end(), ReleaseFunctor<MovableText>() );
 		m_activeFontsToRender.clear();
 
 		m_bIsValid = false;
@@ -146,7 +146,7 @@ namespace Graphics
 		newText->show();
 
 		// Text transformation properties
-		Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+		Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 		newText->setGlobalTranslation(  t.getPosition() );
 		newText->setRotation( t.getRotQuaternion() );
 		newText->setScale( t.getScale() );
@@ -157,13 +157,13 @@ namespace Graphics
 		// Control current coordinate system
 		if ( GraphicsManager::getSingleton().isProcessingMode() )
 		{
-			newText->getParentNode()->setPosition( 0, Globals::height, 0 );
-			newText->getParentNode()->setScale( Globals::width, -Globals::height, 1 );
+			newText->getParentNode()->setPosition( 0, height, 0 );
+			newText->getParentNode()->setScale( width, -height, 1 );
 		}
 		else
 		{
 			newText->getParentNode()->setPosition( 0, 0, 0 );
-			newText->getParentNode()->setScale( Globals::width, Globals::height, 1 );
+			newText->getParentNode()->setScale( width, height, 1 );
 		}
 
 	
@@ -190,10 +190,10 @@ namespace Graphics
 		// Make new text area child of the root node (so we dont create so many nodes)
 
 		// Using root scene node as parent node
-		//Globals::ogreSceneManager->getRootSceneNode()->attachObject( m_activeFontsToRender.back() );
+		//ogreSceneManager->getRootSceneNode()->attachObject( m_activeFontsToRender.back() );
 
 		// Using individual scene nodes
-		Ogre::SceneNode* parentNode = Globals::ogreSceneManager->getRootSceneNode()->createChildSceneNode();
+		Ogre::SceneNode* parentNode = ogreSceneManager->getRootSceneNode()->createChildSceneNode();
 		parentNode->attachObject( m_activeFontsToRender.back() );
 
 		// Return it

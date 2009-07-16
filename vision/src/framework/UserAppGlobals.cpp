@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -22,9 +22,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "UserAppGlobals.h"
 #include "input/InputManager.h"
 #include "common/eString.h"
+#include "graphics/Color.h"
 
 
-namespace Globals
+namespace Cing
 {
 
 // Window
@@ -34,16 +35,16 @@ String					appName = "Cing Demo";
 
 // Data folder
 String					dataFolder = "";
-String					cingDataFolder = "";
+String					cingDataFolder = "../../../cing_bin/data/";
 
 // Input
 char								key;
-Input::KeyCode			keyCode;
+KeyCode			keyCode;
 int									mouseButton;
 int									mouseX = 0;	
 int									mouseY = 0;
-Input::Mouse&				mouse			= Input::InputManager::m_mouse;
-Input::Keyboard&		keyboard	= Input::InputManager::m_keyboard;
+Mouse&				mouse			= InputManager::m_mouse;
+Keyboard&		keyboard	= InputManager::m_keyboard;
 
 // Time
 double							elapsedSec			= 0;
@@ -62,9 +63,9 @@ Ogre::Camera*				ogreCamera				= NULL;
 
 
 // Pixel manipulation
-std::vector < Graphics::Color > pixels;
+std::vector < Color > pixels;
 
 // Other
 PerlinNoise _noise = PerlinNoise(4,.63,1.6,0);
 
-} // namespace Globals
+} // namespace Cing

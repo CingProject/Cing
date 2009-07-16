@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "input/Keyboard.h"
 #include "input/InputManager.h"
 
-namespace Graphics
+namespace Cing
 {
 
 /**
@@ -179,7 +179,7 @@ void CameraController::mouseControl()
 	Ogre::Real pitchAngleSign;
 
 	// Get the mouse reference
-	const Input::Mouse& mouse = Input::InputManager::getSingleton().getMouse();
+	const Mouse& mouse = InputManager::getSingleton().getMouse();
 
 	// Yaws the camera according to the mouse relative movement.
 	Ogre::Radian rotX = Ogre::Degree( mouse.getXAxisRelative() * 0.13 );
@@ -217,7 +217,7 @@ void CameraController::mouseControl()
 void CameraController::keyboardControl()
 {
 	// Get the keyboard reference
-	const Input::Keyboard& keyboard = Input::InputManager::getSingleton().getKeyboard();
+	const Keyboard& keyboard = InputManager::getSingleton().getKeyboard();
 
 	// Move camera upwards along to world's Y-axis.
 	if(keyboard.isKeyDown(OIS::KC_PGUP))
@@ -268,4 +268,4 @@ void CameraController::keyboardControl()
 	}
 }
 
-} // namespace Graphics
+} // namespace Cing

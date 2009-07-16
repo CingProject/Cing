@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "framework/Application.h"
 
 
-namespace Graphics
+namespace Cing
 {
 
 // Static member init
@@ -120,7 +120,7 @@ void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
    THROW_EXCEPTION( "Image already initialized" );
 
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+  Application::getSingleton().checkSubsystemsInit();
 
 	// Create the empty IplImage image
 	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
@@ -145,7 +145,7 @@ void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
 void Image::init( const Image& img )
 {
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+  Application::getSingleton().checkSubsystemsInit();
 
 	this->operator=( img );
 
@@ -165,11 +165,11 @@ void Image::init( const Image& img )
 void Image::load( const std::string& name  )
 {
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+  Application::getSingleton().checkSubsystemsInit();
 
 
 	// Load file from disk
-	m_image.load( name, Common::ResourceManager::userResourcesGroupName );
+	m_image.load( name, ResourceManager::userResourcesGroupName );
 	if ( m_image.getData() )
 		LOG( "Image %s succesfully loaded", name.c_str() );
 	else
@@ -212,7 +212,7 @@ void Image::save( const std::string& name )
 	m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage->imageData, m_cvImage->width, m_cvImage	->height, 1, (Ogre::PixelFormat)getFormat() );
 
 	// Add the user app data folder to the name
-	m_image.save( Common::ResourceManager::userDataPath + name );
+	m_image.save( ResourceManager::userDataPath + name );
 }
 
 /**
@@ -548,7 +548,7 @@ void Image::operator=( const Image& other )
 		THROW_EXCEPTION( "Trying to copy an invalid image" );
 
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+  Application::getSingleton().checkSubsystemsInit();
 
 
 	// TODO: Check speed of cvCloneImage, maybe is faster to use memcpy?
@@ -1316,7 +1316,7 @@ void Image::toColor()
 		return;
 
 	// Image Store data temporarily
-	IplImage* tempImage = Graphics::ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 3 );
+	IplImage* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 3 );
 
 	// Convert image
 	cvCvtColor( m_cvImage, tempImage, CV_GRAY2RGB );
@@ -1339,7 +1339,7 @@ void Image::toColor()
 	setUpdateTexture( true );
 
 	// Release temp image
-	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
+	ImageResourceManager::getSingleton().releaseImage( tempImage );
 
 	// Now this image is valid
 	m_bIsValid = true;
@@ -1364,7 +1364,7 @@ void Image::toGray()
 		return;
 
 	// Image Store data temporarily
-	IplImage* tempImage = Graphics::ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 1 );
+	IplImage* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 1 );
 
 	// Convert image
 	cvCvtColor( m_cvImage, tempImage, CV_RGB2GRAY );
@@ -1387,7 +1387,7 @@ void Image::toGray()
 	setUpdateTexture( true );
 
 	// Release temp image
-	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
+	ImageResourceManager::getSingleton().releaseImage( tempImage );
 
 	// Now this image is valid
 	m_bIsValid = true;
@@ -1492,7 +1492,7 @@ void Image::operator = ( float scalar)
  *
  * @param Color
  */
-void Image::fill( Graphics::Color theColor )
+void Image::fill( Color theColor )
 {
 
 	// Check the image is valid
@@ -1557,4 +1557,4 @@ void Image::setInkMode( ImageInkModes type )
 
 };
 
-} // namespace Graphics
+} // namespace Cing

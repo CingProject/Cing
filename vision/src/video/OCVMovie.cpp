@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,9 +35,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "OpenCV/cv/include/cv.h"
 #include "OpenCV/highgui/include/highgui.h"
 
-using namespace Graphics;
-
-namespace Video
+namespace Cing
 {
 
 /**
@@ -71,7 +69,7 @@ OCVMovie::~OCVMovie()
 bool OCVMovie::load(const char* fileName )
 {
   // Compose full path
-	std::string path = Common::ResourceManager::userDataPath + fileName;
+	std::string path = ResourceManager::userDataPath + fileName;
 
   // Init opencv capture device
   m_capture = cvCaptureFromFile( path.c_str() );
@@ -187,7 +185,7 @@ void OCVMovie::setFps( int fps )
  * Obtains a frame from the video (if it is available -> it depends on the current frames per second)
  * @param frame The image where to store the frame.
  */
-void OCVMovie::read( Graphics::Image &image )
+void OCVMovie::read( Image &image )
 {
 	// Check if video is playing
 	if ( !m_playing || m_finished )
@@ -225,7 +223,7 @@ void OCVMovie::read( Graphics::Image &image )
 	}
 
 	// Image format of the captured image
-  Graphics::GraphicsType format = frame->nChannels == 1? GRAYSCALE: RGB;
+  GraphicsType format = frame->nChannels == 1? GRAYSCALE: RGB;
 
 	// Check if the target image is valid (if not -> init it)
 	if ( !image.isValid() )

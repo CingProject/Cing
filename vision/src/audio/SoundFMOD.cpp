@@ -26,7 +26,7 @@
 #pragma warning(disable:4800)
 #endif
 
-namespace Audio
+namespace Cing
 {
 
 /// Static member initialization
@@ -64,8 +64,8 @@ SoundFMOD::~SoundFMOD()
 void SoundFMOD::load( const char* filename )
 {
 	// Check if the file exist
-	std::string completePath = Common::ResourceManager::userDataPath + filename;
-	if ( !Common::fileExists( completePath ) )
+	std::string completePath = ResourceManager::userDataPath + filename;
+	if ( !fileExists( completePath ) )
 	{
 		end();
 		LOG_ERROR( "Sound %s does NOT exist", completePath.c_str() );
@@ -532,5 +532,5 @@ void SoundFMOD::stopPlayback()
   // Let's free the channel I can request a new one later
   m_channel = 0;
 }
-} // namespace Audio
+} // namespace Cing
 

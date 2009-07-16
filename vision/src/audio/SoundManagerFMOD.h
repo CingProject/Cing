@@ -22,7 +22,7 @@
 // Fmod
 #include "Fmod/include/fmod_errors.h"
 
-namespace Audio
+namespace Cing
 {
 // Forward declaration
 class SoundFMOD;
@@ -41,12 +41,12 @@ const char*   getFmodMessageFromCode      ( FMOD_RESULT result );
  * @brief Common objects need by audio input and output.
  *
  **/
-class SoundManagerFMOD: public Common::SingletonStatic< SoundManagerFMOD >
+class SoundManagerFMOD: public SingletonStatic< SoundManagerFMOD >
 {
 public:
 
 	// Singleton requirements
-	friend class Common::SingletonStatic< SoundManagerFMOD >;
+	friend class SingletonStatic< SoundManagerFMOD >;
 
 	// Initialization/Release
 	FMOD_SYSTEM*    init    ();
@@ -74,7 +74,7 @@ private:
 	SoundsContainer			m_systemSounds; ///< Container for current loaded sounds
 };
 
-} // namespace Audio
+} // namespace Cing
 
 
 #endif // _IL_AUDIO_SHARED_H

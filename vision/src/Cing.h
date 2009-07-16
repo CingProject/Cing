@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-	Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+	  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -114,18 +114,7 @@
 #include "Ogre3d/include/OgreCamera.h"
 
 // namespaces (the library user don't need to know about them...)
-using namespace Framework;
-using namespace CameraInput;
-using namespace Graphics;
-using namespace ComputerVision;
-using namespace Globals;
-using namespace Common;
-using namespace Input;
-using namespace Physics;
-using namespace Audio;
-using namespace	Video;
-using namespace GUI;
-using namespace Midi;
+using namespace Cing;
 
 // Types to make user live easier
 typedef XMLElement::XMLElementArray XMLElementArray;

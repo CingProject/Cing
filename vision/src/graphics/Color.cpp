@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Common
 #include "common/MathUtils.h"
 
-namespace Graphics
+namespace Cing
 {
 
 /// Static member initialization
@@ -146,10 +146,10 @@ Color Color::normalized() const
 void Color::normalize()
 {
 	// Convert values to current color range
-	r = Common::map( r, m_lowRange, m_hightRange, 0.0f, 1.0f );
-	g = Common::map( g, m_lowRange, m_hightRange, 0.0f, 1.0f );
-	b = Common::map( b, m_lowRange, m_hightRange, 0.0f, 1.0f );
-	a = Common::map( a, m_lowRange, m_hightRange, 0.0f, 1.0f );
+	r = map( r, m_lowRange, m_hightRange, 0.0f, 1.0f );
+	g = map( g, m_lowRange, m_hightRange, 0.0f, 1.0f );
+	b = map( b, m_lowRange, m_hightRange, 0.0f, 1.0f );
+	a = map( a, m_lowRange, m_hightRange, 0.0f, 1.0f );
 }
 
 /**
@@ -163,4 +163,4 @@ void Color::colorMode( GraphicsType mode, float range1, float range2, float rang
 	//m_hightRange = 255;
 }
 
-} // namespace Graphics
+} // namespace Cing

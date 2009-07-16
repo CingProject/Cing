@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/Image.h"
 #include "graphics/GraphicsTypes.h"
 
-namespace CameraInput
+namespace Cing
 {
 
 /**
@@ -48,7 +48,7 @@ public:
   virtual ~BaseCameraInput();
   
 	// Init / Release / Update (to be implemented in subclasses)
-  virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, Graphics::GraphicsType format = Graphics::RGB, bool multithreaded = true );
+  virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, GraphicsType format = RGB, bool multithreaded = true );
 	virtual void    end             ();
   virtual void    update          () = 0;
 
@@ -63,13 +63,13 @@ public:
   int             				getHeight       () const { return m_height;     }
   int             				getFPS          () const { return m_fps;        }
   int             				getNumChannels  () const { return m_nChannels;  }
-  Graphics::Image&				getImage        ()		 { return m_currentCameraImage; }
-  Graphics::GraphicsType			getFormat		() const { return m_format; }
+  Image&				getImage        ()		 { return m_currentCameraImage; }
+  GraphicsType			getFormat		() const { return m_format; }
 	 
 protected:
 
   // Protected methods
-  void  setNewFrameData         ( char* data, unsigned int width, unsigned int height, Graphics::GraphicsType format );
+  void  setNewFrameData         ( char* data, unsigned int width, unsigned int height, GraphicsType format );
   void  setNewFrame             ( bool newFrame ) { m_newFrame = newFrame;    }  
   void  setWidth                ( int width   )   { m_width   = width;  }
   void  setHeight               ( int height  )   { m_height  = height; }
@@ -83,19 +83,19 @@ private:
 	Ogre::Timer				m_timer;					///< Timer to check the capture fps
 	Average					m_realFpsAverage;			///< Real fps average
 	double					m_realFps;					///< Real captured fps
-	Graphics::Image			m_currentCameraImage; 		///< Image captured from the camera 
-	Graphics::Image			m_tempImage;				///< Image used to convert received frames to working format
+	Image			m_currentCameraImage; 		///< Image captured from the camera 
+	Image			m_tempImage;				///< Image used to convert received frames to working format
 	int                     m_width, m_height;    		///< Capture resolution
 	int                     m_fps;                		///< Capture frames per second
 	int                     m_frameSize;          		///< Size in bytes of a single frame
 	int                     m_nChannels;          		///< Number of channels of the captured image
-	Graphics::GraphicsType	m_format;					///< Format of the frames (RGB or GRAYSCALE)
+	GraphicsType	m_format;					///< Format of the frames (RGB or GRAYSCALE)
 	bool                    m_newFrame;           		///< True when the camera has a new frame captured
 	bool                    m_bIsValid;	          		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 	bool					m_showFps;					///< Show real capture fps
 
 };
 
-} // namespace CameraInput
+} // namespace Cing
 
 #endif // _BaseCameraInput_H_

@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Ogre bullet
 #include "OgreBullet/Dynamics/include/OgreBulletDynamicsRigidBody.h"
 
-namespace Physics
+namespace Cing
 {
 
 /**
@@ -67,7 +67,7 @@ void PhysicsObject::end()
 {
 	// Release data if physics world is still alive...
 	if ( PhysicsManager::getSingleton().getWorld() )
-		Common::Release( m_rigidBody );
+		Release( m_rigidBody );
 
 	// Release parent class stuff
 	Object3D::end();
@@ -103,7 +103,7 @@ void PhysicsObject::enablePhysics( bool staticObject )
 void PhysicsObject::disablePhysics()
 {
 	// Release physics's rigid body
-	Common::Release( m_rigidBody );
+	Release( m_rigidBody );
 	m_physicsEnabled = false;
 }
 
@@ -226,7 +226,7 @@ void PhysicsObject::enableRigidBodyPhysics( OgreBulletCollisions::CollisionShape
 {
 	// If previously enabled -> disable first to avoid memory leak
 	if ( m_rigidBody )
-		Common::Release( m_rigidBody );
+		Release( m_rigidBody );
 
 	// Create the rigid body and assign it the collision shape
 	m_rigidBody = PhysicsManager::getSingleton().createRigidBody( *this, collisionShape, staticObject );
@@ -237,4 +237,4 @@ void PhysicsObject::enableRigidBodyPhysics( OgreBulletCollisions::CollisionShape
 }
 
 
-} // namespace Physics
+} // namespace Cing

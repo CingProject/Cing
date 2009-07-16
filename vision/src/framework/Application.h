@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Ogre
 #include "Ogre3d/include/OgreTimer.h"
 
-namespace Framework
+namespace Cing
 {
 
 /**
@@ -40,12 +40,12 @@ namespace Framework
  * Base class to create an application. Manages the render loop and the initialization and
  * release of the main application systems
  */
-class Application: public Common::SingletonStatic< Application >, public OIS::KeyListener, public OIS::MouseListener
+class Application: public SingletonStatic< Application >, public OIS::KeyListener, public OIS::MouseListener
 {
 public:
 
 	// Required for singleton
-	friend class Common::SingletonStatic< Application >;
+	friend class SingletonStatic< Application >;
 
 	// Constructor / Destructor
 	virtual ~Application();
@@ -96,6 +96,6 @@ private:
 	bool					m_needUpdate;   					///< If true app will be call draw() user funtion one time
 };
 
-} // namespace Framework
+} // namespace Cing
 
 #endif // _Application_H_

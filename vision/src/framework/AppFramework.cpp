@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/eString.h"
 
 
-namespace Framework
+namespace Cing
 {
 
 /**
@@ -53,7 +53,7 @@ void RunApplication( const char* appName )
   try
   {
 	// Store app name
-	Globals::appName = appName;
+	appName = appName;
 
 	// Init application
     Application::getSingleton().initApp();
@@ -82,7 +82,7 @@ void RunApplication( const char* appName )
       std::cerr << "An exception has occurred: " << e.getFullDescription();
     #endif
   }
-  catch ( Common::Exception& e ) {
+  catch ( Exception& e ) {
     #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
       LOG_ERROR( "Internal Exception: %s", e.getErrorMessage().c_str() );
     #else
@@ -93,4 +93,4 @@ void RunApplication( const char* appName )
 }
 
 
-} // namespace FrameWork
+} // namespace Cing

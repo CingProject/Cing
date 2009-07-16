@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
+  This source file is part of the Cing project
   For the latest info, see http://www.XXX.org
 
-  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+    Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #include "Shape.h"
 #include "common/CommonTypes.h"
 
-namespace Graphics
+namespace Cing
 {
 
 /**
@@ -37,14 +37,14 @@ Shape::Shape(): m_bIsValid ( false )
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-Shape::Shape(Style style, Graphics::GraphicsType renderOp ): m_bIsValid( false ), m_style( style ), m_renderOp( renderOp )
+Shape::Shape(Style style, GraphicsType renderOp ): m_bIsValid( false ), m_style( style ), m_renderOp( renderOp )
 {
 }
 /**
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-Shape::Shape( Graphics::GraphicsType renderOp ): m_bIsValid( false ), m_renderOp( renderOp )
+Shape::Shape( GraphicsType renderOp ): m_bIsValid( false ), m_renderOp( renderOp )
 {
 }
 /**
@@ -77,4 +77,4 @@ void Shape::addVertex(float x, float y, float z, Ogre::ColourValue theColor)
 	m_vertexColors.push_back( theColor );
 };
 
-} // namespace Graphics
+} // namespace Cing

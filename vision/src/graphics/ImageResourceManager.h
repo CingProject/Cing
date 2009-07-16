@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Common
 #include "common/Singleton.h"
 
-namespace Graphics
+namespace Cing
 {
 
 struct ImageResource
@@ -52,13 +52,13 @@ struct ImageResource
  * @note Currently, width default settings, it consumes around 5Mb or ram memory, but can increase performance
  * and memory consumption significantly in an application with a high rate of image processing or computer vision processes
  */
-class ImageResourceManager: public Common::SingletonStatic< ImageResourceManager >
+class ImageResourceManager: public SingletonStatic< ImageResourceManager >
 {
 
 public:
 
 	// Required for singleton
-	friend class Common::SingletonStatic< ImageResourceManager >;
+	friend class SingletonStatic< ImageResourceManager >;
 
 	// Destructor
 	virtual ~ImageResourceManager												();
@@ -82,6 +82,6 @@ private:
 	bool													m_bIsValid;	    ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 
-} // namespace Graphics
+} // namespace Cing
 
 #endif // _ImageResourceManager_H_

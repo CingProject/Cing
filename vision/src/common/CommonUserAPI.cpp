@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include <Windows.h>
 #endif
 
-namespace Common
+namespace Cing
 {
 
 /**
@@ -58,7 +58,7 @@ void print( const char* msg, ... )
 
 	// Print it to debug output
 	// TODO Decide policy
-	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( msgFormated );
+	GUIManagerCEGUI::getSingleton().getDebugOutput().print( msgFormated );
 
 	// If in windows, output it to the output debug string of the visual studio
 	// TODO: decide policy
@@ -87,7 +87,7 @@ void println( const char* msg, ... )
 
 	// Print it to debug output
 	// TODO: decide policy
-	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
+	GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
 
 	// If in windows, output it to the output debug string of the visual studio
 	// TODO: decide policy
@@ -142,4 +142,4 @@ void logErrorMsgsToDebugOutput( bool value )
 	LogManager::getSingleton().logErrorMsgsToDebugOutput( value );
 }
 
-} // namespace Common
+} // namespace Cing

@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -29,11 +29,8 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include "GraphicsTypes.h"
 
-// General includes
-#include <cstdio>
-
 /// Contains all communication with 3d graphics system (Ogre Library) and rendering management
-namespace Graphics
+namespace Cing
 {
 	class GraphicsManager;
 	class Window;
@@ -64,7 +61,7 @@ namespace Ogre
 }
 
 // Physics (This shouldn't be here, but for the moment, as there is no Logic module that combines graphics and physics....)
-namespace Physics
+namespace Cing
 {
 	class PhysicsObject;
 }

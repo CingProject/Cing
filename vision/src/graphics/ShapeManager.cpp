@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
+  This source file is part of the Cing project
   For the latest info, see http://www.XXX.org
 
-  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+    Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #include "ShapeManager.h"
 #include "GraphicsManager.h"
 #include "OgreSceneManager.h"
-namespace Graphics
+namespace Cing
 {
 
 /**
@@ -55,7 +55,7 @@ bool ShapeManager::init()
 	// Init manual objects to allow 3d simple primitives drawing (lines...)
 	int estimatedVertexCount = 10000;
 
-	m_shapesManualObject = GraphicsManager::getSingleton().getSceneManager().createManualObject("Graphics::Shapes");
+	m_shapesManualObject = GraphicsManager::getSingleton().getSceneManager().createManualObject("Shapes");
 	m_shapesManualObject->setDynamic(true);
 	m_shapesManualObject->estimateVertexCount( estimatedVertexCount );
 
@@ -329,4 +329,4 @@ void ShapeManager::vertex(float x, float y, float z)
 	//m_lines.addVertex(x, y, z, GraphicsManager::getSingleton().getStrokeColor());
 };
 
-} // namespace Graphics
+} // namespace Cing

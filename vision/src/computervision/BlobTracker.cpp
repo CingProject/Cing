@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Graphics
 #include "graphics/Image.h"
 
-namespace ComputerVision
+namespace Cing
 {
 
 /**
@@ -78,7 +78,7 @@ void BlobTracker::end()
  * 
  * @param[in] inImage image where the blobs will be searched
  */
-void BlobTracker::update( const Graphics::Image& inImage )
+void BlobTracker::update( const Image& inImage )
 {
 	// Check valid
 	if ( !isValid() )
@@ -161,4 +161,4 @@ void  BlobTracker::setMaxBlobs( float maxBlobs ){
 	};
 }
 
-} // namespace ComputerVision
+} // namespace Cing

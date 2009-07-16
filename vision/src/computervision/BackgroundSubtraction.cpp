@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // OpenCv
 #include "OpenCV/cxcore/include/cxcore.h"
 
-namespace ComputerVision
+namespace Cing
 {
 
 // Static member init
@@ -75,14 +75,14 @@ void BackgroundSubtraction::end()
  * @param				imgToAnalyze	Image to analyze. It will be compared with the stored background
  * @param[out]	output				The result of the background subtraction will be stored in this image
  */
-void BackgroundSubtraction::update( const Graphics::Image& imgToAnalyze, Graphics::Image& output )
+void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 {
 	// If we don't have background stored -> store this image as the background
 	if ( !m_backgroundImage )
 		storeBackground( imgToAnalyze );
 
 	// Request temporal images to the image resource manager
-	IplImage* tempImage = Graphics::ImageResourceManager::getSingleton().getImage( imgToAnalyze.getWidth(), imgToAnalyze.getHeight(), imgToAnalyze.getNChannels() );
+	IplImage* tempImage = ImageResourceManager::getSingleton().getImage( imgToAnalyze.getWidth(), imgToAnalyze.getHeight(), imgToAnalyze.getNChannels() );
 	if ( tempImage == NULL )
 	{
 		LOG_ERROR( "Could not apply BackgroundSubtraction due to the lack of temporal image to work" );
@@ -106,7 +106,7 @@ void BackgroundSubtraction::update( const Graphics::Image& imgToAnalyze, Graphic
 	output.setUpdateTexture( true );
 
 	// Release temporal image
-	Graphics::ImageResourceManager::getSingleton().releaseImage( tempImage );
+	ImageResourceManager::getSingleton().releaseImage( tempImage );
 }
 
 
@@ -116,7 +116,7 @@ void BackgroundSubtraction::update( const Graphics::Image& imgToAnalyze, Graphic
  *
  * @param backgroundImage	Image that will be compared with the "every frame" image.
  */
-void BackgroundSubtraction::storeBackground( const Graphics::Image& backgroundImage )
+void BackgroundSubtraction::storeBackground( const Image& backgroundImage )
 {
 	// Create the image if necessary
 	if (	(!m_backgroundImage) || 
@@ -133,4 +133,4 @@ void BackgroundSubtraction::storeBackground( const Graphics::Image& backgroundIm
 		cvCopy( &backgroundImage.getCVImage(), m_backgroundImage );
 }
 
-} // namespace ComputerVision
+} // namespace Cing

@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/FontProperties.h"
 #include "graphics/FontManager.h"
 
-namespace Graphics
+namespace Cing
 {
 
 
@@ -116,7 +116,7 @@ void background(  const Color& theColor  )
  */
 void setBackgroundColor( const Color& color )
 {
-	Graphics::GraphicsManager::getSingleton().setBackgroundColor( color );
+	GraphicsManager::getSingleton().setBackgroundColor( color );
 }
 
 
@@ -127,7 +127,7 @@ void setBackgroundColor( const Color& color )
  */
 void stroke(  float gray  )
 {
-	Graphics::GraphicsManager::getSingleton().setStrokeColor( Color( gray ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( gray ) );
 }
 
 /**
@@ -138,7 +138,7 @@ void stroke(  float gray  )
  */
 void stroke(  float gray, float alpha )
 {
-	Graphics::GraphicsManager::getSingleton().setStrokeColor( Color( gray, alpha ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( gray, alpha ) );
 }
 
 /**
@@ -150,7 +150,7 @@ void stroke(  float gray, float alpha )
  */
 void stroke( float x, float y, float z )
 {
-	Graphics::GraphicsManager::getSingleton().setStrokeColor( Color( x, y, z ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( x, y, z ) );
 }
 
 /**
@@ -163,7 +163,7 @@ void stroke( float x, float y, float z )
  */
 void stroke( float x, float y, float z, float a )
 {
-	Graphics::GraphicsManager::getSingleton().setStrokeColor( Color( x, y, z, a ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( x, y, z, a ) );
 }
 
 /**
@@ -173,7 +173,7 @@ void stroke( float x, float y, float z, float a )
  */
 void stroke( int rgb )
 {
-	Graphics::GraphicsManager::getSingleton().setStrokeColor( Color( rgb, rgb, rgb, rgb ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( rgb, rgb, rgb, rgb ) );
 }
 
 /**
@@ -184,7 +184,7 @@ void stroke( int rgb )
  */
 void stroke( int rgb, float a )
 {
-	Graphics::GraphicsManager::getSingleton().setStrokeColor( Color( rgb, rgb, rgb, a ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( rgb, rgb, rgb, a ) );
 }
 
 /*
@@ -195,7 +195,7 @@ void stroke( int rgb, float a )
  */
 void stroke( const Color& color )
 {
-	Graphics::GraphicsManager::getSingleton().setStrokeColor( color );
+	GraphicsManager::getSingleton().setStrokeColor( color );
 }
 
 /**
@@ -296,7 +296,7 @@ void fill( const Color& color, int alpha )
  */
 void strokeWeight( int weight )
 {
-	Graphics::GraphicsManager::getSingleton().setStrokeWeight(weight);
+	GraphicsManager::getSingleton().setStrokeWeight(weight);
 }
 
 /*
@@ -307,7 +307,7 @@ void strokeWeight( int weight )
  */
 void noFill()
 {
-	Graphics::GraphicsManager::getSingleton().noFill();
+	GraphicsManager::getSingleton().noFill();
 }
 
 /*
@@ -317,7 +317,7 @@ void noFill()
  */
 void noStroke()
 {
-	Graphics::GraphicsManager::getSingleton().noStroke();
+	GraphicsManager::getSingleton().noStroke();
 }
 
 /*
@@ -328,7 +328,7 @@ void noStroke()
  */
 void smooth()
 {
-	Graphics::GraphicsManager::getSingleton().smooth();
+	GraphicsManager::getSingleton().smooth();
 }
 
 /*
@@ -338,7 +338,7 @@ void smooth()
  */
 void noSmooth()
 {
-	Graphics::GraphicsManager::getSingleton().noSmooth();
+	GraphicsManager::getSingleton().noSmooth();
 }
 
 /**
@@ -358,7 +358,7 @@ void noSmooth()
  */
 void useDefault3DCameraControl( bool useDefault )
 {
-	Graphics::GraphicsManager::getSingleton().useDefault3DCameraControl( useDefault );
+	GraphicsManager::getSingleton().useDefault3DCameraControl( useDefault );
 }
 
 /**
@@ -368,7 +368,7 @@ void useDefault3DCameraControl( bool useDefault )
  */
 void useMouseCameraControl( bool value )
 {
-	Graphics::GraphicsManager::getSingleton().getDefaultCameraController().userMouse( value );
+	GraphicsManager::getSingleton().getDefaultCameraController().userMouse( value );
 }
 
 /**
@@ -378,7 +378,7 @@ void useMouseCameraControl( bool value )
  */
 void useKeyboardCameraControl( bool value )
 {
-	Graphics::GraphicsManager::getSingleton().getDefaultCameraController().userKeyboard( value );
+	GraphicsManager::getSingleton().getDefaultCameraController().userKeyboard( value );
 }
 
 
@@ -389,7 +389,7 @@ void useKeyboardCameraControl( bool value )
  */
 void showFps( bool show )
 {
-	Graphics::GraphicsManager::getSingleton().showFps( show );
+	GraphicsManager::getSingleton().showFps( show );
 }
 
 /**
@@ -405,55 +405,55 @@ void showFps( bool show )
 void line( float x1, float y1, float z1, float x2, float y2, float z2)
 {
     // Transform vertices before the drawing  call 
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 	Vector v1 = t.applyTransform( Vector( x1, y1, z1) );
 	Vector v2 = t.applyTransform( Vector( x2, y2, z2) );
 
-	Graphics::ShapeManager::getSingleton().line( v1.x,  v1.y,  v1.z, v2.x,  v2.y,  v2.z );
+	ShapeManager::getSingleton().line( v1.x,  v1.y,  v1.z, v2.x,  v2.y,  v2.z );
 };
 
 //------------------------------------------------------------------------------------
 void beginShape()
 {
-	Graphics::ShapeManager::getSingleton().beginShape(TRIANGLE_STRIP);
+	ShapeManager::getSingleton().beginShape(TRIANGLE_STRIP);
 };
 
 //------------------------------------------------------------------------------------
 void beginShape(GraphicsType operation)
 {
-	Graphics::ShapeManager::getSingleton().beginShape(operation);
+	ShapeManager::getSingleton().beginShape(operation);
 };
 
 //------------------------------------------------------------------------------------
 void vertex( float x, float y)
 {
 	// Transform vertices before the drawing  call 
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 	Vector v1 = t.applyTransform( Vector( x, y, 0) );
 
-	Graphics::ShapeManager::getSingleton().vertex(v1.x,v1.y);
+	ShapeManager::getSingleton().vertex(v1.x,v1.y);
 };
 
 //------------------------------------------------------------------------------------
 void vertex( float x, float y, float z)
 {
 	// Transform vertices before the drawing  call 
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 	Vector v1 = t.applyTransform( Vector( x, y, z) );
 
-	Graphics::ShapeManager::getSingleton().vertex(v1.x,v1.y,v1.z);
+	ShapeManager::getSingleton().vertex(v1.x,v1.y,v1.z);
 };
 
 //------------------------------------------------------------------------------------
 void endShape()
 {
-	Graphics::ShapeManager::getSingleton().endShape();
+	ShapeManager::getSingleton().endShape();
 };
 
 //------------------------------------------------------------------------------------
 void endShape(GraphicsType operation)
 {
-	Graphics::ShapeManager::getSingleton().endShape(operation);
+	ShapeManager::getSingleton().endShape(operation);
 };
 
 
@@ -470,12 +470,12 @@ void endShape(GraphicsType operation)
 void line( float x1, float y1, float x2, float y2 )
 {
 	// Transform vertex before the drawing  call
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
 	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
 
-	Graphics::GraphicsManager::getSingleton().m_canvas->line( v1.x, v1.y, v2.x, v2.y );
+	GraphicsManager::getSingleton().m_canvas->line( v1.x, v1.y, v2.x, v2.y );
 };
 
 /*
@@ -489,11 +489,11 @@ void line( float x1, float y1, float x2, float y2 )
 void point( float x1, float y1 )
 {
 	// Transform vertex before the drawing  call
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
 
-	Graphics::GraphicsManager::getSingleton().m_canvas->point( v1.x, v1.y );
+	GraphicsManager::getSingleton().m_canvas->point( v1.x, v1.y );
 };
 
 /*
@@ -512,13 +512,13 @@ void point( float x1, float y1 )
 void triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
 {
 	// Transform vertex before the drawing  call
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
 	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
 	Vector v3 = t.applyTransform( Vector( x3, y3, 0) );
 
-	Graphics::GraphicsManager::getSingleton().m_canvas->triangle( v1.x, v1.y, v2.x, v2.y, v3.x, v3.y );
+	GraphicsManager::getSingleton().m_canvas->triangle( v1.x, v1.y, v2.x, v2.y, v3.x, v3.y );
 };
 
 /**
@@ -534,7 +534,7 @@ void rect( float x1, float y1, float x2, float y2 )
 	// TODO:	Optimize
 
 	// Store the top of the matrix stack
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1, v2, v3, v4;
 	float rectWidth, rectHeight;
@@ -543,14 +543,14 @@ void rect( float x1, float y1, float x2, float y2 )
 	// Calculate transformed points
 	switch( GraphicsManager::getSingleton().getRectMode() )
 	{
-	case Common::CORNER:
+	case CORNER:
 		v1 = t.applyTransform( Vector( x1, y1, 0) );
 		v2 = t.applyTransform( Vector( x1+x2, y1, 0) );
 		v3 = t.applyTransform( Vector( x1+x2, y1+y2, 0) );
 		v4 = t.applyTransform( Vector( x1, y1+y2, 0) );
 		break;
 
-	case Common::CORNERS:
+	case CORNERS:
 		rectWidth  = x2 - x1;
 		rectHeight = y2 - y1;
 		v1 = t.applyTransform( Vector( x1, y1, 0) );
@@ -559,7 +559,7 @@ void rect( float x1, float y1, float x2, float y2 )
 		v4 = t.applyTransform( Vector( x1, y1 + rectHeight, 0) );
 		break;
 
-	case Common::CENTER:
+	case CENTER:
 		widthDIV2  = x2/2;
 		heightDIV2 = y2/2;
 		v1 = t.applyTransform( Vector( x1 - widthDIV2, y1 - heightDIV2, 0) );
@@ -568,7 +568,7 @@ void rect( float x1, float y1, float x2, float y2 )
 		v4 = t.applyTransform( Vector( x1 - widthDIV2, y1 + heightDIV2, 0) );
 		break;
 
-	case Common::RADIUS:
+	case RADIUS:
 		v1 = t.applyTransform( Vector( x1-x2,y1-y2, 0) );
 		v2 = t.applyTransform( Vector( x1+x2,y1-y2, 0) );
 		v3 = t.applyTransform( Vector( x1+x2,y1+y2, 0) );
@@ -576,7 +576,7 @@ void rect( float x1, float y1, float x2, float y2 )
 		break;
 	}
 
-	Graphics::GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y );
+	GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y );
 }
 
 /**
@@ -594,14 +594,14 @@ void rect( float x1, float y1, float x2, float y2 )
 void quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
 {
 	// Transform vertex before the drawing  call
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
 	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
 	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
 	Vector v3 = t.applyTransform( Vector( x3, y3, 0) );
 	Vector v4 = t.applyTransform( Vector( x4, y4, 0) );
 
-	Graphics::GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y );
+	GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y );
 }
 
 /**
@@ -615,17 +615,17 @@ void quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4,
 void ellipse( float x, float y, float width, float height)
 {
 	//TODO: Manage transforms
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 	Vector v1 = t.applyTransform( Vector( x, y, 0) );
-	Graphics::GraphicsManager::getSingleton().m_canvas->ellipse( v1.x, v1.y, width, height, t.getRotation().z );
+	GraphicsManager::getSingleton().m_canvas->ellipse( v1.x, v1.y, width, height, t.getRotation().z );
 }
 
 void arc( float x, float y,  float width, float height, float start, float stop )
 {
 	//TODO: Manage transforms
-	Transform &t = Graphics::GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 	Vector v1 = t.applyTransform( Vector( x, y, 0) );
-	Graphics::GraphicsManager::getSingleton().m_canvas->arc( x, y, width, height, start, stop );
+	GraphicsManager::getSingleton().m_canvas->arc( x, y, width, height, start, stop );
 }
 
 /**
@@ -644,7 +644,7 @@ void arc( float x, float y,  float width, float height, float start, float stop 
  */
 void rectMode( int mode )
 {
-	Graphics::GraphicsManager::getSingleton().setRectMode( mode );
+	GraphicsManager::getSingleton().setRectMode( mode );
 }
 
 /**
@@ -656,7 +656,7 @@ void rectMode( int mode )
 */
 void ellipseMode( int mode )
 {
-	Graphics::GraphicsManager::getSingleton().setEllipseMode( mode );
+	GraphicsManager::getSingleton().setEllipseMode( mode );
 }
 
 /**
@@ -706,7 +706,7 @@ void colorMode( GraphicsType mode, float range1, float range2, float range3, flo
 void pushStyle()
 {
 	// Add a new style, copying parameters from the last one.
-	Graphics::GraphicsManager::getSingleton().m_styles.push_front( Graphics::GraphicsManager::getSingleton().m_styles.front() );
+	GraphicsManager::getSingleton().m_styles.push_front( GraphicsManager::getSingleton().m_styles.front() );
 };
 /**
  * @brief
@@ -716,8 +716,8 @@ void pushStyle()
 void popStyle()
 {
 	// Pop the last style created
-	if ( Graphics::GraphicsManager::getSingleton().m_styles.size() > 0 )
-		Graphics::GraphicsManager::getSingleton().m_styles.pop_front();
+	if ( GraphicsManager::getSingleton().m_styles.size() > 0 )
+		GraphicsManager::getSingleton().m_styles.pop_front();
 };
 
 //Create functions
@@ -760,7 +760,7 @@ void loadPixels()
 	{
 		if ( (i % imageWidth == 0) && (i != 0) )
 		  yIndex++;
-		Globals::pixels[i] = tempImage->getPixel( i - imageWidth*yIndex, yIndex );
+		pixels[i] = tempImage->getPixel( i - imageWidth*yIndex, yIndex );
 	}
 
 }
@@ -784,7 +784,7 @@ void updatePixels()
 	{
 		if ( (i % imageWidth == 0) && (i != 0) )
 			yIndex++;
-		stroke( Globals::pixels[i] );
+		stroke( pixels[i] );
 		tempImage->point( i - imageWidth*yIndex, yIndex);
 	}
 }
@@ -1038,4 +1038,4 @@ void textSize(float size)
 }
 
 
-} // namespace Graphics
+} // namespace Cing

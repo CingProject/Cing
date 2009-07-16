@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,11 +30,11 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #endif
 
 
-namespace Common
+namespace Cing
 {
 
 // Static member init
-const std::string LogManager::logFileName = "Vision.log";
+const std::string LogManager::logFileName = "Cing.log";
 
 /**
  * @internal
@@ -159,7 +159,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	// Send it to the debug console
 	// TODO: decide policy
 	//if ( level >= m_debugOutputLogLevel )
-	//	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
+	//	GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
 
 	// If we are in windows and debug -> log to visual studio output
 #if defined(WIN32)
@@ -168,4 +168,4 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 #endif
 }
 
-} // namespace Common
+} // namespace Cing

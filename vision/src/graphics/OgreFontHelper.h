@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 
 
-namespace Graphics {
+namespace Cing {
 
 /// forward iterator that can be used for text plotting or measurement
 /// ogre forum thread http://www.ogre3d.org/phpBB2/viewtopic.php?t=29344

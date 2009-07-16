@@ -1,8 +1,8 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,19 +47,19 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <stack>
 #include "common/eString.h"
 
-namespace Graphics
+namespace Cing
 {
 	/**
 	* @internal
 	* Manages the communication with the Graphics engine (OGRE)
 	*/
-	class GraphicsManager: public Common::SingletonStatic< GraphicsManager >
+	class GraphicsManager: public SingletonStatic< GraphicsManager >
 	{
 
 	public:
 
 		// Required for singleton
-		friend class Common::SingletonStatic< GraphicsManager >;
+		friend class SingletonStatic< GraphicsManager >;
 
 		// Destructor
 		virtual ~GraphicsManager														();
@@ -143,20 +143,20 @@ namespace Graphics
 		void						clearMatrixStack();
 
 		//Save frames
-		void save( const Common::String& name )
+		void save( const String& name )
 		{
 			m_saveFrame = true;
 			m_frameName = name;
 		};
 
 		// Import Collada
-		//bool loadCollada( const Common::String& fileName );
+		//bool loadCollada( const String& fileName );
 		// Coordinate systems
 		bool isProcessingMode() { return ( m_coordSystem == PROCESSING );	}	
 		void applyCoordinateSystemTransform( GraphicsType coordSystem );
 
 		// 2D Canvas
-		Graphics::Image*			m_canvas;
+		Image*			m_canvas;
 
 		// 2D / 3D Transforms
 		std::stack < Transform >	m_transforms; ///< Stack to store transform objects
@@ -212,13 +212,13 @@ namespace Graphics
 		//to allow screen capture and effects
 		Ogre::TexturePtr				m_RttTexture;
 		bool							m_saveFrame;
-		Common::String					m_frameName;
+		String					m_frameName;
 
 	    GraphicsType					m_coordSystem;
 		bool							m_showFps;				///< Indicates whether the frames per second should be shown or not
 		bool							m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 
-} // namespace Graphics
+} // namespace Cing
 
 #endif // _GraphicsManager_H_

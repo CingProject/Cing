@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -29,21 +29,18 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "input/InputTypes.h"
 #include "input/Keyboard.h"
 
-#include "graphics/Color.h"
 #include "common/PerlinNoise.h"
-
-// Forward declarations
-namespace	Input
-{
-	class Mouse;
-}
 
 /**
  * @file
  * @brief This file contains the global variables that can be accessed by the user application
  */
-namespace Globals
+namespace Cing
 {
+
+// Forward declarations
+class Mouse;
+
 
 // Window
 extern unsigned short				width;					///< Window's width
@@ -56,31 +53,31 @@ extern String						cingDataFolder;		///< Cing data folder (required for the user
 
 
 // Input
-extern	char								key;						///< Key being currently pressed
-extern	Input::KeyCode			keyCode;				///< Key code being pressed (allow to detect also special keys such as the arrow or function keys)
-extern	int									mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
-extern	int									mouseX;					///< X coordinate of the mouse (in screen coordinates)
-extern	int									mouseY;					///< Y coordinate of the mouse (in screen coordinates)
-extern	Input::Mouse&				mouse;					///< System mouse
-extern	Input::Keyboard&		keyboard;				///< System keyboard
+extern	char						key;						///< Key being currently pressed
+extern	KeyCode						keyCode;				///< Key code being pressed (allow to detect also special keys such as the arrow or function keys)
+extern	int							mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
+extern	int							mouseX;					///< X coordinate of the mouse (in screen coordinates)
+extern	int							mouseY;					///< Y coordinate of the mouse (in screen coordinates)
+extern	Mouse&						mouse;					///< System mouse
+extern	Keyboard&					keyboard;				///< System keyboard
 
 // Time
-extern double								elapsedSec;			///< Elapsed time in seconds from previous to current frame
+extern double						elapsedSec;			///< Elapsed time in seconds from previous to current frame
 extern unsigned long				elapsedMillis;	///< Elapsed time in milliseconds from previous to current frame
 extern unsigned long				elapsedMicros;	///< Elapsed time in microseconds from previous to current frame
-extern double								secFromStart;		///< Seconds elapsed since application started
+extern double						secFromStart;		///< Seconds elapsed since application started
 extern unsigned long				millisFromStart;///< Milliseconds elapsed since application started
 
 // Frame count
-extern unsigned long  			frameCount;			///< Actual frameRate of app (aproximated)
-extern float								frameRate;
+extern unsigned long  				frameCount;			///< Actual frameRate of app (aproximated)
+extern float						frameRate;
 
 // Advanced 
-extern Ogre::SceneManager*	ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object
+extern Ogre::SceneManager*			ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object
 extern Ogre::Camera*				ogreCamera;				///< Ogre Camera used to render the scene
 
 // Pixel manipulation
-extern std::vector < Graphics::Color > pixels;
+extern std::vector < Color >		pixels;
 
 // Other
 extern PerlinNoise _noise;

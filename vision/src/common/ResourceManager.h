@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -19,27 +19,27 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _ResourceManager_h_
-#define _ResourceManager_h_
+#ifndef _CingResourceManager_h_
+#define _CingResourceManager_h_
 
 #include "CommonPrereqs.h"
 #include "Singleton.h"
 
 #include <string>
 
-namespace Common
+namespace Cing
 {
 
 /**
  * @internal
  * @brief Manages the resources of the library and the user
  */
-	class ResourceManager: public Common::SingletonStatic< ResourceManager >
+	class ResourceManager: public SingletonStatic< ResourceManager >
 {
 public:
 
 	// Singleton requirements
-	friend class Common::SingletonStatic< ResourceManager >;
+	friend class SingletonStatic< ResourceManager >;
 
 	// Constructor / Destructor
 	~ResourceManager();
@@ -76,6 +76,6 @@ private:
 
 };
 
-} // namespace Common
+} // namespace Cing
 
 #endif // _ResourceManager_h_

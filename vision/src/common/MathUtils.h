@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Ogre3d/include/OgreBitwise.h"
 
 #include <numeric>
+# include <cmath>
 
 // Undefine previous min/max definitions ( from other libs ) 
 #ifdef max
@@ -45,7 +46,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
  * This file contains several mathematical util functions
  */
 
-namespace Common
+namespace Cing
 {
 
 // Constants
@@ -92,8 +93,7 @@ T max( T value1, T value2 )
  * @return the absolute value of the received number
  */
 template< typename T >
-T abs ( T value ) {  return static_cast< T >( fabs( value ) );  }
-
+T abs ( T value ) {  return std::abs( value );  }
 
 /**
  * @brief Converts degrees into radians
@@ -324,7 +324,7 @@ inline float noise( float x )
  */
 inline float noise( float x, float y )
 {
-	return abs(Globals::_noise.get(x,y));
+	return abs(_noise.get(x,y));
 }
 
 /**
@@ -394,6 +394,6 @@ struct Average
 	size_t								index;
 };
 
-} // namespace Common
+} // namespace Cing
 
 #endif // _MathUtils_H_

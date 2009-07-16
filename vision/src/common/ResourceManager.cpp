@@ -1,8 +1,8 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Framework
 #include "framework/UserAppGlobals.h"
 
-namespace Common
+namespace Cing
 {
 
 	// Static const init
@@ -41,7 +41,7 @@ namespace Common
 	std::string ResourceManager::userResourcesDirName		= "../data/";
 	std::string ResourceManager::userResourcesGroupName		= "UserData";
 	std::string ResourceManager::pluginsPath				= "Plugins\\plugins.cfg";
-	std::string ResourceManager::libDataPath				= "../../../vision/data/";
+	std::string ResourceManager::libDataPath				= "../../../cing_bin/data/";
 	std::string ResourceManager::userDataPath				= "";
 	std::string ResourceManager::userExecPath				= "";
 
@@ -78,12 +78,10 @@ namespace Common
 		extractUserAppPath();
 
 		// Init Ogre Root
-		 std::cout << "---EclipseTest: Antes crear Ogre::Root\n";
 		new Ogre::Root( pluginsPath );
-		std::cout << "---EclipseTest: Despues crear Ogre::Root\n";
 
 		 // Store user data path in globals
-		Globals::dataFolder = userDataPath;
+		dataFolder = userDataPath;
 
 		// Load Cing Config file
 		XMLElement xml;
@@ -92,17 +90,15 @@ namespace Common
 		// Get cing data folder (the root is CingConfig)
 		if ( xml.isValid() )
 		{
-			XMLElement cingDataFolder = xml.getChild("Cing_Data_Folder");
-			Globals::cingDataFolder = cingDataFolder.getStringAttribute("relativePath");
+			XMLElement cingDataFolderXMLElement = xml.getChild("Cing_Data_Folder");
+			cingDataFolder = cingDataFolderXMLElement.getStringAttribute("relativePath");
 		}
 		else
-			LOG( "CingConfig.xml not found in data folder -> using default paths" );
+			LOG_ERROR( "CingConfig.xml not found in data folder -> using default paths" );
 
 		// Get Cing data path
-		if ( Globals::cingDataFolder != "" )
-			libDataPath = Globals::cingDataFolder;
-
-		std::cout << "---EclipseTest: Antes cargar resources.cfg file\n";
+		if ( cingDataFolder != "" )
+			libDataPath = cingDataFolder;
 
 		// Load resource paths from config file
 		Ogre::ConfigFile  cf;
@@ -131,8 +127,6 @@ namespace Common
 
 		// Add the resource location of the user data
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation( userDataPath, typeName, userResourcesGroupName, true );
-
-		std::cout << "---EclipseTest: Fin cargar recursos\n";
 
 		m_bIsValid = true;
 	}
@@ -194,4 +188,4 @@ namespace Common
 	}
 #endif
 
-} // namespace Common
+} // namespace Cing

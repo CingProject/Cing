@@ -19,7 +19,7 @@
 #include "Ogre3d/include/Ogre.h"
 #include "Ogre3d/include/OgreFontManager.h"
 
-namespace Graphics
+namespace Cing
 {
 long MovableText::count = 0;
 
@@ -92,7 +92,7 @@ void MovableText::end()
 		return;
 
 	if ( mRenderOp.vertexData )
-		Common::Release(mRenderOp.vertexData);
+		Release(mRenderOp.vertexData);
 
 	// May cause crashing... check this and comment if it does
 	if ( !mpMaterial.isNull() )

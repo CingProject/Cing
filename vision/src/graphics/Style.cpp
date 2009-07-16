@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
+  This source file is part of the Cing project
   For the latest info, see http://www.XXX.org
 
-  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+    Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 
 #include "Style.h"
 
-namespace Graphics
+namespace Cing
 {
 
 /**
@@ -61,4 +61,4 @@ Style::~Style()
   end();
 }
 
-} // namespace Graphics
+} // namespace Cing

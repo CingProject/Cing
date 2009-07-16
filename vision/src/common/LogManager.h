@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -32,17 +32,17 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 // Visual studio
 #if defined( _MSC_VER )
-	#define LOG(x, ...)			Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x, __VA_ARGS__ )	
-	#define LOG_ERROR(x, ...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_ERROR, x, __VA_ARGS__ )
+	#define LOG(x, ...)			LogManager::getSingleton().logMessage( LogManager::LOG_NORMAL, x, __VA_ARGS__ )	
+	#define LOG_ERROR(x, ...)	LogManager::getSingleton().logMessage( LogManager::LOG_ERROR, x, __VA_ARGS__ )
 
 // GNU
 #else
-	#define LOG(x, args...)			Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_NORMAL, x, ## args )
-	#define LOG_ERROR(x, args...)	Common::LogManager::getSingleton().logMessage( Common::LogManager::LOG_ERROR, x, ## args )
+	#define LOG(x, args...)			LogManager::getSingleton().logMessage( LogManager::LOG_NORMAL, x, ## args )
+	#define LOG_ERROR(x, args...)	LogManager::getSingleton().logMessage( LogManager::LOG_ERROR, x, ## args )
 #endif
 
 
-namespace Common
+namespace Cing
 {
 
 /**
@@ -51,7 +51,7 @@ namespace Common
  *
  * The whole application generates two log files
  * - Ogre.log: Contains the log information of the graphics engine
- * - Vision.log: Contains the log informatio of the rest of the subsystems
+ * - Cing.log: Contains the log informatio of the rest of the subsystems
  *
  * There are only two kind of log messages (for the sake of simplicity)
  * - LOG_NORMAL: Default log message. It usually means that there is some minor problem, but the application can continue.
@@ -62,8 +62,8 @@ namespace Common
  * - In release mode: Only Critical messages are reported to the log file, and to the debug output console.*
  * @code
  *	// Example use:
- * 	Common::LogManager::getSingleton().logMessage( "Normal log message" );
- *	Common::LogManager::getSingleton().logMessage( "Critical log message", Common::LogManager::LOG_ERROR );
+ * 	LogManager::getSingleton().logMessage( "Normal log message" );
+ *	LogManager::getSingleton().logMessage( "Critical log message", LogManager::LOG_ERROR );
  * @endcode
  */
 class LogManager: public SingletonStatic< LogManager >
@@ -115,6 +115,6 @@ private:
 
 };
 
-} // namespace Common
+} // namespace Cing
 
 #endif // _LogManager_h_

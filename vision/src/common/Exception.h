@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -25,10 +25,10 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include <string>
 
 // Macro to throw an an exception
-#define THROW_EXCEPTION(message) { throw Common::Exception(message, __FILE__, __LINE__); }
+#define THROW_EXCEPTION(message) { throw Exception(message, __FILE__, __LINE__); }
 
 
-namespace Common
+namespace Cing
 {
 
 /**
@@ -56,6 +56,6 @@ private:
     std::string m_message; ///< The exception's message.
 };
 
-} // namespace Common
+} // namespace Cing
 
 #endif // _Exception_H_

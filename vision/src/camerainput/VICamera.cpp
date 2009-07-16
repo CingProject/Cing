@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "VICamera.h"
 #include "common/CommonUtilsIncludes.h"
 
-namespace CameraInput
+namespace Cing
 {
 
 /**
@@ -54,14 +54,14 @@ VICamera::~VICamera()
  * @param[in] fps				frames per second to capture
  * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-void VICamera::init( int deviceId, int width, int height, int fps, Graphics::GraphicsType format, bool multithreaded /*= true*/ )
+void VICamera::init( int deviceId, int width, int height, int fps, GraphicsType format, bool multithreaded /*= true*/ )
 {
 	// List connected devices
 	int numDevices = videoInput::listDevices();	
 	LOG( "Num devs: %d", numDevices );
 
 	// uncomment for silent setup
-	//videoInput::setVerbose(false);
+	//videosetVerbose(false);
 
 	// multi threaded?
 	m_viCamera.setUseCallback( multithreaded );
@@ -94,7 +94,7 @@ void VICamera::update()
 		// Calculate the format
 		int npixels				= m_viCamera.getWidth( m_deviceId ) * m_viCamera.getHeight( m_deviceId );
 		size_t frameSize	= m_viCamera.getSize( m_deviceId );
-		Graphics::GraphicsType format = ( npixels == frameSize )? Graphics::GRAYSCALE: Graphics::RGB;
+		GraphicsType format = ( npixels == frameSize )? GRAYSCALE: RGB;
 
 		// we get the pixels by passing in out buffer which gets 
 		setNewFrameData(	(char*)m_viCamera.getPixels( m_deviceId, false, true ), 
@@ -116,4 +116,4 @@ void VICamera::end()
 	m_bIsValid = false;
 }
 
-} // namespace CameraInput
+} // namespace Cing

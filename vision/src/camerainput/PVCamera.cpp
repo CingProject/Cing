@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Exception.h"
 #include "common/Release.h"
 
-namespace CameraInput
+namespace Cing
 {
 
 void PVCamera::PVCaptureThread::execute()
@@ -87,7 +87,7 @@ PVCamera::~PVCamera()
  * @param[in] fps				frames per second to capture
  * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
  */
-void PVCamera::init( int deviceId, int width, int height, int fps, Graphics::GraphicsType format )
+void PVCamera::init( int deviceId, int width, int height, int fps, GraphicsType format )
 {
   // Check if the class is already initialized
   if ( isValid() )
@@ -106,7 +106,7 @@ void PVCamera::init( int deviceId, int width, int height, int fps, Graphics::Gra
   if(success) 
   {
 		// Init base class (with actual capture resolution)
-		BaseCameraInput::init( deviceId, m_pvCamera->getWidth(), m_pvCamera->getHeight(), m_pvCamera->getFps(), format );
+	  BaseCameraInput::init( deviceId, m_pvCamera->getWidth(), m_pvCamera->getHeight(), m_pvCamera->getFps(), format );
 
   } 
   // Init error
@@ -114,7 +114,7 @@ void PVCamera::init( int deviceId, int width, int height, int fps, Graphics::Gra
   {
     THROW_EXCEPTION( "Error initializing camera" );
     m_pvCamera->closeCamera();
-    Common::Release( m_pvCamera );
+    Release( m_pvCamera );
   }
 
   // Allocate buffers to store images
@@ -147,16 +147,16 @@ void PVCamera::end()
   m_captureThread->signal();  
 
   // Release resources
-  //Common::Release( sourceBuffer_ );
-  Common::Release( m_ringBuffer );
+  //Release( sourceBuffer_ );
+  Release( m_ringBuffer );
   m_pvCamera->closeCamera();
-  Common::Release( m_pvCamera );
+  Release( m_pvCamera );
 
   // Release parent class
   BaseCameraInput::end();
 
   // Delete thread
-  Common::Release( m_captureThread );
+  Release( m_captureThread );
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -186,4 +186,4 @@ void PVCamera::update()
   }
 }
 
-} // namespace CameraInput
+} // namespace Cing

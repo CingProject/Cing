@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/Release.h"
 #include "common/LogManager.h"
 
-namespace CameraInput
+namespace Cing
 {
 
 // Static member initialization
@@ -169,14 +169,14 @@ void OCVCamera::end()
   cvReleaseCapture( &m_capture );
 
   // Release thread
-  Common::Release( m_captureThread );
+  Release( m_captureThread );
 
   // Release image data
   cvReleaseImage( &m_cvResizedImage );
-  Common::Release( m_ogreImage );
+  Release( m_ogreImage );
 
   // Destroy quad mesh
-  Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
+  Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
   sceneManager.destroyManualObject( MANUAL_OBJECT_NAME );
 
 	// The class is not valid anymore
@@ -272,7 +272,7 @@ void OCVCamera::createMesh()
   material->getTechnique(0)->getPass(0)->createTextureUnitState( TEXTURE_NAME );
   material->getTechnique(0)->getPass(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
 
-  Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
+  Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
   Ogre::ManualObject* manual = sceneManager.createManualObject( MANUAL_OBJECT_NAME );
 
   // This would be to render in 2d (screen relative coords)
@@ -305,4 +305,4 @@ void OCVCamera::createMesh()
 	  LOG_ERROR( "OCVCamera::createMesh internal error: Could not create mesh");
 }
 
-} // namespace CameraInput
+} // namespace Cing

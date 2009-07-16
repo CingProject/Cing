@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Graphics
 #include "graphics/Object3D.h"
 
-namespace Physics
+namespace Cing
 {
 
 /**
@@ -36,7 +36,7 @@ namespace Physics
  * This physics object creates a triangle based physic mesh, so if the 3d object is a simple primitive
  * such as a box or a sphere, specialized classes should be used to get better performance (like PhysicsBox...)
  */
-class PhysicsObject: public Graphics::Object3D
+class PhysicsObject: public Object3D
 {
 public:
 
@@ -78,6 +78,6 @@ private:
 
 };
 
-} // namespace Physics
+} // namespace Cing
 
 #endif // _PhysicsObject_h_

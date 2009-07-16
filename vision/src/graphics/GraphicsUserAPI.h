@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 
 #include <sstream>
 
-namespace Graphics
+namespace Cing
 {
 
 /**
@@ -185,7 +185,7 @@ void scale		(	float x, float y, float z );
 void scale		(	float x, float y );
 
 //Save frames
-void save( const Common::String& name );
+void save( const String& name );
 //-----------------------------------------------------------------------------------
 // Typography
 //-----------------------------------------------------------------------------------
@@ -210,6 +210,6 @@ void textMode		(TextMode mode);
 void textSize		(float size);
 
 
-} // namespace Graphics
+} // namespace Cing
 
 #endif // _GraphicsUserAPI_h_

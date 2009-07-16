@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Ogre3d/include/OgreStringConverter.h"
 
 
-namespace Graphics
+namespace Cing
 {
 
 // Static member init
@@ -87,10 +87,10 @@ void Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
     return;
 
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+  Application::getSingleton().checkSubsystemsInit();
 
   // Create a node in the scene for the object
-  Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
+  Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
 	if ( parent )
 		m_sceneNode = parent->createChildSceneNode();
 	else
@@ -729,4 +729,4 @@ void Object3D::duplicateMaterial()
 	}
 }
 
-} // namespace Graphics
+} // namespace Cing

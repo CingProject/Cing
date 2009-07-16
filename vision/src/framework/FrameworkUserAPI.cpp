@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+    Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include "UserAppGlobals.h"
 #include "graphics/GraphicsManager.h"
 
-namespace Framework
+namespace Cing
 {
 
   /**
@@ -31,7 +31,7 @@ namespace Framework
    */
   void fullscreen()
   {
-    Graphics::GraphicsManager::getSingleton().fullscreen();
+    GraphicsManager::getSingleton().fullscreen();
   }
 
   /**
@@ -43,15 +43,11 @@ namespace Framework
    */
   void size( int width, int height, GraphicMode mode )
   {
-	  std::cout << "---EclipseTest: en setup antes de ->setup del graphics manager\n";
     // Set up window and render system configuration
-    Graphics::GraphicsManager::getSingleton().setup( width, height, mode );
+    GraphicsManager::getSingleton().setup( width, height, mode );
 
-    std::cout << "---EclipseTest: en setup antes de ->setup del graphics manager\n";
     // Init application subsystems (necessary for the user to load any graphic resource)
     Application::getSingleton().initSubSystems();
-
-    std::cout << "---EclipseTest: en setup despues de init subsystems\n";
   }
 
 
@@ -121,4 +117,4 @@ namespace Framework
 	}
 
 
-} // namespace Framework
+} // namespace Cing

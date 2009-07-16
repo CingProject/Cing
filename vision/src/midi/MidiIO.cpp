@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 */
 #include "MidiIO.h"
 
-namespace Midi
+namespace Cing
 {
 
 /**
@@ -127,7 +127,7 @@ void MidiIO::printInputDevices()
 	// Print Input Ports
 	std::string portName;
 	unsigned int nPorts = m_MidiIn->getPortCount();
-	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( "Input Ports:" );
+	GUIManagerCEGUI::getSingleton().getDebugOutput().print( "Input Ports:" );
 
 	for ( unsigned int i=0; i<nPorts; i++ ) {
 		try {
@@ -147,13 +147,13 @@ void MidiIO::printInputDevices()
 		// Convert to string
 		itoa(i,portNumber,10);
 
-		Common::print()
+		print()
 		// Print it to debug output
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( "  | Port" );
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
+		GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( "  | Port" );
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
 
 		*/
 		// Delete the buffer
@@ -174,7 +174,7 @@ void MidiIO::printOutputDevices()
 	// Input Ports
 	std::string portName;
 	unsigned int nPorts = m_MidiOut->getPortCount();
-	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( "Outut Ports:" );
+	GUIManagerCEGUI::getSingleton().getDebugOutput().print( "Outut Ports:" );
 
 	for ( unsigned int i=0; i<nPorts; i++ ) {
 		try {
@@ -184,7 +184,7 @@ void MidiIO::printOutputDevices()
 			error.printMessage();
 		}
 		// Print it to debug output
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
+		GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
 
 		char *portNumber;
 		// Create a new char array
@@ -195,10 +195,10 @@ void MidiIO::printOutputDevices()
 		// Convert to string
 		itoa(i,portNumber,10);
 
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( "  | Port" );
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( "  | Port" );
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
 		*/
 		// Delete the buffer
 		delete portNumber;
@@ -218,7 +218,7 @@ void MidiIO::printDevices()
 	// Input Ports
 	std::string portName;
 	unsigned int nPorts = m_MidiIn->getPortCount();
-	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( "Input Ports:" );
+	GUIManagerCEGUI::getSingleton().getDebugOutput().println( "Input Ports:" );
 
 	for ( unsigned int i=0; i<nPorts; i++ ) {
 		try {
@@ -228,7 +228,7 @@ void MidiIO::printDevices()
 			error.printMessage();
 		}
 		// Print it to debug output
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
+		GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
 
 		char *portNumber;
 		// Create a new char array
@@ -239,10 +239,10 @@ void MidiIO::printDevices()
 		// Convert to string
 		itoa(i,portNumber,10);
 
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( "\t\t  | Port" );
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( "\t\t  | Port" );
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
 		*/
 
 		// Delete the buffer
@@ -251,7 +251,7 @@ void MidiIO::printDevices()
 
 	// Output Ports
 	nPorts = m_MidiOut->getPortCount();
-	GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println( "Output Ports:" );
+	GUIManagerCEGUI::getSingleton().getDebugOutput().println( "Output Ports:" );
 
 	for ( unsigned int i=0; i<nPorts; i++ ) {
 		try {
@@ -261,7 +261,7 @@ void MidiIO::printDevices()
 			error.printMessage();
 		}
 		// Print it to debug output
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
+		GUIManagerCEGUI::getSingleton().getDebugOutput().println("");
 
 		char *portNumber;
 		// Create a new char array
@@ -272,10 +272,10 @@ void MidiIO::printDevices()
 		// Convert to string
 		itoa(i,portNumber,10);
 
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( "\t\t  | Port" );
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( portName.c_str() );
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( "\t\t  | Port" );
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( ":	");
+		GUIManagerCEGUI::getSingleton().getDebugOutput().print( portNumber);
 		*/
 		// Delete the buffer
 		delete portNumber;
@@ -335,13 +335,13 @@ void MidiIO::onMessage( double deltatime, std::vector< unsigned char > *message,
 
 		/*
 		sprintf(messageChunk, "Byte 0: %i ,", byte0);
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
+		GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
 
 		sprintf(messageChunk, "Byte 1: %i ,", byte1);
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
+		GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
 
 		sprintf(messageChunk, "Byte 2: %i ,", byte2);
-		GUI::GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
+		GUIManagerCEGUI::getSingleton().getDebugOutput().println(messageChunk);
 		*/
 	}
 	delete messageChunk;
@@ -354,4 +354,4 @@ void MidiIO::plug(  void (*callbackFunction)( double deltatime, std::vector< uns
 {
 	m_MidiIn->setCallback( callbackFunction );
 }
-} // namespace Midi
+} // namespace Cing

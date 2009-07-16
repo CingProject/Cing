@@ -1,8 +1,8 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "TextArea.h"
 #include "Font.h"
+#include "Color.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
-
 
 // OGRE
 #include "Ogre3d/include/OgreOverlayManager.h"
@@ -33,7 +33,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Ogre3d/include/OgreTextAreaOverlayElement.h"
 #include "Ogre3d/include/OgreFontManager.h"
 
-namespace Graphics
+namespace Cing
 {
 	long		TextArea::count=0;
 	String		TextArea::m_panelName = "";
@@ -107,7 +107,7 @@ namespace Graphics
 			m_panel = static_cast<Ogre::OverlayContainer*>(m_overlayManager->createOverlayElement("Panel","TEXT_PANEL"));
 			m_panel->setMetricsMode(Ogre::GMM_PIXELS);
 			m_panel->setPosition(0,0);
-			//m_panel->setDimensions(Globals::width, Globals::height);
+			//m_panel->setDimensions(width, height);
 			m_panel->setDimensions( 0.1, 0.1 );
 
 			// Create an overlay to display the panel
@@ -232,4 +232,4 @@ namespace Graphics
 		}
 	}
 
-} // namespace Graphics
+} // namespace Cing

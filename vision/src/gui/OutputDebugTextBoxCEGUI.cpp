@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Framework
 #include "framework/UserAppGlobals.h"
 
-namespace GUI
+namespace Cing
 {
 
 // Static members init
@@ -73,9 +73,9 @@ void OutputDebugTextBoxCEGUI::init()
 	// Create the listbox (will work as a text box)
 	m_listBox = static_cast<CEGUI::Listbox*>(win.createWindow("Vanilla/Listbox", "Vision/OutputDebugTextBoxCEGUI"));
 	m_listBox->setArea( CEGUI::URect(	cegui_absdim(0), 
-																		cegui_absdim(Globals::height-DEFAULT_TEXT_BOX_HIGHT), 
-																		cegui_absdim(Globals::width), 
-																		cegui_absdim(Globals::height)));
+																		cegui_absdim(height-DEFAULT_TEXT_BOX_HIGHT), 
+																		cegui_absdim(width), 
+																		cegui_absdim(height)));
 	m_listBox->setShowVertScrollbar( false );
 	m_listBox->setShowHorzScrollbar( false );
 	m_listBox->setAlpha( DEFAULT_TRANSPARENCY );
@@ -214,4 +214,4 @@ void OutputDebugTextBoxCEGUI::setAlpha( float alpha )
 	m_listBox->setAlpha( alpha );
 }
 
-} // namespace GUI
+} // namespace Cing

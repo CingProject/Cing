@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,19 +35,19 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Common
 #include "common/Singleton.h"
 
-namespace GUI
+namespace Cing
 {
 
 /**
  * @internal
  * GUI Manager based on CEGUI library
  */
-class GUIManagerCEGUI: public Common::SingletonStatic< GUIManagerCEGUI >, public OIS::MouseListener, public OIS::KeyListener
+class GUIManagerCEGUI: public SingletonStatic< GUIManagerCEGUI >, public OIS::MouseListener, public OIS::KeyListener
 {
 public:
 
 	// Required for singleton
-	friend class Common::SingletonStatic< GUIManagerCEGUI >;
+	friend class SingletonStatic< GUIManagerCEGUI >;
 
 	// Destructor
 	virtual ~GUIManagerCEGUI	();
@@ -96,6 +96,6 @@ private:
 
 };
 
-} // namespace GUI
+} // namespace Cing
 
 #endif // _GUIManagerCEGUI_H_

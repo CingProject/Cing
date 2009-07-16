@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "OgreBullet/Dynamics/include/OgreBulletDynamicsRigidBody.h"
 
 
-namespace Physics
+namespace Cing
 {
 
 // Static member init
@@ -106,7 +106,7 @@ void PhysicsManager::end()
 	// Release bullet related stuff
 	delete m_physicsWorld->getDebugDrawer();
     m_physicsWorld->setDebugDrawer(0);
-	Common::Release( m_physicsWorld );
+	Release( m_physicsWorld );
 
 	m_bIsValid = false;
 }
@@ -141,7 +141,7 @@ void PhysicsManager::drawPhysics( bool draw )
  *
  * @param object Object for which the shape will be created
  */
-OgreBulletCollisions::CollisionShape* PhysicsManager::buildTriMeshShape( Graphics::Object3D& object )
+OgreBulletCollisions::CollisionShape* PhysicsManager::buildTriMeshShape( Object3D& object )
 {
 	// Convert the triangle mesh of the object to a collision shape
 	OgreBulletCollisions::StaticMeshToShapeConverter *trimeshConverter	= new OgreBulletCollisions::StaticMeshToShapeConverter( object.getEntity() );
@@ -164,7 +164,7 @@ OgreBulletCollisions::CollisionShape* PhysicsManager::buildBoxShape( float width
 	// Obtain box correct size
 	Vector size ( width, heigh, depth );
 	size /= 2.0f; // bullet expects half box size
-	size /= Graphics::Object3D::OGRE_SCALE_CORRECTION; // To correct scale problems between ogre and maya exporter
+	size /= Object3D::OGRE_SCALE_CORRECTION; // To correct scale problems between ogre and maya exporter
 
 	// Create the shape
 	OgreBulletCollisions::BoxCollisionShape *boxShape = new OgreBulletCollisions::BoxCollisionShape( size );
@@ -213,7 +213,7 @@ OgreBulletCollisions::CollisionShape* PhysicsManager::buildStaticPlaneShape( flo
 OgreBulletCollisions::CollisionShape* PhysicsManager::buildSphereShape( float radius )
 {
 	// Create the sphere collision shape
-	float correctedRadius = radius / Graphics::Object3D::OGRE_SCALE_CORRECTION; // To correct scale problems between ogre and maya exporter
+	float correctedRadius = radius / Object3D::OGRE_SCALE_CORRECTION; // To correct scale problems between ogre and maya exporter
 	OgreBulletCollisions::SphereCollisionShape *sphereShape = new OgreBulletCollisions::SphereCollisionShape( correctedRadius );
 
 	return sphereShape;
@@ -227,7 +227,7 @@ OgreBulletCollisions::CollisionShape* PhysicsManager::buildSphereShape( float ra
  * @param		staticBody			If true, the rigid body created will be static. Therefore, it will affect collisions of other
  * physics objects, but it won't move.
  */
-OgreBulletDynamics::RigidBody* PhysicsManager::createRigidBody( Graphics::Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody )
+OgreBulletDynamics::RigidBody* PhysicsManager::createRigidBody( Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody )
 {
 	// Create the rigid body
 	m_rigidObjectCounter++;
@@ -261,4 +261,4 @@ OgreBulletDynamics::RigidBody* PhysicsManager::createRigidBody( Graphics::Object
 
 	return rigidBody;
 }
-} // namespace Physics
+} // namespace Cing

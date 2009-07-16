@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/ImageDifferenceFilter.h"
 #include "graphics/ImageThresholdFilter.h"
 
-namespace ComputerVision
+namespace Cing
 {
 
 /**
@@ -47,8 +47,8 @@ public:
 	void	end		();	
 
 	// Operations
-	void	update					( const Graphics::Image& imgToAnalyze, Graphics::Image& output );
-	void	storeBackground	( const Graphics::Image& backgroundImage );
+	void	update					( const Image& imgToAnalyze, Image& output );
+	void	storeBackground	( const Image& backgroundImage );
 
 	// Configuration
 	void  setThreshold		( int threshold ) { m_thresholdFilter.setThreshold( threshold ); }
@@ -68,10 +68,10 @@ private:
 	_IplImage*	m_backgroundImage;	///< Background.	Image that will be compared with the image received in the compute method
 
 	// Filters used
-	Graphics::ImageDifferenceFilter		m_differenceFilter;
-	Graphics::ImageThresholdFilter		m_thresholdFilter;
+	ImageDifferenceFilter		m_differenceFilter;
+	ImageThresholdFilter		m_thresholdFilter;
 };
 
-} // namespace ComputerVision
+} // namespace Cing
 
 #endif // _BackgroundSubtraction_h_

@@ -1,8 +1,8 @@
 /*
-	This source file is part of the Vision project
-	For the latest info, see http://www.playthemagic.com/vision
+	This source file is part of the Cing project
+	For the latest info, see http://www.cing.cc
 
-	Copyright (c) 2008 XXX
+	Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 // External Libs
 
 
-namespace Audio
+namespace Cing
 {
 
 /**
@@ -98,7 +98,7 @@ private:
 }; // class SoundFMOD
 
 
-} // namespace Audio
+} // namespace Cing
 
 
 #endif // _IL_SOUND_FMOD_H

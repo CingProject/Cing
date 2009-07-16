@@ -1,6 +1,6 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
 Copyright (c) 2008-2009 Julio Obelleiro and Jorge Cano
 
@@ -29,12 +29,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 // Graphics
 #include "graphics/Image.h"
-using namespace Graphics;
 
 // Extern libs
 #include "PTypes/include/pasync.h" // for portable mutex
 
-namespace Video
+namespace Cing
 {
 
 	/// Stores frames coming from VLC. The mutex is used to prevent multi threading issues

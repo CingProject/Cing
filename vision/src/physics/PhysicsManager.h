@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Common
 #include "common/Singleton.h"
 
-namespace Physics
+namespace Cing
 {
 
 // Types of Physics collision shapes
@@ -56,12 +56,12 @@ const float				FIXED_TIME_STEP						= 1.0f / 60.f;
  * @internal
  * @brief Manages all core code of the physics
  */
-class PhysicsManager: public Common::SingletonStatic< PhysicsManager >
+class PhysicsManager: public SingletonStatic< PhysicsManager >
 {
 public:
 
 	// Required for singleton
-	friend class Common::SingletonStatic< PhysicsManager >;
+	friend class SingletonStatic< PhysicsManager >;
 
 	// Destructor
 	virtual ~PhysicsManager();
@@ -72,13 +72,13 @@ public:
 	void	update	( unsigned long elapsedMillis );
 
 	// Collision shape construction
-	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Graphics::Object3D& object );
+	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Object3D& object );
 	OgreBulletCollisions::CollisionShape*		buildBoxShape					( float width, float heigh, float depth );
 	OgreBulletCollisions::CollisionShape*		buildStaticPlaneShape	( float width, float heigh );
 	OgreBulletCollisions::CollisionShape*		buildSphereShape			( float radius );
 
 	// Rigid bodies
-	OgreBulletDynamics::RigidBody*					createRigidBody				( Graphics::Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody );
+	OgreBulletDynamics::RigidBody*					createRigidBody				( Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody );
 
 	// Debug methods
 	void	drawPhysics( bool draw );
@@ -101,6 +101,6 @@ private:
 
 };
 
-} // namespace Physics
+} // namespace Cing
 
 #endif // _PhysicsManager_h_

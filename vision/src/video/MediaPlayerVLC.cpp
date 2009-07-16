@@ -1,6 +1,6 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
 Copyright (c) 2008-2009 Julio Obelleiro and Jorge Cano
 
@@ -31,7 +31,7 @@ Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 
-namespace Video
+namespace Cing
 {
 
 	// Static members
@@ -178,8 +178,8 @@ namespace Video
 		// It looks like a local path -> check if it exists
 		else
 		{		
-			m_filePath = Globals::dataFolder + fileName;
-			if ( !Common::fileExists( m_filePath ) )
+			m_filePath = dataFolder + fileName;
+			if ( !fileExists( m_filePath ) )
 			{
 				LOG_ERROR( "MediaPlayer: File %s not found in data folder.", fileName );
 				return;

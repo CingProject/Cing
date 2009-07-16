@@ -1,8 +1,8 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,10 +31,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Ogre3d/include/OgreLight.h"
 #include "Ogre3d/include/OgrePixelFormat.h"
 
-
-//#include "graphics/Color.h"
-
-namespace Graphics
+namespace Cing
 {
 
 	/// Image formats
@@ -113,6 +110,6 @@ namespace Graphics
 
 
 
-} // namespace Graphics
+} // namespace Cing
 
 #endif // _GraphicsTypes_H_

@@ -1,8 +1,8 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "ImageThresholdFilter.h"
 #include "ImageDifferenceFilter.h"
 
-namespace Graphics
+namespace Cing
 {
 
 	/**
@@ -84,7 +84,7 @@ namespace Graphics
 		void  ellipse		( float x, float y, float x2, float y2, float angle);
 		void  rect			( float x1, float y1, float x2, float y2 );
 		void  text			( float x1, float y1, const char* text );
-		void  fill          ( Graphics::Color theColor );
+		void  fill          ( Color theColor );
 
 		// Image processing
 		void	filter	( ImageProcessingFilters type );
@@ -144,6 +144,6 @@ namespace Graphics
 		bool					m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
 	};
 
-} // namespace Graphics
+} // namespace Cing
 
 #endif // _Image_H_

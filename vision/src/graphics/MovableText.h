@@ -19,7 +19,6 @@
 // common
 #include "common/eString.h"
 #include "common/CommonTypes.h"
-using namespace Common;
 
 // Ogre
 #include "Ogre3d/include/OgreFont.h"
@@ -41,7 +40,7 @@ using namespace Common;
 
 
 
-namespace Graphics
+namespace Cing
 {
 
 	class MovableText : public Ogre::MovableObject, public Ogre::Renderable

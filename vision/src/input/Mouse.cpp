@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // OIS
 #include "Ogre3d/include/ois/OISInputManager.h"
 
-namespace Input
+namespace Cing
 {
 
 /**
@@ -84,8 +84,8 @@ bool Mouse::init( OIS::InputManager* pOISInputManager )
       m_pOISMouse->setEventCallback( this );
 
       // Get window size
-      Graphics::Window::TWindowMetrics windowMetrics;
-      Graphics::GraphicsManager::getSingleton().getMainWindow().getMetrics( windowMetrics );
+      Window::TWindowMetrics windowMetrics;
+      GraphicsManager::getSingleton().getMainWindow().getMetrics( windowMetrics );
 
       // Set mouse window limits
       const OIS::MouseState &mouseState = m_pOISMouse->getMouseState();
@@ -211,4 +211,4 @@ bool Mouse::mouseReleased( const OIS::MouseEvent &event, OIS::MouseButtonID id )
 }
 
 
-} // namespace Input
+} // namespace Cing

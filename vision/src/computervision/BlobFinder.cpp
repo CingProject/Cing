@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "graphics/Image.h"
 #include "graphics/ImageResourceManager.h"
 
-namespace ComputerVision
+namespace Cing
 {
 
 // Static member init
@@ -96,7 +96,7 @@ void BlobFinder::end()
  * 
  * @param[in] inImage image where the blobs will be searched
  */
-void BlobFinder::update( const Graphics::Image& inImage )
+void BlobFinder::update( const Image& inImage )
 {
   // Check valid
   if ( !isValid() )
@@ -107,7 +107,7 @@ void BlobFinder::update( const Graphics::Image& inImage )
     THROW_EXCEPTION( "Trying to compute blobs on images with non supporte format -> only RGB or GRAYSCALE images supported" );
 
 	// Request temp image to work with
-	IplImage* cvTempImage = Graphics::ImageResourceManager::getSingleton().getImage( inImage.getWidth(), inImage.getHeight(), 1 );
+	IplImage* cvTempImage = ImageResourceManager::getSingleton().getImage( inImage.getWidth(), inImage.getHeight(), 1 );
 
 	// If they have different number of channels -> convert them
 	if ( inImage.getNChannels() == 3 )
@@ -138,7 +138,7 @@ void BlobFinder::update( const Graphics::Image& inImage )
   }
 
 	// Release temp image
-	Graphics::ImageResourceManager::getSingleton().releaseImage( cvTempImage );
+	ImageResourceManager::getSingleton().releaseImage( cvTempImage );
 
   // Extract information of found blobs
   extractBlobsInformation();
@@ -200,4 +200,4 @@ void BlobFinder::extractBlobsInformation()
 	m_nBlobs = min( (int)m_blobs.size(), (int)m_maxBlobs );
 }
 
-} // namespace ComputerVision
+} // namespace Cing

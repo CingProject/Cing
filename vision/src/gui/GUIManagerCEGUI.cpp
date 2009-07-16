@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "Ogre3d/include/cegui/elements/CEGUIListbox.h"
 
 
-namespace GUI
+namespace Cing
 {
 
 /**
@@ -73,29 +73,18 @@ GUIManagerCEGUI::~GUIManagerCEGUI()
 void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* ogreSceneManager )
 {
 	// Init CEGUI
-	std::cout << "---EclipseTest: creating OgreCEGUIRenderer\n";
 	m_CEGUIRenderer = new CEGUI::OgreCEGUIRenderer( ogreWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, ogreSceneManager );
-
-	std::cout << "---EclipseTest: creating CEGUI::System\n";
-
 	m_CEGUISystem = new CEGUI::System( m_CEGUIRenderer );
-
-	std::cout << "---EclipseTest: adding listeners de gui manager\n";
-
 
 	// Register this class as OIS input listener to receive mouse notifications
 	// TODO: register also as keyBoardListener
-	Input::InputManager::getSingleton().getMouse().addListener( this );
-	Input::InputManager::getSingleton().getKeyboard().addListener( this );
-
-	std::cout << "---EclipseTest: loading skins\n";
+	InputManager::getSingleton().getMouse().addListener( this );
+	InputManager::getSingleton().getKeyboard().addListener( this );
 
 	// Select available skin sets
 	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"WindowsLook.scheme");
 	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"VanillaSkin.scheme");
 	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
-
-	std::cout << "---EclipseTest: creating font Iconified-12.font\n";
 
 	// Set mouse cursor and font
 	//m_CEGUISystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
@@ -105,7 +94,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Create default sheet to place GUI elements
 	CEGUI::WindowManager&	win = CEGUI::WindowManager::getSingleton();
 	m_mainSheet = win.createWindow( "DefaultGUISheet", "Vision/DefaultGUISheet");
-	m_mainSheet->setSize( CEGUI::UVector2(CEGUI::UDim(0, Globals::width), CEGUI::UDim(0, Globals::height) ) );
+	m_mainSheet->setSize( CEGUI::UVector2(CEGUI::UDim(0, width), CEGUI::UDim(0, height) ) );
 	m_CEGUISystem->setGUISheet( m_mainSheet );
 
 	// Now the gui managet is valid
@@ -114,7 +103,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Create the default message box
 	m_messageBoxWindow = (CEGUI::FrameWindow*)win.createWindow( "WindowsLook/StaticText", "MessageBox" );
 	m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(0) ) );
-	m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width), cegui_absdim(Globals::height) ) );
+	m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(width), cegui_absdim(height) ) );
 	m_messageBoxWindow->setProperty("VertFormatting", "TopAligned");
 	m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
 	m_messageBoxWindow->setProperty("TextColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF");
@@ -139,8 +128,8 @@ void GUIManagerCEGUI::end()
 {
 	m_debugOutput.end();
 	//CEGUI::WindowManager::getSingleton().destroyAllWindows();
-	Common::Release( m_CEGUISystem );
-	Common::Release( m_CEGUIRenderer );
+	Release( m_CEGUISystem );
+	Release( m_CEGUIRenderer );
 	m_bIsValid = false;
 }
 
@@ -258,14 +247,14 @@ void GUIManagerCEGUI::messageBox( const char* text, bool fullScreen /*= false*/ 
 			m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
 			int margin = 20;
 			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(margin), cegui_absdim(margin) ) );
-			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width-margin*2), cegui_absdim(Globals::height-margin*2) ) );
+			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(width-margin*2), cegui_absdim(height-margin*2) ) );
 		}
 		else
 		{
 			m_messageBoxWindow->setProperty("VertFormatting", "VertCentred");
 			m_messageBoxWindow->setProperty("HorzFormatting", "HorzCentred");
-			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(Globals::height/2) ) );
-			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(Globals::width), cegui_absdim(50) ) );
+			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(height/2) ) );
+			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(width), cegui_absdim(50) ) );
 		}
 		m_messageBoxWindow->setText( text );
 		m_messageBoxWindow->setVisible( true );
@@ -315,4 +304,4 @@ CEGUI::MouseButton GUIManagerCEGUI::convertOISButtonToCEGUI( OIS::MouseButtonID 
 	}
 }
 
-} // namespace gui
+} // namespace Cing

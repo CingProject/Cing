@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/MathUtils.h"
 #include "common/LogManager.h"
 
-namespace Graphics
+namespace Cing
 {
 
 // Static member initialization
@@ -98,7 +98,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
     return true;
 
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+  Application::getSingleton().checkSubsystemsInit();
 
 	// Get power of 2 texture size
 	m_textWidthP2 = firstPO2From( textureWidth );
@@ -156,7 +156,7 @@ bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType forma
   */
 
   // Create the manual object (is used to define geometry on the fly)
-  Ogre::SceneManager& sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManager();
+  Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
 	m_quad = sceneManager.createManualObject( m_ogreManualObjectName );
 
   // Generate the geometry of the quad
@@ -218,7 +218,7 @@ void TexturedQuad::end()
     return;
 
   // Destroy quad quad object
-  Ogre::SceneManager* sceneManager = Graphics::GraphicsManager::getSingleton().getSceneManagerPtr();
+  Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
 	if ( sceneManager )
 	{
 		// Destroy the manual object
@@ -270,8 +270,8 @@ void TexturedQuad::setPosition2d( float x, float y )
 
 	// Simulate upper left corner to be 0,0 (although in ogre the 0,0 is the lower left corner
 	// That is why the y screen coordinate is inverted
-	m_2dXPos = (x / (float)Globals::width) * 2.0f - 1;
-	m_2dYPos = -((y / (float)Globals::height) * 2.0f - 1);
+	m_2dXPos = (x / (float)width) * 2.0f - 1;
+	m_2dYPos = -((y / (float)height) * 2.0f - 1);
 	m_quadSceneNode->setPosition( m_2dXPos, m_2dYPos - m_2dHeight, 0 );
 }
 
@@ -296,8 +296,8 @@ void TexturedQuad::setScale( float xScale, float yScale, float zScale /*= 1.0f*/
  */
 void TexturedQuad::setScale2d( float xScale, float yScale )
 {
-	m_2dWidth = (xScale / (float)Globals::width) * 2.0f;
-	m_2dHeight = (yScale / (float)Globals::height) * 2.0f;
+	m_2dWidth = (xScale / (float)width) * 2.0f;
+	m_2dHeight = (yScale / (float)height) * 2.0f;
 	m_quadSceneNode->setScale( m_2dWidth, m_2dHeight, 1 );
 }
 
@@ -401,10 +401,10 @@ void TexturedQuad::draw( float x1, float y1, float z1,
 	// Coordinate systems
 	if ( GraphicsManager::getSingleton().isProcessingMode() )
 	{
-		y1 = Globals::height - y1;
-		y2 = Globals::height - y2;
-		y3 = Globals::height - y3;
-		y4 = Globals::height - y4;
+		y1 = height - y1;
+		y2 = height - y2;
+		y3 = height - y3;
+		y4 = height - y4;
 	}
 	// m_quad positions and texture coordinates
 	// TODO revisar esto...por qué hay q voltear las coordenadas uv?
@@ -446,11 +446,11 @@ void TexturedQuad::drawBackground( float x, float y )
 	{
 		// Set properties of the quad, and set visible -> it will be rendered in the next render
 		setScale2d( m_textWidth, -m_textHeight );
-		setPosition2d( x, Globals::height-y );
+		setPosition2d( x, height-y );
 	}else{
 		// Set properties of the quad, and set visible -> it will be rendered in the next render
 		setScale2d( m_textWidth, m_textHeight );
-		setPosition2d( x, Globals::height-y );
+		setPosition2d( x, height-y );
 	}
 
 	m_quadSceneNode->setVisible( true );
@@ -481,11 +481,11 @@ void TexturedQuad::draw2d( float x, float y, float width, float height )
 	{
 		// Set properties of the quad, and set visible -> it will be rendered in the next render
 		setScale2d( width, -height );
-		setPosition2d( x, Globals::height-y );
+		setPosition2d( x, height-y );
 	}else{
 		// Set properties of the quad, and set visible -> it will be rendered in the next render
 		setScale2d( width, height );
-		setPosition2d( x, Globals::height-y );
+		setPosition2d( x, height-y );
 	}
 	m_quadSceneNode->setVisible( true );
 }
@@ -523,11 +523,11 @@ void TexturedQuad::drawBackground( float x, float y, float width, float height )
 	{
 		// Set properties of the quad, and set visible -> it will be rendered in the next render
 		setScale2d( m_textWidth, -m_textHeight );
-		setPosition2d( x, Globals::height-y );
+		setPosition2d( x, height-y );
 	}else{
 		// Set properties of the quad, and set visible -> it will be rendered in the next render
 		setScale2d( m_textWidth, m_textHeight );
-		setPosition2d( x, Globals::height-y );
+		setPosition2d( x, height-y );
 	}
 
 	m_quadSceneNode->setVisible( true );
@@ -712,4 +712,4 @@ void TexturedQuad::set3dRendering()
 }
 
 
-} // namespace Graphics
+} // namespace Cing

@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
+  This source file is part of the Cing project
   For the latest info, see http://www.XXX.org
 
-  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+    Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 #include "Color.h"
 #include "Style.h"
 
-namespace Graphics
+namespace Cing
 {
 
 /**
@@ -39,8 +39,8 @@ public:
 
 	// Constructor / Destructor
 	 Shape();
-	 Shape( Graphics::GraphicsType renderOp );
-	 Shape( Style style, Graphics::GraphicsType renderOp );
+	 Shape( GraphicsType renderOp );
+	 Shape( Style style, GraphicsType renderOp );
 
 	~Shape();
 
@@ -60,7 +60,7 @@ public:
 
 	//
 	Style														m_style;				///< Style to draw the shape
-	Graphics::GraphicsType					m_renderOp;			///< POINTS, LINES, ...
+	GraphicsType					m_renderOp;			///< POINTS, LINES, ...
 	std::vector <Ogre::Vector3>			m_vertexData;
 	std::vector <Ogre::ColourValue> m_vertexColors;
 
@@ -76,6 +76,6 @@ private:
 	bool													  m_bIsValid;	    ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 };
 
-} // namespace Graphics
+} // namespace Cing
 
 #endif // _Shape_H_

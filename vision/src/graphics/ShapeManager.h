@@ -1,8 +1,8 @@
 /*
-This source file is part of the Vision project
+This source file is part of the Cing project
 For the latest info, see http://www.XXX.org
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,18 +31,18 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Style.h"
 #include "Shape.h"
 
-namespace Graphics
+namespace Cing
 {
 
 	/**
 	* @internal
 	* 
 	*/
-	class ShapeManager: public Common::SingletonStatic< ShapeManager >
+	class ShapeManager: public SingletonStatic< ShapeManager >
 	{
 	public:
 		// Required for singleton
-		friend class Common::SingletonStatic< ShapeManager >;
+		friend class SingletonStatic< ShapeManager >;
 
 		// Constructor / Destructor
 		ShapeManager								();
@@ -68,14 +68,14 @@ namespace Graphics
 
 	private:
 
-		Graphics::Shape						m_lines;				///< It contains all line data, including borders of shapes
-		std::vector <Graphics::Shape>		m_shapes;				///< It contains all shape data ( it will be filled polygons later... )
+		Shape						m_lines;				///< It contains all line data, including borders of shapes
+		std::vector <Shape>		m_shapes;				///< It contains all shape data ( it will be filled polygons later... )
 		Ogre::ManualObject*					m_shapesManualObject;	///< The shapes and lines are drawn using the same Ogre::ManualObject
 		Ogre::SceneNode*					m_shapesSceneNode;		///< The ManualOnject is attached to this Ogre::SceneNode
 		bool								m_isShapeClosed;		///< Temp
 		bool								m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 	};
 
-} // namespace Graphics
+} // namespace Cing
 
 #endif // _ShapeManager_H_

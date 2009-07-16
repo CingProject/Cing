@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "computerVision/BlobFinder.h"
 #include "computerVision/Blob.h"
 
-namespace ComputerVision
+namespace Cing
 {
 
 /**
@@ -49,7 +49,7 @@ public:
 	// Init / Release
 	void          end           ();
 	// Blob related methods
-	void          update				( const Graphics::Image& inImage );
+	void          update				( const Image& inImage );
 
 	// TODO check n valid
 	TrackedBlob&	getTrackedBlobN      ( int n )  { return m_trackedBlobs[n]; }
@@ -70,6 +70,6 @@ private:
 
 };
 
-} // namespace ComputerVision
+} // namespace Cing
 
 #endif // _BlobTracker_H_

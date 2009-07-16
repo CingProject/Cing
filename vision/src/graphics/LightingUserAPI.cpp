@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 // Framework
 #include "framework/Application.h"
 
-namespace Graphics
+namespace Cing
 {
 
 /**
@@ -39,7 +39,7 @@ namespace Graphics
 void ambientLight( float gray )
 {
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+  Application::getSingleton().checkSubsystemsInit();
 
 	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(gray , gray , gray).normalized() );
 }
@@ -54,9 +54,9 @@ void ambientLight( float gray )
 void ambientLight( float red, float green, float blue )
 {
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+  Application::getSingleton().checkSubsystemsInit();
 
 	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(red , green , blue).normalized() );
 }
 
-} // namespace Graphics
+} // namespace Cing

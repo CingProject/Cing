@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ Copyright (c) 2008 Julio Obelleiro and Jorge Cano
 #include "common/MathUtils.h"
 #include "common/CommonUserApi.h"
 
-namespace Graphics
+namespace Cing
 {
 
 /**
@@ -205,4 +205,4 @@ void Transform::applyMatrix( float m00, float m01, float m02, float m03,
 																			m20, m21, m22, m23,
 																			m30, m31, m32, m33);
 };
-} // namespace Graphics
+} // namespace Cing

@@ -1,8 +1,8 @@
 /*
-  This source file is part of the Vision project
-  For the latest info, see http://www.playthemagic.com/vision
+  This source file is part of the Cing project
+  For the latest info, see http://www.cing.cc
 
-  Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+    Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 #include <sstream>
 
 
-namespace Common
+namespace Cing
 {
 
 /**
@@ -93,7 +93,7 @@ void XMLElement::load( const std::string& xmlFileName )
     end();
 
   // Load the xml file
-  m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( Globals::dataFolder + xmlFileName.c_str() ) );
+  m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( dataFolder + xmlFileName.c_str() ) );
 	m_xmlDoc->LoadFile();
 
 	// Error loading file?
@@ -349,4 +349,4 @@ String XMLElement::getName()
   return m_rootElem->Value();
 }
 
-} // namespace Common
+} // namespace Cing

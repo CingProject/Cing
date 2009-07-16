@@ -1,8 +1,8 @@
 /*
-This source file is part of the Vision project
-For the latest info, see http://www.playthemagic.com/vision
+This source file is part of the Cing project
+For the latest info, see http://www.cing.cc
 
-Copyright (c) 2008 Julio Obelleiro and Jorge Cano
+  Copyright (c) 2006-2009 Julio Obelleiro and Jorge Cano
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Collada
 #include "OgreCollada/include/OgreCollada.h"
 
-namespace Graphics
+namespace Cing
 {
 
 	/**
@@ -122,7 +122,7 @@ bool GraphicsManager::init()
 	setup( m_defaultWindowWidth, m_defaultWindowHeight );
 
 	// Init rendering engine and create main window
-	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Vision Library Demo" );
+	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Cing" );
 	if ( !ogreWindow )
 		THROW_EXCEPTION( "Error creating application window" );
 
@@ -130,17 +130,17 @@ bool GraphicsManager::init()
 	m_mainWindow.init( ogreWindow );
 
 	// Set global window size variables
-	Globals::width = m_mainWindow.getWidth();
-	Globals::height = m_mainWindow.getHeight();
+	width = m_mainWindow.getWidth();
+	height = m_mainWindow.getHeight();
 
 	// Create the scene manager
 	m_pSceneManager = ogreRoot.createSceneManager( Ogre::ST_GENERIC );
 
 	// Set the global pointer to the scene manager
-	Globals::ogreSceneManager	= m_pSceneManager;
+	ogreSceneManager	= m_pSceneManager;
 
 	// PreInit GUI Manager (QuickGUI requirements)
-	//GUI::GUIManager::getSingleton().preInit();
+	//GUIManager::getSingleton().preInit();
 
 	// Initialize graphics resources, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
@@ -159,7 +159,7 @@ bool GraphicsManager::init()
 	m_activeCamera.init( m_pSceneManager );
 
 	// Set the global pointer to the camera
-	Globals::ogreCamera	= m_activeCamera.getOgreCamera();
+	ogreCamera	= m_activeCamera.getOgreCamera();
 
 	// Make the camera render in the main window
 	m_mainWindow.attachCameraToWindow( m_activeCamera );
@@ -178,10 +178,10 @@ bool GraphicsManager::init()
 	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
 
 	// Init GUI Manager
-	//GUI::GUIManager::getSingleton().init();
+	//GUIManager::getSingleton().init();
 
 	// Init 2dCanvas
-	m_canvas = new Image(Globals::width, Globals::height, RGB);
+	m_canvas = new Image(width, height, RGB);
 
 	// Init style queue
 	m_styles.push_front( Style(Color(255,255,255), Color(0,0,0), 1) );
@@ -189,9 +189,9 @@ bool GraphicsManager::init()
 	// Init transform stack
 	m_transforms.push( Transform() );
 
-	// Init Globals::pixels
+	// Init pixels
 	for (int i = 0; i < m_canvas->getWidth() * m_canvas->getHeight(); i++)
-		Globals::pixels.push_back( Color( 200, 200, 200 ) );
+		pixels.push_back( Color( 200, 200, 200 ) );
 
 	// Set image background color
 	m_canvas->fill(Color(200));
@@ -204,7 +204,7 @@ bool GraphicsManager::init()
 	vp->setOverlaysEnabled(true);
 
 	// Init the default font / text
-	//m_systemFont.init( Globals::width, Globals::height);
+	//m_systemFont.init( width, height);
 	//m_systemFont.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
 	//m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
 
@@ -212,7 +212,7 @@ bool GraphicsManager::init()
 	m_coordSystem = NORMAL;
 
 	// This is to adjust 2d and 3d coordinates like in Processing:
-	applyCoordinateSystemTransform(Graphics::PROCESSING);
+	applyCoordinateSystemTransform(PROCESSING);
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -232,7 +232,7 @@ void GraphicsManager::end()
 		return;
 
 	// Release GUI Manager
-	//GUI::GUIManager::getSingleton().end();
+	//GUIManager::getSingleton().end();
 
 	// Release camera stuff
 	m_defaultCamController.end();
@@ -291,7 +291,7 @@ void GraphicsManager::draw()
 	// Get Frame stats
 	const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
 
-	Globals::frameRate = frameStats.avgFPS;
+	frameRate = frameStats.avgFPS;
 
 	// Show fps
 	if ( m_showFps )
@@ -309,7 +309,7 @@ void GraphicsManager::draw()
 	if ( m_saveFrame )
 	{
 		m_RttTexture->getBuffer()->getRenderTarget()->update();
-		m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(Common::ResourceManager::userDataPath + m_frameName );
+		m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(ResourceManager::userDataPath + m_frameName );
 		m_saveFrame = false;
 	}
 
@@ -492,7 +492,7 @@ bool GraphicsManager::hasBumpMappingSupport() const
 void GraphicsManager::setRenderMode( RenderMode mode )
 {
 	// Check application correctly initialized (could not be if the user didn't call size function)
-	Framework::Application::getSingleton().checkSubsystemsInit();
+	Application::getSingleton().checkSubsystemsInit();
 
 	m_activeCamera.getOgreCamera()->setPolygonMode( (Ogre::PolygonMode) mode );
 }
@@ -505,7 +505,7 @@ void GraphicsManager::setRenderMode( RenderMode mode )
 void GraphicsManager::setFillColor( const Color& color )
 {
 	// Check application correctly initialized (could not be if the user didn't call size function)
-	Framework::Application::getSingleton().checkSubsystemsInit();
+	Application::getSingleton().checkSubsystemsInit();
 
 	m_styles.front().m_fillColor = color;
 
@@ -524,7 +524,7 @@ void GraphicsManager::setFillColor( const Color& color )
 void GraphicsManager::setStrokeColor( const Color& color )
 {
 	// Check application correctly initialized (could not be if the user didn't call size function)
-	Framework::Application::getSingleton().checkSubsystemsInit();
+	Application::getSingleton().checkSubsystemsInit();
 
 	m_styles.front().m_strokeColor = color;
 
@@ -539,7 +539,7 @@ void GraphicsManager::setStrokeColor( const Color& color )
 void GraphicsManager::setStrokeWeight( int weight )
 {
 	// Check application correctly initialized (could not be if the user didn't call size function)
-	Framework::Application::getSingleton().checkSubsystemsInit();
+	Application::getSingleton().checkSubsystemsInit();
 
 	m_styles.front().m_strokeWeight = weight;
 }
@@ -573,7 +573,7 @@ void GraphicsManager::showFps( bool show )
 void GraphicsManager::useDefault3DCameraControl( bool useDefault )
 {
 	// Check application correctly initialized (could not be if the user didn't call size function)
-	Framework::Application::getSingleton().checkSubsystemsInit();
+	Application::getSingleton().checkSubsystemsInit();
 
 	// Enable controller
 	if ( useDefault )
@@ -640,7 +640,7 @@ void GraphicsManager::setEllipseMode( int	mode )
 void GraphicsManager::setBackgroundColor( const Color& color )
 {
 	// Check application correctly initialized (could not be if the user didn't call size function)
-	Framework::Application::getSingleton().checkSubsystemsInit();
+	Application::getSingleton().checkSubsystemsInit();
 
 	if ( !isValid() )
 		return;
@@ -675,13 +675,13 @@ void GraphicsManager::applyCoordinateSystemTransform( GraphicsType coordSystem )
 	case PROCESSING:
 		{
 			// Calculate new camera position 
-			float cameraDistance    =  (Globals::height / 2.0f ) / tanf( (m_activeCamera.getOgreCamera()->getFOVy().valueRadians()) / 2.0f );
+			float cameraDistance    =  (height / 2.0f ) / tanf( (m_activeCamera.getOgreCamera()->getFOVy().valueRadians()) / 2.0f );
 
-			Ogre::Vector3 camPos = Ogre::Vector3( Globals::width/2.0, Globals::height/2.0, cameraDistance );
+			Ogre::Vector3 camPos = Ogre::Vector3( width/2.0, height/2.0, cameraDistance );
 			// Set the camera position
 
 			m_activeCamera.getSceneNode()->setPosition( camPos );
-			m_activeCamera.getSceneNode()->lookAt( Ogre::Vector3(Globals::width/2.0, Globals::height/2.0, 0), Ogre::Node::TS_WORLD );
+			m_activeCamera.getSceneNode()->lookAt( Ogre::Vector3(width/2.0, height/2.0, 0), Ogre::Node::TS_WORLD );
 
 			// Apply simmetry to y-world axis
 			m_pSceneManager->getRootSceneNode()->setScale(1,-1,1);
@@ -693,4 +693,4 @@ void GraphicsManager::applyCoordinateSystemTransform( GraphicsType coordSystem )
 
 }
 
-} // namespace Graphics
+} // namespace Cing
