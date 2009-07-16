@@ -9,7 +9,7 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		Optimization="0"
-		AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\libraries\win\visualStudio2008\OpenCV\cxcore\include;..\..\vision\libraries\win\visualStudio2008\LibVLC\include;..\..\vision\libraries\win\visualStudio2008"
+		AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\cxcore\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008"
 		PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 		RuntimeLibrary="3"
 		WarningLevel="3"
@@ -18,12 +18,12 @@
 	<Tool
 		Name="VCLinkerTool"
 		AdditionalDependencies="OgreMain_d.lib OIS_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libconvexdecomposition_d.lib videoInput.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib OgreCollada_d.lib LibXML_d.lib FCollada_d.lib libvlc.dll.a libvlccore.dll.a tinyxml_STL_d.lib"
-		AdditionalLibraryDirectories="..\..\vision\libraries\win\visualStudio2008\BetaCairo\lib;..\..\vision\libraries\win\visualStudio2008\Bullet\lib;..\..\vision\libraries\win\visualStudio2008\cairo\lib;..\..\vision\libraries\win\visualStudio2008\Fmod\lib;..\..\vision\libraries\win\visualStudio2008\Ogre3d\lib;..\..\vision\libraries\win\visualStudio2008\OgreBullet\lib;..\..\vision\libraries\win\visualStudio2008\OpenCV\lib;..\..\vision\libraries\win\visualStudio2008\PortVideo\lib;..\..\vision\libraries\win\visualStudio2008\PTypes\lib;..\..\vision\libraries\win\visualStudio2008\RtMidi\lib;..\..\vision\libraries\win\visualStudio2008\VideoInput\lib;..\..\vision\libraries\win\visualStudio2008\OgreCollada\lib;..\..\vision\libraries\win\visualStudio2008\LibVLC\lib;..\..\vision\libraries\win\visualStudio2008\TinyXML\lib"
+		AdditionalLibraryDirectories="..\..\cing\libraries\win\visualStudio2008\BetaCairo\lib;..\..\cing\libraries\win\visualStudio2008\Bullet\lib;..\..\cing\libraries\win\visualStudio2008\cairo\lib;..\..\cing\libraries\win\visualStudio2008\Fmod\lib;..\..\cing\libraries\win\visualStudio2008\Ogre3d\lib;..\..\cing\libraries\win\visualStudio2008\OgreBullet\lib;..\..\cing\libraries\win\visualStudio2008\OpenCV\lib;..\..\cing\libraries\win\visualStudio2008\PortVideo\lib;..\..\cing\libraries\win\visualStudio2008\PTypes\lib;..\..\cing\libraries\win\visualStudio2008\RtMidi\lib;..\..\cing\libraries\win\visualStudio2008\VideoInput\lib;..\..\cing\libraries\win\visualStudio2008\OgreCollada\lib;..\..\cing\libraries\win\visualStudio2008\LibVLC\lib;..\..\cing\libraries\win\visualStudio2008\TinyXML\lib"
 		IgnoreDefaultLibraryNames="atlthunk;libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib;"
 		GenerateDebugInformation="true"
 	/>
 	<Tool
 		Name="VCPostBuildEventTool"
-		CommandLine="xcopy &quot;$(SolutionDir)vision\bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
+		CommandLine="xcopy &quot;$(SolutionDir)cing\bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
 	/>
 </VisualStudioPropertySheet>

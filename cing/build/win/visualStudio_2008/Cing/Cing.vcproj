@@ -168,7 +168,7 @@
 				Name="Scripts"
 				>
 				<File
-					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Basic_Vision.material"
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Basic_Cing.material"
 					>
 				</File>
 				<File

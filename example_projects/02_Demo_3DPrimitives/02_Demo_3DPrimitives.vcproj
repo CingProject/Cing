@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\..\vision\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Debug.vsprops"
+			InheritedPropertySheets="..\..\cing\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Debug.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -87,7 +87,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\..\vision\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Release.vsprops"
+			InheritedPropertySheets="..\..\cing\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Release.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>

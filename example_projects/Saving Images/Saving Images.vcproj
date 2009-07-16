@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\..\vision\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Debug.vsprops"
+			InheritedPropertySheets="..\..\cing\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Debug.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -84,7 +84,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\..\vision\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Release.vsprops"
+			InheritedPropertySheets="..\..\cing\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Release.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -105,7 +105,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\vision\src\;..\..\vision\;..\..\vision\externLibs\OpenCV\cxcore\include;..\..\vision\externLibs\LibVLC\include"
+				AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\externLibs\OpenCV\cxcore\include;..\..\cing\externLibs\LibVLC\include"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
@@ -122,7 +122,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="OgreMain.lib OIS.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libconvexdecomposition.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib tinyxml_STL.lib OgreCollada.lib FCollada.lib LibXML.lib libvlc.dll.a libvlccore.dll.a"
-				AdditionalLibraryDirectories="..\..\vision\externLibs\BetaCairo\lib;..\..\vision\externLibs\Bullet\lib;..\..\vision\externLibs\cairo\lib;..\..\vision\externLibs\Fmod\lib;..\..\vision\externLibs\Ogre3d\lib;..\..\vision\externLibs\OgreBullet\lib;..\..\vision\externLibs\OpenCV\lib;..\..\vision\externLibs\PortVideo\lib;..\..\vision\externLibs\PTypes\lib;..\..\vision\externLibs\RtMidi\lib;..\..\vision\externLibs\VideoInput\lib;..\..\vision\externLibs\OgreCollada\lib;..\..\vision\externLibs\LibVLC\lib;..\..\vision\externLibs\TinyXML\lib"
+				AdditionalLibraryDirectories="..\..\cing\externLibs\BetaCairo\lib;..\..\cing\externLibs\Bullet\lib;..\..\cing\externLibs\cairo\lib;..\..\cing\externLibs\Fmod\lib;..\..\cing\externLibs\Ogre3d\lib;..\..\cing\externLibs\OgreBullet\lib;..\..\cing\externLibs\OpenCV\lib;..\..\cing\externLibs\PortVideo\lib;..\..\cing\externLibs\PTypes\lib;..\..\cing\externLibs\RtMidi\lib;..\..\cing\externLibs\VideoInput\lib;..\..\cing\externLibs\OgreCollada\lib;..\..\cing\externLibs\LibVLC\lib;..\..\cing\externLibs\TinyXML\lib"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				RandomizedBaseAddress="1"
