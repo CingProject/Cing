@@ -1,6 +1,6 @@
-#include "Vision.h"
+#include "Cing.h"
 
-CREATE_APPLICATION( "Vision Demo" );
+CREATE_APPLICATION( "Cing" );
 
 float increment = 0.02;
 

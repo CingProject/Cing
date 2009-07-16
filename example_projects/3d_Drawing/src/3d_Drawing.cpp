@@ -1,6 +1,6 @@
-#include "Vision.h"
+#include "Cing.h"
 
-CREATE_APPLICATION( "Vision Demo" );
+CREATE_APPLICATION( "Cing" );
 
 void setup()
 {
@@ -30,7 +30,7 @@ void draw()
 	vertex(10, 110);
 	endShape(CLOSE);
 
-	beginShape(Graphics::POINTS);
+	beginShape(POINTS);
 	vertex(130, 10);
 	vertex(230, 10);
 	vertex(230, 110);

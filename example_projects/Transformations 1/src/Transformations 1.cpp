@@ -1,6 +1,6 @@
-#include "Vision.h"
+#include "Cing.h"
 
-CREATE_APPLICATION( "Vision Demo" );
+CREATE_APPLICATION( "Cing" );
 /*
 // Angle variable
 float angle = 0;

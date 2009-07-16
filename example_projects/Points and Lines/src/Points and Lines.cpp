@@ -4,9 +4,9 @@
 // Changing the value of the variable 'd' scales the image.
 // The four variables set the positions based on the value of 'd'.
 
-#include "Vision.h"
+#include "Cing.h"
 
-CREATE_APPLICATION( "Vision Demo" );
+CREATE_APPLICATION( "Cing" );
 
 void setup()
 {

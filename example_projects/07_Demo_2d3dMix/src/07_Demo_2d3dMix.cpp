@@ -1,5 +1,5 @@
-#include "Vision.h"
-CREATE_APPLICATION( "Vision Demo" );
+#include "Cing.h"
+CREATE_APPLICATION( "Cing" );
 
 /*
  * This example shows of is possible to mix 2d and 3d rendering in the same scene

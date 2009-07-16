@@ -1,6 +1,6 @@
-#include "Vision.h"
+#include "Cing.h"
 
-CREATE_APPLICATION( "Vision Demo" );
+CREATE_APPLICATION( "Cing" );
 
 
 // The following short XML file called "xmlFileTest.xml" is parsed 
@@ -8,7 +8,7 @@ CREATE_APPLICATION( "Vision Demo" );
 // <?xml version="1.0"?>
 // <xmlTest>
 //  <websites>
-//    <site id="0" url="www.playthemagic.com/vision">Vision</site>
+//    <site id="0" url="cing.cc">Cing</site>
 //    <site id="1" url="processing.org">Processing</site>
 //    <site id="2" url="mobile.processing.org">Processing Mobile</site>
 //    </websites>

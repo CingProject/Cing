@@ -2,7 +2,7 @@
 // It draws a line from the center of the screen to the mouse.
 // Press the mouse to clear the background.
 
-#include "Vision.h"
+#include "Cing.h"
 
 CREATE_APPLICATION( "Cing Demo" );
 

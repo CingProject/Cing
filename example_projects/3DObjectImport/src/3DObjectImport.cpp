@@ -1,6 +1,6 @@
 // An intermediate example to show some short of communication between OGRE and Cing
 // It loads a Collada scene and show how to play 3D animations.
-#include "Vision.h"
+#include "Cing.h"
 
 // OGRE and Collada includes
 #include "Ogre3d/include/OgreAnimation.h"  
@@ -10,7 +10,7 @@
 // Collada includes
 #include "OgreCollada/include/OgreCollada.h"
 
-CREATE_APPLICATION( "Vision Demo" );
+CREATE_APPLICATION( "Cing" );
 
 // Animation time control
 float	currentTime				= 0.0f;
@@ -43,7 +43,7 @@ public:
 };
 ColladaListener* colladaListener = NULL;
 // Loads a Collada file
-bool loadCollada( const Common::String& fileName )
+bool loadCollada( const String& fileName )
 {
 	println("Loading collada scene: " );	println( fileName.c_str() );
 
@@ -57,7 +57,7 @@ bool loadCollada( const Common::String& fileName )
 	pImporterExporter->setResourceNotificationListener( (OgreCollada::IResourceNotification*)colladaListener );
 
 	// Import collada file and check result
-	bool success = pImporterExporter->importCollada( Globals::dataFolder + fileName, "Collada." );
+	bool success = pImporterExporter->importCollada( dataFolder + fileName, "Collada." );
 	if ( !success )
 		println( "Error loading %s. It should be in the data folder", fileName.c_str() );
 
@@ -86,7 +86,7 @@ void updateAnimations()
 			track->getAssociatedNode()->resetToInitialState();
 		}
 		// finally, play animation
-		currentTime += Globals::elapsedSec/4.0;
+		currentTime += elapsedSec/4.0;
 		animation->apply( currentTime );
 	}
 }

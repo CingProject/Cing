@@ -1,5 +1,5 @@
-#include "Vision.h"
-CREATE_APPLICATION( "Vision Demo" );
+#include "Cing.h"
+CREATE_APPLICATION( "Cing" );
 
 /*
  * This example shows how to load a 3d model of a head and make it look at the user (using blob detection)

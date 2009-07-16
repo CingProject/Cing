@@ -1,4 +1,4 @@
-#include "Vision.h"
+#include "Cing.h"
 
 /*
  * This example shows of create 3d primitives with physics properties
@@ -16,7 +16,7 @@
  *	- w,a,s,d,q,e,r and arrows: control the 3d camera
  */
 
-CREATE_APPLICATION( "Vision Demo" );
+CREATE_APPLICATION( "Cing" );
 
 // Number of spheres and boxes that are going to be created
 #define MAX_ELEMENTS 300

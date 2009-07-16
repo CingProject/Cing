@@ -1,5 +1,5 @@
-#include "Vision.h"
-CREATE_APPLICATION( "Vision Demo" );
+#include "Cing.h"
+CREATE_APPLICATION( "Cing" );
 
 /*
  * This example shows of to load and play a sound.

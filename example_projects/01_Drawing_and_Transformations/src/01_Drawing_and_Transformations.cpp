@@ -1,4 +1,4 @@
-#include "Vision.h"
+#include "Cing.h"
 
 CREATE_APPLICATION( "Cing Demo" );
 
@@ -24,7 +24,7 @@ void setup()
 void draw()
 {
 	// Blend the background of screen with our backgroundImage
-    //Graphics::GraphicsManager::getSingleton().m_canvas->blend( backgroundImage, 4);
+    //GraphicsManager::getSingleton().m_canvas->blend( backgroundImage, 4);
 
 	// Instead of above code, you can use:  (without the smooth transition)
 	 background ( Color(255) );

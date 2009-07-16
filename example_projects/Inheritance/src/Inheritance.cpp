@@ -1,6 +1,6 @@
-#include "Vision.h"
+#include "Cing.h"
 #include "Ogre3d/include/OgreMatrix4.h"
-CREATE_APPLICATION( "Vision Demo" );
+CREATE_APPLICATION( "Cing" );
 
 
 

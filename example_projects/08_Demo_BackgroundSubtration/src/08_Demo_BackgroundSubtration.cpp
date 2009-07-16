@@ -1,5 +1,5 @@
-#include "Vision.h"
-CREATE_APPLICATION( "Vision Demo" );
+#include "Cing.h"
+CREATE_APPLICATION( "Cing" );
 
 /*
  * This example shows the computer vision technique background subtraction working.
