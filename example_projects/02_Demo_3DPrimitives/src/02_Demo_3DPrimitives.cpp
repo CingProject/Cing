@@ -1,7 +1,7 @@
 #include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
-/*
+/*   
  * This example shows of create 3d primitives and basic lighting
  * It applies a texture (from an image file) to the 3d primitives
  * Keys 
@@ -10,12 +10,12 @@ CREATE_APPLICATION( "Cing" );
  * Mouse
  *	- move mouse to rotate the camera
  */
-
+                     
 // 3d primitives
-Sphere			sphere;					// Sphere 3d primitive
-Box					box;						// Box (cube) 3d primitive
+Sphere			    sphere;					// Sphere 3d primitive
+Box					box;					// Box (cube) 3d primitive
 Plane				plane;					// Plane 3d primitive
-PointLight	light;					// Lights in the scene
+PointLight	light;					        // Lights in the scene
 
 float				timeVar = 0;
 

@@ -23,11 +23,11 @@ void setup()
 
 void draw()
 {
-	// Blend the background of screen with our backgroundImage
-    //GraphicsManager::getSingleton().m_canvas->blend( backgroundImage, 4);
+	// Blend the background with our backgroundImage
+    GraphicsManager::getSingleton().m_canvas->blend( backgroundImage, 4 );
 
-	// Instead of above code, you can use:  (without the smooth transition)
-	 background ( Color(255) );
+	// Instead of above code use:  (without the smooth transition)
+	//background ( Color(255) );
 	
 	// Apply transforms before the draw calls
 	translate (width/2,height/2);

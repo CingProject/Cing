@@ -1,22 +1,23 @@
 #include "Cing.h"
-CREATE_APPLICATION( "Cing" );
+CREATE_APPLICATION( "Cing Demo" );
 
 /*
  * This example shows of to load and draw an image where the mouse is located
  */
- 
-Image		img; // image to load from disk and draw
+
+Image myImage;
 
 void setup()
 {
-  size( 800, 600 );
-	img.load( "BeachStones.jpg" );
+	size(1024, 768);
+	// Load the image from disk
+	myImage.load("MissAmericaRedBlue.jpg");
 }
 
-void draw()	
+void draw()
 {
-	// Draw the image in 2d where the mouse is
-	img.draw( mouseX, mouseY, 0, 100, 100 );
+    // Draw the image in 2d where the mouse is
+	myImage.draw(mouseX,mouseY,0);
 }
 
 void end()

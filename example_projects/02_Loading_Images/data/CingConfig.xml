@@ -2,5 +2,5 @@
 
 <CingConfig>
   <Cing_Data_Folder   relativePath="../../../cing_bin/data/" />
-  <VLC_Plugins_Folder relativePath_Debug="..\\..\\..\\cing_bin\\VLC\\PluginsVLC" relativePath_Release="..\\..\\..\\cing_bin\\VLC\\PluginsVLC" />
+  <VLC_Plugins_Folder relativePath_Debug="..\\..\\..\\cing_bin\\VLC\\PluginsVLC_Debug" relativePath_Release="..\\..\\..\\cing_bin\\VLC\\PluginsVLC_Release" />
 </CingConfig>

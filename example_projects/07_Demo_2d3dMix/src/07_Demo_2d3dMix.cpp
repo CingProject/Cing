@@ -9,8 +9,8 @@ CREATE_APPLICATION( "Cing" );
  *	- move mouse to rotate the camera
  */
 
-Image				img;		// image to load from disk and draw
-Sphere			sphere;	// Sphere 3d primitive
+Image		img;	// image to load from disk and draw
+Sphere		sphere;	// Sphere 3d primitive
 PointLight	light;	// light to light up the sphere
 
 void setup()
