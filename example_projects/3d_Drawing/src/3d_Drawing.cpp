@@ -30,7 +30,7 @@ void draw()
 	vertex(10, 110);
 	endShape(CLOSE);
 
-	beginShape(POINTS);
+	beginShape(Cing::POINTS);
 	vertex(130, 10);
 	vertex(230, 10);
 	vertex(230, 110);

@@ -62,7 +62,7 @@ namespace Cing
 		Application::getSingleton().exit();
 	}
 
-  /**
+    /**
 	 * @internal
 	 * @brief Force the application to stop running for a specified time in milliseconds
 	 *

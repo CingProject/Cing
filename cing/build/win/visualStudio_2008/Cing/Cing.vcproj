@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
-	Name="Cing"
+	Version="9,00"
+	Name="_Cing"
 	ProjectGUID="{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 	RootNamespace="Cing"
 	Keyword="Win32Proj"

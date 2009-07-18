@@ -22,7 +22,7 @@ material EmptyMaterialNoCulling
    {
       pass
       {
-				cull_hardware none
+			cull_hardware none
       }   
    }
 }
@@ -34,9 +34,9 @@ material VertexColorMaterial
     {
         pass
         {
-         		cull_hardware none
-        		scene_blend alpha_blend
-        		lighting off
+         	cull_hardware none
+        	scene_blend alpha_blend
+        	lighting off
             ambient  vertexcolour
             diffuse  vertexcolour
             emissive vertexcolour

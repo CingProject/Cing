@@ -5,7 +5,7 @@ CREATE_APPLICATION( "Cing" );
 
 void setup()
 {
-	//size(200, 200);
+	size(200, 200);
 	background(0);
 
 	for(int i=10; i<width; i+=10) {
