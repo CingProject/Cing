@@ -12,7 +12,7 @@ void setup()
 	int timey = 0;
 	int num = 12;
 
-	//size(200, 200);
+	size(200, 200);
 	background(102);
 	noStroke();
 

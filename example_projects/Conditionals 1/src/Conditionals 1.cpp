@@ -1,7 +1,5 @@
 #include "Cing.h"
-
 CREATE_APPLICATION( "Cing" );
-
 
 void setup()
 {
@@ -19,7 +17,6 @@ void setup()
 			line(i, 20, i, 180); 
 		}
 	}
-
 }
 
 void draw()

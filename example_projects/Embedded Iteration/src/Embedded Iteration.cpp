@@ -9,7 +9,7 @@ void setup()
 	float box_space = 12; 
 	int margin = 7; 
 
-	//size(200, 200); 
+	size(200, 200); 
 	background(0); 
 	noStroke(); 
 
