@@ -87,6 +87,8 @@ namespace Cing
 		bool							getAlwaysFaceCamera		() const	{ return mAlwaysFaceCamera; }
 		AABox							getAABB					()			{ return mAABB; }
 		Ogre::Node*						getNode					()			{ return mParentNode; }
+		const Vector&					getScale				() const	{ return mScale; }				
+
 		bool							isVisible				() const	{ return MovableObject::isVisible(); }
 
 		// Helpers

@@ -171,8 +171,8 @@ bool GraphicsManager::init()
 	// TODO
 	//m_debugOverlay.init();
 
-	// Use default camera controller
-	useDefault3DCameraControl( true );
+	// Not Use default camera controller (the user would need to activate it)
+	useDefault3DCameraControl( false );
 
 	// Init the cvFont
 	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);

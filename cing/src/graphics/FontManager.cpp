@@ -125,7 +125,6 @@ namespace Cing
 		}
 
 		// Add a new font (to be rendered later)
-		//m_activeFontsToRender.push_back( TextArea() );
 		MovableText* newText = getNewText();
 
 		// Set properties for the new text
@@ -145,28 +144,25 @@ namespace Cing
 		newText->setAlwaysFaceCamera( false );
 		newText->show();
 
-		// Text transformation properties
+		// Get global transformation
 		Transform &t = GraphicsManager::getSingleton().m_transforms.top();
-		newText->setGlobalTranslation(  t.getPosition() );
-		newText->setRotation( t.getRotQuaternion() );
-		newText->setScale( t.getScale() );
 
-		// Set text area local transformation (transformation passed to the text function)
-		newText->setGlobalTranslation( Vector( m_activeFontProperties.x, m_activeFontProperties.y, m_activeFontProperties.z ) );
+		// Font Position
+		Vector fontPos( m_activeFontProperties.x, m_activeFontProperties.y, m_activeFontProperties.z );
 
 		// Control current coordinate system
 		if ( GraphicsManager::getSingleton().isProcessingMode() )
 		{
-			newText->getParentNode()->setPosition( 0, height, 0 );
-			newText->getParentNode()->setScale( width, -height, 1 );
+			newText->getParentNode()->setPosition( t.getPosition() + fontPos );	
+			newText->getParentNode()->setScale( t.getScale() * Vector( 1, -1, 1 ) );
+			newText->getParentNode()->setOrientation( t.getRotQuaternion().Inverse() );
 		}
 		else
 		{
-			newText->getParentNode()->setPosition( 0, 0, 0 );
-			newText->getParentNode()->setScale( width, height, 1 );
+			newText->getParentNode()->setPosition( t.getPosition() + fontPos );	
+			newText->getParentNode()->setScale( 1, 1, 1 );
+			newText->getParentNode()->setOrientation( t.getRotQuaternion() );
 		}
-
-	
 
 		// Setup text geometry for render
 		newText->_setupGeometry();

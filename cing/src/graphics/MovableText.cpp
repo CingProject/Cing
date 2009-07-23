@@ -116,6 +116,7 @@ void MovableText::setFontName( const String &fontName )
 	mpMaterial = mpFont->getMaterial();
 	mpMaterial->setDepthCheckEnabled(false);
 	mpMaterial->setLightingEnabled(false);
+	mpMaterial->setCullingMode( Ogre::CULL_NONE );
 	mNeedUpdate = true;
 }
 
@@ -455,8 +456,9 @@ void MovableText::_setupGeometry()
 	//	this->_updateColors();
 
 	// update AABB/Sphere radius (for ogre movable object)
-	mAABB = AABox(m_min, m_max);
-	mRadius = Ogre::Math::Sqrt(m_maxSquaredRadius);
+	// Note: for some strange reason texts must be scale by 2 to have the correct pixel size
+	mAABB = AABox(m_min/2, m_max/2);
+	mRadius = Ogre::Math::Sqrt(m_maxSquaredRadius / 2);
 
 	// update done
 	mNeedUpdate = false;
@@ -536,10 +538,11 @@ void MovableText::getWorldTransforms( Matrix4 *xform ) const
 		mParentNode->_getDerivedOrientation().ToRotationMatrix(rot3x3);
 
 		// TEMP hasta que se ajuste sistema de coordenadas global!!!
-		mpCam->getDerivedOrientation().ToRotationMatrix(rot3x3);
+		//mpCam->getDerivedOrientation().ToRotationMatrix(rot3x3);
 
 		// parent node position
-		Vector ppos = mParentNode->_getDerivedPosition() + mGlobalTranslation;
+		Vector parentPos = mParentNode->_getDerivedPosition();
+		Vector ppos =  parentPos + mGlobalTranslation;
 		ppos += rot3x3 * mLocalTranslation;
 
 		// apply all transforms (scale + translation)to xform
@@ -727,11 +730,11 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 
 	// Deal with bounds (for Ogre Movable Object BBox and Radius)
 	if ( mHorizontalAlignment == LEFT )
-		currPos = Vector(left, top, -1.0);
+		currPos = Vector(0, top, -1.0);
 	else if ( mHorizontalAlignment == CENTER )
-		currPos = Vector(lineLength - (lineLength / 2), top, -1.0);
+		currPos = Vector((lineLength / 2), top, -1.0);
 	else
-		currPos = Vector(left - lineLength, top, -1.0);
+		currPos = Vector(-lineLength, top, -1.0);
 
 	// First triangle -> init the vars to calculate the bbox
 	if ( m_maxSquaredRadius < 0 )
@@ -759,11 +762,11 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 
 	// Deal with bounds (for Ogre Movable Object BBox and Radius)
 	if ( mHorizontalAlignment == LEFT )
-		currPos = Vector(left, top, -1.0);
+		currPos = Vector(0, top, -1.0);
 	else if ( mHorizontalAlignment == CENTER )
-		currPos = Vector(left - (lineLength / 2), top, -1.0);
+		currPos = Vector((lineLength / 2), top, -1.0);
 	else
-		currPos = Vector(left - lineLength, top, -1.0);
+		currPos = Vector(-lineLength, top, -1.0);
 
 	m_min.makeFloor(currPos);
 	m_max.makeCeil(currPos);
@@ -781,11 +784,11 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 
 	// Deal with bounds
 	if ( mHorizontalAlignment == LEFT )
-		currPos = Vector(left, top, -1.0);
+		currPos = Vector(0, top, -1.0);
 	else if ( mHorizontalAlignment == CENTER )
-		currPos = Vector(left - (lineLength / 2), top, -1.0);
+		currPos = Vector((lineLength / 2), top, -1.0);
 	else
-		currPos = Vector(left - lineLength, top, -1.0);
+		currPos = Vector(-lineLength, top, -1.0);
 
 	m_min.makeFloor(currPos);
 	m_max.makeCeil(currPos);
