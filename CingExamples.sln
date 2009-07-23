@@ -63,16 +63,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_Physics", "example
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_MidiInput", "example_projects\Advanced_MidiInput\Advanced_MidiInput.vcproj", "{F33A0865-9BEC-494B-827A-89538F4F211C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_Interactive3dObject", "example_projects\Advanced_Interactive3dObject\Advanced_Interactive3dObject.vcproj", "{CA80063E-0530-43FB-9BC3-DDEE2D00FA2C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -139,14 +129,6 @@ Global
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Debug|Win32.Build.0 = Debug|Win32
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Release|Win32.ActiveCfg = Release|Win32
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Release|Win32.Build.0 = Release|Win32
-		{F33A0865-9BEC-494B-827A-89538F4F211C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F33A0865-9BEC-494B-827A-89538F4F211C}.Debug|Win32.Build.0 = Debug|Win32
-		{F33A0865-9BEC-494B-827A-89538F4F211C}.Release|Win32.ActiveCfg = Release|Win32
-		{F33A0865-9BEC-494B-827A-89538F4F211C}.Release|Win32.Build.0 = Release|Win32
-		{CA80063E-0530-43FB-9BC3-DDEE2D00FA2C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{CA80063E-0530-43FB-9BC3-DDEE2D00FA2C}.Debug|Win32.Build.0 = Debug|Win32
-		{CA80063E-0530-43FB-9BC3-DDEE2D00FA2C}.Release|Win32.ActiveCfg = Release|Win32
-		{CA80063E-0530-43FB-9BC3-DDEE2D00FA2C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
