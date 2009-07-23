@@ -2,7 +2,6 @@
 
 CREATE_APPLICATION( "Cing" );
 
-
 void setup()
 {
 	float box_size = 11; 
@@ -14,7 +13,6 @@ void setup()
 	noStroke(); 
 
 	// Draw gray boxes 
-
 	for (int i = margin; i < height-margin; i += box_space){
 		if(box_size > 0){
 			for(int j = margin; j < width-margin; j+= box_space){
