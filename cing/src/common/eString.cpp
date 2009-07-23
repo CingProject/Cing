@@ -25,6 +25,18 @@
 namespace Cing
 {
 
+/// String utils
+
+/// Converts an int to string
+std::string intToString(int inputNumber)
+{
+	std::stringstream s;
+	s << inputNumber;
+	return s.str();
+}
+
+
+
 /**
  * @brief Returns the character located at a specific position within the string
  * @param index Index of the caracter to retrieve

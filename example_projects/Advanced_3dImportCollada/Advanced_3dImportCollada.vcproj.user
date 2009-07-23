@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioUserFile
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	ShowAllFiles="false"
 	>
 	<Configurations>
@@ -10,19 +10,19 @@
 			>
 			<DebugSettings
 				Command="$(TargetPath)"
-				WorkingDirectory=""
+				WorkingDirectory="$(OutDir)"
 				CommandArguments=""
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"
-				RemoteMachine="MOTOGRAFICA"
+				RemoteMachine="JULIOWIN"
 				RemoteCommand=""
 				HttpUrl=""
 				PDBPath=""
 				SQLDebugging=""
 				Environment=""
 				EnvironmentMerge="true"
-				DebuggerFlavor=""
+				DebuggerFlavor="0"
 				MPIRunCommand=""
 				MPIRunArguments=""
 				MPIRunWorkingDirectory=""
@@ -38,19 +38,19 @@
 			>
 			<DebugSettings
 				Command="$(TargetPath)"
-				WorkingDirectory=""
+				WorkingDirectory="$(OutDir)"
 				CommandArguments=""
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"
-				RemoteMachine="MOTOGRAFICA"
+				RemoteMachine="JULIOWIN"
 				RemoteCommand=""
 				HttpUrl=""
 				PDBPath=""
 				SQLDebugging=""
 				Environment=""
 				EnvironmentMerge="true"
-				DebuggerFlavor=""
+				DebuggerFlavor="0"
 				MPIRunCommand=""
 				MPIRunArguments=""
 				MPIRunWorkingDirectory=""

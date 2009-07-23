@@ -25,6 +25,7 @@
 #include "Image.h"
 #include "Framework/UserAppGlobals.h"
 #include "common/CommonConstants.h"
+#include "common/LogManager.h"
 #include "graphics/FontProperties.h"
 #include "graphics/FontManager.h"
 
@@ -948,6 +949,13 @@ void save( const String& name )
  */
 void text( const String& text, float x, float y )
 {
+	// Check empty text
+	if ( text == "" )
+	{
+		LOG_ERROR( "Trying to pring empty text" );
+		return;
+	}
+
 	// Set the font properties
 	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
 	currentFontProperties.text				= text;

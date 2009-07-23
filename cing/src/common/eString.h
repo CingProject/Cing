@@ -39,6 +39,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 namespace Cing
 {
+	/// String utils
+	std::string intToString(int inputNumber);
+
 
 	/**
 	* @internal
@@ -68,18 +71,6 @@ namespace Cing
 		// Modify string
 		void toLowerCases	();
 		void toUpperCases	();
-
-		// Static Members
-		static std::string intToString(int inputNumber)
-		{
-
-			std::stringstream s;
-			s << inputNumber;
-			return s.str();
-
-			//Ogre::StringConverter::toString( inputNumber );
-		}
-
 	};
 
 } // namespace Cing

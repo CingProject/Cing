@@ -32,8 +32,11 @@
 
 // Visual studio
 #if defined( _MSC_VER )
-	#define LOG(x, ...)			LogManager::getSingleton().logMessage( LogManager::LOG_NORMAL, x, __VA_ARGS__ )	
-	#define LOG_ERROR(x, ...)	LogManager::getSingleton().logMessage( LogManager::LOG_ERROR, x, __VA_ARGS__ )
+	#define LOG(x, ...)					LogManager::getSingleton().logMessage( LogManager::LOG_NORMAL, x, __VA_ARGS__ )	
+	#define LOG_ERROR(x, ...)			LogManager::getSingleton().logMessage( LogManager::LOG_ERROR, x, __VA_ARGS__ )
+	#define LOG_ERROR_NTIMES(n, x, ...)	static int count = 0; \
+										if ( ++count <= n )	  \
+											LogManager::getSingleton().logMessage( LogManager::LOG_ERROR, x, __VA_ARGS__ )
 
 // GNU
 #else

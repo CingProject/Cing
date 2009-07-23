@@ -343,7 +343,7 @@ void TexturedQuad::draw( float x, float y, float z, float width, float height )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to draw a textured quad not initialized" );
+		LOG_ERROR_NTIMES( 1, "Trying to draw a textured quad not initialized" );
 		return;
 	}
 

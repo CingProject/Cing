@@ -135,7 +135,7 @@ namespace Cing
 			}
 		}
 
-		LOG( "xml cargado: %s", m_pluginsPath.toChar() );
+		LOG( "VLC plugins path: %s", m_pluginsPath.toChar() );
 
 		// VLC config values (for more info check: http://wiki.videolan.org/VLC_command-line_help)
 		char const *vlc_argv[] =
@@ -143,22 +143,23 @@ namespace Cing
 			"--verbose", "0",
 			"--plugin-path", m_pluginsPath.toChar(),
 			"--ignore-config", //Don't use VLC's config files 
+			"--no-video-title-show",
+			"--disable-screensaver",
 			"--no-osd"
 		};
 		int vlc_argc = sizeof(vlc_argv) / sizeof(*vlc_argv);
 
-		LOG( "Init VLC" );
-
 		// Init VLC Exception handling
 		libvlc_exception_init(&m_vlcException);
-
-		LOG( "Init VLC Done" );
-
 
 		// Init VLC
 		m_libvlc = libvlc_new(vlc_argc, vlc_argv, &m_vlcException);
 
-		LOG( "New VLC Done" );
+		// TODO: need to know when plugins are loaded
+		pt::psleep( 100 );
+		
+
+		LOG( "MediaPlayer Initialized correcly" );
 
 		checkVLCException();
 	}

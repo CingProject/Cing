@@ -103,7 +103,7 @@ void PhysicsBox::enablePhysics( bool staticObject )
 {
 	if ( m_physicsEnabled )
 	{
-		LOG( "Trying to enable physics on a box that has physics already enabled" );
+		LOG_ERROR_NTIMES( 1, "Trying to enable physics on a box that has physics already enabled" );
 		return;
 	}
 

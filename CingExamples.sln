@@ -13,6 +13,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_DrawingAndTransforma
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_LoadingAndDrawingInImages", "example_projects\Simple_LoadingAndDrawingInImages\Simple_LoadingAndDrawingInImages.vcproj", "{29079109-39EF-41B5-861D-692F2EF554C6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_Fonts", "example_projects\Simple_Fonts\Simple_Fonts.vcproj", "{13AD480A-0D51-4B65-995C-24D44AB61FB4}"
 	ProjectSection(ProjectDependencies) = postProject

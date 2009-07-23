@@ -120,7 +120,7 @@ namespace Cing
 		// Check the manager is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "text error: FontManager not properly initialized. The init method has not been called or there no active font" );
+			LOG_ERROR( "text error: FontManager not properly initialized. The init method has not been called or there are no active font" );
 			return;
 		}
 

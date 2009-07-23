@@ -35,7 +35,7 @@ MovableText::MovableText() :
 {
 
 	// Create unique name
-	mName = "MovableText_" + String::intToString(count++);
+	mName = "MovableText_" + intToString(count++);
 
 }
 

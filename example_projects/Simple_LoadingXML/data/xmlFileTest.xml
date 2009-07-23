@@ -1,0 +1,8 @@
+﻿<?xml version="1.0"?>
+
+<xmlTest>
+  <websites>
+	  <site id="33" url="cing.cc">Cing</site>
+	  <site id="1" url="processing.org">Processing</site>
+  </websites>
+</xmlTest>

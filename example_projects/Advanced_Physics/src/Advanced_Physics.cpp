@@ -7,8 +7,6 @@
  * so they don't move although they collide with the rest of the objects
  *
  * Mouse
- *	- Left button activates physics
- *	- Right button deactivates physics
  *	- move mouse to rotate the camera
  * Keys
  *	- Space bar applies a vertical force to all the objects( those non static) if
@@ -39,9 +37,11 @@ void setup()
 		// Set size and position (with some random)
 		sphere[i].init( 100 + random( -50, 50 ) );
 		sphere[i].setPosition( coordX + random ( -20, 20 ), coordY, 200 );
+		sphere[i].enablePhysics( false );
 
 		box[i].init( 100 + random( -50, 50 ) );
 		box[i].setPosition( coordX + random ( -20, 20 ), coordY, 0 );
+		box[i].enablePhysics( false );
 
 		// Control coordinates to place them in a grid way
 		coordY += 150;
@@ -56,15 +56,19 @@ void setup()
 	plane.init( 100000 );
 	plane.setPosition( 0, 2000, 0 );
 	plane.setOrientation( Vector::UNIT_X, 15 );
-	plane.setSelfIlluminationColor( 100, 0, 0 );
+	plane.setSelfIlluminationColor( 120, 120, 0 );
+
+	// Enable physics plate as static
+	plane.enablePhysics( true );
 
 	// Init lights and set the ambient light
 	ambientLight( 50, 50, 50 );
-	light.init( 255, 255, 255, 0, 0, 200 );	
+	light.init( 100, 100, 100, 0, 0, 200 );	
 
 	// Allow mouse control
+	useDefault3DCameraControl( true );
 	useMouseCameraControl( true );
-	showFps( true );
+	useKeyboardCameraControl( true );
 }
 
 void draw()
@@ -78,35 +82,6 @@ void end()
 
 void mousePressed()
 {
-	// Activate or deactivate physics
-	if ( mouseButton == LEFT )
-	{
-		// Activate object's physics
-		for ( int i = 0; i < MAX_ELEMENTS; i++ )
-		{
-			// some of the objects will be static
-			int randomN				= random( 0, 100 );
-			bool staticObject = randomN > 95? true: false;
-
-			// Enable the physics
-			box[i].enablePhysics( staticObject );
-			sphere[i].enablePhysics( staticObject );
-		}
-
-		// Enable physics plate as static
-		plane.enablePhysics( true );
-	}
-	else
-	{
-		// Deactivate object's physics
-		//sphere.deActivatePhysics();
-		for ( int i = 0; i < MAX_ELEMENTS; i++ )
-		{
-			box[i].disablePhysics();
-			sphere[i].disablePhysics();
-		}
-		plane.disablePhysics();
-	}
 }
 
 void mouseMoved()
