@@ -1,10 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Demo_SoundPlayback", "example_projects\04_Demo_SoundPlayback\04_Demo_SoundPlayback.vcproj", "{ACAF1B3D-F407-472E-A0D9-60546A5B8786}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_Demo_Mic", "example_projects\05_Demo_Mic\05_Demo_Mic.vcproj", "{68C91ED7-3425-4A59-BDC5-BC5440992D21}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
@@ -57,8 +52,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Physics", "example_proje
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Font", "example_projects\Font\Font.vcproj", "{AA13A684-C0DD-49CE-AC99-BA231EA9317B}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_BasicApplication", "example_projects\Simple_BasicApplication\Simple_BasicApplication.vcproj", "{3FA9B1E0-D56E-4C46-A063-FAE8250995D7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
@@ -71,16 +64,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_DrawingAndTransforma
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_LoadingAndDrawingInImages", "example_projects\Simple_LoadingAndDrawingInImages\Simple_LoadingAndDrawingInImages.vcproj", "{29079109-39EF-41B5-861D-692F2EF554C6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_Fonts", "example_projects\Simple_Fonts\Simple_Fonts.vcproj", "{13AD480A-0D51-4B65-995C-24D44AB61FB4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_PlayingSounds", "example_projects\Simple_PlayingSounds\Simple_PlayingSounds.vcproj", "{15ADA377-0E5C-48CA-8D16-99ECF9853C2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ACAF1B3D-F407-472E-A0D9-60546A5B8786}.Debug|Win32.ActiveCfg = Debug|Win32
-		{ACAF1B3D-F407-472E-A0D9-60546A5B8786}.Debug|Win32.Build.0 = Debug|Win32
-		{ACAF1B3D-F407-472E-A0D9-60546A5B8786}.Release|Win32.ActiveCfg = Release|Win32
-		{ACAF1B3D-F407-472E-A0D9-60546A5B8786}.Release|Win32.Build.0 = Release|Win32
 		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Debug|Win32.ActiveCfg = Debug|Win32
 		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Debug|Win32.Build.0 = Debug|Win32
 		{68C91ED7-3425-4A59-BDC5-BC5440992D21}.Release|Win32.ActiveCfg = Release|Win32
@@ -125,10 +121,6 @@ Global
 		{179D4F12-4894-4FE1-B749-304603B97DB3}.Debug|Win32.Build.0 = Debug|Win32
 		{179D4F12-4894-4FE1-B749-304603B97DB3}.Release|Win32.ActiveCfg = Release|Win32
 		{179D4F12-4894-4FE1-B749-304603B97DB3}.Release|Win32.Build.0 = Release|Win32
-		{AA13A684-C0DD-49CE-AC99-BA231EA9317B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{AA13A684-C0DD-49CE-AC99-BA231EA9317B}.Debug|Win32.Build.0 = Debug|Win32
-		{AA13A684-C0DD-49CE-AC99-BA231EA9317B}.Release|Win32.ActiveCfg = Release|Win32
-		{AA13A684-C0DD-49CE-AC99-BA231EA9317B}.Release|Win32.Build.0 = Release|Win32
 		{3FA9B1E0-D56E-4C46-A063-FAE8250995D7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{3FA9B1E0-D56E-4C46-A063-FAE8250995D7}.Debug|Win32.Build.0 = Debug|Win32
 		{3FA9B1E0-D56E-4C46-A063-FAE8250995D7}.Release|Win32.ActiveCfg = Release|Win32
@@ -141,6 +133,14 @@ Global
 		{29079109-39EF-41B5-861D-692F2EF554C6}.Debug|Win32.Build.0 = Debug|Win32
 		{29079109-39EF-41B5-861D-692F2EF554C6}.Release|Win32.ActiveCfg = Release|Win32
 		{29079109-39EF-41B5-861D-692F2EF554C6}.Release|Win32.Build.0 = Release|Win32
+		{13AD480A-0D51-4B65-995C-24D44AB61FB4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13AD480A-0D51-4B65-995C-24D44AB61FB4}.Debug|Win32.Build.0 = Debug|Win32
+		{13AD480A-0D51-4B65-995C-24D44AB61FB4}.Release|Win32.ActiveCfg = Release|Win32
+		{13AD480A-0D51-4B65-995C-24D44AB61FB4}.Release|Win32.Build.0 = Release|Win32
+		{15ADA377-0E5C-48CA-8D16-99ECF9853C2D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{15ADA377-0E5C-48CA-8D16-99ECF9853C2D}.Debug|Win32.Build.0 = Debug|Win32
+		{15ADA377-0E5C-48CA-8D16-99ECF9853C2D}.Release|Win32.ActiveCfg = Release|Win32
+		{15ADA377-0E5C-48CA-8D16-99ECF9853C2D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
