@@ -184,6 +184,9 @@ void rotateZ	(	float angle );
 void scale		(	float x, float y, float z );
 void scale		(	float x, float y );
 
+// Coordinate systems
+void applyCoordinateSystemTransform( const GraphicsType& coordSystem );
+
 //Save frames
 void save( const String& name );
 //-----------------------------------------------------------------------------------

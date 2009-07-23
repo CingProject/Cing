@@ -153,7 +153,7 @@ namespace Cing
 		//bool loadCollada( const String& fileName );
 		// Coordinate systems
 		bool isProcessingMode() { return ( m_coordSystem == PROCESSING );	}	
-		void applyCoordinateSystemTransform( GraphicsType coordSystem );
+		void applyCoordinateSystemTransform( const GraphicsType& coordSystem );
 
 		// 2D Canvas
 		Image*			m_canvas;

@@ -654,9 +654,9 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 /**
 * @brief Apply coordinate system transforms to subsequent rendering and camera
 *
-* @param coordSystem
+* @param[in] coordSystem
 */
-void GraphicsManager::applyCoordinateSystemTransform( GraphicsType coordSystem )
+void GraphicsManager::applyCoordinateSystemTransform( const GraphicsType& coordSystem )
 {
 	if ( coordSystem == m_coordSystem)
 		return;

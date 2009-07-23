@@ -650,7 +650,7 @@ void rectMode( int mode )
 /**
 * @brief  The origin of the ellipse is modified by the ellipseMode() function.
 *         The default configuration is ellipseMode(CENTER), which specifies the
-*					location of the ellipse as the center of the shape.
+*		  location of the ellipse as the center of the shape.
 *
 * @param mode
 */
@@ -1037,5 +1037,12 @@ void textSize(float size)
 	currentFontProperties.size				= size;
 }
 
-
+/**
+ * Sets the 3d coordinate system. Thre are two systems: NORMAL and PROCESSING (default)
+ * @param[in] coordSystem the input coordSystem 	 
+ */
+void applyCoordinateSystemTransform( const GraphicsType& coordSystem )
+{
+	GraphicsManager::getSingleton().applyCoordinateSystemTransform( coordSystem );
+}
 } // namespace Cing
