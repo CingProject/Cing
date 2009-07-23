@@ -1,9 +1,0 @@
-﻿<?xml version="1.0"?>
-
-<xmlTest>
-  <websites>
-	  <site id="33" url="www.playthemagic.com/vision">Vision</site>
-	  <site id="1" url="processing.org">Processing</site>
-	  <site id="2" url="mobile.processing.org">Processing Mobile</site>
-  </websites>
-</xmlTest>
