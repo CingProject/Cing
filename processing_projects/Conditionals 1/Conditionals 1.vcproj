@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Conditionals 1"
 	ProjectGUID="{06D94DE6-3E23-4D5D-A385-890E3EB31FA6}"
 	RootNamespace="Conditionals1"

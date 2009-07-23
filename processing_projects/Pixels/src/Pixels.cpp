@@ -1,9 +1,13 @@
-#include "Cing.h"
+// Code from: http://processing.org/reference/pixels.html
 
+// Using the pixels array
+
+#include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
-void setup()
-{
+void setup() {
+	size(200,200);
+
 	Color pink = Color(255, 102, 204);
 	loadPixels();
 	for (int i = 0; i < (width*height/2)-width/2; i++) {
@@ -12,12 +16,10 @@ void setup()
 	updatePixels();
 }
 
-void draw()
-{
+void draw() {
 }
 
-void end()
-{
+void end() {
 }
 
 void mousePressed()

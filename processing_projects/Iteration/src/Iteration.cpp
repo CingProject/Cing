@@ -1,10 +1,11 @@
-#include "Cing.h"
+// Code from: http://processing.org/learning/basics/iteration.html
 
+// Iteration with a "for" structure constructs repetitive forms.
+
+#include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
-
-void setup()
-{
+void setup() {
 	int k;
 	int xpos1 = 100; 
 	int xpos2 = 118; 

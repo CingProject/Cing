@@ -5,11 +5,9 @@
 // The four variables set the positions based on the value of 'd'.
 
 #include "Cing.h"
-
 CREATE_APPLICATION( "Cing" );
 
-void setup()
-{
+void setup() {
 	size(200, 200); 
 
 	int d = 40;

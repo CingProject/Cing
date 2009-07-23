@@ -1,5 +1,10 @@
-#include "Cing.h"
+// Code from: http://processing.org/learning/basics/distance2d.html
 
+// Move the mouse across the image to obscure and reveal the matrix.
+// Measures the distance from the mouse to each square and sets the
+// size proportionally.
+
+#include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
 float max_distance;
@@ -10,7 +15,6 @@ void setup()
 	smooth();
 	noStroke();
 	max_distance = dist(0, 0, width, height);
-
 }
 
 void draw()

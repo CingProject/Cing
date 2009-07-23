@@ -1,5 +1,8 @@
-#include "Cing.h"
+// Code from: http://processing.org/learning/basics/embeddediteration.html
 
+// Embedding "for" structures allows repetition in two dimensions.
+
+#include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
 void setup()

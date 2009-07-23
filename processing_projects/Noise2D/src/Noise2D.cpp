@@ -1,19 +1,19 @@
-#include "Cing.h"
+// Code from: http://processing.org/learning/basics/noise2d.html
 
+// Noise2D by Daniel Shiffman.
+// Using 2D noise to create simple texture.
+
+#include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
 float increment = 0.02;
 
 void setup() {
 	size(200,200);
-	showFps(true);
 }
 
 void draw() {
 	background(0);
-
-	// Optional: adjust noise detail here
-	// noiseDetail(8,0.65f);
 
 	loadPixels();
 

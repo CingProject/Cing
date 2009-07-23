@@ -1,10 +1,14 @@
-#include "Cing.h"
+// Code from: http://processing.org/learning/basics/piechart.html
 
+// Pie Chart By Ira Greenberg
+// Uses the arc() function to generate a pie chart from the data stored in an array.
+
+#include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
+void setup() {
 
-void setup()
-{
+	size(500,500);
 
 	background(100);
 	smooth();
