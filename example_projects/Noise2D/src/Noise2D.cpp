@@ -5,8 +5,7 @@ CREATE_APPLICATION( "Cing" );
 float increment = 0.02;
 
 void setup() {
-	size(100,100);
-	//noLoop();
+	size(200,200);
 	showFps(true);
 }
 
