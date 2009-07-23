@@ -1,9 +1,11 @@
 #include "Cing.h"
 CREATE_APPLICATION( "Cing Demo" );
 
-// This example shows the basic about a Cing application
-// It draws a line from the center of the screen to the mouse.
-// Press the mouse to clear the background.
+/*
+ * This example shows the basic about a Cing application
+ * It draws a line from the center of the screen to the mouse.
+ * Press the mouse to clear the background.
+ */
 
 void setup()
 {

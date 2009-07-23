@@ -5,7 +5,7 @@ CREATE_APPLICATION( "Cing" );
 float increment = 0.02;
 
 void setup() {
-	//size(200,200);
+	size(100,100);
 	//noLoop();
 	showFps(true);
 }
@@ -31,7 +31,7 @@ void draw() {
 			yoff += increment; // Increment yoff
 
 			// Calculate noise and scale by 255
-			bright = noise(xoff,yoff)*255;
+			bright = noise(xoff+mouseX,yoff+mouseY)*255;
 
 			// Try using this line instead
 			// bright = random(0,255);

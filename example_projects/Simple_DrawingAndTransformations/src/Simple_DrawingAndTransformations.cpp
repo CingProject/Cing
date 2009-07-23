@@ -1,9 +1,10 @@
 #include "Cing.h"
 CREATE_APPLICATION( "Cing Demo" );
 
-// This example shows the use of transformations
-// and 2d drawing on images. It draw a rotating 
-// rectangle on the screen. 
+/*
+ * This example shows the use of transformations and 2d drawing on
+ * images. It draw a rotating rectangle on the screen. 
+ */
 
 // Used to rotate the rectangle
 float angle = 0;

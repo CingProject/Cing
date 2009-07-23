@@ -10,8 +10,10 @@ Image myImage;
 void setup()
 {
 	size(1024, 768);
+
 	// Load the image from disk
 	myImage.load("MissAmericaRedBlue.jpg");
+
 }
 
 void draw()

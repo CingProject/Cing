@@ -1,6 +1,9 @@
 #include "Cing.h"
-
 CREATE_APPLICATION( "Cing" );
+
+/*
+ * This example shows the use of the Cing::String class
+ */
 
 void setup()
 {
@@ -17,7 +20,7 @@ void setup()
 	p.toUpperCases();
 
 	// Printing Strings
-  println(p.toChar());
+	println(p.toChar());
 
 	// Searching indexes
 	String a = "T";

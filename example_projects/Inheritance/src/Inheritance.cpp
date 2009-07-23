@@ -2,9 +2,6 @@
 #include "Ogre3d/include/OgreMatrix4.h"
 CREATE_APPLICATION( "Cing" );
 
-
-
-
 class Spin 
 {
 public:
@@ -27,8 +24,7 @@ class SpinArm: public Spin
 {
 	public:
 	SpinArm(){};
-	SpinArm(Spin input){};
-	SpinArm(float x, float y, float s)
+	SpinArm(float x, float y, float s):Spin(x,y,s)
 	{
 	};
 	void display() {
@@ -36,9 +32,9 @@ class SpinArm: public Spin
 		stroke(0);
 
 		pushMatrix();
-		//translate(x, y);
+		translate(x, y);
 		angle += speed;
-		//rotate(angle);
+		rotate(angle);
 		line(0, 0, 66, 0);
 		popMatrix();	
 	}
@@ -49,46 +45,46 @@ class SpinSpots: public Spin
 	public:
 	float dim;
 	SpinSpots(){};
-	SpinSpots(Spin input){};
-	SpinSpots(float x, float y, float s, float d)
+
+	
+	SpinSpots(float x, float y, float s, float d):Spin(x,y,s)
 	{
 		dim = d;
 	}
+
 	void display() {
 		noStroke();
 
 		pushMatrix();
-		//translate(x, y);
+		translate(x, y);
 		angle += speed;
-		//rotate(angle);
+		rotate(angle);
 		ellipse(-dim/2, 0, dim, dim);
 		ellipse(dim/2, 0, dim, dim);
 	  popMatrix();
 	}
 };
 
-SpinSpots spots;
-SpinArm   arm;
+SpinSpots* spots;
+SpinArm*   arm;
 
 void setup() 
 {
-	//size(200, 200);
-	smooth();
-	arm   = SpinArm(width/2, height/2, 0.01);
-	spots = SpinSpots(width/2, height/2, -0.02, 33.0);
+  size(200, 200);
+  smooth();
+  arm = new SpinArm(width/2, height/2, 0.01);
+  spots = new SpinSpots(width/2, height/2, -0.02, 33.0);
 }
 
 
 
 void draw() 
 {
-	background(204);
-	arm.update();
-	arm.display();
-	spots.update();
-	spots.display();
-
-	//line(0,0,0,10,10,10);
+  background(204);
+  arm->update();
+  arm->display();
+  spots->update();
+  spots->display();
 }
 
 void end()
