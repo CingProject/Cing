@@ -1,0 +1,6 @@
+<!--This file can be used to configure any aspect of Cing or you application-->
+
+<CingConfig>
+  <Cing_Data_Folder   relativePath="../../../cing_bin/data/" />
+  <VLC_Plugins_Folder relativePath_Debug="..\\..\\..\\cing_bin\\VLC\\PluginsVLC_Debug" relativePath_Release="..\\..\\..\\cing_bin\\VLC\\PluginsVLC_Release" />
+</CingConfig>
