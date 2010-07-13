@@ -592,9 +592,8 @@ Image* Image::clone()
 void Image::updateTexture()
 {
 	m_quad.updateTexture(	m_cvImage->imageData,
-												m_cvImage->width,
-												m_cvImage->height,
-												getFormat());
+							m_cvImage->width,
+							m_cvImage->height );
 }
 
 /**

@@ -67,8 +67,8 @@ namespace Cing
 
 		// Texture update
 		void	updateTexture	( const Ogre::Image& img );
-		void	updateTexture	( unsigned char* textureData, int width, int height, GraphicsType format );
-		void	updateTexture	( char* textureData, int width, int height, GraphicsType format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
+		void	updateTexture	( unsigned char* textureData, int width, int height );
+		void	updateTexture	( char* textureData, int width, int height ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height ); }
 
 		// Query methods
 		bool  				isValid         () const { return m_bIsValid; }

@@ -557,7 +557,7 @@ void TexturedQuad::updateTexture( const Ogre::Image& img )
  * @param[in] format  Format of the image. RGB for color images (red, green and blue), ARGB for color plus alpha channel for transparency
  * GRAYSCALE for grayscale images, this is, black & white
  */
-void TexturedQuad::updateTexture( unsigned char* textureData, int width, int height, GraphicsType format )
+void TexturedQuad::updateTexture( unsigned char* textureData, int width, int height )
 {
 	// Check if the object is valid
 	if ( !isValid() )
@@ -567,14 +567,10 @@ void TexturedQuad::updateTexture( unsigned char* textureData, int width, int hei
   if ( ( width > m_textWidth ) || ( height > m_textHeight ) )
     THROW_EXCEPTION( "Trying to update texture with too big image data" );
 
-	// Check format
-	if ( m_format != format )
-		THROW_EXCEPTION( "Trying to update texture with different format" );
-
 	// Update texture
 	//m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
-	Ogre::PixelBox newData( width, height, 1, (Ogre::PixelFormat)format, textureData );
-	Ogre::PixelBox dest( m_textWidth, m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
+	Ogre::PixelBox newData( width, height, 1, (Ogre::PixelFormat)m_format, textureData );
+	Ogre::PixelBox dest( m_textWidth, m_textHeight, 1, (Ogre::PixelFormat)m_format, textureData );
 	m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData, dest );
 }
 
