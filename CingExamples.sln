@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_Cing", "cing\build\win\visualStudio_2008\Cing\Cing.vcproj", "{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_BasicApplication", "example_projects\Simple_BasicApplication\Simple_BasicApplication.vcproj", "{3FA9B1E0-D56E-4C46-A063-FAE8250995D7}"
@@ -23,6 +23,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_Fonts", "example_pro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_PlayingSounds", "example_projects\Simple_PlayingSounds\Simple_PlayingSounds.vcproj", "{15ADA377-0E5C-48CA-8D16-99ECF9853C2D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_PlayingVideos", "example_projects\Simple_PlayingVideos\Simple_PlayingVideos.vcproj", "{DC3A006E-396A-400D-8892-FF5451D7D216}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -50,6 +53,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_3dDrawing", "examp
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_3dImportCollada", "example_projects\Advanced_3dImportCollada\Advanced_3dImportCollada.vcproj", "{1272054E-5B32-4F38-869A-F82EFBB81BA7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_BackgroundSubtraction", "example_projects\Advanced_BackgroundSubtraction\Advanced_BackgroundSubtraction.vcproj", "{A39C78AF-F8B9-4E0E-8653-D78DF093E41E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -62,6 +68,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_BlobDetection", "e
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_Physics", "example_projects\Advanced_Physics\Advanced_Physics.vcproj", "{6C638EF5-3382-4ADD-9D51-192E52703211}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_CameraInput", "example_projects\Simple_CameraInput\Simple_CameraInput.vcproj", "{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
@@ -132,6 +143,10 @@ Global
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Debug|Win32.Build.0 = Debug|Win32
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Release|Win32.ActiveCfg = Release|Win32
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Release|Win32.Build.0 = Release|Win32
+		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Debug|Win32.Build.0 = Debug|Win32
+		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.ActiveCfg = Release|Win32
+		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
