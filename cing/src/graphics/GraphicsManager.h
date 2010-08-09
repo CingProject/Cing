@@ -34,9 +34,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Shape.h"
 
 // OpenCv includes
-#include "OpenCV/cxcore/include/cxtypes.h"
-#include "OpenCV/cxcore/include/cxcore.h"
-#include "OpenCV/highgui/include/highgui.h"
+#include "OpenCV/cxtypes.h"
+#include "OpenCV/cxcore.h"
+#include "OpenCV/highgui.h"
 
 //TEMP
 #include "input/InputPrereqs.h"

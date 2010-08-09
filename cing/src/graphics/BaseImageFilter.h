@@ -28,7 +28,7 @@
 #include "graphics/GraphicsTypes.h"
 
 // OpenCV
-#include "OpenCV/cxcore/include/cxtypes.h"
+#include "OpenCV/cxtypes.h"
 
 
 namespace Cing

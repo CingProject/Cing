@@ -25,8 +25,8 @@
 #include "common/Exception.h"
 
 // OpenCv
-#include "OpenCV/cxcore/include/cxcore.h"
-#include "OpenCV/cv/include/cv.h"
+#include "OpenCV/cxcore.h"
+#include "OpenCV/cv.h"
 
 namespace Cing
 {

@@ -26,7 +26,7 @@
 #include "common/MathUtils.h"
 
 // opencv
-#include "OpenCV/highgui/include/highgui.h"
+#include "OpenCV/highgui.h"
 
 // Graphics
 #include "graphics/Image.h"

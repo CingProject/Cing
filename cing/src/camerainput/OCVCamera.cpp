@@ -36,8 +36,8 @@
 #include "graphics/GraphicsManager.h"
 
 // OpenCv
-#include "cv.h"
-#include "highgui.h"
+#include "OpenCV/cv.h"
+#include "OpenCV/highgui.h"
 
 // Common
 #include "common/Exception.h"

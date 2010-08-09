@@ -22,7 +22,7 @@
 #include "BaseImageFilter.h"
 
 // OpenCv
-#include "OpenCV/cxcore/include/cxcore.h"
+#include "OpenCV/cxcore.h"
 
 namespace Cing
 {

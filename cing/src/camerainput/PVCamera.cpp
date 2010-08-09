@@ -22,7 +22,7 @@
 #include "PVCamera.h"
 
 // OpenCv
-#include "cv.h"
+#include "OpenCV/cv.h"
 
 // Common
 #include "common/Exception.h"

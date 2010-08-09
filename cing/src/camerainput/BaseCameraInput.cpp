@@ -25,9 +25,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/LogManager.h"
 
 // OpenCV
-#include "OpenCV/cxcore/include/cxcore.h"
-#include "OpenCV/highgui/include/highgui.h"
-#include "OpenCV/cv/include/cv.h"
+#include "OpenCV/cxcore.h"
+#include "OpenCV/highgui.h"
+#include "OpenCV/cv.h"
 
 // Common
 #include "common/Exception.h"

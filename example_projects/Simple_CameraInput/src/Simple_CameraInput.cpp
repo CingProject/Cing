@@ -16,6 +16,11 @@ void setup()
 	gray.init( r.x, r.y, RGB );
 	blurry.init( r.x, r.y, RGB );
 	threshold.init( r.x, r.y, RGB );
+
+	// Allow mouse control
+	useDefault3DCameraControl( true );
+	useMouseCameraControl( true );
+	useKeyboardCameraControl( true );
 }
 
 void draw()

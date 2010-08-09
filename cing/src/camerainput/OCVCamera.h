@@ -29,7 +29,7 @@
 #include <string>
 
 // OpenCV
-#include "OpenCV/cxcore/include/cxtypes.h"
+#include "OpenCV/cxtypes.h"
 
 // Ogre
 #include "Ogre3d/include/OgreTexture.h"

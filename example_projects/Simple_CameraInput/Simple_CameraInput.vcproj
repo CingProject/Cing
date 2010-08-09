@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\cxcore\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008;..\..\cing\libraries\win\visualStudio2008\Ogre3d\include\CEGUI"
+				AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008;..\..\cing\libraries\win\visualStudio2008\Ogre3d\include\CEGUI"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="_Cing_d.lib OgreMain_d.lib OIS_d.lib cv_d.lib cvaux_d.lib cxcore_d.lib highgui_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libconvexdecomposition_d.lib videoInput.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib OgreCollada_d.lib LibXML_d.lib FCollada_d.lib libvlc.dll.a libvlccore.dll.a tinyxml_STL_d.lib"
+				AdditionalDependencies="_Cing_d.lib OgreMain_d.lib OIS_d.lib cv210_d.lib cvaux210_d.lib cxcore210_d.lib highgui210_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libconvexdecomposition_d.lib videoInput.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib OgreCollada_d.lib LibXML_d.lib FCollada_d.lib libvlc.dll.a libvlccore.dll.a tinyxml_STL_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\cing\lib;..\..\cing\libraries\win\visualStudio2008\BetaCairo\lib;..\..\cing\libraries\win\visualStudio2008\Bullet\lib;..\..\cing\libraries\win\visualStudio2008\cairo\lib;..\..\cing\libraries\win\visualStudio2008\Fmod\lib;..\..\cing\libraries\win\visualStudio2008\Ogre3d\lib;..\..\cing\libraries\win\visualStudio2008\OgreBullet\lib;..\..\cing\libraries\win\visualStudio2008\OpenCV\lib;..\..\cing\libraries\win\visualStudio2008\PortVideo\lib;..\..\cing\libraries\win\visualStudio2008\PTypes\lib;..\..\cing\libraries\win\visualStudio2008\RtMidi\lib;..\..\cing\libraries\win\visualStudio2008\VideoInput\lib;..\..\cing\libraries\win\visualStudio2008\OgreCollada\lib;..\..\cing\libraries\win\visualStudio2008\LibVLC\lib;..\..\cing\libraries\win\visualStudio2008\TinyXML\lib"
@@ -129,7 +129,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\cxcore\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008;..\..\cing\libraries\win\visualStudio2008\Ogre3d\include\CEGUI"
+				AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008;..\..\cing\libraries\win\visualStudio2008\Ogre3d\include\CEGUI"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="true"
 				MinimalRebuild="false"
@@ -154,7 +154,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="_Cing.lib OgreMain.lib OIS.lib cv.lib cvaux.lib cxcore.lib highgui.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libconvexdecomposition.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib tinyxml_STL.lib OgreCollada.lib FCollada.lib LibXML.lib libvlc.dll.a libvlccore.dll.a"
+				AdditionalDependencies="_Cing.lib OgreMain.lib OIS.lib cv210.lib cvaux210.lib cxcore210.lib highgui210.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libconvexdecomposition.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib tinyxml_STL.lib OgreCollada.lib FCollada.lib LibXML.lib libvlc.dll.a libvlccore.dll.a"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\cing\lib;..\..\cing\libraries\win\visualStudio2008\BetaCairo\lib;..\..\cing\libraries\win\visualStudio2008\Bullet\lib;..\..\cing\libraries\win\visualStudio2008\cairo\lib;..\..\cing\libraries\win\visualStudio2008\Fmod\lib;..\..\cing\libraries\win\visualStudio2008\Ogre3d\lib;..\..\cing\libraries\win\visualStudio2008\OgreBullet\lib;..\..\cing\libraries\win\visualStudio2008\OpenCV\lib;..\..\cing\libraries\win\visualStudio2008\PortVideo\lib;..\..\cing\libraries\win\visualStudio2008\PTypes\lib;..\..\cing\libraries\win\visualStudio2008\RtMidi\lib;..\..\cing\libraries\win\visualStudio2008\VideoInput\lib;..\..\cing\libraries\win\visualStudio2008\OgreCollada\lib;..\..\cing\libraries\win\visualStudio2008\LibVLC\lib;..\..\cing\libraries\win\visualStudio2008\TinyXML\lib"

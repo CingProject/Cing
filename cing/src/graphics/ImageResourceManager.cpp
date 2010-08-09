@@ -25,7 +25,7 @@
 #include "common/CommonUtilsIncludes.h"
 
 // Open CV
-#include "OpenCV/cxcore/include/cxcore.h"
+#include "OpenCV/cxcore.h"
 
 namespace Cing
 {

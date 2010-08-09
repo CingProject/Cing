@@ -32,8 +32,8 @@
 #include "graphics/Image.h"
 
 // Open CV for video capture
-#include "OpenCV/cv/include/cv.h"
-#include "OpenCV/highgui/include/highgui.h"
+#include "OpenCV/cv.h"
+#include "OpenCV/highgui.h"
 
 namespace Cing
 {

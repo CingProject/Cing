@@ -34,7 +34,7 @@
 #include <string>
 
 // OpenCV
-#include "OpenCV/cxcore/include/cxtypes.h"
+#include "OpenCV/cxtypes.h"
 
 // PTypes
 #include "PTypes/include/pasync.h"

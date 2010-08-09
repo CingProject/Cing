@@ -26,7 +26,7 @@
 #include "common/MathUtils.h"
 
 // OpenCV
-#include "OpenCV/cxcore/include/cxtypes.h"
+#include "OpenCV/cxtypes.h"
 
 // Graphics
 #include "graphics/Image.h"
