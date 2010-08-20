@@ -34,6 +34,8 @@
 #include "common/eString.h"
 #include "common/PerlinNoise.h"
 #include "common/CommonUserAPI.h"
+#include "common/XMLElement.h"
+#include "common/ResourceManager.h"
 
 // standard general utils
 #include <cstdio>

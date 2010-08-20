@@ -3,4 +3,5 @@
 <CingConfig>
   <Cing_Data_Folder   relativePath="../../../cing_bin/data/" />
   <VLC_Plugins_Folder relativePath_Debug="..\\..\\..\\cing_bin\\VLC\\PluginsVLC" relativePath_Release="..\\..\\..\\cing_bin\\VLC\\PluginsVLC" />
+  <GStreamer_Plugins_Folder relativePath="..\\..\\..\\cing_bin\\GStreamer\\gstreamer-0.10" />
 </CingConfig>

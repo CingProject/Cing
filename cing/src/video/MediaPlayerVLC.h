@@ -95,33 +95,33 @@ namespace Cing
 
 
 		// Static members common to all players
-		static String		m_pluginsPath;
+		static String			m_pluginsPath;
 
 
 		// VLC attributes
-		libvlc_exception_t    m_vlcException;
-		libvlc_instance_t     *m_libvlc;
-		libvlc_media_t        *m_media;
-		libvlc_media_player_t *m_mediaPlayer;
-		libvlc_event_manager_t*m_eventManager;
+		libvlc_exception_t    	m_vlcException;
+		libvlc_instance_t     	*m_libvlc;
+		libvlc_media_t        	*m_media;
+		libvlc_media_player_t 	*m_mediaPlayer;
+		libvlc_event_manager_t	*m_eventManager;
 
-			VLCFrameContainer     m_frameContainer; ///< Stores the image frames decoded by VLC
+		VLCFrameContainer		m_frameContainer; ///< Stores the image frames decoded by VLC
 
 		// Media info
-		String				m_fileName;
-		String				m_filePath;
-		libvlc_time_t         m_videoDuration;
-		float                 m_videoFps;
-		int                   m_videoWidth;
-		int                   m_videoHeight;
+		String					m_fileName;
+		String					m_filePath;
+		libvlc_time_t         	m_videoDuration;
+		float                 	m_videoFps;
+		int                   	m_videoWidth;
+		int                   	m_videoHeight;
 
 		// Playback Settings
-		bool                  m_loop;
-		bool                  m_loopOnNextUpdate;
+		bool                  	m_loop;
+		bool                  	m_loopOnNextUpdate;
 
 		// Other stuff
-		Ogre::Timer			  m_timer;
-		bool                  m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+		Ogre::Timer			  	m_timer;
+		bool                  	m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 	};
 

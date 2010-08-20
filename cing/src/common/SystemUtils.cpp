@@ -22,7 +22,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "SystemUtils.h"
-#include <stdio.h>
+
+#include  <io.h>
+#include  <stdio.h>
+#include  <stdlib.h>
+
+
 
 
 namespace Cing
@@ -50,6 +55,19 @@ bool fileExists( const std::string& fileName )
   }
 
   return false;	// File does not exist
+}
+/**
+ * @brief Checks if a folder exists
+ *
+ * @param folderPath Absolute path to the folder to be checked
+ * @return True if the folder exitst, false otherwise
+ */
+bool folderExists( const std::string& folderPath )
+{
+	if( (_access( folderPath.c_str() , 0 )) != -1 )
+		return true;
+
+   return false;
 }
 
 } // namespace Cing

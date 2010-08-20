@@ -50,10 +50,10 @@ struct Blob
     bool operator < ( const Blob& other ) const { return area < other.area; }
     bool operator > ( const Blob& other ) const { return area > other.area; }
 
-    float	            area;		  ///< Blob's area
-    CvRect		        bbox;		  ///< Blob's bounding box
-    Point							center;		///< Center of the Blob
-	  BlobContourPoints nodes;		///< Points of the Blob's contour
+    float	            area;		///< Blob's area
+    CvRect		        bbox;		///< Blob's bounding box
+    Point				center;		///< Center of the Blob
+	BlobContourPoints	nodes;		///< Points of the Blob's contour
 
 private:
     // This is done to avoid making contour attribute public

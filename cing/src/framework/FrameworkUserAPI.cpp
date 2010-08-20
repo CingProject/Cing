@@ -35,6 +35,15 @@ namespace Cing
   }
 
   /**
+   * @brief Sets the full screen antialiasing
+   */
+  void FSAA( int fsaa )
+  {
+    GraphicsManager::getSingleton().FSAA( fsaa );
+  }
+
+
+  /**
    * @brief Configures the application window size and render system used
    * @note It should be called first to any other graphics related function
    * @param windowWidth   width of the application's window

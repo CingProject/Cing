@@ -191,16 +191,72 @@ size_t Window::getWindowHandle() const
  * @note This method modifies the aspect ration of the camera to match the windows' aspect ratio
  * @param[in] camera Camera to attach to the window
  */
-void Window::attachCameraToWindow( Camera3D& camera )
+void Window::attachCameraToWindow( Camera3D& camera, int viewportIndex /*= 0*/ )
 {
   if ( !isValid() )
     return;
 
-  // Create the viewport
-  m_mainViewport = m_pOgreWindow->addViewport( camera.getOgreCamera() );
+  // Viewport pointer
+  Ogre::Viewport* viewport = NULL;
+
+  // Get the viewport pointer
+  if ( m_pOgreWindow->getNumViewports()-1 >=  viewportIndex )
+  {
+	  viewport = m_pOgreWindow->getViewport(viewportIndex);
+	  viewport->setCamera( camera.getOgreCamera() );
+  }
+  // Create the viewport if it does not exist
+  else
+	 viewport = m_pOgreWindow->addViewport( camera.getOgreCamera(), viewportIndex );
 
   // Set the camera aspect ratio to match the window's aspect ratio
-  camera.getOgreCamera()->setAspectRatio( float(m_mainViewport->getActualWidth()) / m_mainViewport->getActualHeight() ); 
+  camera.getOgreCamera()->setAspectRatio( float(viewport->getActualWidth()) / viewport->getActualHeight() ); 
+
+  // If there is no main viewport -> assign the new created 
+  if ( !m_mainViewport || (viewportIndex == 0))
+	  m_mainViewport = viewport;
+}
+
+/**
+ * @internal
+ * @brief Specify the camera that will be rendered in this window.
+ * As off this moment, this window will be the render target for this camera.
+ * @note This method modifies the aspect ration of the camera to match the windows' aspect ratio
+ * @param[in] camera Camera to attach to the window
+ */
+void Window::attachCameraToWindow( Ogre::Camera* ogreCamera, int viewportIndex /*= 0*/ )
+{
+  if ( !isValid() )
+    return;
+
+  // Viewport pointer
+  Ogre::Viewport* viewport = NULL;
+
+  // Get the viewport pointer
+  if ( m_pOgreWindow->getNumViewports()-1 >=  viewportIndex )
+  {
+	  viewport = m_pOgreWindow->getViewport(viewportIndex);
+	  viewport->setCamera( ogreCamera );
+  }
+
+  // Create the viewport if it does not exist
+  else
+	 viewport = m_pOgreWindow->addViewport( ogreCamera, viewportIndex );
+
+  // Set the camera aspect ratio to match the window's aspect ratio
+  ogreCamera->setAspectRatio( float(viewport->getActualWidth()) / viewport->getActualHeight() ); 
+
+  // If there is no main viewport -> assign the new created 
+  if ( !m_mainViewport || (viewportIndex == 0))
+	  m_mainViewport = viewport;
+}
+
+const Ogre::ColourValue& Window::getBackgroundColor()
+{
+  if ( !isValid() )
+	  return Color::Black;
+
+  return m_mainViewport->getBackgroundColour();
 }
 
 /**
@@ -216,5 +272,19 @@ void Window::setBackgroundColor( const Color& color )
 
   m_mainViewport->setBackgroundColour( color.normalized() ); 
 }
+
+
+Ogre::Viewport* Window::getViewport( int index )
+{
+  if ( !isValid() )
+    return NULL;
+
+  // Get the viewport pointer
+  if ( m_pOgreWindow->getNumViewports() >  index )
+	  return m_pOgreWindow->getViewport(index);
+  else 
+	  return NULL;
+}
+
 
 } // namespace Cing

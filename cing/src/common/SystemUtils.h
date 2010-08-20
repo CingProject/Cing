@@ -36,6 +36,7 @@ namespace Cing
 
 // Files I/O
 bool fileExists( const std::string& fileName );
+bool folderExists( const std::string& folderPath );
 
 } // namespace
 

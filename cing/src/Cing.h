@@ -19,8 +19,8 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _Vision_H_
-#define _Vision_H_
+#ifndef _Cing_H_
+#define _Cing_H_
   
 
 /**
@@ -102,6 +102,7 @@
 
 // Video
 #include "video/MediaPlayerVLC.h"
+#include "video/MediaPlayerGS.h"
 #include "video/OCVMovie.h"
 
 // GUI
@@ -132,10 +133,8 @@ typedef SoundFMOD Sound;
 typedef AudioInputFMOD	AudioInput;
   
 // Video
-typedef MediaPlayerVLC MediaPlayer;
+//typedef MediaPlayerVLC MediaPlayer;
+typedef MediaPlayerGS MediaPlayer;
 
-// Common
-typedef  bool boolean;
-typedef  char byte;
 
 #endif // _Vision_H_

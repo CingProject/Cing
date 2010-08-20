@@ -30,6 +30,7 @@ namespace Cing
 {
 // Application setup
 void fullscreen ();
+void FSAA		( int fsaa );
 void size       ( int width, int height, GraphicMode mode = OPENGL );
 
 // Application control

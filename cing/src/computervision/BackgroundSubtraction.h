@@ -38,6 +38,14 @@ namespace Cing
 class BackgroundSubtraction
 {
 public:
+	
+	// Bg subtraction techniques
+	enum BgSubtractionTechnique
+	{
+		ABS_DIFF,
+		BRIGHTNESS
+	};
+
 
 	// Constructor / Destructor
 	BackgroundSubtraction();
@@ -51,7 +59,8 @@ public:
 	void	storeBackground	( const Image& backgroundImage );
 
 	// Configuration
-	void  setThreshold		( int threshold ) { m_thresholdFilter.setThreshold( threshold ); }
+	void	setThreshold		( int threshold ) { m_thresholdFilter.setThreshold( threshold ); }
+	void	setTechnique		( BgSubtractionTechnique technique ) { m_technique = technique; }
 
 	// Query  Methods
 	bool	isValid	() { return m_backgroundImage != NULL; }
@@ -70,6 +79,8 @@ private:
 	// Filters used
 	ImageDifferenceFilter		m_differenceFilter;
 	ImageThresholdFilter		m_thresholdFilter;
+
+	BgSubtractionTechnique		m_technique;
 };
 
 } // namespace Cing

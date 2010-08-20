@@ -25,7 +25,7 @@
 #include <string>
 
 // Macro to throw an an exception
-#define THROW_EXCEPTION(message) { throw Exception(message, __FILE__, __LINE__); }
+#define THROW_EXCEPTION(message, ...) { throw Exception(__FILE__, __LINE__, message, __VA_ARGS__ ); }
 
 
 namespace Cing
@@ -41,7 +41,7 @@ class Exception
 public:
 
     // Constructor / Destructor
-    Exception( const std::string& message, const char* fileName, int line );
+    Exception( const char* fileName, int line, const char* message, ... );
 
     // Queries
 

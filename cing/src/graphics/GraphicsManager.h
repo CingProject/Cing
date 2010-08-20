@@ -70,8 +70,9 @@ namespace Cing
 		void						draw                      ();
 
 		// App window setup
-		void						setup                     ( int windowWidth, int windowHeight, GraphicMode mode = OPENGL );
-		void						fullscreen                ()		{ m_fullscreen = true; }
+		void						setup						( int windowWidth, int windowHeight, GraphicMode mode = OPENGL );
+		void						fullscreen					()		{ m_fullscreen = true; }
+		void						FSAA						( int fsaa )		{ m_fsaa = fsaa; }
 
 		// Query methods
 		bool						isValid                   () const	{ return m_bIsValid; }
@@ -189,6 +190,7 @@ namespace Cing
 		GraphicMode                		m_defaultGraphicMode;
 		bool                       		m_setupCalled;        ///< True when the setup method has been already called
 		bool                       		m_fullscreen;         ///< If true, the applcation will run in full screen mode
+		int								m_fsaa;				/// < Antialiasing value (0..16). Depends on HW support
 
 		// Misc
 		DebugOverlay					m_debugOverlay;   ///< Debug overlay used to show debug information

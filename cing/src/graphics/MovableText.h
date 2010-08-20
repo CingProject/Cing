@@ -51,27 +51,32 @@ namespace Cing
 		virtual ~MovableText();
 
 		// Init / End
-		void init	(/*const String& caption, const String& fontName = Font::DEFAULT_FONT_NAME, float charHeight = 1.0, const Color& color = Color::White*/);
+		void init	( Ogre::SceneNode* parentNode = NULL /*const String& caption, const String& fontName = Font::DEFAULT_FONT_NAME, float charHeight = 1.0, const Color& color = Color::White*/);
 		void end	();
 
 		// Set settings
-		void    setFontName				(const String &fontName);
-		void    setCaption				(const Ogre::DisplayString& caption);
-		void    setColor				(const Color& color);
-		void    setCharacterHeight		(float height);
-		void    setSpaceWidth			(float width);
-		void	setWordWrap				(bool wordWrap) { mwordWrap = wordWrap; }
-		void    setTextAlignment		(int horizontalAlignment, int verticalAlignment);
-		void    setGlobalTranslation	( const Vector& trans );
-		void    setLocalTranslation		( const Vector& trans );
-		void	setRotation				( const Vector& rotation );
-		void	setRotation				( const Quaternion& quat );
-		void	setScale				( const Vector& scale );
-		void	show					( bool show = true );
-		void    showOnTop				( bool show = true );
-		void	setAlwaysFaceCamera		( bool alwaysFaceCamera ) { mAlwaysFaceCamera = alwaysFaceCamera; }
-		void	setTextAreaWidth		( float width );
-		void	setTextAreaHeight		( float height );
+		void    setFontName					(const String &fontName);
+		void    setCaption					(const Ogre::DisplayString& caption);
+		void    setText						(const Ogre::DisplayString& text) { setCaption(text); }
+		void    setColor					(const Color& color);
+		void    setCharacterHeight			(float height);
+		void    setSpaceWidth				(float width);
+		void	setWordWrap					(bool wordWrap) { mwordWrap = wordWrap; }
+		void    setTextAlignment			(int horizontalAlignment, int verticalAlignment);
+		void    setPosition					( float x, float y );
+		void    setPosition					( float x, float y, float z );
+		void    setPosition					( const Vector& pos ) { setPosition( pos.x, pos.y, pos.z ); }
+		void	setRotation					( const Vector& rotation );
+		void	setRotation					( const Quaternion& quat );
+		void	setScale					( float x, float y );
+		void	setScale					( float x, float y, float z );
+		void	setScale					( const Vector& scale ) { setScale (scale.x, scale.y, scale.z); }
+		void	show						( bool show = true );
+		void    showOnTop					( bool show = true );
+		void	setAlwaysFaceCamera			( bool alwaysFaceCamera ) { mAlwaysFaceCamera = alwaysFaceCamera; }
+		void	setTextAreaWidth			( float width );
+		void	setTextAreaHeight			( float height );
+		void	setBackgroundTransparency	( float transparency );
 
 		// Get settings
 		bool            				isValid					() const	{ return m_bIsValid;   }
@@ -81,13 +86,11 @@ namespace Cing
 		float							getCharacterHeight		() const 	{ return mCharHeight; }
 		float							getSpaceWidth			() const 	{ return mSpaceWidth; }
 		bool							getWordWrap				() const 	{ return mwordWrap; }
-		Vector							getGlobalTranslation	() const 	{ return mGlobalTranslation; }
-		Vector							getLocalTranslation		() const 	{ return mLocalTranslation; }
 		bool							getShowOnTop			() const 	{ return mOnTop; }
 		bool							getAlwaysFaceCamera		() const	{ return mAlwaysFaceCamera; }
 		AABox							getAABB					()			{ return mAABB; }
 		Ogre::Node*						getNode					()			{ return mParentNode; }
-		const Vector&					getScale				() const	{ return mScale; }				
+		const Vector&					getScale				() const	{ return mScale; }
 
 		bool							isVisible				() const	{ return MovableObject::isVisible(); }
 
@@ -140,6 +143,8 @@ namespace Cing
 		void	advanceWord			( Ogre::DisplayString::iterator& it, const Ogre::DisplayString::iterator& end  );
 		void	calculateLineLeft	( const Ogre::DisplayString::iterator& currentIt, const Ogre::DisplayString::iterator& iend, const ForcedLineBreaks& forcedLineBreaks, float& left, float& lineLength );
 		void	drawCharacter		( float*& pVert, const Ogre::Font::CodePoint& character, float& top, float& left, float& lineLength );
+		void	set2dRendering		();
+		void	set3dRendering		();
 
 
 		// Static attributes
@@ -169,9 +174,6 @@ namespace Cing
 
 		float						mTimeUntilNextToggle;
 		float						mRadius;
-
-		Vector            			mGlobalTranslation;
-		Vector            			mLocalTranslation;
 		Vector						mScale;
 		Matrix3						mLocalRotation;
 
@@ -189,7 +191,9 @@ namespace Cing
 		float						mViewportAspectCoef;
 		bool						mwordWrap;
 		bool						mAlwaysFaceCamera;
+		bool						mRender2D;
 		bool						m_bIsValid;
+
 
 
 	};

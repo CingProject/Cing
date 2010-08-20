@@ -127,9 +127,6 @@ namespace Cing
 		// Add a new font (to be rendered later)
 		MovableText* newText = getNewText();
 
-		// Set properties for the new text
-		newText->init();
-
 		// Font properties
 		newText->setFontName( m_activeFontProperties.fontName );
 		newText->setCharacterHeight( m_activeFontProperties.size );
@@ -153,14 +150,14 @@ namespace Cing
 		// Control current coordinate system
 		if ( GraphicsManager::getSingleton().isProcessingMode() )
 		{
-			newText->getParentNode()->setPosition( t.getPosition() + fontPos );	
-			newText->getParentNode()->setScale( t.getScale() * Vector( 1, -1, 1 ) );
+			newText->setPosition( t.getPosition() + fontPos );	
+			newText->setScale( t.getScale() );
 			newText->getParentNode()->setOrientation( t.getRotQuaternion().Inverse() );
 		}
 		else
 		{
-			newText->getParentNode()->setPosition( t.getPosition() + fontPos );	
-			newText->getParentNode()->setScale( 1, 1, 1 );
+			newText->setPosition( t.getPosition() + fontPos );	
+			newText->setScale( t.getScale() );
 			newText->getParentNode()->setOrientation( t.getRotQuaternion() );
 		}
 
@@ -189,8 +186,7 @@ namespace Cing
 		//ogreSceneManager->getRootSceneNode()->attachObject( m_activeFontsToRender.back() );
 
 		// Using individual scene nodes
-		Ogre::SceneNode* parentNode = ogreSceneManager->getRootSceneNode()->createChildSceneNode();
-		parentNode->attachObject( m_activeFontsToRender.back() );
+		m_activeFontsToRender.back()->init( ogreSceneManager->getRootSceneNode()->createChildSceneNode() );
 
 		// Return it
 		return m_activeFontsToRender.back();

@@ -20,6 +20,7 @@
 			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
 			IntermediateDirectory="obj\$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="..\..\cing\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Debug.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -104,6 +105,7 @@
 			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
 			IntermediateDirectory="obj\$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="..\..\cing\build\win\visualStudio_2008\CingExample_VS90PropertySheet_Release.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>

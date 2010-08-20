@@ -253,11 +253,15 @@ void CameraController::keyboardControl()
 
 	// Rotate camera upwards.
 	if(keyboard.isKeyDown(OIS::KC_UP))
-		m_cameraPitchNode->pitch(m_rotateScale);
+		//m_cameraPitchNode->pitch(m_rotateScale);
+		m_cameraNode->setPosition(m_cameraNode->getPosition() + Ogre::Vector3(0, 5, 0));
+
 
 	// Rotate camera downwards.
 	if(keyboard.isKeyDown(OIS::KC_DOWN))
-		m_cameraPitchNode->pitch(-(m_rotateScale));
+		//m_cameraPitchNode->pitch(-(m_rotateScale));
+		m_cameraNode->setPosition(m_cameraNode->getPosition() - Ogre::Vector3(0, 5, 0));
+
 
 	// Strip all rotation to the camera.
 	if(keyboard.isKeyDown(OIS::KC_R))

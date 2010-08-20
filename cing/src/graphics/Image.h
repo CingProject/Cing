@@ -53,24 +53,31 @@ namespace Cing
 		~Image			();
 
 		// Init / Release / Update / Save / Clone
-		void		init  ( int width, int height, GraphicsType format = RGB );
-		void		init  ( const Image& img );
-		void		load  ( const std::string& name );
-		void		save	( const std::string& name );
-		void		end		();
+		void		init				( int width, int height, GraphicsType format = RGB );
+		void		initAsRenderTarget	( int width, int height );
+		void		init				( const Image& img );
+		void		load				( const std::string& name );
+		void		save				( const std::string& name );
+		void		end					();
 
 		// Image data
 		void		setData( char* imageData, int width, int height, GraphicsType format );
 		char*		getData() { return isValid()? m_cvImage->imageData: NULL; }
-		Image*	clone ();
+		Image*		clone ();
+
+		// Transformations
+		void		setOrientation	( const Vector& axis, float angle );
+		void		rotate			( const Vector& axis, float angle );
+		void		setScale		( float xScale, float yScale, float zScale );
 
 		// Draw on scene
 		void	draw	( float xPos, float yPos, float zPos );
 		void	draw	( float xPos, float yPos, float zPos, float width, float height );
 		void	draw	( float x1, float y1, float z1,	float x2, float y2, float z2,
-			float x3, float y3, float z3,	float x4, float y4, float z4);
+						  float x3, float y3, float z3,	float x4, float y4, float z4);
 		void	draw2d( float xPos, float yPos );
 		void	draw2d( float xPos, float yPos, float width, float height );
+		void	draw2d( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
 
 		void  drawBackground( float xPos, float yPos, float width, float height );
 
@@ -108,6 +115,7 @@ namespace Cing
 		int				getNChannels() const	{ return m_nChannels; }
 		Color			getPixel	( int x, int y );
 		Ogre::TexturePtr getOgreTexture() { return m_quad.getOgreTexture(); }
+		TexturedQuad&	getTexturedQuad() { return m_quad; }
 
 		// Operators and operations
 		void operator =	( const Image& other );
@@ -136,12 +144,13 @@ namespace Cing
 		static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
 		static ImageThresholdFilter    m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
 
-		IplImage*		  m_cvImage;				///< Contains the image compatible with openCV
-		Ogre::Image		m_image;					///< Contains the image data (loaded from file or dynamically created)
-		int						m_nChannels;			///< Number of channels of the image
-		bool					m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
-		bool					m_bVFlip;					///< True if the image texture coordinates are flipped vertically 
-		bool					m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
+		IplImage*						m_cvImage;			///< Contains the image compatible with openCV
+		Ogre::Image						m_image;			///< Contains the image data (loaded from file or dynamically created)
+		int								m_nChannels;		///< Number of channels of the image
+		bool							m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
+		bool							m_bVFlip;			///< True if the image texture coordinates are flipped vertically 
+		bool							m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
+		GraphicsType					m_format;			///< Format of the image
 	};
 
 } // namespace Cing

@@ -39,8 +39,12 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 namespace Cing
 {
+	// Forward declarations
+	class String;
+
 	/// String utils
 	std::string intToString(int inputNumber);
+	int			stringToInt(const String& str);
 
 
 	/**
@@ -58,7 +62,7 @@ namespace Cing
 		char				charAt		( int index );
 		int					indexOf		( const std::string& str );
 		int					indexOf		( const std::string& str, int fromIndex );
-		int					length		() { return (int)size(); }
+		int					length		() const { return (int)size(); }
 		String				substring	( int beginIndex );
 		String				substring	( int beginIndex, int endIndex );
 		const char*			toChar		() const { return c_str(); }
@@ -71,6 +75,7 @@ namespace Cing
 		// Modify string
 		void toLowerCases	();
 		void toUpperCases	();
+		void replaceSubStr	( const String& subStrToFind, const String& subStrToReplace );
 	};
 
 } // namespace Cing

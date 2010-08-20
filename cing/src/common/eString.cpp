@@ -35,6 +35,16 @@ std::string intToString(int inputNumber)
 	return s.str();
 }
 
+/// Converts a string to int
+int stringToInt(const String& str)
+{
+	int intNumber;
+	std::stringstream s(str);
+	s >> intNumber;
+	return intNumber;
+}
+
+
 
 
 /**
@@ -110,6 +120,20 @@ String String::substring( int beginIndex, int endIndex ) {
 	String result = this->substr( beginIndex, endIndex).c_str();
 	return result;
 }
+
+
+void String::replaceSubStr( const String& subStrToFind, const String& subStrToReplace )
+{
+  std::string::size_type pos = 0;
+
+  while((pos = find(subStrToFind, pos)) != std::string::npos)
+  {
+    replace(pos, subStrToFind.length(), subStrToReplace);
+    pos += subStrToReplace.length();
+  }
+}
+
+
 
 /*Ogre::UTFString String::toUTF() const
 {

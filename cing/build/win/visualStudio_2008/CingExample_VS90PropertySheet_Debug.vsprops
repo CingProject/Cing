@@ -9,7 +9,7 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		Optimization="0"
-		AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008"
+		AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008;&quot;..\..\cing\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\cing\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\cing\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\cing\libraries\win\visualStudio2008\GStreamer\include"
 		PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 		RuntimeLibrary="3"
 		WarningLevel="3"
@@ -17,8 +17,8 @@
 	/>
 	<Tool
 		Name="VCLinkerTool"
-		AdditionalDependencies="OgreMain_d.lib OIS_d.lib cv210_d.lib cvaux210_d.lib cxcore210_d.lib highgui210_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libconvexdecomposition_d.lib videoInput.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib OgreCollada_d.lib LibXML_d.lib FCollada_d.lib libvlc.dll.a libvlccore.dll.a tinyxml_STL_d.lib"
-		AdditionalLibraryDirectories="..\..\cing\libraries\win\visualStudio2008\BetaCairo\lib;..\..\cing\libraries\win\visualStudio2008\Bullet\lib;..\..\cing\libraries\win\visualStudio2008\cairo\lib;..\..\cing\libraries\win\visualStudio2008\Fmod\lib;..\..\cing\libraries\win\visualStudio2008\Ogre3d\lib;..\..\cing\libraries\win\visualStudio2008\OgreBullet\lib;..\..\cing\libraries\win\visualStudio2008\OpenCV\lib;..\..\cing\libraries\win\visualStudio2008\PortVideo\lib;..\..\cing\libraries\win\visualStudio2008\PTypes\lib;..\..\cing\libraries\win\visualStudio2008\RtMidi\lib;..\..\cing\libraries\win\visualStudio2008\VideoInput\lib;..\..\cing\libraries\win\visualStudio2008\OgreCollada\lib;..\..\cing\libraries\win\visualStudio2008\LibVLC\lib;..\..\cing\libraries\win\visualStudio2008\TinyXML\lib"
+		AdditionalDependencies="OgreMain_d.lib OIS_d.lib cv210_d.lib cvaux210_d.lib cxcore210_d.lib highgui210_d.lib ptypes_d.lib portVideoSDL_d.lib OgreBulletCollisions_d.lib OgreBulletDynamics_d.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libconvexdecomposition_d.lib videoInput.lib fmodex_vc.lib CEGUIBase_d.lib OgreGUIRenderer_d.lib RtMidi_d.lib winmm.lib OgreCollada_d.lib LibXML_d.lib FCollada_d.lib libvlc.dll.a libvlccore.dll.a tinyxml_STL_d.lib gstreamer-0.10.lib gthread-2.0.lib glib-2.0.lib gobject-2.0.lib gstvideo-0.10.lib gstapp-0.10.lib gstbase-0.10.lib"
+		AdditionalLibraryDirectories="..\..\cing\libraries\win\visualStudio2008\BetaCairo\lib;..\..\cing\libraries\win\visualStudio2008\Bullet\lib;..\..\cing\libraries\win\visualStudio2008\cairo\lib;..\..\cing\libraries\win\visualStudio2008\Fmod\lib;..\..\cing\libraries\win\visualStudio2008\Ogre3d\lib;..\..\cing\libraries\win\visualStudio2008\OgreBullet\lib;..\..\cing\libraries\win\visualStudio2008\OpenCV\lib;..\..\cing\libraries\win\visualStudio2008\PortVideo\lib;..\..\cing\libraries\win\visualStudio2008\PTypes\lib;..\..\cing\libraries\win\visualStudio2008\RtMidi\lib;..\..\cing\libraries\win\visualStudio2008\VideoInput\lib;..\..\cing\libraries\win\visualStudio2008\OgreCollada\lib;..\..\cing\libraries\win\visualStudio2008\LibVLC\lib;..\..\cing\libraries\win\visualStudio2008\TinyXML\lib;..\..\cing\libraries\win\visualStudio2008\GStreamer\lib"
 		IgnoreDefaultLibraryNames="atlthunk;libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib;"
 		GenerateDebugInformation="true"
 	/>

@@ -61,69 +61,69 @@ public:
 	virtual void      end         			();
 
 	// Query methods
-	bool              isValid     			() const { return m_bIsValid; }
-	Ogre::SceneNode*  getSceneNode			() { return m_sceneNode;			}
-	Ogre::Entity*			getEntity					() { return m_entity;					}
-	const std::string getName						() { return m_objectName;			}
-	Object3DType			getType						() { return m_type;						}
-	const Vector&			getPosition				();
+	bool				isValid     			() const { return m_bIsValid; }
+	Ogre::SceneNode*	getSceneNode			() { return m_sceneNode;			}
+	Ogre::Entity*		getEntity					() { return m_entity;					}
+	const std::string	getName						() { return m_objectName;			}
+	Object3DType		getType						() { return m_type;						}
+	const Vector&		getPosition				();
 	const Quaternion&	getOrientation		() const;
 
 	// Set methods
-	void							setType						( Object3DType type ) { m_type = type; }
+	void				setType						( Object3DType type ) { m_type = type; }
 
-	void              setPosition 			( float x, float y, float z );
-	void              setPosition 			( float x, float y );
-	void              setPosition 			( const Vector& pos );
+	void              	setPosition 			( float x, float y, float z );
+	void              	setPosition 			( float x, float y );
+	void              	setPosition 			( const Vector& pos );
 
-	void							setOrientation		( const Quaternion& orientation );
-	void							setOrientation		( const Vector& axis, float angle );
+	void				setOrientation		( const Quaternion& orientation );
+	void				setOrientation		( const Vector& axis, float angle );
 
-	void							rotate						( const Vector& axis, float angle );
-	void							rotate						( const Quaternion& quat );
+	void				rotate						( const Vector& axis, float angle );
+	void				rotate						( const Quaternion& quat );
 
-	void              setScale    			( float xScale, float yScale, float zScale );
-	void              setScale    			( float xScale, float yScale );
-	void              setScale    			( float scale );
-	void              setScale    			( const Vector& scale );
+	void              	setScale    			( float xScale, float yScale, float zScale );
+	void              	setScale    			( float xScale, float yScale );
+	void              	setScale    			( float scale );
+	void              	setScale    			( const Vector& scale );
 
-	void              lookAt 						( Object3D& objectToTrack );
+	void				lookAt 						( Object3D& objectToTrack );
 
-	void							setAmbientColor		( const Color& color );
-	void							setAmbientColor		( const Color& color, int alpha );
-	void							setAmbientColor		( int gray );
-	void							setAmbientColor		( int gray, int alpha );
-	void							setAmbientColor		( int value1, int value2, int value3 );
-	void							setAmbientColor		( int value1, int value2, int value3, int alpha );
+	void				setAmbientColor		( const Color& color );
+	void				setAmbientColor		( const Color& color, int alpha );
+	void				setAmbientColor		( int gray );
+	void				setAmbientColor		( int gray, int alpha );
+	void				setAmbientColor		( int value1, int value2, int value3 );
+	void				setAmbientColor		( int value1, int value2, int value3, int alpha );
 
-	void							setDiffuseColor		( const Color& color );
-	void							setDiffuseColor		( const Color& color, int alpha );
-	void							setDiffuseColor		( int gray );
-	void							setDiffuseColor		( int gray, int alpha );
-	void							setDiffuseColor		( int value1, int value2, int value3 );
-	void							setDiffuseColor		( int value1, int value2, int value3, int alpha );
+	void				setDiffuseColor		( const Color& color );
+	void				setDiffuseColor		( const Color& color, int alpha );
+	void				setDiffuseColor		( int gray );
+	void				setDiffuseColor		( int gray, int alpha );
+	void				setDiffuseColor		( int value1, int value2, int value3 );
+	void				setDiffuseColor		( int value1, int value2, int value3, int alpha );
 
-	void							setSpecularColor	( const Color& color );
-	void							setSpecularColor	( const Color& color, int alpha );
-	void							setSpecularColor	( int gray );
-	void							setSpecularColor	( int gray, int alpha );
-	void							setSpecularColor	( int value1, int value2, int value3 );
-	void							setSpecularColor	( int value1, int value2, int value3, int alpha );
+	void				setSpecularColor	( const Color& color );
+	void				setSpecularColor	( const Color& color, int alpha );
+	void				setSpecularColor	( int gray );
+	void				setSpecularColor	( int gray, int alpha );
+	void				setSpecularColor	( int value1, int value2, int value3 );
+	void				setSpecularColor	( int value1, int value2, int value3, int alpha );
 
-	void							setSelfIlluminationColor	( const Color& color );
-	void							setSelfIlluminationColor	( const Color& color, int alpha );
-	void							setSelfIlluminationColor	( int gray );
-	void							setSelfIlluminationColor	( int gray, int alpha );
-	void							setSelfIlluminationColor	( int value1, int value2, int value3 );
-	void							setSelfIlluminationColor	( int value1, int value2, int value3, int alpha );
+	void				setSelfIlluminationColor	( const Color& color );
+	void				setSelfIlluminationColor	( const Color& color, int alpha );
+	void				setSelfIlluminationColor	( int gray );
+	void				setSelfIlluminationColor	( int gray, int alpha );
+	void				setSelfIlluminationColor	( int value1, int value2, int value3 );
+	void				setSelfIlluminationColor	( int value1, int value2, int value3, int alpha );
 
-	void							setTexture								( const std::string& textureFileName );
-	void							setMaterial								( const std::string& materialName );
+	void				setTexture								( const std::string& textureFileName );
+	void				setMaterial								( const std::string& materialName );
 
-	void							setVisible								( bool visible );
+	void				setVisible								( bool visible );
 
 	// Debug methods
-	void							showBoundingBox						( bool show );
+	void				showBoundingBox						( bool show );
 
 
 	// Public Const static attributes
@@ -136,15 +136,15 @@ private:
 	void duplicateMaterial();
 
 	// Constant / static attributes
-	static long       m_objectCounter;///< Used to generate unique names for the 3d objects
+	static long				m_objectCounter;///< Used to generate unique names for the 3d objects
 
 	// Attributes
-	Ogre::SceneNode* 					m_sceneNode;		///< Node in the scene manager where the object is placed
-	Ogre::Entity*    					m_entity;				///< Ogre entity that represents the model
-	Ogre::MaterialPtr					m_materialCopy;	///< Entity's material copy (to allow this object to have a specific color)
-	std::string       				m_objectName;		///< Unique object name
-	Object3DType							m_type;					///< Type of 3d object
-	bool              				m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	Ogre::SceneNode* 		m_sceneNode;		///< Node in the scene manager where the object is placed
+	Ogre::Entity*    		m_entity;				///< Ogre entity that represents the model
+	Ogre::MaterialPtr		m_materialCopy;	///< Entity's material copy (to allow this object to have a specific color)
+	std::string       		m_objectName;		///< Unique object name
+	Object3DType			m_type;					///< Type of 3d object
+	bool              		m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

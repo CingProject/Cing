@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include"
+				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				MinimalRebuild="true"
 				ExceptionHandling="2"
@@ -115,7 +115,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;..\..\..\..\libraries\win\visualStudio2008\"
+				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				StringPooling="false"
 				MinimalRebuild="false"
@@ -124,7 +124,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1049,6 +1049,14 @@
 					Name="Source Files"
 					>
 					<File
+						RelativePath="..\..\..\..\src\video\GStreamerManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\video\MediaPlayerGS.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.cpp"
 						>
 					</File>
@@ -1060,6 +1068,14 @@
 				<Filter
 					Name="Header Files"
 					>
+					<File
+						RelativePath="..\..\..\..\src\video\GStreamerManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\video\MediaPlayerGS.h"
+						>
+					</File>
 					<File
 						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.h"
 						>

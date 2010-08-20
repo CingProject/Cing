@@ -36,17 +36,18 @@ namespace Cing
   class XMLVisitor: public TiXmlVisitor
   {
   public:
-    XMLVisitor( XMLElement::XMLDocSharedPtr& xmlDoc, XMLElement::XMLElementArray& children, const String& path = "NO_PATH" );
+    XMLVisitor( XMLElement::XMLDocSharedPtr& xmlDoc, const TiXmlElement& root , XMLElement::XMLElementArray& children, const String& path = "NO_PATH" );
     virtual ~XMLVisitor() {}
 
     /// Visit an element.
     virtual bool VisitEnter( const TiXmlElement& element, const TiXmlAttribute* firstAttribute );
 
     // Attributes
-    XMLElement::XMLDocSharedPtr&  m_xmlDoc;
-    XMLElement::XMLElementArray&  m_children;
-    const String&                 m_path;
-    std::vector< std::string >    m_tokens;
+    XMLElement::XMLDocSharedPtr&	m_xmlDoc;
+    XMLElement::XMLElementArray&	m_children;
+    const String&					m_path;
+	const TiXmlElement&				m_root; /// < Root node of the tree to visit (used because TinyXml also walks the visitor through the first node, the parent)
+    std::vector< std::string >		m_tokens;
   };
 
 } // namespace Cing

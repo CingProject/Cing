@@ -84,6 +84,7 @@ m_defaultWindowWidth( 640 ),
 m_defaultWindowHeight( 480 ),
 m_defaultGraphicMode( OPENGL ),
 m_fullscreen( false ),
+m_fsaa(0),
 m_saveFrame(false)
 {
 }
@@ -268,9 +269,11 @@ void GraphicsManager::draw()
 
 	// Update the background image
 	m_canvas->drawBackground(	0,
-		0,
-		m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
-		m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
+								0,
+								m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
+								m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
+	m_canvas->getTexturedQuad().setRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
+
 
 	// Update 3d primitive drawing	( shape, lines,...)
 	ShapeManager::getSingleton().update();
@@ -370,6 +373,18 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 	// Configure rest of the settings depending on the rendering system selected
 	if ( mode == OPENGL )
 	{
+		// Get list of options for this render system
+		// TODO: This could be used to create a custom settings setup to make it easy to configur for users
+		Ogre::ConfigOptionMap opts;
+		opts = selectedRenderSystem->getConfigOptions();
+		Ogre::ConfigOptionMap::iterator pOpt = opts.begin();
+        String strLine;
+        while( pOpt!= opts.end() )
+        {
+            strLine = pOpt->second.name + ": " + pOpt->second.currentValue;
+            ++pOpt;
+        }
+
 		// Generate the video mode string
 		std::ostringstream videoMode;
 		videoMode << windowWidth << " x " << windowHeight;;
@@ -381,9 +396,11 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 
 		// Set render system settings specified by user
 		// TODO: Make all options available to user
+		// RTT possible values: FBO, PBuffer, Copy
+		selectedRenderSystem->setConfigOption( "RTT Preferred Mode", "FBO" );
 		selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
-		selectedRenderSystem->setConfigOption( "VSync","Yes" );
-
+		selectedRenderSystem->setConfigOption( "VSync","No" );
+		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
 	}
 	else if ( mode == DIRECTX )
 	{
@@ -398,7 +415,16 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 
 		// Rest options with default values
 		selectedRenderSystem->setConfigOption("VSync","Yes");
+		// TODO: Ogre 1.7 normalizes the Antialiasing among DX and OpenGL -> use it
+		//selectedRenderSystem->setConfigOption( "Anti aliasing","Level 8" );
+		selectedRenderSystem->setConfigOption( "Floating-point mode","Consistent" );
+	}
 
+	// Validate render system options
+	String optionsStatus = selectedRenderSystem->validateConfigOptions();
+	if ( optionsStatus != "" )
+	{
+		LOG_ERROR( "Invalid Render System Options. Error: %s", optionsStatus.toChar() );
 	}
 
 

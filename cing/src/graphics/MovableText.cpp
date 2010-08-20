@@ -19,6 +19,9 @@
 #include "Ogre3d/include/Ogre.h"
 #include "Ogre3d/include/OgreFontManager.h"
 
+// Graphics
+#include "graphics/GraphicsManager.h"
+
 namespace Cing
 {
 long MovableText::count = 0;
@@ -27,11 +30,11 @@ MovableText::MovableText() :
 	mpCam(NULL)
 	, mpWin(NULL)
 	, mpFont(NULL)
-	, mName(""), mCaption(""), mFontName(""), mCharHeight(16), mColor(Color::White), mType("MovableText"),
+	, mName(""), mCaption(""), mFontName(""), mCharHeight(Font::DEFAULT_FONT_SIZE), mColor(Color::White), mType("MovableText"),
 			mTimeUntilNextToggle(0), mSpaceWidth(0), mUpdateColors(true), mOnTop(false), mHorizontalAlignment(LEFT),
-			mVerticalAlignment(TOP), mGlobalTranslation(0.0), mLocalTranslation(0.0), m_textAreaWidth(-1),
-			m_textAreaHeight(-1), mAllocSize(0), mwordWrap(true), mAlwaysFaceCamera(false), m_bIsValid(false),
-			m_maxSquaredRadius(-1)
+			mVerticalAlignment(TOP), m_textAreaWidth(-1),
+			m_textAreaHeight(-1), mAllocSize(0), mwordWrap(true), mAlwaysFaceCamera(false), mRender2D(false), m_bIsValid(false),
+			m_maxSquaredRadius(-1), mScale( Vector::UNIT_SCALE )
 {
 
 	// Create unique name
@@ -44,7 +47,7 @@ MovableText::~MovableText()
 	end();
 }
 
-void MovableText::init(/*const String &caption, const String &fontName, float charHeight, const Color &color*/)
+void MovableText::init( Ogre::SceneNode* parentNode /*= NULL*/ /*const String &caption, const String &fontName, float charHeight, const Color &color*/)
 {
 	// Only init once
 	if ( !isValid() )
@@ -72,16 +75,21 @@ void MovableText::init(/*const String &caption, const String &fontName, float ch
 		// Note: Vertex buffer will be created in checkMemoryAllocation
 		checkMemoryAllocation(DEFAULT_INITIAL_CHARS);
 
+		// Attatch to parent scene node
+		if ( parentNode == NULL )
+			parentNode = ogreSceneManager->getRootSceneNode()->createChildSceneNode();
+		parentNode->attachObject( this );
+
 		// Set default font for now
-		setFontName("DefaultFont");
+		setFontName(Font::DEFAULT_FONT_NAME);
+
+		// On top by default
+		showOnTop(true);
 
 		m_bIsValid = true;
 	}
 
 	// Reset vars
-	mLocalTranslation = Vector::ZERO;
-	mGlobalTranslation = Vector::ZERO;
-	mScale = Vector::UNIT_SCALE;
 	mLocalRotation = Matrix3::IDENTITY;
 }
 
@@ -117,6 +125,12 @@ void MovableText::setFontName( const String &fontName )
 	mpMaterial->setDepthCheckEnabled(false);
 	mpMaterial->setLightingEnabled(false);
 	mpMaterial->setCullingMode( Ogre::CULL_NONE );
+			
+	
+	// set 2d rendering by default
+	set2dRendering();
+
+
 	mNeedUpdate = true;
 }
 
@@ -174,6 +188,43 @@ void MovableText::setTextAreaHeight( float height )
 	}
 }
 
+void MovableText::setBackgroundTransparency( float transparency )
+{
+	// Semitransparent background for the text
+	mpMaterial->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAlphaOperation(	Ogre::LBX_ADD_SIGNED,
+																						Ogre::LBS_TEXTURE, 
+																						Ogre::LBS_MANUAL, 
+																						transparency);
+}
+
+
+void MovableText::setPosition( float x, float y )
+{
+	// Calculate position depending on the current camera setting
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+	{
+		y = height - y;
+		getParentNode()->setScale( getParentNode()->getScale() * Vector(1, -1, 1) );
+	}
+
+	float _2dXPos = (x / (float)width) * 2.0f - 1;
+	float _2dYPos = -((y / (float)height) * 2.0f - 1);
+	getParentNode()->setPosition( _2dXPos, _2dYPos, 0 );
+
+	// set 2D rendering
+	set2dRendering();
+}
+
+
+void MovableText::setPosition( float x, float y, float z )
+{		
+	getParentNode()->setPosition( x, y, z );
+
+	// set 3d rendering
+	set3dRendering();
+}
+
+
 void MovableText::setTextAlignment( int horizontalAlignment, int verticalAlignment )
 {
 	if ( mHorizontalAlignment != horizontalAlignment )
@@ -188,16 +239,6 @@ void MovableText::setTextAlignment( int horizontalAlignment, int verticalAlignme
 	}
 }
 
-void MovableText::setGlobalTranslation( const Vector& trans )
-{
-	mGlobalTranslation = trans;
-}
-
-void MovableText::setLocalTranslation( const Vector& trans )
-{
-	mLocalTranslation = trans;
-}
-
 void MovableText::setRotation( const Vector& rotation )
 {
 	// Build quaterniotn to build then rot matrix
@@ -210,9 +251,28 @@ void MovableText::setRotation( const Quaternion& quat )
 	quat.ToRotationMatrix(mLocalRotation);
 }
 
-void MovableText::setScale( const Vector& scale )
+void MovableText::setScale( float x, float y )
 {
-	mScale = scale;
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+		y *= -1;
+
+	mScale.x = x;
+	mScale.y = y;
+	mScale.z = 1;
+	getParentNode()->setScale( mScale );
+}
+
+
+
+void MovableText::setScale( float x, float y, float z )
+{
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+		y *= -1;
+
+	mScale.x = x;
+	mScale.y = y;
+	mScale.z = z;
+	getParentNode()->setScale( mScale );
 }
 
 void MovableText::show( bool show /*= true*/)
@@ -511,18 +571,14 @@ void MovableText::getWorldTransforms( Matrix4 *xform ) const
 		// store rotation in a matrix
 		mpCam->getDerivedOrientation().ToRotationMatrix(rot3x3);
 
-		// parent node position
-		Vector ppos = mParentNode->_getDerivedPosition() + mGlobalTranslation;
-		ppos += rot3x3 * mLocalTranslation;
-
 		// apply scale
-		scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2 * mScale.x;
-		scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2 * mScale.y;
-		scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2 * mScale.z;
+		scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2;
+		scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2;
+		scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2;
 
 		// apply all transforms to xform
-		*xform = (rot3x3 * mLocalRotation * scale3x3);
-		xform->setTrans(ppos);
+		*xform = (rot3x3 * scale3x3);
+		xform->setTrans(mParentNode->_getDerivedPosition());
 	}
 	// 3d -> rotations allowed
 
@@ -530,9 +586,9 @@ void MovableText::getWorldTransforms( Matrix4 *xform ) const
 	{
 		// apply scale from parent (divided by 2... TODO: not sure why is necessary)
 		Matrix3 rot3x3, scale3x3 = Matrix3::IDENTITY;
-		scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2 * mScale.x;
-		scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2 * mScale.y;
-		scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2 * mScale.z;
+		scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2;
+		scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2;
+		scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2;
 
 		// parent node rotation
 		mParentNode->_getDerivedOrientation().ToRotationMatrix(rot3x3);
@@ -540,14 +596,9 @@ void MovableText::getWorldTransforms( Matrix4 *xform ) const
 		// TEMP hasta que se ajuste sistema de coordenadas global!!!
 		//mpCam->getDerivedOrientation().ToRotationMatrix(rot3x3);
 
-		// parent node position
-		Vector parentPos = mParentNode->_getDerivedPosition();
-		Vector ppos =  parentPos + mGlobalTranslation;
-		ppos += rot3x3 * mLocalTranslation;
-
 		// apply all transforms (scale + translation)to xform
-		*xform = (rot3x3 * mLocalRotation * scale3x3);
-		xform->setTrans(ppos);
+		*xform = (rot3x3 * scale3x3);
+		xform->setTrans(mParentNode->_getDerivedPosition());
 
 		// FIRST TIME TRIED (Working)
 		//*xform = mParentNode->_getFullTransform();
@@ -615,10 +666,12 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 
 			else
 			{
-				// Wordwrap is activated -> check whole words
-				if ( mwordWrap )
+				// Get the length of the next word
+				float nextWordLength = getWordLength(i, mCaption.end());
+
+				// Wordwrap is activated -> check whole words (only if possible, maybe the word itself is longer than textarea width)
+				if ( mwordWrap && (nextWordLength < m_textAreaWidth))
 				{
-					float nextWordLength = getWordLength(i, mCaption.end());
 					// have to break the line?
 					if ( (lineLength + nextWordLength) > m_textAreaWidth )
 						breakToWrapWord = true;
@@ -662,7 +715,7 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 float MovableText::getWordLength( Ogre::DisplayString::iterator it, const Ogre::DisplayString::iterator& end )
 {
 	float length = 0;
-	while (!IsNewLine(*it) && !IsSpace(*it) && (it != end))
+	while ( (it != end) && !IsNewLine(*it) && !IsSpace(*it) )
 	{
 		length += mpFont->getGlyphAspectRatio(*it) * mCharHeight;
 		++it;
@@ -673,7 +726,7 @@ float MovableText::getWordLength( Ogre::DisplayString::iterator it, const Ogre::
 
 void MovableText::advanceWord( Ogre::DisplayString::iterator& it, const Ogre::DisplayString::iterator& end )
 {
-	while (!IsNewLine(*(it + 1)) && !IsSpace(*(it + 1)) && ((it + 1) != end))
+	while ( ((it + 1) != end) && !IsNewLine(*(it + 1)) && !IsSpace(*(it + 1)))
 		++it;
 }
 
@@ -847,6 +900,55 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 
 	// Go back up with top
 	top += mCharHeight * 2.0;
+}
+
+
+void MovableText::set2dRendering()
+{
+	if ( mRender2D == false )
+	{
+		// Set render properties
+		setUseIdentityProjection(true);
+		setUseIdentityView(true);
+		setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
+
+		// Adjust scale
+		float scaleFactor = (mCharHeight / (float)height) / 2.0f;
+
+		mScale.x *= scaleFactor;
+		mScale.y *= scaleFactor;
+		mScale.z = 1;
+
+		setScale( mScale.x, mScale.y );
+		
+		mRender2D = true;
+	}
+
+	// Note: This is outside the if, becuase it is overriden every frame... (fix this!)
+	mAABB.setInfinite();
+}
+
+void MovableText::set3dRendering()
+{
+	// set 3d rendering
+	if ( mRender2D == true )
+	{
+		// Set render properties
+		setUseIdentityProjection(false);
+		setUseIdentityView(false);
+
+		// Adjust scale
+		float scaleFactor = (mCharHeight / (float)height);
+
+		mScale.x /= scaleFactor;
+		mScale.y /= scaleFactor;
+		mScale.z = 1;
+
+		setScale( mScale );
+
+		mRender2D = false;
+	}
+	
 }
 
 }

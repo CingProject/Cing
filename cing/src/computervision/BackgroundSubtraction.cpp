@@ -41,7 +41,7 @@ const int BackgroundSubtraction::DEFAULT_THRESHOLD = 50;
  * @brief Constructor. Initializes class attributes.
  */
 BackgroundSubtraction::BackgroundSubtraction():
-	m_backgroundImage	( NULL )
+	m_backgroundImage	( NULL ), m_technique( ABS_DIFF )
 {
 	// Set default threshold
 	m_thresholdFilter.setThreshold( DEFAULT_THRESHOLD );
@@ -96,11 +96,23 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 		return;
 	}
 
-	// Calculate the difference between the background and the current image
-	m_differenceFilter.apply( *m_backgroundImage, imgToAnalyze.getCVImage(), *tempImage );
+	// Bg Subtraction technique
+	if ( m_technique == ABS_DIFF )
+	{
+		// Calculate the difference between the background and the current image
+		m_differenceFilter.apply( *m_backgroundImage, imgToAnalyze.getCVImage(), *tempImage );
 
-	// Threshold the image
-	m_thresholdFilter.apply( *tempImage, output.getCVImage() );
+		// Threshold the image
+		m_thresholdFilter.apply( *tempImage, output.getCVImage() );
+	}
+	else if ( m_technique == BRIGHTNESS )
+	{
+		// Subtract background from the current image (brighter pixels will remain non black)
+		cvSub( &imgToAnalyze.getCVImage(), m_backgroundImage, tempImage );
+
+		// Threshold the image
+		m_thresholdFilter.apply( *tempImage, output.getCVImage() );
+	}
 
 	// Mark the output image to be uploaded to the texture in case it is drawn
 	output.setUpdateTexture( true );

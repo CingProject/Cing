@@ -88,12 +88,12 @@ XMLElement::~XMLElement()
  */
 void XMLElement::load( const std::string& xmlFileName )
 {
-  // Check if load has already been called
-  if ( isValid() )
-    end();
+	// Check if load has already been called
+	if ( isValid() )
+		end();
 
-  // Load the xml file
-  m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( dataFolder + xmlFileName.c_str() ) );
+	// Load the xml file
+	m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( dataFolder + xmlFileName.c_str() ) );
 	m_xmlDoc->LoadFile();
 
 	// Error loading file?
@@ -130,7 +130,7 @@ void XMLElement::end()
 int XMLElement::getChildCount()
 {
 	// Check state
-	if ( !isValid() )
+  if ( !m_rootElem )
 	{
 		LOG_ERROR( "Trying to call getChildCount() in a XMLElement no correctly initialized. You should call load() before using this object)" );
 		return 0;
@@ -151,7 +151,7 @@ int XMLElement::getChildCount()
 XMLElement XMLElement::getChild( int index )
 {
 	// Check state
-	if ( !isValid() )
+  if ( !m_rootElem )
 	{
 		LOG_ERROR( "Trying to call getChild() in a XMLElement no correctly initialized. You should call load() before using this object)" );
 		return XMLElement();
@@ -193,7 +193,7 @@ XMLElement XMLElement::getChild( int index )
 XMLElement XMLElement::getChild( const std::string& path )
 {
 	// Check state
-	if ( !isValid() )
+  if ( !m_rootElem )
 	{
 		LOG_ERROR( "Trying to call getChild() in a XMLElement no correctly initialized. You should call load() before using this object)" );
 		return XMLElement();
@@ -218,7 +218,9 @@ XMLElement XMLElement::getChild( const std::string& path )
   }
 
   // Get first child
-  child = m_rootElem->FirstChild( tokens[0] )->ToElement();
+  TiXmlNode* childNode = m_rootElem->FirstChild( tokens[0] );
+  if ( childNode )
+	 child = childNode->ToElement();
   if ( !child )
   {
     LOG_ERROR( "Error in XMLElement::getChild. path received does not correspond to any child in the XML file. %s not found", tokens[0].c_str() );
@@ -248,14 +250,14 @@ XMLElement XMLElement::getChild( const std::string& path )
 void XMLElement::getChildren( XMLElementArray& children, const String& path /*= "NO_PATH"*/ )
 {
   // Check state
-  if ( !isValid() )
+  if ( !m_rootElem )
   {
     LOG_ERROR( "Trying to call getChildren() in a XMLElement no correctly initialized. You should call load() before using this object)" );
     return;
   }
 
   // Visit all the nodes to fill the children array
-  XMLVisitor visitor( m_xmlDoc, children, path );
+  XMLVisitor visitor( m_xmlDoc, *m_rootElem, children, path );
   m_rootElem->Accept( &visitor );
 }
 
@@ -266,7 +268,7 @@ void XMLElement::getChildren( XMLElementArray& children, const String& path /*= 
 String XMLElement::getContent()
 {
   // Check state
-  if ( !isValid() )
+  if ( !m_rootElem )
   {
     LOG_ERROR( "Trying to call getContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
     return String();
@@ -284,9 +286,9 @@ String XMLElement::getContent()
 int XMLElement::getIntAttribute( const String& name, int defaultValue /*= 0 */)
 {
   // Check state
-  if ( !isValid() )
+  if ( !m_rootElem )
   {
-    LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+        LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
     return defaultValue;
   }
 
@@ -304,9 +306,9 @@ int XMLElement::getIntAttribute( const String& name, int defaultValue /*= 0 */)
 float XMLElement::getFloatAttribute( const String& name, float defaultValue /*= 0.0f*/ )
 {
   // Check state
-  if ( !isValid() )
+  if ( !m_rootElem )
   {
-    LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+        LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
     return defaultValue;
   }
 
@@ -321,12 +323,12 @@ float XMLElement::getFloatAttribute( const String& name, float defaultValue /*= 
  * @param defaultValue Default value that will be returned in case the attribute does not exist
  * @return        a String attribute of the xml Element.
  */
-String XMLElement::getStringAttribute( const String& name, String defaultValue /*= "0"*/ )
+String XMLElement::getStringAttribute( const String& name, String defaultValue /*= ""*/ )
 {
   // Check state
-  if ( !isValid() )
+  if ( !m_rootElem )
   {
-    LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+    LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
     return defaultValue;
   }
 
@@ -340,7 +342,7 @@ String XMLElement::getStringAttribute( const String& name, String defaultValue /
 String XMLElement::getName()
 {
   // Check state
-  if ( !isValid() )
+  if ( !m_rootElem )
   {
     LOG_ERROR( "Trying to call getName() in a XMLElement no correctly initialized. You should call load() before using this object)" );
     return String();

@@ -66,7 +66,7 @@ namespace Cing
 		String        getContent        ();
 		int           getIntAttribute   ( const String& name, int defaultValue = 0 );
 		float         getFloatAttribute ( const String& name, float defaultValue = 0.0f );
-		String        getStringAttribute( const String& name, String defaultValue = "0" );
+		String        getStringAttribute( const String& name, String defaultValue = "" );
 		String        getName           ();
 		bool					isValid				    () { return m_bIsValid; }
 

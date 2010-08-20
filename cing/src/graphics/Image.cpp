@@ -132,6 +132,43 @@ void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
 	// Load image data to texture -> No necessary as it is an empty image
 	// updateTexture();
 
+	// Store the format
+	m_format = format;
+
+	// The class is now initialized
+	m_bIsValid = true;
+	m_bUpdateTexture = true;
+}
+
+/**
+ * @brief Creates an image of the specified size, but does not load it from file.
+ * Moreover, this image will be used as render to texture target (to render a scene in to it).
+ *
+ * @param width  Width of the image to be created
+ * @param height Height of the image to be created
+ */
+void Image::initAsRenderTarget( int width, int height )
+{
+  // Check if the class is already initialized
+  if ( isValid() )
+   THROW_EXCEPTION( "Image already initialized" );
+
+  // Format always RGB for render targets (is this necessary?)
+  m_format = RGB;
+
+  // Check application correctly initialized (could not be if the user didn't calle size function)
+  Application::getSingleton().checkSubsystemsInit();
+
+	// Create the empty IplImage image
+	m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
+	m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
+
+	// Create the texture quad (to draw image)
+	m_quad.init( m_cvImage->width, m_cvImage->height, m_format, true );
+
+	// Load image data to texture -> No necessary as it is an empty image
+	// updateTexture();
+
 	// The class is now initialized
 	m_bIsValid = true;
 	m_bUpdateTexture = true;
@@ -297,16 +334,19 @@ GraphicsType Image::getFormat() const
 	if ( m_image.getFormat() != Ogre::PF_UNKNOWN )
 		return (GraphicsType)m_image.getFormat();
 
-	switch(m_nChannels)
-	{
-	case 1: return (GraphicsType)GRAYSCALE;
-		break;
-	case 3: return (GraphicsType)RGB;
-		break;
-	case 4: return (GraphicsType)RGBA;
-		break;
-	default: THROW_EXCEPTION( "Error in GraphicsType" );
-	}
+	// Return the stored format (as the image was not loaded from file)
+	return m_format;
+
+	//switch(m_nChannels)
+	//{
+	//case 1: return (GraphicsType)GRAYSCALE;
+	//	break;
+	//case 3: return (GraphicsType)RGB;
+	//	break;
+	//case 4: return (GraphicsType)RGBA;
+	//	break;
+	//default: THROW_EXCEPTION( "Error in GraphicsType" );
+	//}
 }
 
 /**
@@ -524,6 +564,28 @@ void Image::draw2d( float xPos, float yPos, float width, float height )
 	m_quad.draw2d( xPos, yPos, width, height );
 }
 
+/**
+ * @brief Draws the image in 2d -> screen coordinates, but specifying the four corners
+ * order: top-left, top-right, bottom-right, bottom-left (anti-cloclwise)
+ */
+void Image::draw2d( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
+{
+	// check if image needs to be mirrored
+	if (m_bVFlip)
+	{
+		cvFlip(m_cvImage, NULL, 0);
+	}
+
+	// check if texture needs to be updated
+	if (m_bUpdateTexture)
+	{
+		updateTexture();
+		m_bUpdateTexture = false;
+	}
+
+	m_quad.draw2d( x1, y1, x2, y2, x3, y3, x4, y4 );
+}
+
 void Image::drawBackground( float xPos, float yPos, float width, float height )
 	{
 		// check if texture needs to be updated
@@ -587,13 +649,52 @@ Image* Image::clone()
 }
 
 /**
+ * @brief Sets the rotation of the image (in relation to its parents)
+ *
+ * @param[in] axis	rotation axis
+ * @param[in] angle rotation angle (degrees)
+ */
+void Image::setOrientation( const Vector& axis, float angle )
+{
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to rotate an invalid image" );
+	
+	m_quad.setOrientation( axis, angle );
+}
+
+
+/**
+ * @brief Adds rotation of the image (in relation to its parents)
+ *
+ * @param[in] axis	rotation axis
+ * @param[in] angle rotation angle (degrees)
+ */
+void Image::rotate( const Vector& axis, float angle )
+{
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to rotate an invalid image" );
+	
+	m_quad.rotate( axis, angle );
+}
+
+/**
+ * @brief Sets the scale of the image (1.0 would be normal scale)
+ */
+void Image::setScale( float xScale, float yScale, float zScale )
+{
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to rotate an invalid image" );
+	
+	m_quad.setScale( xScale, yScale, zScale );
+}
+
+/**
  * @brief  Load image data to texture
  */
 void Image::updateTexture()
 {
-	m_quad.updateTexture(	m_cvImage->imageData,
-							m_cvImage->width,
-							m_cvImage->height );
+	m_quad.updateTexture(	m_cvImage->imageData, m_cvImage->width, m_cvImage->height, getFormat());
+	m_bUpdateTexture = false;
 }
 
 /**
@@ -992,9 +1093,9 @@ void Image::rect( float x1, float y1, float x2, float y2 )
 
 		case CORNER:
 			if (graphManager.getSmooth())
-				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 16);
 			else
-				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x1+x2,y1+y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
+				cvRectangle( m_cvImage, cvPoint(x1,y1), cvPoint(x2,y2), CV_RGB(color.r,color.g,color.b), strokeWeight, 4);
 			break;
 
 		case CORNERS:

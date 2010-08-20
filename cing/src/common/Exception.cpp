@@ -21,6 +21,7 @@
 
 #include "Exception.h"
 #include <sstream>
+#include <stdarg.h>
 
 namespace Cing
 {
@@ -33,12 +34,18 @@ namespace Cing
  * @param [in] fileName The file's name where the exception was thrown.
  * @param [in] The line number where the exception was thrown.
  */
-Exception::Exception(const std::string& message, const char* fileName, int line)
+Exception::Exception(const char* fileName, int line, const char* message, ...)
 {
+	// Extract string parameters
+	char		msgFormated[1024];
+	va_list		args;
+	va_start	(args, message);
+	vsprintf_s 	(msgFormated, 1024, message, args);
+	va_end		(args);
+
     std::ostringstream oss;
-    oss << "\n-----------Error!----------\n" << message << "\nException thrown at " << fileName << "(" << line << ")";
+    oss << "\n-----------Error!----------\n" << msgFormated << "\nException thrown at " << fileName << "(" << line << ")";
     m_message = oss.str();
 }
-
 
 } // namespace Cing

@@ -37,11 +37,15 @@ namespace Cing
 	/// Image formats
 	enum GraphicsType
 	{
+		// Not defined graphics type (can be used as a "non-set" kind of format)
+		UNDEFINED = -1,
+
 		// Image Formats
-		RGB			= Ogre::PF_R8G8B8,		///< Red, Green and Blue
-		COLOR 		= Ogre::PF_R8G8B8,		///< Same as RGB
-		RGBA		= Ogre::PF_R8G8B8A8,	///< Red, Green, Blue and Alpha
-		ARGB		= Ogre::PF_A8R8G8B8,	///< Alpha, Red, Green, and Blue
+		RGB			= Ogre::PF_BYTE_RGB,	///< Red, Green and Blue
+		COLOR 		= RGB,					///< Same as RGB
+		RGBA		= Ogre::PF_BYTE_RGBA,	///< Red, Green, Blue and Alpha
+		BGR			= Ogre::PF_BYTE_BGR,	///< Blue, Green and Red
+		BGRA		= Ogre::PF_BYTE_BGRA,	///< Blue, Green, Red and Alpha
 		GRAYSCALE	= Ogre::PF_BYTE_L,		///< Gray scale
 
 		// Color Modes

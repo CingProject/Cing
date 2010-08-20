@@ -78,6 +78,7 @@ namespace Cing
 		extractUserAppPath();
 
 		// Init Ogre Root
+		LOG( "Creating Ogre Root" );
 		new Ogre::Root( pluginsPath );
 
 		 // Store user data path in globals

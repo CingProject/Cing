@@ -65,7 +65,7 @@ public:
   // Event handlers
 	bool mouseMoved			( const OIS::MouseEvent& event );
 	bool mousePressed		( const OIS::MouseEvent& event, OIS::MouseButtonID id  );
-	bool mouseReleased	( const OIS::MouseEvent& event, OIS::MouseButtonID id  );
+	bool mouseReleased		( const OIS::MouseEvent& event, OIS::MouseButtonID id  );
 	bool keyPressed			( const OIS::KeyEvent& event );
 	bool keyReleased		( const OIS::KeyEvent& event);
 

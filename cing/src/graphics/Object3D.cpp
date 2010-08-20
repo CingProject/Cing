@@ -105,11 +105,11 @@ void Object3D::init( const std::string& meshName /*= ""*/, const std::string& ma
 
 		// TODO remove this from here
     // Build tangent vectors (for normal mapping), all our meshes use only 1 texture coordset 
-    unsigned short src, dest;
-    if ( !pMesh->suggestTangentVectorBuildParams( Ogre::VES_TANGENT, src, dest ) )
-    {
-      pMesh->buildTangentVectors( Ogre::VES_TANGENT, src, dest );
-    }
+    //unsigned short src, dest;
+    //if ( !pMesh->suggestTangentVectorBuildParams( Ogre::VES_TANGENT, src, dest ) )
+    //{
+    //  pMesh->buildTangentVectors( Ogre::VES_TANGENT, src, dest );
+    //}
 
 		// Create a unique name for the entity
 		m_objectName = meshName + Ogre::StringConverter::toString( ++m_objectCounter );
