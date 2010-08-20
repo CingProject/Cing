@@ -735,14 +735,607 @@ material Examples/Robot
 	}
 }
 
+material Examples/GrassFloor
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture grass_1024.jpg
+			}
+		}
+	}
+}
 
+vertex_program Examples/GrassWaverVp cg
+{
+	source Grass.cg
+	entry_point grass_vp
+	profiles vs_1_1 arbvp1
+    
+    default_params
+    {    
+        param_named_auto worldViewProj worldviewproj_matrix
+        
+        param_named_auto camObjPos camera_position_object_space
+        
+        param_named_auto ambient ambient_light_colour
+        param_named_auto objSpaceLight light_position_object_space 0
+        param_named_auto lightColour light_diffuse_colour 0
+        
+        param_named_auto offset custom 999
+    }
+  }
   
+vertex_program Examples/GrassWaverTexVp cg
+  {
+	source Grass.cg
+	entry_point grassTex_vp
+	profiles vs_1_1 arbvp1
+    
+    default_params
+      {
+        param_named_auto worldViewProj worldviewproj_matrix        
+        param_named_auto offset custom 999
+    }
+}
+vertex_program Examples/GrassWaverAmbientVp cg
+          {
+	source Grass.cg
+	entry_point grassAmbient_vp
+	profiles vs_1_1 arbvp1
+    
+    default_params
+  			{
+  				param_named_auto worldViewProj worldviewproj_matrix
+  				param_named_auto ambient ambient_light_colour
+        param_named_auto offset custom 999
+    }
+}
+fragment_program Examples/GrassWaverAmbientFp cg
+{
+	source Grass.cg
+	entry_point grassAmbient_fp
+	profiles ps_2_0 arbfp1
+    default_params
+    {
+    }
+}
+
+vertex_program Examples/GrassWaverCasterVp cg
+{
+	source Grass.cg
+	entry_point grasscaster_vp
+	profiles vs_1_1 arbvp1
+    
+    default_params
+    {    
+        param_named_auto worldViewProj worldviewproj_matrix
+        param_named_auto offset custom 999
+		param_named_auto texelOffsets texel_offsets
+    }
+}
+fragment_program Examples/GrassWaverCasterFp cg
+{
+	source Grass.cg
+	entry_point grasscaster_fp
+	profiles ps_2_0 arbfp1
+    default_params
+    {
+    }
+}
+
+vertex_program Examples/GrassWaverReceiverVp cg
+{
+	source Grass.cg
+	entry_point grassreceiver_vp
+	profiles vs_1_1 arbvp1
+    
+    default_params
+    {
+        param_named_auto world world_matrix
+		param_named_auto worldViewProj worldviewproj_matrix
+		param_named_auto texViewProj texture_viewproj_matrix
+        
+        param_named_auto camObjPos camera_position_object_space
+        
+  				param_named_auto objSpaceLight light_position_object_space 0
+  				param_named_auto lightColour light_diffuse_colour 0
+        
+  				param_named_auto offset custom 999
+  			}
+}
 
 
+fragment_program Examples/GrassWaverReceiverFp cg
+{
+	source Grass.cg
+	entry_point grassreceiver_fp
+	profiles ps_2_0 arbfp1
+   
+	default_params
+    {
+        //param_named inverseShadowmapSize float 0.0009765625
+		param_named fixedDepthBias float 0.0005
+		param_named gradientClamp float 0.0098
+		param_named gradientScaleBias float 0
+    }
+}
 
 
+material Examples/GrassBladesShadowCaster
+{
+	// Vertex program waving grass
+    technique
+    {
+        pass
+        {
+			vertex_program_ref Examples/GrassWaverCasterVp
+			{
+			}
+			fragment_program_ref Examples/GrassWaverCasterFp
+			{
+			}
+            
+  			alpha_rejection greater 150 
+            
+  			scene_blend alpha_blend
+            
+  		    cull_hardware none
+              cull_software none
+            
+              texture_unit
+              {
+				tex_address_mode clamp
+                  texture gras_02.png 
+              }
+          }
+        
+      }
+}
+material Examples/GrassBladesShadowReceiver
+{
+	// Vertex program waving grass
+    technique
+    {
+        pass 
+		{
+			scene_blend add
+  
+			alpha_rejection greater 150       
+            
+		    cull_hardware none
+            cull_software none 
+            
+			vertex_program_ref Examples/GrassWaverReceiverVp
+			{
+			}
+			fragment_program_ref Examples/GrassWaverReceiverFp
+			{
+			}
+            
+            texture_unit ShadowMap
+            {
+                 tex_address_mode border
+                 tex_border_colour 1.0 1.0 1.0 0.0                
+                 content_type shadow
+                 filtering linear linear none		
+                 tex_coord_set 0
+            }
+           
+           texture_unit
+           {
+				tex_address_mode clamp				
+                tex_coord_set 1
+                texture gras_02.png
+           }
+        }
+        
+    }
+}
 
+material Examples/GrassBladesAdditiveFloatTransparentBest
+{
+    
+    transparency_casts_shadows on
+    receive_shadows on
+     
+	// This is the preferred technique which uses both vertex and
+	// fragment programs, supports coloured lights
+    technique
+    {
+        shadow_caster_material Examples/GrassBladesShadowCaster
+        shadow_receiver_material Examples/GrassBladesShadowReceiver
 
+		// Base ambient pass
+		pass
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 1 1 1
+			diffuse 0 0 0 
+			specular 0 0 0 0 
+            
+			alpha_rejection greater 150 
+            
+			scene_blend alpha_blend  
+            
+		    cull_hardware none
+            cull_software none
+            
+			// Really basic vertex program		
+			vertex_program_ref Examples/GrassWaverAmbientVp
+			{
+			}
+            
+			fragment_program_ref Examples/GrassWaverAmbientFp
+			{
+			}
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+			
+		}
+        pass lighting
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 0 0 0 
+			
+			// do this for each light
+			iteration once_per_light
+
+		
+			scene_blend add
+
+       
+			vertex_program_ref Examples/GrassWaverAmbientVp
+			{
+			}
+            
+			fragment_program_ref Examples/GrassWaverAmbientFp
+			{
+			}
+            
+            
+			alpha_rejection greater 150 
+            
+		    cull_hardware none
+            cull_software none
+            
+            texture_unit ShadowMap
+            {
+                 tex_address_mode border
+                 tex_border_colour 1.0 1.0 1.0 0.0                
+                 content_type shadow
+                 filtering linear linear none		
+                 tex_coord_set 0
+            }
+           
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+        }
+		// Decal pass
+		pass
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			lighting off
+            
+			alpha_rejection greater 150 
+            
+			//scene_blend alpha_blend            
+			scene_blend dest_colour zero
+            
+		    cull_hardware none
+            cull_software none
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+            
+			vertex_program_ref Examples/GrassWaverVp
+			{
+			}
+            
+            
+        }
+    }
+}
+material Examples/GrassBladesAdditiveFloatTransparent
+{
+    
+    transparency_casts_shadows on
+    receive_shadows on
+     
+	// This is the preferred technique which uses both vertex and
+	// fragment programs, supports coloured lights
+  	technique
+      {
+        shadow_caster_material Examples/GrassBladesShadowCaster
+        shadow_receiver_material Examples/GrassBladesShadowReceiver
+
+		// Base ambient pass
+          pass
+          {
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 1 1 1
+			diffuse 0 0 0 
+			specular 0 0 0 0 
+            
+  			alpha_rejection greater 150 
+            
+  			scene_blend alpha_blend
+            
+		    cull_hardware none
+            cull_software none
+            
+			// Really basic vertex program		
+			vertex_program_ref Examples/GrassWaverAmbientVp
+			{
+			}
+            
+			fragment_program_ref Examples/GrassWaverAmbientFp
+			{
+			}
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+			
+		}
+        pass lighting
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 0 0 0 
+			
+			// do this for each light
+			iteration once_per_light
+
+		
+			scene_blend add
+
+       
+			vertex_program_ref Examples/GrassWaverAmbientVp
+			{
+			}
+            
+			fragment_program_ref Examples/GrassWaverAmbientFp
+			{
+			}
+            
+            
+			alpha_rejection greater 150 
+            
+  		    cull_hardware none
+              cull_software none
+            
+            texture_unit ShadowMap
+            {
+                 tex_address_mode border
+                 tex_border_colour 1.0 1.0 1.0 0.0                
+                 content_type shadow
+                 filtering linear linear none		
+                 tex_coord_set 0
+            }
+           
+            
+              texture_unit
+              {
+				tex_address_mode clamp
+                  texture gras_02.png 
+              }
+          }
+		// Decal pass
+		pass
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			lighting off
+            
+			alpha_rejection greater 150 
+            
+			//scene_blend alpha_blend            
+			scene_blend dest_colour zero
+            
+		    cull_hardware none
+            cull_software none
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+      }
+            
+			vertex_program_ref Examples/GrassWaverTexVp
+			{
+			}
+            
+            
+        }
+    }
+}
+
+material Examples/GrassBladesAdditiveFloat
+{
+    transparency_casts_shadows on
+    receive_shadows on
+     
+	// This is the preferred technique which uses both vertex and
+	// fragment programs, supports coloured lights
+    technique
+    {
+        shadow_caster_material Ogre/DepthShadowmap/Caster/Float
+        shadow_receiver_material Ogre/DepthShadowmap/Receiver/Float
+
+		// Base ambient pass
+		pass
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 1 1 1
+			diffuse 0 0 0 
+			specular 0 0 0 0 
+			// Really basic vertex program
+			vertex_program_ref Ogre/BasicVertexPrograms/AmbientOneTextureUnified
+			{
+  }
+  
+		}
+        pass lighting
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 0 0 0 
+			
+			// do this for each light
+			iteration once_per_light
+
+		
+			scene_blend add
+
+       
+			vertex_program_ref Examples/GrassWaverAmbientVp
+			{
+			}
+            
+			fragment_program_ref Examples/GrassWaverAmbientFp
+			{
+			}
+            
+            
+			alpha_rejection greater 150 
+			scene_blend alpha_blend
+            
+		    cull_hardware none
+            cull_software none
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+        }
+		// Decal pass
+		pass
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			lighting off
+            
+			alpha_rejection greater 150 
+			scene_blend alpha_blend
+            
+		    cull_hardware none
+            cull_software none
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+            
+			vertex_program_ref Examples/GrassWaverAmbientVp
+			{
+			}
+            
+			fragment_program_ref Examples/GrassWaverAmbientFp
+			{
+			}
+            
+        }
+    }
+    
+}
+
+material Examples/GrassBladesAdditive
+{
+    transparency_casts_shadows on
+    receive_shadows on
+	// Vertex program waving grass    
+    technique
+    {
+        pass
+        {
+			vertex_program_ref Examples/GrassWaverAmbientVp
+			{
+			}            
+            
+			alpha_rejection greater 150 
+			scene_blend alpha_blend
+            
+		    cull_hardware none
+            cull_software none
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+        }
+    }
+}
+
+material Examples/GrassBlades
+{
+    transparency_casts_shadows on
+    receive_shadows on
+	// Vertex program waving grass    
+    technique
+    {
+        pass
+        {
+			vertex_program_ref Examples/GrassWaverVp
+			{
+			}            
+            
+			alpha_rejection greater 150 
+			scene_blend alpha_blend
+            
+		    cull_hardware none
+            cull_software none
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+        }
+    }
+    // fallback
+    technique
+    {
+        pass
+        {
+			alpha_rejection greater 150 
+			scene_blend alpha_blend
+            
+		    cull_hardware none
+            cull_software none
+            
+            texture_unit
+            {
+				tex_address_mode clamp
+                texture gras_02.png 
+            }
+        }
+    }
+}
 
 
 material Examples/Rockwall

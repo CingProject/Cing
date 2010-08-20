@@ -357,8 +357,195 @@ material Examples/GeneralTexProjection
 // Distortion effects
 //----------------------------
 
+vertex_program Examples/FresnelRefractReflectVP cg
+{
+	source Example_Fresnel.cg
+	entry_point main_vp
+	profiles vs_1_1 arbvp1
+}
+vertex_program Examples/FresnelRefractReflectVPold cg
+{
+	source Example_Fresnel.cg
+	entry_point main_vp_old
+	profiles vs_1_1 arbvp1
+}
 
+fragment_program Examples/FresnelRefractReflectFP cg
+{
+	source Example_Fresnel.cg
+	entry_point main_fp
+	// sorry, ps_1_1 and fp20 can't do this
+	profiles ps_2_0 arbfp1
+}
 
+fragment_program Examples/FresnelRefractReflectPS asm
+{
+	source Example_FresnelPS.asm
+	// sorry, only for ps_1_4 :)
+	syntax ps_1_4
+
+}
+
+material Examples/FresnelReflectionRefraction
+{
+	// ps_2_0 / arbfp1
+	technique
+	{
+		pass 
+		{
+			
+			vertex_program_ref Examples/FresnelRefractReflectVP
+			{
+				param_named_auto worldViewProjMatrix worldviewproj_matrix
+				param_named_auto eyePosition camera_position_object_space
+				param_named_auto timeVal time 0.05
+				param_named scroll float 1  
+				param_named scale float 1 
+				param_named noise float 1 
+				// scroll and noisePos will need updating per frame
+			}
+			fragment_program_ref Examples/FresnelRefractReflectFP
+			{
+				param_named fresnelBias float -0.1 
+				param_named fresnelScale float 1.8 
+				param_named fresnelPower float 8  
+				param_named tintColour float4 0 0.05 0.05 1
+				param_named noiseScale float 0.05 
+			}
+			// Noise
+			texture_unit
+			{
+				// Perlin noise volume
+				texture waves2.dds
+				// min / mag filtering, no mip
+				filtering linear linear none
+			}
+			// Reflection
+			texture_unit
+			{
+				// Will be filled in at runtime
+				texture Reflection
+				tex_address_mode clamp
+			}
+			// Refraction
+			texture_unit
+			{
+				// Will be filled in at runtime
+				texture Refraction
+				tex_address_mode clamp
+			}
+		}
+		
+			
+	}
+
+	// ATI 8500 +
+	technique
+	{
+		pass
+		{
+			vertex_program_ref Examples/FresnelRefractReflectVPold
+			{
+				param_named_auto worldViewProjMatrix worldviewproj_matrix
+				param_named_auto eyePosition camera_position_object_space
+				param_named fresnelBias float -0.3
+				param_named fresnelScale float 1.4
+				param_named fresnelPower float 8
+				param_named_auto timeVal time_0_1 20
+				param_named scroll float 1 
+				param_named scale float 4 
+				param_named noise float 1
+				// scroll and noisePos will need updating per frame
+			}
+
+			// for ATI RADEON 8500 - 9200
+			fragment_program_ref Examples/FresnelRefractReflectPS
+			{
+				// distortionRange
+				param_indexed 0  float 0.025  
+				// tintColour
+				param_indexed 1  float4 0.05 0.12 0.15 1
+			}
+
+			// Noise
+			texture_unit
+			{
+				// Perlin noise volume
+				texture perlinvolume.dds 3d
+				// min / mag filtering, no mip
+				filtering linear linear none
+			}
+			// Reflection
+			texture_unit
+			{
+				// Will be filled in at runtime
+				texture Reflection
+				tex_address_mode clamp
+			}
+			// Refraction
+			texture_unit
+			{
+				// Will be filled in at runtime
+				texture Refraction
+				tex_address_mode clamp
+			}
+		}
+	}    
+}
+
+// Normal-mapped Athene statue
+material Examples/Athene/NormalMapped : Examples/BumpMapping/MultiLight
+{
+
+	// This is the preferred technique which uses both vertex and
+	// fragment programs, supports coloured lights
+	technique
+	{
+		// Now do the lighting pass
+		// NB we don't do decal texture here because this is repeated per light
+		pass perlight
+		{
+
+			
+			// Base bump map
+			texture_unit normalmap
+			{
+				texture atheneNormalMap.png
+				colour_op replace
+			}
+		}
+		
+		// Decal pass
+		pass decal
+		{
+			texture_unit decalmap
+			{
+				texture egyptrockyfull.jpg 
+			}
+			
+		}
+	}
+}
+
+// Basic Athene statue
+material Examples/Athene/Basic
+{
+
+	technique
+	{
+		pass
+		{
+			ambient 0.3 0.3 0.3
+			diffuse 1.0 1.0 0.9
+
+			texture_unit
+			{
+				texture egyptrockyfull.jpg 
+			}
+			
+		}
+	}
+}
 
 
 // Any number of lights, diffuse and specular
