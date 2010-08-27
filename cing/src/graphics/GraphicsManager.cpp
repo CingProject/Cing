@@ -43,18 +43,18 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/LogManager.h"
 
 // Ogre includes
-#include "Ogre3d/include/OgreRoot.h"
-#include "Ogre3d/include/OgreConfigFile.h"
-#include "Ogre3d/include/OgreRenderWindow.h"
-#include "Ogre3d/include/OgreRenderSystem.h"
-#include "Ogre3d/include/OgreBillboard.h"
-#include "Ogre3d/include/OgreBillboardSet.h"
-#include "Ogre3d/include/OgreStringConverter.h"
-#include "Ogre3d/include/OgreStringConverter.h"
-#include "Ogre3d/include/OgreHardwarePixelBuffer.h"
+#include "OgreRoot.h"
+#include "OgreConfigFile.h"
+#include "OgreRenderWindow.h"
+#include "OgreRenderSystem.h"
+#include "OgreBillboard.h"
+#include "OgreBillboardSet.h"
+#include "OgreStringConverter.h"
+#include "OgreStringConverter.h"
+#include "OgreHardwarePixelBuffer.h"
 
 // TEMP
-#include "Ogre3d/include/OgreTextAreaOverlayElement.h"
+#include "OgreTextAreaOverlayElement.h"
 
 // GUI
 //#include "gui/GUIManager.h"
@@ -163,7 +163,7 @@ bool GraphicsManager::init()
 	ogreCamera	= m_activeCamera.getOgreCamera();
 
 	// Make the camera render in the main window
-	m_mainWindow.attachCameraToWindow( m_activeCamera );
+	m_mainWindow.attachCameraToWindow( m_activeCamera.getOgreCamera() );
 
 	// Background color
 	m_mainWindow.setBackgroundColor( Color( 200, 200, 200 ) );
@@ -210,7 +210,7 @@ bool GraphicsManager::init()
 	//m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
 
 	// Set default coordinate system:
-	m_coordSystem = NORMAL;
+	m_coordSystem = NORMAL3D;
 
 	// This is to adjust 2d and 3d coordinates like in Processing:
 	applyCoordinateSystemTransform(PROCESSING);
@@ -352,17 +352,17 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		THROW_EXCEPTION( "Critital Error: Graphics Mode in size() call does not exist" );
 
 	// Get list of render systems
-	Ogre::RenderSystemList  *availableRenderers = ogreRoot.getAvailableRenderers();
+	const Ogre::RenderSystemList&	availableRenderers = ogreRoot.getAvailableRenderers();
 	Ogre::RenderSystem      *selectedRenderSystem = NULL;
-	if ( !availableRenderers || ( availableRenderers->size() == 0 ) )
+	if ( availableRenderers.size() == 0 )
 		THROW_EXCEPTION( "Critical Error: No available render systems. Please re-install the application" );
 
 	// Select the render system
-	for ( size_t i = 0; i < availableRenderers->size(); ++i )
+	for ( size_t i = 0; i < availableRenderers.size(); ++i )
 	{
-		if ( availableRenderers->at( i )->getName().compare( rendererName ) == 0 )
+		if ( availableRenderers.at( i )->getName().compare( rendererName ) == 0 )
 		{
-			selectedRenderSystem = availableRenderers->at( i );
+			selectedRenderSystem = availableRenderers.at( i );
 			break;
 		}
 	}
@@ -415,9 +415,8 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 
 		// Rest options with default values
 		selectedRenderSystem->setConfigOption("VSync","Yes");
-		// TODO: Ogre 1.7 normalizes the Antialiasing among DX and OpenGL -> use it
-		//selectedRenderSystem->setConfigOption( "Anti aliasing","Level 8" );
 		selectedRenderSystem->setConfigOption( "Floating-point mode","Consistent" );
+		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
 	}
 
 	// Validate render system options
@@ -690,7 +689,7 @@ void GraphicsManager::applyCoordinateSystemTransform( const GraphicsType& coordS
 	m_coordSystem = coordSystem;
 	switch(m_coordSystem)
 	{
-	case NORMAL:
+	case NORMAL3D:
 		{
 			// Reset camera position (and orientation?)
 			m_activeCamera.getSceneNode()->setPosition( Ogre::Vector3( 0, 0, 2000.0 ) );

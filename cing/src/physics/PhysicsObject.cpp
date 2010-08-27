@@ -79,13 +79,16 @@ void PhysicsObject::end()
  * @param staticObject	If true, this object will be static, this means that this object is affected by 
  * physics objects and forces of the scene (so it will collide with other physics object), but won't move.
  */
-void PhysicsObject::enablePhysics( bool staticObject )
+void PhysicsObject::enablePhysics( bool staticObject /*= false*/)
 {
 	if ( m_physicsEnabled )
 	{
 		LOG( "Trying to enable physics on an object that has physics already enabled" );
 		return;
 	}
+
+	// We need the pysics manger activated, so make sure
+	PhysicsManager::getSingleton().enable();
 
 	// Create collision shape for the object based on the triangle mesh
 	OgreBulletCollisions::CollisionShape*	collisionShape =  PhysicsManager::getSingleton().buildTriMeshShape( *this );	
@@ -227,6 +230,9 @@ void PhysicsObject::enableRigidBodyPhysics( OgreBulletCollisions::CollisionShape
 	// If previously enabled -> disable first to avoid memory leak
 	if ( m_rigidBody )
 		Release( m_rigidBody );
+
+	// We need the pysics manger activated, so make sure
+	PhysicsManager::getSingleton().enable();
 
 	// Create the rigid body and assign it the collision shape
 	m_rigidBody = PhysicsManager::getSingleton().createRigidBody( *this, collisionShape, staticObject );

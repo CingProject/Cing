@@ -33,7 +33,7 @@
 #include "input/InputTypes.h"
 
 // OIS
-#include "Ogre3d/include/ois/OISInputManager.h"
+#include "OISInputManager.h"
 
 namespace Cing
 {
@@ -76,7 +76,7 @@ bool Mouse::init( OIS::InputManager* pOISInputManager )
 	BaseInputDevice< OIS::MouseListener >::init();
 
   // Create the buffered mouse
-  if ( pOISInputManager && ( pOISInputManager->numMice() > 0 ) )
+  if ( pOISInputManager && ( pOISInputManager->getNumberOfDevices(OIS::OISMouse ) > 0 ) )
   {
       m_pOISMouse = static_cast< OIS::Mouse* >( pOISInputManager->createInputObject( OIS::OISMouse, true ) );
 

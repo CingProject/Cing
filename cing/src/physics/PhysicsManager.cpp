@@ -24,6 +24,9 @@
 // Common
 #include "common/Release.h"
 
+// Graphics
+#include "graphics/GraphicsManager.h"
+
 // Ogre bullet
 #include "OgreBullet/Dynamics/include/OgreBulletDynamicsWorld.h"
 #include "OgreBullet/Collisions/include/Utils/OgreBulletCollisionsMeshToShapeConverter.h"
@@ -39,7 +42,7 @@ namespace Cing
 {
 
 // Static member init
-long	PhysicsManager::m_rigidObjectCounter				= 0;
+long	PhysicsManager::m_rigidObjectCounter = 0;
 
 
 /**
@@ -47,9 +50,10 @@ long	PhysicsManager::m_rigidObjectCounter				= 0;
  * @brief Constructor. Initializes class attributes.
  */
 PhysicsManager::PhysicsManager():
-	m_physicsWorld				( NULL ),
+	m_physicsWorld			( NULL ),
 	m_physicsDebugDrawer	( NULL ),
-	m_bIsValid						( false )
+	m_enabled				( false ),
+	m_bIsValid				( false )
 {
 }
 
@@ -71,9 +75,9 @@ PhysicsManager::~PhysicsManager()
  * @param gravityVector	Gravity used in physics calculations
  * @param bounds				Bounds of the physics affected world
  */
-void PhysicsManager::init( Ogre::SceneManager&	sceneManager, 
-													 const Vector&				gravityVector /*= Vector3(0,9.81,0)*/,
-													 const AABox&					bounds				/*= AABox (Vector3 (-10000, -10000, -10000), Vector3 (10000,  10000,  10000))*/ )
+void PhysicsManager::init(	 Ogre::SceneManager&	sceneManager, 
+							 const Vector&		gravityVector	/*= Vector3(0,-9.81,0)*/,
+							 const AABox&		bounds			/*= AABox (Vector3 (-10000, -10000, -10000), Vector3 (10000,  10000,  10000))*/ )
 {
 	if ( isValid() )
 		return;
@@ -86,14 +90,13 @@ void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
 
 	// Set the active debug drawer for physics
 	m_physicsWorld->setDebugDrawer( m_physicsDebugDrawer );
-	//m_physicsWorld->setShowDebugShapes( true );
-	//m_physicsDebugDrawer->setDrawWireframe( true );
 
 	// Attach it to the scene
 	Ogre::SceneNode *node = sceneManager.getRootSceneNode()->createChildSceneNode( "physicsDebugDrawer", Vector::ZERO );
 	node->attachObject(static_cast < Ogre::SimpleRenderable *>( m_physicsDebugDrawer ));
 
-	m_bIsValid = true;
+	m_bIsValid	= true;
+	m_enabled	= true;
 }
 
 /**
@@ -103,13 +106,52 @@ void PhysicsManager::init( Ogre::SceneManager&	sceneManager,
  */	
 void PhysicsManager::end()
 {
+	// If it has already been release -> do nothing
+	if ( !isValid() )
+		return;
+
 	// Release bullet related stuff
-	delete m_physicsWorld->getDebugDrawer();
-    m_physicsWorld->setDebugDrawer(0);
+	// TODO: reivew why this delete creates a crash (is OgreBullet already releasing it?)
+	//delete m_physicsWorld->getDebugDrawer();
+    //m_physicsWorld->setDebugDrawer(0);
 	Release( m_physicsWorld );
 
-	m_bIsValid = false;
+	m_bIsValid	= false;
+	m_enabled	= false;
 }
+
+/*
+ * @brief Enables/Disables physics on the scene
+ *
+ * @param enable if true physics will be enabled (but objects need to have it enabled too), otherwise it will be disabled.
+ */
+void PhysicsManager::enable( bool enable /*= true*/ )
+{
+	// Want to enable physics
+	if ( enable ) 
+	{
+		// If physics is already enabled -> do nothing
+		if ( m_enabled )
+			return;
+		// If physics are not enabled but have been previously initialized -> just enable it
+		else if ( isValid() )
+		{
+			m_enabled = enable;
+		}
+		// This is the first time physics is enabled -> initialize it
+		else
+		{
+			m_enabled = enable;
+			init( GraphicsManager::getSingleton().getSceneManager() );
+		}
+	}
+	// Want to disable physics
+	else
+	{
+		m_enabled = enable;
+	}
+}
+
 
 /**
  * @brief Updates the physics state
@@ -118,7 +160,8 @@ void PhysicsManager::end()
  */
 void PhysicsManager::update( unsigned long elapsedMillis )
 {
-	m_physicsWorld->stepSimulation( elapsedMillis, MAX_SIMULATION_SUBSTEPS, FIXED_TIME_STEP );
+	if ( isValid() && m_enabled )
+		m_physicsWorld->stepSimulation( elapsedMillis, MAX_SIMULATION_SUBSTEPS, FIXED_TIME_STEP );
 }
 
 /**
@@ -128,8 +171,11 @@ void PhysicsManager::update( unsigned long elapsedMillis )
  */
 void PhysicsManager::drawPhysics( bool draw )
 {
-	m_physicsWorld->setShowDebugShapes( draw );
-	m_physicsWorld->setShowDebugContactPoints( draw );
+	if ( isValid() && m_enabled )
+	{
+		m_physicsWorld->setShowDebugShapes( draw );
+		m_physicsWorld->setShowDebugContactPoints( draw );
+	}
 }
 
 
@@ -165,6 +211,8 @@ OgreBulletCollisions::CollisionShape* PhysicsManager::buildBoxShape( float width
 	Vector size ( width, heigh, depth );
 	size /= 2.0f; // bullet expects half box size
 	size /= Object3D::OGRE_SCALE_CORRECTION; // To correct scale problems between ogre and maya exporter
+	size *= 0.96f;   // Bullet margin is a bit bigger so we need a smaller size (Bullet 2.76 Physics SDK Manual page 18)
+
 
 	// Create the shape
 	OgreBulletCollisions::BoxCollisionShape *boxShape = new OgreBulletCollisions::BoxCollisionShape( size );
@@ -231,16 +279,17 @@ OgreBulletDynamics::RigidBody* PhysicsManager::createRigidBody( Object3D& object
 {
 	// Create the rigid body
 	m_rigidObjectCounter++;
-	OgreBulletDynamics::RigidBody* rigidBody = new OgreBulletDynamics::RigidBody( object.getName() + "RigidBody" + Ogre::StringConverter::toString( m_rigidObjectCounter ), 
-																																								m_physicsWorld );
+	OgreBulletDynamics::RigidBody* rigidBody = new OgreBulletDynamics::RigidBody( object.getName() + "RigidBody" + Ogre::StringConverter::toString( m_rigidObjectCounter ),  m_physicsWorld );
 
 	// Attach the collision shape
 	if ( staticBody )
 	{
 		rigidBody->setStaticShape(	collisionShape, 
-																DEFAULT_DYNAMIC_BODY_RESTITUTION, 
-																DEFAULT_DYNAMIC_BODY_FRICTION, object.getPosition(), object.getOrientation() );
-}
+									DEFAULT_DYNAMIC_BODY_RESTITUTION, 
+									DEFAULT_DYNAMIC_BODY_FRICTION, 
+									object.getPosition(), 
+									object.getOrientation() );
+	}
 	else
 	{
 		// Note: The position and rotation of the object are stored here (and not as references)
@@ -250,12 +299,12 @@ OgreBulletDynamics::RigidBody* PhysicsManager::createRigidBody( Object3D& object
 		Quaternion orientation = object.getOrientation();
 
 		rigidBody->setShape(	object.getSceneNode(), 
-													collisionShape, 
-													DEFAULT_DYNAMIC_BODY_RESTITUTION, 
-													DEFAULT_DYNAMIC_BODY_FRICTION, 
-													DEFAULT_DYNAMIC_BODY_MASS,
-													pos,
-													orientation );
+								collisionShape, 
+								DEFAULT_DYNAMIC_BODY_RESTITUTION, 
+								DEFAULT_DYNAMIC_BODY_FRICTION, 
+								DEFAULT_DYNAMIC_BODY_MASS * object.getScale().x * object.getScale().y * object.getScale().z,
+								pos,
+								orientation );
 
 	}
 

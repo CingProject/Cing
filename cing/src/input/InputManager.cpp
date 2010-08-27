@@ -25,7 +25,7 @@
 #include "graphics/GraphicsManager.h"
 
 // OIS
-#include "Ogre3d/include/ois/OIS.h"
+#include "OIS.h"
 
 // STL
 #include <sstream>

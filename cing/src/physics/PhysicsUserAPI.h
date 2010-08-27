@@ -31,6 +31,10 @@ namespace Cing
  * @brief Physics related functions that user can call 
  */
 
+// Physics controll functions
+void enablePhysics( bool enable = true );
+void disablePhysics();
+
 // Debugging functions
 void drawPhysics( bool draw );
 

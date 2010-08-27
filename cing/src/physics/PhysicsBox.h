@@ -54,7 +54,7 @@ public:
 	float	getDepth	() { return m_depth;		}
 
 	// Physics control
-	virtual void enablePhysics		( bool staticObject );
+	virtual void enablePhysics		( bool staticObject = false );
 
 
 private:

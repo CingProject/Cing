@@ -23,9 +23,9 @@
 #include "Camera3D.h"
 
 // Ogre includes
-#include "Ogre3d/include/OgreRenderWindow.h"
-#include "Ogre3d/include/OgreWindowEventUtilities.h"
-#include "Ogre3d/include/OgreCamera.h"
+#include "OgreRenderWindow.h"
+#include "OgreWindowEventUtilities.h"
+#include "OgreCamera.h"
 
 // Common includes
 #include "common/Exception.h"

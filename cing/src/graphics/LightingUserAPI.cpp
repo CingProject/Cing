@@ -23,7 +23,7 @@
 #include "GraphicsManager.h"
 
 // Ogre
-#include "Ogre3d/include/OgreSceneManager.h"
+#include "OgreSceneManager.h"
 
 // Framework
 #include "framework/Application.h"

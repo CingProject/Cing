@@ -36,12 +36,12 @@
 #include "common/LogManager.h"
 
 // Ogre
-#include "Ogre3d/include/OgreSceneManager.h"
-#include "Ogre3d/include/OgreEntity.h"
-#include "Ogre3d/include/OgreSubEntity.h"
-#include "Ogre3d/include/OgreMeshManager.h"
-#include "Ogre3d/include/OgreMaterialManager.h"
-#include "Ogre3d/include/OgreStringConverter.h"
+#include "OgreSceneManager.h"
+#include "OgreEntity.h"
+#include "OgreSubEntity.h"
+#include "OgreMeshManager.h"
+#include "OgreMaterialManager.h"
+#include "OgreStringConverter.h"
 
 
 namespace Cing
@@ -173,6 +173,21 @@ const Quaternion& Object3D::getOrientation() const
 
 	// Return the position
 	return m_sceneNode->getOrientation();	
+}
+
+/** 
+ * @brief Returns the current scale of the object
+ *
+ * @return The current scale of the object in the scene
+ */
+const Vector& Object3D::getScale() const
+{
+	// Check if the class is already released
+	if ( !isValid() )
+		THROW_EXCEPTION( "Trying to get the scale of a 3d Object that has been already released (method end() has been called)" );
+
+	// Return the position
+	return m_sceneNode->getScale();	
 }
 
 /**

@@ -26,6 +26,22 @@ namespace Cing
 {
 
 /*
+ * @brief Enables/Disables physics on the scene
+ *
+ * @param enable if true physics will be enabled (but objects need to have it enabled too), otherwise it will be disabled.
+ */
+void enablePhysics( bool enable /*= true*/ )
+{
+	PhysicsManager::getSingleton().enable( enable );
+}
+
+/// Disables the physics. Equivalent to enablePhysics( false );
+void disablePhysics() 
+{ 
+	enablePhysics( false ); 
+}
+
+/*
  * @brief Controls if the physic data (collision volumes and contact points) should be drawn or not
  *
  * @param draw if true, physics data will be drawn. Pass falseo to deactivate physics data rendering

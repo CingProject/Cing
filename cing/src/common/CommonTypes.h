@@ -23,11 +23,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define _Cing_CommonTypes_H_
 
 // Ogre
-#include "Ogre3d/include/OgreVector2.h"
-#include "Ogre3d/include/OgreVector3.h"
-#include "Ogre3d/include/OgreCommon.h"
-#include "Ogre3d/include/OgreAxisAlignedBox.h"
-#include "Ogre3d/include/OgreMath.h"
+#include "OgreVector2.h"
+#include "OgreVector3.h"
+#include "OgreCommon.h"
+#include "OgreAxisAlignedBox.h"
+#include "OgreMath.h"
 
 /**
 * @internal

@@ -25,7 +25,7 @@
 #include "GraphicsPrereqs.h"
 #include "graphics/Color.h"
 // OGRE
-#include "Ogre3d/include/OgreRenderTarget.h"
+#include "OgreRenderTarget.h"
 
 namespace Cing
 {

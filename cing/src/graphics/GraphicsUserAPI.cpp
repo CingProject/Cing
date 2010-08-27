@@ -1046,7 +1046,7 @@ void textSize(float size)
 }
 
 /**
- * Sets the 3d coordinate system. Thre are two systems: NORMAL and PROCESSING (default)
+ * Sets the 3d coordinate system. Thre are two systems: NORMAL3D and PROCESSING (default)
  * @param[in] coordSystem the input coordSystem 	 
  */
 void applyCoordinateSystemTransform( const GraphicsType& coordSystem )

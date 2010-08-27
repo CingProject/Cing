@@ -45,23 +45,23 @@ public:
 	virtual ~PhysicsObject();
 
 	// Init / Release / Update
-	void					end			();	
+	void	end			();	
 
 	// Physics control
-	virtual void					enablePhysics				( bool staticObject );
-	void									disablePhysics			();
-	void									applyCentralForce		( const Vector& force );
-	void									applyCentralImpulse	( const Vector& impulse );
-	void									applyForce					( const Vector& force, const Vector& relPos );
-	void									applyImpulse				( const Vector& impulse, const Vector& relPos );
-	void									applyTorque					( const Vector& torque );
-	void									applyTorqueImpulse	( const Vector& torque );
+	virtual void	enablePhysics			( bool staticObject = false );
+	void			disablePhysics			();
+	void			applyCentralForce		( const Vector& force );
+	void			applyCentralImpulse		( const Vector& impulse );
+	void			applyForce				( const Vector& force, const Vector& relPos );
+	void			applyImpulse			( const Vector& impulse, const Vector& relPos );
+	void			applyTorque				( const Vector& torque );
+	void			applyTorqueImpulse		( const Vector& torque );
 
 	// Advanced physics control
-	btRigidBody*					getBulletRigidBody	();
+	btRigidBody*	getBulletRigidBody	();
 
 	// Query  Methods
-	bool									isValid							() { return Object3D::isValid(); }
+	bool			isValid				() { return Object3D::isValid(); }
 
 protected:
 

@@ -24,11 +24,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 // OGRE
-#include "Ogre3d/include/OgreOverlayManager.h"
-#include "Ogre3d/include/OgreOverlayContainer.h"
-#include "Ogre3d/include/OgreStringConverter.h"
-#include "Ogre3d/include/OgreTextAreaOverlayElement.h"
-#include "Ogre3d/include/OgreFontManager.h"
+#include "OgreOverlayManager.h"
+#include "OgreOverlayContainer.h"
+#include "OgreStringConverter.h"
+#include "OgreTextAreaOverlayElement.h"
+#include "OgreFontManager.h"
 
 namespace Cing
 {

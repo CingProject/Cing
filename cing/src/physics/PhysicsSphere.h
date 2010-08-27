@@ -49,7 +49,7 @@ public:
 	float	getDiameter	() { return m_radius * 2;		}
 
 	// Physics control
-	virtual void enablePhysics		( bool staticObject );
+	virtual void enablePhysics		( bool staticObject = false );
 
 private:
 

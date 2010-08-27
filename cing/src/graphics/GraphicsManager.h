@@ -28,7 +28,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "DebugOverlay.h"
 #include "TextArea.h"
 #include "CameraController.h"
-#include "Ogre3d/include/OgreManualObject.h"
+#include "OgreManualObject.h"
 #include "Transform.h"
 #include "Style.h"
 #include "Shape.h"

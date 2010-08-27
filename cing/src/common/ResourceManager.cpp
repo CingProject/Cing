@@ -27,8 +27,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 // Ogre
-#include "Ogre3d/include/OgreRoot.h"
-#include "Ogre3d/include/OgreConfigFile.h"
+#include "OgreRoot.h"
+#include "OgreConfigFile.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"

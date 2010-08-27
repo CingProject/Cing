@@ -25,7 +25,7 @@
 #include "GraphicsPrereqs.h"
 
 // Ogre
-#include "Ogre3d/include/OgreColourValue.h"
+#include "OgreColourValue.h"
 
 namespace Cing
 {

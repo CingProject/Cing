@@ -28,7 +28,7 @@
 #include "PerlinNoise.h"
 #include "framework/UserAppGlobals.h"
 
-#include "Ogre3d/include/OgreBitwise.h"
+#include "OgreBitwise.h"
 
 #include <numeric>
 # include <cmath>
@@ -383,7 +383,7 @@ struct Average
 	}
 
 	/// @brief returns the ave
-	float getValue()
+	double getValue()
 	{
 		double sum = std::accumulate( values.begin(), values.end(), 0.0 );
 		return sum / (double)values.size();

@@ -23,7 +23,7 @@
 #define _InputTypes_h_
 
 #include "InputPrereqs.h"
-#include "Ogre3d/include/ois/OISKeyboard.h"
+#include "OISKeyboard.h"
 
 namespace Cing
 {

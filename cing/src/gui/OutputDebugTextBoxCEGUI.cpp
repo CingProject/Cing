@@ -23,9 +23,9 @@
 #include "GUIManagerCEGUI.h"
 
 // CEGUI
-#include "Ogre3d/include/cegui/CEGUI.h"
-#include "Ogre3d/include/cegui/elements/CEGUIListbox.h"
-#include "Ogre3d/include/cegui/elements/CEGUIListboxTextItem.h"
+#include "CEGUI.h"
+#include "elements/CEGUIListbox.h"
+#include "elements/CEGUIListboxTextItem.h"
 
 //  Common
 #include "common/CommonUtilsIncludes.h"

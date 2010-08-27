@@ -26,9 +26,9 @@
 #include "framework/Application.h"
 
 // Ogre
-#include "Ogre3d/include/OgreOverlayManager.h"
-#include "Ogre3d/include/OgreOverlayContainer.h"
-#include "Ogre3d/include/OgreTextAreaOverlayElement.h"
+#include "OgreOverlayManager.h"
+#include "OgreOverlayContainer.h"
+#include "OgreTextAreaOverlayElement.h"
 
 namespace Cing
 {

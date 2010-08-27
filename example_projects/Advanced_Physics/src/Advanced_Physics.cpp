@@ -17,31 +17,32 @@
 CREATE_APPLICATION( "Cing" );
 
 // Number of spheres and boxes that are going to be created
-#define MAX_ELEMENTS 300
+#define MAX_ELEMENTS 100
 
 // 3d primitives
 PhysicsSphere		sphere[MAX_ELEMENTS];	// SphereS
 PhysicsBox			box[MAX_ELEMENTS];		// Boxes 
-PhysicsPlane		plane;								// Plane 
-PointLight			light;								// Lights in the scene
+PhysicsPlane		plane;					// Plane 
+PointLight			light;					// Lights in the scene
 
 void setup()
 {
 	size(1024,768);
 
+	applyCoordinateSystemTransform(NORMAL3D);
+
 	// init spheres and boxes
-	int coordX = -5000;
+	int coordX = 0;
 	int coordY = 100;
 	for ( int i = 0; i < MAX_ELEMENTS; i++ )
 	{
 		// Set size and position (with some random)
-		sphere[i].init( 100 + random( -50, 50 ) );
+		sphere[i].init( 100 );
 		sphere[i].setPosition( coordX + random ( -20, 20 ), coordY, 200 );
-		sphere[i].enablePhysics( false );
 
-		box[i].init( 100 + random( -50, 50 ) );
+		box[i].init( 100 );
 		box[i].setPosition( coordX + random ( -20, 20 ), coordY, 0 );
-		box[i].enablePhysics( false );
+		box[i].setAmbientColor( 255, 0, 0 );
 
 		// Control coordinates to place them in a grid way
 		coordY += 150;
@@ -53,9 +54,9 @@ void setup()
 	}
 
 	// plane
-	plane.init( 100000 );
-	plane.setPosition( 0, 2000, 0 );
-	plane.setOrientation( Vector::UNIT_X, 15 );
+	plane.init( 10000, 10000 );
+	plane.setPosition( 0, -200, 0 );
+	plane.setOrientation( Vector::UNIT_X, 180 );
 	plane.setSelfIlluminationColor( 120, 120, 0 );
 
 	// Enable physics plate as static
@@ -97,11 +98,28 @@ void keyPressed()
 	// Apply force to all objects when space bar is pressed
 	if ( key == ' ' )
 	{
-		float forceScale = 100;
 		for ( int i = 0; i < MAX_ELEMENTS; i++ )
 		{
-			box[i].applyCentralImpulse( Vector::NEGATIVE_UNIT_Y * forceScale );
-			sphere[i].applyCentralImpulse( Vector::NEGATIVE_UNIT_Y * forceScale );
+			box[i].enablePhysics();
+			sphere[i].enablePhysics();
 		}
 	}
+	else if ( key == 'f' )
+	{
+		float forceScale = 10000000;
+		for ( int i = 0; i < MAX_ELEMENTS; i++ )
+		{
+			box[i].applyCentralImpulse( Vector::UNIT_Y * forceScale*20 );
+			sphere[i].applyCentralImpulse( Vector::UNIT_Y * forceScale );
+		}
+	}
+	else if ( key == 'e' )
+	{
+		enablePhysics();
+	}
+	else if ( key == 'r' )
+	{
+		disablePhysics();
+	}
+
 }

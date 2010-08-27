@@ -65,7 +65,7 @@ void PhysicsBox::init( float width, float height, float depth )
 
 	// Scale correction
 	width		*= OGRE_SCALE_CORRECTION;
-	height	*= OGRE_SCALE_CORRECTION;
+	height		*= OGRE_SCALE_CORRECTION;
 	depth		*= OGRE_SCALE_CORRECTION;
 
 	// Set the size
@@ -99,7 +99,7 @@ void PhysicsBox::init( float size )
  * @param staticObject	If true, this object will be static, this means that this object is affected by 
  * physics objects and forces of the scene (so it will collide with other physics object), but won't move.
  */
-void PhysicsBox::enablePhysics( bool staticObject )
+void PhysicsBox::enablePhysics( bool staticObject /*= false*/ )
 {
 	if ( m_physicsEnabled )
 	{
@@ -107,8 +107,11 @@ void PhysicsBox::enablePhysics( bool staticObject )
 		return;
 	}
 
+	// We need the pysics manger activated, so make sure
+	PhysicsManager::getSingleton().enable();
+
 	// Create collision shape for the object based on the triangle mesh
-	OgreBulletCollisions::CollisionShape*	collisionShape =  PhysicsManager::getSingleton().buildBoxShape( m_width, m_height, m_depth );
+	OgreBulletCollisions::CollisionShape* collisionShape = PhysicsManager::getSingleton().buildBoxShape( m_width, m_height, m_depth );
 
 	// Create rigid body
 	enableRigidBodyPhysics( collisionShape, staticObject );

@@ -26,7 +26,7 @@
 #include "BaseInputDevice.h"
 
 // OIS
-#include "Ogre3d/include/OIS/OISKeyboard.h"
+#include "OISKeyboard.h"
 
 namespace Cing
 {

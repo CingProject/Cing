@@ -26,11 +26,11 @@
 #include "OutputDebugTextBoxCEGUI.h"
 
 // CEGUI
-#include "Ogre3d/include/cegui/CEGUIInputEvent.h"
+#include "CEGUIInputEvent.h"
 
 // OIS
-#include "Ogre3d/include/OIS/OISMouse.h"
-#include "Ogre3d/include/OIS/OISKeyboard.h"
+#include "OISMouse.h"
+#include "OISKeyboard.h"
 
 // Common
 #include "common/Singleton.h"
@@ -87,12 +87,12 @@ private:
 	CEGUI::MouseButton convertOISButtonToCEGUI( OIS::MouseButtonID buttonID );
 
 	// Attributes
-	CEGUI::OgreCEGUIRenderer*		m_CEGUIRenderer;	///< CEGUI Renderer. Connects gui system with render system
-	CEGUI::System*							m_CEGUISystem;		///< Main CEGUI object
-	CEGUI::Window*							m_mainSheet;			///< Main gui sheet: place where all gui elements will be placed<s
-	CEGUI::FrameWindow*					m_messageBoxWindow;
-	OutputDebugTextBoxCEGUI			m_debugOutput;		///< Text Box to output debug messages
-	bool												m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	CEGUI::OgreRenderer*		m_CEGUIRenderer;	///< CEGUI Renderer. Connects gui system with render system
+	CEGUI::System*				m_CEGUISystem;		///< Main CEGUI object
+	CEGUI::Window*				m_mainSheet;		///< Main gui sheet: place where all gui elements will be placed<s
+	CEGUI::FrameWindow*			m_messageBoxWindow;
+	OutputDebugTextBoxCEGUI		m_debugOutput;		///< Text Box to output debug messages
+	bool						m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

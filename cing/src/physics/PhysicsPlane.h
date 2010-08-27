@@ -32,7 +32,7 @@ namespace Cing
  * @internal
  * @brief Represents a 3D Plane with physics capabilities. It can have an associated texture to draw it.
  */
-	class PhysicsPlane: public PhysicsObject
+class PhysicsPlane: public PhysicsObject
 {
 public:
 
@@ -50,7 +50,7 @@ public:
 	float	getHeight	() { return m_height;		}
 
 	// Physics control
-	virtual void enablePhysics		( bool staticObject );
+	virtual void enablePhysics		( bool staticObject = false );
 
 private:
 

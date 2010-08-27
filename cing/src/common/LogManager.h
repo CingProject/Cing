@@ -26,7 +26,7 @@
 #include "Singleton.h"
 
 // Ogre
-#include "Ogre3d/include/OgreLogManager.h"
+#include "OgreLogManager.h"
 
 // Macros for handy use of log system
 

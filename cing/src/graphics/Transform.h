@@ -25,8 +25,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "GraphicsPrereqs.h"
 #include "Common/CommonTypes.h"
 
-#include "ogre3d/include/OgreMatrix3.h"
-#include "ogre3d/include/OgreMatrix4.h"
+#include "OgreMatrix3.h"
+#include "OgreMatrix4.h"
 
 #include "common/CommonTypes.h"
 

@@ -32,7 +32,7 @@
 #include "OpenCV/cxtypes.h"
 
 // Ogre
-#include "Ogre3d/include/OgreTexture.h"
+#include "OgreTexture.h"
 
 // PTypes
 #include "PTypes/include/pasync.h"

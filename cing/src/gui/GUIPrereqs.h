@@ -30,7 +30,7 @@
 /// Contains the GUI management of the library
 namespace CEGUI
 {
-	class OgreCEGUIRenderer;
+	class OgreRenderer;
 	class System;
 	class Listbox;
 }

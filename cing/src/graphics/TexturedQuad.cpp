@@ -27,16 +27,16 @@
 #include "GraphicsManager.h"
 
 // Ogre
-#include "Ogre3d/include/OgrePixelFormat.h"
-#include "Ogre3d/include/OgreImage.h"
-#include "Ogre3d/include/OgreSceneManager.h"
-#include "Ogre3d/include/OgreManualObject.h"
-#include "Ogre3d/include/OgreRenderOperation.h"
-#include "Ogre3d/include/OgreHardwarePixelBuffer.h"
-#include "Ogre3d/include/OgreTextureManager.h"
-#include "Ogre3d/include/OgreTexture.h"
-#include "Ogre3d/include/OgreMaterial.h"
-#include "Ogre3d/include/OgreMaterialManager.h"
+#include "OgrePixelFormat.h"
+#include "OgreImage.h"
+#include "OgreSceneManager.h"
+#include "OgreManualObject.h"
+#include "OgreRenderOperation.h"
+#include "OgreHardwarePixelBuffer.h"
+#include "OgreTextureManager.h"
+#include "OgreTexture.h"
+#include "OgreMaterial.h"
+#include "OgreMaterialManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"

@@ -24,7 +24,7 @@
 #include "VideoPrereqs.h"
 
 // Ogre
-#include "Ogre3d/include/OgreTimer.h"
+#include "OgreTimer.h"
 
 #include <string>
 

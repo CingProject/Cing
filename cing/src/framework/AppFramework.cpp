@@ -27,7 +27,7 @@
 #include "UserAppGlobals.h"
 
 // Ogre
-#include "Ogre3d/include/OgreException.h"
+#include "OgreException.h"
 
 // Common includes
 #include "common/Exception.h"

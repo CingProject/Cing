@@ -25,7 +25,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "CommonPrereqs.h"
 #include "eString.h"
 
-#include "Ogre3d/include/OgreSharedPtr.h"
+#include "OgreSharedPtr.h"
 #include "TinyXML/include/tinyxml.h"
 
 #include <string>

@@ -25,6 +25,15 @@
 #include "GraphicsPrereqs.h"
 #include "common/CommonTypes.h"
 
+// Forward declarations
+namespace CCS
+{
+	class CameraControlSystem;
+	class FreeCameraMode;
+	class OrbitalCameraMode;
+}
+
+
 namespace Cing
 {
 
@@ -59,18 +68,21 @@ private:
 	void	keyboardControl	();
 
 	// Attributes
-	Camera3D*					m_camera;					///< Pointer to the controlled camera
-	Ogre::SceneNode*	m_cameraNode;
-	Ogre::SceneNode*	m_cameraYawNode;
-	Ogre::SceneNode*	m_cameraPitchNode;
-	Ogre::SceneNode*	m_cameraRollNode;	
+	CCS::CameraControlSystem*	m_cameraCS;			///< Camera control system: manages different camera controllers
+	CCS::FreeCameraMode*		m_freeCam;			///< Free camera mode (default)
+	CCS::OrbitalCameraMode*		m_orbitalCam;		///< Orbital camera mode
+	Camera3D*					m_camera;			///< Pointer to the controlled camera
+	Ogre::SceneNode*			m_cameraNode;
+	Ogre::SceneNode*			m_cameraYawNode;
+	Ogre::SceneNode*			m_cameraPitchNode;
+	Ogre::SceneNode*			m_cameraRollNode;	
 	Vector						m_translateVector;
-	float							m_moveScale;
-	Ogre::Degree			m_rotateScale;
+	float						m_moveScale;
+	Ogre::Degree				m_rotateScale;
 
-	bool							m_useKeyboard;
-	bool							m_useMouse;
-	bool							m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool						m_useKeyboard;
+	bool						m_useMouse;
+	bool						m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

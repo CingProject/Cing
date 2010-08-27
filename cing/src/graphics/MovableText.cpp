@@ -16,8 +16,8 @@
 #include "common/CommonTypes.h"
 
 // Ogre
-#include "Ogre3d/include/Ogre.h"
-#include "Ogre3d/include/OgreFontManager.h"
+#include "Ogre.h"
+#include "OgreFontManager.h"
 
 // Graphics
 #include "graphics/GraphicsManager.h"

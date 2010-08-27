@@ -80,13 +80,16 @@ void PhysicsSphere::init( float diameter )
  * @param staticObject	If true, this object will be static, this means that this object is affected by 
  * physics objects and forces of the scene (so it will collide with other physics object), but won't move.
  */
-void PhysicsSphere::enablePhysics( bool staticObject )
+void PhysicsSphere::enablePhysics( bool staticObject /*= false*/ )
 {
 	if ( m_physicsEnabled )
 	{
 		LOG_ERROR_NTIMES( 1, "Trying to enable physics on a sphere that has physics already enabled" );
 		return;
 	}
+
+	// We need the pysics manger activated, so make sure
+	PhysicsManager::getSingleton().enable();
 
 	// Create collision shape for the object based on the triangle mesh
 	OgreBulletCollisions::CollisionShape*	collisionShape =  PhysicsManager::getSingleton().buildSphereShape( m_radius );

@@ -23,17 +23,26 @@
 #include "Camera3D.h"
 
 // Common
-#include "common/LogManager.h"
+#include "common/CommonUtilsIncludes.h"
+
+// Graphics
+#include "graphics/GraphicsManager.h"
 
 // Ogre
-#include "Ogre3d/include/OgreSceneNode.h"
-#include "Ogre3d/include/OgreCamera.h"
-#include "Ogre3d/include/ois/OISKeyboard.h"
+#include "OgreSceneNode.h"
+#include "OgreCamera.h"
+#include "OISKeyboard.h"
 
 // Input
 #include "input/Mouse.h"
 #include "input/Keyboard.h"
 #include "input/InputManager.h"
+
+// Ogre Camera System
+#include <CCSCameraControlSystem.h>
+#include "CCSBasicCameraModes.h"
+#include "CCSFreeCameraMode.h"
+#include "CCSOrbitalCameraMode.h"
 
 namespace Cing
 {
@@ -43,6 +52,9 @@ namespace Cing
  * @brief Constructor. Initializes class attributes.
  */
 CameraController::CameraController():
+	m_cameraCS		( NULL ),
+	m_freeCam		( NULL ),
+	m_orbitalCam	( NULL ),
 	m_camera		( NULL ),
 	m_cameraNode( NULL ),
 	m_cameraYawNode( NULL ),
@@ -79,22 +91,39 @@ void CameraController::init( Camera3D& cameraToControl )
 	// Store the camera pointer
 	m_camera = &cameraToControl;
 
-	// Crete the scene nodes to control the camera
+	// First we have to detach the camera from the current scene node, because the CameraControlSystem will reatach it again
+	m_camera->getSceneNode()->detachObject(m_camera->getOgreCamera());
 
-	// Get camera's node
-	m_cameraNode = m_camera->getSceneNode();
-	m_cameraNode->detachObject( m_camera->getOgreCamera()->getName() );
+	// Create the camera control system
+	// TODO: error checking
+	m_cameraCS = new CCS::CameraControlSystem(m_camera->getOgreCamera()->getSceneManager(), "CameraControlSystem", m_camera->getOgreCamera());
 
-	// Create the camera's yaw node as a child of camera's top node.
-	m_cameraYawNode = m_cameraNode->createChildSceneNode();
+	// Set the camera to render the main viewport
+	GraphicsManager::getSingleton().getMainWindow().attachCameraToWindow( m_cameraCS->getOgreCamera() );
 
-	// Create the camera's pitch node as a child of camera's yaw node.
-	m_cameraPitchNode = m_cameraYawNode->createChildSceneNode();
-
-	// Create the camera's roll node as a child of camera's pitch node and attach the camera to it.
-	m_cameraRollNode = m_cameraPitchNode->createChildSceneNode();
-	m_cameraRollNode->attachObject( m_camera->getOgreCamera() );
+	// Register available camera modes
 	
+	// Create an instance of the "orbital" camera mode
+	m_orbitalCam = new CCS::OrbitalCameraMode(m_cameraCS, 200);
+	m_orbitalCam->setZoomFactor(100);
+	m_orbitalCam->setRotationFactor(5);
+	m_cameraCS->registerCameraMode("Orbit",m_orbitalCam);
+
+	// Create a free camera mode
+	m_freeCam = new CCS::FreeCameraMode(m_cameraCS);
+	m_freeCam->setMoveFactor( 30 );
+	m_freeCam->setRotationFactor( 0.2 );
+	m_cameraCS->registerCameraMode("Free",m_freeCam);
+
+	// Set initial position
+	m_cameraCS->getOgreCamera()->setPosition( Ogre::Vector3( 0, 0, 2000.0 ) );
+	m_camera->getOgreCamera()->getSceneManager()->getRootSceneNode()->setScale(1,1,1);
+
+	// Set the initial camera mode (Free)
+	m_cameraCS->setCameraTarget(GraphicsManager::getSingleton().getSceneManager().getRootSceneNode());
+	m_cameraCS->setCurrentCameraMode(m_freeCam);
+
+
 	m_bIsValid = true;
 }
 
@@ -109,11 +138,9 @@ void CameraController::end()
 	if ( !isValid() )
 		return;
 
-	// Delete yaw node (which is the parent) and re-attach the camera to its original node
-	m_cameraNode->removeAndDestroyChild( m_cameraYawNode->getName() );
-	m_cameraNode->attachObject( m_camera->getOgreCamera() );
-
-	// TODO is it necessary to delete child scene nodes? think not
+	Release(m_orbitalCam);
+	Release(m_freeCam);
+	Release(m_cameraCS);
 
 	m_bIsValid = false;
 }
@@ -126,26 +153,18 @@ void CameraController::update()
 {
 	if ( !isValid() )
 		return;
+	
+	// Update camera controller
+	if ( m_cameraCS ) 
+		m_cameraCS->update(elapsedSec);
 
-	// Check keyboard's state
+	// Keyboard control
 	if ( m_useKeyboard )
 		keyboardControl();
 
-	// Check mouse's state
+	// Mouse Control
 	if ( m_useMouse )
 		mouseControl();
-
-	// Translates the camera according to the translate vector which is
-	// controlled by the keyboard arrows.
-	//
-	// NOTE: We multiply the mTranslateVector by the cameraPitchNode's
-	// orientation quaternion and the cameraYawNode's orientation
-	// quaternion to translate the camera according to the camera's
-	// orientation around the Y-axis and the X-axis.
-	m_cameraNode->translate(m_cameraYawNode->getOrientation() * m_cameraPitchNode->getOrientation() * m_translateVector, Ogre::SceneNode::TS_LOCAL);
-
-	// Reset translation vector
-	m_translateVector = Vector::ZERO;
 }
 
 /**
@@ -175,38 +194,14 @@ void CameraController::userMouse( bool value )
  */
 void CameraController::mouseControl()
 {
-	Ogre::Real pitchAngle;
-	Ogre::Real pitchAngleSign;
-
-	// Get the mouse reference
-	const Mouse& mouse = InputManager::getSingleton().getMouse();
-
-	// Yaws the camera according to the mouse relative movement.
-	Ogre::Radian rotX = Ogre::Degree( mouse.getXAxisRelative() * 0.13 );
-	m_cameraYawNode->yaw(rotX);
-
-	// Pitches the camera according to the mouse relative movement.
-	Ogre::Radian rotY = Ogre::Degree( mouse.getYAxisRelative() * 0.13 );
-	m_cameraPitchNode->pitch(rotY);
-
-	// Angle of rotation around the X-axis.
-	pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(m_cameraPitchNode->getOrientation().w)).valueDegrees());
-
-	// Just to determine the sign of the angle we pick up above, the
-	// value itself does not interest us.
-	pitchAngleSign = m_cameraPitchNode->getOrientation().x;
-
-	// Limit the pitch between -90 degress and +90 degrees, Quake3-style.
-	if (pitchAngle > 90.0f)
+	if (m_cameraCS->getCameraModeName( m_cameraCS->getCurrentCameraMode() ) == "Free")
 	{
-		if (pitchAngleSign > 0)
-			// Set orientation to 90 degrees on X-axis.
-			m_cameraPitchNode->setOrientation(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),
-			Ogre::Math::Sqrt(0.5f), 0, 0));
-		else if (pitchAngleSign < 0)
-			// Sets orientation to -90 degrees on X-axis.
-			m_cameraPitchNode->setOrientation(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),
-			-Ogre::Math::Sqrt(0.5f), 0, 0));
+		CCS::FreeCameraMode* freeCameraMode = (CCS::FreeCameraMode*)m_cameraCS->getCameraMode("Free");
+		if ( freeCameraMode )
+		{
+			freeCameraMode->yaw( mouse.getXAxisRelative() );
+			freeCameraMode->pitch( mouse.getYAxisRelative() );
+		}
 	}
 }
 
@@ -216,60 +211,63 @@ void CameraController::mouseControl()
  */
 void CameraController::keyboardControl()
 {
-	// Get the keyboard reference
-	const Keyboard& keyboard = InputManager::getSingleton().getKeyboard();
-
-	// Move camera upwards along to world's Y-axis.
-	if(keyboard.isKeyDown(OIS::KC_PGUP))
-		m_cameraNode->setPosition(m_cameraNode->getPosition() + Ogre::Vector3(0, 5, 0));
-
-	// Move camera downwards along to world's Y-axis.
-	if(keyboard.isKeyDown(OIS::KC_PGDOWN))
-		m_cameraNode->setPosition(m_cameraNode->getPosition() - Ogre::Vector3(0, 5, 0));
-
-	// Move camera forward.
-	if(keyboard.isKeyDown(OIS::KC_W))
-		m_translateVector.z = -(m_moveScale);
-
-	// Move camera backward.
-	if(keyboard.isKeyDown(OIS::KC_S))
-		m_translateVector.z = m_moveScale;
-
-	// Move camera left.
-	if(keyboard.isKeyDown(OIS::KC_A))
-		m_translateVector.x = m_moveScale;
-
-	// Move camera right.
-	if(keyboard.isKeyDown(OIS::KC_D))
-		m_translateVector.x = -m_moveScale;
-
-	// Rotate camera left.
-	if(keyboard.isKeyDown(OIS::KC_Q))
-		m_cameraYawNode->yaw(m_rotateScale);
-
-	// Rotate camera right.
-	if(keyboard.isKeyDown(OIS::KC_E))
-		m_cameraYawNode->yaw(-(m_rotateScale));
-
-	// Rotate camera upwards.
-	if(keyboard.isKeyDown(OIS::KC_UP))
-		//m_cameraPitchNode->pitch(m_rotateScale);
-		m_cameraNode->setPosition(m_cameraNode->getPosition() + Ogre::Vector3(0, 5, 0));
-
-
-	// Rotate camera downwards.
-	if(keyboard.isKeyDown(OIS::KC_DOWN))
-		//m_cameraPitchNode->pitch(-(m_rotateScale));
-		m_cameraNode->setPosition(m_cameraNode->getPosition() - Ogre::Vector3(0, 5, 0));
-
-
-	// Strip all rotation to the camera.
-	if(keyboard.isKeyDown(OIS::KC_R))
+	// Free camera mode
+	if(m_cameraCS->getCameraModeName(m_cameraCS->getCurrentCameraMode()) == "Free")
 	{
-		m_cameraYawNode->setOrientation(Ogre::Quaternion::IDENTITY);
-		m_cameraPitchNode->setOrientation(Ogre::Quaternion::IDENTITY);
-		m_cameraRollNode->setOrientation(Ogre::Quaternion::IDENTITY);
+		CCS::FreeCameraMode* freeCameraMode = (CCS::FreeCameraMode*)m_cameraCS->getCameraMode("Free");
+		if ( !freeCameraMode )
+			return;
+
+		if(keyboard.isKeyDown(OIS::KC_A))
+			freeCameraMode->goLeft();
+
+		if(keyboard.isKeyDown(OIS::KC_D))
+			freeCameraMode->goRight();
+
+		if(keyboard.isKeyDown(OIS::KC_UP) || keyboard.isKeyDown(OIS::KC_W) )
+			freeCameraMode->goForward();
+
+		if(keyboard.isKeyDown(OIS::KC_DOWN) || keyboard.isKeyDown(OIS::KC_S) )
+			freeCameraMode->goBackward();
+
+		if(keyboard.isKeyDown(OIS::KC_PGUP))
+			freeCameraMode->goUp();
+
+		if(keyboard.isKeyDown(OIS::KC_PGDOWN))
+			freeCameraMode->goDown();
+
+		if(keyboard.isKeyDown(OIS::KC_RIGHT))
+			freeCameraMode->yaw(-1);
+
+		if(keyboard.isKeyDown(OIS::KC_LEFT))
+			freeCameraMode->yaw(1);	
 	}
+	// Orbital camera mode
+	else if(m_cameraCS->getCameraModeName(m_cameraCS->getCurrentCameraMode()) == "Orbital")
+	{
+		CCS::OrbitalCameraMode* orbitalCameraMode = (CCS::OrbitalCameraMode*)m_cameraCS->getCameraMode("Orbital");
+		if ( !orbitalCameraMode )
+			return;
+
+		if(keyboard.isKeyDown(OIS::KC_A))
+			orbitalCameraMode->yaw(1);
+
+		if(keyboard.isKeyDown(OIS::KC_D))
+			orbitalCameraMode->yaw(-1);
+
+		if(keyboard.isKeyDown(OIS::KC_W))
+			orbitalCameraMode->pitch(1);
+
+		if(keyboard.isKeyDown(OIS::KC_S))
+			orbitalCameraMode->pitch(-1);
+
+		if(keyboard.isKeyDown(OIS::KC_PGUP))
+			orbitalCameraMode->zoom(-1);
+
+		if(keyboard.isKeyDown(OIS::KC_PGDOWN))
+			orbitalCameraMode->zoom(1);	
+	}
+		
 }
 
 } // namespace Cing

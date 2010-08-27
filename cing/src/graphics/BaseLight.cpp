@@ -23,10 +23,10 @@
 #include "graphics/GraphicsManager.h"
 
 // Ogre
-#include "Ogre3d/include/OgreStringConverter.h"
-#include "Ogre3d/include/OgreSceneManager.h"
-#include "Ogre3d/include/OgreBillboardSet.h"
-#include "Ogre3d/include/OgreBillboard.h"
+#include "OgreStringConverter.h"
+#include "OgreSceneManager.h"
+#include "OgreBillboardSet.h"
+#include "OgreBillboard.h"
 
 // Common
 #include "common/Exception.h"

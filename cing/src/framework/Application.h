@@ -26,11 +26,11 @@
 #include "common/Singleton.h"
 
 // OIS
-#include "Ogre3d/include/ois/OISMouse.h"
-#include "Ogre3d/include/ois/OISKeyboard.h"
+#include "OISMouse.h"
+#include "OISKeyboard.h"
 
 // Ogre
-#include "Ogre3d/include/OgreTimer.h"
+#include "OgreTimer.h"
 
 namespace Cing
 {

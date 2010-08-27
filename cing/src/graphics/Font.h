@@ -25,7 +25,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "GraphicsPrereqs.h"
 
 // Ogre
-#include "Ogre3d/include/OgreFont.h"
+#include "OgreFont.h"
 
 // Common
 #include "common/eString.h"

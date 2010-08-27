@@ -42,7 +42,7 @@ enum CollisionShape
 
 // Physics constants (default values)
 const float				DEFAULT_STATIC_BODY_RESTITUTION		= 0.1f;
-const float				DEFAULT_STATIC_BODY_FRICTION			= 0.8f;
+const float				DEFAULT_STATIC_BODY_FRICTION		= 0.8f;
 
 const float				DEFAULT_DYNAMIC_BODY_RESTITUTION  = 0.6f;
 const float				DEFAULT_DYNAMIC_BODY_FRICTION     = 0.6f;
@@ -67,24 +67,29 @@ public:
 	virtual ~PhysicsManager();
 
 	// Init / Release / Update
-	void	init		( Ogre::SceneManager& sceneManager, const Vector& gravityVector = Vector(0 , 9.81, 0), const AABox &bounds = AABox (Vector (-10000, -10000, -10000), Vector (10000,  10000,  10000)));
+	void	init		( Ogre::SceneManager& sceneManager, const Vector& gravityVector = Vector(0,-9.81,0), const AABox &bounds = AABox (Vector (-10000, -10000, -10000), Vector (10000,  10000,  10000)));
 	void	end			();
 	void	update	( unsigned long elapsedMillis );
 
+
+	// Control methods
+	void	enable		( bool enable = true );
+
+
 	// Collision shape construction
 	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Object3D& object );
-	OgreBulletCollisions::CollisionShape*		buildBoxShape					( float width, float heigh, float depth );
-	OgreBulletCollisions::CollisionShape*		buildStaticPlaneShape	( float width, float heigh );
+	OgreBulletCollisions::CollisionShape*		buildBoxShape				( float width, float heigh, float depth );
+	OgreBulletCollisions::CollisionShape*		buildStaticPlaneShape		( float width, float heigh );
 	OgreBulletCollisions::CollisionShape*		buildSphereShape			( float radius );
 
 	// Rigid bodies
-	OgreBulletDynamics::RigidBody*					createRigidBody				( Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody );
+	OgreBulletDynamics::RigidBody*				createRigidBody				( Object3D& object, OgreBulletCollisions::CollisionShape* collisionShape, bool staticBody );
 
 	// Debug methods
 	void	drawPhysics( bool draw );
 
 	// Query  Methods
-	bool																isValid	()	{ return m_bIsValid; }
+	bool								isValid	()	{ return m_bIsValid; }
 	OgreBulletDynamics::DynamicsWorld*	getWorld()	{ return m_physicsWorld; }
 
 private:
@@ -92,12 +97,13 @@ private:
 	PhysicsManager();
 
 	// Static attributes
-	static long													m_rigidObjectCounter;///< Used to generate unique names for the rigid objects
+	static long							m_rigidObjectCounter;///< Used to generate unique names for the rigid objects
 
 	// Attributes
-	OgreBulletDynamics::DynamicsWorld*	m_physicsWorld;				///< Manager of the physics world. All physics communication is managed through this object
+	bool								m_enabled;				///< Physics are enabled/disabled?
+	OgreBulletDynamics::DynamicsWorld*	m_physicsWorld;			///< Manager of the physics world. All physics communication is managed through this object
 	OgreBulletCollisions::DebugDrawer*	m_physicsDebugDrawer;	///< Contains all methods related to physics visual debugging (such as activate bbox rendering...etc).
-	bool																m_bIsValid;						///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool								m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

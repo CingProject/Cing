@@ -34,7 +34,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //#define UINT32 unsigned short
 //#include <iterator>
 //#include <string>
-#include "Ogre3d/include/OgreUTFString.h"
+#include "OgreUTFString.h"
 
 
 namespace Cing

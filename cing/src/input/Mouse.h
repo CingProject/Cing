@@ -26,7 +26,7 @@
 #include "InputPrereqs.h"
 
 // OIS
-#include "Ogre3d/include/OIS/OISMouse.h"
+#include "OISMouse.h"
 
 namespace Cing
 {

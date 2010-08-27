@@ -3,9 +3,9 @@
 #include "Cing.h"
 
 // OGRE and Collada includes
-#include "Ogre3d/include/OgreAnimation.h"  
-#include "Ogre3d/include/OgreRoot.h"  
-#include "Ogre3d/include/OgreEntity.h"  
+#include "OgreAnimation.h"  
+#include "OgreRoot.h"  
+#include "OgreEntity.h"  
 
 // Collada includes
 #include "OgreCollada/include/OgreCollada.h"

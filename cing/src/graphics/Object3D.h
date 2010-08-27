@@ -29,7 +29,7 @@
 #include "common/CommonTypes.h"
 
 // Ogre
-#include "Ogre3d/include/OgreMaterial.h"
+#include "OgreMaterial.h"
 
 namespace Cing
 {
@@ -61,13 +61,14 @@ public:
 	virtual void      end         			();
 
 	// Query methods
-	bool				isValid     			() const { return m_bIsValid; }
-	Ogre::SceneNode*	getSceneNode			() { return m_sceneNode;			}
-	Ogre::Entity*		getEntity					() { return m_entity;					}
-	const std::string	getName						() { return m_objectName;			}
-	Object3DType		getType						() { return m_type;						}
-	const Vector&		getPosition				();
+	bool				isValid     		() const { return m_bIsValid; }
+	Ogre::SceneNode*	getSceneNode		() { return m_sceneNode;}
+	Ogre::Entity*		getEntity			() { return m_entity;	}
+	const std::string	getName				() { return m_objectName;}
+	Object3DType		getType				() { return m_type;		}
+	const Vector&		getPosition			();
 	const Quaternion&	getOrientation		() const;
+	const Vector&		getScale			() const;
 
 	// Set methods
 	void				setType						( Object3DType type ) { m_type = type; }

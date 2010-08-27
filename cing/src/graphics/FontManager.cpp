@@ -26,9 +26,9 @@ Inc.
 
 
 // TEST
-#include "Ogre3d/include/OgreTechnique.h"
-#include "Ogre3d/include/OgreTextureUnitState.h"
-#include "Ogre3d/include/OgreSceneManager.h"
+#include "OgreTechnique.h"
+#include "OgreTextureUnitState.h"
+#include "OgreSceneManager.h"
 
 
 namespace Cing

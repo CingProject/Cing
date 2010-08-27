@@ -28,8 +28,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 // Ogre includes
-#include "Ogre3d/include/OgreLight.h"
-#include "Ogre3d/include/OgrePixelFormat.h"
+#include "OgreLight.h"
+#include "OgrePixelFormat.h"
 
 namespace Cing
 {
@@ -62,7 +62,7 @@ namespace Cing
 		// Other
 		CLOSE,
 	    // Coordinate systems
-		NORMAL,
+		NORMAL3D,
 		PROCESSING
 	};
 

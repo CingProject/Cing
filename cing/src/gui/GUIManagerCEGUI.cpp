@@ -31,10 +31,10 @@
 #include "common/CommonUtilsIncludes.h"
 
 // CEGUI
-#include "Ogre3d/include/OgreCEGUIRenderer.h"
-#include "Ogre3d/include/cegui/CEGUI.h"
-#include "Ogre3d/include/cegui/elements/CEGUIScrollablePane.h"
-#include "Ogre3d/include/cegui/elements/CEGUIListbox.h"
+#include "CEGUIOgreRenderer.h"
+#include "CEGUI.h"
+#include "elements/CEGUIScrollablePane.h"
+#include "elements/CEGUIListbox.h"
 
 
 namespace Cing
@@ -72,9 +72,13 @@ GUIManagerCEGUI::~GUIManagerCEGUI()
  */
 void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* ogreSceneManager )
 {
-	// Init CEGUI
-	m_CEGUIRenderer = new CEGUI::OgreCEGUIRenderer( ogreWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, ogreSceneManager );
-	m_CEGUISystem = new CEGUI::System( m_CEGUIRenderer );
+	// Init CEGUI for version 0.7
+	m_CEGUIRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
+	m_CEGUISystem	= CEGUI::System::getSingletonPtr();
+
+	// Working for CEGUI 0.6
+	//m_CEGUIRenderer = new CEGUI::OgreCEGUIRenderer( ogreWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, ogreSceneManager );
+	//m_CEGUISystem = new CEGUI::System( m_CEGUIRenderer );
 
 	// Register this class as OIS input listener to receive mouse notifications
 	// TODO: register also as keyBoardListener
@@ -82,14 +86,14 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	InputManager::getSingleton().getKeyboard().addListener( this );
 
 	// Select available skin sets
-	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"WindowsLook.scheme");
-	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"VanillaSkin.scheme");
-	CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
+	CEGUI::SchemeManager::getSingleton().create("WindowsLook.scheme");
+	CEGUI::SchemeManager::getSingleton().create("VanillaSkin.scheme");
+	CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
 
 	// Set mouse cursor and font
 	//m_CEGUISystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
 	//m_CEGUISystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
-	CEGUI::FontManager::getSingleton().createFont("Iconified-12.font");
+	CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font");
 
 	// Create default sheet to place GUI elements
 	CEGUI::WindowManager&	win = CEGUI::WindowManager::getSingleton();
@@ -127,9 +131,8 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 void GUIManagerCEGUI::end()
 {
 	m_debugOutput.end();
-	//CEGUI::WindowManager::getSingleton().destroyAllWindows();
-	Release( m_CEGUISystem );
-	Release( m_CEGUIRenderer );
+	CEGUI::System::destroy();
+	//CEGUI::OgreRenderer::destroySystem();
 	m_bIsValid = false;
 }
 
@@ -165,8 +168,8 @@ bool GUIManagerCEGUI::mouseMoved( const OIS::MouseEvent& event )
 	// Inject mouse wheel and position
 	// NOTE: we are injecting the absolute position (instead of relative), because is the only way
 	// to math OIS and CEGUI mouse coordinates when in windowed mode
-	m_CEGUISystem->injectMouseWheelChange(event.state.Z.rel);
-	m_CEGUISystem->injectMousePosition( event.state.X.abs, event.state.Y.abs);
+	m_CEGUISystem->injectMouseWheelChange((float)event.state.Z.rel);
+	m_CEGUISystem->injectMousePosition( (float)event.state.X.abs, event.state.Y.abs);
 
 	return true;
 }
@@ -246,7 +249,7 @@ void GUIManagerCEGUI::messageBox( const char* text, bool fullScreen /*= false*/ 
 			m_messageBoxWindow->setProperty("VertFormatting", "VertCentred");
 			m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
 			int margin = 20;
-			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(margin), cegui_absdim(margin) ) );
+			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim((float)margin), cegui_absdim((float)margin) ) );
 			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(width-margin*2), cegui_absdim(height-margin*2) ) );
 		}
 		else

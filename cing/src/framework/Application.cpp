@@ -124,7 +124,7 @@ void Application::endApp()
 	InputManager::getSingleton().end();
 
 	// Release physics manager
-	//PhysicsManager::getSingleton().end();
+	PhysicsManager::getSingleton().end();
 
 	// Release GUI Manager
 	GUIManagerCEGUI::getSingleton().end();
@@ -225,9 +225,6 @@ void Application::initSubSystems()
 
 	// Init graphics manager
 	GraphicsManager::getSingleton().init();
-
-	// Init physics manager
-	PhysicsManager::getSingleton().init( GraphicsManager::getSingleton().getSceneManager() );
 
 	// Init input manager
 	InputManager::getSingleton().init();

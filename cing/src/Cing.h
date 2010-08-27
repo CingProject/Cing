@@ -113,8 +113,8 @@
 
 // OGRE -> this is included because some Ogre objects are exposed to user application
 // just in case an advanced user wants to use them...
-#include "Ogre3d/include/OgreSceneManager.h"
-#include "Ogre3d/include/OgreCamera.h"
+#include "OgreSceneManager.h"
+#include "OgreCamera.h"
 
 // namespaces (the library user don't need to know about them...)
 using namespace Cing;

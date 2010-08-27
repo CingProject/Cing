@@ -26,8 +26,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "framework/Application.h"
 
 // Ogre includes
-#include "Ogre3d/include/OgreCamera.h"
-#include "Ogre3d/include/OgreSceneManager.h"
+#include "OgreCamera.h"
+#include "OgreSceneManager.h"
 
 // Common includes
 #include "common/Exception.h"

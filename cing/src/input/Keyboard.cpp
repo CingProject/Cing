@@ -29,7 +29,7 @@
 #include "graphics/GraphicsManager.h"
 
 // OIS
-#include "Ogre3d/include/ois/OISInputManager.h"
+#include "OISInputManager.h"
 
 namespace Cing
 {
@@ -72,11 +72,11 @@ bool Keyboard::init( OIS::InputManager* pOISInputManager )
 	BaseInputDevice< OIS::KeyListener >::init();
 
   // If possible create a buffered keyboard
-  if ( pOISInputManager && ( pOISInputManager->numKeyboards() > 0 ) )
-  {
-    m_pOISKeyboard = static_cast<OIS::Keyboard*>( pOISInputManager->createInputObject( OIS::OISKeyboard, true ) );
-    m_pOISKeyboard->setEventCallback( this );
-  }
+	if ( pOISInputManager && ( pOISInputManager->getNumberOfDevices(OIS::OISKeyboard ) > 0 ) )
+	{
+	 m_pOISKeyboard = static_cast<OIS::Keyboard*>( pOISInputManager->createInputObject( OIS::OISKeyboard, true ) );
+	 m_pOISKeyboard->setEventCallback( this );
+	}
 
   // To be able to ask for ascii codes
   m_pOISKeyboard->setTextTranslation( OIS::Keyboard::Ascii );
