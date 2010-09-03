@@ -23,7 +23,9 @@
 
 #include "SystemUtils.h"
 
-#include  <io.h>
+#if defined( _MSC_VER )
+	#include  <io.h>
+#endif
 #include  <stdio.h>
 #include  <stdlib.h>
 
@@ -64,8 +66,10 @@ bool fileExists( const std::string& fileName )
  */
 bool folderExists( const std::string& folderPath )
 {
+#if defined( _MSC_VER )
 	if( (_access( folderPath.c_str() , 0 )) != -1 )
 		return true;
+#endif
 
    return false;
 }

@@ -42,6 +42,9 @@
 #else
 	#define LOG(x, args...)			LogManager::getSingleton().logMessage( LogManager::LOG_NORMAL, x, ## args )
 	#define LOG_ERROR(x, args...)	LogManager::getSingleton().logMessage( LogManager::LOG_ERROR, x, ## args )
+	#define LOG_ERROR_NTIMES(n, x, args...)	static int count = 0; \
+										if ( ++count <= n )	  \
+										Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_ERROR, x, ## args )
 #endif
 
 

@@ -60,7 +60,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //#include "gui/GUIManager.h"
 
 // Collada
-#include "OgreCollada/include/OgreCollada.h"
+#if defined( _MSC_VER ) // TODO, need OgreCollada working on os x!
+	#include "OgreCollada/include/OgreCollada.h"
+#endif
 
 namespace Cing
 {

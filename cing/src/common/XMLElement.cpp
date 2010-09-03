@@ -93,7 +93,7 @@ void XMLElement::load( const std::string& xmlFileName )
 		end();
 
 	// Load the xml file
-	m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( dataFolder + xmlFileName.c_str() ) );
+	m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( (dataFolder + xmlFileName).c_str() ) );
 	m_xmlDoc->LoadFile();
 
 	// Error loading file?
@@ -218,7 +218,7 @@ XMLElement XMLElement::getChild( const std::string& path )
   }
 
   // Get first child
-  TiXmlNode* childNode = m_rootElem->FirstChild( tokens[0] );
+  TiXmlNode* childNode = m_rootElem->FirstChild( tokens[0].c_str() );
   if ( childNode )
 	 child = childNode->ToElement();
   if ( !child )
@@ -230,7 +230,7 @@ XMLElement XMLElement::getChild( const std::string& path )
   // Iterate to find the rest if there is more than one leve in the path
   for ( size_t i = 1; i < tokens.size(); ++i )
   {
-    child = child->FirstChild( tokens[i] )->ToElement();
+    child = child->FirstChild( tokens[i].c_str() )->ToElement();
     if ( !child )
     {
       LOG_ERROR( "Error in XMLElement::getChild. path received does not correspond to any child in the XML file. %s not found", tokens[i].c_str() );
@@ -293,7 +293,7 @@ int XMLElement::getIntAttribute( const String& name, int defaultValue /*= 0 */)
   }
 
   int value = defaultValue;
-  m_rootElem->QueryIntAttribute( name, &value );
+  m_rootElem->QueryIntAttribute( name.c_str(), &value );
   return value;
 }
 

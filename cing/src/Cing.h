@@ -109,7 +109,7 @@
 #include "gui/GUIUserAPI.h"
 
 // Midi
-#include "midi/midiIO.h"
+#include "midi/MidiIO.h"
 
 // OGRE -> this is included because some Ogre objects are exposed to user application
 // just in case an advanced user wants to use them...

@@ -73,6 +73,7 @@ bool Window::init( Ogre::RenderWindow* pOgreWindow )
   // Check window pointer
   if ( !pOgreWindow )
     THROW_EXCEPTION( "Internal Error: Invalid window" );
+	
 
   // Store Ogre window handle
   m_pOgreWindow = pOgreWindow;

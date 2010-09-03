@@ -39,8 +39,11 @@ Exception::Exception(const char* fileName, int line, const char* message, ...)
 	// Extract string parameters
 	char		msgFormated[1024];
 	va_list		args;
+	
+	
+	
 	va_start	(args, message);
-	vsprintf_s 	(msgFormated, 1024, message, args);
+	sprintf 	(msgFormated, message, args);
 	va_end		(args);
 
     std::ostringstream oss;

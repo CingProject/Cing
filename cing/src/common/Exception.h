@@ -25,8 +25,11 @@
 #include <string>
 
 // Macro to throw an an exception
-#define THROW_EXCEPTION(message, ...) { throw Exception(__FILE__, __LINE__, message, __VA_ARGS__ ); }
-
+#if defined( _MSC_VER )
+	#define THROW_EXCEPTION(message, ...) { throw Exception(__FILE__, __LINE__, message, __VA_ARGS__ ); }
+#else
+	#define THROW_EXCEPTION(message, args...) { throw Exception(__FILE__, __LINE__, message, ## args ); }
+#endif
 
 namespace Cing
 {
