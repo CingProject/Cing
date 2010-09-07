@@ -169,6 +169,8 @@
 		A94E00F912072075009A8F12 /* PhysicsSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E005012072075009A8F12 /* PhysicsSphere.h */; };
 		A94E00FA12072075009A8F12 /* PhysicsUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E005112072075009A8F12 /* PhysicsUserAPI.cpp */; };
 		A94E00FB12072075009A8F12 /* PhysicsUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E005212072075009A8F12 /* PhysicsUserAPI.h */; };
+		A97B8D6E1236DE0700FF585F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97B8D6D1236DE0700FF585F /* IOKit.framework */; };
+		A97B8E241236DF4000FF585F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97B8E231236DF4000FF585F /* Carbon.framework */; };
 		A97FD9C6122C0E280049BCBA /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97FD9C5122C0E280049BCBA /* Ogre.framework */; };
 		A9847A73123002820037050E /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9847A72123002820037050E /* CoreMIDI.framework */; };
 		A9847AA2123003CE0037050E /* MidiIO.h in Headers */ = {isa = PBXBuildFile; fileRef = A9847AA1123003CE0037050E /* MidiIO.h */; };
@@ -377,6 +379,8 @@
 		A94EFFFD12072075009A8F12 /* Font(Deprecated).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Font(Deprecated).h"; sourceTree = "<group>"; };
 		A94EFFFE12072075009A8F12 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
 		A94EFFFF12072075009A8F12 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Font.h; sourceTree = "<group>"; };
+		A97B8D6D1236DE0700FF585F /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		A97B8E231236DF4000FF585F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		A97FD9C5122C0E280049BCBA /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = ../../../libraries/mac/xcode/Ogre3d/Frameworks/Ogre.framework; sourceTree = SOURCE_ROOT; };
 		A9847A72123002820037050E /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		A9847AA1123003CE0037050E /* MidiIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiIO.h; sourceTree = "<group>"; };
@@ -399,6 +403,8 @@
 				A9B3A837122EB14C00D9B110 /* CEGUIBase.framework in Frameworks */,
 				A9B3A839122EB14C00D9B110 /* CEGUIOgreRenderer.framework in Frameworks */,
 				A9847A73123002820037050E /* CoreMIDI.framework in Frameworks */,
+				A97B8D6E1236DE0700FF585F /* IOKit.framework in Frameworks */,
+				A97B8E241236DF4000FF585F /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +480,8 @@
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 				A9B3A836122EB14C00D9B110 /* CEGUIBase.framework */,
 				A9B3A838122EB14C00D9B110 /* CEGUIOgreRenderer.framework */,
+				A97B8D6D1236DE0700FF585F /* IOKit.framework */,
+				A97B8E231236DF4000FF585F /* Carbon.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -1017,6 +1025,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Cing_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/include",
 					"$(CING_LIBRARIES)/OgreCCS/include",
 					"$(CING_LIBRARIES)/OgreBullet/Dynamics/include",
 					"$(CING_LIBRARIES)/OgreBullet/Collisions/include",
@@ -1032,6 +1041,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/lib",
 					"$(CING_LIBRARIES)/OgreCCS/lib",
 					"$(CING_LIBRARIES)/Bullet/lib",
 					"$(CING_LIBRARIES)/OgreBullet/lib",
@@ -1044,6 +1054,7 @@
 					"$(CING_LIBRARIES)/TinyXML/lib",
 				);
 				OTHER_LDFLAGS = (
+					"-lfmodex",
 					"-lCCS",
 					"-lOgreBullet",
 					"-lConvexDecomposition",
@@ -1054,7 +1065,6 @@
 					"-lcv",
 					"-lcvaux",
 					"-lcxcore",
-					"-lhighgui",
 					"-lml",
 				);
 				PRODUCT_NAME = Cing;
@@ -1079,6 +1089,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Cing_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/include",
 					"$(CING_LIBRARIES)/OgreCCS/include",
 					"$(CING_LIBRARIES)/OgreBullet/Dynamics/include",
 					"$(CING_LIBRARIES)/OgreBullet/Collisions/include",
@@ -1094,6 +1105,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/lib",
 					"$(CING_LIBRARIES)/OgreCCS/lib",
 					"$(CING_LIBRARIES)/Bullet/lib",
 					"$(CING_LIBRARIES)/OgreBullet/lib",
@@ -1106,6 +1118,7 @@
 					"$(CING_LIBRARIES)/TinyXML/lib",
 				);
 				OTHER_LDFLAGS = (
+					"-lfmodex",
 					"-lCCS",
 					"-lOgreBullet",
 					"-lConvexDecomposition",
@@ -1116,7 +1129,6 @@
 					"-lcv",
 					"-lcvaux",
 					"-lcxcore",
-					"-lhighgui",
 					"-lml",
 				);
 				PRODUCT_NAME = Cing;
