@@ -171,10 +171,6 @@
 		A94E00FB12072075009A8F12 /* PhysicsUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E005212072075009A8F12 /* PhysicsUserAPI.h */; };
 		A97FD9C6122C0E280049BCBA /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97FD9C5122C0E280049BCBA /* Ogre.framework */; };
 		A9847A73123002820037050E /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9847A72123002820037050E /* CoreMIDI.framework */; };
-		A9847A9D1230039E0037050E /* GStreamerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9847A991230039E0037050E /* GStreamerManager.cpp */; };
-		A9847A9E1230039E0037050E /* GStreamerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9847A9A1230039E0037050E /* GStreamerManager.h */; };
-		A9847A9F1230039E0037050E /* MediaPlayerGS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9847A9B1230039E0037050E /* MediaPlayerGS.cpp */; };
-		A9847AA01230039E0037050E /* MediaPlayerGS.h in Headers */ = {isa = PBXBuildFile; fileRef = A9847A9C1230039E0037050E /* MediaPlayerGS.h */; };
 		A9847AA2123003CE0037050E /* MidiIO.h in Headers */ = {isa = PBXBuildFile; fileRef = A9847AA1123003CE0037050E /* MidiIO.h */; };
 		A9B3A837122EB14C00D9B110 /* CEGUIBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B3A836122EB14C00D9B110 /* CEGUIBase.framework */; };
 		A9B3A839122EB14C00D9B110 /* CEGUIOgreRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B3A838122EB14C00D9B110 /* CEGUIOgreRenderer.framework */; };
@@ -381,15 +377,11 @@
 		A94EFFFD12072075009A8F12 /* Font(Deprecated).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Font(Deprecated).h"; sourceTree = "<group>"; };
 		A94EFFFE12072075009A8F12 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
 		A94EFFFF12072075009A8F12 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Font.h; sourceTree = "<group>"; };
-		A97FD9C5122C0E280049BCBA /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = /Users/sroske/Projects/frameworks/cing/cingproject/trunk/cing/libraries/mac/xcode/Ogre3d/Frameworks/Ogre.framework; sourceTree = "<absolute>"; };
+		A97FD9C5122C0E280049BCBA /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = ../../../libraries/mac/xcode/Ogre3d/Frameworks/Ogre.framework; sourceTree = SOURCE_ROOT; };
 		A9847A72123002820037050E /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
-		A9847A991230039E0037050E /* GStreamerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GStreamerManager.cpp; sourceTree = "<group>"; };
-		A9847A9A1230039E0037050E /* GStreamerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStreamerManager.h; sourceTree = "<group>"; };
-		A9847A9B1230039E0037050E /* MediaPlayerGS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaPlayerGS.cpp; sourceTree = "<group>"; };
-		A9847A9C1230039E0037050E /* MediaPlayerGS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerGS.h; sourceTree = "<group>"; };
 		A9847AA1123003CE0037050E /* MidiIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiIO.h; sourceTree = "<group>"; };
-		A9B3A836122EB14C00D9B110 /* CEGUIBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIBase.framework; path = /Users/sroske/Projects/frameworks/cing/cingproject/trunk/cing/libraries/mac/xcode/CEGUI/Frameworks/CEGUIBase.framework; sourceTree = "<absolute>"; };
-		A9B3A838122EB14C00D9B110 /* CEGUIOgreRenderer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIOgreRenderer.framework; path = /Users/sroske/Projects/frameworks/cing/cingproject/trunk/cing/libraries/mac/xcode/CEGUI/Frameworks/CEGUIOgreRenderer.framework; sourceTree = "<absolute>"; };
+		A9B3A836122EB14C00D9B110 /* CEGUIBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIBase.framework; path = ../../../libraries/mac/xcode/CEGUI/Frameworks/CEGUIBase.framework; sourceTree = SOURCE_ROOT; };
+		A9B3A838122EB14C00D9B110 /* CEGUIOgreRenderer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIOgreRenderer.framework; path = ../../../libraries/mac/xcode/CEGUI/Frameworks/CEGUIOgreRenderer.framework; sourceTree = SOURCE_ROOT; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -582,10 +574,6 @@
 		A94E005312072075009A8F12 /* video */ = {
 			isa = PBXGroup;
 			children = (
-				A9847A991230039E0037050E /* GStreamerManager.cpp */,
-				A9847A9A1230039E0037050E /* GStreamerManager.h */,
-				A9847A9B1230039E0037050E /* MediaPlayerGS.cpp */,
-				A9847A9C1230039E0037050E /* MediaPlayerGS.h */,
 				A94E005412072075009A8F12 /* MediaPlayerVLC.cpp */,
 				A94E005512072075009A8F12 /* MediaPlayerVLC.h */,
 				A94E005612072075009A8F12 /* OCVMovie.cpp */,
@@ -868,8 +856,6 @@
 				A94E00F712072075009A8F12 /* PhysicsPrereqs.h in Headers */,
 				A94E00F912072075009A8F12 /* PhysicsSphere.h in Headers */,
 				A94E00FB12072075009A8F12 /* PhysicsUserAPI.h in Headers */,
-				A9847A9E1230039E0037050E /* GStreamerManager.h in Headers */,
-				A9847AA01230039E0037050E /* MediaPlayerGS.h in Headers */,
 				A9847AA2123003CE0037050E /* MidiIO.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -994,8 +980,6 @@
 				A94E00F512072075009A8F12 /* PhysicsPlane.cpp in Sources */,
 				A94E00F812072075009A8F12 /* PhysicsSphere.cpp in Sources */,
 				A94E00FA12072075009A8F12 /* PhysicsUserAPI.cpp in Sources */,
-				A9847A9D1230039E0037050E /* GStreamerManager.cpp in Sources */,
-				A9847A9F1230039E0037050E /* MediaPlayerGS.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1033,10 +1017,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Cing_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
-					/opt/local/include/libxml2/,
-					"/opt/local/lib/glib-2.0/include/",
-					"/opt/local/include/glib-2.0",
-					"/opt/local/include/gstreamer-0.10",
 					"$(CING_LIBRARIES)/OgreCCS/include",
 					"$(CING_LIBRARIES)/OgreBullet/Dynamics/include",
 					"$(CING_LIBRARIES)/OgreBullet/Collisions/include",
@@ -1052,7 +1032,6 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					/opt/local/lib,
 					"$(CING_LIBRARIES)/OgreCCS/lib",
 					"$(CING_LIBRARIES)/Bullet/lib",
 					"$(CING_LIBRARIES)/OgreBullet/lib",
@@ -1065,9 +1044,6 @@
 					"$(CING_LIBRARIES)/TinyXML/lib",
 				);
 				OTHER_LDFLAGS = (
-					"-lxml2",
-					"-lglib-2.0",
-					"-lgstreamer-0.10",
 					"-lCCS",
 					"-lOgreBullet",
 					"-lConvexDecomposition",
@@ -1103,10 +1079,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Cing_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
-					/opt/local/include/libxml2/,
-					"/opt/local/lib/glib-2.0/include/",
-					"/opt/local/include/glib-2.0",
-					"/opt/local/include/gstreamer-0.10",
 					"$(CING_LIBRARIES)/OgreCCS/include",
 					"$(CING_LIBRARIES)/OgreBullet/Dynamics/include",
 					"$(CING_LIBRARIES)/OgreBullet/Collisions/include",
@@ -1122,7 +1094,6 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					/opt/local/lib,
 					"$(CING_LIBRARIES)/OgreCCS/lib",
 					"$(CING_LIBRARIES)/Bullet/lib",
 					"$(CING_LIBRARIES)/OgreBullet/lib",
@@ -1135,9 +1106,6 @@
 					"$(CING_LIBRARIES)/TinyXML/lib",
 				);
 				OTHER_LDFLAGS = (
-					"-lxml2",
-					"-lglib-2.0",
-					"-lgstreamer-0.10",
 					"-lCCS",
 					"-lOgreBullet",
 					"-lConvexDecomposition",

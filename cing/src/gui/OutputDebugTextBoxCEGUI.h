@@ -24,6 +24,9 @@
 
 #include "GUIPrereqs.h"
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#import <CoreFoundation/CoreFoundation.h>
+#endif
 namespace Cing
 {
 
