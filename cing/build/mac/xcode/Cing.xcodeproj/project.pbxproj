@@ -17,6 +17,177 @@
 		A91E9FF91211DDDD002292DF /* BulletDynamics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A91E9D6E1211D9D1002292DF /* BulletDynamics.framework */; };
 		A91E9FFA1211DDDD002292DF /* BulletSoftBody.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A91E9D701211D9D1002292DF /* BulletSoftBody.framework */; };
 		A91E9FFB1211DDDD002292DF /* LinearMath.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A91E9D721211D9D1002292DF /* LinearMath.framework */; };
+		A9325D9C1237008A00A0B30D /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97FD9C5122C0E280049BCBA /* Ogre.framework */; };
+		A9325D9D1237008A00A0B30D /* BulletCollision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91E9D6C1211D9D1002292DF /* BulletCollision.framework */; };
+		A9325D9E1237008A00A0B30D /* BulletDynamics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91E9D6E1211D9D1002292DF /* BulletDynamics.framework */; };
+		A9325D9F1237008A00A0B30D /* BulletSoftBody.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91E9D701211D9D1002292DF /* BulletSoftBody.framework */; };
+		A9325DA01237008A00A0B30D /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91E9D721211D9D1002292DF /* LinearMath.framework */; };
+		A9325DA11237008A00A0B30D /* CEGUIBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B3A836122EB14C00D9B110 /* CEGUIBase.framework */; };
+		A9325DA21237008A00A0B30D /* CEGUIOgreRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B3A838122EB14C00D9B110 /* CEGUIOgreRenderer.framework */; };
+		A93260951237008E00A0B30D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+		A93260961237008E00A0B30D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97B8D6D1236DE0700FF585F /* IOKit.framework */; };
+		A93260971237008E00A0B30D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97B8E231236DF4000FF585F /* Carbon.framework */; };
+		A93260981237008E00A0B30D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97B8E3C1236E11200FF585F /* CoreAudio.framework */; };
+		A93260991237008E00A0B30D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9847A72123002820037050E /* CoreMIDI.framework */; };
+		A932609A1237008E00A0B30D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D6A5FE840307C02AAC07 /* AppKit.framework */; };
+		A932609B1237008E00A0B30D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2F7E79907B2D74100F64583 /* CoreData.framework */; };
+		A932609C1237008E00A0B30D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D69BFE84028FC02AAC07 /* Foundation.framework */; };
+		A932609D1237008E00A0B30D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97B90371236E72400FF585F /* CoreFoundation.framework */; };
+		A93260A5123700D400A0B30D /* AudioInputFMOD.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFA712072075009A8F12 /* AudioInputFMOD.h */; };
+		A93260A6123700D400A0B30D /* AudioInputFMOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFA612072075009A8F12 /* AudioInputFMOD.cpp */; };
+		A93260A7123700D400A0B30D /* SoundManagerFMOD.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFAE12072075009A8F12 /* SoundManagerFMOD.h */; };
+		A93260A8123700D400A0B30D /* AudioPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFA812072075009A8F12 /* AudioPrereqs.h */; };
+		A93260A9123700D400A0B30D /* SoundFMOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFAB12072075009A8F12 /* SoundFMOD.cpp */; };
+		A93260AA123700D400A0B30D /* SoundManagerFMOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFAD12072075009A8F12 /* SoundManagerFMOD.cpp */; };
+		A93260AB123700D400A0B30D /* BaseSound.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFAA12072075009A8F12 /* BaseSound.h */; };
+		A93260AC123700D400A0B30D /* BaseAudioInput.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFA912072075009A8F12 /* BaseAudioInput.h */; };
+		A93260AD123700D400A0B30D /* SoundFMOD.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFAC12072075009A8F12 /* SoundFMOD.h */; };
+		A93260AF123700D900A0B30D /* OCVCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFB412072075009A8F12 /* OCVCamera.h */; };
+		A93260B0123700D900A0B30D /* BaseCameraInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFB012072075009A8F12 /* BaseCameraInput.cpp */; };
+		A93260B1123700D900A0B30D /* CameraInputPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFB212072075009A8F12 /* CameraInputPrereqs.h */; };
+		A93260B2123700D900A0B30D /* OCVCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFB312072075009A8F12 /* OCVCamera.cpp */; };
+		A93260B4123700D900A0B30D /* BaseCameraInput.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFB112072075009A8F12 /* BaseCameraInput.h */; };
+		A93260B7123700DD00A0B30D /* Cing.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFB912072075009A8F12 /* Cing.h */; };
+		A93260B8123700E200A0B30D /* XMLVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFD312072075009A8F12 /* XMLVisitor.h */; };
+		A93260B9123700E200A0B30D /* XMLVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFD212072075009A8F12 /* XMLVisitor.cpp */; };
+		A93260BA123700E200A0B30D /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFCB12072075009A8F12 /* ResourceManager.cpp */; };
+		A93260BB123700E200A0B30D /* Release.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFCA12072075009A8F12 /* Release.h */; };
+		A93260BC123700E200A0B30D /* XMLElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFD012072075009A8F12 /* XMLElement.cpp */; };
+		A93260BD123700E200A0B30D /* MathUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFC712072075009A8F12 /* MathUtils.h */; };
+		A93260BE123700E200A0B30D /* CommonConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFBB12072075009A8F12 /* CommonConstants.h */; };
+		A93260BF123700E200A0B30D /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFC312072075009A8F12 /* Exception.cpp */; };
+		A93260C0123700E200A0B30D /* XMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFD112072075009A8F12 /* XMLElement.h */; };
+		A93260C1123700E200A0B30D /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFC512072075009A8F12 /* LogManager.cpp */; };
+		A93260C2123700E200A0B30D /* PerlinNoise.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFC912072075009A8F12 /* PerlinNoise.h */; };
+		A93260C3123700E200A0B30D /* CommonUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFBF12072075009A8F12 /* CommonUserAPI.h */; };
+		A93260C4123700E200A0B30D /* Singleton.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFCD12072075009A8F12 /* Singleton.h */; };
+		A93260C5123700E200A0B30D /* PerlinNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFC812072075009A8F12 /* PerlinNoise.cpp */; };
+		A93260C6123700E200A0B30D /* SystemUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFCF12072075009A8F12 /* SystemUtils.h */; };
+		A93260C7123700E200A0B30D /* eString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFC112072075009A8F12 /* eString.cpp */; };
+		A93260C8123700E200A0B30D /* SystemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFCE12072075009A8F12 /* SystemUtils.cpp */; };
+		A93260C9123700E200A0B30D /* CommonTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFBD12072075009A8F12 /* CommonTypes.h */; };
+		A93260CA123700E200A0B30D /* CommonPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFBC12072075009A8F12 /* CommonPrereqs.h */; };
+		A93260CB123700E200A0B30D /* CommonUtilsIncludes.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFC012072075009A8F12 /* CommonUtilsIncludes.h */; };
+		A93260CC123700E200A0B30D /* ResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFCC12072075009A8F12 /* ResourceManager.h */; };
+		A93260CD123700E200A0B30D /* eString.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFC212072075009A8F12 /* eString.h */; };
+		A93260CE123700E200A0B30D /* Exception.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFC412072075009A8F12 /* Exception.h */; };
+		A93260CF123700E200A0B30D /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFC612072075009A8F12 /* LogManager.h */; };
+		A93260D0123700E200A0B30D /* CommonUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFBE12072075009A8F12 /* CommonUserAPI.cpp */; };
+		A93260D1123700E700A0B30D /* ComputerVisionPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFDC12072075009A8F12 /* ComputerVisionPrereqs.h */; };
+		A93260D2123700E700A0B30D /* BackgroundSubtraction.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFD612072075009A8F12 /* BackgroundSubtraction.h */; };
+		A93260D3123700E700A0B30D /* Blob.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFD712072075009A8F12 /* Blob.h */; };
+		A93260D4123700E700A0B30D /* BlobTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFDB12072075009A8F12 /* BlobTracker.h */; };
+		A93260D5123700E700A0B30D /* BlobFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFD812072075009A8F12 /* BlobFinder.cpp */; };
+		A93260D6123700E700A0B30D /* BlobFinder.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFD912072075009A8F12 /* BlobFinder.h */; };
+		A93260D7123700E700A0B30D /* BlobTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFDA12072075009A8F12 /* BlobTracker.cpp */; };
+		A93260D8123700E700A0B30D /* BackgroundSubtraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFD512072075009A8F12 /* BackgroundSubtraction.cpp */; };
+		A93260D9123700EC00A0B30D /* FrameworkUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFE412072075009A8F12 /* FrameworkUserAPI.cpp */; };
+		A93260DA123700EC00A0B30D /* UserAppGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFE812072075009A8F12 /* UserAppGlobals.h */; };
+		A93260DB123700EC00A0B30D /* UserAppGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFE712072075009A8F12 /* UserAppGlobals.cpp */; };
+		A93260DC123700EC00A0B30D /* FrameworkUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFE512072075009A8F12 /* FrameworkUserAPI.h */; };
+		A93260DD123700EC00A0B30D /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFE012072075009A8F12 /* Application.cpp */; };
+		A93260DE123700EC00A0B30D /* FrameworkPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFE312072075009A8F12 /* FrameworkPrereqs.h */; };
+		A93260DF123700EC00A0B30D /* AppFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFDF12072075009A8F12 /* AppFramework.h */; };
+		A93260E0123700EC00A0B30D /* AppFramework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFDE12072075009A8F12 /* AppFramework.cpp */; };
+		A93260E1123700EC00A0B30D /* Application.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFE112072075009A8F12 /* Application.h */; };
+		A93260E2123700EC00A0B30D /* UserAppFunctionDeclaration.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFE612072075009A8F12 /* UserAppFunctionDeclaration.h */; };
+		A93260E3123700EC00A0B30D /* AppMain.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFE212072075009A8F12 /* AppMain.h */; };
+		A93260E4123700F000A0B30D /* BaseImageFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFEA12072075009A8F12 /* BaseImageFilter.cpp */; };
+		A93260E5123700F000A0B30D /* CameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFF212072075009A8F12 /* CameraController.cpp */; };
+		A93260E7123700F000A0B30D /* ImageThresholdFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E000F12072075009A8F12 /* ImageThresholdFilter.cpp */; };
+		A93260E9123700F000A0B30D /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000A12072075009A8F12 /* Image.h */; };
+		A93260EA123700F000A0B30D /* Box.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFEF12072075009A8F12 /* Box.h */; };
+		A93260EB123700F000A0B30D /* ImageResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E000D12072075009A8F12 /* ImageResourceManager.cpp */; };
+		A93260EC123700F000A0B30D /* Shape.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001D12072075009A8F12 /* Shape.h */; };
+		A93260ED123700F000A0B30D /* OgreFontHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001712072075009A8F12 /* OgreFontHelper.h */; };
+		A93260EE123700F000A0B30D /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E002812072075009A8F12 /* Transform.cpp */; };
+		A93260EF123700F000A0B30D /* GraphicsUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000812072075009A8F12 /* GraphicsUserAPI.h */; };
+		A93260F0123700F000A0B30D /* Plane.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001912072075009A8F12 /* Plane.h */; };
+		A93260F1123700F000A0B30D /* GraphicsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E000312072075009A8F12 /* GraphicsManager.cpp */; };
+		A93260F2123700F000A0B30D /* Sphere.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E002112072075009A8F12 /* Sphere.h */; };
+		A93260F3123700F000A0B30D /* LightingUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E001112072075009A8F12 /* LightingUserAPI.cpp */; };
+		A93260F4123700F000A0B30D /* Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E002912072075009A8F12 /* Transform.h */; };
+		A93260F5123700F000A0B30D /* Object3D.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001612072075009A8F12 /* Object3D.h */; };
+		A93260F6123700F000A0B30D /* TexturedQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E002712072075009A8F12 /* TexturedQuad.h */; };
+		A93260F7123700F000A0B30D /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E002012072075009A8F12 /* Sphere.cpp */; };
+		A93260FA123700F000A0B30D /* Camera3D.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFF112072075009A8F12 /* Camera3D.h */; };
+		A93260FB123700F000A0B30D /* PointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E001A12072075009A8F12 /* PointLight.cpp */; };
+		A93260FC123700F000A0B30D /* GraphicsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000412072075009A8F12 /* GraphicsManager.h */; };
+		A93260FD123700F000A0B30D /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E000912072075009A8F12 /* Image.cpp */; };
+		A93260FE123700F000A0B30D /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E002B12072075009A8F12 /* Window.h */; };
+		A93260FF123700F000A0B30D /* ImageResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000E12072075009A8F12 /* ImageResourceManager.h */; };
+		A9326100123700F000A0B30D /* DebugOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFF712072075009A8F12 /* DebugOverlay.h */; };
+		A9326101123700F000A0B30D /* TexturedQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E002612072075009A8F12 /* TexturedQuad.cpp */; };
+		A9326102123700F000A0B30D /* MovableText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E001312072075009A8F12 /* MovableText.cpp */; };
+		A9326103123700F000A0B30D /* TextArea.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E002512072075009A8F12 /* TextArea.h */; };
+		A9326104123700F000A0B30D /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFF412072075009A8F12 /* Color.cpp */; };
+		A9326105123700F000A0B30D /* LightingUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001212072075009A8F12 /* LightingUserAPI.h */; };
+		A9326106123700F000A0B30D /* Camera3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFF012072075009A8F12 /* Camera3D.cpp */; };
+		A9326107123700F000A0B30D /* ShapeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E001E12072075009A8F12 /* ShapeManager.cpp */; };
+		A9326108123700F000A0B30D /* Box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFEE12072075009A8F12 /* Box.cpp */; };
+		A9326109123700F000A0B30D /* CameraController.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFF312072075009A8F12 /* CameraController.h */; };
+		A932610A123700F000A0B30D /* GraphicsTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000612072075009A8F12 /* GraphicsTypes.h */; };
+		A932610B123700F000A0B30D /* Font.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFFF12072075009A8F12 /* Font.h */; };
+		A932610C123700F000A0B30D /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E001812072075009A8F12 /* Plane.cpp */; };
+		A932610D123700F000A0B30D /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E000012072075009A8F12 /* FontManager.cpp */; };
+		A932610E123700F000A0B30D /* BaseLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFEC12072075009A8F12 /* BaseLight.cpp */; };
+		A932610F123700F000A0B30D /* GraphicsUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E000712072075009A8F12 /* GraphicsUserAPI.cpp */; };
+		A9326110123700F000A0B30D /* Object3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E001512072075009A8F12 /* Object3D.cpp */; };
+		A9326111123700F000A0B30D /* BaseImageFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFEB12072075009A8F12 /* BaseImageFilter.h */; };
+		A9326112123700F000A0B30D /* MovableText.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001412072075009A8F12 /* MovableText.h */; };
+		A9326113123700F000A0B30D /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFFE12072075009A8F12 /* Font.cpp */; };
+		A9326114123700F000A0B30D /* DebugOverlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFF612072075009A8F12 /* DebugOverlay.cpp */; };
+		A9326115123700F000A0B30D /* TextArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E002412072075009A8F12 /* TextArea.cpp */; };
+		A9326116123700F000A0B30D /* ImageDifferenceFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E000B12072075009A8F12 /* ImageDifferenceFilter.cpp */; };
+		A9326117123700F000A0B30D /* BaseLight.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFED12072075009A8F12 /* BaseLight.h */; };
+		A9326118123700F000A0B30D /* ShapeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001F12072075009A8F12 /* ShapeManager.h */; };
+		A932611B123700F000A0B30D /* ImageThresholdFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001012072075009A8F12 /* ImageThresholdFilter.h */; };
+		A932611C123700F000A0B30D /* GraphicsPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000512072075009A8F12 /* GraphicsPrereqs.h */; };
+		A932611D123700F000A0B30D /* FontProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000212072075009A8F12 /* FontProperties.h */; };
+		A932611E123700F000A0B30D /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E001C12072075009A8F12 /* Shape.cpp */; };
+		A932611F123700F000A0B30D /* FontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000112072075009A8F12 /* FontManager.h */; };
+		A9326120123700F000A0B30D /* Style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E002212072075009A8F12 /* Style.cpp */; };
+		A9326121123700F000A0B30D /* ImageDifferenceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E000C12072075009A8F12 /* ImageDifferenceFilter.h */; };
+		A9326122123700F000A0B30D /* PointLight.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E001B12072075009A8F12 /* PointLight.h */; };
+		A9326123123700F000A0B30D /* Color.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFF512072075009A8F12 /* Color.h */; };
+		A9326124123700F000A0B30D /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E002A12072075009A8F12 /* Window.cpp */; };
+		A9326125123700F000A0B30D /* Style.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E002312072075009A8F12 /* Style.h */; };
+		A93261261237010D00A0B30D /* OutputDebugTextBoxCEGUI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003312072075009A8F12 /* OutputDebugTextBoxCEGUI.h */; };
+		A93261271237010D00A0B30D /* OutputDebugTextBoxCEGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E003212072075009A8F12 /* OutputDebugTextBoxCEGUI.cpp */; };
+		A93261281237010D00A0B30D /* GUIUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003112072075009A8F12 /* GUIUserAPI.h */; };
+		A93261291237010D00A0B30D /* GUIUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E003012072075009A8F12 /* GUIUserAPI.cpp */; };
+		A932612A1237010D00A0B30D /* GUIPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E002F12072075009A8F12 /* GUIPrereqs.h */; };
+		A932612B1237010D00A0B30D /* GUIManagerCEGUI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E002E12072075009A8F12 /* GUIManagerCEGUI.h */; };
+		A932612C1237010D00A0B30D /* GUIManagerCEGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E002D12072075009A8F12 /* GUIManagerCEGUI.cpp */; };
+		A932612D1237011700A0B30D /* Mouse.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003E12072075009A8F12 /* Mouse.h */; };
+		A932612E1237011700A0B30D /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E003D12072075009A8F12 /* Mouse.cpp */; };
+		A932612F1237011700A0B30D /* Keyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003C12072075009A8F12 /* Keyboard.h */; };
+		A93261301237011700A0B30D /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E003B12072075009A8F12 /* Keyboard.cpp */; };
+		A93261311237011800A0B30D /* InputTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003A12072075009A8F12 /* InputTypes.h */; };
+		A93261321237011800A0B30D /* InputPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003912072075009A8F12 /* InputPrereqs.h */; };
+		A93261331237011800A0B30D /* InputManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003812072075009A8F12 /* InputManager.h */; };
+		A93261341237011800A0B30D /* InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E003712072075009A8F12 /* InputManager.cpp */; };
+		A93261351237011800A0B30D /* BaseInputDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003512072075009A8F12 /* BaseInputDevice.h */; };
+		A93261361237011D00A0B30D /* RtMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = A97B90231236E68F00FF585F /* RtMidi.h */; };
+		A93261371237011D00A0B30D /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97B90221236E68F00FF585F /* RtMidi.cpp */; };
+		A93261381237011D00A0B30D /* RtError.h in Headers */ = {isa = PBXBuildFile; fileRef = A97B90211236E68F00FF585F /* RtError.h */; };
+		A93261391237011D00A0B30D /* MidiPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004212072075009A8F12 /* MidiPrereqs.h */; };
+		A932613A1237011D00A0B30D /* MidiIO.h in Headers */ = {isa = PBXBuildFile; fileRef = A9847AA1123003CE0037050E /* MidiIO.h */; };
+		A932613B1237011D00A0B30D /* MidiIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004012072075009A8F12 /* MidiIO.cpp */; };
+		A932613C1237012300A0B30D /* OCVMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004412072075009A8F12 /* OCVMovie.h */; };
+		A932613D1237012800A0B30D /* PhysicsUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E005212072075009A8F12 /* PhysicsUserAPI.h */; };
+		A932613E1237012800A0B30D /* PhysicsUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E005112072075009A8F12 /* PhysicsUserAPI.cpp */; };
+		A932613F1237012800A0B30D /* PhysicsSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E005012072075009A8F12 /* PhysicsSphere.h */; };
+		A93261401237012800A0B30D /* PhysicsSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004F12072075009A8F12 /* PhysicsSphere.cpp */; };
+		A93261411237012800A0B30D /* PhysicsPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004E12072075009A8F12 /* PhysicsPrereqs.h */; };
+		A93261421237012800A0B30D /* PhysicsPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004D12072075009A8F12 /* PhysicsPlane.h */; };
+		A93261431237012800A0B30D /* PhysicsPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004C12072075009A8F12 /* PhysicsPlane.cpp */; };
+		A93261441237012800A0B30D /* PhysicsObject.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004B12072075009A8F12 /* PhysicsObject.h */; };
+		A93261451237012800A0B30D /* PhysicsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004A12072075009A8F12 /* PhysicsObject.cpp */; };
+		A93261461237012800A0B30D /* PhysicsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004912072075009A8F12 /* PhysicsManager.h */; };
+		A93261471237012800A0B30D /* PhysicsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004812072075009A8F12 /* PhysicsManager.cpp */; };
+		A93261481237012800A0B30D /* PhysicsBox.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004712072075009A8F12 /* PhysicsBox.h */; };
+		A93261491237012800A0B30D /* PhysicsBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004612072075009A8F12 /* PhysicsBox.cpp */; };
 		A94E005912072075009A8F12 /* AudioInputFMOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFA612072075009A8F12 /* AudioInputFMOD.cpp */; };
 		A94E005A12072075009A8F12 /* AudioInputFMOD.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFA712072075009A8F12 /* AudioInputFMOD.h */; };
 		A94E005B12072075009A8F12 /* AudioPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFA812072075009A8F12 /* AudioPrereqs.h */; };
@@ -217,6 +388,7 @@
 		A91E9D6E1211D9D1002292DF /* BulletDynamics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletDynamics.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/BulletDynamics.framework; sourceTree = SOURCE_ROOT; };
 		A91E9D701211D9D1002292DF /* BulletSoftBody.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletSoftBody.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/BulletSoftBody.framework; sourceTree = SOURCE_ROOT; };
 		A91E9D721211D9D1002292DF /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/LinearMath.framework; sourceTree = SOURCE_ROOT; };
+		A9325A071236FA5D00A0B30D /* liblibCing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibCing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A94E000012072075009A8F12 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontManager.cpp; sourceTree = "<group>"; };
 		A94E000112072075009A8F12 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
 		A94E000212072075009A8F12 /* FontProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontProperties.h; sourceTree = "<group>"; };
@@ -420,6 +592,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A9325A051236FA5D00A0B30D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93260951237008E00A0B30D /* Cocoa.framework in Frameworks */,
+				A93260961237008E00A0B30D /* IOKit.framework in Frameworks */,
+				A93260971237008E00A0B30D /* Carbon.framework in Frameworks */,
+				A93260981237008E00A0B30D /* CoreAudio.framework in Frameworks */,
+				A93260991237008E00A0B30D /* CoreMIDI.framework in Frameworks */,
+				A932609A1237008E00A0B30D /* AppKit.framework in Frameworks */,
+				A932609B1237008E00A0B30D /* CoreData.framework in Frameworks */,
+				A932609C1237008E00A0B30D /* Foundation.framework in Frameworks */,
+				A932609D1237008E00A0B30D /* CoreFoundation.framework in Frameworks */,
+				A9325D9C1237008A00A0B30D /* Ogre.framework in Frameworks */,
+				A9325D9D1237008A00A0B30D /* BulletCollision.framework in Frameworks */,
+				A9325D9E1237008A00A0B30D /* BulletDynamics.framework in Frameworks */,
+				A9325D9F1237008A00A0B30D /* BulletSoftBody.framework in Frameworks */,
+				A9325DA01237008A00A0B30D /* LinearMath.framework in Frameworks */,
+				A9325DA11237008A00A0B30D /* CEGUIBase.framework in Frameworks */,
+				A9325DA21237008A00A0B30D /* CEGUIOgreRenderer.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -427,6 +622,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* Cing.framework */,
+				A9325A071236FA5D00A0B30D /* liblibCing.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -887,6 +1083,105 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A9325A031236FA5D00A0B30D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93260A5123700D400A0B30D /* AudioInputFMOD.h in Headers */,
+				A93260A7123700D400A0B30D /* SoundManagerFMOD.h in Headers */,
+				A93260A8123700D400A0B30D /* AudioPrereqs.h in Headers */,
+				A93260AB123700D400A0B30D /* BaseSound.h in Headers */,
+				A93260AC123700D400A0B30D /* BaseAudioInput.h in Headers */,
+				A93260AD123700D400A0B30D /* SoundFMOD.h in Headers */,
+				A93260AF123700D900A0B30D /* OCVCamera.h in Headers */,
+				A93260B1123700D900A0B30D /* CameraInputPrereqs.h in Headers */,
+				A93260B4123700D900A0B30D /* BaseCameraInput.h in Headers */,
+				A93260B7123700DD00A0B30D /* Cing.h in Headers */,
+				A93260B8123700E200A0B30D /* XMLVisitor.h in Headers */,
+				A93260BB123700E200A0B30D /* Release.h in Headers */,
+				A93260BD123700E200A0B30D /* MathUtils.h in Headers */,
+				A93260BE123700E200A0B30D /* CommonConstants.h in Headers */,
+				A93260C0123700E200A0B30D /* XMLElement.h in Headers */,
+				A93260C2123700E200A0B30D /* PerlinNoise.h in Headers */,
+				A93260C3123700E200A0B30D /* CommonUserAPI.h in Headers */,
+				A93260C4123700E200A0B30D /* Singleton.h in Headers */,
+				A93260C6123700E200A0B30D /* SystemUtils.h in Headers */,
+				A93260C9123700E200A0B30D /* CommonTypes.h in Headers */,
+				A93260CA123700E200A0B30D /* CommonPrereqs.h in Headers */,
+				A93260CB123700E200A0B30D /* CommonUtilsIncludes.h in Headers */,
+				A93260CC123700E200A0B30D /* ResourceManager.h in Headers */,
+				A93260CD123700E200A0B30D /* eString.h in Headers */,
+				A93260CE123700E200A0B30D /* Exception.h in Headers */,
+				A93260CF123700E200A0B30D /* LogManager.h in Headers */,
+				A93260D1123700E700A0B30D /* ComputerVisionPrereqs.h in Headers */,
+				A93260D2123700E700A0B30D /* BackgroundSubtraction.h in Headers */,
+				A93260D3123700E700A0B30D /* Blob.h in Headers */,
+				A93260D4123700E700A0B30D /* BlobTracker.h in Headers */,
+				A93260D6123700E700A0B30D /* BlobFinder.h in Headers */,
+				A93260DA123700EC00A0B30D /* UserAppGlobals.h in Headers */,
+				A93260DC123700EC00A0B30D /* FrameworkUserAPI.h in Headers */,
+				A93260DE123700EC00A0B30D /* FrameworkPrereqs.h in Headers */,
+				A93260DF123700EC00A0B30D /* AppFramework.h in Headers */,
+				A93260E1123700EC00A0B30D /* Application.h in Headers */,
+				A93260E2123700EC00A0B30D /* UserAppFunctionDeclaration.h in Headers */,
+				A93260E3123700EC00A0B30D /* AppMain.h in Headers */,
+				A93260E9123700F000A0B30D /* Image.h in Headers */,
+				A93260EA123700F000A0B30D /* Box.h in Headers */,
+				A93260EC123700F000A0B30D /* Shape.h in Headers */,
+				A93260ED123700F000A0B30D /* OgreFontHelper.h in Headers */,
+				A93260EF123700F000A0B30D /* GraphicsUserAPI.h in Headers */,
+				A93260F0123700F000A0B30D /* Plane.h in Headers */,
+				A93260F2123700F000A0B30D /* Sphere.h in Headers */,
+				A93260F4123700F000A0B30D /* Transform.h in Headers */,
+				A93260F5123700F000A0B30D /* Object3D.h in Headers */,
+				A93260F6123700F000A0B30D /* TexturedQuad.h in Headers */,
+				A93260FA123700F000A0B30D /* Camera3D.h in Headers */,
+				A93260FC123700F000A0B30D /* GraphicsManager.h in Headers */,
+				A93260FE123700F000A0B30D /* Window.h in Headers */,
+				A93260FF123700F000A0B30D /* ImageResourceManager.h in Headers */,
+				A9326100123700F000A0B30D /* DebugOverlay.h in Headers */,
+				A9326103123700F000A0B30D /* TextArea.h in Headers */,
+				A9326105123700F000A0B30D /* LightingUserAPI.h in Headers */,
+				A9326109123700F000A0B30D /* CameraController.h in Headers */,
+				A932610A123700F000A0B30D /* GraphicsTypes.h in Headers */,
+				A932610B123700F000A0B30D /* Font.h in Headers */,
+				A9326111123700F000A0B30D /* BaseImageFilter.h in Headers */,
+				A9326112123700F000A0B30D /* MovableText.h in Headers */,
+				A9326117123700F000A0B30D /* BaseLight.h in Headers */,
+				A9326118123700F000A0B30D /* ShapeManager.h in Headers */,
+				A932611B123700F000A0B30D /* ImageThresholdFilter.h in Headers */,
+				A932611C123700F000A0B30D /* GraphicsPrereqs.h in Headers */,
+				A932611D123700F000A0B30D /* FontProperties.h in Headers */,
+				A932611F123700F000A0B30D /* FontManager.h in Headers */,
+				A9326121123700F000A0B30D /* ImageDifferenceFilter.h in Headers */,
+				A9326122123700F000A0B30D /* PointLight.h in Headers */,
+				A9326123123700F000A0B30D /* Color.h in Headers */,
+				A9326125123700F000A0B30D /* Style.h in Headers */,
+				A93261261237010D00A0B30D /* OutputDebugTextBoxCEGUI.h in Headers */,
+				A93261281237010D00A0B30D /* GUIUserAPI.h in Headers */,
+				A932612A1237010D00A0B30D /* GUIPrereqs.h in Headers */,
+				A932612B1237010D00A0B30D /* GUIManagerCEGUI.h in Headers */,
+				A932612D1237011700A0B30D /* Mouse.h in Headers */,
+				A932612F1237011700A0B30D /* Keyboard.h in Headers */,
+				A93261311237011800A0B30D /* InputTypes.h in Headers */,
+				A93261321237011800A0B30D /* InputPrereqs.h in Headers */,
+				A93261331237011800A0B30D /* InputManager.h in Headers */,
+				A93261351237011800A0B30D /* BaseInputDevice.h in Headers */,
+				A93261361237011D00A0B30D /* RtMidi.h in Headers */,
+				A93261381237011D00A0B30D /* RtError.h in Headers */,
+				A93261391237011D00A0B30D /* MidiPrereqs.h in Headers */,
+				A932613A1237011D00A0B30D /* MidiIO.h in Headers */,
+				A932613C1237012300A0B30D /* OCVMovie.h in Headers */,
+				A932613D1237012800A0B30D /* PhysicsUserAPI.h in Headers */,
+				A932613F1237012800A0B30D /* PhysicsSphere.h in Headers */,
+				A93261411237012800A0B30D /* PhysicsPrereqs.h in Headers */,
+				A93261421237012800A0B30D /* PhysicsPlane.h in Headers */,
+				A93261441237012800A0B30D /* PhysicsObject.h in Headers */,
+				A93261461237012800A0B30D /* PhysicsManager.h in Headers */,
+				A93261481237012800A0B30D /* PhysicsBox.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -910,6 +1205,23 @@
 			productReference = 8DC2EF5B0486A6940098B216 /* Cing.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		A9325A061236FA5D00A0B30D /* libCing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9325A0A1236FA8F00A0B30D /* Build configuration list for PBXNativeTarget "libCing" */;
+			buildPhases = (
+				A9325A031236FA5D00A0B30D /* Headers */,
+				A9325A041236FA5D00A0B30D /* Sources */,
+				A9325A051236FA5D00A0B30D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libCing;
+			productName = libCing;
+			productReference = A9325A071236FA5D00A0B30D /* liblibCing.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -924,6 +1236,7 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* Cing */,
+				A9325A061236FA5D00A0B30D /* libCing */,
 			);
 		};
 /* End PBXProject section */
@@ -1011,6 +1324,76 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A9325A041236FA5D00A0B30D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93260A6123700D400A0B30D /* AudioInputFMOD.cpp in Sources */,
+				A93260A9123700D400A0B30D /* SoundFMOD.cpp in Sources */,
+				A93260AA123700D400A0B30D /* SoundManagerFMOD.cpp in Sources */,
+				A93260B0123700D900A0B30D /* BaseCameraInput.cpp in Sources */,
+				A93260B2123700D900A0B30D /* OCVCamera.cpp in Sources */,
+				A93260B9123700E200A0B30D /* XMLVisitor.cpp in Sources */,
+				A93260BA123700E200A0B30D /* ResourceManager.cpp in Sources */,
+				A93260BC123700E200A0B30D /* XMLElement.cpp in Sources */,
+				A93260BF123700E200A0B30D /* Exception.cpp in Sources */,
+				A93260C1123700E200A0B30D /* LogManager.cpp in Sources */,
+				A93260C5123700E200A0B30D /* PerlinNoise.cpp in Sources */,
+				A93260C7123700E200A0B30D /* eString.cpp in Sources */,
+				A93260C8123700E200A0B30D /* SystemUtils.cpp in Sources */,
+				A93260D0123700E200A0B30D /* CommonUserAPI.cpp in Sources */,
+				A93260D5123700E700A0B30D /* BlobFinder.cpp in Sources */,
+				A93260D7123700E700A0B30D /* BlobTracker.cpp in Sources */,
+				A93260D8123700E700A0B30D /* BackgroundSubtraction.cpp in Sources */,
+				A93260D9123700EC00A0B30D /* FrameworkUserAPI.cpp in Sources */,
+				A93260DB123700EC00A0B30D /* UserAppGlobals.cpp in Sources */,
+				A93260DD123700EC00A0B30D /* Application.cpp in Sources */,
+				A93260E0123700EC00A0B30D /* AppFramework.cpp in Sources */,
+				A93260E4123700F000A0B30D /* BaseImageFilter.cpp in Sources */,
+				A93260E5123700F000A0B30D /* CameraController.cpp in Sources */,
+				A93260E7123700F000A0B30D /* ImageThresholdFilter.cpp in Sources */,
+				A93260EB123700F000A0B30D /* ImageResourceManager.cpp in Sources */,
+				A93260EE123700F000A0B30D /* Transform.cpp in Sources */,
+				A93260F1123700F000A0B30D /* GraphicsManager.cpp in Sources */,
+				A93260F3123700F000A0B30D /* LightingUserAPI.cpp in Sources */,
+				A93260F7123700F000A0B30D /* Sphere.cpp in Sources */,
+				A93260FB123700F000A0B30D /* PointLight.cpp in Sources */,
+				A93260FD123700F000A0B30D /* Image.cpp in Sources */,
+				A9326101123700F000A0B30D /* TexturedQuad.cpp in Sources */,
+				A9326102123700F000A0B30D /* MovableText.cpp in Sources */,
+				A9326104123700F000A0B30D /* Color.cpp in Sources */,
+				A9326106123700F000A0B30D /* Camera3D.cpp in Sources */,
+				A9326107123700F000A0B30D /* ShapeManager.cpp in Sources */,
+				A9326108123700F000A0B30D /* Box.cpp in Sources */,
+				A932610C123700F000A0B30D /* Plane.cpp in Sources */,
+				A932610D123700F000A0B30D /* FontManager.cpp in Sources */,
+				A932610E123700F000A0B30D /* BaseLight.cpp in Sources */,
+				A932610F123700F000A0B30D /* GraphicsUserAPI.cpp in Sources */,
+				A9326110123700F000A0B30D /* Object3D.cpp in Sources */,
+				A9326113123700F000A0B30D /* Font.cpp in Sources */,
+				A9326114123700F000A0B30D /* DebugOverlay.cpp in Sources */,
+				A9326115123700F000A0B30D /* TextArea.cpp in Sources */,
+				A9326116123700F000A0B30D /* ImageDifferenceFilter.cpp in Sources */,
+				A932611E123700F000A0B30D /* Shape.cpp in Sources */,
+				A9326120123700F000A0B30D /* Style.cpp in Sources */,
+				A9326124123700F000A0B30D /* Window.cpp in Sources */,
+				A93261271237010D00A0B30D /* OutputDebugTextBoxCEGUI.cpp in Sources */,
+				A93261291237010D00A0B30D /* GUIUserAPI.cpp in Sources */,
+				A932612C1237010D00A0B30D /* GUIManagerCEGUI.cpp in Sources */,
+				A932612E1237011700A0B30D /* Mouse.cpp in Sources */,
+				A93261301237011700A0B30D /* Keyboard.cpp in Sources */,
+				A93261341237011800A0B30D /* InputManager.cpp in Sources */,
+				A93261371237011D00A0B30D /* RtMidi.cpp in Sources */,
+				A932613B1237011D00A0B30D /* MidiIO.cpp in Sources */,
+				A932613E1237012800A0B30D /* PhysicsUserAPI.cpp in Sources */,
+				A93261401237012800A0B30D /* PhysicsSphere.cpp in Sources */,
+				A93261431237012800A0B30D /* PhysicsPlane.cpp in Sources */,
+				A93261451237012800A0B30D /* PhysicsObject.cpp in Sources */,
+				A93261471237012800A0B30D /* PhysicsManager.cpp in Sources */,
+				A93261491237012800A0B30D /* PhysicsBox.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -1044,7 +1427,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Cing_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = __MACOSX_CORE__;
 				HEADER_SEARCH_PATHS = (
 					"$(CING_LIBRARIES)/Fmod/include",
 					"$(CING_LIBRARIES)/OgreCCS/include",
@@ -1074,6 +1457,7 @@
 					"$(CING_LIBRARIES)/TinyXML/lib",
 				);
 				OTHER_LDFLAGS = (
+					"-lhighgui",
 					"-lfmodex",
 					"-lCCS",
 					"-lOgreBullet",
@@ -1107,7 +1491,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Cing_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = __MACOSX_CORE__;
 				HEADER_SEARCH_PATHS = (
 					"$(CING_LIBRARIES)/Fmod/include",
 					"$(CING_LIBRARIES)/OgreCCS/include",
@@ -1137,6 +1521,7 @@
 					"$(CING_LIBRARIES)/TinyXML/lib",
 				);
 				OTHER_LDFLAGS = (
+					"-lhighgui",
 					"-lfmodex",
 					"-lCCS",
 					"-lOgreBullet",
@@ -1170,7 +1555,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -1190,8 +1575,129 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				VALID_ARCHS = i386;
+			};
+			name = Release;
+		};
+		A9325A081236FA5D00A0B30D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/CEGUI/Frameworks",
+					"$(CING_LIBRARIES)/Bullet/Frameworks",
+					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/Ogre3d/Frameworks\"",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/Bullet/Frameworks\"",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/CEGUI/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/include",
+					"$(CING_LIBRARIES)/OgreCCS/include",
+					"$(CING_LIBRARIES)/OgreBullet/Dynamics/include",
+					"$(CING_LIBRARIES)/OgreBullet/Collisions/include",
+					"$(CING_LIBRARIES)/OpenCV/include",
+					"$(CING_LIBRARIES)/Ogre3d/include/OIS",
+					"$(CING_LIBRARIES)/Ogre3d/include",
+					"$(CING_LIBRARIES)/Bullet/include",
+					"$(CING_LIBRARIES)/CEGUI/Frameworks/CEGUIBase.framework/Headers",
+					"$(CING_LIBRARIES)/CEGUI/Frameworks/CEGUIBase.framework/Headers/RendererModules/Ogre",
+					"$(CING_LIBRARIES)",
+					"$(CING_HOME)/src",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/lib",
+					"$(CING_LIBRARIES)/OgreCCS/lib",
+					"$(CING_LIBRARIES)/Bullet/lib",
+					"$(CING_LIBRARIES)/OgreBullet/lib",
+					"$(CING_LIBRARIES)/Ogre3d/lib/Release",
+					"$(CING_LIBRARIES)/Ogre3d/lib",
+					"$(CING_LIBRARIES)/TinyXML/lib",
+					"$(CING_LIBRARIES)/PTypes/lib",
+					"$(CING_LIBRARIES)/OpenCV/lib",
+					"$(CING_LIBRARIES)/TinyXML/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-lhighgui",
+					"-lfmodex",
+					"-lCCS",
+					"-lOgreBullet",
+					"-lConvexDecomposition",
+					"-lOIS",
+					"-ltinyxml",
+					"-lptypes",
+					"-lcv",
+					"-lcvaux",
+					"-lcxcore",
+					"-lml",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = libCing;
+			};
+			name = Debug;
+		};
+		A9325A091236FA5D00A0B30D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/CEGUI/Frameworks",
+					"$(CING_LIBRARIES)/Bullet/Frameworks",
+					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/Ogre3d/Frameworks\"",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/Bullet/Frameworks\"",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/CEGUI/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/include",
+					"$(CING_LIBRARIES)/OgreCCS/include",
+					"$(CING_LIBRARIES)/OgreBullet/Dynamics/include",
+					"$(CING_LIBRARIES)/OgreBullet/Collisions/include",
+					"$(CING_LIBRARIES)/OpenCV/include",
+					"$(CING_LIBRARIES)/Ogre3d/include/OIS",
+					"$(CING_LIBRARIES)/Ogre3d/include",
+					"$(CING_LIBRARIES)/Bullet/include",
+					"$(CING_LIBRARIES)/CEGUI/Frameworks/CEGUIBase.framework/Headers",
+					"$(CING_LIBRARIES)/CEGUI/Frameworks/CEGUIBase.framework/Headers/RendererModules/Ogre",
+					"$(CING_LIBRARIES)",
+					"$(CING_HOME)/src",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/lib",
+					"$(CING_LIBRARIES)/OgreCCS/lib",
+					"$(CING_LIBRARIES)/Bullet/lib",
+					"$(CING_LIBRARIES)/OgreBullet/lib",
+					"$(CING_LIBRARIES)/Ogre3d/lib/Release",
+					"$(CING_LIBRARIES)/Ogre3d/lib",
+					"$(CING_LIBRARIES)/TinyXML/lib",
+					"$(CING_LIBRARIES)/PTypes/lib",
+					"$(CING_LIBRARIES)/OpenCV/lib",
+					"$(CING_LIBRARIES)/TinyXML/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-lhighgui",
+					"-lfmodex",
+					"-lCCS",
+					"-lOgreBullet",
+					"-lConvexDecomposition",
+					"-lOIS",
+					"-ltinyxml",
+					"-lptypes",
+					"-lcv",
+					"-lcvaux",
+					"-lcxcore",
+					"-lml",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = libCing;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -1212,6 +1718,15 @@
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
 				1DEB91B308733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9325A0A1236FA8F00A0B30D /* Build configuration list for PBXNativeTarget "libCing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9325A081236FA5D00A0B30D /* Debug */,
+				A9325A091236FA5D00A0B30D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

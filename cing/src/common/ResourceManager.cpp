@@ -188,5 +188,18 @@ namespace Cing
 		userDataPath = userExecPath + userResourcesDirName;
 	}
 #endif
+	
+#ifdef __APPLE__
+	/**
+	 * @internal
+	 * @brief Mac version. Extracts the user application execution and data path.
+	 *
+	 * They are stored in userDataPath and userExecPath attributes.
+	 */
+	void ResourceManager::extractUserAppPathMAC()
+	{
+		// TODO
+	}
+#endif
 
 } // namespace Cing
