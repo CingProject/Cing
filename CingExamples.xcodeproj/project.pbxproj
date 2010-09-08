@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A9EF54B91237D940008A6038 /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FED1237D783008A6038 /* Ogre.framework */; };
-		A9EF54BA1237D940008A6038 /* BulletCollision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FEE1237D783008A6038 /* BulletCollision.framework */; };
-		A9EF54BB1237D940008A6038 /* BulletDynamics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FEF1237D783008A6038 /* BulletDynamics.framework */; };
-		A9EF54BC1237D940008A6038 /* BulletSoftBody.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FF01237D783008A6038 /* BulletSoftBody.framework */; };
-		A9EF54BD1237D940008A6038 /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FF11237D783008A6038 /* LinearMath.framework */; };
 		A9EF54BE1237D940008A6038 /* CEGUIBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FF21237D783008A6038 /* CEGUIBase.framework */; };
 		A9EF54BF1237D940008A6038 /* CEGUIOgreRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FF31237D783008A6038 /* CEGUIOgreRenderer.framework */; };
 		A9EF54C01237D940008A6038 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF52EF1237D795008A6038 /* Cocoa.framework */; };
@@ -28,10 +24,6 @@
 		A9EF55761237DD28008A6038 /* OgreBullet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55751237DD28008A6038 /* OgreBullet.framework */; };
 		A9EF557E1237DD74008A6038 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF557D1237DD74008A6038 /* libfmodex.dylib */; };
 		A9EF55891237DE09008A6038 /* Ogre.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FED1237D783008A6038 /* Ogre.framework */; };
-		A9EF558A1237DE09008A6038 /* BulletCollision.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FEE1237D783008A6038 /* BulletCollision.framework */; };
-		A9EF558B1237DE09008A6038 /* BulletDynamics.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FEF1237D783008A6038 /* BulletDynamics.framework */; };
-		A9EF558C1237DE09008A6038 /* BulletSoftBody.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FF01237D783008A6038 /* BulletSoftBody.framework */; };
-		A9EF558D1237DE09008A6038 /* LinearMath.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FF11237D783008A6038 /* LinearMath.framework */; };
 		A9EF558E1237DE09008A6038 /* CEGUIBase.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FF21237D783008A6038 /* CEGUIBase.framework */; };
 		A9EF558F1237DE09008A6038 /* CEGUIOgreRenderer.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FF31237D783008A6038 /* CEGUIOgreRenderer.framework */; };
 		A9EF55901237DE09008A6038 /* OgreBullet.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF55751237DD28008A6038 /* OgreBullet.framework */; };
@@ -68,7 +60,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = A9EF4B7612370AAE008A6038 /* Cing.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = A9325A061236FA5D00A0B30D /* libCing */;
+			remoteGlobalIDString = A9325A061236FA5D00A0B30D;
 			remoteInfo = libCing;
 		};
 /* End PBXContainerItemProxy section */
@@ -87,10 +79,6 @@
 				A9EF55D11237E89F008A6038 /* libml.dylib in Copy Frameworks & Dynamic Libraries */,
 				A9EF55D21237E89F008A6038 /* libfmodex.dylib in Copy Frameworks & Dynamic Libraries */,
 				A9EF55891237DE09008A6038 /* Ogre.framework in Copy Frameworks & Dynamic Libraries */,
-				A9EF558A1237DE09008A6038 /* BulletCollision.framework in Copy Frameworks & Dynamic Libraries */,
-				A9EF558B1237DE09008A6038 /* BulletDynamics.framework in Copy Frameworks & Dynamic Libraries */,
-				A9EF558C1237DE09008A6038 /* BulletSoftBody.framework in Copy Frameworks & Dynamic Libraries */,
-				A9EF558D1237DE09008A6038 /* LinearMath.framework in Copy Frameworks & Dynamic Libraries */,
 				A9EF558E1237DE09008A6038 /* CEGUIBase.framework in Copy Frameworks & Dynamic Libraries */,
 				A9EF558F1237DE09008A6038 /* CEGUIOgreRenderer.framework in Copy Frameworks & Dynamic Libraries */,
 				A9EF55901237DE09008A6038 /* OgreBullet.framework in Copy Frameworks & Dynamic Libraries */,
@@ -106,10 +94,6 @@
 		A9EF4BCD123719EC008A6038 /* Simple_BasicApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simple_BasicApplication.cpp; sourceTree = "<group>"; };
 		A9EF4C2F1237D263008A6038 /* CingExamples_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CingExamples_Prefix.pch; sourceTree = "<group>"; };
 		A9EF4FED1237D783008A6038 /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = cing/libraries/mac/xcode/Ogre3d/Frameworks/Ogre.framework; sourceTree = "<group>"; };
-		A9EF4FEE1237D783008A6038 /* BulletCollision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletCollision.framework; path = cing/libraries/mac/xcode/Bullet/Frameworks/BulletCollision.framework; sourceTree = "<group>"; };
-		A9EF4FEF1237D783008A6038 /* BulletDynamics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletDynamics.framework; path = cing/libraries/mac/xcode/Bullet/Frameworks/BulletDynamics.framework; sourceTree = "<group>"; };
-		A9EF4FF01237D783008A6038 /* BulletSoftBody.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletSoftBody.framework; path = cing/libraries/mac/xcode/Bullet/Frameworks/BulletSoftBody.framework; sourceTree = "<group>"; };
-		A9EF4FF11237D783008A6038 /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = cing/libraries/mac/xcode/Bullet/Frameworks/LinearMath.framework; sourceTree = "<group>"; };
 		A9EF4FF21237D783008A6038 /* CEGUIBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIBase.framework; path = cing/libraries/mac/xcode/CEGUI/Frameworks/CEGUIBase.framework; sourceTree = "<group>"; };
 		A9EF4FF31237D783008A6038 /* CEGUIOgreRenderer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIOgreRenderer.framework; path = cing/libraries/mac/xcode/CEGUI/Frameworks/CEGUIOgreRenderer.framework; sourceTree = "<group>"; };
 		A9EF52EF1237D795008A6038 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -146,10 +130,6 @@
 				A9EF55071237DA8D008A6038 /* CoreMIDI.framework in Frameworks */,
 				A9EF55091237DA8D008A6038 /* IOKit.framework in Frameworks */,
 				A9EF54B91237D940008A6038 /* Ogre.framework in Frameworks */,
-				A9EF54BA1237D940008A6038 /* BulletCollision.framework in Frameworks */,
-				A9EF54BB1237D940008A6038 /* BulletDynamics.framework in Frameworks */,
-				A9EF54BC1237D940008A6038 /* BulletSoftBody.framework in Frameworks */,
-				A9EF54BD1237D940008A6038 /* LinearMath.framework in Frameworks */,
 				A9EF54BE1237D940008A6038 /* CEGUIBase.framework in Frameworks */,
 				A9EF54BF1237D940008A6038 /* CEGUIOgreRenderer.framework in Frameworks */,
 				A9EF54C01237D940008A6038 /* Cocoa.framework in Frameworks */,
@@ -257,10 +237,6 @@
 				A9EF55B11237E22E008A6038 /* libml.dylib */,
 				A9EF557D1237DD74008A6038 /* libfmodex.dylib */,
 				A9EF4FED1237D783008A6038 /* Ogre.framework */,
-				A9EF4FEE1237D783008A6038 /* BulletCollision.framework */,
-				A9EF4FEF1237D783008A6038 /* BulletDynamics.framework */,
-				A9EF4FF01237D783008A6038 /* BulletSoftBody.framework */,
-				A9EF4FF11237D783008A6038 /* LinearMath.framework */,
 				A9EF4FF21237D783008A6038 /* CEGUIBase.framework */,
 				A9EF4FF31237D783008A6038 /* CEGUIOgreRenderer.framework */,
 				A9EF55751237DD28008A6038 /* OgreBullet.framework */,
@@ -372,7 +348,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "install_name_tool -change ./libfmodex.dylib @loader_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libcv.dylib @loader_path/../Frameworks/libcv.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libcvaux.dylib @loader_path/../Frameworks/libcvaux.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libcxcore.dylib @loader_path/../Frameworks/libcxcore.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libhighgui.dylib @loader_path/../Frameworks/libhighgui.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libml.dylib @loader_path/../Frameworks/libml.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"";
+			shellScript = "install_name_tool -change ./libfmodex.dylib @loader_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -437,6 +413,11 @@
 					"-lOIS",
 					"-ltinyxml",
 					"-lptypes",
+					"-lLinearMath",
+					"-lConvexDecomposition",
+					"-lBulletSoftBody",
+					"-lBulletDynamics",
+					"-lBulletCollision",
 				);
 				VALID_ARCHS = i386;
 			};
@@ -483,6 +464,11 @@
 					"-lOIS",
 					"-ltinyxml",
 					"-lptypes",
+					"-lLinearMath",
+					"-lConvexDecomposition",
+					"-lBulletSoftBody",
+					"-lBulletDynamics",
+					"-lBulletCollision",
 				);
 				VALID_ARCHS = i386;
 			};
