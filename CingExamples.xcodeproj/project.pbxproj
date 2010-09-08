@@ -1,0 +1,575 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A9EF54B91237D940008A6038 /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FED1237D783008A6038 /* Ogre.framework */; };
+		A9EF54BA1237D940008A6038 /* BulletCollision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FEE1237D783008A6038 /* BulletCollision.framework */; };
+		A9EF54BB1237D940008A6038 /* BulletDynamics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FEF1237D783008A6038 /* BulletDynamics.framework */; };
+		A9EF54BC1237D940008A6038 /* BulletSoftBody.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FF01237D783008A6038 /* BulletSoftBody.framework */; };
+		A9EF54BD1237D940008A6038 /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FF11237D783008A6038 /* LinearMath.framework */; };
+		A9EF54BE1237D940008A6038 /* CEGUIBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FF21237D783008A6038 /* CEGUIBase.framework */; };
+		A9EF54BF1237D940008A6038 /* CEGUIOgreRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4FF31237D783008A6038 /* CEGUIOgreRenderer.framework */; };
+		A9EF54C01237D940008A6038 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF52EF1237D795008A6038 /* Cocoa.framework */; };
+		A9EF54C51237D940008A6038 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF52F41237D795008A6038 /* AppKit.framework */; };
+		A9EF54C61237D940008A6038 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF52F51237D795008A6038 /* CoreData.framework */; };
+		A9EF54C71237D940008A6038 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF52F61237D795008A6038 /* Foundation.framework */; };
+		A9EF54D31237D99F008A6038 /* Simple_BasicApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9EF4BCD123719EC008A6038 /* Simple_BasicApplication.cpp */; };
+		A9EF55011237DA8D008A6038 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55001237DA8D008A6038 /* Carbon.framework */; };
+		A9EF55031237DA8D008A6038 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55021237DA8D008A6038 /* CoreAudio.framework */; };
+		A9EF55051237DA8D008A6038 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55041237DA8D008A6038 /* CoreFoundation.framework */; };
+		A9EF55071237DA8D008A6038 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55061237DA8D008A6038 /* CoreMIDI.framework */; };
+		A9EF55091237DA8D008A6038 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55081237DA8D008A6038 /* IOKit.framework */; };
+		A9EF556F1237DCDB008A6038 /* libCing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF4B8112370AAE008A6038 /* libCing.a */; };
+		A9EF55761237DD28008A6038 /* OgreBullet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55751237DD28008A6038 /* OgreBullet.framework */; };
+		A9EF557E1237DD74008A6038 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF557D1237DD74008A6038 /* libfmodex.dylib */; };
+		A9EF55891237DE09008A6038 /* Ogre.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FED1237D783008A6038 /* Ogre.framework */; };
+		A9EF558A1237DE09008A6038 /* BulletCollision.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FEE1237D783008A6038 /* BulletCollision.framework */; };
+		A9EF558B1237DE09008A6038 /* BulletDynamics.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FEF1237D783008A6038 /* BulletDynamics.framework */; };
+		A9EF558C1237DE09008A6038 /* BulletSoftBody.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FF01237D783008A6038 /* BulletSoftBody.framework */; };
+		A9EF558D1237DE09008A6038 /* LinearMath.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FF11237D783008A6038 /* LinearMath.framework */; };
+		A9EF558E1237DE09008A6038 /* CEGUIBase.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FF21237D783008A6038 /* CEGUIBase.framework */; };
+		A9EF558F1237DE09008A6038 /* CEGUIOgreRenderer.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF4FF31237D783008A6038 /* CEGUIOgreRenderer.framework */; };
+		A9EF55901237DE09008A6038 /* OgreBullet.framework in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF55751237DD28008A6038 /* OgreBullet.framework */; };
+		A9EF55B21237E22E008A6038 /* libcv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55AD1237E22E008A6038 /* libcv.dylib */; };
+		A9EF55B31237E22E008A6038 /* libcvaux.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55AE1237E22E008A6038 /* libcvaux.dylib */; };
+		A9EF55B41237E22E008A6038 /* libcxcore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55AF1237E22E008A6038 /* libcxcore.dylib */; };
+		A9EF55B51237E22E008A6038 /* libhighgui.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55B01237E22E008A6038 /* libhighgui.dylib */; };
+		A9EF55B61237E22E008A6038 /* libml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EF55B11237E22E008A6038 /* libml.dylib */; };
+		A9EF55CD1237E89F008A6038 /* libcv.dylib in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF55AD1237E22E008A6038 /* libcv.dylib */; };
+		A9EF55CE1237E89F008A6038 /* libcvaux.dylib in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF55AE1237E22E008A6038 /* libcvaux.dylib */; };
+		A9EF55CF1237E89F008A6038 /* libcxcore.dylib in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF55AF1237E22E008A6038 /* libcxcore.dylib */; };
+		A9EF55D01237E89F008A6038 /* libhighgui.dylib in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF55B01237E22E008A6038 /* libhighgui.dylib */; };
+		A9EF55D11237E89F008A6038 /* libml.dylib in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF55B11237E22E008A6038 /* libml.dylib */; };
+		A9EF55D21237E89F008A6038 /* libfmodex.dylib in Copy Frameworks & Dynamic Libraries */ = {isa = PBXBuildFile; fileRef = A9EF557D1237DD74008A6038 /* libfmodex.dylib */; };
+		A9EF55F91237EDF0008A6038 /* Simple_BasicApplication-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9EF55F81237EDF0008A6038 /* Simple_BasicApplication-Info.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A9EF4B7E12370AAE008A6038 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9EF4B7612370AAE008A6038 /* Cing.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Cing;
+		};
+		A9EF4B8012370AAE008A6038 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9EF4B7612370AAE008A6038 /* Cing.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A9325A071236FA5D00A0B30D;
+			remoteInfo = libCing;
+		};
+		A9EF54B31237D7DA008A6038 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9EF4B7612370AAE008A6038 /* Cing.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A9325A061236FA5D00A0B30D /* libCing */;
+			remoteInfo = libCing;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A9EF55931237DE27008A6038 /* Copy Frameworks & Dynamic Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A9EF55CD1237E89F008A6038 /* libcv.dylib in Copy Frameworks & Dynamic Libraries */,
+				A9EF55CE1237E89F008A6038 /* libcvaux.dylib in Copy Frameworks & Dynamic Libraries */,
+				A9EF55CF1237E89F008A6038 /* libcxcore.dylib in Copy Frameworks & Dynamic Libraries */,
+				A9EF55D01237E89F008A6038 /* libhighgui.dylib in Copy Frameworks & Dynamic Libraries */,
+				A9EF55D11237E89F008A6038 /* libml.dylib in Copy Frameworks & Dynamic Libraries */,
+				A9EF55D21237E89F008A6038 /* libfmodex.dylib in Copy Frameworks & Dynamic Libraries */,
+				A9EF55891237DE09008A6038 /* Ogre.framework in Copy Frameworks & Dynamic Libraries */,
+				A9EF558A1237DE09008A6038 /* BulletCollision.framework in Copy Frameworks & Dynamic Libraries */,
+				A9EF558B1237DE09008A6038 /* BulletDynamics.framework in Copy Frameworks & Dynamic Libraries */,
+				A9EF558C1237DE09008A6038 /* BulletSoftBody.framework in Copy Frameworks & Dynamic Libraries */,
+				A9EF558D1237DE09008A6038 /* LinearMath.framework in Copy Frameworks & Dynamic Libraries */,
+				A9EF558E1237DE09008A6038 /* CEGUIBase.framework in Copy Frameworks & Dynamic Libraries */,
+				A9EF558F1237DE09008A6038 /* CEGUIOgreRenderer.framework in Copy Frameworks & Dynamic Libraries */,
+				A9EF55901237DE09008A6038 /* OgreBullet.framework in Copy Frameworks & Dynamic Libraries */,
+			);
+			name = "Copy Frameworks & Dynamic Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A9EF4B7612370AAE008A6038 /* Cing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cing.xcodeproj; path = cing/build/mac/xcode/Cing.xcodeproj; sourceTree = "<group>"; };
+		A9EF4BC8123719EC008A6038 /* CingConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CingConfig.xml; sourceTree = "<group>"; };
+		A9EF4BCD123719EC008A6038 /* Simple_BasicApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simple_BasicApplication.cpp; sourceTree = "<group>"; };
+		A9EF4C2F1237D263008A6038 /* CingExamples_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CingExamples_Prefix.pch; sourceTree = "<group>"; };
+		A9EF4FED1237D783008A6038 /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = cing/libraries/mac/xcode/Ogre3d/Frameworks/Ogre.framework; sourceTree = "<group>"; };
+		A9EF4FEE1237D783008A6038 /* BulletCollision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletCollision.framework; path = cing/libraries/mac/xcode/Bullet/Frameworks/BulletCollision.framework; sourceTree = "<group>"; };
+		A9EF4FEF1237D783008A6038 /* BulletDynamics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletDynamics.framework; path = cing/libraries/mac/xcode/Bullet/Frameworks/BulletDynamics.framework; sourceTree = "<group>"; };
+		A9EF4FF01237D783008A6038 /* BulletSoftBody.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletSoftBody.framework; path = cing/libraries/mac/xcode/Bullet/Frameworks/BulletSoftBody.framework; sourceTree = "<group>"; };
+		A9EF4FF11237D783008A6038 /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = cing/libraries/mac/xcode/Bullet/Frameworks/LinearMath.framework; sourceTree = "<group>"; };
+		A9EF4FF21237D783008A6038 /* CEGUIBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIBase.framework; path = cing/libraries/mac/xcode/CEGUI/Frameworks/CEGUIBase.framework; sourceTree = "<group>"; };
+		A9EF4FF31237D783008A6038 /* CEGUIOgreRenderer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIOgreRenderer.framework; path = cing/libraries/mac/xcode/CEGUI/Frameworks/CEGUIOgreRenderer.framework; sourceTree = "<group>"; };
+		A9EF52EF1237D795008A6038 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		A9EF52F41237D795008A6038 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		A9EF52F51237D795008A6038 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		A9EF52F61237D795008A6038 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple_BasicApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9EF55001237DA8D008A6038 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		A9EF55021237DA8D008A6038 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
+		A9EF55041237DA8D008A6038 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		A9EF55061237DA8D008A6038 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = /System/Library/Frameworks/CoreMIDI.framework; sourceTree = "<absolute>"; };
+		A9EF55081237DA8D008A6038 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		A9EF55751237DD28008A6038 /* OgreBullet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreBullet.framework; path = cing/libraries/mac/xcode/OgreBullet/Frameworks/OgreBullet.framework; sourceTree = "<group>"; };
+		A9EF557D1237DD74008A6038 /* libfmodex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodex.dylib; path = cing/libraries/mac/xcode/Fmod/lib/libfmodex.dylib; sourceTree = "<group>"; };
+		A9EF55AD1237E22E008A6038 /* libcv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcv.dylib; path = cing/libraries/mac/xcode/OpenCV/lib/libcv.dylib; sourceTree = "<group>"; };
+		A9EF55AE1237E22E008A6038 /* libcvaux.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcvaux.dylib; path = cing/libraries/mac/xcode/OpenCV/lib/libcvaux.dylib; sourceTree = "<group>"; };
+		A9EF55AF1237E22E008A6038 /* libcxcore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcxcore.dylib; path = cing/libraries/mac/xcode/OpenCV/lib/libcxcore.dylib; sourceTree = "<group>"; };
+		A9EF55B01237E22E008A6038 /* libhighgui.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhighgui.dylib; path = cing/libraries/mac/xcode/OpenCV/lib/libhighgui.dylib; sourceTree = "<group>"; };
+		A9EF55B11237E22E008A6038 /* libml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libml.dylib; path = cing/libraries/mac/xcode/OpenCV/lib/libml.dylib; sourceTree = "<group>"; };
+		A9EF55F81237EDF0008A6038 /* Simple_BasicApplication-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Simple_BasicApplication-Info.plist"; path = "example_projects/Simple_BasicApplication/Simple_BasicApplication-Info.plist"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A9EF54AB1237D7D5008A6038 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9EF557E1237DD74008A6038 /* libfmodex.dylib in Frameworks */,
+				A9EF55761237DD28008A6038 /* OgreBullet.framework in Frameworks */,
+				A9EF556F1237DCDB008A6038 /* libCing.a in Frameworks */,
+				A9EF55011237DA8D008A6038 /* Carbon.framework in Frameworks */,
+				A9EF55031237DA8D008A6038 /* CoreAudio.framework in Frameworks */,
+				A9EF55051237DA8D008A6038 /* CoreFoundation.framework in Frameworks */,
+				A9EF55071237DA8D008A6038 /* CoreMIDI.framework in Frameworks */,
+				A9EF55091237DA8D008A6038 /* IOKit.framework in Frameworks */,
+				A9EF54B91237D940008A6038 /* Ogre.framework in Frameworks */,
+				A9EF54BA1237D940008A6038 /* BulletCollision.framework in Frameworks */,
+				A9EF54BB1237D940008A6038 /* BulletDynamics.framework in Frameworks */,
+				A9EF54BC1237D940008A6038 /* BulletSoftBody.framework in Frameworks */,
+				A9EF54BD1237D940008A6038 /* LinearMath.framework in Frameworks */,
+				A9EF54BE1237D940008A6038 /* CEGUIBase.framework in Frameworks */,
+				A9EF54BF1237D940008A6038 /* CEGUIOgreRenderer.framework in Frameworks */,
+				A9EF54C01237D940008A6038 /* Cocoa.framework in Frameworks */,
+				A9EF54C51237D940008A6038 /* AppKit.framework in Frameworks */,
+				A9EF54C61237D940008A6038 /* CoreData.framework in Frameworks */,
+				A9EF54C71237D940008A6038 /* Foundation.framework in Frameworks */,
+				A9EF55B21237E22E008A6038 /* libcv.dylib in Frameworks */,
+				A9EF55B31237E22E008A6038 /* libcvaux.dylib in Frameworks */,
+				A9EF55B41237E22E008A6038 /* libcxcore.dylib in Frameworks */,
+				A9EF55B51237E22E008A6038 /* libhighgui.dylib in Frameworks */,
+				A9EF55B61237E22E008A6038 /* libml.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A909007412370A2B0040FA33 = {
+			isa = PBXGroup;
+			children = (
+				A9EF4BC5123719C8008A6038 /* Samples */,
+				A9EF4BC4123719C0008A6038 /* Resources */,
+				A9EF4BC0123719AA008A6038 /* Frameworks */,
+				A909008312370A440040FA33 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A909008312370A440040FA33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9EF4B7712370AAE008A6038 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF4B7F12370AAE008A6038 /* Cing.framework */,
+				A9EF4B8112370AAE008A6038 /* libCing.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9EF4BC0123719AA008A6038 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF54D61237D9E0008A6038 /* Linked Frameworks */,
+				A9EF54D71237D9F3008A6038 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9EF4BC4123719C0008A6038 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF4B7612370AAE008A6038 /* Cing.xcodeproj */,
+				A9EF4C2F1237D263008A6038 /* CingExamples_Prefix.pch */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		A9EF4BC5123719C8008A6038 /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF4BC6123719EC008A6038 /* Simple_BasicApplication */,
+			);
+			name = Samples;
+			sourceTree = "<group>";
+		};
+		A9EF4BC6123719EC008A6038 /* Simple_BasicApplication */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF4BC7123719EC008A6038 /* data */,
+				A9EF4BCC123719EC008A6038 /* src */,
+				A9EF55F81237EDF0008A6038 /* Simple_BasicApplication-Info.plist */,
+			);
+			name = Simple_BasicApplication;
+			path = example_projects/Simple_BasicApplication;
+			sourceTree = "<group>";
+		};
+		A9EF4BC7123719EC008A6038 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF4BC8123719EC008A6038 /* CingConfig.xml */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		A9EF4BCC123719EC008A6038 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF4BCD123719EC008A6038 /* Simple_BasicApplication.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A9EF54D61237D9E0008A6038 /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF55AD1237E22E008A6038 /* libcv.dylib */,
+				A9EF55AE1237E22E008A6038 /* libcvaux.dylib */,
+				A9EF55AF1237E22E008A6038 /* libcxcore.dylib */,
+				A9EF55B01237E22E008A6038 /* libhighgui.dylib */,
+				A9EF55B11237E22E008A6038 /* libml.dylib */,
+				A9EF557D1237DD74008A6038 /* libfmodex.dylib */,
+				A9EF4FED1237D783008A6038 /* Ogre.framework */,
+				A9EF4FEE1237D783008A6038 /* BulletCollision.framework */,
+				A9EF4FEF1237D783008A6038 /* BulletDynamics.framework */,
+				A9EF4FF01237D783008A6038 /* BulletSoftBody.framework */,
+				A9EF4FF11237D783008A6038 /* LinearMath.framework */,
+				A9EF4FF21237D783008A6038 /* CEGUIBase.framework */,
+				A9EF4FF31237D783008A6038 /* CEGUIOgreRenderer.framework */,
+				A9EF55751237DD28008A6038 /* OgreBullet.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		A9EF54D71237D9F3008A6038 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF52EF1237D795008A6038 /* Cocoa.framework */,
+				A9EF52F41237D795008A6038 /* AppKit.framework */,
+				A9EF52F51237D795008A6038 /* CoreData.framework */,
+				A9EF52F61237D795008A6038 /* Foundation.framework */,
+				A9EF55001237DA8D008A6038 /* Carbon.framework */,
+				A9EF55021237DA8D008A6038 /* CoreAudio.framework */,
+				A9EF55041237DA8D008A6038 /* CoreFoundation.framework */,
+				A9EF55061237DA8D008A6038 /* CoreMIDI.framework */,
+				A9EF55081237DA8D008A6038 /* IOKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A9EF54AC1237D7D5008A6038 /* Simple_BasicApplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9EF54B21237D7D6008A6038 /* Build configuration list for PBXNativeTarget "Simple_BasicApplication" */;
+			buildPhases = (
+				A9EF54A91237D7D5008A6038 /* Resources */,
+				A9EF54AA1237D7D5008A6038 /* Sources */,
+				A9EF54AB1237D7D5008A6038 /* Frameworks */,
+				A9EF55931237DE27008A6038 /* Copy Frameworks & Dynamic Libraries */,
+				A9EF55CC1237E870008A6038 /* Relocate Dynamic Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9EF54B41237D7DA008A6038 /* PBXTargetDependency */,
+			);
+			name = Simple_BasicApplication;
+			productName = Simple_BasicApplication;
+			productReference = A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A909007612370A2B0040FA33 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = A909007912370A2B0040FA33 /* Build configuration list for PBXProject "CingExamples" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = A909007412370A2B0040FA33;
+			productRefGroup = A909008312370A440040FA33 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A9EF4B7712370AAE008A6038 /* Products */;
+					ProjectRef = A9EF4B7612370AAE008A6038 /* Cing.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				A9EF54AC1237D7D5008A6038 /* Simple_BasicApplication */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A9EF4B7F12370AAE008A6038 /* Cing.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Cing.framework;
+			remoteRef = A9EF4B7E12370AAE008A6038 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A9EF4B8112370AAE008A6038 /* libCing.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCing.a;
+			remoteRef = A9EF4B8012370AAE008A6038 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A9EF54A91237D7D5008A6038 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9EF55F91237EDF0008A6038 /* Simple_BasicApplication-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A9EF55CC1237E870008A6038 /* Relocate Dynamic Libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Relocate Dynamic Libraries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "install_name_tool -change ./libfmodex.dylib @loader_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libcv.dylib @loader_path/../Frameworks/libcv.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libcvaux.dylib @loader_path/../Frameworks/libcvaux.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libcxcore.dylib @loader_path/../Frameworks/libcxcore.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libhighgui.dylib @loader_path/../Frameworks/libhighgui.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\ninstall_name_tool -change ./libml.dylib @loader_path/../Frameworks/libml.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A9EF54AA1237D7D5008A6038 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9EF54D31237D99F008A6038 /* Simple_BasicApplication.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A9EF54B41237D7DA008A6038 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libCing;
+			targetProxy = A9EF54B31237D7DA008A6038 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A909007712370A2B0040FA33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CING_HOME = cing/;
+				CING_LIBRARIES = "$(CING_HOME)libraries/mac/xcode";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/CEGUI/Frameworks",
+					"$(CING_LIBRARIES)/Bullet/Frameworks",
+					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/include",
+					"$(CING_LIBRARIES)/OgreCCS/include",
+					"$(CING_LIBRARIES)/OgreBullet/Dynamics/include",
+					"$(CING_LIBRARIES)/OgreBullet/Collisions/include",
+					"$(CING_LIBRARIES)/OpenCV/include",
+					"$(CING_LIBRARIES)/Ogre3d/include/OIS",
+					"$(CING_LIBRARIES)/Ogre3d/include",
+					"$(CING_LIBRARIES)/Bullet/include",
+					"$(CING_LIBRARIES)/CEGUI/Frameworks/CEGUIBase.framework/Headers",
+					"$(CING_LIBRARIES)/CEGUI/Frameworks/CEGUIBase.framework/Headers/RendererModules/Ogre",
+					"$(CING_LIBRARIES)",
+					"$(CING_HOME)/src",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/lib",
+					"$(CING_LIBRARIES)/OgreCCS/lib",
+					"$(CING_LIBRARIES)/Bullet/lib",
+					"$(CING_LIBRARIES)/OgreBullet/lib",
+					"$(CING_LIBRARIES)/Ogre3d/lib/Release",
+					"$(CING_LIBRARIES)/Ogre3d/lib",
+					"$(CING_LIBRARIES)/TinyXML/lib",
+					"$(CING_LIBRARIES)/PTypes/lib",
+					"$(CING_LIBRARIES)/OpenCV/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-lCCS",
+					"-lOIS",
+					"-ltinyxml",
+					"-lptypes",
+				);
+				VALID_ARCHS = i386;
+			};
+			name = Debug;
+		};
+		A909007812370A2B0040FA33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CING_HOME = cing/;
+				CING_LIBRARIES = "$(CING_HOME)libraries/mac/xcode";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/CEGUI/Frameworks",
+					"$(CING_LIBRARIES)/Bullet/Frameworks",
+					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/include",
+					"$(CING_LIBRARIES)/OgreCCS/include",
+					"$(CING_LIBRARIES)/OgreBullet/Dynamics/include",
+					"$(CING_LIBRARIES)/OgreBullet/Collisions/include",
+					"$(CING_LIBRARIES)/OpenCV/include",
+					"$(CING_LIBRARIES)/Ogre3d/include/OIS",
+					"$(CING_LIBRARIES)/Ogre3d/include",
+					"$(CING_LIBRARIES)/Bullet/include",
+					"$(CING_LIBRARIES)/CEGUI/Frameworks/CEGUIBase.framework/Headers",
+					"$(CING_LIBRARIES)/CEGUI/Frameworks/CEGUIBase.framework/Headers/RendererModules/Ogre",
+					"$(CING_LIBRARIES)",
+					"$(CING_HOME)/src",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(CING_LIBRARIES)/Fmod/lib",
+					"$(CING_LIBRARIES)/OgreCCS/lib",
+					"$(CING_LIBRARIES)/Bullet/lib",
+					"$(CING_LIBRARIES)/OgreBullet/lib",
+					"$(CING_LIBRARIES)/Ogre3d/lib/Release",
+					"$(CING_LIBRARIES)/Ogre3d/lib",
+					"$(CING_LIBRARIES)/TinyXML/lib",
+					"$(CING_LIBRARIES)/PTypes/lib",
+					"$(CING_LIBRARIES)/OpenCV/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-lCCS",
+					"-lOIS",
+					"-ltinyxml",
+					"-lptypes",
+				);
+				VALID_ARCHS = i386;
+			};
+			name = Release;
+		};
+		A9EF54B01237D7D6008A6038 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OgreBullet/Frameworks\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CingExamples_Prefix.pch;
+				INFOPLIST_FILE = "example_projects/Simple_BasicApplication/Simple_BasicApplication-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Fmod/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
+				PREBINDING = NO;
+				PRODUCT_NAME = Simple_BasicApplication;
+			};
+			name = Debug;
+		};
+		A9EF54B11237D7D6008A6038 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OgreBullet/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CingExamples_Prefix.pch;
+				INFOPLIST_FILE = "example_projects/Simple_BasicApplication/Simple_BasicApplication-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Fmod/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
+				PREBINDING = NO;
+				PRODUCT_NAME = Simple_BasicApplication;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A909007912370A2B0040FA33 /* Build configuration list for PBXProject "CingExamples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A909007712370A2B0040FA33 /* Debug */,
+				A909007812370A2B0040FA33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9EF54B21237D7D6008A6038 /* Build configuration list for PBXNativeTarget "Simple_BasicApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9EF54B01237D7D6008A6038 /* Debug */,
+				A9EF54B11237D7D6008A6038 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A909007612370A2B0040FA33 /* Project object */;
+}

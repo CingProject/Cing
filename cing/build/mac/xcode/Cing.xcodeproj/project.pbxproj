@@ -388,7 +388,7 @@
 		A91E9D6E1211D9D1002292DF /* BulletDynamics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletDynamics.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/BulletDynamics.framework; sourceTree = SOURCE_ROOT; };
 		A91E9D701211D9D1002292DF /* BulletSoftBody.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletSoftBody.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/BulletSoftBody.framework; sourceTree = SOURCE_ROOT; };
 		A91E9D721211D9D1002292DF /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/LinearMath.framework; sourceTree = SOURCE_ROOT; };
-		A9325A071236FA5D00A0B30D /* liblibCing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibCing.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9325A071236FA5D00A0B30D /* libCing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A94E000012072075009A8F12 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontManager.cpp; sourceTree = "<group>"; };
 		A94E000112072075009A8F12 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
 		A94E000212072075009A8F12 /* FontProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontProperties.h; sourceTree = "<group>"; };
@@ -622,7 +622,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* Cing.framework */,
-				A9325A071236FA5D00A0B30D /* liblibCing.a */,
+				A9325A071236FA5D00A0B30D /* libCing.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1219,7 +1219,7 @@
 			);
 			name = libCing;
 			productName = libCing;
-			productReference = A9325A071236FA5D00A0B30D /* liblibCing.a */;
+			productReference = A9325A071236FA5D00A0B30D /* libCing.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -1621,22 +1621,9 @@
 					"$(CING_LIBRARIES)/OpenCV/lib",
 					"$(CING_LIBRARIES)/TinyXML/lib",
 				);
-				OTHER_LDFLAGS = (
-					"-lhighgui",
-					"-lfmodex",
-					"-lCCS",
-					"-lOgreBullet",
-					"-lConvexDecomposition",
-					"-lOIS",
-					"-ltinyxml",
-					"-lptypes",
-					"-lcv",
-					"-lcvaux",
-					"-lcxcore",
-					"-lml",
-				);
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				PRODUCT_NAME = libCing;
+				PRODUCT_NAME = Cing;
 			};
 			name = Debug;
 		};
@@ -1681,22 +1668,9 @@
 					"$(CING_LIBRARIES)/OpenCV/lib",
 					"$(CING_LIBRARIES)/TinyXML/lib",
 				);
-				OTHER_LDFLAGS = (
-					"-lhighgui",
-					"-lfmodex",
-					"-lCCS",
-					"-lOgreBullet",
-					"-lConvexDecomposition",
-					"-lOIS",
-					"-ltinyxml",
-					"-lptypes",
-					"-lcv",
-					"-lcvaux",
-					"-lcxcore",
-					"-lml",
-				);
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				PRODUCT_NAME = libCing;
+				PRODUCT_NAME = Cing;
 				ZERO_LINK = NO;
 			};
 			name = Release;

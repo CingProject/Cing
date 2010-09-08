@@ -64,8 +64,10 @@
 
 // CameraInput
 #include "cameraInput/OCVCamera.h"
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #include "cameraInput/PVCamera.h"
 #include "cameraInput/VICamera.h"
+#endif
 
 // Framework 
 #include "framework/AppMain.h"
@@ -101,8 +103,10 @@
 #include "audio/AudioInputFMOD.h"
 
 // Video
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #include "video/MediaPlayerVLC.h"
 #include "video/MediaPlayerGS.h"
+#endif
 #include "video/OCVMovie.h"
 
 // GUI
@@ -125,16 +129,20 @@ typedef XMLElement::XMLElementArray XMLElementArray;
 // Classes used by user
 
 // Camera
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 typedef	VICamera Capture;
-//typedef	OCVCamera Capture;
+typedef	OCVCamera Capture;
+#endif
 
 // Sound and Mic
 typedef SoundFMOD Sound;
 typedef AudioInputFMOD	AudioInput;
   
 // Video
-//typedef MediaPlayerVLC MediaPlayer;
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+typedef MediaPlayerVLC MediaPlayer;
 typedef MediaPlayerGS MediaPlayer;
+#endif
 
 
 #endif // _Vision_H_
