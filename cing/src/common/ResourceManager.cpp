@@ -198,7 +198,25 @@ namespace Cing
 	 */
 	void ResourceManager::extractUserAppPathMAC()
 	{
-		// TODO
+		char path[1024];
+		CFBundleRef mainBundle = CFBundleGetMainBundle();
+		assert( mainBundle );
+		
+		CFURLRef mainBundleURL = CFBundleCopyBundleURL( mainBundle);
+		assert( mainBundleURL);
+		
+		CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
+		assert( cfStringRef);
+		
+		CFStringGetCString( cfStringRef, path, 1024, kCFStringEncodingASCII);
+		
+		CFRelease( mainBundleURL);
+		CFRelease( cfStringRef);
+		
+		userExecPath = std::string( path );
+		std::string::size_type lastSlashPos = userExecPath.find_last_of("/");
+		userExecPath = userExecPath.substr(0, lastSlashPos);
+		userDataPath = userExecPath + "/" + userResourcesDirName;
 	}
 #endif
 
