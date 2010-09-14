@@ -55,7 +55,7 @@ public:
 	TrackedBlob&	getTrackedBlobN      ( int n )  { return m_trackedBlobs[n]; }
 
 	// Get / Set methods
-  virtual void  setMaxBlobs   ( float maxBlobs );
+  virtual void  setMaxBlobs   ( int maxBlobs );
 
 	void setCallback(void (*callback)){ m_callback = callback; };
 

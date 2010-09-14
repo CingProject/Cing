@@ -62,7 +62,7 @@ CameraController::CameraController():
 	m_cameraRollNode( NULL ),
 	m_moveScale			( 5.0f ),
 	m_rotateScale		( 0.1f ),
-	m_useMouse			( false	),
+	m_useMouse			( true	),
 	m_useKeyboard		( true ),
 	m_bIsValid  ( false )
 {
@@ -156,7 +156,7 @@ void CameraController::update()
 	
 	// Update camera controller
 	if ( m_cameraCS ) 
-		m_cameraCS->update(elapsedSec);
+		m_cameraCS->update((float)elapsedSec);
 
 	// Keyboard control
 	if ( m_useKeyboard )
@@ -199,8 +199,8 @@ void CameraController::mouseControl()
 		CCS::FreeCameraMode* freeCameraMode = (CCS::FreeCameraMode*)m_cameraCS->getCameraMode("Free");
 		if ( freeCameraMode )
 		{
-			freeCameraMode->yaw( mouse.getXAxisRelative() );
-			freeCameraMode->pitch( mouse.getYAxisRelative() );
+			freeCameraMode->yaw( (float)mouse.getXAxisRelative() );
+			freeCameraMode->pitch( (float)mouse.getYAxisRelative() );
 		}
 	}
 }

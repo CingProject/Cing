@@ -57,7 +57,7 @@ namespace Cing
 		// Query methods
 		bool    isValid   () const { return m_bIsValid; }
 		bool    isPlaying ();
-		float   duration  () const { return m_videoDuration; }
+		float   duration  () const { return (float)m_videoDuration; }
 		float   time      ();
 		int     getWidth  () const { return m_videoWidth; }
 		int     getHeight () const { return m_videoHeight; }

@@ -91,32 +91,32 @@ public:
 	void				lookAt 						( Object3D& objectToTrack );
 
 	void				setAmbientColor		( const Color& color );
-	void				setAmbientColor		( const Color& color, int alpha );
-	void				setAmbientColor		( int gray );
-	void				setAmbientColor		( int gray, int alpha );
-	void				setAmbientColor		( int value1, int value2, int value3 );
-	void				setAmbientColor		( int value1, int value2, int value3, int alpha );
+	void				setAmbientColor		( const Color& color, float alpha );
+	void				setAmbientColor		( float gray );
+	void				setAmbientColor		( float gray, float alpha );
+	void				setAmbientColor		( float value1, float value2, float value3 );
+	void				setAmbientColor		( float value1, float value2, float value3, float alpha );
 
 	void				setDiffuseColor		( const Color& color );
-	void				setDiffuseColor		( const Color& color, int alpha );
-	void				setDiffuseColor		( int gray );
-	void				setDiffuseColor		( int gray, int alpha );
-	void				setDiffuseColor		( int value1, int value2, int value3 );
-	void				setDiffuseColor		( int value1, int value2, int value3, int alpha );
+	void				setDiffuseColor		( const Color& color, float alpha );
+	void				setDiffuseColor		( float gray );
+	void				setDiffuseColor		( float gray, float alpha );
+	void				setDiffuseColor		( float value1, float value2, float value3 );
+	void				setDiffuseColor		( float value1, float value2, float value3, float alpha );
 
 	void				setSpecularColor	( const Color& color );
-	void				setSpecularColor	( const Color& color, int alpha );
-	void				setSpecularColor	( int gray );
-	void				setSpecularColor	( int gray, int alpha );
-	void				setSpecularColor	( int value1, int value2, int value3 );
-	void				setSpecularColor	( int value1, int value2, int value3, int alpha );
+	void				setSpecularColor	( const Color& color, float alpha );
+	void				setSpecularColor	( float gray );
+	void				setSpecularColor	( float gray, float alpha );
+	void				setSpecularColor	( float value1, float value2, float value3 );
+	void				setSpecularColor	( float value1, float value2, float value3, float alpha );
 
 	void				setSelfIlluminationColor	( const Color& color );
-	void				setSelfIlluminationColor	( const Color& color, int alpha );
-	void				setSelfIlluminationColor	( int gray );
-	void				setSelfIlluminationColor	( int gray, int alpha );
-	void				setSelfIlluminationColor	( int value1, int value2, int value3 );
-	void				setSelfIlluminationColor	( int value1, int value2, int value3, int alpha );
+	void				setSelfIlluminationColor	( const Color& color, float alpha );
+	void				setSelfIlluminationColor	( float gray );
+	void				setSelfIlluminationColor	( float gray, float alpha );
+	void				setSelfIlluminationColor	( float value1, float value2, float value3 );
+	void				setSelfIlluminationColor	( float value1, float value2, float value3, float alpha );
 
 	void				setTexture								( const std::string& textureFileName );
 	void				setMaterial								( const std::string& materialName );

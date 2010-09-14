@@ -191,7 +191,7 @@ void Application::drawApp()
 
 			if ( millisFromStart < (m_timePerFrameMillis * frameCount) )
 			{
-				unsigned long millisToSleep = (m_timePerFrameMillis * frameCount) - millisFromStart;
+				unsigned long millisToSleep = (unsigned long)((m_timePerFrameMillis * frameCount) - millisFromStart);
 				if ( millisToSleep > 0 )
 					pt::psleep( millisToSleep );
 			}

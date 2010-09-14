@@ -75,22 +75,21 @@ namespace Cing
 		void	draw	( float xPos, float yPos, float zPos, float width, float height );
 		void	draw	( float x1, float y1, float z1,	float x2, float y2, float z2,
 						  float x3, float y3, float z3,	float x4, float y4, float z4);
-		void	draw2d( float xPos, float yPos );
-		void	draw2d( float xPos, float yPos, float width, float height );
-		void	draw2d( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
+		void	draw	( float xPos, float yPos );
+		void	draw	( float xPos, float yPos, float width, float height );
+		void	draw	( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
 
 		void  drawBackground( float xPos, float yPos, float width, float height );
 
 		// 2D Image drawing methods
-		void  triangle	( float x1, float y1, float x2, float y2, float x3, float y3 );
-		void  line			( float x1, float y1, float x2, float y2 );
-		void  arc				( float x, float y,  float width, float height, float start, float stop );
-		void  point			( float x, float y);
-		void  quad			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
-		void  ellipse		( float x, float y, float x2, float y2);
-		void  ellipse		( float x, float y, float x2, float y2, float angle);
-		void  rect			( float x1, float y1, float x2, float y2 );
-		void  text			( float x1, float y1, const char* text );
+		void  triangle		( int x1, int y1, int x2, int y2, int x3, int y3 );
+		void  line			( int x1, int y1, int x2, int y2 );
+		void  arc			( int x, int y,  int width, int height, float start, float stop );
+		void  point			( int x, int y);
+		void  quad			( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
+		void  ellipse		( int x, int y, int x2, int y2, float angleDegrees = 0 );
+		void  rect			( int x, int y, int width, int height );
+		void  text			( int x1, int y1, const char* text );
 		void  fill          ( Color theColor );
 
 		// Image processing

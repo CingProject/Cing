@@ -46,6 +46,10 @@ public:
 	Color( float gray, float alpha );
 	Color( float red,  float green, float blue );
 	Color( float red,  float green, float blue, float alpha );
+
+	Color( int rgb );
+	Color( int rgb, float alpha );
+
 	Color( Ogre::ColourValue color );
 
 	// To set values or range

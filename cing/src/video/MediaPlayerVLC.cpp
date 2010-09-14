@@ -493,7 +493,7 @@ namespace Cing
 			return;
 
 		// Seek specified position
-		libvlc_media_player_set_time( m_mediaPlayer, whereInSecs * 1000.0f, &m_vlcException );
+		libvlc_media_player_set_time( m_mediaPlayer, libvlc_time_t(whereInSecs * 1000.0f), &m_vlcException );
 		checkVLCException();
 	}
 
@@ -540,7 +540,7 @@ namespace Cing
 		if ( !isValid() )
 			return;
 		
-		libvlc_audio_set_volume( m_libvlc, volume * 100, &m_vlcException );
+		libvlc_audio_set_volume( m_libvlc, (int)(volume * 100), &m_vlcException );
 		checkVLCException();
 	}
 

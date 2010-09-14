@@ -37,8 +37,8 @@ namespace Cing
 {
 
 // Static members init
-const int		OutputDebugTextBoxCEGUI::DEFAULT_TEXT_BOX_HIGHT	= 150;
-const float OutputDebugTextBoxCEGUI::DEFAULT_TRANSPARENCY		= 0.5f;
+const int		OutputDebugTextBoxCEGUI::DEFAULT_TEXT_BOX_HEIGHT		= 150;
+const float		OutputDebugTextBoxCEGUI::DEFAULT_TRANSPARENCY		= 0.5f;
 const int		OutputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 300;
 
 /**
@@ -73,9 +73,9 @@ void OutputDebugTextBoxCEGUI::init()
 	// Create the listbox (will work as a text box)
 	m_listBox = static_cast<CEGUI::Listbox*>(win.createWindow("Vanilla/Listbox", "Vision/OutputDebugTextBoxCEGUI"));
 	m_listBox->setArea( CEGUI::URect(	cegui_absdim(0), 
-																		cegui_absdim(height-DEFAULT_TEXT_BOX_HIGHT), 
-																		cegui_absdim(width), 
-																		cegui_absdim(height)));
+										cegui_absdim((float)(height-DEFAULT_TEXT_BOX_HEIGHT)), 
+										cegui_absdim((float)width), 
+										cegui_absdim((float)height)));
 	m_listBox->setShowVertScrollbar( false );
 	m_listBox->setShowHorzScrollbar( false );
 	m_listBox->setAlpha( DEFAULT_TRANSPARENCY );
@@ -183,19 +183,19 @@ void OutputDebugTextBoxCEGUI::setVisible( bool visible )
 }
 
 /**
- * @brief Sets the hight of the text box
+ * @brief Sets the height of the text box
  *
- * @param pxHight hight in pixels of the text box
+ * @param pxHeight height in pixels of the text box
  */
-void OutputDebugTextBoxCEGUI::setHight( int pxHight )
+void OutputDebugTextBoxCEGUI::setHeight( float pxHeight )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to set visible the OutputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to set the OutputDebugTextBoxCEGUI height, but it has not been initialized" );
 		return;
 	}
 
-	m_listBox->setHeight( CEGUI::UDim( 0, pxHight ) );
+	m_listBox->setHeight( CEGUI::UDim( 0, pxHeight ) );
 }
 
 /**
@@ -207,7 +207,7 @@ void OutputDebugTextBoxCEGUI::setAlpha( float alpha )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to set visible the OutputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to set the OutputDebugTextBoxCEGUI height, but it has not been initialized" );
 		return;
 	}
 

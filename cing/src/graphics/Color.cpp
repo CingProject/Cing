@@ -46,6 +46,7 @@ Color::Color( float gray /*= 255*/ ):
 	set( gray, gray, gray, m_hightRange );
 }
 
+
 /**
  * @brief Initializes the color with a specific color values (depending on the color range
  * which by default is 0..255, and RGB color model (red, green, blue).
@@ -89,6 +90,33 @@ Color::Color( float  red, float green, float blue, float alpha ):
 	m_hightRange( 255.0f )
 {
 	set( red, green, blue, alpha );
+}
+
+/**
+ * @brief Initializes the color with a specific color values (depending on the color range
+ * which by default is 0..255, and RGB color model (red, green, blue).
+ *
+ * @param rgb Gray color. Red, green and blue with the same value
+ */
+Color::Color( int rgb ): 
+	m_lowRange( 0.0f ), 
+	m_hightRange( 255.0f )
+{
+	set( (float)rgb, (float)rgb, (float)rgb, m_hightRange );
+}
+
+/**
+ * @brief Initializes the color with a specific color values (depending on the color range
+ * which by default is 0..255, and RGB color model (red, green, blue).
+ *
+ * @param rgb Gray color.	Red, green and blue with the same value
+ * @param alpha				Transparency value (0 = transparent, 255 = opaque)
+ */
+Color::Color( int rgb, float alpha ): 
+	m_lowRange( 0.0f ), 
+	m_hightRange( 255.0f )
+{
+	set( (float)rgb, (float)rgb, (float)rgb, alpha );
 }
 
 /**

@@ -95,12 +95,13 @@ void colorMode(GraphicsType mode, float range1, float range2, float range3, floa
    color space is RGB, with each value in the range from 0 to 255).
 */
 
-void fill( int gray );
-void fill( int gray, int alpha );
-void fill( int value1, int value2, int value3 );
-void fill( int value1, int value2, int value3, int alpha );
+void fill( float gray );
+void fill( float gray, float alpha );
+void fill( float value1, float value2, float value3 );
+void fill( float value1, float value2, float value3, float alpha );
+void fill( int rgb );
+void fill( int rgb, float alpha );
 void fill( const Color& color );
-void fill( const Color& color, int alpha );
 //void fill(hex)						NO HEX DATA TYPE
 //void fill(hex, alpha)					NO HEX DATA TYPE
 
@@ -116,13 +117,13 @@ void noStroke	();
 void smooth		();
 void noSmooth	();
 
-void line			( float x1, float y1, float x2, float y2 );
-void point		( float x1, float y1 );
-void triangle	( float x1, float y1, float x2, float y2, float x3, float y3 );
-void rect			( float x1, float y1, float x2, float y2 );
-void quad			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
-void ellipse	( float x, float y, float width, float height);
-void arc			( float x, float y,  float width, float height, float start, float stop );
+void line		( int x1, int y1, int x2, int y2 );
+void point		( int x, int y );
+void triangle	( int x1, int y1, int x2, int y2, int x3, int y3 );
+void rect		( int x1, int y1, int width, int height );
+void quad		( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
+void ellipse	( int x, int y, int width, int height);
+void arc		( int x, int y,  int width, int height, float start, float stop );
 
 void rectMode    ( int mode );
 void ellipseMode ( int mode );
@@ -207,7 +208,7 @@ void text( float text, float x, float y );
 
 
 void textFont		(const Font& font);
-void textFont		(const Font& font, int size);
+void textFont		(const Font& font, float size);
 void textAlign		(int halign, int valign = TOP);
 void textMode		(TextMode mode);
 void textSize		(float size);

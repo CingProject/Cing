@@ -86,7 +86,7 @@ void background( float x, float y, float z, float a )
  */
 void background( int rgb )
 {
-	setBackgroundColor( Color(rgb, rgb, rgb, rgb ) );
+	setBackgroundColor( Color(rgb) );
 }
 
 /**
@@ -97,7 +97,7 @@ void background( int rgb )
  */
 void background( int rgb, float a )
 {
-	setBackgroundColor( Color(rgb, rgb, rgb, a ) );
+	setBackgroundColor( Color(rgb, a ) );
 }
 
 /**
@@ -145,26 +145,26 @@ void stroke(  float gray, float alpha )
 /**
  * @brief Sets the color used to draw lines and border around shapes.
  *
- * @param[in] x Float
- * @param[in] y Float
- * @param[in] z Float
+ * @param[in] r Float
+ * @param[in] g Float
+ * @param[in] b Float
  */
-void stroke( float x, float y, float z )
+void stroke( float r, float g, float b )
 {
-	GraphicsManager::getSingleton().setStrokeColor( Color( x, y, z ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( r, g, b ) );
 }
 
 /**
  * @brief Sets the color used to draw lines and border around shapes.
  *
- * @param[in] x Float
- * @param[in] y Float
- * @param[in] z Float
+ * @param[in] r Float
+ * @param[in] g Float
+ * @param[in] b Float
  * @param[in] a Float
  */
-void stroke( float x, float y, float z, float a )
+void stroke( float r, float g, float b, float a )
 {
-	GraphicsManager::getSingleton().setStrokeColor( Color( x, y, z, a ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( r, g, b, a ) );
 }
 
 /**
@@ -174,7 +174,7 @@ void stroke( float x, float y, float z, float a )
  */
 void stroke( int rgb )
 {
-	GraphicsManager::getSingleton().setStrokeColor( Color( rgb, rgb, rgb, rgb ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( rgb ) );
 }
 
 /**
@@ -185,7 +185,7 @@ void stroke( int rgb )
  */
 void stroke( int rgb, float a )
 {
-	GraphicsManager::getSingleton().setStrokeColor( Color( rgb, rgb, rgb, a ) );
+	GraphicsManager::getSingleton().setStrokeColor( Color( rgb, a ) );
 }
 
 /*
@@ -216,9 +216,9 @@ void setRenderMode( RenderMode mode )
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param gray Gray level. A value of 0 means black, and 255 means white.
  */
-void fill( int gray )
+void fill( float gray )
 {
-	fill( Color( gray, gray, gray, 1 ) );
+	fill( Color( gray ) );
 }
 
 /*
@@ -228,9 +228,9 @@ void fill( int gray )
  * @param gray Gray level. A value of 0 means black, and 255 means white.
  * @param alpha Alpha level. A value of 0 means transparent, and 255 means opaque.
  */
-void fill( int gray, int alpha )
+void fill( float gray, float alpha )
 {
-	fill( Color( gray, gray, gray, alpha ) );
+	fill( Color( gray, alpha ) );
 
 }
 
@@ -242,7 +242,7 @@ void fill( int gray, int alpha )
  * @param value2 Specifies the green value
  * @param value3 Specifies the blue value
  */
-void fill( int value1 , int value2, int value3 )
+void fill( float value1 , float value2, float value3 )
 {
 	fill( Color( value1, value2, value3, 255 ) );
 }
@@ -256,9 +256,33 @@ void fill( int value1 , int value2, int value3 )
  * @param value3 Specifies the blue value
  * @param alpha  Specifies the alpha value. A value of 0 means transparent, and 255 means opaque.
  */
-void fill( int value1 , int value2, int value3, int alpha )
+void fill( float value1 , float value2, float value3, float alpha )
 {
 	fill( Color( value1, value2, value3, alpha ) );
+}
+
+/*
+ * @brief Sets the color used to fill the shapes drawn after this call.
+ *
+ * It specifies color for shapes not using textures or lighting. Value range is 0..255
+ * @param rgb Gray level. A value of 0 means black, and 255 means white.
+ */
+void fill( int rgb )
+{
+	fill( Color( rgb ) );
+}
+
+/*
+ * @brief Sets the color used to fill the shapes drawn after this call.
+ *
+ * It specifies color for shapes not using textures or lighting. Value range is 0..255
+ * @param rgb Gray level. A value of 0 means black, and 255 means white.
+ * @param alpha Alpha level. A value of 0 means transparent, and 255 means opaque.
+ */
+void fill( int rgb, float alpha )
+{
+	fill( Color( rgb, alpha ) );
+
 }
 
 /*
@@ -272,23 +296,6 @@ void fill( const Color& color )
 
 	GraphicsManager::getSingleton().setFillColor( color );
 }
-
-/*
- * @brief Sets the color used to fill the shapes drawn after this call.
- *
- * It specifies color for shapes not using textures or lighting. Value range is 0..255
- * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
- * @param alpha Specifies the alpha value. A value of 0 means transparent, and 255 means opaque.
- */
-void fill( const Color& color, int alpha )
-{
-	// Create a new color to set the alpha without modifying the received parameter
-	Color newColor = Color( color.r, color.g, color.b, alpha );
-
-	// Set the fill color
-	GraphicsManager::getSingleton().setFillColor( newColor );
-}
-
 
 /*
  * @brief Sets the width of the stroke used for lines, points, and the border around shapes.
@@ -468,33 +475,33 @@ void endShape(GraphicsType operation)
 * @param y2 int or float: y-coordinate of the second point
 */
 
-void line( float x1, float y1, float x2, float y2 )
+void line( int x1, int y1, int x2, int y2 )
 {
 	// Transform vertex before the drawing  call
 	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
-	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
-	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
+	Vector v1 = t.applyTransform( Vector( (float)x1, (float)y1, 0) );
+	Vector v2 = t.applyTransform( Vector( (float)x2, (float)y2, 0) );
 
-	GraphicsManager::getSingleton().m_canvas->line( v1.x, v1.y, v2.x, v2.y );
+	GraphicsManager::getSingleton().m_canvas->line( (int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y );
 };
 
 /*
  * @Draws a point, a coordinate in space at the dimension of one pixel
  *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
- * @param x1 int or float: x-coordinate of the point
- * @param y1 int or float: y-coordinate of the point
+ * @param x int or float: x-coordinate of the point
+ * @param y int or float: y-coordinate of the point
  */
 
-void point( float x1, float y1 )
+void point( int x, int y )
 {
 	// Transform vertex before the drawing  call
 	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
-	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
+	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
 
-	GraphicsManager::getSingleton().m_canvas->point( v1.x, v1.y );
+	GraphicsManager::getSingleton().m_canvas->point( (int)v1.x, (int)v1.y );
 };
 
 /*
@@ -510,27 +517,27 @@ void point( float x1, float y1 )
  * @param y3 int or float: y-coordinate of the third point
  */
 
-void triangle( float x1, float y1, float x2, float y2, float x3, float y3 )
+void triangle( int x1, int y1, int x2, int y2, int x3, int y3 )
 {
 	// Transform vertex before the drawing  call
 	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
-	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
-	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
-	Vector v3 = t.applyTransform( Vector( x3, y3, 0) );
+	Vector v1 = t.applyTransform( Vector( (float)x1, (float)y1, 0) );
+	Vector v2 = t.applyTransform( Vector( (float)x2, (float)y2, 0) );
+	Vector v3 = t.applyTransform( Vector( (float)x3, (float)y3, 0) );
 
-	GraphicsManager::getSingleton().m_canvas->triangle( v1.x, v1.y, v2.x, v2.y, v3.x, v3.y );
+	GraphicsManager::getSingleton().m_canvas->triangle( (int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y, (int)v3.x, (int)v3.y );
 };
 
 /**
  * @brief Draws a rectangle inside the 2dCanvas
  *
- * @param x1 x, first point
- * @param y1 y, first point
- * @param x2 x, end point
- * @param y2 y, end point
+ * @param x x, first point
+ * @param y y, first point
+ * @param width x, end point
+ * @param height y, end point
  */
-void rect( float x1, float y1, float x2, float y2 )
+void rect( int x, int y, int width, int height )
 {
 	// TODO:	Optimize
 
@@ -545,39 +552,42 @@ void rect( float x1, float y1, float x2, float y2 )
 	switch( GraphicsManager::getSingleton().getRectMode() )
 	{
 	case CORNER:
-		v1 = t.applyTransform( Vector( x1, y1, 0) );
-		v2 = t.applyTransform( Vector( x1+x2, y1, 0) );
-		v3 = t.applyTransform( Vector( x1+x2, y1+y2, 0) );
-		v4 = t.applyTransform( Vector( x1, y1+y2, 0) );
+		v1 = t.applyTransform( Vector( (float)x,		(float)y, 0) );
+		v2 = t.applyTransform( Vector( (float)x+width,	(float)y, 0) );
+		v3 = t.applyTransform( Vector( (float)x+width,	(float)y+height, 0) );
+		v4 = t.applyTransform( Vector( (float)x,		(float)y+height, 0) );
 		break;
 
 	case CORNERS:
-		rectWidth  = x2 - x1;
-		rectHeight = y2 - y1;
-		v1 = t.applyTransform( Vector( x1, y1, 0) );
-		v2 = t.applyTransform( Vector( x1 + rectWidth, y1, 0) );
-		v3 = t.applyTransform( Vector( x1 + rectWidth, y1 + rectHeight, 0) );
-		v4 = t.applyTransform( Vector( x1, y1 + rectHeight, 0) );
+		rectWidth  = (float)(width - x);
+		rectHeight = (float)(height - y);
+		v1 = t.applyTransform( Vector( (float)x,				(float)y, 0) );
+		v2 = t.applyTransform( Vector( (float)x + rectWidth,	(float)y, 0) );
+		v3 = t.applyTransform( Vector( (float)x + rectWidth,	(float)y + rectHeight, 0) );
+		v4 = t.applyTransform( Vector( (float)x,				(float)y + rectHeight, 0) );
 		break;
 
 	case CENTER:
-		widthDIV2  = x2/2;
-		heightDIV2 = y2/2;
-		v1 = t.applyTransform( Vector( x1 - widthDIV2, y1 - heightDIV2, 0) );
-		v2 = t.applyTransform( Vector( x1 + widthDIV2, y1 - heightDIV2, 0) );
-		v3 = t.applyTransform( Vector( x1 + widthDIV2, y1 + heightDIV2, 0) );
-		v4 = t.applyTransform( Vector( x1 - widthDIV2, y1 + heightDIV2, 0) );
+		widthDIV2  = (float)width/2.0f;
+		heightDIV2 = (float)height/2.0f;
+		v1 = t.applyTransform( Vector( (float)x - widthDIV2, (float)y - heightDIV2, 0) );
+		v2 = t.applyTransform( Vector( (float)x + widthDIV2, (float)y - heightDIV2, 0) );
+		v3 = t.applyTransform( Vector( (float)x + widthDIV2, (float)y + heightDIV2, 0) );
+		v4 = t.applyTransform( Vector( (float)x - widthDIV2, (float)y + heightDIV2, 0) );
 		break;
 
 	case RADIUS:
-		v1 = t.applyTransform( Vector( x1-x2,y1-y2, 0) );
-		v2 = t.applyTransform( Vector( x1+x2,y1-y2, 0) );
-		v3 = t.applyTransform( Vector( x1+x2,y1+y2, 0) );
-		v4 = t.applyTransform( Vector( x1-x2,y1+y2, 0) );
+		v1 = t.applyTransform( Vector( (float)x-width,(float)y-height, 0) );
+		v2 = t.applyTransform( Vector( (float)x+width,(float)y-height, 0) );
+		v3 = t.applyTransform( Vector( (float)x+width,(float)y+height, 0) );
+		v4 = t.applyTransform( Vector( (float)x-width,(float)y+height, 0) );
 		break;
 	}
 
-	GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y );
+	GraphicsManager::getSingleton().m_canvas->quad( (int)v1.x , (int)v1.y , 
+													(int)v2.x , (int)v2.y, 
+													(int)v3.x , (int)v3.y, 
+													(int)v4.x , (int)v4.y );
 }
 
 /**
@@ -592,40 +602,43 @@ void rect( float x1, float y1, float x2, float y2 )
  * @param x4 x, fourth point
  * @param y4 y, fourth point
  */
-void quad( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
+void quad( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 )
 {
 	// Transform vertex before the drawing  call
 	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 
-	Vector v1 = t.applyTransform( Vector( x1, y1, 0) );
-	Vector v2 = t.applyTransform( Vector( x2, y2, 0) );
-	Vector v3 = t.applyTransform( Vector( x3, y3, 0) );
-	Vector v4 = t.applyTransform( Vector( x4, y4, 0) );
+	Vector v1 = t.applyTransform( Vector( (float)x1, (float)y1, 0) );
+	Vector v2 = t.applyTransform( Vector( (float)x2, (float)y2, 0) );
+	Vector v3 = t.applyTransform( Vector( (float)x3, (float)y3, 0) );
+	Vector v4 = t.applyTransform( Vector( (float)x4, (float)y4, 0) );
 
-	GraphicsManager::getSingleton().m_canvas->quad( v1.x , v1.y , v2.x , v2.y, v3.x , v3.y, v4.x , v4.y );
+	GraphicsManager::getSingleton().m_canvas->quad( (int)v1.x , (int)v1.y , 
+													(int)v2.x , (int)v2.y, 
+													(int)v3.x , (int)v3.y, 
+													(int)v4.x , (int)v4.y );
 }
 
 /**
  * @brief Draws an ellipse
  *
- * @param x1 x, first point
- * @param y1 y, first point
+ * @param x x, first point
+ * @param y y, first point
  * @param width
  * @param height
  */
-void ellipse( float x, float y, float width, float height)
+void ellipse( int x, int y, int width, int height)
 {
 	//TODO: Manage transforms
 	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
-	Vector v1 = t.applyTransform( Vector( x, y, 0) );
-	GraphicsManager::getSingleton().m_canvas->ellipse( v1.x, v1.y, width, height, t.getRotation().z );
+	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
+	GraphicsManager::getSingleton().m_canvas->ellipse( (int)v1.x, (int)v1.y, width, height, t.getRotation().z );
 }
 
-void arc( float x, float y,  float width, float height, float start, float stop )
+void arc( int x, int y,  int width, int height, float start, float stop )
 {
 	//TODO: Manage transforms
 	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
-	Vector v1 = t.applyTransform( Vector( x, y, 0) );
+	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
 	GraphicsManager::getSingleton().m_canvas->arc( x, y, width, height, start, stop );
 }
 
@@ -786,7 +799,7 @@ void updatePixels()
 		if ( (i % imageWidth == 0) && (i != 0) )
 			yIndex++;
 		stroke( pixels[i] );
-		tempImage->point( i - imageWidth*yIndex, yIndex);
+		tempImage->point( i - (imageWidth*yIndex), yIndex);
 	}
 }
 /**
@@ -1002,7 +1015,7 @@ void textFont(const Font& font)
  * @param font	font used to draw in future calls to text
  * @param size	size that will be used to draw the text. It is best to specify the size in the font.load call.
  */
-void textFont(const Font& font, int size)
+void textFont(const Font& font, float size)
 {
 	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
 	currentFontProperties.fontName			= font.getFontName();

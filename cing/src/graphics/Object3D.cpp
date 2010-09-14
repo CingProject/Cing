@@ -389,7 +389,7 @@ void Object3D::setAmbientColor( const Color& color )
  * @param color New color of the object.
  * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
  */
-void Object3D::setAmbientColor( const Color& color, int alpha )
+void Object3D::setAmbientColor( const Color& color, float alpha )
 {
 	setAmbientColor( Color ( color.r, color.g, color.b, alpha ) );
 }
@@ -399,7 +399,7 @@ void Object3D::setAmbientColor( const Color& color, int alpha )
  *
  * @param gray New gray color of the object.
  */
-void Object3D::setAmbientColor( int gray )
+void Object3D::setAmbientColor( float gray )
 {
 	setAmbientColor( Color( gray, gray, gray ) );
 }
@@ -410,7 +410,7 @@ void Object3D::setAmbientColor( int gray )
  * @param gray	New gray color of the object.
  * @param alpha New alpha value.
  */
-void Object3D::setAmbientColor( int gray, int alpha )
+void Object3D::setAmbientColor( float gray, float alpha )
 {
 	setAmbientColor( Color ( gray, gray, gray, alpha ) );
 }
@@ -423,7 +423,7 @@ void Object3D::setAmbientColor( int gray, int alpha )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setAmbientColor( int value1, int value2, int value3 )
+void Object3D::setAmbientColor( float value1, float value2, float value3 )
 {
 	setAmbientColor( Color ( value1, value2, value3 ) );
 }
@@ -436,7 +436,7 @@ void Object3D::setAmbientColor( int value1, int value2, int value3 )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setAmbientColor( int value1, int value2, int value3, int alpha )
+void Object3D::setAmbientColor( float value1, float value2, float value3, float alpha )
 {
 
 	setAmbientColor( Color ( value1, value2, value3, alpha ) );
@@ -462,7 +462,7 @@ void Object3D::setDiffuseColor( const Color& color )
  * @param color New color of the object.
  * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
  */
-void Object3D::setDiffuseColor( const Color& color, int alpha )
+void Object3D::setDiffuseColor( const Color& color, float alpha )
 {
 	setDiffuseColor( Color ( color.r, color.g, color.b, alpha ) );
 }
@@ -472,7 +472,7 @@ void Object3D::setDiffuseColor( const Color& color, int alpha )
  *
  * @param gray New gray color of the object.
  */
-void Object3D::setDiffuseColor( int gray )
+void Object3D::setDiffuseColor( float gray )
 {
 	setDiffuseColor( Color( gray, gray, gray ) );
 }
@@ -483,7 +483,7 @@ void Object3D::setDiffuseColor( int gray )
  * @param gray	New gray color of the object.
  * @param alpha New alpha value.
  */
-void Object3D::setDiffuseColor( int gray, int alpha )
+void Object3D::setDiffuseColor( float gray, float alpha )
 {
 	setDiffuseColor( Color ( gray, gray, gray, alpha ) );
 }
@@ -496,7 +496,7 @@ void Object3D::setDiffuseColor( int gray, int alpha )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setDiffuseColor( int value1, int value2, int value3 )
+void Object3D::setDiffuseColor( float value1, float value2, float value3 )
 {
 	setDiffuseColor( Color ( value1, value2, value3 ) );
 }
@@ -509,7 +509,7 @@ void Object3D::setDiffuseColor( int value1, int value2, int value3 )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setDiffuseColor( int value1, int value2, int value3, int alpha )
+void Object3D::setDiffuseColor( float value1, float value2, float value3, float alpha )
 {
 
 	setDiffuseColor( Color ( value1, value2, value3, alpha ) );
@@ -535,7 +535,7 @@ void Object3D::setSpecularColor( const Color& color )
  * @param color New color of the object.
  * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
  */
-void Object3D::setSpecularColor( const Color& color, int alpha )
+void Object3D::setSpecularColor( const Color& color, float alpha )
 {
 	setSpecularColor( Color ( color.r, color.g, color.b, alpha ) );
 }
@@ -545,7 +545,7 @@ void Object3D::setSpecularColor( const Color& color, int alpha )
  *
  * @param gray New gray color of the object.
  */
-void Object3D::setSpecularColor( int gray )
+void Object3D::setSpecularColor( float gray )
 {
 	setSpecularColor( Color( gray, gray, gray ) );
 }
@@ -556,7 +556,7 @@ void Object3D::setSpecularColor( int gray )
  * @param gray	New gray color of the object.
  * @param alpha New alpha value.
  */
-void Object3D::setSpecularColor( int gray, int alpha )
+void Object3D::setSpecularColor( float gray, float alpha )
 {
 	setSpecularColor( Color ( gray, gray, gray, alpha ) );
 }
@@ -569,7 +569,7 @@ void Object3D::setSpecularColor( int gray, int alpha )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setSpecularColor( int value1, int value2, int value3 )
+void Object3D::setSpecularColor( float value1, float value2, float value3 )
 {
 	setSpecularColor( Color ( value1, value2, value3 ) );
 }
@@ -582,7 +582,7 @@ void Object3D::setSpecularColor( int value1, int value2, int value3 )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setSpecularColor( int value1, int value2, int value3, int alpha )
+void Object3D::setSpecularColor( float value1, float value2, float value3, float alpha )
 {
 
 	setSpecularColor( Color ( value1, value2, value3, alpha ) );
@@ -608,7 +608,7 @@ void Object3D::setSelfIlluminationColor( const Color& color )
  * @param color New color of the object.
  * @param alpha Alpha or transparency level of the object. 0 means transparent, 255 means opaque.
  */
-void Object3D::setSelfIlluminationColor( const Color& color, int alpha )
+void Object3D::setSelfIlluminationColor( const Color& color, float alpha )
 {
 	setSelfIlluminationColor( Color ( color.r, color.g, color.b, alpha ) );
 }
@@ -618,7 +618,7 @@ void Object3D::setSelfIlluminationColor( const Color& color, int alpha )
  *
  * @param gray New gray color of the object.
  */
-void Object3D::setSelfIlluminationColor( int gray )
+void Object3D::setSelfIlluminationColor( float gray )
 {
 	setSelfIlluminationColor( Color( gray, gray, gray ) );
 }
@@ -629,7 +629,7 @@ void Object3D::setSelfIlluminationColor( int gray )
  * @param gray	New gray color of the object.
  * @param alpha New alpha value.
  */
-void Object3D::setSelfIlluminationColor( int gray, int alpha )
+void Object3D::setSelfIlluminationColor( float gray, float alpha )
 {
 	setSelfIlluminationColor( Color ( gray, gray, gray, alpha ) );
 }
@@ -642,7 +642,7 @@ void Object3D::setSelfIlluminationColor( int gray, int alpha )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setSelfIlluminationColor( int value1, int value2, int value3 )
+void Object3D::setSelfIlluminationColor( float value1, float value2, float value3 )
 {
 	setSelfIlluminationColor( Color ( value1, value2, value3 ) );
 }
@@ -655,7 +655,7 @@ void Object3D::setSelfIlluminationColor( int value1, int value2, int value3 )
  * @param value3	Third value of the color (blue or brightness, depending on the color mode)
  * @param alpha New alpha value.
  */
-void Object3D::setSelfIlluminationColor( int value1, int value2, int value3, int alpha )
+void Object3D::setSelfIlluminationColor( float value1, float value2, float value3, float alpha )
 {
 
 	setSelfIlluminationColor( Color ( value1, value2, value3, alpha ) );

@@ -27,8 +27,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 namespace Cing
 {
 	// Window
-	unsigned short 	 		width  = -1;
-	unsigned short 	 		height = -1;
+	int 	 				width  = -1;
+	int 	 				height = -1;
 	String					appName = "Cing Demo";
 
 	// Data folder

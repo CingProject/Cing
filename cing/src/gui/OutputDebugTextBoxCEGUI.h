@@ -24,9 +24,14 @@
 
 #include "GUIPrereqs.h"
 
+#include "OgrePlatform.h"
+
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-#import <CoreFoundation/CoreFoundation.h>
+#error "mac"
+//#import <CoreFoundation/CoreFoundation.h>
 #endif
+
 namespace Cing
 {
 
@@ -43,33 +48,33 @@ public:
 	~OutputDebugTextBoxCEGUI();
 
 	// Init / Release / Update
-	void	init 	();
-	void	end		();	
+	void	init 		();
+	void	end			();	
 
 	// Text control
-	void	print			( const char* text );
+	void	print		( const char* text );
 	void	println		( const char* text );
-	void	clear			();
+	void	clear		();
 
 	// Visual aspect
-	void	setVisible( bool visible );
-	void	setHight	( int pxHight );
+	void	setVisible	( bool visible );
+	void	setHeight	( float pxHeight );
 	void	setAlpha	( float alpha );
 
 
 	// Query  Methods
-	bool	isValid	() { return m_bIsValid; }
+	bool	isValid		() { return m_bIsValid; }
 
 	// Static const public members
-	static const int		DEFAULT_TEXT_BOX_HIGHT; ///< Hight in pixels of the text box (actually internally it is a listbox)
-	static const float	DEFAULT_TRANSPARENCY;		///< Default transparency of the text box: 0 means transparent, 1 means opaque
+	static const int		DEFAULT_TEXT_BOX_HEIGHT;	///< Height in pixels of the text box (actually internally it is a listbox)
+	static const float		DEFAULT_TRANSPARENCY;		///< Default transparency of the text box: 0 means transparent, 1 means opaque
 	static const int		DEFAULT_MAX_MESSAGES;		///< Max number of messages that the text box will print. If the limit is reached older messages will be deleted as needed
 
 private:
 
 	// Attributes
 	CEGUI::Listbox* m_listBox;		///< Displays all the output messages
-	bool						m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool			m_bIsValid;		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

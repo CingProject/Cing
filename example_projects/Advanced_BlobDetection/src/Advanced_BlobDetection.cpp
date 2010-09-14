@@ -17,14 +17,17 @@ Image					img;			// Image to draw the result of the background subtraction
 void setup()
 {
 	// Init camera and image
-	camera.init( 0, 320, 240, 30, RGB, false );
-	img.init( 320, 240, RGB );
+	camera.init( 0, 320, 240, 30, RGB );
+	img.init( 320,  240, RGB );
 }
 
 void draw()
 {
 	// Update the camera
 	camera.update();
+
+	// We can control the threshold of the background subtraciton with this line (mapping the mouseX to the threshold)
+	//bgSubtraction.setThreshold(map(mouseX, 0, width, 0, 100));	
 
 	// background subtraction
 	bgSubtraction.update( camera.getImage(), img);
@@ -33,6 +36,7 @@ void draw()
 	bfinder.update( img );
 
 	// Process found blobs
+	noFill();
 	stroke( 255, 0, 0 );
 	strokeWeight( 2 );
 	int nBlobs = bfinder.getNumBlobs();
@@ -42,13 +46,12 @@ void draw()
 		Blob& blob = bfinder.getBlobN( i );
 
 		// draw it in the image
-		img.rect( blob.bbox.x, blob.bbox.y, blob.bbox.x + blob.bbox.width, blob.bbox.y + blob.bbox.height );
+		img.rect( blob.bbox.x, blob.bbox.y, blob.bbox.width, blob.bbox.height );
 	}
 
 	// Draw images
-	camera.getImage().draw( 0, 0, 0);
-	img.draw( 640, 0, 0 );
-
+	camera.getImage().draw( 0, 0 );
+	img.draw( 320, 0  );
 }
 
 void end()

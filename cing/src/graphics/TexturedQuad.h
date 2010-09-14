@@ -77,8 +77,8 @@ namespace Cing
 
 		// Query methods
 		bool  				isValid         () const 	{ return m_bIsValid; }
-		int					getTextWidth	() const 	{ return m_textWidth;	}
-		int					getTextHeight	() const 	{ return m_textHeight;	}
+		int					getTextWidth	() const 	{ return (int)m_textWidth;	}
+		int					getTextHeight	() const 	{ return (int)m_textHeight;	}
 		GraphicsType		getFormat		() const 	{ return m_format;		}
 		Ogre::ManualObject*	getManualObject	() 			{ return m_quad;		}
 		Ogre::TexturePtr	getOgreTexture	() const 	{ return m_ogreTexture; }

@@ -175,7 +175,7 @@ void OCVMovie::stop()
 void OCVMovie::setFps( int fps )
 {
 	// Calculate time step between frames (in microseconds)
-	m_timeBetweenFramesMs = 1000000.0 / (double)fps;
+	m_timeBetweenFramesMs = (unsigned long)(1000000.0 / (double)fps);
 
 	// Store the new value
 	m_fps = fps;

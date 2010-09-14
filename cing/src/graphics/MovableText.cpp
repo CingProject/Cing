@@ -412,7 +412,7 @@ void MovableText::_setupGeometry()
 	// Calculate the max number of lines depending on the size of the text area
 	int maxLines = -1;
 	if ( mCharHeight > 0 )
-		maxLines = floor(m_textAreaHeight / mCharHeight);
+		maxLines = (int)floor(m_textAreaHeight / mCharHeight);
 	int nLines = 0;
 
 	// iterate through the caption to render the characters

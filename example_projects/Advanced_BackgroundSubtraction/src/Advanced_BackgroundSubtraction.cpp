@@ -25,11 +25,11 @@ void draw()
 {
 	// Update the camera
 	camera.update();
-	camera.getImage().draw2d( 0, 0 );
+	camera.getImage().draw( 0, 0 );
 
 	// background subtraction
 	bgSubtraction.update( camera.getImage(), img);
-	img.draw2d( 320, 0 );
+	img.draw( 320, 0 );
 }
 
 void end()

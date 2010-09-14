@@ -37,13 +37,13 @@ namespace Cing
 Exception::Exception(const char* fileName, int line, const char* message, ...)
 {
 	// Extract string parameters
-	char		msgFormated[1024];
+	char		msgFormated[2048];
 	va_list		args;
 	
 	
 	
 	va_start	(args, message);
-	sprintf 	(msgFormated, message, args);
+	sprintf		(msgFormated, message, args);
 	va_end		(args);
 
     std::ostringstream oss;

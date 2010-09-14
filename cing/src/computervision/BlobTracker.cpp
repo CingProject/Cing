@@ -151,7 +151,7 @@ void BlobTracker::update( const Image& inImage )
  * 
  * @param[in] maxBlobs
  */
-void  BlobTracker::setMaxBlobs( float maxBlobs ){
+void  BlobTracker::setMaxBlobs( int maxBlobs ){
 	
 	BlobFinder::setMaxBlobs( maxBlobs );
 

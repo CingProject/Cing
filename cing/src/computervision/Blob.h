@@ -43,14 +43,14 @@ struct Blob
 	typedef std::vector<Point> BlobContourPoints; ///< Contour points of a blob
 
     // Constructors
-    Blob( float _area, CvSeq* _contour ) : area( _area ), contour( _contour ) {}
+    Blob( double _area, CvSeq* _contour ) : area( _area ), contour( _contour ) {}
 		Blob(): area(0),contour( NULL ){}
 
     /// To compare two Blobs
     bool operator < ( const Blob& other ) const { return area < other.area; }
     bool operator > ( const Blob& other ) const { return area > other.area; }
 
-    float	            area;		///< Blob's area
+    double	            area;		///< Blob's area
     CvRect		        bbox;		///< Blob's bounding box
     Point				center;		///< Center of the Blob
 	BlobContourPoints	nodes;		///< Points of the Blob's contour

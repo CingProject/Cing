@@ -44,7 +44,7 @@
 				Optimization="0"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_42;&quot;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include&quot;;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
+				PreprocessorDefinitions="WIN32;__WIN32__;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				MinimalRebuild="true"
 				ExceptionHandling="2"
 				BasicRuntimeChecks="3"
@@ -54,7 +54,7 @@
 				EnableFunctionLevelLinking="true"
 				FloatingPointModel="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="2"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
@@ -116,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_42;&quot;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include&quot;;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
+				PreprocessorDefinitions="WIN32;__WIN32__;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				StringPooling="false"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
@@ -844,6 +844,14 @@
 						<File
 							RelativePath="..\..\..\..\src\graphics\Image.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									WarningLevel="3"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\..\..\..\src\graphics\TexturedQuad.cpp"

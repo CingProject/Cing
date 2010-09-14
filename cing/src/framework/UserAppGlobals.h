@@ -43,8 +43,8 @@ class Mouse;
 
 
 // Window
-extern unsigned short				width;					///< Window's width
-extern unsigned short				height;					///< Window's height
+extern int							width;					///< Window's width
+extern int							height;					///< Window's height
 extern String						appName;				///< Name of the application (window's title)
 
 // Data folder
@@ -69,8 +69,8 @@ extern double						secFromStart;		///< Seconds elapsed since application started
 extern unsigned long				millisFromStart;///< Milliseconds elapsed since application started
 
 // Frame count
-extern unsigned long  				frameCount;			///< Actual frameRate of app (aproximated)
-extern float						frameRate;
+extern unsigned long  				frameCount;			///< Actual frame number the app is rendering
+extern float						frameRate;			///< Current app framerate (approx)
 
 // Advanced 
 extern Ogre::SceneManager*			ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object

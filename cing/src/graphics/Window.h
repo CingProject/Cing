@@ -67,8 +67,8 @@ public:
 	bool                                  	isValid               	() const { return m_bIsValid; }
 	bool                                  	isClosed              	() const;
 	bool                                  	isFullScreen          	() const;
-	int																				getWidth							() const { return m_width; }
-	int																				getHeight							() const { return m_height; }
+	int										getWidth				() const { return m_width; }
+	int										getHeight				() const { return m_height; }
 	void                                  	getMetrics            	( TWindowMetrics& metrics ) const;
 	size_t                                	getWindowHandle       	() const;
 	const Ogre::RenderTarget::FrameStats& 	getFrameStats         	() const { return *m_stats; }

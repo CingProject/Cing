@@ -31,6 +31,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreLight.h"
 #include "OgrePixelFormat.h"
 
+// Set to 1 to use the Ogre Native formats (as opposed to Byte formats)
+#define USE_OGRE_NATIVE_FORMATS 0
+
 namespace Cing
 {
 
@@ -41,12 +44,28 @@ namespace Cing
 		UNDEFINED = -1,
 
 		// Image Formats
+
+		// Using Ogre Native Endian Formats
+#if (USE_OGRE_NATIVE_FORMATS == 1)
+		RGB			= Ogre::PF_R8G8B8,		///< Red, Green and Blue
+		COLOR 		= RGB,					///< Same as RGB
+		RGBA		= Ogre::PF_R8G8B8A8,	///< Red, Green, Blue and Alpha
+		BGR			= Ogre::PF_B8G8R8,		///< Blue, Green and Red
+		BGRA		= Ogre::PF_B8G8R8A8,	///< Blue, Green, Red and Alpha
+		GRAYSCALE	= Ogre::PF_BYTE_L,		///< Gray scale
+#else
+		// Using Ogre Byte formats
 		RGB			= Ogre::PF_BYTE_RGB,	///< Red, Green and Blue
 		COLOR 		= RGB,					///< Same as RGB
 		RGBA		= Ogre::PF_BYTE_RGBA,	///< Red, Green, Blue and Alpha
 		BGR			= Ogre::PF_BYTE_BGR,	///< Blue, Green and Red
 		BGRA		= Ogre::PF_BYTE_BGRA,	///< Blue, Green, Red and Alpha
 		GRAYSCALE	= Ogre::PF_BYTE_L,		///< Gray scale
+#endif
+
+
+		
+
 
 		// Color Modes
 		//RGB,

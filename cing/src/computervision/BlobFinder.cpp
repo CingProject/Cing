@@ -179,8 +179,8 @@ void BlobFinder::extractBlobsInformation()
 
       // Get center through moments
       cvMoments( blob.contour, &moment );
-      blob.center.x = static_cast< int >( moment.m10 / moment.m00 );
-      blob.center.y = static_cast< int >( moment.m01 / moment.m00 );
+      blob.center.x = (float)(moment.m10 / moment.m00);
+      blob.center.y = (float)(moment.m01 / moment.m00);
 
       // Invert Y coordinate because our Y 0 is at top of the image,
       // and for Opencv is at the bottom of the image
@@ -192,7 +192,7 @@ void BlobFinder::extractBlobsInformation()
     {
 	    // Read node of the contour
 	    CV_READ_SEQ_ELEM( contourNode, contourReader );
-	    blob.nodes.push_back( Point( contourNode.x, contourNode.y , 0) );
+	    blob.nodes.push_back( Point( (float)contourNode.x, (float)contourNode.y , 0) );
     }
   }
 

@@ -98,7 +98,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Create default sheet to place GUI elements
 	CEGUI::WindowManager&	win = CEGUI::WindowManager::getSingleton();
 	m_mainSheet = win.createWindow( "DefaultGUISheet", "Vision/DefaultGUISheet");
-	m_mainSheet->setSize( CEGUI::UVector2(CEGUI::UDim(0, width), CEGUI::UDim(0, height) ) );
+	m_mainSheet->setSize( CEGUI::UVector2(CEGUI::UDim(0, (float)width), CEGUI::UDim(0, (float)height) ) );
 	m_CEGUISystem->setGUISheet( m_mainSheet );
 
 	// Now the gui managet is valid
@@ -107,7 +107,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Create the default message box
 	m_messageBoxWindow = (CEGUI::FrameWindow*)win.createWindow( "WindowsLook/StaticText", "MessageBox" );
 	m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(0) ) );
-	m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(width), cegui_absdim(height) ) );
+	m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim((float)width), cegui_absdim((float)height) ) );
 	m_messageBoxWindow->setProperty("VertFormatting", "TopAligned");
 	m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
 	m_messageBoxWindow->setProperty("TextColours", "tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF");
@@ -169,7 +169,7 @@ bool GUIManagerCEGUI::mouseMoved( const OIS::MouseEvent& event )
 	// NOTE: we are injecting the absolute position (instead of relative), because is the only way
 	// to math OIS and CEGUI mouse coordinates when in windowed mode
 	m_CEGUISystem->injectMouseWheelChange((float)event.state.Z.rel);
-	m_CEGUISystem->injectMousePosition( (float)event.state.X.abs, event.state.Y.abs);
+	m_CEGUISystem->injectMousePosition( (float)event.state.X.abs, (float)event.state.Y.abs);
 
 	return true;
 }
@@ -250,14 +250,14 @@ void GUIManagerCEGUI::messageBox( const char* text, bool fullScreen /*= false*/ 
 			m_messageBoxWindow->setProperty("HorzFormatting", "LeftAligned");
 			int margin = 20;
 			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim((float)margin), cegui_absdim((float)margin) ) );
-			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(width-margin*2), cegui_absdim(height-margin*2) ) );
+			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim((float)(width-margin*2)), cegui_absdim((float)(height-margin*2)) ) );
 		}
 		else
 		{
 			m_messageBoxWindow->setProperty("VertFormatting", "VertCentred");
 			m_messageBoxWindow->setProperty("HorzFormatting", "HorzCentred");
-			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim(height/2) ) );
-			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim(width), cegui_absdim(50) ) );
+			m_messageBoxWindow->setPosition( CEGUI::UVector2( cegui_absdim(0), cegui_absdim((float)height/2.0f) ) );
+			m_messageBoxWindow->setSize( CEGUI::UVector2( cegui_absdim((float)width), cegui_absdim(50) ) );
 		}
 		m_messageBoxWindow->setText( text );
 		m_messageBoxWindow->setVisible( true );

@@ -131,7 +131,7 @@ typedef XMLElement::XMLElementArray XMLElementArray;
 // Camera
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 typedef	VICamera Capture;
-typedef	OCVCamera Capture;
+//typedef	OCVCamera Capture;
 #endif
 
 // Sound and Mic
@@ -140,7 +140,7 @@ typedef AudioInputFMOD	AudioInput;
   
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-typedef MediaPlayerVLC MediaPlayer;
+//typedef MediaPlayerVLC MediaPlayer;
 typedef MediaPlayerGS MediaPlayer;
 #endif
 

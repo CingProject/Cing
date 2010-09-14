@@ -35,7 +35,7 @@ namespace Cing
 
 	// Static member definition
 	const std::string	Font::DEFAULT_FONT_NAME       = "DefaultFont";
-	const int			Font::DEFAULT_FONT_SIZE       = 16;
+	const float			Font::DEFAULT_FONT_SIZE       = 16;
 	const int			Font::DEFAULT_FONT_RESOLUTION = 96;
 
 	/**
@@ -65,7 +65,7 @@ namespace Cing
 	* @param resolution Resolution of the font (dpi) when rasterized (rendered into a texture). Default 96
 	* @return true if the initialization was ok | false otherwise
 	*/
-	bool Font::load( const String& ttfName /*= DEFAULT_FONT_NAME*/, int size /*= DEFAULT_FONT_SIZE*/, int resolution /*= DEFAULT_FONT_RESOLUTION*/ )
+	bool Font::load( const String& ttfName /*= DEFAULT_FONT_NAME*/, float size /*= DEFAULT_FONT_SIZE*/, int resolution /*= DEFAULT_FONT_RESOLUTION*/ )
 	{
 		// Check if the class is already initialized
 		if ( isValid() )

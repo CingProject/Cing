@@ -133,8 +133,8 @@ bool GraphicsManager::init()
 	m_mainWindow.init( ogreWindow );
 
 	// Set global window size variables
-	width = m_mainWindow.getWidth();
-	height = m_mainWindow.getHeight();
+	width	= m_mainWindow.getWidth();
+	height	= m_mainWindow.getHeight();
 
 	// Create the scene manager
 	m_pSceneManager = ogreRoot.createSceneManager( Ogre::ST_GENERIC );
@@ -272,8 +272,8 @@ void GraphicsManager::draw()
 	// Update the background image
 	m_canvas->drawBackground(	0,
 								0,
-								m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
-								m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
+								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
+								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
 	m_canvas->getTexturedQuad().setRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
 
 

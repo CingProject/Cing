@@ -161,7 +161,7 @@ void PhysicsManager::enable( bool enable /*= true*/ )
 void PhysicsManager::update( unsigned long elapsedMillis )
 {
 	if ( isValid() && m_enabled )
-		m_physicsWorld->stepSimulation( elapsedMillis, MAX_SIMULATION_SUBSTEPS, FIXED_TIME_STEP );
+		m_physicsWorld->stepSimulation( (float)elapsedMillis, MAX_SIMULATION_SUBSTEPS, FIXED_TIME_STEP );
 }
 
 /**

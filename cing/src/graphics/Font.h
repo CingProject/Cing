@@ -46,21 +46,21 @@ namespace Cing
 		~Font();
 
 		// Init / Release / Update
-		bool  load   ( const String& ttfName = DEFAULT_FONT_NAME, int size = DEFAULT_FONT_SIZE,  int resolution = DEFAULT_FONT_RESOLUTION );
+		bool  load   ( const String& ttfName = DEFAULT_FONT_NAME, float size = DEFAULT_FONT_SIZE,  int resolution = DEFAULT_FONT_RESOLUTION );
 		void  end    ();
 
 		// Query methods
 		const String&	getFontName			() const { return m_fontName; }
-		int				getFontSize			() const { return m_fontSize; }
+		float			getFontSize			() const { return m_fontSize; }
 		int				getFontResolution	() const { return m_fontRes; }
 		float			getTextWitdhInPixels() const;
 		Ogre::FontPtr	getOgreFont			() const { return Ogre::FontPtr( m_font ); }
 		bool			isValid				() const { return m_bIsValid; }
 
 		// Const static attributes
-		static const std::string DEFAULT_FONT_NAME;       ///< Default font name
-		static const int         DEFAULT_FONT_SIZE;       ///< Default font size
-		static const int         DEFAULT_FONT_RESOLUTION; ///< Default font resolution
+		static const std::string	DEFAULT_FONT_NAME;       ///< Default font name
+		static const float			DEFAULT_FONT_SIZE;       ///< Default font size
+		static const int			DEFAULT_FONT_RESOLUTION; ///< Default font resolution
 
 
 	private:
@@ -68,7 +68,7 @@ namespace Cing
 		// Attributes
 		Ogre::FontPtr					m_font;
 		String							m_fontName;
-		int								m_fontSize;
+		float							m_fontSize;
 		int								m_fontRes;
 
 		bool  m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
