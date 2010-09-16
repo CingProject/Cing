@@ -49,9 +49,8 @@ namespace Cing
 	* @brief Constructor. This constructor does not load or creates any image.
 	*/
 	Image::Image():
-		//m_cvImage(NULL),
 		m_bIsValid( false ),
-		m_bVFlip( false ),
+		m_bVFlipped( false ),
 		m_bUpdateTexture( false )
 	{
 	}
@@ -63,7 +62,7 @@ namespace Cing
 	*/
 	Image::Image( const Image& img ):
 		m_bIsValid( false ),
-		//m_cvImage(NULL),
+		m_bVFlipped( img.isVFlipped() ),
 		m_bUpdateTexture( false )
 	{
 		init( img );
@@ -79,7 +78,7 @@ namespace Cing
 	*/
 	Image::Image( int width, int height, GraphicsType format /*= RGB*/ ):
 		m_bIsValid( false ),
-		//m_cvImage(NULL),
+		m_bVFlipped( false ),
 		m_bUpdateTexture( false )
 	{
 		init( width, height, format );
@@ -92,8 +91,8 @@ namespace Cing
 	* @param name  Name of the file to be loaded. It must be placed in the data directory.
 	*/
 	Image::Image( const std::string& name ):
+		m_bVFlipped( false ),
 		m_bIsValid( false )
-		//m_cvImage(NULL)
 	{
 		load( name );
 	}
@@ -127,7 +126,6 @@ namespace Cing
 
 		// Create the empty IplImage image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
-		//m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
 		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
 
 		// Create the texture quad (to draw image)
@@ -162,7 +160,6 @@ namespace Cing
 
 		// Create the empty IplImage image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
-		//m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
 		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
 
 		// Create the texture quad (to draw image)
@@ -203,6 +200,10 @@ namespace Cing
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
+		// If the image has already been initialized -> release it first
+		if ( isValid () )
+			end();
+
 		// Load image from file
 		m_image.load( name, ResourceManager::userResourcesGroupName );
 
@@ -221,19 +222,13 @@ namespace Cing
 		else
 			m_format = RGB;
 
-		////Copy pixels from the OgreImage to the IplImage
-		//if ( m_cvImage != NULL )
-		//	cvReleaseImage( &m_cvImage );
-
+		// Create the image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
-		//m_cvImage = cvCreateImage(cvSize((int)m_image.getWidth(),(int)m_image.getHeight()),IPL_DEPTH_8U,m_nChannels);
 		m_cvImage.create( m_image.getHeight(), m_image.getWidth(), CV_MAKETYPE(CV_8U,m_nChannels) );
 
+		// Set the data comming from the file image
 		cv::Mat imgData(m_cvImage.rows, m_cvImage.cols, CV_MAKETYPE(CV_8U,m_nChannels), m_image.getData(), m_image.getWidth() * m_nChannels);
 		imgData.copyTo(m_cvImage);
-
-		//cvSetImageData( &(IplImage)m_cvImage, m_image.getData(), m_image.getWidth() * m_nChannels );
-		//m_cvImage.data = (char *)m_image.getData();
 
 		// Check if we need to flip the channels red and green (for example png and jpgs are loaded as BGR by Ogre)
 		GraphicsType currentImageFormat = (GraphicsType)m_image.getFormat();
@@ -336,7 +331,6 @@ namespace Cing
 		// Set the data
 		cv::Mat imgData(height, width, CV_MAKETYPE(CV_8U,channels), (void*)imageData, width*channels);
 		imgData.copyTo(m_cvImage);
-		//cvSetData( &(IplImage)m_cvImage, const_cast<unsigned char*>(imageData), m_cvImage.step );
 
 		// Make the image to be updated to texture in the next draw
 		m_bUpdateTexture = true;
@@ -393,10 +387,10 @@ namespace Cing
 			THROW_EXCEPTION( "Trying to get a pixel from an invalid image" );
 
 		// Check boundaries
-		if ( x < 0 )								x = 0;
+		if ( x < 0 )				x = 0;
 		if ( x > m_cvImage.cols )	x = m_cvImage.cols - 1;
-		if ( y < 0 )								y = 0;
-		if ( y > m_cvImage.rows) y = m_cvImage.rows -1 ;
+		if ( y < 0 )				y = 0;
+		if ( y > m_cvImage.rows)	y = m_cvImage.rows -1 ;
 
 		// Read color
 		int			   channels = m_cvImage.channels();
@@ -449,16 +443,10 @@ namespace Cing
 	*/
 	void Image::flipVertical()
 	{
+		m_bVFlipped = !m_bVFlipped;
 
-		//cvFlip(m_cvImage, NULL, 0);
-		//m_quad.flipVertical();
-
-		// Make the image to be updated to texture in the next draw
-		//m_bUpdateTexture = true;
-		// Load image data to texture
-		//updateTexture();
-
-		m_bVFlip = true;
+		// Flip quad's texture coordinates
+		m_quad.flipVertical( m_bVFlipped );
 	}
 
 	/**
@@ -550,14 +538,6 @@ namespace Cing
 	*/
 	void Image::draw( float xPos, float yPos )
 	{
-
-		// check if image needs to be mirrored
-		if (m_bVFlip)
-		{
-			//cvFlip(m_cvImage, NULL, 0);
-			cv::flip(m_cvImage, m_cvImage, 0);
-		}
-
 		// check if texture needs to be updated
 		if (m_bUpdateTexture)
 		{
@@ -579,13 +559,6 @@ namespace Cing
 	*/
 	void Image::draw( float xPos, float yPos, float width, float height )
 	{
-		// check if image needs to be mirrored
-		if (m_bVFlip)
-		{
-			//cvFlip(m_cvImage, NULL, 0);
-			cv::flip(m_cvImage, m_cvImage, 0);
-		}
-
 		// check if texture needs to be updated
 		if (m_bUpdateTexture)
 		{
@@ -602,13 +575,6 @@ namespace Cing
 	*/
 	void Image::draw( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
 	{
-		// check if image needs to be mirrored
-		if (m_bVFlip)
-		{
-			//cvFlip(m_cvImage, NULL, 0);
-			cv::flip(m_cvImage, m_cvImage, 0);
-		}
-
 		// check if texture needs to be updated
 		if (m_bUpdateTexture)
 		{
@@ -654,6 +620,10 @@ namespace Cing
 		{
 			end();
 			init( other.getWidth(), other.getHeight(), other.getFormat() );
+			
+			// Check if the image was v flipped
+			if ( m_bVFlipped )
+				m_quad.flipVertical();
 		}
 
 		// Copy the data
@@ -726,7 +696,7 @@ namespace Cing
 	*/
 	void Image::updateTexture()
 	{
-		m_quad.updateTexture(	m_cvImage.data, m_cvImage.cols, m_cvImage.rows, getFormat());
+		m_quad.updateTexture( m_cvImage.data, m_cvImage.cols, m_cvImage.rows, getFormat());
 		m_bUpdateTexture = false;
 	}
 
@@ -1335,6 +1305,10 @@ namespace Cing
 		init( tempImage->width, tempImage->height, RGB );
 		setData( (unsigned char*)tempImage->imageData, tempImage->width, tempImage->height, RGB );
 
+		// Check if the image was v flipped
+		if ( m_bVFlipped )
+			m_quad.flipVertical();
+
 		// Release temp image
 		ImageResourceManager::getSingleton().releaseImage( tempImage );
 
@@ -1371,6 +1345,10 @@ namespace Cing
 		end();
 		init( tempImage->width, tempImage->height, GRAYSCALE );
 		setData( (unsigned char*)tempImage->imageData, tempImage->width, tempImage->height, GRAYSCALE );
+
+		// Check if the image was v flipped
+		if ( m_bVFlipped )
+			m_quad.flipVertical();
 
 		// Release temp image
 		ImageResourceManager::getSingleton().releaseImage( tempImage );
@@ -1479,7 +1457,7 @@ namespace Cing
 	*
 	* @param Color
 	*/
-	void Image::fill( Color theColor )
+	void Image::fill( const Color& color )
 	{
 
 		// Check the image is valid
@@ -1490,13 +1468,13 @@ namespace Cing
 		switch( m_cvImage.channels() )
 		{
 		case 1:
-			m_cvImage = cv::Scalar(theColor.r);
+			m_cvImage = cv::Scalar(color.r);
 			break;
 		case 3:
-			m_cvImage = cv::Scalar(theColor.r, theColor.g, theColor.b);
+			m_cvImage = cv::Scalar(color.r, color.g, color.b);
 			break;
 		case 4:
-			m_cvImage = cv::Scalar(theColor.r, theColor.g, theColor.b, theColor.a);
+			m_cvImage = cv::Scalar(color.r, color.g, color.b, color.a);
 			break;
 		default:
 			THROW_EXCEPTION( "Invalid number of channels in image" )

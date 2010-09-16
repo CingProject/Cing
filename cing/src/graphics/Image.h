@@ -86,15 +86,15 @@ namespace Cing
 		void	drawBackground( float xPos, float yPos, float width, float height );
 
 		// 2D Image drawing methods
-		void  	triangle		( int x1, int y1, int x2, int y2, int x3, int y3 );
-		void  	line			( int x1, int y1, int x2, int y2 );
-		void  	arc			( int x, int y,  int width, int height, float start, float stop );
-		void  	point			( int x, int y);
-		void  	quad			( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
-		void  	ellipse		( int x, int y, int x2, int y2, float angleDegrees = 0 );
-		void  	rect			( int x, int y, int width, int height );
-		void  	text			( int x1, int y1, const char* text );
-		void  	fill          ( Color theColor );
+		void  	triangle( int x1, int y1, int x2, int y2, int x3, int y3 );
+		void  	line	( int x1, int y1, int x2, int y2 );
+		void  	arc		( int x, int y,  int width, int height, float start, float stop );
+		void  	point	( int x, int y);
+		void  	quad	( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
+		void  	ellipse	( int x, int y, int x2, int y2, float angleDegrees = 0 );
+		void  	rect	( int x, int y, int width, int height );
+		void  	text	( int x1, int y1, const char* text );
+		void  	fill    ( const Color& color );
 
 		// Image processing
 		void	filter	( ImageProcessingFilters type );
@@ -137,7 +137,7 @@ namespace Cing
 
 		// Texture coordinate flip
 		void					flipVertical		();
-		bool					isVFlipped			() const { return m_bVFlip; }
+		bool					isVFlipped			() const { return m_bVFlipped; }
 
 		TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
 	private:
@@ -149,7 +149,7 @@ namespace Cing
 		Ogre::Image						m_image;			///< Contains the image data (loaded from file or dynamically created)
 		int								m_nChannels;		///< Number of channels of the image
 		bool							m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
-		bool							m_bVFlip;			///< True if the image texture coordinates are flipped vertically 
+		bool							m_bVFlipped;		///< True if the image texture coordinates are flipped vertically 
 		bool							m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
 		GraphicsType					m_format;			///< Format of the image
 	};

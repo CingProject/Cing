@@ -62,15 +62,15 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	TexturedQuad::TexturedQuad():
-	m_quadSceneNode ( NULL  ),
+		m_quadSceneNode ( NULL  ),
 		m_visible				( true	),
 		m_quad					( NULL  ),
-		m_2dXPos				( -INT_MAX ),
-		m_2dYPos				( -INT_MAX ),
+		m_2dXPos				( -FLT_MAX ),
+		m_2dYPos				( -FLT_MAX ),
 		m_xScale				( 1.0f ),
 		m_yScale				( 1.0f ),
 		m_zScale				( 1.0f ),
-		m_bIsValid      ( false )
+		m_bIsValid				( false )
 	{
 	}
 
@@ -194,9 +194,9 @@ namespace Cing
 		//m_quad->position( 0.0, 1.0, 0.0);  m_quad->textureCoord( 0, 0 );
 
 		// Center mode (Julio -> TODO)
-		m_quad->position( -0.5, -0.5, 0.0);  m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
-		m_quad->position( 0.5, -0.5, 0.0);  m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
-		m_quad->position( 0.5, 0.5, 0.0);  m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+		m_quad->position( -0.5, -0.5, 0.0);	m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+		m_quad->position( 0.5, -0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+		m_quad->position( 0.5, 0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
 		m_quad->position( -0.5, 0.5, 0.0);  m_quad->textureCoord( 0, 0 );
 
 
@@ -685,7 +685,7 @@ namespace Cing
 
 		// Check resolution
 		if ( ( width > m_textWidth ) || ( height > m_textHeight ) )
-			THROW_EXCEPTION( "Trying to update texture with too big image data" );
+			THROW_EXCEPTION( "The resolution of the received data is bigger than the texture data size. Cannot update the texture" );
 
 		// Check format
 		if ( m_format != format )
@@ -701,7 +701,7 @@ namespace Cing
 	/**
 	* @brief Flips the texture coordinates vertically
 	*/
-	void TexturedQuad::flipVertical()
+	void TexturedQuad::flipVertical( bool flip /*= true*/ )
 	{
 		// Update geometry to flip texture coordinates
 		// We recreate the object instead of updating it because this is an extrange use, and for the normal
@@ -709,18 +709,25 @@ namespace Cing
 		m_quad->clear();
 		m_quad->begin( m_ogreMaterialName );
 
-		// m_quad positions and texture coordinates
-		m_quad->position( 0.0, 0.0, 0.0);  m_quad->textureCoord( 0, 0 );
-		m_quad->position( 1.0, 0.0, 0.0);  m_quad->textureCoord( 1, 0 );
-		m_quad->position( 1.0, 1.0, 0.0);  m_quad->textureCoord( 1, 1 );
-		m_quad->position( 0.0, 1.0, 0.0);  m_quad->textureCoord( 0, 1 );
+		if ( flip ) 
+		{
+			// m_quad positions and texture coordinates
+			m_quad->position( -0.5, -0.5, 0.0);		m_quad->textureCoord( 0, 0 );
+			m_quad->position( 0.5, -0.5, 0.0);		m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+			m_quad->position( 0.5, 0.5, 0.0);		m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+			m_quad->position( -0.5, 0.5, 0.0);		m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+		}
+		else
+		{
+			m_quad->position( -0.5, -0.5, 0.0);	m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, -0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, 0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+			m_quad->position( -0.5, 0.5, 0.0);  m_quad->textureCoord( 0, 0 );
+		}
 
-		// m_quad indexes (two triangles)
-		m_quad->triangle( 0, 2, 1 );
-		m_quad->triangle( 0, 3, 2 );
-		// Versión que estaba en carpeta cing
-		//	m_quad->triangle( 0, 1, 2 );
-		//	m_quad->triangle( 0, 2, 3 );
+		// quad indexes (two triangles)
+		m_quad->triangle( 0, 1, 2 );
+		m_quad->triangle( 0, 2, 3 );
 
 		// Finish updating geometry
 		m_quad->end();

@@ -112,7 +112,7 @@ void CameraController::init( Camera3D& cameraToControl )
 	// Create a free camera mode
 	m_freeCam = new CCS::FreeCameraMode(m_cameraCS);
 	m_freeCam->setMoveFactor( 30 );
-	m_freeCam->setRotationFactor( 0.2 );
+	m_freeCam->setRotationFactor( 0.2f );
 	m_cameraCS->registerCameraMode("Free",m_freeCam);
 
 	// Set initial position
