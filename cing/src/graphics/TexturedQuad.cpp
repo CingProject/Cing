@@ -576,28 +576,58 @@ namespace Cing
 		m_quadSceneNode->setVisible( true );
 	}
 
-	// TODO: NOTE --> deprecated --> update
+	/**
+	 * @brief Draws the texture quad in two dimensions as a background
+	 * 
+	 * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
+	 * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
+	 */
 	void TexturedQuad::drawBackground( float x, float y )
+	{
+		// Forward the call -> draw it to cover the whole window 
+		drawBackground(x, y, (float)width, (float)height);
+	}
+
+
+	/**
+	 * @brief Draws the texture quad in two dimensions as a background
+	 * 
+	 * @param x X coordinate where it will be drawn <b>in screen coordinates</b>
+	 * @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
+	 * @parma imgWidth width of the rendered quad in screen coordinates
+	 * @parma imgHeight height of the rendered quad in screen coordinates
+	 */
+	void TexturedQuad::drawBackground( float x, float y, float imgWidth, float imgHeight )
 	{
 		if ( !isValid() )
 		{
 			LOG_ERROR( "Trying to draw a textured quad not initialized" );
 			return;
 		}
+
+		// Set rendering properties
+		setbackgroundRendering();
+
+		// Set properties of the quad, and set visible -> it will be rendered in the next render
 		if ( GraphicsManager::getSingleton().isProcessingMode() )
 		{
 			// Set properties of the quad, and set visible -> it will be rendered in the next render
-			setScale2d( m_textWidth, -m_textHeight );
+			setScale2d( imgWidth, -imgHeight );
 			setPosition2d( x, height-y );
 		}else{
 			// Set properties of the quad, and set visible -> it will be rendered in the next render
-			setScale2d( m_textWidth, m_textHeight );
-			setPosition2d( x, height-y );
+			setScale2d( imgWidth, imgHeight );
+			setPosition2d( x, y );
 		}
 
 		m_quadSceneNode->setVisible( true );
 	}
 
+
+	/**
+	 * Sets the alpha value (transparency of the image). Range: 0 (transparent) -> 255 (opaque)
+	 * @param alpha new alpha value to use when rendering this texture
+	 */
 	void TexturedQuad::setTransparency( float alpha )
 	{
 		// Has alpha channel?
@@ -613,54 +643,14 @@ namespace Cing
 		}
 	}
 
+	/*
+	 * Sets the Ogre Scene Manager render queue for this quad
+	 * @param group render queue
+	 */
 	void TexturedQuad::setRenderQueue( Ogre::RenderQueueGroupID group )
 	{
 		if ( isValid() )
 			m_quad->setRenderQueueGroup( group );
-	}
-
-
-	/**
-	* @brief Draws the texture quad in two dimensions as a background
-	* 
-	* @param x X coordinate where it will be drawn <b>in screen coordinates</b>
-	* @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
-	*/
-	void TexturedQuad::drawBackground( float x, float y, float imgWidth, float imgHeight )
-	{
-		if ( !isValid() )
-		{
-			LOG_ERROR( "Trying to draw a textured quad not initialized" );
-			return;
-		}
-
-		// Properties to be rendered in 2d
-		m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
-
-		m_quad->setUseIdentityProjection(true);
-		m_quad->setUseIdentityView(true);
-		Ogre::AxisAlignedBox aabb;
-		aabb.setInfinite();
-		m_quad->setBoundingBox(aabb);
-
-		// mark the object as 2d rendering
-		m_render2D = true;
-
-		// Set properties of the quad, and set visible -> it will be rendered in the next render
-		if ( GraphicsManager::getSingleton().isProcessingMode() )
-		{
-			// Set properties of the quad, and set visible -> it will be rendered in the next render
-			setScale2d( imgWidth, imgHeight);
-			setPosition2d( x, height - y - imgHeight );
-		}else{
-			// Set properties of the quad, and set visible -> it will be rendered in the next render
-			setScale2d( imgWidth, imgHeight );
-			setPosition2d( x, y );
-		}
-
-		m_quadSceneNode->setVisible( true );
 	}
 
 	/**
@@ -793,7 +783,10 @@ namespace Cing
 	void TexturedQuad::setbackgroundRendering()
 	{
 		// Properties to be rendered in 2d
-		m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND);
+		m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
+
 		m_quad->setUseIdentityProjection(true);
 		m_quad->setUseIdentityView(true);
 		Ogre::AxisAlignedBox aabb;
@@ -802,6 +795,7 @@ namespace Cing
 
 		// mark the object as 2d rendering
 		m_render2D = true;
+
 	}
 
 	/**

@@ -68,6 +68,7 @@ namespace Cing
 		void	draw2d			( float x, float y );
 		void	draw2d			( float x, float y, float width, float height );
 		void	draw2d			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
+		void	drawBackground	( float x, float y );
 		void	drawBackground	( float x, float y , float imgWidth, float imgHeight );
 
 		// Texture update
@@ -92,11 +93,8 @@ namespace Cing
 		// Operators 
 		void			operator=		( const TexturedQuad& other );
 
-		void	setbackgroundRendering			();
-		void	drawBackground					( float x, float y );
-
-		void	setTransparency( float alpha );
-		void	setRenderQueue( Ogre::RenderQueueGroupID group ); 
+		void			setTransparency	( float alpha );
+		void			setRenderQueue	( Ogre::RenderQueueGroupID group ); 
 
 
 
@@ -106,6 +104,7 @@ namespace Cing
 		void	generateUniqueNames	();
 		void	set2dRendering			();
 		void	set3dRendering			();
+		void	setbackgroundRendering	();
 
 		// Constant / static attributes
 		static const std::string  MANUAL_OBJECT_NAME;     		///< Name of the manual object (which is the quad)

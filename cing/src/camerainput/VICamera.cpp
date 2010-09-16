@@ -97,10 +97,7 @@ void VICamera::update()
 		GraphicsType format = ( npixels == frameSize )? GRAYSCALE: RGB;
 
 		// we get the pixels by passing in out buffer which gets 
-		setNewFrameData(	(char*)m_viCamera.getPixels( m_deviceId, true, true ), 
-											m_viCamera.getWidth( m_deviceId ), 
-											m_viCamera.getHeight( m_deviceId ),
-											format );
+		setNewFrameData(  m_viCamera.getPixels( m_deviceId, true, true ),  m_viCamera.getWidth( m_deviceId ),  m_viCamera.getHeight( m_deviceId ), format );
 		setNewFrame( true );
 	}
 }

@@ -24,7 +24,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "GraphicsPrereqs.h"
 #include "TexturedQuad.h"
-#include "GraphicsManager.h"
 
 // Ogre
 #include "OgreImage.h"
@@ -32,6 +31,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Image processing
 #include "ImageThresholdFilter.h"
 #include "ImageDifferenceFilter.h"
+
+// Open CV
+#include "OpenCV/cv.h"
+#include "OpenCV/cxtypes.h"
 
 namespace Cing
 {
@@ -61,14 +64,15 @@ namespace Cing
 		void		end					();
 
 		// Image data
-		void		setData( char* imageData, int width, int height, GraphicsType format );
-		char*		getData() { return isValid()? m_cvImage->imageData: NULL; }
-		Image*		clone ();
+		void			setData( const unsigned char* imageData, int width, int height, GraphicsType format );
+		unsigned char*	getData();
+		unsigned char*	pixels() { return getData(); }
+		Image*			clone ();
 
 		// Transformations
-		void		setOrientation	( const Vector& axis, float angle );
-		void		rotate			( const Vector& axis, float angle );
-		void		setScale		( float xScale, float yScale, float zScale );
+		void			setOrientation	( const Vector& axis, float angle );
+		void			rotate			( const Vector& axis, float angle );
+		void			setScale		( float xScale, float yScale, float zScale );
 
 		// Draw on scene
 		void	draw	( float xPos, float yPos, float zPos );
@@ -79,22 +83,22 @@ namespace Cing
 		void	draw	( float xPos, float yPos, float width, float height );
 		void	draw	( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
 
-		void  drawBackground( float xPos, float yPos, float width, float height );
+		void	drawBackground( float xPos, float yPos, float width, float height );
 
 		// 2D Image drawing methods
-		void  triangle		( int x1, int y1, int x2, int y2, int x3, int y3 );
-		void  line			( int x1, int y1, int x2, int y2 );
-		void  arc			( int x, int y,  int width, int height, float start, float stop );
-		void  point			( int x, int y);
-		void  quad			( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
-		void  ellipse		( int x, int y, int x2, int y2, float angleDegrees = 0 );
-		void  rect			( int x, int y, int width, int height );
-		void  text			( int x1, int y1, const char* text );
-		void  fill          ( Color theColor );
+		void  	triangle		( int x1, int y1, int x2, int y2, int x3, int y3 );
+		void  	line			( int x1, int y1, int x2, int y2 );
+		void  	arc			( int x, int y,  int width, int height, float start, float stop );
+		void  	point			( int x, int y);
+		void  	quad			( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
+		void  	ellipse		( int x, int y, int x2, int y2, float angleDegrees = 0 );
+		void  	rect			( int x, int y, int width, int height );
+		void  	text			( int x1, int y1, const char* text );
+		void  	fill          ( Color theColor );
 
 		// Image processing
 		void	filter	( ImageProcessingFilters type );
-		void	filter	( ImageProcessingFilters type, float param1 );
+		void	filter	( ImageProcessingFilters type, int param1 );
 		void	toColor	();
 		void	toGray	();
 
@@ -106,28 +110,26 @@ namespace Cing
 
 		// Query methods
 		bool			isValid		() const	{ return m_bIsValid; }
-		const IplImage&	getCVImage	() const	{ return *m_cvImage; }
-		IplImage&		getCVImage	()			{ return *m_cvImage; }
+		IplImage		getCVImage	() const	{ return (IplImage)m_cvImage; }
 		int				getWidth	() const;
 		int				getHeight	() const;
 		GraphicsType	getFormat	() const;
 		int				getNChannels() const	{ return m_nChannels; }
-		Color			getPixel	( int x, int y );
+		Color			getPixel	( int x, int y ) const;
 		Ogre::TexturePtr getOgreTexture() { return m_quad.getOgreTexture(); }
 		TexturedQuad&	getTexturedQuad() { return m_quad; }
 
 		// Operators and operations
 		void operator =	( const Image& other );
 		void operator = ( float scalar);
-		void operator -=	( float scalar );
-		void operator +=	( float scalar );
-		void operator -=	( const Image& img );
-		void operator +=	( const Image& img );
-		void blend				( const Image& other, float percentage );
+		void operator -=( float scalar );
+		void operator +=( float scalar );
+		void operator -=( const Image& img );
+		void operator +=( const Image& img );
+		void blend		( const Image& other, float percentage );
 
 		// Other
 		void copy( const Image& img );
-		void copy( const Image& img , int srcX, int srcY, int srcW, int srcH, int destX, int destY, int destW, int destH);
 
 		// Texture update control
 		void					setUpdateTexture( bool updateTextureFlag );	
@@ -143,7 +145,7 @@ namespace Cing
 		static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
 		static ImageThresholdFilter    m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
 
-		IplImage*						m_cvImage;			///< Contains the image compatible with openCV
+		cv::Mat 						m_cvImage;			///< Contains the image compatible with openCV
 		Ogre::Image						m_image;			///< Contains the image data (loaded from file or dynamically created)
 		int								m_nChannels;		///< Number of channels of the image
 		bool							m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			

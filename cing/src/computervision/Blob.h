@@ -40,7 +40,7 @@ namespace Cing
  */
 struct Blob
 {
-	typedef std::vector<Point> BlobContourPoints; ///< Contour points of a blob
+	typedef std::vector<Cing::Point> BlobContourPoints; ///< Contour points of a blob
 
     // Constructors
     Blob( double _area, CvSeq* _contour ) : area( _area ), contour( _contour ) {}

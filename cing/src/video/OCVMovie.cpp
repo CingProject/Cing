@@ -68,28 +68,28 @@ OCVMovie::~OCVMovie()
  */
 bool OCVMovie::load(const char* fileName )
 {
-  // Compose full path
+	// Compose full path
 	std::string path = ResourceManager::userDataPath + fileName;
 
-  // Init opencv capture device
-  m_capture = cvCaptureFromFile( path.c_str() );
-  if ( !m_capture )
+	// Init opencv capture device
+	m_capture = cvCaptureFromFile( path.c_str() );
+	if ( !m_capture )
 	{
-      LOG_ERROR("Error loading video, maybe it does not exist?, Is it AVI format?" );
+	  LOG_ERROR("Error loading video, maybe it does not exist?, Is it AVI format?" );
 			return false;
 	}
-	
+
 	// Store the filename
 	m_fileName = fileName;
 
 	// Message
 	LOG( "Movie %s succesfully loaded", fileName );
 
-  // Store video data
-  m_width     = static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_WIDTH ) );
-  m_height    = static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_HEIGHT ) );
-	m_fps				= static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FPS ) );
-	m_nFrames		= cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_COUNT );
+	// Store video data
+	m_width     = static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_WIDTH ) );
+	m_height    = static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_HEIGHT ) );
+	m_fps		= static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FPS ) );
+	m_nFrames	= cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_COUNT );
 
 	// Set the current fps for the playback speed
 	setFps( m_fps );
@@ -194,8 +194,8 @@ void OCVMovie::read( Image &image )
 		return;
 	}
 
-  // Check state
-  if ( !isValid())
+	// Check state
+	if ( !isValid())
 	{
 		LOG_ERROR( "Movie(%s): could not get the frame, because the movie has not been loaded", m_fileName.c_str( ) );
 		return;
@@ -207,23 +207,23 @@ void OCVMovie::read( Image &image )
 
 	// Set current frame to ensure correct synchronization
 	double elapsedMicroSecs = m_timer.getMicroseconds();
-	double currentFrame			=  elapsedMicroSecs / m_timeBetweenFramesMs;
-	currentFrame						= constrain( currentFrame, 0, m_nFrames-1 );
+	double currentFrame		=  elapsedMicroSecs / m_timeBetweenFramesMs;
+	currentFrame			= (double)constrain( (float)currentFrame, 0.0f, (float)m_nFrames-1 );
 	cvSetCaptureProperty( m_capture, CV_CAP_PROP_POS_FRAMES, currentFrame );
 
 	// Set first frame flag to false
 	m_firstFrame = false;
 
-  // Get frame from video
-  IplImage*   frame = cvQueryFrame( m_capture );
-  if ( !frame )
+	// Get frame from video
+	IplImage*   frame = cvQueryFrame( m_capture );
+	if ( !frame )
 	{
-      LOG_ERROR( "Error getting frame from video" );
+	  LOG_ERROR( "Error getting frame from video" );
 			return;
 	}
 
 	// Image format of the captured image
-  GraphicsType format = frame->nChannels == 1? GRAYSCALE: RGB;
+	GraphicsType format = frame->nChannels == 1? GRAYSCALE: RGB;
 
 	// Check if the target image is valid (if not -> init it)
 	if ( !image.isValid() )
@@ -234,19 +234,19 @@ void OCVMovie::read( Image &image )
 	image.setUpdateTexture( true );
 
 	// If it was the last frame and we have to loop -> restar the video
-  if ( equal( cvGetCaptureProperty( m_capture, CV_CAP_PROP_POS_AVI_RATIO ), 1.0f ) )
-  {
-      // Restart video
-      if ( m_loop )
-      {
-          cvSetCaptureProperty( m_capture, CV_CAP_PROP_POS_AVI_RATIO, 0 );
-      }
-      // Movie finished
-      else
-      {
-          m_finished = true;
-      }
-  }
+	if ( equal( (float)cvGetCaptureProperty( m_capture, CV_CAP_PROP_POS_AVI_RATIO ), 1.0f ) )
+	{
+	  // Restart video
+	  if ( m_loop )
+	  {
+		  cvSetCaptureProperty( m_capture, CV_CAP_PROP_POS_AVI_RATIO, 0 );
+	  }
+	  // Movie finished
+	  else
+	  {
+		  m_finished = true;
+	  }
+	}
 
 	// Reset the frames timer
 	//m_timer.reset();

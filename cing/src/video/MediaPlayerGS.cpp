@@ -389,7 +389,7 @@ namespace Cing
 			return 0;
 		}
 
-		return currentPosition / 1000000000.0;
+		return currentPosition / 1000000000.0f;
 	}
 
 	/**
@@ -827,7 +827,7 @@ namespace Cing
 			return;
 
 		// Set image data (and upload it to the texture)
-		m_frameImg.setData( (char*)m_internalBuffer, m_videoWidth, m_videoHeight, m_frameImg.getFormat() );
+		m_frameImg.setData( m_internalBuffer, m_videoWidth, m_videoHeight, m_frameImg.getFormat() );
 		m_frameImg.updateTexture();
 
 		// Clear new buffer flag

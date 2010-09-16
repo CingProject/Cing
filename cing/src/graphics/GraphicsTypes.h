@@ -63,13 +63,9 @@ namespace Cing
 		GRAYSCALE	= Ogre::PF_BYTE_L,		///< Gray scale
 #endif
 
-
-		
-
-
 		// Color Modes
 		//RGB,
-		HSB,
+		HSB = 100, // The 100 is assignmed to avoid enum collisions with the Ogre defined values (to have clear values for debugging)
 		// Drawing modes
 		POINTS,
 		LINES,
@@ -88,26 +84,26 @@ namespace Cing
 	/// Filter types
 	enum ImageProcessingFilters
 	{
-		BLUR,				///< provides a basic blur.
-		GRAY,				///< converts the image to grayscale based on luminance.
-		INVERT,			///< will invert the color components in the image.
+		BLUR,		///< provides a basic blur.
+		GRAY,		///< converts the image to grayscale based on luminance.
+		INVERT,		///< will invert the color components in the image.
 		//_OPAQUE,	///< set all the high bits in the image to opaque
 		THRESHOLD,	///< converts the image to black and white.
-		DILATE,			///< grow white/light areas
-		ERODE				///< shrink white/light areas
+		DILATE,		///< grow white/light areas
+		ERODE		///< shrink white/light areas
 	};
 
 	/// Ink types
 	enum ImageInkModes
 	{
 		BLEND,			///< normal mode
-		ADD					///< additive mode
+		ADD				///< additive mode
 	};
 	/// Render modes
 	enum RenderMode
 	{
 		DRAW_POINTS			= Ogre::PM_POINTS,
-		DRAW_WIREFRAME  = Ogre::PM_WIREFRAME,
+		DRAW_WIREFRAME		 = Ogre::PM_WIREFRAME,
 		DRAW_SOLID			= Ogre::PM_SOLID
 	};
 

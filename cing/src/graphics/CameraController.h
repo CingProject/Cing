@@ -55,8 +55,8 @@ public:
 	void	update();	
 
 	// control methods
-	void	userKeyboard( bool value );
-	void	userMouse		( bool value );
+	void	useKeyboard( bool value );
+	void	useMouse		( bool value );
 
 	// Query  Methods
 	bool	isValid	() { return m_bIsValid; }

@@ -22,6 +22,9 @@
 #ifndef _Cing_H_
 #define _Cing_H_
   
+#if OGRE_COMPILER == OGRE_COMPILER_MSVC
+	#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 /**
  * \mainpage Cing Documentation

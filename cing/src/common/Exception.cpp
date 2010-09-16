@@ -23,6 +23,11 @@
 #include <sstream>
 #include <stdarg.h>
 
+#if OGRE_COMPILER == OGRE_COMPILER_MSVC
+	#pragma warning (disable : 4996 )
+#endif
+
+
 namespace Cing
 {
 

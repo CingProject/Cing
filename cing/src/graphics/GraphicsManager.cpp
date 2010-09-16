@@ -72,22 +72,21 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	GraphicsManager::GraphicsManager():
-m_bIsValid    ( false ),
-m_showFps			( false ),
-m_pSceneManager( NULL ),
-m_canvas( NULL ),
-m_fill( true ),
-m_stroke( true ),
-m_smooth( false ),
-m_rectMode( CORNER ),
-m_ellipseMode( CENTER ),
-m_setupCalled( false ),
-m_defaultWindowWidth( 640 ),
-m_defaultWindowHeight( 480 ),
-m_defaultGraphicMode( OPENGL ),
-m_fullscreen( false ),
-m_fsaa(0),
-m_saveFrame(false)
+		m_bIsValid    ( false ),
+		m_showFps			( false ),
+		m_pSceneManager( NULL ),
+		m_fill( true ),
+		m_stroke( true ),
+		m_smooth( false ),
+		m_rectMode( CORNER ),
+		m_ellipseMode( CENTER ),
+		m_setupCalled( false ),
+		m_defaultWindowWidth( 640 ),
+		m_defaultWindowHeight( 480 ),
+		m_defaultGraphicMode( OPENGL ),
+		m_fullscreen( false ),
+		m_fsaa(0),
+		m_saveFrame(false)
 {
 }
 
@@ -184,7 +183,7 @@ bool GraphicsManager::init()
 	//GUIManager::getSingleton().init();
 
 	// Init 2dCanvas
-	m_canvas = new Image(width, height, RGB);
+	m_canvas.init(width, height, RGB);
 
 	// Init style queue
 	m_styles.push_front( Style(Color(255,255,255), Color(0,0,0), 1) );
@@ -193,11 +192,11 @@ bool GraphicsManager::init()
 	m_transforms.push( Transform() );
 
 	// Init pixels
-	for (int i = 0; i < m_canvas->getWidth() * m_canvas->getHeight(); i++)
+	for (int i = 0; i < m_canvas.getWidth() * m_canvas.getHeight(); i++)
 		pixels.push_back( Color( 200, 200, 200 ) );
 
 	// Set image background color
-	m_canvas->fill(Color(200));
+	m_canvas.fill(Color(200));
 
 	// Init RTT texture and setup viewport
 	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_R8G8B8, Ogre::TU_RENDERTARGET);
@@ -254,10 +253,6 @@ void GraphicsManager::end()
 	// Release the Shape Manager
 	ShapeManager::getSingleton().end();
 
-	// Release 2dCanvas...
-	m_canvas->end();
-	m_canvas = NULL;
-
 	// The class is not valid anymore
 	m_bIsValid = false;
 }
@@ -270,11 +265,11 @@ void GraphicsManager::draw()
 {
 
 	// Update the background image
-	m_canvas->drawBackground(	0,
+	m_canvas.drawBackground(	0,
 								0,
 								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
 								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
-	m_canvas->getTexturedQuad().setRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
+	m_canvas.getTexturedQuad().setRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
 
 
 	// Update 3d primitive drawing	( shape, lines,...)
@@ -674,8 +669,8 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 
 	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
 
-	cvSet( &m_canvas->getCVImage(), cvScalar(color.b,color.g,color.r) );
-	m_canvas->setUpdateTexture(true);
+	cvSet( &m_canvas.getCVImage(), cvScalar(color.b,color.g,color.r) );
+	m_canvas.setUpdateTexture(true);
 }
 
 /**
@@ -704,11 +699,11 @@ void GraphicsManager::applyCoordinateSystemTransform( const GraphicsType& coordS
 			// Calculate new camera position 
 			float cameraDistance    =  (height / 2.0f ) / tanf( (m_activeCamera.getOgreCamera()->getFOVy().valueRadians()) / 2.0f );
 
-			Ogre::Vector3 camPos = Ogre::Vector3( width/2.0, height/2.0, cameraDistance );
+			Ogre::Vector3 camPos = Ogre::Vector3( width/2.0f, height/2.0f, cameraDistance );
 			// Set the camera position
 
 			m_activeCamera.getSceneNode()->setPosition( camPos );
-			m_activeCamera.getSceneNode()->lookAt( Ogre::Vector3(width/2.0, height/2.0, 0), Ogre::Node::TS_WORLD );
+			m_activeCamera.getSceneNode()->lookAt( Ogre::Vector3(width/2.0f, height/2.0f, 0.0f), Ogre::Node::TS_WORLD );
 
 			// Apply simmetry to y-world axis
 			m_pSceneManager->getRootSceneNode()->setScale(1,-1,1);

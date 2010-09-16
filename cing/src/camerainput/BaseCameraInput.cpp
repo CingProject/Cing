@@ -139,7 +139,7 @@ void BaseCameraInput::end()
 * @param[in] height  Height in pixels
 * @param format			Format to the image passed
 */
-void BaseCameraInput::setNewFrameData( char* data, unsigned int width, unsigned int height, GraphicsType format )	
+void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, unsigned int height, GraphicsType format )	
 {
 	// Get capture fps
 	unsigned long elapsedMicroseconds = m_timer.getMicroseconds();

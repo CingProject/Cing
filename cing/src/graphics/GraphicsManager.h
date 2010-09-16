@@ -32,6 +32,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Transform.h"
 #include "Style.h"
 #include "Shape.h"
+#include "Image.h"
 
 // OpenCv includes
 #include "OpenCV/cxtypes.h"
@@ -157,7 +158,7 @@ namespace Cing
 		void applyCoordinateSystemTransform( const GraphicsType& coordSystem );
 
 		// 2D Canvas
-		Image*			m_canvas;
+		Image						m_canvas;
 
 		// 2D / 3D Transforms
 		std::stack < Transform >	m_transforms; ///< Stack to store transform objects
@@ -168,57 +169,57 @@ namespace Cing
 		// private constructor to ensure singleton
 		GraphicsManager      ();
 
-		//TODO: poner decente
-		Ogre::Light*					pLight;
-		Ogre::SceneNode*				pLightSceneNode;
+		//TODO: Clean up
+		Ogre::Light*				pLight;
+		Ogre::SceneNode*			pLightSceneNode;
 
 		// Attributes
 
 		// Core
-		Ogre::SceneManager*				m_pSceneManager;  ///< Main scene manager
+		Ogre::SceneManager*			m_pSceneManager;  ///< Main scene manager
 
 		// Camera controller
-		CameraController				m_defaultCamController;
+		CameraController			m_defaultCamController;
 
 
-		Window							m_mainWindow;     ///< Main application window
-		Camera3D						m_activeCamera;   ///< Active camera
+		Window						m_mainWindow;     ///< Main application window
+		Camera3D					m_activeCamera;   ///< Active camera
 
 		// Graphics system setup
-		int                        		m_defaultWindowWidth;
-		int                        		m_defaultWindowHeight;
-		GraphicMode                		m_defaultGraphicMode;
-		bool                       		m_setupCalled;        ///< True when the setup method has been already called
-		bool                       		m_fullscreen;         ///< If true, the applcation will run in full screen mode
-		int								m_fsaa;				/// < Antialiasing value (0..16). Depends on HW support
+		int                        	m_defaultWindowWidth;
+		int                        	m_defaultWindowHeight;
+		GraphicMode                	m_defaultGraphicMode;
+		bool                       	m_setupCalled;        ///< True when the setup method has been already called
+		bool                       	m_fullscreen;         ///< If true, the applcation will run in full screen mode
+		int							m_fsaa;				/// < Antialiasing value (0..16). Depends on HW support
 
 		// Misc
-		DebugOverlay					m_debugOverlay;   ///< Debug overlay used to show debug information
-		//MovableText						m_systemFont;    ///< To print system info to screen
+		DebugOverlay				m_debugOverlay;   ///< Debug overlay used to show debug information
+		//MovableText				m_systemFont;    ///< To print system info to screen
 
 		// Styling properties
 		// TODO: Eliminates this. Change styles que to stack
-		int								m_rectMode;					///< Parameters input mode to draw rectangles
-		int								m_ellipseMode;			///< Parameters input mode to draw ellipses
-		bool							m_fill;
-		bool							m_stroke;
-		bool							m_smooth;
+		int							m_rectMode;					///< Parameters input mode to draw rectangles
+		int							m_ellipseMode;			///< Parameters input mode to draw ellipses
+		bool						m_fill;
+		bool						m_stroke;
+		bool						m_smooth;
 
-		CvFont							m_cvFont;					///< Font used to draw text on images
+		CvFont						m_cvFont;					///< Font used to draw text on images
 
 		// To manage visibility of loaded images
 		// TODO optimize this
-		std::list< TexturedQuad* >		m_drawableImagesQueue; ///< Images that are being drawn by the user ar maked as not visible every frame
+		std::list< TexturedQuad* >	m_drawableImagesQueue; ///< Images that are being drawn by the user ar maked as not visible every frame
 		// to if the user does not call the draw one frame the image is not drawn
 
 		//to allow screen capture and effects
-		Ogre::TexturePtr				m_RttTexture;
-		bool							m_saveFrame;
-		String					m_frameName;
+		Ogre::TexturePtr			m_RttTexture;
+		bool						m_saveFrame;
+		String						m_frameName;
 
-	    GraphicsType					m_coordSystem;
-		bool							m_showFps;				///< Indicates whether the frames per second should be shown or not
-		bool							m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
+	    GraphicsType				m_coordSystem;
+		bool						m_showFps;				///< Indicates whether the frames per second should be shown or not
+		bool						m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 
 } // namespace Cing

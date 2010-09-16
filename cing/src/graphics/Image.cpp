@@ -20,9 +20,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 #include "Image.h"
 #include "ImageResourceManager.h"
-
-// Open CV
-#include "OpenCV/cv.h"
+#include "GraphicsManager.h"
 
 // Common
 #include "common/Exception.h"
@@ -37,6 +35,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Ogre
 #include "OgreDataStream.h"
 
+// OpenCV
+#include "OpenCV/cxcore.h"
 
 namespace Cing
 {
@@ -49,7 +49,7 @@ namespace Cing
 	* @brief Constructor. This constructor does not load or creates any image.
 	*/
 	Image::Image():
-	m_cvImage(NULL),
+		//m_cvImage(NULL),
 		m_bIsValid( false ),
 		m_bVFlip( false ),
 		m_bUpdateTexture( false )
@@ -62,8 +62,8 @@ namespace Cing
 	* @param
 	*/
 	Image::Image( const Image& img ):
-	m_bIsValid( false ),
-		m_cvImage(NULL),
+		m_bIsValid( false ),
+		//m_cvImage(NULL),
 		m_bUpdateTexture( false )
 	{
 		init( img );
@@ -78,8 +78,8 @@ namespace Cing
 	* @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
 	*/
 	Image::Image( int width, int height, GraphicsType format /*= RGB*/ ):
-	m_bIsValid( false ),
-		m_cvImage(NULL),
+		m_bIsValid( false ),
+		//m_cvImage(NULL),
 		m_bUpdateTexture( false )
 	{
 		init( width, height, format );
@@ -92,8 +92,8 @@ namespace Cing
 	* @param name  Name of the file to be loaded. It must be placed in the data directory.
 	*/
 	Image::Image( const std::string& name ):
-	m_bIsValid( false ),
-		m_cvImage(NULL)
+		m_bIsValid( false )
+		//m_cvImage(NULL)
 	{
 		load( name );
 	}
@@ -127,13 +127,11 @@ namespace Cing
 
 		// Create the empty IplImage image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
-		m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
+		//m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
+		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
 
 		// Create the texture quad (to draw image)
-		m_quad.init( m_cvImage->width, m_cvImage->height, format );
-
-		// Load image data to texture -> No necessary as it is an empty image
-		// updateTexture();
+		m_quad.init( m_cvImage.cols, m_cvImage.rows, format );
 
 		// Store the format
 		m_format = format;
@@ -164,13 +162,11 @@ namespace Cing
 
 		// Create the empty IplImage image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
-		m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
+		//m_cvImage    = cvCreateImage(cvSize(width,height),IPL_DEPTH_8U, m_nChannels);
+		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
 
 		// Create the texture quad (to draw image)
-		m_quad.init( m_cvImage->width, m_cvImage->height, m_format, true );
-
-		// Load image data to texture -> No necessary as it is an empty image
-		// updateTexture();
+		m_quad.init( m_cvImage.cols, m_cvImage.rows, m_format, true );
 
 		// The class is now initialized
 		m_bIsValid = true;
@@ -225,19 +221,28 @@ namespace Cing
 		else
 			m_format = RGB;
 
-		//Copy pixels from the OgreImage to the IplImage
-		if ( m_cvImage != NULL )
-			cvReleaseImage( &m_cvImage );
+		////Copy pixels from the OgreImage to the IplImage
+		//if ( m_cvImage != NULL )
+		//	cvReleaseImage( &m_cvImage );
 
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
-		m_cvImage = cvCreateImage(cvSize((int)m_image.getWidth(),(int)m_image.getHeight()),IPL_DEPTH_8U,m_nChannels);
-		m_cvImage->imageData = (char *)m_image.getData();
+		//m_cvImage = cvCreateImage(cvSize((int)m_image.getWidth(),(int)m_image.getHeight()),IPL_DEPTH_8U,m_nChannels);
+		m_cvImage.create( m_image.getHeight(), m_image.getWidth(), CV_MAKETYPE(CV_8U,m_nChannels) );
+
+		cv::Mat imgData(m_cvImage.rows, m_cvImage.cols, CV_MAKETYPE(CV_8U,m_nChannels), m_image.getData(), m_image.getWidth() * m_nChannels);
+		imgData.copyTo(m_cvImage);
+
+		//cvSetImageData( &(IplImage)m_cvImage, m_image.getData(), m_image.getWidth() * m_nChannels );
+		//m_cvImage.data = (char *)m_image.getData();
 
 		// Check if we need to flip the channels red and green (for example png and jpgs are loaded as BGR by Ogre)
 		GraphicsType currentImageFormat = (GraphicsType)m_image.getFormat();
 		if ( (currentImageFormat == BGR) || (currentImageFormat == BGRA) )
 		{
-			cvConvertImage( m_cvImage, m_cvImage, CV_CVTIMG_SWAP_RB );
+			if ( m_nChannels == 3 )
+				cv::cvtColor( m_cvImage, m_cvImage, CV_RGB2BGR );
+			else
+				cv::cvtColor( m_cvImage, m_cvImage, CV_RGBA2BGRA );
 		}
 
 		// Create the texture quad (to draw image)
@@ -249,6 +254,9 @@ namespace Cing
 		// The class is now initialized
 		m_bIsValid = true;
 		m_bUpdateTexture = false;
+
+		// Now we can release the image used by the image loader
+		m_image.freeMemory();
 	}
 
 	/**
@@ -266,7 +274,7 @@ namespace Cing
 	void Image::save( const std::string& name )
 	{
 		// TODO: Pass data from IplImage to m_image to save the data
-		m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage->imageData, m_cvImage->width, m_cvImage	->height, 1, (Ogre::PixelFormat)getFormat() );
+		m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage.data, m_cvImage.cols, m_cvImage.rows, 1, (Ogre::PixelFormat)getFormat() );
 
 		// Add the user app data folder to the name
 		m_image.save( ResourceManager::userDataPath + name );
@@ -283,12 +291,18 @@ namespace Cing
 		if ( !isValid() )
 			return;
 
-		m_quad.end();
+		// TODO: This is a hack to avoid a crash comming from cvReleaseImage
+		// when it is called by a static object destructor (global Image variable created by the user)
+		// when there is image copy involved
+		Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
+		if ( sceneManager == NULL )
+			return;
 
 		//Release IplImage
-		// TODO check why this crashes..
-		//cvReleaseImage(&m_cvImage);
-		m_cvImage = NULL;
+		m_cvImage.release();
+
+		// Release the quad
+		m_quad.end();
 
 		// The class is not valid anymore
 		m_bIsValid = false;
@@ -303,7 +317,7 @@ namespace Cing
 	* @param height		Height of the passed image data
 	* @param format		format Format of the image passed
 	*/
-	void Image::setData( char* imageData, int width, int height, GraphicsType format )
+	void Image::setData( const unsigned char* imageData, int width, int height, GraphicsType format )
 	{
 		if ( !isValid() )
 		{
@@ -313,19 +327,29 @@ namespace Cing
 
 		// Check dimensions
 		int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
-		if ( (width != m_cvImage->width) || (height != m_cvImage->height) || (channels != m_cvImage->nChannels) )
+		if ( (width != m_cvImage.cols) || (height != m_cvImage.rows) || (channels != m_cvImage.channels()) )
 		{
 			LOG_ERROR( "Trying to set data with a wrong size of number of channels" );
 			return;
 		}
 
 		// Set the data
-		cvSetData( m_cvImage, imageData, m_cvImage->widthStep );
+		cv::Mat imgData(height, width, CV_MAKETYPE(CV_8U,channels), (void*)imageData, width*channels);
+		imgData.copyTo(m_cvImage);
+		//cvSetData( &(IplImage)m_cvImage, const_cast<unsigned char*>(imageData), m_cvImage.step );
 
 		// Make the image to be updated to texture in the next draw
 		m_bUpdateTexture = true;
 	}
 
+	/**
+	 * @brief Returns the image data (buffer)
+	 * @return the image data (buffer)
+	 */	
+	unsigned char* Image::getData() 
+	{ 
+		return isValid()? m_cvImage.data: NULL; 
+	}
 
 	/**
 	* @brief Returns image width
@@ -333,7 +357,7 @@ namespace Cing
 	*/
 	int Image::getWidth() const
 	{
-		return m_cvImage? (int)m_cvImage->width: 0;
+		return m_cvImage.data? (int)m_cvImage.cols: 0;
 	}
 
 	/**
@@ -342,7 +366,7 @@ namespace Cing
 	*/
 	int Image::getHeight() const
 	{
-		return m_cvImage? (int)m_cvImage->height: 0;
+		return m_cvImage.data? (int)m_cvImage.rows: 0;
 	}
 
 	/**
@@ -361,7 +385,7 @@ namespace Cing
 	* @param x x coordinate of the pixel that wants to be retrieved
 	* @param y y coordinate of the pixel that wants to be retrieved
 	*/
-	Color Image::getPixel( int x, int y )
+	Color Image::getPixel( int x, int y ) const
 	{
 
 		// Check the image is valid
@@ -370,13 +394,13 @@ namespace Cing
 
 		// Check boundaries
 		if ( x < 0 )								x = 0;
-		if ( x > m_cvImage->width )	x = m_cvImage->width - 1;
+		if ( x > m_cvImage.cols )	x = m_cvImage.cols - 1;
 		if ( y < 0 )								y = 0;
-		if ( y > m_cvImage->height) y = m_cvImage->height -1 ;
+		if ( y > m_cvImage.rows) y = m_cvImage.rows -1 ;
 
 		// Read color
-		int		channels = m_cvImage->nChannels;
-		char* pixelPtr = m_cvImage->imageData + m_cvImage->widthStep * y;
+		int			   channels = m_cvImage.channels();
+		unsigned char* pixelPtr = m_cvImage.data + m_cvImage.step * y;
 		unsigned char blue, red, green, alpha = 0;
 
 		switch( channels )
@@ -530,7 +554,8 @@ namespace Cing
 		// check if image needs to be mirrored
 		if (m_bVFlip)
 		{
-			cvFlip(m_cvImage, NULL, 0);
+			//cvFlip(m_cvImage, NULL, 0);
+			cv::flip(m_cvImage, m_cvImage, 0);
 		}
 
 		// check if texture needs to be updated
@@ -557,7 +582,8 @@ namespace Cing
 		// check if image needs to be mirrored
 		if (m_bVFlip)
 		{
-			cvFlip(m_cvImage, NULL, 0);
+			//cvFlip(m_cvImage, NULL, 0);
+			cv::flip(m_cvImage, m_cvImage, 0);
 		}
 
 		// check if texture needs to be updated
@@ -579,7 +605,8 @@ namespace Cing
 		// check if image needs to be mirrored
 		if (m_bVFlip)
 		{
-			cvFlip(m_cvImage, NULL, 0);
+			//cvFlip(m_cvImage, NULL, 0);
+			cv::flip(m_cvImage, m_cvImage, 0);
 		}
 
 		// check if texture needs to be updated
@@ -618,20 +645,20 @@ namespace Cing
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
-
-		// TODO: Check speed of cvCloneImage, maybe is faster to use memcpy?
-		// and solve a bug when the loaded image has different size.
-		if ( m_cvImage )
-			cvReleaseImage( &m_cvImage );
-
-		// Check if the image is initialized
+		// Check if the image is initialized -> if not initialize with "other"'s format and size
 		if ( !isValid() )
 			init( other.getWidth(), other.getHeight(), other.getFormat() );
 
+		// Check if the size of the image differs
+		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) || (other.getFormat() != getFormat()) )
+		{
+			end();
+			init( other.getWidth(), other.getHeight(), other.getFormat() );
+		}
+
 		// Copy the data
-		m_cvImage		= cvCloneImage(other.m_cvImage);
-		m_quad			= other.m_quad;
-		m_nChannels = other.m_nChannels;
+		const unsigned char* imageData = const_cast<Image&>(other).getData();
+		setData( imageData, getWidth(), getHeight(), getFormat() );
 
 		// Load image data to texture
 		updateTexture();
@@ -699,7 +726,7 @@ namespace Cing
 	*/
 	void Image::updateTexture()
 	{
-		m_quad.updateTexture(	m_cvImage->imageData, m_cvImage->width, m_cvImage->height, getFormat());
+		m_quad.updateTexture(	m_cvImage.data, m_cvImage.cols, m_cvImage.rows, getFormat());
 		m_bUpdateTexture = false;
 	}
 
@@ -725,18 +752,12 @@ namespace Cing
 		{
 			// Get Fill Color
 			Color color        = graphManager.getFillColor();
-
-			CvPoint* pts = new CvPoint[3];
-			pts[0] = cvPoint(x1,y1);
-			pts[1] = cvPoint(x2,y2);
-			pts[2] = cvPoint(x3,y3);
+			cv::Point pts[3] = { cv::Point(x1,y1), cv::Point(x2,y2), cv::Point(x3,y3)};
 
 			if (graphManager.getSmooth())
-				cvFillConvexPoly( m_cvImage , pts, 3, cvScalar( color.r, color.g, color.b, color.a ), 16, 0 );
+				cv::fillConvexPoly( m_cvImage , (const cv::Point*)&pts, 3, cv::Scalar( color.r, color.g, color.b, color.a ), CV_AA, 0 );
 			else
-				cvFillConvexPoly( m_cvImage , pts, 3, cvScalar( color.r, color.g, color.b, color.a ), 4, 0 );
-
-			delete []pts;
+				cv::fillConvexPoly( m_cvImage , (const cv::Point*)&pts, 3, cv::Scalar( color.r, color.g, color.b, color.a ), 4, 0 );
 		}
 
 		if (graphManager.getStroke())
@@ -747,19 +768,13 @@ namespace Cing
 
 			if (graphManager.getSmooth())
 			{
-				cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),cvScalar( color.r, color.g, color.b, color.a ),
-					strokeWeight,16,0);
-				cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),cvScalar( color.r, color.g, color.b, color.a ),
-					strokeWeight,16,0);
-				cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x1,y1),cvScalar( color.r, color.g, color.b, color.a ),
-					strokeWeight,16,0);
+				cv::line( m_cvImage,cv::Point(x1,y1),cv::Point(x2,y2),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,CV_AA,0);
+				cv::line( m_cvImage,cv::Point(x2,y2),cv::Point(x3,y3),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,CV_AA,0);
+				cv::line( m_cvImage,cv::Point(x3,y3),cv::Point(x1,y1),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,CV_AA,0);
 			}else{
-				cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),cvScalar( color.r, color.g, color.b, color.a ),
-					strokeWeight,4,0);
-				cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),cvScalar( color.r, color.g, color.b, color.a ),
-					strokeWeight,4,0);
-				cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x1,y1),cvScalar( color.r, color.g, color.b, color.a ),
-					strokeWeight,4,0);
+				cv::line( m_cvImage,cv::Point(x1,y1),cv::Point(x2,y2),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
+				cv::line( m_cvImage,cv::Point(x2,y2),cv::Point(x3,y3),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
+				cv::line( m_cvImage,cv::Point(x3,y3),cv::Point(x1,y1),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
 			}
 		}
 
@@ -787,21 +802,21 @@ namespace Cing
 		int   strokeWeight = graphManager.getStrokeWeight();
 		if (graphManager.getSmooth())
 		{
-			cvLine(	m_cvImage,
-				cvPoint(x1,y1),
-				cvPoint(x2,y2),
-				cvScalar( color.r, color.g, color.b, color.a ),
-				strokeWeight,	///< Thickness.
-				16,	///< Type of the ellipse boundary, see cvLine description.
-				0); ///< Number of fractional bits in the center coordinates and axes' values.
+			cv::line(	m_cvImage,
+						cv::Point(x1,y1),
+						cv::Point(x2,y2),
+						cv::Scalar( color.r, color.g, color.b, color.a ),
+						strokeWeight,	///< Thickness.
+						CV_AA,	///< Type of the ellipse boundary, see cvLine description.
+						0); ///< Number of fractional bits in the center coordinates and axes' values.
 		}else{
-			cvLine(	m_cvImage,
-				cvPoint(x1,y1),
-				cvPoint(x2,y2),
-				cvScalar( color.r, color.g, color.b, color.a ),
-				strokeWeight,	///< Thickness.
-				4,	///< Type of the ellipse boundary, see cvLine description.
-				0); ///< Number of fractional bits in the center coordinates and axes' values.
+			cv::line(	m_cvImage,
+						cv::Point(x1,y1),
+						cv::Point(x2,y2),
+						cv::Scalar( color.r, color.g, color.b, color.a ),
+						strokeWeight,	///< Thickness.
+						4,	///< Type of the ellipse boundary, see cvLine description.
+						0); ///< Number of fractional bits in the center coordinates and axes' values.
 		}
 		// Update texture when the next drawing call is made by the user
 		m_bUpdateTexture = true;
@@ -830,25 +845,25 @@ namespace Cing
 			Color color        = graphManager.getFillColor();
 			if (graphManager.getSmooth())
 			{
-				cvEllipse(	m_cvImage,						///-> Image.
-					cvPoint(x,y),					///-> Center of the ellipse.
-					cvSize(width,height),			///-> Length of the ellipse axes.
-					0,								///->	Rotation angle.
-					start,							///-> Starting angle of the elliptic arc.
-					end,							///-> Ending angle of the elliptic arc.
-					cvScalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
-					-1,
-					16);							///-> Thickness of the ellipse arc.
+				cv::ellipse(	m_cvImage,						///-> Image.
+								cv::Point(x,y),					///-> Center of the ellipse.
+								cvSize(width,height),			///-> Length of the ellipse axes.
+								0,								///->	Rotation angle.
+								start,							///-> Starting angle of the elliptic arc.
+								end,							///-> Ending angle of the elliptic arc.
+								cv::Scalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
+								-1,
+								CV_AA);							///-> Thickness of the ellipse arc.
 			}else{
-				cvEllipse(	m_cvImage,						///-> Image.
-					cvPoint(x,y),					///-> Center of the ellipse.
-					cvSize(width,height),			///-> Length of the ellipse axes.
-					0,								///->	Rotation angle.
-					start,							///-> Starting angle of the elliptic arc.
-					end,							///-> Ending angle of the elliptic arc.
-					cvScalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
-					-1,
-					4);								///-> Thickness of the ellipse arc.
+				cv::ellipse(	m_cvImage,						///-> Image.
+								cv::Point(x,y),					///-> Center of the ellipse.
+								cvSize(width,height),			///-> Length of the ellipse axes.
+								0,								///->	Rotation angle.
+								start,							///-> Starting angle of the elliptic arc.
+								end,							///-> Ending angle of the elliptic arc.
+								cv::Scalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
+								-1,
+								4);								///-> Thickness of the ellipse arc.
 			}
 		}
 
@@ -861,26 +876,25 @@ namespace Cing
 
 			if (graphManager.getSmooth())
 			{
-				cvEllipse(	m_cvImage,						///-> Image.
-					cvPoint(x,y),					///-> Center of the ellipse.
-					cvSize(width,height),			///-> Length of the ellipse axes.
-					0,								///->	Rotation angle.
-					start,							///-> Starting angle of the elliptic arc.
-					end,							///-> Ending angle of the elliptic arc.
-					cvScalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
-					strokeWeight,
-					16
-					);								///-> Thickness of the ellipse arc.
+				cv::ellipse(	m_cvImage,						///-> Image.
+								cv::Point(x,y),					///-> Center of the ellipse.
+								cvSize(width,height),			///-> Length of the ellipse axes.
+								0,								///->	Rotation angle.
+								start,							///-> Starting angle of the elliptic arc.
+								end,							///-> Ending angle of the elliptic arc.
+								cv::Scalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
+								strokeWeight,
+								CV_AA );								///-> Thickness of the ellipse arc.
 			}else{
-				cvEllipse(	m_cvImage,						///-> Image.
-					cvPoint(x,y),					///-> Center of the ellipse.
-					cvSize(width,height),			///-> Length of the ellipse axes.
-					0,								///->	Rotation angle.
-					start,							///-> Starting angle of the elliptic arc.
-					end,							///-> Ending angle of the elliptic arc.
-					cvScalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
-					strokeWeight,
-					4 );							///-> Thickness of the ellipse arc.
+				cv::ellipse(	m_cvImage,						///-> Image.
+								cv::Point(x,y),					///-> Center of the ellipse.
+								cvSize(width,height),			///-> Length of the ellipse axes.
+								0,								///->	Rotation angle.
+								start,							///-> Starting angle of the elliptic arc.
+								end,							///-> Ending angle of the elliptic arc.
+								cv::Scalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
+								strokeWeight,
+								4 );							///-> Thickness of the ellipse arc.
 
 			}
 		}
@@ -924,11 +938,11 @@ namespace Cing
 		int   strokeWeight = graphManager.getStrokeWeight();
 
 		// Draw a pixel
-		cvRectangle( m_cvImage,
-			cvPoint(x,y),
-			cvPoint(x,y),
-			cvScalar( color.r, color.g, color.b, color.a ),
-			strokeWeight);		///-> Thickness.
+		cv::rectangle( m_cvImage,
+						cv::Point(x,y),
+						cv::Point(x,y),
+						cv::Scalar( color.r, color.g, color.b, color.a ),
+						strokeWeight);		///-> Thickness.
 
 		// Update texture when the next drawing call is made by the user
 		m_bUpdateTexture = true;
@@ -957,20 +971,13 @@ namespace Cing
 		if (graphManager.getFill())
 		{
 			// Get Fill Color
-			Color color        = graphManager.getFillColor();
-
-			CvPoint* pts = new CvPoint[4];
-			pts[0] = cvPoint(x1,y1);
-			pts[1] = cvPoint(x2,y2);
-			pts[2] = cvPoint(x3,y3);
-			pts[3] = cvPoint(x4,y4);
+			Color color		= graphManager.getFillColor();
+			cv::Point pts[4]= { cv::Point(x1,y1), cv::Point(x2,y2), cv::Point(x3,y3), cv::Point(x4,y4) };
 
 			if (graphManager.getSmooth())
-				cvFillConvexPoly( m_cvImage , pts, 4,	cvScalar( color.r, color.g, color.b, color.a ), 16, 0 );
+				cv::fillConvexPoly( m_cvImage , (const cv::Point*)&pts, 4,	cv::Scalar( color.r, color.g, color.b, color.a ), CV_AA, 0 );
 			else
-				cvFillConvexPoly( m_cvImage , pts, 4,	cvScalar( color.r, color.g, color.b, color.a ), 4, 0 );
-
-			delete []pts;
+				cv::fillConvexPoly( m_cvImage , (const cv::Point*)&pts, 4,	cv::Scalar( color.r, color.g, color.b, color.a ), 4, 0 );
 		}
 
 		if (graphManager.getStroke())
@@ -983,17 +990,17 @@ namespace Cing
 			if (graphManager.getSmooth())
 			{
 
-				cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),cvScalar( color.r, color.g, color.b, color.a ), strokeWeight,16,0);
-				cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),cvScalar( color.r, color.g, color.b, color.a ), strokeWeight,16,0);
-				cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x4,y4),cvScalar( color.r, color.g, color.b, color.a ), strokeWeight,16,0);
-				cvLine( m_cvImage,cvPoint(x4,y4),cvPoint(x1,y1),cvScalar( color.r, color.g, color.b, color.a ), strokeWeight,16,0);
+				cv::line( m_cvImage,cv::Point(x1,y1),cv::Point(x2,y2),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,CV_AA,0);
+				cv::line( m_cvImage,cv::Point(x2,y2),cv::Point(x3,y3),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,CV_AA,0);
+				cv::line( m_cvImage,cv::Point(x3,y3),cv::Point(x4,y4),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,CV_AA,0);
+				cv::line( m_cvImage,cv::Point(x4,y4),cv::Point(x1,y1),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,CV_AA,0);
 
 			}else{
 
-				cvLine( m_cvImage,cvPoint(x1,y1),cvPoint(x2,y2),cvScalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
-				cvLine( m_cvImage,cvPoint(x2,y2),cvPoint(x3,y3),cvScalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
-				cvLine( m_cvImage,cvPoint(x3,y3),cvPoint(x4,y4),cvScalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
-				cvLine( m_cvImage,cvPoint(x4,y4),cvPoint(x1,y1),cvScalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
+				cv::line( m_cvImage,cv::Point(x1,y1),cv::Point(x2,y2),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
+				cv::line( m_cvImage,cv::Point(x2,y2),cv::Point(x3,y3),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
+				cv::line( m_cvImage,cv::Point(x3,y3),cv::Point(x4,y4),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
+				cv::line( m_cvImage,cv::Point(x4,y4),cv::Point(x1,y1),cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight,4,0);
 			}
 		}
 
@@ -1013,12 +1020,13 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		GraphicsManager& graphManager = GraphicsManager::getSingleton();
 		// Get Stroke and Fill Color
-		Color color        = graphManager.getStrokeColor();
-		int   strokeWeight = graphManager.getStrokeWeight();
+		GraphicsManager& graphManager = GraphicsManager::getSingleton();
+		Color color			= graphManager.getStrokeColor();
+		int   strokeWeight	= graphManager.getStrokeWeight();
+		int	  fontScale		= 2;
 
-		cvPutText(m_cvImage, text, cvPoint(x1,y1), &(graphManager.getCvFont()), cvScalar( color.r, color.g, color.b, color.a ));
+		cv::putText(m_cvImage, text, cv::Point(x1,y1), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar( color.r, color.g, color.b, color.a ));
 
 		// Update texture when the next drawing call is made by the user
 		m_bUpdateTexture = true;
@@ -1053,30 +1061,30 @@ namespace Cing
 
 			case CORNER:
 				if (graphManager.getSmooth())
-					cvRectangle( m_cvImage, cvPoint(x,y), cvPoint(x+width,y+height), cvScalar( color.r, color.g, color.b, color.a ), -1, 16);
+					cv::rectangle( m_cvImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( color.r, color.g, color.b, color.a ), -1, CV_AA);
 				else
-					cvRectangle( m_cvImage, cvPoint(x,y), cvPoint(x+width,y+height), cvScalar( color.r, color.g, color.b, color.a ), -1, 4);
+					cv::rectangle( m_cvImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( color.r, color.g, color.b, color.a ), -1, 4);
 				break;
 
 			case CORNERS:
 				if (graphManager.getSmooth())
-					cvRectangle( m_cvImage, cvPoint(x,y), cvPoint(width,height), cvScalar( color.r, color.g, color.b, color.a ), -1, 16);
+					cv::rectangle( m_cvImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( color.r, color.g, color.b, color.a ), -1, CV_AA);
 				else
-					cvRectangle( m_cvImage, cvPoint(x,y), cvPoint(width,height), cvScalar( color.r, color.g, color.b, color.a ), -1, 4);
+					cv::rectangle( m_cvImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( color.r, color.g, color.b, color.a ), -1, 4);
 				break;
 
 			case CENTER:
 				if (graphManager.getSmooth())
-					cvRectangle( m_cvImage, cvPoint(x-(int)widthDIV2,y-(int)heightDIV2), cvPoint(x+(int)widthDIV2,y+(int)heightDIV2), cvScalar( color.r, color.g, color.b, color.a ), -1, 16);
+					cv::rectangle( m_cvImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( color.r, color.g, color.b, color.a ), -1, CV_AA);
 				else
-					cvRectangle( m_cvImage, cvPoint(x-(int)widthDIV2,y-(int)heightDIV2), cvPoint(x+(int)widthDIV2,y+(int)heightDIV2), cvScalar( color.r, color.g, color.b, color.a ), -1, 4);
+					cv::rectangle( m_cvImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( color.r, color.g, color.b, color.a ), -1, 4);
 				break;
 
 			case RADIUS:
 				if (graphManager.getSmooth())
-					cvRectangle( m_cvImage, cvPoint(x-width,y-height), cvPoint(x+width,y+height), cvScalar( color.r, color.g, color.b, color.a ), -1, 16);
+					cv::rectangle( m_cvImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( color.r, color.g, color.b, color.a ), -1, CV_AA);
 				else
-					cvRectangle( m_cvImage, cvPoint(x-width,y-height), cvPoint(x+width,y+height), cvScalar( color.r, color.g, color.b, color.a ), -1, 4);
+					cv::rectangle( m_cvImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( color.r, color.g, color.b, color.a ), -1, 4);
 				break;
 			}
 		}
@@ -1091,30 +1099,30 @@ namespace Cing
 
 			case CORNER:
 				if (graphManager.getSmooth())
-					cvRectangle( m_cvImage, cvPoint(x,y), cvPoint(x+width,y+height), cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 16);
+					cv::rectangle( m_cvImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, CV_AA);
 				else
-					cvRectangle( m_cvImage, cvPoint(x,y), cvPoint(x+width,y+height), cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
+					cv::rectangle( m_cvImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
 				break;
 
 			case CORNERS:
 				if (graphManager.getSmooth())
-					cvRectangle( m_cvImage, cvPoint(x,y), cvPoint(width,height), cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 16);
+					cv::rectangle( m_cvImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, CV_AA);
 				else
-					cvRectangle( m_cvImage, cvPoint(x,y), cvPoint(width,height), cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
+					cv::rectangle( m_cvImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
 				break;
 
 			case CENTER:
 				if (graphManager.getSmooth())
-					cvRectangle( m_cvImage, cvPoint(x-(int)widthDIV2,y-(int)heightDIV2), cvPoint(x+(int)widthDIV2,y+(int)heightDIV2), cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 16);
+					cv::rectangle( m_cvImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, CV_AA);
 				else
-					cvRectangle( m_cvImage, cvPoint(x-(int)widthDIV2,y-(int)heightDIV2), cvPoint(x+(int)widthDIV2,y+(int)heightDIV2), cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
+					cv::rectangle( m_cvImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
 				break;
 
 			case RADIUS:
 				if (graphManager.getSmooth())
-					cvRectangle( m_cvImage, cvPoint(x-width,y-height), cvPoint(x+width,y+height), cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 16);
+					cv::rectangle( m_cvImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, CV_AA);
 				else
-					cvRectangle( m_cvImage, cvPoint(x-width,y-height), cvPoint(x+width,y+height), cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
+					cv::rectangle( m_cvImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
 				break;
 			}
 		}
@@ -1156,30 +1164,30 @@ namespace Cing
 			{
 			case CORNER:
 				if (graphManager.getSmooth())
-					cvEllipse(	m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360,	cvScalar( color.r, color.g, color.b, color.a ),-1,16 );
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360,	cv::Scalar( color.r, color.g, color.b, color.a ),-1,CV_AA);
 				else
-					cvEllipse(	m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360,	cvScalar( color.r, color.g, color.b, color.a ),-1,4 );
+					cv::ellipse(	m_cvImage, cv::Point(x1,y1), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360,	cv::Scalar( color.r, color.g, color.b, color.a ),-1,4 );
 				break;
 
 			case CORNERS:
 				if (graphManager.getSmooth())
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), -1, 16);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize(x2,y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), -1, CV_AA);
 				else
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), -1, 4);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize(x2,y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), -1, 4);
 				break;
 
 			case CENTER:
 				if (graphManager.getSmooth())
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), -1, 16);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), -1, CV_AA);
 				else
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), -1, 4);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), -1, 4);
 				break;
 
 			case RADIUS:
 				if (graphManager.getSmooth())
-					cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), -1, 16);
+					cv::ellipse( m_cvImage, cv::Point(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), -1, CV_AA);
 				else
-					cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), -1, 4);
+					cv::ellipse( m_cvImage, cv::Point(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), -1, 4);
 				break;
 			}
 		}
@@ -1194,30 +1202,30 @@ namespace Cing
 
 			case CORNER:
 				if (graphManager.getSmooth())
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 16);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, CV_AA);
 				else
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
 				break;
 
 			case CORNERS:
 				if (graphManager.getSmooth())
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 16);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize(x2,y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, CV_AA);
 				else
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize(x2,y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize(x2,y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
 				break;
 
 			case CENTER:
 				if (graphManager.getSmooth())
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 16);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, CV_AA);
 				else
-					cvEllipse( m_cvImage, cvPoint(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
+					cv::ellipse( m_cvImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
 				break;
 
 			case RADIUS:
 				if (graphManager.getSmooth())
-					cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 16);
+					cv::ellipse( m_cvImage, cv::Point(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, CV_AA);
 				else
-					cvEllipse( m_cvImage, cvPoint(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cvScalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
+					cv::ellipse( m_cvImage, cv::Point(x1-x2,y1-y2), cvSize(x1+x2,y1+y2), angleDegrees,	0, 360, cv::Scalar( color.r, color.g, color.b, color.a ), strokeWeight, 4);
 				break;
 			}
 		}
@@ -1231,31 +1239,31 @@ namespace Cing
 	* @brief Method to apply a variety of basic filters to this image.
 	*
 	* @param ImageProcessingFilters type
-	* @param float
+	* @param int argument fot the filter that will be applied
 	*/
-	void Image::filter( ImageProcessingFilters type, float param1 )
+	void Image::filter( ImageProcessingFilters type, int param1 )
 	{
 		// Check the image is valid
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 		if (type == BLUR)
-			cvSmooth(m_cvImage, m_cvImage, CV_BLUR , 9);
+			cv::blur(m_cvImage, m_cvImage, cv::Size(param1,param1) );
 
 		if (type == ERODE)
-			cvErode( m_cvImage, m_cvImage, 0, 1 );
+			cv::erode( m_cvImage, m_cvImage, cv::Mat(), cv::Point(-1, -1), param1 );
 
 		if (type == DILATE)
-			cvDilate( m_cvImage, m_cvImage, 0, 1 );
-
+			cv::dilate( m_cvImage, m_cvImage, cv::Mat(), cv::Point(-1, -1), param1 );
+			
 		if (type == THRESHOLD)
 		{
-			m_imgThresholdFilter.setThreshold( (int) param1);
-			m_imgThresholdFilter.apply(  *m_cvImage , *m_cvImage);
+			m_imgThresholdFilter.setThreshold(param1);
+			m_imgThresholdFilter.apply(  (IplImage)m_cvImage , (IplImage)m_cvImage);
 		}
 
 		if (type == INVERT)
-			cvNot( m_cvImage, m_cvImage);
+			cv::invert( m_cvImage, m_cvImage);
 
 		// TODO
 		// Update texture when the next drawing call is made by the user
@@ -1274,22 +1282,23 @@ namespace Cing
 			THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 		if (type == BLUR)
-			cvSmooth(m_cvImage, m_cvImage, CV_BLUR , 3);
+			cv::blur(m_cvImage, m_cvImage, cv::Size(3, 3));
 
 		if (type == ERODE)
-			cvErode( m_cvImage, m_cvImage, 0, 1 );
+			cv::erode( m_cvImage, m_cvImage, cv::Mat() );
 
 		if (type == DILATE)
-			cvDilate( m_cvImage, m_cvImage, 0, 1 );
+			cv::erode( m_cvImage, m_cvImage, cv::Mat() );
 
 		if (type == THRESHOLD)
 		{
-			m_imgThresholdFilter.apply(  *m_cvImage , *m_cvImage);
+			m_imgThresholdFilter.apply( (IplImage)m_cvImage , (IplImage)m_cvImage);
 		}
 
 		if (type == INVERT)
 		{
-			cvNot( m_cvImage, m_cvImage);
+			cv::invert( m_cvImage, m_cvImage );
+
 		}
 		// TODO
 		// Update texture when the next drawing call is made by the user
@@ -1318,24 +1327,13 @@ namespace Cing
 		IplImage* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 3 );
 
 		// Convert image
-		cvCvtColor( m_cvImage, tempImage, CV_GRAY2RGB );
+		cv::Mat temp(tempImage);
+		cv::cvtColor( m_cvImage, temp, CV_GRAY2RGB );
 
-		// Update attributes
-		m_nChannels = 3;
-
-		// Release current image
-		if ( m_cvImage )
-			cvReleaseImage( &m_cvImage );
-
-		// Release and recreate the quad
-		m_quad.end();
-		m_quad.init( tempImage->width, tempImage->height, getFormat() );
-
-		// Clone the temp
-		m_cvImage = cvCloneImage( tempImage );
-
-		// Mark texture to be updated in the next draw call
-		setUpdateTexture( true );
+		// Re-init the image with the new format and se the color data
+		end();
+		init( tempImage->width, tempImage->height, RGB );
+		setData( (unsigned char*)tempImage->imageData, tempImage->width, tempImage->height, RGB );
 
 		// Release temp image
 		ImageResourceManager::getSingleton().releaseImage( tempImage );
@@ -1358,7 +1356,7 @@ namespace Cing
 			return;
 		}
 
-		// Check current format
+		// Check current format, if it is already grayscale -> do nothing
 		if ( m_nChannels == 1 )
 			return;
 
@@ -1366,24 +1364,13 @@ namespace Cing
 		IplImage* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 1 );
 
 		// Convert image
-		cvCvtColor( m_cvImage, tempImage, CV_RGB2GRAY );
+		cv::Mat temp(tempImage);
+		cv::cvtColor( m_cvImage, temp, CV_RGB2GRAY );
 
-		// Update attributes
-		m_nChannels = 1;
-
-		// Release current image
-		//if ( m_cvImage )
-		cvReleaseImage( &m_cvImage );
-
-		// Release and recreate the quad
-		m_quad.end();
-		m_quad.init( tempImage->width, tempImage->height, getFormat() );
-
-		// Clone the temp
-		m_cvImage = cvCloneImage( tempImage );
-
-		// Mark texture to be updated in the next draw call
-		setUpdateTexture( true );
+		// Re-init the image with the new format and se the grayscale data
+		end();
+		init( tempImage->width, tempImage->height, GRAYSCALE );
+		setData( (unsigned char*)tempImage->imageData, tempImage->width, tempImage->height, GRAYSCALE );
 
 		// Release temp image
 		ImageResourceManager::getSingleton().releaseImage( tempImage );
@@ -1395,16 +1382,16 @@ namespace Cing
 	void Image::operator +=	( float scalar ){
 
 
-		switch( m_cvImage->nChannels )
+		switch( m_cvImage.channels() )
 		{
 		case 1:
-			cvAddS( m_cvImage, cvScalar(scalar), m_cvImage );
+			cv::add( m_cvImage, cv::Scalar(scalar), m_cvImage );
 			break;
 		case 3:
-			cvAddS( m_cvImage, cvScalar(scalar,scalar,scalar), m_cvImage );
+			cv::add( m_cvImage, cv::Scalar(scalar,scalar,scalar), m_cvImage );
 			break;
 		case 4:
-			cvAddS( m_cvImage, cvScalar(scalar,scalar,scalar,scalar), m_cvImage );
+			cv::add( m_cvImage, cv::Scalar(scalar,scalar,scalar,scalar), m_cvImage );
 			break;
 		default:
 			THROW_EXCEPTION( "Invalid number of channels in image" )
@@ -1413,16 +1400,16 @@ namespace Cing
 	}
 
 	void Image::operator -=	( float scalar ){
-		switch( m_cvImage->nChannels )
+		switch( m_cvImage.channels() )
 		{
 		case 1:
-			cvSubS( m_cvImage, cvScalar(scalar), m_cvImage );
+			cv::subtract( m_cvImage, cv::Scalar(scalar), m_cvImage );
 			break;
 		case 3:
-			cvSubS( m_cvImage, cvScalar(scalar,scalar,scalar), m_cvImage );
+			cv::subtract( m_cvImage, cv::Scalar(scalar,scalar,scalar), m_cvImage );
 			break;
 		case 4:
-			cvSubS( m_cvImage, cvScalar(scalar,scalar,scalar,scalar), m_cvImage );
+			cv::subtract( m_cvImage, cv::Scalar(scalar,scalar,scalar,scalar), m_cvImage );
 			break;
 		default:
 			THROW_EXCEPTION( "Invalid number of channels in image" )
@@ -1432,12 +1419,14 @@ namespace Cing
 
 	void Image::operator +=	( const Image& img ){
 
-		cvAdd( m_cvImage, &img.getCVImage(), m_cvImage );
+		cv::add( m_cvImage, &img.getCVImage(), m_cvImage );
+		setUpdateTexture(true);
 	}
 
 	void Image::operator -=	( const Image& img ){
 
-		cvSub( m_cvImage, &img.getCVImage(), m_cvImage );
+		cv::subtract( m_cvImage, &img.getCVImage(), m_cvImage );
+		setUpdateTexture(true);
 	}
 
 	/**
@@ -1459,8 +1448,7 @@ namespace Cing
 			THROW_EXCEPTION( "Images with different sizes" );
 
 		percentage = map( percentage, 0, 100, 0.0f, 1.0f );
-		cvAddWeighted( m_cvImage, 1.0 - percentage, &other.getCVImage(), percentage, 0.0f, m_cvImage );
-
+		cv::addWeighted( m_cvImage, 1.0 - percentage, &other.getCVImage(), percentage, 0.0f, m_cvImage );
 	}
 
 	void Image::operator = ( float scalar)
@@ -1469,16 +1457,16 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		switch( m_cvImage->nChannels )
+		switch( m_cvImage.channels() )
 		{
 		case 1:
-			cvSet( m_cvImage, cvScalar(scalar) );
+			m_cvImage = cv::Scalar(scalar);
 			break;
 		case 3:
-			cvSet( m_cvImage, cvScalar(scalar,scalar,scalar) );
+			m_cvImage = cv::Scalar(scalar,scalar,scalar);
 			break;
 		case 4:
-			cvSet( m_cvImage, cvScalar(scalar,scalar,scalar,scalar) );
+			m_cvImage = cv::Scalar(scalar,scalar,scalar,scalar);
 			break;
 		default:
 			THROW_EXCEPTION( "Invalid number of channels in image" )
@@ -1499,16 +1487,16 @@ namespace Cing
 			THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 		// Set the entire image 
-		switch( m_cvImage->nChannels )
+		switch( m_cvImage.channels() )
 		{
 		case 1:
-			cvSet( m_cvImage, cvScalar(theColor.r) );
+			m_cvImage = cv::Scalar(theColor.r);
 			break;
 		case 3:
-			cvSet( m_cvImage, cvScalar(theColor.r, theColor.g, theColor.b) );
+			m_cvImage = cv::Scalar(theColor.r, theColor.g, theColor.b);
 			break;
 		case 4:
-			cvSet( m_cvImage, cvScalar(theColor.r, theColor.g, theColor.b, theColor.a) );
+			m_cvImage = cv::Scalar(theColor.r, theColor.g, theColor.b, theColor.a);
 			break;
 		default:
 			THROW_EXCEPTION( "Invalid number of channels in image" )
@@ -1525,23 +1513,7 @@ namespace Cing
 	*/
 	void Image::copy( const Image& img )
 	{
-		// TODO: add check size and formats
-		cvCopy( &img.getCVImage(), m_cvImage, NULL );
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
-	}
-
-	/**
-	* @brief Copy part of image to another
-	* TODO: optimize
-	*/
-	void Image::copy( const Image& img , int srcX, int srcY, int srcW, int srcH, int destX, int destY, int destW, int destH )
-	{
-
-		// TODO: add check size and formats
-		cvCopy( &img.getCVImage(), m_cvImage, NULL );
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+		*this = img;
 	}
 
 	// Ink modes

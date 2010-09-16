@@ -405,7 +405,7 @@ void MovableText::_setupGeometry()
 					!= forcedLineBreaks.end();
 
 			if ( IsNewLine(*i) || isLineBreak )
-				top += verticalOffset * 2.0;
+				top += verticalOffset * 2.0f;
 		}
 	}
 
@@ -455,8 +455,8 @@ void MovableText::_setupGeometry()
 		// Current character is a new line
 		if ( IsNewLine(character) )
 		{
-			left = 0 * 2.0 - 1.0;
-			top -= mCharHeight * 2.0;
+			left = 0.0f * 2.0f - 1.0f;
+			top -= mCharHeight * 2.0f;
 			newLine = true;
 			// Also reduce tri count
 			mRenderOp.vertexData->vertexCount -= 6;
@@ -481,8 +481,8 @@ void MovableText::_setupGeometry()
 		else if ( isLineBreak )
 		{
 			// Normal line break stuff (but without reducing tris)
-			left = 0 * 2.0 - 1.0;
-			top -= mCharHeight * 2.0;
+			left = 0.0f * 2.0f - 1.0f;
+			top -= mCharHeight * 2.0f;
 			newLine = true;
 
 			// Remove this line break from the list of line breaks to process
@@ -751,7 +751,7 @@ void MovableText::calculateLineLeft( const Ogre::DisplayString::iterator& curren
 				lineLength += mSpaceWidth;
 			} else
 			{
-				lineLength += mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0 * mViewportAspectCoef;
+				lineLength += mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0f * mViewportAspectCoef;
 			}
 		}
 
@@ -759,7 +759,7 @@ void MovableText::calculateLineLeft( const Ogre::DisplayString::iterator& curren
 		if ( mHorizontalAlignment == RIGHT )
 			left -= lineLength;
 		else if ( mHorizontalAlignment == CENTER )
-			left -= lineLength * 0.5;
+			left -= lineLength * 0.5f;
 	}
 }
 
@@ -804,7 +804,7 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 		m_maxSquaredRadius = std::max(m_maxSquaredRadius, currPos.squaredLength());
 	}
 
-	top -= mCharHeight * 2.0;
+	top -= mCharHeight * 2.0f;
 
 	// Bottom left
 	*pVert++ = left;
@@ -825,8 +825,8 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 	m_max.makeCeil(currPos);
 	m_maxSquaredRadius = std::max(m_maxSquaredRadius, currPos.squaredLength());
 
-	top += mCharHeight * 2.0;
-	left += horiz_height * mCharHeight * 2.0;
+	top += mCharHeight * 2.0f;
+	left += horiz_height * mCharHeight * 2.0f;
 
 	// Top right
 	*pVert++ = left;
@@ -865,8 +865,8 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 	m_max.makeCeil(currPos);
 	m_maxSquaredRadius = std::max(m_maxSquaredRadius, currPos.squaredLength());
 
-	top -= mCharHeight * 2.0;
-	left -= horiz_height * mCharHeight * 2.0;
+	top -= mCharHeight * 2.0f;
+	left -= horiz_height * mCharHeight * 2.0f;
 
 	// Bottom left (again)
 	*pVert++ = left;
@@ -876,12 +876,12 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 	*pVert++ = uvRect.bottom;
 
 	// Deal with bounds
-	currPos = Vector(left, top, -1.0);
+	currPos = Vector(left, top, -1.0f);
 	m_min.makeFloor(currPos);
 	m_max.makeCeil(currPos);
 	m_maxSquaredRadius = std::max(m_maxSquaredRadius, currPos.squaredLength());
 
-	left += horiz_height * mCharHeight * 2.0;
+	left += horiz_height * mCharHeight * 2.0f;
 
 	// Bottom right
 	*pVert++ = left;
@@ -891,7 +891,7 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 	*pVert++ = uvRect.bottom;
 
 	// Deal with bounds
-	currPos = Vector(left, top, -1.0);
+	currPos = Vector(left, top, -1.0f);
 	m_min.makeFloor(currPos);
 	m_max.makeCeil(currPos);
 	m_maxSquaredRadius = std::max(m_maxSquaredRadius, currPos.squaredLength());
@@ -899,7 +899,7 @@ void MovableText::drawCharacter( float*& pVert, const Ogre::Font::CodePoint& cha
 	//-------------------------------------------------------------------------------------
 
 	// Go back up with top
-	top += mCharHeight * 2.0;
+	top += mCharHeight * 2.0f;
 }
 
 

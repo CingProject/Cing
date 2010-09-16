@@ -376,7 +376,7 @@ void useDefault3DCameraControl( bool useDefault )
  */
 void useMouseCameraControl( bool value )
 {
-	GraphicsManager::getSingleton().getDefaultCameraController().userMouse( value );
+	GraphicsManager::getSingleton().getDefaultCameraController().useMouse( value );
 }
 
 /**
@@ -386,7 +386,7 @@ void useMouseCameraControl( bool value )
  */
 void useKeyboardCameraControl( bool value )
 {
-	GraphicsManager::getSingleton().getDefaultCameraController().userKeyboard( value );
+	GraphicsManager::getSingleton().getDefaultCameraController().useKeyboard( value );
 }
 
 
@@ -483,7 +483,7 @@ void line( int x1, int y1, int x2, int y2 )
 	Vector v1 = t.applyTransform( Vector( (float)x1, (float)y1, 0) );
 	Vector v2 = t.applyTransform( Vector( (float)x2, (float)y2, 0) );
 
-	GraphicsManager::getSingleton().m_canvas->line( (int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y );
+	GraphicsManager::getSingleton().m_canvas.line( (int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y );
 };
 
 /*
@@ -501,7 +501,7 @@ void point( int x, int y )
 
 	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
 
-	GraphicsManager::getSingleton().m_canvas->point( (int)v1.x, (int)v1.y );
+	GraphicsManager::getSingleton().m_canvas.point( (int)v1.x, (int)v1.y );
 };
 
 /*
@@ -526,7 +526,7 @@ void triangle( int x1, int y1, int x2, int y2, int x3, int y3 )
 	Vector v2 = t.applyTransform( Vector( (float)x2, (float)y2, 0) );
 	Vector v3 = t.applyTransform( Vector( (float)x3, (float)y3, 0) );
 
-	GraphicsManager::getSingleton().m_canvas->triangle( (int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y, (int)v3.x, (int)v3.y );
+	GraphicsManager::getSingleton().m_canvas.triangle( (int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y, (int)v3.x, (int)v3.y );
 };
 
 /**
@@ -584,7 +584,7 @@ void rect( int x, int y, int width, int height )
 		break;
 	}
 
-	GraphicsManager::getSingleton().m_canvas->quad( (int)v1.x , (int)v1.y , 
+	GraphicsManager::getSingleton().m_canvas.quad( (int)v1.x , (int)v1.y , 
 													(int)v2.x , (int)v2.y, 
 													(int)v3.x , (int)v3.y, 
 													(int)v4.x , (int)v4.y );
@@ -612,7 +612,7 @@ void quad( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 )
 	Vector v3 = t.applyTransform( Vector( (float)x3, (float)y3, 0) );
 	Vector v4 = t.applyTransform( Vector( (float)x4, (float)y4, 0) );
 
-	GraphicsManager::getSingleton().m_canvas->quad( (int)v1.x , (int)v1.y , 
+	GraphicsManager::getSingleton().m_canvas.quad( (int)v1.x , (int)v1.y , 
 													(int)v2.x , (int)v2.y, 
 													(int)v3.x , (int)v3.y, 
 													(int)v4.x , (int)v4.y );
@@ -631,7 +631,7 @@ void ellipse( int x, int y, int width, int height)
 	//TODO: Manage transforms
 	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
-	GraphicsManager::getSingleton().m_canvas->ellipse( (int)v1.x, (int)v1.y, width, height, t.getRotation().z );
+	GraphicsManager::getSingleton().m_canvas.ellipse( (int)v1.x, (int)v1.y, width, height, t.getRotation().z );
 }
 
 void arc( int x, int y,  int width, int height, float start, float stop )
@@ -639,7 +639,7 @@ void arc( int x, int y,  int width, int height, float start, float stop )
 	//TODO: Manage transforms
 	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
 	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
-	GraphicsManager::getSingleton().m_canvas->arc( x, y, width, height, start, stop );
+	GraphicsManager::getSingleton().m_canvas.arc( x, y, width, height, start, stop );
 }
 
 /**
@@ -764,9 +764,9 @@ Image loadImage( const std::string& name)
 void loadPixels()
 {
 	// Create temporal image to allow an easy access to the data
-	Image* tempImage = GraphicsManager::getSingleton().m_canvas;
-	int    numPixels = tempImage->getWidth() * tempImage->getHeight();
-	int    imageWidth    = tempImage->getWidth();
+	const Image& tempImage = GraphicsManager::getSingleton().m_canvas;
+	int    numPixels = tempImage.getWidth() * tempImage.getHeight();
+	int    imageWidth= tempImage.getWidth();
 	int    yIndex    = 0;
 
 	// Read entire canvas image
@@ -774,7 +774,7 @@ void loadPixels()
 	{
 		if ( (i % imageWidth == 0) && (i != 0) )
 		  yIndex++;
-		pixels[i] = tempImage->getPixel( i - imageWidth*yIndex, yIndex );
+		pixels[i] = tempImage.getPixel( i - imageWidth*yIndex, yIndex );
 	}
 
 }
@@ -787,10 +787,10 @@ void loadPixels()
 void updatePixels()
 {
 	// Create temporal image to allow an easy access to the data
-	Image* tempImage		= GraphicsManager::getSingleton().m_canvas;
-	int    numPixels		= tempImage->getWidth() * tempImage->getHeight();
-	int    imageWidth		= tempImage->getWidth();
-	int    yIndex				= 0;
+	Image& tempImage	= GraphicsManager::getSingleton().m_canvas;
+	int    numPixels	= tempImage.getWidth() * tempImage.getHeight();
+	int    imageWidth	= tempImage.getWidth();
+	int    yIndex		= 0;
 
 	// Paint pixels in the canvas image
 	// TODO: Too slow! Optimize
@@ -799,7 +799,7 @@ void updatePixels()
 		if ( (i % imageWidth == 0) && (i != 0) )
 			yIndex++;
 		stroke( pixels[i] );
-		tempImage->point( i - (imageWidth*yIndex), yIndex);
+		tempImage.point( i - (imageWidth*yIndex), yIndex);
 	}
 }
 /**

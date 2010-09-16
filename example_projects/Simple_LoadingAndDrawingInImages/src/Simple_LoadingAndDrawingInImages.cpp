@@ -18,8 +18,8 @@ void setup()
 
 void draw()
 {
-    // Draw the image in 2d where the mouse is
-	myImage.draw(mouseX,mouseY,0);
+    // Draw the image in 2d where the mouse is located
+	myImage.draw(mouseX,mouseY);
 }
 
 void end()

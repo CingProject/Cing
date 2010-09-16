@@ -9,13 +9,16 @@ CREATE_APPLICATION( "Cing Demo" );
 
 void setup()
 {
-	// Init values for size and stroke color
+	// Set window size and smooth drawing
 	size(800, 800);
-	stroke(255);
+	smooth();
 }
 
 void draw()
 {
+	// Associate the stroke grayscale value to the vertical position of the mouse
+	stroke(mouseY);
+
 	// Draw a line from the center of the window to the mouse
 	line(width/2, height/2, mouseX, mouseY);
 }

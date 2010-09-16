@@ -174,7 +174,7 @@ void CameraController::update()
  *
  * @param value if true, keyboard control will be activated, if false it will be deactivated
  */
-void CameraController::userKeyboard( bool value )
+void CameraController::useKeyboard( bool value )
 {
 	m_useKeyboard = value;
 }
@@ -184,7 +184,7 @@ void CameraController::userKeyboard( bool value )
  *
  * @param value if true, mouse control will be activated, if false it will be deactivated
  */
-void CameraController::userMouse( bool value )
+void CameraController::useMouse( bool value )
 {
 	m_useMouse = value;
 }
