@@ -1486,18 +1486,38 @@ namespace Cing
 
 	}
 	/**
-	* @brief Copy from image
-	* TODO: optimize
-	*/
+	 * @brief Copy from image
+	 * @param img Image to copy data and format from
+	 * TODO: optimize
+	 */
 	void Image::copy( const Image& img )
 	{
 		*this = img;
 	}
 
-	// Ink modes
+	/**
+	 * @brief Copy from image
+	 * @param alpha Transparency value for the image. Range 0..255
+	 */
+	void Image::setTransparency( float alpha )
+	{
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Trying to set transparency on an image that hast no been initialized" );
+			return;
+		}
+
+		m_quad.setTransparency( alpha );
+	}
+	
+
+	/**
+	 * @brief Sets the blending mode of the image
+	 * @param img Image to copy data and format from
+	 * TODO: optimize
+	 */
 	void Image::setInkMode( ImageInkModes type )
 	{
-
 		if (type == ADD)
 			m_quad.setAdditiveMode( true );
 

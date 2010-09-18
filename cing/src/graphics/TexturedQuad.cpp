@@ -630,16 +630,19 @@ namespace Cing
 	 */
 	void TexturedQuad::setTransparency( float alpha )
 	{
+		// Move into 0..1 range
+		float alphaNormalized = map( alpha, 0, 255, 0.0f, 1.0f );
+
 		// Has alpha channel?
-		if ( Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format ) )
+		if ( Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format ) == 4 )
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( m_ogreMaterialName );
-			material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAlphaOperation( Ogre::LBX_MODULATE, Ogre::LBS_MANUAL, Ogre::LBS_TEXTURE, alpha );
+			material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAlphaOperation( Ogre::LBX_MODULATE, Ogre::LBS_MANUAL, Ogre::LBS_TEXTURE, alphaNormalized );
 		}
 		else
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( m_ogreMaterialName );
-			material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAlphaOperation(Ogre::LBX_SOURCE1, Ogre::LBS_MANUAL, Ogre::LBS_CURRENT, alpha);
+			material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAlphaOperation(Ogre::LBX_SOURCE1, Ogre::LBS_MANUAL, Ogre::LBS_CURRENT, alphaNormalized);
 		}
 	}
 

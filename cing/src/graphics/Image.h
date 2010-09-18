@@ -102,8 +102,10 @@ namespace Cing
 		void	toColor	();
 		void	toGray	();
 
-		// Ink modes
-		void setInkMode( ImageInkModes type );
+		// Ink modes / Transparency
+		void setTransparency( float alpha );
+		void setTransparency( int alpha ) { setTransparency( (float)alpha ); }
+		void setInkMode		( ImageInkModes type );
 
 		// Updates texture data
 		void updateTexture();
