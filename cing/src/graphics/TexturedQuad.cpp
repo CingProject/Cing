@@ -690,9 +690,9 @@ namespace Cing
 		if ( ( width > m_textWidth ) || ( height > m_textHeight ) )
 			THROW_EXCEPTION( "The resolution of the received data is bigger than the texture data size. Cannot update the texture" );
 
-		// Check format
-		if ( m_format != format )
-			THROW_EXCEPTION( "Trying to update texture with different format" );
+		//// Check format
+		//if ( m_format != format )
+		//	THROW_EXCEPTION( "Trying to update texture with different format" );
 
 		// Update texture
 		//m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );

@@ -216,28 +216,50 @@ namespace Cing
 			return;
 		}
 
-		// Store image format (for images loaded from file, we force it to be RGB or RGBA
+		// Store image format (for images loaded from file, we force it to be RGB or RGBA)
 		if (m_image.getHasAlpha() )
 			m_format = RGBA;
 		else
 			m_format = RGB;
 
+		//m_format = (GraphicsType)m_image.getFormat();
+
 		// Create the image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
 		m_cvImage.create( m_image.getHeight(), m_image.getWidth(), CV_MAKETYPE(CV_8U,m_nChannels) );
 
-		// Set the data comming from the file image
+		// Create OpenCV header for the image data comming from the file (to copy it later to our opencv image)
 		cv::Mat imgData(m_cvImage.rows, m_cvImage.cols, CV_MAKETYPE(CV_8U,m_nChannels), m_image.getData(), m_image.getWidth() * m_nChannels);
-		imgData.copyTo(m_cvImage);
 
 		// Check if we need to flip the channels red and green (for example png and jpgs are loaded as BGR by Ogre)
 		GraphicsType currentImageFormat = (GraphicsType)m_image.getFormat();
 		if ( (currentImageFormat == BGR) || (currentImageFormat == BGRA) )
 		{
+			// No alpha channel
 			if ( m_nChannels == 3 )
-				cv::cvtColor( m_cvImage, m_cvImage, CV_RGB2BGR );
+			{
+				cv::cvtColor( imgData, m_cvImage, CV_RGB2BGR );
+			}
+			// Now, we have an image with Alpha channel -> where is the alpha? (first or last byte)
+			// Alpha is last
+			else if (m_image.getFormat() == Ogre::PF_B8G8R8A8 )
+			{
+				cv::cvtColor( imgData, m_cvImage, CV_RGBA2BGRA );
+			}
+			// Alpha is first byte
+			else if (m_image.getFormat() == Ogre::PF_A8R8G8B8 )
+			{
+				// Flip Red and Blue channels leaving Apha and Green where they are
+				//int from_to[] = { 0,0,  1,3,  2,2,  3,1 };
+				int from_to[] = { 0,2,  1,1,  2,0,  3,3 };
+				cv::mixChannels( &imgData, 1, &m_cvImage, 1, from_to, 4 );
+			}
+			// Format not "under control" -> not touching byte order
 			else
-				cv::cvtColor( m_cvImage, m_cvImage, CV_RGBA2BGRA );
+			{
+				LOG( "Image::load. Format not \"under control\". Not altering byte order, colors could be swapped" );
+				imgData.copyTo(m_cvImage);
+			}
 		}
 
 		// Create the texture quad (to draw image)
@@ -452,7 +474,7 @@ namespace Cing
 	/**
 	* @brief Set if texture updates automatically every frame
 	*/
-	void Image::setUpdateTexture(bool updateTextureFlag )
+	void Image::setUpdateTexture(bool updateTextureFlag /*= true*/)
 	{
 		m_bUpdateTexture = updateTextureFlag;
 	}

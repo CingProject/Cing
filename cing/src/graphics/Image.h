@@ -134,7 +134,7 @@ namespace Cing
 		void copy( const Image& img );
 
 		// Texture update control
-		void					setUpdateTexture( bool updateTextureFlag );	
+		void					setUpdateTexture( bool updateTextureFlag = true );	
 		bool					getUpdateTexture() const;	
 
 		// Texture coordinate flip
