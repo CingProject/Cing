@@ -22,6 +22,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "TexturedQuad.h"
 
 #include <limits.h>
+#include <ostream>
 
 // Graphics
 #include "GraphicsManager.h"
@@ -207,8 +208,9 @@ namespace Cing
 		// Finish defining geometry
 		m_quad->end();
 
-		// Add to the scene
-		m_quadSceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
+		// Create scene nodes (pivot and quadSceneNode) and add the manual object
+		m_pivotSceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
+		m_quadSceneNode  = m_pivotSceneNode->createChildSceneNode();
 		m_quadSceneNode->attachObject( m_quad );
 
 		// Register in graphics manager so that it is marked as invisible every frame
@@ -253,6 +255,9 @@ namespace Cing
 		Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
 		if ( sceneManager )
 		{
+			// Remove the nodes
+			sceneManager->getRootSceneNode()->removeChild( m_pivotSceneNode );
+
 			// Destroy the manual object
 			sceneManager->destroyManualObject( m_ogreManualObjectName );
 
@@ -288,7 +293,7 @@ namespace Cing
 	}
 
 	/**
-	* @brief Sets the position in the scene of the textured quad (in 2 dimensions -> in screen coordinates)
+	* @brief Sets the position in the scene of the textured quad (in 2 dimensions -> in screen coordinates: range -1..1)
 	* @param[in] x x coordinate of the new position
 	* @param[in] y y coordinate of the new position
 	*/
@@ -304,7 +309,7 @@ namespace Cing
 		// That is why the y screen coordinate is inverted
 		m_2dXPos = (x / (float)width) * 2.0f - 1;
 		m_2dYPos = -((y / (float)height) * 2.0f - 1);
-		m_quadSceneNode->setPosition( m_2dXPos + m_2dWidth/2 , m_2dYPos - m_2dHeight/2, 0 );
+		m_pivotSceneNode->setPosition( m_2dXPos , m_2dYPos, 0 );
 	}
 
 	/**
@@ -410,15 +415,8 @@ namespace Cing
 		if ( m_render2D )
 			set3dRendering();
 
-		// Finally, set coordinates in the selected system
-		if ( GraphicsManager::getSingleton().isProcessingMode() )
-		{
-			m_quadSceneNode->setPosition( x + width/2, y + height/2, z );
-			m_quadSceneNode->setScale( width, -height, 1 );
-		}else{
-			m_quadSceneNode->setPosition( x, y, z );
-			m_quadSceneNode->setScale( width, height, 1 );
-		}
+		// Apply current transformations to the pivot node
+		applyTransformations(x, y, z, width, height);
 
 		m_quadSceneNode->setVisible( true );
 	}
@@ -440,10 +438,10 @@ namespace Cing
 	* @param yPos y4
 	* @param zPos z4
 	*/
-	void TexturedQuad::draw( float x1, float y1, float z1,
-		float x2, float y2, float z2,
-		float x3, float y3, float z3,
-		float x4, float y4, float z4)
+	void TexturedQuad::draw(	float x1, float y1, float z1,
+								float x2, float y2, float z2,
+								float x3, float y3, float z3,
+								float x4, float y4, float z4)
 	{
 		if ( !isValid() )
 		{
@@ -455,24 +453,33 @@ namespace Cing
 		if ( m_render2D )
 			set3dRendering();
 
+		// Apply current transformations to the pivot node
+		applyTransformations(0, 0, 0, 1, 1);
+		
+
+		// Find center
+		float xCenter = (x1 + x2 + x3 + x4)/4.0f;
+		float yCenter = (y1 + y2 + y3 + y4)/4.0f;
+		float zCenter = (z1 + z2 + z3 + z4)/4.0f;
+
 		// Generate the geometry of the quad
 		m_quad->beginUpdate( 0 );
 
-		// Coordinate systems: in normal system invert y coordinates (y increasis in top direction)
-		if ( GraphicsManager::getSingleton().isProcessingMode() == false )
-		{
-			y1 = height - y1;
-			y2 = height - y2;
-			y3 = height - y3;
-			y4 = height - y4;
-		}
+		// Coordinate systems: in normal system invert y coordinates (y grows in top direction)
+		//if ( GraphicsManager::getSingleton().isProcessingMode() == false )
+		//{
+		//	y1 = height - y1;
+		//	y2 = height - y2;
+		//	y3 = height - y3;
+		//	y4 = height - y4;
+		//}
 
 		// m_quad positions and texture coordinates
 		// TODO revisar esto...por qué hay q voltear las coordenadas uv?
-		m_quad->position( x1, y1, z1 );  m_quad->textureCoord( 0, 0 );
-		m_quad->position( x2, y2, z2 );  m_quad->textureCoord( 1, 0 );
-		m_quad->position( x3, y3, z3 );  m_quad->textureCoord( 1, 1 );
-		m_quad->position( x4, y4, z4 );  m_quad->textureCoord( 0, 1 );
+		m_quad->position( x1-xCenter, y1-yCenter, z1-zCenter );  m_quad->textureCoord( 0, 0 );
+		m_quad->position( x2-xCenter, y2-yCenter, z2-zCenter );  m_quad->textureCoord( 1, 0 );
+		m_quad->position( x3-xCenter, y3-yCenter, z3-zCenter );  m_quad->textureCoord( 1, 1 );
+		m_quad->position( x4-xCenter, y4-yCenter, z4-zCenter );  m_quad->textureCoord( 0, 1 );
 
 		// m_quad indexes (two triangles)
 		m_quad->triangle( 0, 2, 1 );
@@ -505,17 +512,9 @@ namespace Cing
 		if ( !m_render2D )
 			set2dRendering();
 
-		// Set properties of the quad, and set visible -> it will be rendered in the next render
-		if ( GraphicsManager::getSingleton().isProcessingMode() )
-		{
-			// Set properties of the quad, and set visible -> it will be rendered in the next render
-			setScale2d( imgWidth, -imgHeight );
-			setPosition2d( x, height-y );
-		}else{
-			// Set properties of the quad, and set visible -> it will be rendered in the next render
-			setScale2d( imgWidth, imgHeight );
-			setPosition2d( x, y );
-		}
+		// Apply transformations to the pivot node
+ 		applyTransformations2D(x, y, imgWidth, imgHeight);
+
 		m_quadSceneNode->setVisible( true );
 	}
 
@@ -545,6 +544,9 @@ namespace Cing
 		// If the object was set to render in 3d -> set it to render in 2d
 		if ( !m_render2D )
 			set2dRendering();
+
+		// Apply current transformations to the pivot node
+		applyTransformations2D(0, 0, 1, 1);
 
 		// Generate the geometry of the quad
 		m_quad->beginUpdate( 0 );
@@ -608,17 +610,8 @@ namespace Cing
 		// Set rendering properties
 		setbackgroundRendering();
 
-		// Set properties of the quad, and set visible -> it will be rendered in the next render
-		if ( GraphicsManager::getSingleton().isProcessingMode() )
-		{
-			// Set properties of the quad, and set visible -> it will be rendered in the next render
-			setScale2d( imgWidth, -imgHeight );
-			setPosition2d( x, height-y );
-		}else{
-			// Set properties of the quad, and set visible -> it will be rendered in the next render
-			setScale2d( imgWidth, imgHeight );
-			setPosition2d( x, y );
-		}
+		// Apply current transformations to the pivot node
+		applyTransformations2D(x, y, imgWidth, imgHeight);
 
 		m_quadSceneNode->setVisible( true );
 	}
@@ -829,9 +822,9 @@ namespace Cing
 	}
 
 	/**
-	* @internal
-	* @brief Sets the necessary properties for the object to be rendered in 3d (in world coordinates and world units)
-	*/
+	 * @internal
+	 * @brief Sets the necessary properties for the object to be rendered in 3d (in world coordinates and world units)
+	 */
 	void TexturedQuad::set3dRendering()
 	{
 		// Set properties for 3d rendering
@@ -846,5 +839,76 @@ namespace Cing
 		m_render2D = false;
 	}
 
+
+	
+	/**
+	 * @internal
+	 * @brief Applies the current transformations (on the matrix stack) to the pivot node of the quad)
+	 */
+	void TexturedQuad::applyTransformations( float x, float y, float z, float imgWidth, float imgHeight )
+	{
+		// Get Current transformation
+		Transform&	currentTransformation = GraphicsManager::getSingleton().m_transforms.top();
+
+		// Reset pivot transformations
+		m_pivotSceneNode->setPosition( Vector::ZERO );
+		m_pivotSceneNode->setOrientation( Quaternion::IDENTITY );
+		m_pivotSceneNode->setScale( Vector::UNIT_SCALE );
+
+		// Apply current transformations to the pivot Node
+		m_pivotSceneNode->translate( currentTransformation.getPosition() );
+		m_pivotSceneNode->rotate( currentTransformation.getRotQuaternion(), Ogre::Node::TS_PARENT );
+		m_pivotSceneNode->scale( currentTransformation.getScale() );
+
+		// Finally, set coordinates/scale for the quad scene node in the selected system
+		if ( GraphicsManager::getSingleton().isProcessingMode() )
+		{
+			m_quadSceneNode->setPosition( x + imgWidth/2, y + imgHeight/2, z );
+			m_quadSceneNode->setScale( (float)imgWidth, (float)-imgHeight, 1 );
+		}else{
+			m_quadSceneNode->setPosition( x + imgWidth/2, y + imgHeight/2, z );
+			m_quadSceneNode->setScale( (float)imgWidth, (float)imgHeight, 1 );
+		}
+
+	}
+
+	/**
+	 * @internal
+	 * @brief Applies the current transformations (on the matrix stack) to the pivot node of the quad)
+	 */
+	void TexturedQuad::applyTransformations2D( float x, float y, float imgWidth, float imgHeight )
+	{
+		// Get Current transformation
+		Transform&	currentTransformation = GraphicsManager::getSingleton().m_transforms.top();
+
+		// Reset pivot transformations
+		m_pivotSceneNode->setPosition( Vector::ZERO );
+		m_pivotSceneNode->setOrientation( Quaternion::IDENTITY );
+		m_pivotSceneNode->setScale( Vector::UNIT_SCALE );
+
+		// Now scale the pivot (coming from current transformation's  scale)
+		m_pivotSceneNode->scale( currentTransformation.getScale() );
+
+		// Pivot orientation Orientation
+		m_pivotSceneNode->setOrientation( currentTransformation.getRotQuaternion() );
+
+		// Translate quad position, so that the image is drawn from the top-left corner
+		m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
+
+		// Calculate the transformed coordinates in 3d space
+		Vector pos = currentTransformation.applyTransform( Vector(x, y, 0) );
+
+		// Set properties of the quad, and set visible -> it will be rendered in the next render
+		if ( GraphicsManager::getSingleton().isProcessingMode() )
+		{
+			// Set properties of the quad, and set visible -> it will be rendered in the next render
+			setScale2d( imgWidth, -imgHeight );
+			setPosition2d( pos.x, height-pos.y);
+		}else{
+			// Set properties of the quad, and set visible -> it will be rendered in the next render
+			setScale2d( imgWidth, imgHeight );
+			setPosition2d( pos.x, pos.y );
+		}
+	}
 
 } // namespace Cing

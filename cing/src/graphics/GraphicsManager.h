@@ -161,8 +161,11 @@ namespace Cing
 		Image						m_canvas;
 
 		// 2D / 3D Transforms
-		std::stack < Transform >	m_transforms; ///< Stack to store transform objects
-		std::deque < Style >		m_styles;     ///< Deque to store style properties ( fill color, stroke weight, etc.)
+		std::stack < Transform >	m_transforms;		///< Stack to store transform objects
+		std::stack < Transform >	m_shapesTransforms;	///< Stack to store transform shapes. They have a different stack as their tranformations differ.
+														///< This is because 3d objects and Images are centered in relation to its parent node, but shapes are not
+														///< to be able to have 1 shared parent node for all shapes (performance reasons)
+		std::deque < Style >		m_styles;			///< Deque to store style properties ( fill color, stroke weight, etc.)
 
 	private:
 

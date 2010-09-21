@@ -23,7 +23,8 @@
 #define _Cing_Object3D_H_
 
 #include "GraphicsPrereqs.h"
-#include "graphics/Color.h"
+#include "SceneGraphElement.h"
+#include "Color.h"
 
 // Common
 #include "common/CommonTypes.h"
@@ -38,7 +39,7 @@ namespace Cing
  * @internal
  * Represents a 3d object
  */
-class Object3D
+class Object3D: public SceneGraphElement
 {
 public:
 
@@ -62,7 +63,6 @@ public:
 
 	// Query methods
 	bool				isValid     		() const { return m_bIsValid; }
-	Ogre::SceneNode*	getSceneNode		() { return m_sceneNode;}
 	Ogre::Entity*		getEntity			() { return m_entity;	}
 	const std::string	getName				() { return m_objectName;}
 	Object3DType		getType				() { return m_type;		}
@@ -71,24 +71,31 @@ public:
 	const Vector&		getScale			() const;
 
 	// Set methods
-	void				setType						( Object3DType type ) { m_type = type; }
+	void				setType				( Object3DType type ) { m_type = type; }
 
-	void              	setPosition 			( float x, float y, float z );
-	void              	setPosition 			( float x, float y );
-	void              	setPosition 			( const Vector& pos );
+	void              	setPosition 		( float x, float y, float z );
+	void              	setPosition 		( float x, float y );
+	void              	setPosition 		( const Vector& pos );
+
+	void				translate			( float x, float y );
+	void				translate			( float x, float y, float z );
 
 	void				setOrientation		( const Quaternion& orientation );
 	void				setOrientation		( const Vector& axis, float angle );
 
-	void				rotate						( const Vector& axis, float angle );
-	void				rotate						( const Quaternion& quat );
+	void				rotate				( float angleRad );
+	void				rotateX				( float angleRad );
+	void				rotateY				( float angleRad );
+	void				rotateZ				( float angleRad );
+	void				rotate				( const Vector& axis, float angleRad );
+	void				rotate				( const Quaternion& quat );
 
-	void              	setScale    			( float xScale, float yScale, float zScale );
-	void              	setScale    			( float xScale, float yScale );
-	void              	setScale    			( float scale );
-	void              	setScale    			( const Vector& scale );
+	void              	setScale    		( float xScale, float yScale, float zScale );
+	void              	setScale    		( float xScale, float yScale );
+	void              	setScale    		( float scale );
+	void              	setScale    		( const Vector& scale );
 
-	void				lookAt 						( Object3D& objectToTrack );
+	void				lookAt 				( Object3D& objectToTrack );
 
 	void				setAmbientColor		( const Color& color );
 	void				setAmbientColor		( const Color& color, float alpha );
@@ -126,7 +133,6 @@ public:
 	// Debug methods
 	void				showBoundingBox						( bool show );
 
-
 	// Public Const static attributes
 	static const float OGRE_SCALE_CORRECTION; ///< Scale applied to all primitive objects in order to correct ogre scale bug with lighting
 																						///< So, for example, in order to have a 1m diameter sphere, we have to create a 100m diameter sphere in maya
@@ -140,7 +146,6 @@ private:
 	static long				m_objectCounter;///< Used to generate unique names for the 3d objects
 
 	// Attributes
-	Ogre::SceneNode* 		m_sceneNode;		///< Node in the scene manager where the object is placed
 	Ogre::Entity*    		m_entity;				///< Ogre entity that represents the model
 	Ogre::MaterialPtr		m_materialCopy;	///< Entity's material copy (to allow this object to have a specific color)
 	std::string       		m_objectName;		///< Unique object name

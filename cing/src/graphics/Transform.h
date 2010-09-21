@@ -53,6 +53,9 @@ namespace Cing
 		// Simple transformations methods
 		void		translate		( float x, float y, float z );
 		void		rotate			( float x, float y, float z );
+		void		rotateX			( float angleRad );
+		void		rotateY			( float angleRad );
+		void		rotateZ			( float angleRad );
 		void		scale			( float x, float y, float z );
 
 		// Get methods
@@ -60,6 +63,7 @@ namespace Cing
 		Vector			getRotation	();
 		Quaternion		getRotQuaternion();
 		Vector			getScale	();
+		const Matrix4&	getTransformMatrix() const { return m_4x4; }
 
 		// Set methods
 		// Todo: Implementar
@@ -80,8 +84,8 @@ namespace Cing
 							float m30, float m31, float m32, float m33 );
 	private:
 		// The transform data is stored here
-		Ogre::Matrix4     m_4x4;
-		bool							m_bIsValid;
+		Ogre::Matrix4		m_4x4;
+		bool				m_bIsValid;
 	};
 
 } // namespace Cing

@@ -60,7 +60,9 @@ bool ShapeManager::init()
 	m_shapesManualObject->estimateVertexCount( estimatedVertexCount );
 
 	// Attach m_polys sceneNode
-	GraphicsManager::getSingleton().getSceneManager().getRootSceneNode()->createChildSceneNode()->attachObject(m_shapesManualObject);
+	m_shapesSceneNode = GraphicsManager::getSingleton().getSceneManager().getRootSceneNode()->createChildSceneNode();
+	m_shapesSceneNode->attachObject(m_shapesManualObject);
+	
 	//m_isShapeClosed = true;
 
 	// The class is now initialized
@@ -76,8 +78,7 @@ bool ShapeManager::init()
 void ShapeManager::update()
 {
 	// Clear old geometry
-	m_shapesManualObject->clear();		
-
+	m_shapesManualObject->clear();	
 
 	// TODO: Si hay que dibujar el mismo número de vértices que en el fotograma anterior,
 	// usar beginUpdate() en lugar de begin()
@@ -119,10 +120,10 @@ void ShapeManager::update()
 			for (int j=0; j<(int)m_shapes[i].m_vertexData.size(); j++)
 			{
 				m_shapesManualObject->position(	m_shapes[i].m_vertexData[j]);
-				m_shapesManualObject->colour(		m_shapes[i].m_FillColor.r/255.0f,
-																				m_shapes[i].m_FillColor.g/255.0f,
-																				m_shapes[i].m_FillColor.b/255.0f,
-																				m_shapes[i].m_FillColor.a/255.0f   );	
+				m_shapesManualObject->colour(	m_shapes[i].m_FillColor.r/255.0f,
+												m_shapes[i].m_FillColor.g/255.0f,
+												m_shapes[i].m_FillColor.b/255.0f,
+												m_shapes[i].m_FillColor.a/255.0f   );	
 			}
 			m_shapesManualObject->end();
 
@@ -134,10 +135,10 @@ void ShapeManager::update()
 				for (int j=0; j<(int)m_shapes[i].m_vertexData.size(); j++)
 				{
 					m_shapesManualObject->position(	m_shapes[i].m_vertexData[j]);
-					m_shapesManualObject->colour(		m_shapes[i].m_FillColor.r/255.0f,
-						m_shapes[i].m_FillColor.g/255.0f,
-						m_shapes[i].m_FillColor.b/255.0f,
-						m_shapes[i].m_FillColor.a/255.0f   );	
+					m_shapesManualObject->colour(	m_shapes[i].m_FillColor.r/255.0f,
+													m_shapes[i].m_FillColor.g/255.0f,
+													m_shapes[i].m_FillColor.b/255.0f,
+													m_shapes[i].m_FillColor.a/255.0f   );	
 				}
 				m_shapesManualObject->end();
 			}
@@ -151,15 +152,16 @@ void ShapeManager::update()
 			for (int j=0; j<(int)m_shapes[i].m_vertexData.size()-1; j++)
 			{
 				m_shapesManualObject->position(	m_shapes[i].m_vertexData[j] );
-				m_shapesManualObject->colour(		m_shapes[i].m_StrokeColor.r/255.0f,
-																				m_shapes[i].m_StrokeColor.g/255.0f,
-																				m_shapes[i].m_StrokeColor.b/255.0f,
-																				m_shapes[i].m_StrokeColor.a/255.0f   );	
+				m_shapesManualObject->colour(	m_shapes[i].m_StrokeColor.r/255.0f,
+												m_shapes[i].m_StrokeColor.g/255.0f,
+												m_shapes[i].m_StrokeColor.b/255.0f,
+												m_shapes[i].m_StrokeColor.a/255.0f   );	
+
 				m_shapesManualObject->position(	m_shapes[i].m_vertexData[j+1] );
-				m_shapesManualObject->colour(		m_shapes[i].m_StrokeColor.r/255.0f,
-																				m_shapes[i].m_StrokeColor.g/255.0f,
-																				m_shapes[i].m_StrokeColor.b/255.0f,
-																				m_shapes[i].m_StrokeColor.a/255.0f   );	
+				m_shapesManualObject->colour(	m_shapes[i].m_StrokeColor.r/255.0f,
+												m_shapes[i].m_StrokeColor.g/255.0f,
+												m_shapes[i].m_StrokeColor.b/255.0f,
+												m_shapes[i].m_StrokeColor.a/255.0f   );	
 			}
 			m_shapesManualObject->end();	
 		}
@@ -175,9 +177,9 @@ void ShapeManager::update()
 	{
 		m_shapesManualObject->position(	m_lines.m_vertexData[i] );
 		m_shapesManualObject->colour  (	m_lines.m_vertexColors[i].r/255.0f,
-																		m_lines.m_vertexColors[i].g/255.0f,
-																		m_lines.m_vertexColors[i].b/255.0f,
-																		m_lines.m_vertexColors[i].a/255.0f);	
+										m_lines.m_vertexColors[i].g/255.0f,
+										m_lines.m_vertexColors[i].b/255.0f,
+										m_lines.m_vertexColors[i].a/255.0f);	
 	}
 	m_shapesManualObject->end();
 

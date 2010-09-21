@@ -84,6 +84,7 @@ namespace Cing
 		Ogre::ManualObject*	getManualObject	() 			{ return m_quad;		}
 		Ogre::TexturePtr	getOgreTexture	() const 	{ return m_ogreTexture; }
 		Ogre::SceneNode*	getSceneNode	()			{ return m_quadSceneNode;   }
+		Ogre::SceneNode*	getPivotSceneNode()			{ return m_pivotSceneNode;   }
 		const String&		getMaterialName	() const	{ return m_ogreMaterialName; }
 
 
@@ -105,23 +106,26 @@ namespace Cing
 		void	set2dRendering			();
 		void	set3dRendering			();
 		void	setbackgroundRendering	();
+		void	applyTransformations	( float x, float y, float z, float imgWidth, float imgHeight );
+		void	applyTransformations2D	( float x, float y, float imgWidth, float imgHeight );
 
 		// Constant / static attributes
-		static const std::string  MANUAL_OBJECT_NAME;     		///< Name of the manual object (which is the quad)
-		static const std::string  MATERIAL_NAME;          		///< Name of the material where the texture will be placed
-		static const std::string  TEXTURE_NAME;           		///< Name of the texture
-		static long               m_quadCounter;          		///< Used to generate unique names for the quad materials, textures and ogre manual objects
+		static const std::string  MANUAL_OBJECT_NAME;     			///< Name of the manual object (which is the quad)
+		static const std::string  MATERIAL_NAME;          			///< Name of the material where the texture will be placed
+		static const std::string  TEXTURE_NAME;           			///< Name of the texture
+		static long               m_quadCounter;          			///< Used to generate unique names for the quad materials, textures and ogre manual objects
 
 		// Attributes
 		Ogre::TexturePtr			m_ogreTexture;          		///< Ogre texture (to render the quad with it)  
 		Ogre::SceneNode*			m_quadSceneNode;        		///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
-		Ogre::ManualObject*			m_quad;											///< Ogre manual object that contains the geometry (vertex) of the quad
-		GraphicsType				m_format;										///< Format of the image
-		Ogre::uint32				m_3dQueryFlags;							///< Query flags of ogre when the object is being renderd in 3d		
+		Ogre::SceneNode*			m_pivotSceneNode;        		///< Pivot scene node (parent of the quadSceneNode. Used to concatenate transformations
+		Ogre::ManualObject*			m_quad;							///< Ogre manual object that contains the geometry (vertex) of the quad
+		GraphicsType				m_format;						///< Format of the image
+		Ogre::uint32				m_3dQueryFlags;					///< Query flags of ogre when the object is being renderd in 3d		
 
-		float						m_xScale, m_yScale, m_zScale; ///< Scale of the node
+		float						m_xScale, m_yScale, m_zScale;	///< Scale of the node
 
-		float						m_textWidth, m_textHeight;  ///< Width and height of the texture
+		float						m_textWidth, m_textHeight;		///< Width and height of the texture
 		float						m_textWidthP2, m_textHeightP2;  ///< Width and height of the texture
 		float						m_2dWidth, m_2dHeight;			///< Width and height of the object when it is being drawn in 2d (in screen coordinates)
 		float						m_2dXPos, m_2dYPos;					///< Position (in screen coordinates) of the object when it is being drawn in 2d
@@ -130,9 +134,9 @@ namespace Cing
 		String               		m_ogreTextureName;      		///< Unique texture name
 		String               		m_ogreMaterialName;     		///< Unique material name
 
-		bool											m_visible;									///< Tells if the object is visible or not
-		bool                      m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene
-		bool                      m_bIsValid;	            		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+		bool						m_visible;						///< Tells if the object is visible or not
+		bool						m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene
+		bool						m_bIsValid;	            		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 	};
 

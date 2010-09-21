@@ -69,8 +69,8 @@
 // CameraInput
 #include "cameraInput/OCVCamera.h"
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#include "cameraInput/PVCamera.h"
-#include "cameraInput/VICamera.h"
+	#include "cameraInput/PVCamera.h"
+	#include "cameraInput/VICamera.h"
 #endif
 
 // Framework 

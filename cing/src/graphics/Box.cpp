@@ -26,7 +26,7 @@ namespace Cing
 {
 
 // Static member init
-const std::string  Box::DEFAULT_MESH			= "box.mesh";
+const std::string  Box::DEFAULT_MESH		= "box.mesh";
 const std::string  Box::DEFAULT_MATERIAL	= "EmptyMaterial";
 
 /**
@@ -62,7 +62,7 @@ void Box::init( float width, float height, float depth )
 
 	// Scale correction
 	width		*= OGRE_SCALE_CORRECTION;
-	height	*= OGRE_SCALE_CORRECTION;
+	height		*= OGRE_SCALE_CORRECTION;
 	depth		*= OGRE_SCALE_CORRECTION;
 
 	// Set the size

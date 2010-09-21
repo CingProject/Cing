@@ -55,6 +55,10 @@ public:
 	// To set values or range
 	void	set	( float red, float green, float blue, float alpha = 255.0f );
 
+	// Getters
+	float	getHighRange() const { return m_hightRange; }
+	float	getLowRange() const { return m_lowRange; }
+
 	// Color conversion
 	Color	normalized	() const;
 	void	normalize		();

@@ -126,6 +126,7 @@ namespace Cing
 
 	/// Lights
 	typedef Ogre::Light       		Light;
+	typedef Ogre::SceneNode       	SceneNode;
 
 
 

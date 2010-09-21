@@ -619,6 +619,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\..\src\graphics\SceneGraphElement.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\..\src\graphics\Shape.h"
 						>
 					</File>
@@ -778,6 +782,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\..\src\graphics\ImageResourceManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\graphics\SceneGraphElement.cpp"
 						>
 					</File>
 					<File

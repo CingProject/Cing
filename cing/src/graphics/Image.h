@@ -91,7 +91,7 @@ namespace Cing
 		void  	arc		( int x, int y,  int width, int height, float start, float stop );
 		void  	point	( int x, int y);
 		void  	quad	( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
-		void  	ellipse	( int x, int y, int x2, int y2, float angleDegrees = 0 );
+		void  	ellipse	( int x, int y, int width, int height, float angleDegrees = 0 );
 		void  	rect	( int x, int y, int width, int height );
 		void  	text	( int x1, int y1, const char* text );
 		void  	fill    ( const Color& color );

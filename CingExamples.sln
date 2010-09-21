@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+# Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_Cing", "cing\build\win\visualStudio_2008\Cing\Cing.vcproj", "{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_BasicApplication", "example_projects\Simple_BasicApplication\Simple_BasicApplication.vcproj", "{3FA9B1E0-D56E-4C46-A063-FAE8250995D7}"
@@ -77,6 +77,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_CameraInput", "examp
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_SceneGraph", "example_projects\Advanced_SceneGraph\Advanced_SceneGraph.vcproj", "{D7AD3008-68B1-4383-8B2C-76FCDD72501F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -147,6 +152,10 @@ Global
 		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Debug|Win32.Build.0 = Debug|Win32
 		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.ActiveCfg = Release|Win32
 		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.Build.0 = Release|Win32
+		{D7AD3008-68B1-4383-8B2C-76FCDD72501F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D7AD3008-68B1-4383-8B2C-76FCDD72501F}.Debug|Win32.Build.0 = Debug|Win32
+		{D7AD3008-68B1-4383-8B2C-76FCDD72501F}.Release|Win32.ActiveCfg = Release|Win32
+		{D7AD3008-68B1-4383-8B2C-76FCDD72501F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

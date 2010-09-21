@@ -20,6 +20,10 @@
 */
 
 #include "Transform.h"
+#include "GraphicsManager.h"
+
+#include "OgreSceneManager.h"
+
 #include "common/MathUtils.h"
 #include "common/CommonUserApi.h"
 
@@ -80,7 +84,7 @@ void Transform::end()
 void Transform::translate(  float x, float y, float z )
 {
  	// Apply transform
-	m_4x4 = m_4x4.concatenate( Ogre::Matrix4::getTrans(x,y,z) );
+	m_4x4 = m_4x4.concatenate( Ogre::Matrix4::getTrans(x,y,z ) );
 }
 
 /**
@@ -99,6 +103,40 @@ void Transform::rotate(  float x, float y, float z )
 	m_4x4 = m_4x4.concatenate(tMat);
 }
 
+//// Rotates around the X axis. Angle in Radians
+void Transform::rotateX( float angleRad )
+{
+	Matrix3 rotation(Matrix3::IDENTITY);
+	rotation.FromAxisAngle(Vector(1,0,0), Ogre::Radian(angleRad) );
+	
+	// Apply transform
+	//m_4x4 = m_4x4 * rotation;
+	m_4x4 = m_4x4 * Matrix4(rotation);
+}
+
+//// Rotates around the Y axis. Angle in Radians
+void Transform::rotateY( float angleRad )
+{
+	Matrix3 rotation(Matrix3::IDENTITY);
+	rotation.FromAxisAngle(Vector(0,1,0), Ogre::Radian(angleRad) );
+	
+	// Apply transform
+	//m_4x4 = m_4x4 * rotation;
+	m_4x4 = m_4x4 * Matrix4(rotation);
+}
+
+//// Rotates around the Z axis. Angle in Radians
+void Transform::rotateZ( float angleRad )
+{
+	Matrix3 rotation(Matrix3::IDENTITY);
+	rotation.FromAxisAngle(Vector(0,0,-1), Ogre::Radian(angleRad) );
+	
+	// Apply transform
+	//m_4x4 = m_4x4 * rotation;
+	m_4x4 = m_4x4 * Matrix4(rotation);
+}
+
+
 /**
  * @brief 
  *
@@ -107,7 +145,11 @@ void Transform::rotate(  float x, float y, float z )
 void Transform::scale(  float x, float y, float z )
 {
 	// Apply transform
+	// TODO: Check this. When we apply the scale, the result of the rotation
+	// value in the matrix changes... Check this with Processing (documented in issue list)
+	Quaternion qbefore = m_4x4.extractQuaternion();
 	m_4x4 = m_4x4.concatenate(Ogre::Matrix4::getScale( x, y, z ));
+	Quaternion qafter = m_4x4.extractQuaternion();
 }
 
 /**
@@ -196,13 +238,15 @@ void Transform::printMatrix()
  * @param mode
  */
 void Transform::applyMatrix( float m00, float m01, float m02, float m03,
-														 float m10, float m11, float m12, float m13,
-														 float m20, float m21, float m22, float m23,
-														 float m30, float m31, float m32, float m33 )
+							 float m10, float m11, float m12, float m13,
+							 float m20, float m21, float m22, float m23,
+							 float m30, float m31, float m32, float m33 )
 {
 	Ogre::Matrix4 tMat = Ogre::Matrix4( m00, m01, m02, m03,
-																			m10, m11, m12, m13,
-																			m20, m21, m22, m23,
-																			m30, m31, m32, m33);
+										m10, m11, m12, m13,
+										m20, m21, m22, m23,
+										m30, m31, m32, m33);
+
+	m_4x4 = m_4x4 * tMat;
 };
 } // namespace Cing

@@ -108,7 +108,7 @@ namespace Cing
 			m_panel->setMetricsMode(Ogre::GMM_PIXELS);
 			m_panel->setPosition(0,0);
 			//m_panel->setDimensions(width, height);
-			m_panel->setDimensions( 0.1, 0.1 );
+			m_panel->setDimensions( 0.1f, 0.1f );
 
 			// Create an overlay to display the panel
 			//m_overlay = m_overlayManager->create("GUI_OVERLAY");

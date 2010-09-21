@@ -26,7 +26,7 @@ namespace Cing
 {
 
 // Static member init
-const std::string  Sphere::DEFAULT_MESH			= "sphere.mesh";
+const std::string  Sphere::DEFAULT_MESH		= "sphere.mesh";
 const std::string  Sphere::DEFAULT_MATERIAL	= "EmptyMaterial";
 
 /**

@@ -85,9 +85,6 @@ void stroke( const Color& color );
 */
 
 void colorMode(GraphicsType mode);
-void colorMode(GraphicsType mode, float range);
-void colorMode(GraphicsType mode, float range1, float range2, float range3);
-void colorMode(GraphicsType mode, float range1, float range2, float range3, float range4);
 
 /* Sets the color used to fill shapes. For example, if you run fill(204, 102, 0),
    all subsequent shapes will be filled with orange. This color is either specified
@@ -175,15 +172,14 @@ void applyMatrix( float m00, float m01, float m02, float m03,
 void translate( float x, float y );
 void translate( float x, float y, float z );
 
-void rotate		(	float x, float y, float z );
-void rotate		(	float x );
+void rotate		( float angleZRad );
 
-void rotateX	(	float angle );
-void rotateY	(	float angle );
-void rotateZ	(	float angle );
+void rotateX	( float angleRad );
+void rotateY	( float angleRad );
+void rotateZ	( float angleRad );
 
-void scale		(	float x, float y, float z );
-void scale		(	float x, float y );
+void scale		( float x, float y, float z );
+void scale		( float x, float y );
 
 // Coordinate systems
 void applyCoordinateSystemTransform( const GraphicsType& coordSystem );

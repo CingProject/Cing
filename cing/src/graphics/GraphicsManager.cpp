@@ -190,6 +190,7 @@ bool GraphicsManager::init()
 
 	// Init transform stack
 	m_transforms.push( Transform() );
+	m_shapesTransforms.push( Transform() );
 
 	// Init pixels
 	for (int i = 0; i < m_canvas.getWidth() * m_canvas.getHeight(); i++)
@@ -298,9 +299,15 @@ void GraphicsManager::draw()
 	{
 		std::ostringstream oss;
 		oss << "FPS: " << frameStats.lastFPS;
+
+		pushMatrix();
+		resetMatrix();
+		pushStyle();
+		stroke(0);
+		fill(220);
 		text( oss.str(), 10, 0 );
-		//m_systemFont.setText( oss.str() );	// Text to be displayed
-		//m_systemFont.show( true );
+		popStyle();
+		popMatrix();
 	}
 	//else
 	//	m_systemFont.show( false );
@@ -396,7 +403,7 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		// RTT possible values: FBO, PBuffer, Copy
 		selectedRenderSystem->setConfigOption( "RTT Preferred Mode", "FBO" );
 		selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
-		selectedRenderSystem->setConfigOption( "VSync","No" );
+		selectedRenderSystem->setConfigOption( "VSync","Yes" );
 		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
 	}
 	else if ( mode == DIRECTX )
@@ -444,8 +451,12 @@ void GraphicsManager::clearStyleStack()
 void GraphicsManager::clearMatrixStack()
 {
 	while ( !m_transforms.empty() )
+	{
 		m_transforms.pop();
+		m_shapesTransforms.pop();
+	}
 	m_transforms.push(Transform());
+	m_shapesTransforms.push(Transform());
 };
 
 /**
@@ -669,7 +680,7 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 
 	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
 
-	cvSet( &m_canvas.getCVImage(), cvScalar(color.b,color.g,color.r) );
+	cvSet( &m_canvas.getCVImage(), cvScalar(color.r,color.g,color.b) );
 	m_canvas.setUpdateTexture(true);
 }
 

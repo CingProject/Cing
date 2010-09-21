@@ -64,6 +64,6 @@ namespace Cing
 	std::vector < Color > pixels;
 
 	// PerlinNoise global object
-	PerlinNoise _noise = PerlinNoise(4,.63,1.6,0);
+	PerlinNoise _noise = PerlinNoise(4,0.63f,1.6f,0);
 
 } // namespace Cing

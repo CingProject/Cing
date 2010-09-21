@@ -413,7 +413,8 @@ void showFps( bool show )
 void line( float x1, float y1, float z1, float x2, float y2, float z2)
 {
     // Transform vertices before the drawing  call 
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
+
 	Vector v1 = t.applyTransform( Vector( x1, y1, z1) );
 	Vector v2 = t.applyTransform( Vector( x2, y2, z2) );
 
@@ -433,11 +434,11 @@ void beginShape(GraphicsType operation)
 };
 
 //------------------------------------------------------------------------------------
-void vertex( float x, float y)
+void vertex( float x, float y )
 {
 	// Transform vertices before the drawing  call 
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
-	Vector v1 = t.applyTransform( Vector( x, y, 0) );
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
+	Vector v1 = t.applyTransform( Vector( x, y, 0 ) );
 
 	ShapeManager::getSingleton().vertex(v1.x,v1.y);
 };
@@ -446,8 +447,8 @@ void vertex( float x, float y)
 void vertex( float x, float y, float z)
 {
 	// Transform vertices before the drawing  call 
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
-	Vector v1 = t.applyTransform( Vector( x, y, z) );
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
+	Vector v1 = t.applyTransform( Vector( x, y, z ) );
 
 	ShapeManager::getSingleton().vertex(v1.x,v1.y,v1.z);
 };
@@ -465,6 +466,7 @@ void endShape(GraphicsType operation)
 };
 
 
+
 /*
 * @Draws a line (a direct path between two points) to the screen
 *
@@ -478,7 +480,7 @@ void endShape(GraphicsType operation)
 void line( int x1, int y1, int x2, int y2 )
 {
 	// Transform vertex before the drawing  call
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
 
 	Vector v1 = t.applyTransform( Vector( (float)x1, (float)y1, 0) );
 	Vector v2 = t.applyTransform( Vector( (float)x2, (float)y2, 0) );
@@ -497,7 +499,7 @@ void line( int x1, int y1, int x2, int y2 )
 void point( int x, int y )
 {
 	// Transform vertex before the drawing  call
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
 
 	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
 
@@ -520,7 +522,7 @@ void point( int x, int y )
 void triangle( int x1, int y1, int x2, int y2, int x3, int y3 )
 {
 	// Transform vertex before the drawing  call
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
 
 	Vector v1 = t.applyTransform( Vector( (float)x1, (float)y1, 0) );
 	Vector v2 = t.applyTransform( Vector( (float)x2, (float)y2, 0) );
@@ -542,7 +544,7 @@ void rect( int x, int y, int width, int height )
 	// TODO:	Optimize
 
 	// Store the top of the matrix stack
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
 
 	Vector v1, v2, v3, v4;
 	float rectWidth, rectHeight;
@@ -605,7 +607,7 @@ void rect( int x, int y, int width, int height )
 void quad( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 )
 {
 	// Transform vertex before the drawing  call
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
 
 	Vector v1 = t.applyTransform( Vector( (float)x1, (float)y1, 0) );
 	Vector v2 = t.applyTransform( Vector( (float)x2, (float)y2, 0) );
@@ -629,17 +631,54 @@ void quad( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 )
 void ellipse( int x, int y, int width, int height)
 {
 	//TODO: Manage transforms
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
+	//Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
+	//Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
+	//GraphicsManager::getSingleton().m_canvas.ellipse( (int)v1.x, (int)v1.y, width, height, t.getRotation().z );
+
+	// Get current transformation
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
+	
+	// Transform position
 	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
-	GraphicsManager::getSingleton().m_canvas.ellipse( (int)v1.x, (int)v1.y, width, height, t.getRotation().z );
+
+	// Transform scale
+	Matrix4 scaleRotMatrix = t.getTransformMatrix() * Matrix4::getScale( (float)width, (float)height, 1.0f );
+
+	// Extract scale/rotation
+	Vector pos, scale;
+	Quaternion orient;
+	scaleRotMatrix.decomposition( pos, scale, orient );	
+	float yaw	= orient.getYaw().valueRadians();
+	float pitch = orient.getPitch().valueRadians();
+	float roll	= orient.getRoll().valueRadians();
+
+	// Note: widtha and height are swaped becuase the way opencv expects them (TODO: check)
+	GraphicsManager::getSingleton().m_canvas.ellipse( (int)v1.x, (int)v1.y, (int)scale.y, (int)scale.x );
+
+
 }
 
 void arc( int x, int y,  int width, int height, float start, float stop )
 {
 	//TODO: Manage transforms
-	Transform &t = GraphicsManager::getSingleton().m_transforms.top();
+	Transform &t = GraphicsManager::getSingleton().m_shapesTransforms.top();
+	
+	// Transform position
 	Vector v1 = t.applyTransform( Vector( (float)x, (float)y, 0) );
-	GraphicsManager::getSingleton().m_canvas.arc( x, y, width, height, start, stop );
+
+	// Transform scale
+	Matrix4 scaleRotMatrix = t.getTransformMatrix() * Matrix4::getScale( (float)width, (float)height, 1.0f );
+
+	// Extract scale/rotation
+	Vector pos, scale;
+	Quaternion orient;
+	scaleRotMatrix.decomposition( pos, scale, orient );	
+	float yaw	= orient.getYaw().valueRadians();
+	float pitch = orient.getPitch().valueRadians();
+	float roll	= orient.getRoll().valueRadians();
+
+	// Note: widtha and height are swaped becuase the way opencv expects them (TODO: check)
+	GraphicsManager::getSingleton().m_canvas.arc( (int)v1.x, (int)v1.y, (int)scale.y, (int)scale.x, start - roll, stop - roll );
 }
 
 /**
@@ -685,33 +724,7 @@ void colorMode( GraphicsType mode )
 	Color::colorMode( mode, 255, 255, 255, 255 );
 };
 
-/**
- * @brief
- *
- * @param mode
- */
-void colorMode( GraphicsType mode, float range )
-{
 
-};
-
-/**
- * @brief
- *
- * @param mode
- */
-void colorMode( GraphicsType mode, float range1, float range2, float range3 )
-{
-
-};
-/**
- * @brief
- *
- * @param mode
- */
-void colorMode( GraphicsType mode, float range1, float range2, float range3, float range4 )
-{
-};
 /**
  * @brief
  *
@@ -811,6 +824,7 @@ void pushMatrix()
 {
 	// Add new IDENTITY transform object to the stack
 	GraphicsManager::getSingleton().m_transforms.push( GraphicsManager::getSingleton().m_transforms.top() );
+	GraphicsManager::getSingleton().m_shapesTransforms.push( GraphicsManager::getSingleton().m_shapesTransforms.top() );
 }
 /**
  * @brief
@@ -821,7 +835,10 @@ void popMatrix()
 {
 	// Pop the last transform
 	if ( GraphicsManager::getSingleton().m_transforms.size() > 0 )
+	{
 		GraphicsManager::getSingleton().m_transforms.pop();
+		GraphicsManager::getSingleton().m_shapesTransforms.pop();
+	}
 }
 
 /**
@@ -832,6 +849,7 @@ void popMatrix()
 void resetMatrix()
 {
 	GraphicsManager::getSingleton().m_transforms.top().identity();
+	GraphicsManager::getSingleton().m_shapesTransforms.top().identity();
 }
 
 /**
@@ -849,14 +867,20 @@ void printMatrix()
  * @param mode
  */
 void applyMatrix( float m00, float m01, float m02, float m03,
-								  float m10, float m11, float m12, float m13,
-								  float m20, float m21, float m22, float m23,
-								  float m30, float m31, float m32, float m33 )
+				  float m10, float m11, float m12, float m13,
+				  float m20, float m21, float m22, float m23,
+				  float m30, float m31, float m32, float m33 )
 {
 	GraphicsManager::getSingleton().m_transforms.top().applyMatrix( m00, m01, m02, m03,
-																																	m10, m11, m12, m13,
-																																	m20, m21, m22, m23,
-																																	m30, m31, m32, m33);
+																	m10, m11, m12, m13,
+																	m20, m21, m22, m23,
+																	m30, m31, m32, m33);
+
+	GraphicsManager::getSingleton().m_shapesTransforms.top().applyMatrix(	m00, m01, m02, m03,
+																			m10, m11, m12, m13,
+																			m20, m21, m22, m23,
+																			m30, m31, m32, m33);
+
 };
 /**
  * @brief
@@ -865,7 +889,7 @@ void applyMatrix( float m00, float m01, float m02, float m03,
  */
 void translate( float x, float y )
 {
-	GraphicsManager::getSingleton().m_transforms.top().translate( x, y, 0);
+	translate(x, y, 0);
 };
 /**
  * @brief
@@ -874,52 +898,58 @@ void translate( float x, float y )
  */
 void translate( float x, float y, float z )
 {
-	GraphicsManager::getSingleton().m_transforms.top().translate( x, y, z);
+	GraphicsManager::getSingleton().m_transforms.top().translate( x, y, z );
+	GraphicsManager::getSingleton().m_shapesTransforms.top().translate( x, y, z );
+};
+
+/**
+ * @brief
+ *
+ * @param mode
+ */
+void rotate( float angleZRad )
+{
+	rotateZ(angleZRad);
 };
 /**
  * @brief
  *
  * @param mode
  */
-void rotate( float x, float y, float z )
+void rotateX( float angleRad )
 {
-	GraphicsManager::getSingleton().m_transforms.top().rotate( x, y, z);
+	GraphicsManager::getSingleton().m_transforms.top().rotateX( angleRad );
+	GraphicsManager::getSingleton().m_shapesTransforms.top().rotateX( angleRad );
+
 };
 /**
  * @brief
  *
  * @param mode
  */
-void rotate( float angleX )
+void rotateY( float angleRad )
 {
-	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, 0, angleX );
+	GraphicsManager::getSingleton().m_transforms.top().rotateY( angleRad );
+	GraphicsManager::getSingleton().m_shapesTransforms.top().rotateY( angleRad );
 };
 /**
  * @brief
  *
  * @param mode
  */
-void rotateX(	float angle )
+void rotateZ( float angleRad )
 {
-	GraphicsManager::getSingleton().m_transforms.top().rotate( angle, 0, 0 );
-};
-/**
- * @brief
- *
- * @param mode
- */
-void rotateY(	float angle )
-{
-	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, angle, 0 );
-};
-/**
- * @brief
- *
- * @param mode
- */
-void rotateZ(	float angle )
-{
-	GraphicsManager::getSingleton().m_transforms.top().rotate( 0, 0, angle );
+	GraphicsManager::getSingleton().m_transforms.top().rotateZ( angleRad );
+
+	// Note: The angle is inverted in the shape transformations (in Processing coordinate system Mode)
+	// This is because 3d objects and Images are centered in relation to its parent node, but shapes are not
+	// to be able to have 1 shared parent node for all shapes (performance reasons)
+	// Therefore the coordinate system PROCESSING with the scale (1, -1, 1) of the root node, affects shapes and the rest
+	// of the objects differently.
+	if ( GraphicsManager::getSingleton().isProcessingMode() )
+		GraphicsManager::getSingleton().m_shapesTransforms.top().rotateZ( -angleRad );
+	else
+		GraphicsManager::getSingleton().m_shapesTransforms.top().rotateZ( angleRad );
 };
 /**
  * @brief
@@ -929,6 +959,7 @@ void rotateZ(	float angle )
 void scale(	float x, float y, float z )
 {
 	GraphicsManager::getSingleton().m_transforms.top().scale( x, y, z );
+	GraphicsManager::getSingleton().m_shapesTransforms.top().scale( x, y, z );
 };
 
 /**
@@ -939,6 +970,7 @@ void scale(	float x, float y, float z )
 void scale(	float x, float y)
 {
 	GraphicsManager::getSingleton().m_transforms.top().scale( x, y, 1 );
+	GraphicsManager::getSingleton().m_shapesTransforms.top().scale( x, y, 1 );
 };
 /**
  * @brief
