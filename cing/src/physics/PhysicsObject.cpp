@@ -111,6 +111,77 @@ void PhysicsObject::disablePhysics()
 }
 
 /**
+ * @brief Sets the object's mass.
+ *
+ * @param mass new mass of the object
+ */
+void PhysicsObject::setMass( float mass )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to set the mass to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	// Get object's inertia
+	btVector3 inertia;
+	getBulletRigidBody()->getCollisionShape()->calculateLocalInertia(mass, inertia);
+	getBulletRigidBody()->setMassProps(mass, inertia);
+	getBulletRigidBody()->updateInertiaTensor();
+}
+
+
+/**
+ * @brief Sets the linear velocity for this physics object.
+ *
+ * @param velocity Velocity to set to the object
+ */
+void PhysicsObject::setGravity( const Vector& gravity )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to set the gravity to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->setGravity( OgreBulletCollisions::OgreBtConverter::to( gravity ) );
+}
+
+/**
+ * @brief Sets the linear velocity for this physics object.
+ *
+ * @param velocity Velocity to set to the object
+ */
+void PhysicsObject::setLinearVelocity( const Vector& velocity )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to set a velocity to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->setLinearVelocity( OgreBulletCollisions::OgreBtConverter::to( velocity ) );
+}
+
+
+/**
+ * @brief Sets the angular velocity for this physics object.
+ *
+ * @param angVelocity Angular Velocity to set to the object
+ */
+void PhysicsObject::setAngularVelocity( const Vector& angVelocity )
+{
+	if ( !isValid() || !m_physicsEnabled )
+	{
+		LOG( "Trying to set a velocity to an invalid physics object, or physics are not enabled in this object" );
+		return;
+	}
+
+	getBulletRigidBody()->setAngularVelocity( OgreBulletCollisions::OgreBtConverter::to( angVelocity ) );
+}
+
+
+/**
  * @brief Applies a force to the center of the object.
  *
  * @param force Force to apply

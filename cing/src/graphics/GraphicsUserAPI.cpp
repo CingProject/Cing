@@ -364,7 +364,7 @@ void noSmooth()
  *		- cursors: up, down movement
  *		- r: restore camera rotation to initial settings
  */
-void useDefault3DCameraControl( bool useDefault )
+void useDefault3DCameraControl( bool useDefault /*= true */ )
 {
 	GraphicsManager::getSingleton().useDefault3DCameraControl( useDefault );
 }
@@ -374,7 +374,7 @@ void useDefault3DCameraControl( bool useDefault )
  *
  * @param value if true, it activates mouse control, if false it deactivates it
  */
-void useMouseCameraControl( bool value )
+void useMouseCameraControl( bool value  /*= true */)
 {
 	GraphicsManager::getSingleton().getDefaultCameraController().useMouse( value );
 }
@@ -384,7 +384,7 @@ void useMouseCameraControl( bool value )
  *
  * @param value if true, it activates keyboard control, if false it deactivates it
  */
-void useKeyboardCameraControl( bool value )
+void useKeyboardCameraControl( bool value  /*= true */)
 {
 	GraphicsManager::getSingleton().getDefaultCameraController().useKeyboard( value );
 }
@@ -395,7 +395,7 @@ void useKeyboardCameraControl( bool value )
  *
  * @param show if true the current fps wil be printed on screen, if false, it won't be printed
  */
-void showFps( bool show )
+void showFps( bool show /*= true */ )
 {
 	GraphicsManager::getSingleton().showFps( show );
 }
@@ -645,7 +645,8 @@ void ellipse( int x, int y, int width, int height)
 	Matrix4 scaleRotMatrix = t.getTransformMatrix() * Matrix4::getScale( (float)width, (float)height, 1.0f );
 
 	// Extract scale/rotation
-	Vector pos, scale;
+	Vector pos(0, 0, 0);
+	Vector scale(0, 0, 0);
 	Quaternion orient;
 	scaleRotMatrix.decomposition( pos, scale, orient );	
 	float yaw	= orient.getYaw().valueRadians();
@@ -670,7 +671,8 @@ void arc( int x, int y,  int width, int height, float start, float stop )
 	Matrix4 scaleRotMatrix = t.getTransformMatrix() * Matrix4::getScale( (float)width, (float)height, 1.0f );
 
 	// Extract scale/rotation
-	Vector pos, scale;
+	Vector pos(0, 0, 0);
+	Vector scale(0, 0, 0);
 	Quaternion orient;
 	scaleRotMatrix.decomposition( pos, scale, orient );	
 	float yaw	= orient.getYaw().valueRadians();
@@ -987,7 +989,7 @@ void save( const String& name )
 //-----------------------------------------------------------------------------------
 
 /**
- * Draws text to the screen
+ * Draws text to the screen in 2d coordinates (screen coordinates)
  * @param text	text to print on screen
  * @param x		x coordinate where the text will be printed
  * @param y		y coordinate where the text will be printed
@@ -1003,16 +1005,45 @@ void text( const String& text, float x, float y )
 
 	// Set the font properties
 	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.render2d			= true;
 	currentFontProperties.text				= text;
 	currentFontProperties.x					= x;
 	currentFontProperties.y					= y;
+	
+	// Add the text to the manager so that it gets rendered in the next draw
+	FontManager::getSingleton().addText();
+}
+
+
+/**
+ * Draws text to the screen in 3d (3d world coordinates)
+ * @param text	text to print on screen
+ * @param x		x coordinate where the text will be printed
+ * @param y		y coordinate where the text will be printed
+ */
+void text( const String& text, float x, float y, float z )
+{
+	// Check empty text
+	if ( text == "" )
+	{
+		LOG_ERROR( "Trying to pring empty text" );
+		return;
+	}
+
+	// Set the font properties
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.render2d			= false;
+	currentFontProperties.text				= text;
+	currentFontProperties.x					= x;
+	currentFontProperties.y					= y;
+	currentFontProperties.z					= z;
 
 	// Add the text to the manager so that it gets rendered in the next draw
 	FontManager::getSingleton().addText();
 }
 
 /**
- * Draws text to the screen
+ * Draws text to the screen in 2d coordinates (screen coordinates)
  * @param text	text to print on screen
  * @param x			x coordinate where the text will be printed
  * @param y			y coordinate where the text will be printed
@@ -1023,6 +1054,7 @@ void text( const String& text, float x, float y, float width, float height )
 {
 	// Set the font properties
 	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.render2d			= true;
 	currentFontProperties.text				= text;
 	currentFontProperties.x					= x;
 	currentFontProperties.y					= y;
@@ -1032,6 +1064,31 @@ void text( const String& text, float x, float y, float width, float height )
 	// Add the text to the manager so that it gets rendered in the next draw
 	FontManager::getSingleton().addText();
 }
+
+/**
+ * Draws text to the screen in 3d (3d world coordinates)
+ * @param text	text to print on screen
+ * @param x			x coordinate where the text will be printed
+ * @param y			y coordinate where the text will be printed
+ * @param width		width of the text box that will be printed
+ * @param height	height of the text box that will be printed
+ */
+void text( const String& text, float x, float y, float z, float width, float height )
+{
+	// Set the font properties
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.render2d			= false;
+	currentFontProperties.text				= text;
+	currentFontProperties.x					= x;
+	currentFontProperties.y					= y;
+	currentFontProperties.z					= z;
+	currentFontProperties.width				= width;
+	currentFontProperties.height			= height;
+
+	// Add the text to the manager so that it gets rendered in the next draw
+	FontManager::getSingleton().addText();
+}
+
 
 /**
  * Sets the font used to draw from now on
@@ -1091,7 +1148,7 @@ void textSize(float size)
 }
 
 /**
- * Sets the 3d coordinate system. Thre are two systems: NORMAL3D and PROCESSING (default)
+ * Sets the 3d coordinate system. Thre are two systems: OPENGL3D and PROCESSING (default)
  * @param[in] coordSystem the input coordSystem 	 
  */
 void applyCoordinateSystemTransform( const GraphicsType& coordSystem )

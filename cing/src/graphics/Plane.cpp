@@ -68,6 +68,10 @@ void Plane::init( float width, float height )
 	// Set the size
 	setScale( width, 1, height );
 
+	// Flip the plane
+	// TODO: Flip the actual model!
+	setOrientation( Vector::UNIT_X, 180 );
+
 	// Store scale
 	m_width		= width;
 	m_height	= height;

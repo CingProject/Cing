@@ -204,7 +204,7 @@ void MovableText::setPosition( float x, float y )
 	if ( GraphicsManager::getSingleton().isProcessingMode() )
 	{
 		y = height - y;
-		getParentNode()->setScale( getParentNode()->getScale() * Vector(1, -1, 1) );
+		//getParentNode()->setScale( getParentNode()->getScale() * Vector(1, -1, 1) );
 	}
 
 	float _2dXPos = (x / (float)width) * 2.0f - 1;
@@ -251,27 +251,44 @@ void MovableText::setRotation( const Quaternion& quat )
 	quat.ToRotationMatrix(mLocalRotation);
 }
 
+/// 2d rendering Scale
 void MovableText::setScale( float x, float y )
 {
-	if ( GraphicsManager::getSingleton().isProcessingMode() )
-		y *= -1;
+	// set 2D rendering
+	set2dRendering();
 
-	mScale.x = x;
-	mScale.y = y;
-	mScale.z = 1;
+	// Screen aspect ratio
+	float hAspectRatio = (float)height/(float)width;
+	float vAspectRatio = (float)width/(float)height;
+	//hAspectRatio = 1.0f;
+	vAspectRatio = 1.0f;
+
+	// Adjust scale (to screen coordinates: -1..1)
+	// NOTE: Check this expression! looks too convoluted.
+	// When reviewing make sure text works well in both 3d and 2d and in Processing and Normal3D coordinate system
+	float scaleFactor = (mCharHeight / (float)height) /  (mCharHeight/2.0f) / vAspectRatio;
+
+	// Calculate and set scale adjusted to screen coordinates
+	mScale.x = x * scaleFactor * hAspectRatio;
+	mScale.y = y * scaleFactor;
+	mScale.z = scaleFactor;
 	getParentNode()->setScale( mScale );
+
+	mNeedUpdate = true;
+
 }
 
 
-
+/// 3d rendering scale
 void MovableText::setScale( float x, float y, float z )
 {
-	if ( GraphicsManager::getSingleton().isProcessingMode() )
-		y *= -1;
+	// Adjust scale
+	float scaleFactor = (mCharHeight / (float)height);
+	scaleFactor = 1.0f;
 
-	mScale.x = x;
-	mScale.y = y;
-	mScale.z = z;
+	mScale.x = x * scaleFactor;
+	mScale.y = y * scaleFactor;
+	mScale.z = scaleFactor;
 	getParentNode()->setScale( mScale );
 }
 
@@ -360,10 +377,10 @@ void MovableText::_setupGeometry()
 	float top = -((0 * 2.0) - 1.0);
 
 	// Derive space with from a number 0
-	// Cing note: widht half of the width ogre was using (do to testing, it looks better this way)
+	// Cing note: width half of the width ogre was using (though to testing, it looks closer to the font look this way)
 	if ( mSpaceWidth == 0 )
 	{
-		mSpaceWidth = mpFont->getGlyphAspectRatio(UNICODE_ZERO) * mCharHeight;// * 2.0 * mViewportAspectCoef;
+		mSpaceWidth = mpFont->getGlyphAspectRatio(UNICODE_ZERO) * mCharHeight;//  * 2.0 * mViewportAspectCoef;
 	}
 
 	// Calculate vertical offset depending on the vertical alignment
@@ -517,8 +534,10 @@ void MovableText::_setupGeometry()
 
 	// update AABB/Sphere radius (for ogre movable object)
 	// Note: for some strange reason texts must be scale by 2 to have the correct pixel size
-	mAABB = AABox(m_min/2, m_max/2);
-	mRadius = Ogre::Math::Sqrt(m_maxSquaredRadius / 2);
+	// TODO: properly calculate bbox taking into account V and H alignment
+	//mAABB = AABox(m_min/2, m_max/2);
+	mAABB.setInfinite();
+	mRadius = Ogre::Math::Sqrt(m_maxSquaredRadius/2);
 
 	// update done
 	mNeedUpdate = false;
@@ -581,7 +600,6 @@ void MovableText::getWorldTransforms( Matrix4 *xform ) const
 		xform->setTrans(mParentNode->_getDerivedPosition());
 	}
 	// 3d -> rotations allowed
-
 	else
 	{
 		// apply scale from parent (divided by 2... TODO: not sure why is necessary)
@@ -589,7 +607,7 @@ void MovableText::getWorldTransforms( Matrix4 *xform ) const
 		scale3x3[0][0] = mParentNode->_getDerivedScale().x / 2;
 		scale3x3[1][1] = mParentNode->_getDerivedScale().y / 2;
 		scale3x3[2][2] = mParentNode->_getDerivedScale().z / 2;
-
+ 
 		// parent node rotation
 		mParentNode->_getDerivedOrientation().ToRotationMatrix(rot3x3);
 
@@ -687,7 +705,7 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 				// Check just one character at a time
 
 				else
-					lineLength += mpFont->getGlyphAspectRatio(character) * mCharHeight; // * 2.0 * mViewportAspectCoef;
+					lineLength += mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0f * mViewportAspectCoef;
 			}
 
 			// If the text does not fit in the width anymore -> insert line break
@@ -911,15 +929,6 @@ void MovableText::set2dRendering()
 		setUseIdentityProjection(true);
 		setUseIdentityView(true);
 		setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
-
-		// Adjust scale
-		float scaleFactor = (mCharHeight / (float)height) / 2.0f;
-
-		mScale.x *= scaleFactor;
-		mScale.y *= scaleFactor;
-		mScale.z = 1;
-
-		setScale( mScale.x, mScale.y );
 		
 		mRender2D = true;
 	}
@@ -936,19 +945,10 @@ void MovableText::set3dRendering()
 		// Set render properties
 		setUseIdentityProjection(false);
 		setUseIdentityView(false);
-
-		// Adjust scale
-		float scaleFactor = (mCharHeight / (float)height);
-
-		mScale.x /= scaleFactor;
-		mScale.y /= scaleFactor;
-		mScale.z = 1;
-
-		setScale( mScale );
+		setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
 
 		mRender2D = false;
-	}
-	
+	}	
 }
 
 }

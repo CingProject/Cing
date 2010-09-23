@@ -45,6 +45,7 @@ namespace Cing
 		int			valign;				/// TOP, BOTTOM, CENTER, or BASELINE			
 		TextMode	mode;				/// MODEL, SCREEN, (SHAPE? -> not for now)
 		Color		color;
+		bool		render2d;			/// If true, the text will be rendered in screen coordinates (2d)
 
 		// Constructor
 		FontProperties() 
@@ -60,6 +61,7 @@ namespace Cing
 			halign		= LEFT;
 			valign		= TOP;
 			color		= Color::White;
+			render2d	= true;
 		}
 
 		// Comparison operator

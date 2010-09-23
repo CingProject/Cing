@@ -28,7 +28,7 @@ namespace Cing
 /// String utils
 
 /// Converts an int to string
-std::string intToString(int inputNumber)
+String intToString(int inputNumber)
 {
 	std::stringstream s;
 	s << inputNumber;

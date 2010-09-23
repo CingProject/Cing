@@ -28,7 +28,7 @@ void setup()
 
 	// setup light
 	ambientLight( 20, 20, 20 );
-	light.init( 0, 0, 0, width/2, height/2, -200 );
+	light.init( 0, 0, 0, width/2, height/2, 200 );
 }
 
 void draw()

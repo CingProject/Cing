@@ -32,7 +32,7 @@ namespace Cing
  */
 
 // Debug output methods
-void	showDebugOutput	( bool show );
+void	showDebugOutput	( bool show = true );
 void	clearDebugOutput();
 
 } // namespace Cing

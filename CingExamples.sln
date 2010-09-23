@@ -52,11 +52,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_3dDrawing", "examp
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_3dImportCollada", "example_projects\Advanced_3dImportCollada\Advanced_3dImportCollada.vcproj", "{1272054E-5B32-4F38-869A-F82EFBB81BA7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_BackgroundSubtraction", "example_projects\Advanced_BackgroundSubtraction\Advanced_BackgroundSubtraction.vcproj", "{A39C78AF-F8B9-4E0E-8653-D78DF093E41E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
@@ -72,12 +67,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_Physics", "example
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_CameraInput", "example_projects\Simple_CameraInput\Simple_CameraInput.vcproj", "{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_SceneGraph", "example_projects\Advanced_SceneGraph\Advanced_SceneGraph.vcproj", "{D7AD3008-68B1-4383-8B2C-76FCDD72501F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_SceneGraph", "example_projects\Advanced_SceneGraph\Advanced_SceneGraph.vcproj", "{D7AD3008-68B1-4383-8B2C-76FCDD72501F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_CameraInputAndFilters", "example_projects\Simple_CameraInputAndFilters\Simple_CameraInputAndFilters.vcproj", "{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
@@ -132,10 +127,6 @@ Global
 		{A014A615-8C97-4305-A96E-983BCABFE863}.Debug|Win32.Build.0 = Debug|Win32
 		{A014A615-8C97-4305-A96E-983BCABFE863}.Release|Win32.ActiveCfg = Release|Win32
 		{A014A615-8C97-4305-A96E-983BCABFE863}.Release|Win32.Build.0 = Release|Win32
-		{1272054E-5B32-4F38-869A-F82EFBB81BA7}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1272054E-5B32-4F38-869A-F82EFBB81BA7}.Debug|Win32.Build.0 = Debug|Win32
-		{1272054E-5B32-4F38-869A-F82EFBB81BA7}.Release|Win32.ActiveCfg = Release|Win32
-		{1272054E-5B32-4F38-869A-F82EFBB81BA7}.Release|Win32.Build.0 = Release|Win32
 		{A39C78AF-F8B9-4E0E-8653-D78DF093E41E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{A39C78AF-F8B9-4E0E-8653-D78DF093E41E}.Debug|Win32.Build.0 = Debug|Win32
 		{A39C78AF-F8B9-4E0E-8653-D78DF093E41E}.Release|Win32.ActiveCfg = Release|Win32
@@ -148,14 +139,14 @@ Global
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Debug|Win32.Build.0 = Debug|Win32
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Release|Win32.ActiveCfg = Release|Win32
 		{6C638EF5-3382-4ADD-9D51-192E52703211}.Release|Win32.Build.0 = Release|Win32
-		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Debug|Win32.Build.0 = Debug|Win32
-		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.ActiveCfg = Release|Win32
-		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.Build.0 = Release|Win32
 		{D7AD3008-68B1-4383-8B2C-76FCDD72501F}.Debug|Win32.ActiveCfg = Debug|Win32
 		{D7AD3008-68B1-4383-8B2C-76FCDD72501F}.Debug|Win32.Build.0 = Debug|Win32
 		{D7AD3008-68B1-4383-8B2C-76FCDD72501F}.Release|Win32.ActiveCfg = Release|Win32
 		{D7AD3008-68B1-4383-8B2C-76FCDD72501F}.Release|Win32.Build.0 = Release|Win32
+		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Debug|Win32.Build.0 = Debug|Win32
+		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.ActiveCfg = Release|Win32
+		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

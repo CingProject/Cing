@@ -3,6 +3,7 @@ CREATE_APPLICATION( "Cing Demo" );
 
 /*
  * This example shows of to load and draw an image where the mouse is located
+ * The image should be on the data folder of the project.
  */
 
 Image myImage;
@@ -12,7 +13,8 @@ void setup()
 	size(1024, 768);
 
 	// Load the image from disk
-	myImage.load("MissAmericaRedBlue.jpg");
+	myImage = loadImage("muybridge.jpg");
+	//myImage.load("muybridge.jpg");
 
 }
 

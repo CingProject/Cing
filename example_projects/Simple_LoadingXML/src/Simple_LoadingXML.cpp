@@ -5,13 +5,13 @@ CREATE_APPLICATION( "Cing" );
  * Example extracted from http://processing.org/reference/XMLElement.html
  * The following short XML file called "xmlFileTest.xml" is parsed 
  * in the code below. It must be in the project's "data" directory
+ * This is the content of the file
  *
  * <?xml version="1.0"?>
  * <xmlTest>
  *  <websites>
  *    <site id="0" url="cing.cc">Cing</site>
  *    <site id="1" url="processing.org">Processing</site>
- *    <site id="2" url="mobile.processing.org">Processing Mobile</site>
  *   </websites>
  * </xmlTest>
  *

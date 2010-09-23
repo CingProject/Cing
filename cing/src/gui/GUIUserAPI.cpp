@@ -30,7 +30,7 @@ namespace Cing
  *
  * @param show if true it will be shown, if false it will be hidden
  */
-void showDebugOutput( bool show )
+void showDebugOutput( bool show /*= true*/ )
 {
 	GUIManagerCEGUI::getSingleton().getDebugOutput().setVisible( show );
 }

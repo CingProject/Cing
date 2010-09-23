@@ -43,9 +43,9 @@ class Mouse;
 
 
 // Window
-extern int							width;					///< Window's width
-extern int							height;					///< Window's height
-extern String						appName;				///< Name of the application (window's title)
+extern int							width;				///< Window's width
+extern int							height;				///< Window's height
+extern String						appName;			///< Name of the application (window's title)
 
 // Data folder
 extern String						dataFolder;			///< Path to user's application data folder
@@ -53,28 +53,28 @@ extern String						cingDataFolder;		///< Cing data folder (required for the user
 
 
 // Input
-extern	char						key;						///< Key being currently pressed
-extern	KeyCode						keyCode;				///< Key code being pressed (allow to detect also special keys such as the arrow or function keys)
+extern	char						key;				///< Key being currently pressed
+extern	KeyCode						keyCode;			///< Key code being pressed (allow to detect also special keys such as the arrow or function keys)
 extern	int							mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
-extern	int							mouseX;					///< X coordinate of the mouse (in screen coordinates)
-extern	int							mouseY;					///< Y coordinate of the mouse (in screen coordinates)
-extern	Mouse&						mouse;					///< System mouse
-extern	Keyboard&					keyboard;				///< System keyboard
+extern	int							mouseX;				///< X coordinate of the mouse (in screen coordinates)
+extern	int							mouseY;				///< Y coordinate of the mouse (in screen coordinates)
+extern	Mouse&						mouse;				///< System mouse
+extern	Keyboard&					keyboard;			///< System keyboard
 
 // Time
 extern double						elapsedSec;			///< Elapsed time in seconds from previous to current frame
-extern unsigned long				elapsedMillis;	///< Elapsed time in milliseconds from previous to current frame
-extern unsigned long				elapsedMicros;	///< Elapsed time in microseconds from previous to current frame
+extern unsigned long				elapsedMillis;		///< Elapsed time in milliseconds from previous to current frame
+extern unsigned long				elapsedMicros;		///< Elapsed time in microseconds from previous to current frame
 extern double						secFromStart;		///< Seconds elapsed since application started
-extern unsigned long				millisFromStart;///< Milliseconds elapsed since application started
+extern unsigned long				millisFromStart;	///< Milliseconds elapsed since application started
 
 // Frame count
 extern unsigned long  				frameCount;			///< Actual frame number the app is rendering
 extern float						frameRate;			///< Current app framerate (approx)
 
 // Advanced 
-extern Ogre::SceneManager*			ogreSceneManager; ///< Ogre Scene Manager. Almost all communication with ogre is done through this object
-extern Ogre::Camera*				ogreCamera;				///< Ogre Camera used to render the scene
+extern Ogre::SceneManager*			ogreSceneManager;	///< Ogre Scene Manager. Almost all communication with ogre is done through this object
+extern Ogre::Camera*				ogreCamera;			///< Ogre Camera used to render the scene
 
 // Pixel manipulation
 extern std::vector < Color >		pixels;

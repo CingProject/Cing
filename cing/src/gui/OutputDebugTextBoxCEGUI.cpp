@@ -175,7 +175,7 @@ void OutputDebugTextBoxCEGUI::setVisible( bool visible )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to set visible the OutputDebugTextBoxCEGUI, but it has not been initialized" );
+		LOG_ERROR( "Trying to set visible the OutputDebugTextBoxCEGUI, but it has not been initialized. The function showDebugOutput cannot be called in the setup()" );
 		return;
 	}
 

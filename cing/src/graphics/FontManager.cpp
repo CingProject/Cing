@@ -146,18 +146,38 @@ namespace Cing
 
 		// Font Position
 		Vector fontPos( m_activeFontProperties.x, m_activeFontProperties.y, m_activeFontProperties.z );
+		Vector transformedPos = t.getPosition() + fontPos;
+		Vector scale = t.getScale();
 
 		// Control current coordinate system
 		if ( GraphicsManager::getSingleton().isProcessingMode() )
 		{
-			newText->setPosition( t.getPosition() + fontPos );	
-			newText->setScale( t.getScale() );
+			if ( m_activeFontProperties.render2d )
+			{
+				newText->setPosition( transformedPos.x, transformedPos.y );	
+				newText->setScale( scale.x, -scale.y );
+			}
+			else
+			{
+				newText->setPosition( transformedPos );	
+				newText->setScale( scale.x, -scale.y, scale.z );
+			}
+			
 			newText->getParentNode()->setOrientation( t.getRotQuaternion().Inverse() );
 		}
 		else
 		{
-			newText->setPosition( t.getPosition() + fontPos );	
-			newText->setScale( t.getScale() );
+			if ( m_activeFontProperties.render2d )
+			{
+				newText->setPosition( transformedPos.x, transformedPos.y );	
+				newText->setScale( scale.x, scale.y );
+			}
+			else
+			{
+				newText->setPosition( transformedPos );	
+				newText->setScale( scale );
+			}
+
 			newText->getParentNode()->setOrientation( t.getRotQuaternion() );
 		}
 

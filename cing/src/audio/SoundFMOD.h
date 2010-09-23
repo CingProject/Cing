@@ -45,32 +45,32 @@ public:
 	friend class SoundManagerFMOD;
 
 	// Constructor/Destructor
-					SoundFMOD   ();
+			SoundFMOD   ();
 	virtual ~SoundFMOD  ();
 
   // Actions
-	void	load				( const char* filename );
-	void	play				( bool loop )           ;
-	void	pause				()                      ;
-	void	stop				()                      ;
-  bool	isPlaying		()                 const;
-	void	end					();
+	void	load		( const char* filename );
+	void	play		( bool loop )           ;
+	void	pause		()                      ;
+	void	stop		()                      ;
+	bool	isPlaying	()                 const;
+	void	end			();
 
-	bool isValid			() const;
-	bool isLoaded			() const { return m_sound != 0 ; }
+	bool	isValid		() const;
+	bool	isLoaded	() const { return m_sound != 0 ; }
 
 
   // Parameters
 	void	setVolume   ( float value ) ;
-	float getVolume   ()              const;
-	void  setSpeed    ( float value ) ;
-	float getSpeed    ()              const;
-	void  setPan      ( float value ) ;
-	float getPan      ()              const;
+	float	getVolume	()              const;
+	void	setSpeed	( float value ) ;
+	float	getSpeed	()              const;
+	void	setPan		( float value ) ;
+	float	getPan		()              const;
 
   // Get info from played sound
-  float					getCurrentLevel	( int channelNum = 0 ) const;
-	unsigned int	getDuration			() const;
+  float				getCurrentLevel	( int channelNum = 0 ) const;
+	unsigned int	getDuration		() const;
 
 private:
 
@@ -86,8 +86,8 @@ private:
 	static FMOD_SYSTEM  *m_sysPtr;  ///< Save a shared copy to the audio system
 
   // Attributes
-   FMOD_SOUND*		m_sound;   ///< Sound to be play
-   FMOD_CHANNEL*	m_channel; ///< Channel where the sound is being played
+   FMOD_SOUND*			m_sound;   ///< Sound to be play
+   FMOD_CHANNEL*		m_channel; ///< Channel where the sound is being played
 
    float    			m_soundVolume;  ///< Because fmod handles it by channel instead of sound
    float    			m_soundPan;     ///< Because fmod handles it by channel instead of sound

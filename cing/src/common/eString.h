@@ -43,7 +43,9 @@ namespace Cing
 	class String;
 
 	/// String utils
-	std::string intToString(int inputNumber);
+	template< typename T>
+	String		toString( T input );
+	String		intToString(int inputNumber);
 	int			stringToInt(const String& str);
 
 
@@ -77,6 +79,16 @@ namespace Cing
 		void toUpperCases	();
 		void replaceSubStr	( const String& subStrToFind, const String& subStrToReplace );
 	};
+
+
+	// Template method definition
+	template<typename T>
+	String	toString( T input )
+	{
+		std::stringstream s;
+		s << inputNumber;
+		return s.str();
+	}
 
 } // namespace Cing
 

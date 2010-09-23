@@ -302,7 +302,7 @@ OgreBulletDynamics::RigidBody* PhysicsManager::createRigidBody( Object3D& object
 								collisionShape, 
 								DEFAULT_DYNAMIC_BODY_RESTITUTION, 
 								DEFAULT_DYNAMIC_BODY_FRICTION, 
-								DEFAULT_DYNAMIC_BODY_MASS * object.getScale().x * object.getScale().y * object.getScale().z,
+								DEFAULT_DYNAMIC_BODY_MASS /** object.getScale().x * object.getScale().y * object.getScale().z*/,
 								pos,
 								orientation );
 

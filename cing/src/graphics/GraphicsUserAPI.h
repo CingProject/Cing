@@ -144,12 +144,12 @@ void vertex			(float x, float y, float z);
 void setRenderMode( RenderMode mode );
 
 // Camera 3D related functions
-void	useDefault3DCameraControl ( bool useDefault );
-void	useMouseCameraControl		  ( bool value );
-void	useKeyboardCameraControl	( bool value );
+void	useDefault3DCameraControl	( bool useDefault = true );
+void	useMouseCameraControl		( bool value = true );
+void	useKeyboardCameraControl	( bool value = true );
 
-// Debug methods
-void	showFps ( bool show );
+// Debugle methods
+void	showFps ( bool show = true  );
 
 // Image Create functions
 Image createImage( int width, int height, GraphicsType format );
@@ -190,7 +190,9 @@ void save( const String& name );
 // Typography
 //-----------------------------------------------------------------------------------
 void text( const String& text, float x, float y );
+void text( const String& text, float x, float y, float z);
 void text( const String& text, float x, float y, float width, float height );
+void text( const String& text, float x, float y, float z, float width, float height );
 
 
 

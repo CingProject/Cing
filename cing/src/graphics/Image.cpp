@@ -1306,7 +1306,14 @@ namespace Cing
 		// Check the image is valid
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to paint in an invalid image" );
-
+	
+		// Check scale
+		if ( (width < 0) || (height < 0) )
+		{
+			LOG_ERROR( "Image::ellipse. widht and height should be positive" );
+			return;
+		}
+			
 		float widthDIV2 = (float)width/2.0f;
 		float heightDIV2 = (float)height/2.0f;
 

@@ -50,6 +50,14 @@ public:
 	// Physics control
 	virtual void	enablePhysics			( bool staticObject = false );
 	void			disablePhysics			();
+
+	// Velocities and accelerations
+	void			setMass					( float mass );
+	void			setGravity				( const Vector& gravity );
+	void			setLinearVelocity		( const Vector& velocity );
+	void			setAngularVelocity		( const Vector& angVelocity );
+
+	// Forces and Impulses
 	void			applyCentralForce		( const Vector& force );
 	void			applyCentralImpulse		( const Vector& impulse );
 	void			applyForce				( const Vector& force, const Vector& relPos );
@@ -58,10 +66,10 @@ public:
 	void			applyTorqueImpulse		( const Vector& torque );
 
 	// Advanced physics control
-	btRigidBody*	getBulletRigidBody	();
+	btRigidBody*	getBulletRigidBody		();
 
 	// Query  Methods
-	bool			isValid				() { return Object3D::isValid(); }
+	bool			isValid					() { return Object3D::isValid(); }
 
 protected:
 

@@ -72,8 +72,8 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	GraphicsManager::GraphicsManager():
-		m_bIsValid    ( false ),
-		m_showFps			( false ),
+		m_bIsValid		( false ),
+		m_showFps		( false ),
 		m_pSceneManager( NULL ),
 		m_fill( true ),
 		m_stroke( true ),
@@ -212,7 +212,7 @@ bool GraphicsManager::init()
 	//m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
 
 	// Set default coordinate system:
-	m_coordSystem = NORMAL3D;
+	m_coordSystem = OPENGL3D;
 
 	// This is to adjust 2d and 3d coordinates like in Processing:
 	applyCoordinateSystemTransform(PROCESSING);
@@ -264,6 +264,8 @@ void GraphicsManager::end()
 */
 void GraphicsManager::draw()
 {
+	// Reset the "global" matrix stack
+	clearMatrixStack();
 
 	// Update the background image
 	m_canvas.drawBackground(	0,
@@ -324,10 +326,6 @@ void GraphicsManager::draw()
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
 	for (; it != m_drawableImagesQueue.end(); ++it )
 		(*it)->setVisible( false );
-
-	// Reset the "global" matrix stack
-	clearMatrixStack();
-
 }
 
 /**
@@ -697,7 +695,7 @@ void GraphicsManager::applyCoordinateSystemTransform( const GraphicsType& coordS
 	m_coordSystem = coordSystem;
 	switch(m_coordSystem)
 	{
-	case NORMAL3D:
+	case OPENGL3D:
 		{
 			// Reset camera position (and orientation?)
 			m_activeCamera.getSceneNode()->setPosition( Ogre::Vector3( 0, 0, 2000.0 ) );

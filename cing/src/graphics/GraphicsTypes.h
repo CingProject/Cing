@@ -77,7 +77,7 @@ namespace Cing
 		// Other
 		CLOSE,
 	    // Coordinate systems
-		NORMAL3D,
+		OPENGL3D,
 		PROCESSING
 	};
 
