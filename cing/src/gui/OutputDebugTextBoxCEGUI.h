@@ -28,8 +28,7 @@
 
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-#error "mac"
-//#import <CoreFoundation/CoreFoundation.h>
+#import <CoreFoundation/CoreFoundation.h>
 #endif
 
 namespace Cing

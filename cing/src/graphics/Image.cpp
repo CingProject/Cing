@@ -781,19 +781,15 @@ namespace Cing
 		// Draw stroke
 		if (graphManager.getStroke())
 		{
-			// Get Stroke Color
-			Color color        = graphManager.getStrokeColor();
-			int   strokeWeight = graphManager.getStrokeWeight();
-
 			if (graphManager.getSmooth())
 			{
-				cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( color.r, color.g, color.b ), strokeWeight, CV_AA, 0);
-				cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( color.r, color.g, color.b ), strokeWeight, CV_AA, 0);
-				cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x1,y1), cv::Scalar( color.r, color.g, color.b ), strokeWeight, CV_AA, 0);
+				cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+				cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+				cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
 			}else{																														 
-				cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( color.r, color.g, color.b ), strokeWeight, 4, 0);  
-				cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( color.r, color.g, color.b ), strokeWeight, 4, 0);  
-				cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x1,y1), cv::Scalar( color.r, color.g, color.b ), strokeWeight, 4, 0);  
+				cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+				cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+				cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
 			}																														 
 		}																															  	
 
@@ -936,8 +932,6 @@ namespace Cing
 
 		if (graphManager.getFill())
 		{
-			// Get Fill Color
-			Color color        = graphManager.getFillColor();
 			if (graphManager.getSmooth())
 			{
 				cv::ellipse(	*canvasImage,					///-> Image.
@@ -946,7 +940,7 @@ namespace Cing
 								0,								///->	Rotation angle.
 								start,							///-> Starting angle of the elliptic arc.
 								end,							///-> Ending angle of the elliptic arc.
-								cv::Scalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
+								cv::Scalar(fillColor.r, fillColor.g, fillColor.b),///-> Ellipse color.
 								-1,
 								CV_AA);							///-> Thickness of the ellipse arc.
 			}else{
@@ -956,19 +950,14 @@ namespace Cing
 								0,								///->	Rotation angle.
 								start,							///-> Starting angle of the elliptic arc.
 								end,							///-> Ending angle of the elliptic arc.
-								cv::Scalar( color.r, color.g, color.b, color.a ),///-> Ellipse color.
+								cv::Scalar(fillColor.r, fillColor.g, fillColor.b),///-> Ellipse color.
 								-1,
 								4);								///-> Thickness of the ellipse arc.
 			}
 		}
 
 		if (graphManager.getStroke())
-		{
-			// Get Stroke Color
-			// Get Fill Color
-			Color color        = graphManager.getStrokeColor();
-			int   strokeWeight = graphManager.getStrokeWeight();
-
+		{			
 			if (graphManager.getSmooth())
 			{
 				cv::ellipse(	*canvasImage,					///-> Image.
@@ -977,7 +966,7 @@ namespace Cing
 								0,								///->	Rotation angle.
 								start,							///-> Starting angle of the elliptic arc.
 								end,							///-> Ending angle of the elliptic arc.
-								cv::Scalar( color.r, color.g, color.b ),///-> Ellipse color.
+								cv::Scalar(strokeColor.r, strokeColor.g, strokeColor.b ),///-> Ellipse color.
 								strokeWeight,
 								CV_AA );								///-> Thickness of the ellipse arc.
 			}else{
@@ -987,7 +976,7 @@ namespace Cing
 								0,								///->	Rotation angle.
 								start,							///-> Starting angle of the elliptic arc.
 								end,							///-> Ending angle of the elliptic arc.
-								cv::Scalar( color.r, color.g, color.b ),///-> Ellipse color.
+								cv::Scalar(strokeColor.r, strokeColor.g, strokeColor.b ),///-> Ellipse color.
 								strokeWeight,
 								4 );							///-> Thickness of the ellipse arc.
 
@@ -1239,9 +1228,6 @@ namespace Cing
 		// Draw Stroke
 		if (graphManager.getStroke())
 		{
-			// Get Stroke Color
-			Color color        = graphManager.getStrokeColor();
-			int   strokeWeight = graphManager.getStrokeWeight();
 			switch( graphManager.getRectMode() )
 			{
 
@@ -1479,7 +1465,8 @@ namespace Cing
 		if (type == THRESHOLD)
 		{
 			m_imgThresholdFilter.setThreshold(param1);
-			m_imgThresholdFilter.apply(  (IplImage)m_cvImage , (IplImage)m_cvImage);
+			IplImage tempImage = (IplImage)m_cvImage;
+			m_imgThresholdFilter.apply(  tempImage , tempImage);
 		}
 
 		if (type == INVERT)
@@ -1512,7 +1499,8 @@ namespace Cing
 
 		if (type == THRESHOLD)
 		{
-			m_imgThresholdFilter.apply( (IplImage)m_cvImage , (IplImage)m_cvImage);
+			IplImage tempImageHeader = (IplImage)m_cvImage;
+			m_imgThresholdFilter.apply( tempImageHeader, tempImageHeader);
 		}
 
 		if (type == INVERT)

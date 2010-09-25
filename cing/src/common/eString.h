@@ -86,7 +86,7 @@ namespace Cing
 	String	toString( T input )
 	{
 		std::stringstream s;
-		s << inputNumber;
+		s << input;
 		return s.str();
 	}
 

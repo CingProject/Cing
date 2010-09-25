@@ -103,7 +103,9 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 		m_differenceFilter.apply( *m_backgroundImage, imgToAnalyze.getCVImage(), *tempImage );
 
 		// Threshold the image
-		m_thresholdFilter.apply( *tempImage, output.getCVImage() );
+		IplImage tempImageHeader = (IplImage)*tempImage;
+		IplImage tempOutImageHeader = (IplImage)output.getCVImage();
+		m_thresholdFilter.apply(tempImageHeader, tempOutImageHeader );
 	}
 	else if ( m_technique == BRIGHTNESS )
 	{
@@ -111,7 +113,9 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 		cvSub( &imgToAnalyze.getCVImage(), m_backgroundImage, tempImage );
 
 		// Threshold the image
-		m_thresholdFilter.apply( *tempImage, output.getCVImage() );
+		IplImage tempImageHeader = (IplImage)*tempImage;
+		IplImage tempOutImageHeader = (IplImage)output.getCVImage();
+		m_thresholdFilter.apply( tempImageHeader, tempOutImageHeader);
 	}
 
 	// Mark the output image to be uploaded to the texture in case it is drawn
