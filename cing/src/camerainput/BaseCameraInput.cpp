@@ -85,10 +85,11 @@ bool BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
 	}
 
 	// Store data
-	m_deviceId	= deviceId;
+	m_deviceId		= deviceId;
 	m_width			= width;
 	m_height		= height;
 	m_format		= format;
+	m_fps			= fps;
 
 	// Calculate number of channels of the captured images and the frame size
 	m_frameSize	= m_width * m_height * (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
@@ -135,12 +136,14 @@ void BaseCameraInput::end()
 * @briefUpdates the data of the camera frame.
 * This method should be called by subclasses to update the captured images
 * 
-* @param[in] data  Image data to update (the just captured camera frame)
+* @param[in] data		Image data to update (the just captured camera frame)
 * @param[in] width		Width in pixels
-* @param[in] height  Height in pixels
+* @param[in] height		Height in pixels
 * @param format			Format to the image passed
+* @param widthStep		width step of the passed data
+* @param swapRB			swap red and blue channels
 */
-void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, unsigned int height, GraphicsType format )	
+void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, unsigned int height, GraphicsType format, int widthStep, bool swapRB /*= false*/ )	
 {
 	// Get capture fps
 	unsigned long elapsedMicroseconds = m_timer.getMicroseconds();
@@ -148,24 +151,52 @@ void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, 
 	m_realFpsAverage.addValue( m_realFps );
 
 	// If the received image has the same format... copy it
-	if (	(width == m_currentCameraImage.getWidth() ) && 
+	if ((width == m_currentCameraImage.getWidth() ) && 
 		(height == m_currentCameraImage.getHeight()) && 
 		(m_format == format) )
 	{
-		m_currentCameraImage.setData( data, width, height, format );
-	}
+		m_currentCameraImage.setData( data, width, height, format, widthStep );
+		
+		// Swap red and blue channels
+		if ( swapRB )
+		{
+			cvtColor(m_currentCameraImage.getCVMat(), m_currentCameraImage.getCVMat(), CV_RGB2BGR);
+			m_currentCameraImage.setUpdateTexture(true);
+		}
+	}	
 	// If we are working in GRAYSCALE and the received image is RGB -> convert it, and then store it
-	else if ( (width == m_currentCameraImage.getWidth() ) && 
-		(height == m_currentCameraImage.getHeight()) && 
-		(m_format == GRAYSCALE) && (format == RGB) )
+	else if ((width == m_currentCameraImage.getWidth() ) && 
+			 (height == m_currentCameraImage.getHeight()) && 
+			 (m_format == GRAYSCALE) && (format == RGB) )
 	{
 		// Set data to temp image to make the conversion
-		m_tempImage.setData( data, width, height, format );
+		m_tempImage.setData( data, width, height, format, widthStep );
 
 		// Convert it and mark the image to update to texture next draw
 		cvCvtColor( &m_tempImage.getCVImage(), &m_currentCameraImage.getCVImage(), CV_BGR2GRAY );
 		m_currentCameraImage.setUpdateTexture( true );
 	}
+	// Check if we have an image with 4 channels -> convert it to RGB or GRAY
+	else if ((width == m_currentCameraImage.getWidth() ) && 
+			 (height == m_currentCameraImage.getHeight()) && 
+			 (format == RGBA ) )
+	{
+		// Convert to RGB (from RGBA)
+		if ( m_format == RGB )
+		{
+			int nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );	
+			cv::Mat imgData(height, width, CV_MAKETYPE(CV_8U,nChannels), data, widthStep);
+			
+			cvtColor(imgData, m_currentCameraImage.getCVMat(), CV_RGBA2RGB);
+			m_currentCameraImage.setUpdateTexture( true );
+		}
+		// Convert to GRAY (from RGB) -> not supported for now
+		else if ( m_format == GRAYSCALE )
+		{
+			LOG_ERROR( "Trying to set camera image data with a wrong size or format" );	
+		}
+	}
+	// Not compatible format or size
 	else
 		LOG_ERROR( "Trying to set camera image data with a wrong size or format" );
 

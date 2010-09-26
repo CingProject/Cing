@@ -330,11 +330,12 @@ namespace Cing
 	* @brief Sets the data of the image
 	*
 	* @param imageData Data to set to the image
-	* @param width			Width of the passed image data
+	* @param width		Width of the passed image data
 	* @param height		Height of the passed image data
 	* @param format		format Format of the image passed
+	* @param widthStep	optional parameter in case the width step is not width*nChannels. Usually you should not use it.
 	*/
-	void Image::setData( const unsigned char* imageData, int width, int height, GraphicsType format )
+	void Image::setData( const unsigned char* imageData, int width, int height, GraphicsType format, int widthStep /*= -1*/ )
 	{
 		if ( !isValid() )
 		{
@@ -351,7 +352,9 @@ namespace Cing
 		}
 
 		// Set the data
-		cv::Mat imgData(height, width, CV_MAKETYPE(CV_8U,channels), (void*)imageData, width*channels);
+		if ( widthStep == -1 )
+			widthStep = width*channels;
+		cv::Mat imgData(height, width, CV_MAKETYPE(CV_8U,channels), (void*)imageData, widthStep);
 		imgData.copyTo(m_cvImage);
 
 		// Make the image to be updated to texture in the next draw

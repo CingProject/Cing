@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		43327CDE124E4CF10098BE13 /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43327CDD124E4CF10098BE13 /* Cg.framework */; };
-		43327E67124E50D70098BE13 /* libOgrePaging.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 43327E55124E50960098BE13 /* libOgrePaging.dylib */; };
 		433294AA124E56430098BE13 /* plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 433294A9124E56430098BE13 /* plugins.cfg */; };
 		43329920124EABF90098BE13 /* CEGUIExpatParser.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 433298FD124EABEA0098BE13 /* CEGUIExpatParser.bundle */; };
 		43329921124EABF90098BE13 /* CEGUIFalagardWRBase.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 433298FE124EABEA0098BE13 /* CEGUIFalagardWRBase.bundle */; };
 		43329922124EABF90098BE13 /* CEGUISILLYImageCodec.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 433298FF124EABEA0098BE13 /* CEGUISILLYImageCodec.bundle */; };
 		43329924124EAC0A0098BE13 /* Cg.framework in Copy Cg Framework */ = {isa = PBXBuildFile; fileRef = 43327CDD124E4CF10098BE13 /* Cg.framework */; };
+		436A9FF9124FA344003D7C33 /* libOgrePaging.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 436A9FF8124FA344003D7C33 /* libOgrePaging.dylib */; };
+		436A9FFA124FA344003D7C33 /* libOgrePaging.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 436A9FF8124FA344003D7C33 /* libOgrePaging.dylib */; };
+		436AA1B4124FA3A5003D7C33 /* libOgrePaging.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 436A9FF8124FA344003D7C33 /* libOgrePaging.dylib */; };
+		436AA1B5124FA3AC003D7C33 /* libOgrePaging.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 436A9FF8124FA344003D7C33 /* libOgrePaging.dylib */; };
 		439B4050124EB96C00ADC54C /* libhighgui.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 439B402D124EB63F00ADC54C /* libhighgui.dylib */; };
 		439B40D1124EC50F00ADC54C /* CEGUIBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 439B40D0124EC50F00ADC54C /* CEGUIBase.framework */; };
 		439B45B2124ED53F00ADC54C /* libOgreRTShaderSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 439B45B0124ED53F00ADC54C /* libOgreRTShaderSystem.dylib */; };
@@ -78,7 +81,6 @@
 		43D9633C124EDA2700DB3AF3 /* RenderSystem_GL.dylib in Copy Plugins */ = {isa = PBXBuildFile; fileRef = A9750954123A7F5500DEF3FB /* RenderSystem_GL.dylib */; };
 		43D9633E124EDA2700DB3AF3 /* libOgreRTShaderSystem.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 439B45B0124ED53F00ADC54C /* libOgreRTShaderSystem.dylib */; };
 		43D9633F124EDA2700DB3AF3 /* libOgreTerrain.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 439B45B1124ED53F00ADC54C /* libOgreTerrain.dylib */; };
-		43D96340124EDA2700DB3AF3 /* libOgrePaging.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 43327E55124E50960098BE13 /* libOgrePaging.dylib */; };
 		43D96343124EDA2700DB3AF3 /* Cg.framework in Copy Cg Framework */ = {isa = PBXBuildFile; fileRef = 43327CDD124E4CF10098BE13 /* Cg.framework */; };
 		43D9641E124EE22800DB3AF3 /* libhighgui.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 439B402D124EB63F00ADC54C /* libhighgui.dylib */; };
 		A9750955123A7F5500DEF3FB /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9750954123A7F5500DEF3FB /* RenderSystem_GL.dylib */; };
@@ -216,9 +218,9 @@
 			dstPath = ../Components;
 			dstSubfolderSpec = 13;
 			files = (
+				436AA1B4124FA3A5003D7C33 /* libOgrePaging.dylib in Copy Components */,
 				43D9633E124EDA2700DB3AF3 /* libOgreRTShaderSystem.dylib in Copy Components */,
 				43D9633F124EDA2700DB3AF3 /* libOgreTerrain.dylib in Copy Components */,
-				43D96340124EDA2700DB3AF3 /* libOgrePaging.dylib in Copy Components */,
 			);
 			name = "Copy Components";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,9 +263,9 @@
 			dstPath = ../Components;
 			dstSubfolderSpec = 13;
 			files = (
+				436AA1B5124FA3AC003D7C33 /* libOgrePaging.dylib in Copy Components */,
 				439B45B5124ED55400ADC54C /* libOgreRTShaderSystem.dylib in Copy Components */,
 				439B45B4124ED54D00ADC54C /* libOgreTerrain.dylib in Copy Components */,
-				43327E67124E50D70098BE13 /* libOgrePaging.dylib in Copy Components */,
 			);
 			name = "Copy Components";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,12 +294,12 @@
 
 /* Begin PBXFileReference section */
 		43327CDD124E4CF10098BE13 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = cing/libraries/mac/xcode/Ogre3d/Frameworks/Cg.framework; sourceTree = "<group>"; };
-		43327E55124E50960098BE13 /* libOgrePaging.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libOgrePaging.dylib; sourceTree = "<group>"; };
 		43328FF2124E52FC0098BE13 /* cing_bin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cing_bin; sourceTree = "<group>"; };
 		433294A9124E56430098BE13 /* plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plugins.cfg; path = cing/libraries/mac/xcode/Ogre3d/inst/plugins.cfg; sourceTree = "<group>"; };
 		433298FD124EABEA0098BE13 /* CEGUIExpatParser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CEGUIExpatParser.bundle; path = cing/libraries/mac/xcode/CEGUI/Plugins/CEGUIExpatParser.bundle; sourceTree = "<group>"; };
 		433298FE124EABEA0098BE13 /* CEGUIFalagardWRBase.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CEGUIFalagardWRBase.bundle; path = cing/libraries/mac/xcode/CEGUI/Plugins/CEGUIFalagardWRBase.bundle; sourceTree = "<group>"; };
 		433298FF124EABEA0098BE13 /* CEGUISILLYImageCodec.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CEGUISILLYImageCodec.bundle; path = cing/libraries/mac/xcode/CEGUI/Plugins/CEGUISILLYImageCodec.bundle; sourceTree = "<group>"; };
+		436A9FF8124FA344003D7C33 /* libOgrePaging.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOgrePaging.dylib; path = cing/libraries/mac/xcode/Ogre3d/Frameworks/libOgrePaging.dylib; sourceTree = "<group>"; };
 		439B402D124EB63F00ADC54C /* libhighgui.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhighgui.dylib; path = cing/libraries/mac/xcode/OpenCV/lib/libhighgui.dylib; sourceTree = "<group>"; };
 		439B40D0124EC50F00ADC54C /* CEGUIBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIBase.framework; path = cing/libraries/mac/xcode/CEGUI/Frameworks/CEGUIBase.framework; sourceTree = "<group>"; };
 		439B45B0124ED53F00ADC54C /* libOgreRTShaderSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOgreRTShaderSystem.dylib; path = cing/libraries/mac/xcode/Ogre3d/Frameworks/libOgreRTShaderSystem.dylib; sourceTree = "<group>"; };
@@ -306,7 +308,7 @@
 		43D962CF124ED9CB00DB3AF3 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		43D962D1124ED9CB00DB3AF3 /* Simple_CameraInputAndFilters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simple_CameraInputAndFilters.cpp; sourceTree = "<group>"; };
 		43D962D7124EDA1F00DB3AF3 /* Simple_CameraInputAndFilters-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Simple_CameraInputAndFilters-Info.plist"; path = "example_projects/Simple_CameraInputAndFilters/Simple_CameraInputAndFilters-Info.plist"; sourceTree = "<group>"; };
-		43D96347124EDA2700DB3AF3 /* Simple_CameraInputAndFilters_Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple_CameraInputAndFilters_Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43D96347124EDA2700DB3AF3 /* Simple_CameraInputAndFilters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple_CameraInputAndFilters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9750954123A7F5500DEF3FB /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = cing/libraries/mac/xcode/Ogre3d/Frameworks/RenderSystem_GL.dylib; sourceTree = "<group>"; };
 		A9750965123A800600DEF3FB /* Plugin_BSPSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_BSPSceneManager.dylib; path = cing/libraries/mac/xcode/Ogre3d/Frameworks/Plugin_BSPSceneManager.dylib; sourceTree = "<group>"; };
 		A9750966123A800600DEF3FB /* Plugin_CgProgramManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_CgProgramManager.dylib; path = cing/libraries/mac/xcode/Ogre3d/Frameworks/Plugin_CgProgramManager.dylib; sourceTree = "<group>"; };
@@ -324,7 +326,7 @@
 		A9EF52F41237D795008A6038 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		A9EF52F51237D795008A6038 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		A9EF52F61237D795008A6038 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication_Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple_BasicApplication_Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple_BasicApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9EF55001237DA8D008A6038 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		A9EF55021237DA8D008A6038 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		A9EF55041237DA8D008A6038 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
@@ -374,6 +376,7 @@
 				43D96324124EDA2700DB3AF3 /* CEGUIBase.framework in Frameworks */,
 				43D96325124EDA2700DB3AF3 /* libOgreRTShaderSystem.dylib in Frameworks */,
 				43D96326124EDA2700DB3AF3 /* libOgreTerrain.dylib in Frameworks */,
+				436A9FFA124FA344003D7C33 /* libOgrePaging.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +413,7 @@
 				439B40D1124EC50F00ADC54C /* CEGUIBase.framework in Frameworks */,
 				439B45B2124ED53F00ADC54C /* libOgreRTShaderSystem.dylib in Frameworks */,
 				439B45B3124ED53F00ADC54C /* libOgreTerrain.dylib in Frameworks */,
+				436A9FF9124FA344003D7C33 /* libOgrePaging.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,8 +484,8 @@
 		A909008312370A440040FA33 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication_Debug.app */,
-				43D96347124EDA2700DB3AF3 /* Simple_CameraInputAndFilters_Debug.app */,
+				A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication.app */,
+				43D96347124EDA2700DB3AF3 /* Simple_CameraInputAndFilters.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -514,9 +518,9 @@
 		A975099D123A819E00DEF3FB /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				436A9FF8124FA344003D7C33 /* libOgrePaging.dylib */,
 				439B45B0124ED53F00ADC54C /* libOgreRTShaderSystem.dylib */,
 				439B45B1124ED53F00ADC54C /* libOgreTerrain.dylib */,
-				43327E55124E50960098BE13 /* libOgrePaging.dylib */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -639,7 +643,7 @@
 			);
 			name = Simple_CameraInputAndFilters;
 			productName = Simple_BasicApplication;
-			productReference = 43D96347124EDA2700DB3AF3 /* Simple_CameraInputAndFilters_Debug.app */;
+			productReference = 43D96347124EDA2700DB3AF3 /* Simple_CameraInputAndFilters.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A9EF54AC1237D7D5008A6038 /* Simple_BasicApplication */ = {
@@ -662,7 +666,7 @@
 			);
 			name = Simple_BasicApplication;
 			productName = Simple_BasicApplication;
-			productReference = A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication_Debug.app */;
+			productReference = A9EF54AD1237D7D5008A6038 /* Simple_BasicApplication.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -839,6 +843,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Fmod/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
@@ -847,6 +852,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
 				OBJROOT = "$(SYMROOT)/build";
 				PREBINDING = NO;
 				PRODUCT_NAME = Simple_CameraInputAndFilters_Debug;
@@ -892,6 +898,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Fmod/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
@@ -900,6 +907,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
 				OBJROOT = "$(SYMROOT)/build";
 				PREBINDING = NO;
 				PRODUCT_NAME = Simple_CameraInputAndFilters;
@@ -1048,6 +1056,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Fmod/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
@@ -1055,6 +1064,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
 				OBJROOT = "$(SYMROOT)/build";
 				PREBINDING = NO;
 				PRODUCT_NAME = Simple_BasicApplication_Debug;
@@ -1099,6 +1109,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Fmod/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
@@ -1106,6 +1117,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/cing/libraries/mac/xcode/OpenCV/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
 				OBJROOT = "$(SYMROOT)/build";
 				PREBINDING = NO;
 				PRODUCT_NAME = Simple_BasicApplication;

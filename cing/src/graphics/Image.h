@@ -64,7 +64,7 @@ namespace Cing
 		void		end					();
 
 		// Image data
-		void			setData( const unsigned char* imageData, int width, int height, GraphicsType format );
+		void			setData( const unsigned char* imageData, int width, int height, GraphicsType format, int widthStep = -1 );
 		unsigned char*	getData();
 		unsigned char*	pixels() { return getData(); }
 		Image*			clone ();
@@ -113,6 +113,7 @@ namespace Cing
 		// Query methods
 		bool			isValid		() const	{ return m_bIsValid; }
 		IplImage		getCVImage	() const	{ return (IplImage)m_cvImage; }
+		cv::Mat&		getCVMat	()			{ return m_cvImage; }
 		int				getWidth	() const;
 		int				getHeight	() const;
 		GraphicsType	getFormat	() const;

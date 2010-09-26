@@ -66,13 +66,14 @@ namespace Cing
 		int             getHeight       () const { return m_height;     }
 		int             getFPS          () const { return m_fps;        }
 		int             getNumChannels  () const { return m_nChannels;  }
+		int             getDeviceId		() const { return m_deviceId;  }
 		Image&			getImage        ()		 { return m_currentCameraImage; }
 		GraphicsType	getFormat		() const { return m_format; }
 
 	protected:
 
 		// Protected methods
-		void  			setNewFrameData ( unsigned char* data, unsigned int width, unsigned int height, GraphicsType format );
+		void  			setNewFrameData ( unsigned char* data, unsigned int width, unsigned int height, GraphicsType format, int widthStep, bool swapRB = false );
 		void  			setNewFrame     ( bool newFrame ) { m_newFrame = newFrame;    }  
 		void  			setWidth        ( int width   )   { m_width   = width;  }
 		void  			setHeight       ( int height  )   { m_height  = height; }

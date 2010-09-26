@@ -54,6 +54,16 @@ namespace Cing
 	
 	void OCVCamera::OCVCaptureThread::execute()
 	{
+		m_ocvCamera.m_capture = cvCaptureFromCAM( m_ocvCamera.getDeviceId() );
+		if ( !m_ocvCamera.m_capture )
+			THROW_EXCEPTION( "No camera found, or no drivers installed" );
+		
+		// Set camera res
+		cvSetCaptureProperty( m_ocvCamera.m_capture, CV_CAP_PROP_FRAME_WIDTH, m_ocvCamera.getWidth() );
+		cvSetCaptureProperty( m_ocvCamera.m_capture, CV_CAP_PROP_FRAME_HEIGHT, m_ocvCamera.getHeight() );
+		cvSetCaptureProperty( m_ocvCamera.m_capture, CV_CAP_PROP_FPS, m_ocvCamera.getFPS() );
+		
+		
 		while( !get_signaled() )
 		{
 			// Get New frmae
@@ -65,10 +75,21 @@ namespace Cing
 				//m_ocvCamera.m_capture.retrieve( m_ocvCamera.m_newFrame, 0 );
 				//m_ocvCamera.m_mutex.lock();
 						
+				// Get number of channels in the image (looks like in the mac side it is aligned to 4 bytes
+				GraphicsType format;
+				if ( m_cvCaptureImage->nChannels == 1 )
+					format = GRAYSCALE;
+				else if ( m_cvCaptureImage->nChannels == 3 )
+					format = RGB;
+				else if ( m_cvCaptureImage->nChannels == 4 )
+					format = BGRA;
+				
 				// we get the pixels by passing in out buffer which gets 
-				m_ocvCamera.setNewFrameData(  (unsigned char*)m_cvCaptureImage->imageData,  m_ocvCamera.getWidth( ),  m_ocvCamera.getHeight( ), RGB );
+				m_ocvCamera.setNewFrameData(  (unsigned char*)m_cvCaptureImage->imageData,  m_ocvCamera.getWidth( ),  m_ocvCamera.getHeight( ), format, m_cvCaptureImage->widthStep, true );
 				m_ocvCamera.setNewFrame( true );				
-			
+
+				m_cvCaptureImage = NULL;
+				
 				// Copy the image
 				//cvCopy( m_cvCaptureImage, m_ocvCamera.m_cvResizedImage );
 			
@@ -83,6 +104,7 @@ namespace Cing
 	
 	void OCVCamera::OCVCaptureThread::cleanup()
 	{
+		cvReleaseCapture(&m_ocvCamera.m_capture);
 	}
 	
 	
@@ -129,7 +151,7 @@ namespace Cing
 		//if(!m_capture.isOpened()) 
 		//	return false;
 		
-		m_capture = cvCaptureFromCAM( deviceId );
+/*		m_capture = cvCaptureFromCAM( deviceId );
 		if ( !m_capture )
 			THROW_EXCEPTION( "No camera found, or no drivers installed" );
 		
@@ -137,7 +159,7 @@ namespace Cing
 		cvSetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_WIDTH, width );
 		cvSetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_HEIGHT, height );
 		cvSetCaptureProperty( m_capture, CV_CAP_PROP_FPS, fps );
-
+*/
 		//m_capture.set( CV_CAP_PROP_FRAME_WIDTH, width );
 		//m_capture.set( CV_CAP_PROP_FRAME_HEIGHT, height );
 		
@@ -152,6 +174,7 @@ namespace Cing
 		// Create capture thread
 		m_captureThread = new OCVCaptureThread( *this );
 		m_captureThread->start();		
+
 		
 		// The class is now initialized
 		m_bIsValid = true;
@@ -172,7 +195,7 @@ namespace Cing
 		
 		// Release camera
 		//m_capture.release();
-		cvReleaseCapture(&m_capture);
+		//cvReleaseCapture(&m_capture);
 		
 		// Release thread
 		Release( m_captureThread );

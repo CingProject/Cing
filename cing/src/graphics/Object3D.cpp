@@ -789,7 +789,7 @@ namespace Cing
 		}
 		// TODO: Log -> material does not exist
 		else
-			LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName );
+			LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName.c_str() );
 	}
 
 	/**
