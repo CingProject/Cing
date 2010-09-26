@@ -41,7 +41,7 @@ const std::string LogManager::logFileName = "Cing.log";
  * @brief Constructor. Initializes class attributes.
  */
 LogManager::LogManager():
-	m_log					( NULL  ),
+	m_log			( NULL  ),
 	m_logToOutput	( false ),
 	m_logToFile		( false ),
 	m_bIsValid		( false )
@@ -154,7 +154,12 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 
 	// Log message normally
 	if ( m_log )
+	{
 		m_log->logMessage( msgFormated, (Ogre::LogMessageLevel)level );
+	}
+	// Log is not ready yet (probably we are initializing the app)
+	else
+		printf("%s\n", msgFormated);
 
 	// Send it to the debug console
 	// TODO: decide policy

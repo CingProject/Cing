@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43F990F3124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43F990F1124E3C06009E5C1B /* SceneGraphElement.cpp */; };
+		43F990F4124E3C06009E5C1B /* SceneGraphElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 43F990F2124E3C06009E5C1B /* SceneGraphElement.h */; };
+		43F990F5124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43F990F1124E3C06009E5C1B /* SceneGraphElement.cpp */; };
+		43F990F6124E3C06009E5C1B /* SceneGraphElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 43F990F2124E3C06009E5C1B /* SceneGraphElement.h */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		A91E9D6D1211D9D1002292DF /* BulletCollision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91E9D6C1211D9D1002292DF /* BulletCollision.framework */; };
@@ -382,6 +386,8 @@
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* Cing_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cing_Prefix.pch; sourceTree = "<group>"; };
+		43F990F1124E3C06009E5C1B /* SceneGraphElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneGraphElement.cpp; sourceTree = "<group>"; };
+		43F990F2124E3C06009E5C1B /* SceneGraphElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraphElement.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* Cing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A91E9D6C1211D9D1002292DF /* BulletCollision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletCollision.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/BulletCollision.framework; sourceTree = SOURCE_ROOT; };
@@ -910,6 +916,8 @@
 		A94EFFE912072075009A8F12 /* graphics */ = {
 			isa = PBXGroup;
 			children = (
+				43F990F1124E3C06009E5C1B /* SceneGraphElement.cpp */,
+				43F990F2124E3C06009E5C1B /* SceneGraphElement.h */,
 				A94EFFEA12072075009A8F12 /* BaseImageFilter.cpp */,
 				A94EFFEB12072075009A8F12 /* BaseImageFilter.h */,
 				A94EFFEC12072075009A8F12 /* BaseLight.cpp */,
@@ -1080,6 +1088,7 @@
 				A9847AA2123003CE0037050E /* MidiIO.h in Headers */,
 				A97B90241236E68F00FF585F /* RtError.h in Headers */,
 				A97B90261236E68F00FF585F /* RtMidi.h in Headers */,
+				43F990F4124E3C06009E5C1B /* SceneGraphElement.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1179,6 +1188,7 @@
 				A93261441237012800A0B30D /* PhysicsObject.h in Headers */,
 				A93261461237012800A0B30D /* PhysicsManager.h in Headers */,
 				A93261481237012800A0B30D /* PhysicsBox.h in Headers */,
+				43F990F6124E3C06009E5C1B /* SceneGraphElement.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,7 +1239,6 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Cing" */;
 			compatibilityVersion = "Xcode 3.1";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -1328,6 +1337,7 @@
 				A94E00F812072075009A8F12 /* PhysicsSphere.cpp in Sources */,
 				A94E00FA12072075009A8F12 /* PhysicsUserAPI.cpp in Sources */,
 				A97B90251236E68F00FF585F /* RtMidi.cpp in Sources */,
+				43F990F3124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1398,6 +1408,7 @@
 				A93261451237012800A0B30D /* PhysicsObject.cpp in Sources */,
 				A93261471237012800A0B30D /* PhysicsManager.cpp in Sources */,
 				A93261491237012800A0B30D /* PhysicsBox.cpp in Sources */,
+				43F990F5124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1475,6 +1486,7 @@
 					"-lcv",
 					"-lcvaux",
 					"-lcxcore",
+					"-lhighgui",
 					"-lml",
 				);
 				PRODUCT_NAME = Cing;

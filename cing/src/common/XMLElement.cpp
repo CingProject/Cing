@@ -93,7 +93,9 @@ void XMLElement::load( const std::string& xmlFileName )
 		end();
 
 	// Load the xml file
-	m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( (dataFolder + xmlFileName).c_str() ) );
+	std::string fileAbsPath = dataFolder + xmlFileName;
+	LOG("Trying to load XML file: %s", fileAbsPath.c_str());
+	m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( fileAbsPath.c_str() ) );
 	m_xmlDoc->LoadFile();
 
 	// Error loading file?

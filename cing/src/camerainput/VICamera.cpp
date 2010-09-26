@@ -92,7 +92,7 @@ void VICamera::update()
 	if( m_viCamera.isFrameNew( m_deviceId ) )	
 	{
 		// Calculate the format
-		int npixels				= m_viCamera.getWidth( m_deviceId ) * m_viCamera.getHeight( m_deviceId );
+		int npixels			= m_viCamera.getWidth( m_deviceId ) * m_viCamera.getHeight( m_deviceId );
 		size_t frameSize	= m_viCamera.getSize( m_deviceId );
 		GraphicsType format = ( npixels == frameSize )? GRAYSCALE: RGB;
 

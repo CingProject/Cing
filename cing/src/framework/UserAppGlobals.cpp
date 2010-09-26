@@ -33,8 +33,12 @@ namespace Cing
 
 	// Data folder
 	String					dataFolder = "";
+#ifdef WIN32
 	String					cingDataFolder = "../../../cing_bin/data/";
-
+#elif __APPLE__
+	String					cingDataFolder = "../Resources/cing_bin/data/";
+#endif
+	
 	// Input
 	char					key;
 	KeyCode					keyCode;

@@ -135,7 +135,8 @@ typedef XMLElement::XMLElementArray XMLElementArray;
 // Camera
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 typedef	VICamera Capture;
-//typedef	OCVCamera Capture;
+#elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+typedef	OCVCamera Capture;
 #endif
 
 // Sound and Mic

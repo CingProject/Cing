@@ -71,11 +71,11 @@ BaseCameraInput::~BaseCameraInput()
 * @param[in] fps				frames per second to capture
 * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
 */
-void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, GraphicsType format, bool multithreaded /*= true*/  )
+bool BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int height /*= 240*/, int fps /*= 25*/, GraphicsType format, bool multithreaded /*= true*/  )
 {
 	// Check if the class is already initialized
 	if ( isValid() )
-		return;
+		return true;
 
 	// Check format has no alpha
 	if ( format == RGBA )
@@ -108,6 +108,7 @@ void BaseCameraInput::init( int deviceId /*= 0*/, int width /*= 320*/, int heigh
 
 	// The class is now initialized
 	m_bIsValid = true;
+	return true;
 }
 
 /**

@@ -51,7 +51,7 @@ namespace Cing
 		virtual ~BaseCameraInput();
 
 		// Init / Release / Update (to be implemented in subclasses)
-		virtual void    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, GraphicsType format = RGB, bool multithreaded = true );
+		virtual bool    init            ( int deviceId = 0, int width = 320, int height = 240, int fps = 25, GraphicsType format = RGB, bool multithreaded = true );
 		virtual void    end             ();
 		virtual void    update          () = 0;
 

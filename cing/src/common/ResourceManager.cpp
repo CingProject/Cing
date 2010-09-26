@@ -24,6 +24,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "eString.h"
 #include "XMLElement.h"
 #include "LogManager.h"
+#include "SystemUtils.h"
 
 
 // Ogre
@@ -37,6 +38,7 @@ namespace Cing
 {
 
 	// Static const init
+#ifdef WIN32
 	std::string ResourceManager::resourcesFileName			= "resources.cfg";
 	std::string ResourceManager::userResourcesDirName		= "../data/";
 	std::string ResourceManager::userResourcesGroupName		= "UserData";
@@ -44,7 +46,22 @@ namespace Cing
 	std::string ResourceManager::libDataPath				= "../../../cing_bin/data/";
 	std::string ResourceManager::userDataPath				= "";
 	std::string ResourceManager::userExecPath				= "";
-
+	std::string resourcesPathInBundle						= "";
+	
+	
+	// TODO: Fix this with XCode project properties/postbuild steps
+	// TODO: Clean this up. resourcesPathInBundle is only mac side!
+#elif __APPLE__
+	std::string ResourceManager::resourcesFileName			= "resources.cfg";
+	std::string ResourceManager::userResourcesDirName		= "Resources";
+	std::string ResourceManager::userResourcesGroupName		= "UserData";
+	std::string ResourceManager::pluginsPath				= "plugins.cfg";
+	std::string ResourceManager::libDataPath				= "Contents/Resources/cing_bin/data/";
+	std::string ResourceManager::userDataPath				= "";
+	std::string ResourceManager::userExecPath				= "";
+	std::string resourcesPathInBundle						= "";
+#endif
+	
 	/**
 	* @internal
 	* @brief Constructor. Initializes class attributes.
@@ -78,11 +95,12 @@ namespace Cing
 		extractUserAppPath();
 
 		// Init Ogre Root
-		LOG( "Creating Ogre Root" );
-		new Ogre::Root( pluginsPath );
+		LOG( "Creating Ogre Root. Plugins path: %s", (resourcesPathInBundle + pluginsPath).c_str() );
+		new Ogre::Root( resourcesPathInBundle + pluginsPath );
 
 		 // Store user data path in globals
 		dataFolder = userDataPath;
+		LOG("User Data Folder: %s", dataFolder.c_str() );
 
 		// Load Cing Config file
 		XMLElement xml;
@@ -96,14 +114,21 @@ namespace Cing
 		}
 		else
 			LOG_ERROR( "CingConfig.xml not found in data folder -> using default paths" );
-
+		
 		// Get Cing data path
-		if ( cingDataFolder != "" )
-			libDataPath = cingDataFolder;
-
+		LOG( "Cing Data Folder: %s", cingDataFolder.c_str());
+	//	if ( cingDataFolder != "" )
+	//	{
+	//		libDataPath = cingDataFolder;
+	//	}
+	//	else
+	//		LOG_ERROR( "Cing Data Folder is empty: libDataPath will use default value: %s",  libDataPath.c_str() );
+		
 		// Load resource paths from config file
 		Ogre::ConfigFile  cf;
-		cf.load( libDataPath + resourcesFileName );
+		std::string resourcesFileAbsPath = libDataPath + resourcesFileName ;
+		LOG( "Trying to load Ogre Resources file (resources.cfg) at: %s", resourcesFileAbsPath.c_str() ); 
+		cf.load( resourcesFileAbsPath.c_str() );
 
 		// Go through all sections & settings in the file to add all library resource locations
 		Ogre::String secName, typeName, archName;
@@ -198,25 +223,68 @@ namespace Cing
 	 */
 	void ResourceManager::extractUserAppPathMAC()
 	{
-		char path[1024];
+		char bundlePath[2048];
+		char exePath[2048];
+		char resourcesPath[2048];
+
 		CFBundleRef mainBundle = CFBundleGetMainBundle();
 		assert( mainBundle );
+		
+		// Get URLs
 		
 		CFURLRef mainBundleURL = CFBundleCopyBundleURL( mainBundle);
 		assert( mainBundleURL);
 		
+		CFURLRef exeURL = CFBundleCopyExecutableURL( mainBundle);
+		assert( exeURL);		
+		
+		CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL( mainBundle);
+		assert( resourcesURL);	
+		
+		// Get Paths into strings
+		
 		CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
 		assert( cfStringRef);
 		
-		CFStringGetCString( cfStringRef, path, 1024, kCFStringEncodingASCII);
+		CFStringRef cfExePathRef = CFURLCopyFileSystemPath( exeURL, kCFURLPOSIXPathStyle);
+		assert( cfExePathRef);
 		
+		CFStringRef cfResourcesPathRef = CFURLCopyFileSystemPath( resourcesURL, kCFURLPOSIXPathStyle);
+		assert( cfResourcesPathRef);	
+		
+		CFStringGetCString( cfStringRef, bundlePath, 1024, kCFStringEncodingASCII);
+		CFStringGetCString( cfExePathRef, exePath, 1024, kCFStringEncodingASCII);
+		CFStringGetCString( cfResourcesPathRef, resourcesPath, 1024, kCFStringEncodingASCII);
+
+		// Release resources
 		CFRelease( mainBundleURL);
+		CFRelease( exeURL);
 		CFRelease( cfStringRef);
+		CFRelease( cfExePathRef);
+		CFRelease( cfResourcesPathRef);
+
 		
-		userExecPath = std::string( path );
+		userExecPath = bundlePath;
+		//userExecPath = exePath;
 		std::string::size_type lastSlashPos = userExecPath.find_last_of("/");
 		userExecPath = userExecPath.substr(0, lastSlashPos);
-		userDataPath = userExecPath + "/" + userResourcesDirName;
+		userExecPath = userExecPath + "/";
+		//userDataPath = userExecPath + userResourcesDirName;
+		
+		resourcesPathInBundle	= String(bundlePath) + "/" + String(resourcesPath) + "/";
+		userDataPath	= String(bundlePath) + "/" + String(resourcesPath) + "/data/";
+		//libDataPath		= String(bundlePath) + "/" + String(resourcesPath) + "/cing_bin/data/";
+		libDataPath = String(bundlePath) + "/../../../../cing_bin/data/";
+		
+		// Log some info
+		LOG( "Exec Path %s", exePath );
+		LOG( "Bundle Path %s", bundlePath );
+		LOG( "Resources Path %s", resourcesPath );
+		LOG( "User Data Path %s", userDataPath.c_str() );
+		
+		const char* curentDir = getWorkingDir().c_str();
+		LOG( "Current Working Dir: %s", getWorkingDir().c_str() );
+		
 	}
 #endif
 
