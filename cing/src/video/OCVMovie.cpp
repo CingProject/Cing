@@ -91,6 +91,9 @@ bool OCVMovie::load(const char* fileName )
 	m_fps		= static_cast<int>( cvGetCaptureProperty( m_capture, CV_CAP_PROP_FPS ) );
 	m_nFrames	= cvGetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_COUNT );
 
+	// Init internal image
+	m_image.init( m_width, m_height, RGB );
+	
 	// Set the current fps for the playback speed
 	setFps( m_fps );
 
@@ -185,7 +188,7 @@ void OCVMovie::setFps( int fps )
  * Obtains a frame from the video (if it is available -> it depends on the current frames per second)
  * @param frame The image where to store the frame.
  */
-void OCVMovie::read( Image &image )
+void OCVMovie::read( )
 {
 	// Check if video is playing
 	if ( !m_playing || m_finished )
@@ -218,20 +221,20 @@ void OCVMovie::read( Image &image )
 	IplImage*   frame = cvQueryFrame( m_capture );
 	if ( !frame )
 	{
-	  LOG_ERROR( "Error getting frame from video" );
-			return;
+		LOG_ERROR( "Error getting frame from video" );
+		return;
 	}
 
 	// Image format of the captured image
 	GraphicsType format = frame->nChannels == 1? GRAYSCALE: RGB;
 
 	// Check if the target image is valid (if not -> init it)
-	if ( !image.isValid() )
-		image.init( frame->width, frame->height, format );
+	if ( !m_image.isValid() )
+		m_image.init( frame->width, frame->height, format );
 
 	// Set the image data (flipping it vertically)
-	cvConvertImage( frame, &image.getCVImage(), CV_CVTIMG_FLIP );
-	image.setUpdateTexture( true );
+	cvConvertImage( frame, &m_image.getCVImage(), CV_CVTIMG_FLIP );
+	m_image.setUpdateTexture( true );
 
 	// If it was the last frame and we have to loop -> restar the video
 	if ( equal( (float)cvGetCaptureProperty( m_capture, CV_CAP_PROP_POS_AVI_RATIO ), 1.0f ) )
@@ -252,6 +255,16 @@ void OCVMovie::read( Image &image )
 	//m_timer.reset();
 }
 
+/**
+ * Returns true if the video is correctly initialized.
+ * @return True if the video is correctly initialized.
+ */
+Image& OCVMovie::getImage()
+{
+	read();
+	return m_image;
+}
+	
 /**
  * Returns true if the video is correctly initialized.
  * @return True if the video is correctly initialized.
