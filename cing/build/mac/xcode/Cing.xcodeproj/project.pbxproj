@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4368997012502A6800EB4F68 /* MediaPlayerOCV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4368996E12502A6800EB4F68 /* MediaPlayerOCV.cpp */; };
+		4368997112502A6800EB4F68 /* MediaPlayerOCV.h in Headers */ = {isa = PBXBuildFile; fileRef = 4368996F12502A6800EB4F68 /* MediaPlayerOCV.h */; };
+		4368997212502A6800EB4F68 /* MediaPlayerOCV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4368996E12502A6800EB4F68 /* MediaPlayerOCV.cpp */; };
+		4368997312502A6800EB4F68 /* MediaPlayerOCV.h in Headers */ = {isa = PBXBuildFile; fileRef = 4368996F12502A6800EB4F68 /* MediaPlayerOCV.h */; };
 		43F990F3124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43F990F1124E3C06009E5C1B /* SceneGraphElement.cpp */; };
 		43F990F4124E3C06009E5C1B /* SceneGraphElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 43F990F2124E3C06009E5C1B /* SceneGraphElement.h */; };
 		43F990F5124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43F990F1124E3C06009E5C1B /* SceneGraphElement.cpp */; };
@@ -178,7 +182,6 @@
 		A93261391237011D00A0B30D /* MidiPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004212072075009A8F12 /* MidiPrereqs.h */; };
 		A932613A1237011D00A0B30D /* MidiIO.h in Headers */ = {isa = PBXBuildFile; fileRef = A9847AA1123003CE0037050E /* MidiIO.h */; };
 		A932613B1237011D00A0B30D /* MidiIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004012072075009A8F12 /* MidiIO.cpp */; };
-		A932613C1237012300A0B30D /* OCVMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004412072075009A8F12 /* OCVMovie.h */; };
 		A932613D1237012800A0B30D /* PhysicsUserAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E005212072075009A8F12 /* PhysicsUserAPI.h */; };
 		A932613E1237012800A0B30D /* PhysicsUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E005112072075009A8F12 /* PhysicsUserAPI.cpp */; };
 		A932613F1237012800A0B30D /* PhysicsSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E005012072075009A8F12 /* PhysicsSphere.h */; };
@@ -330,7 +333,6 @@
 		A94E00EA12072075009A8F12 /* Mouse.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E003E12072075009A8F12 /* Mouse.h */; };
 		A94E00EB12072075009A8F12 /* MidiIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004012072075009A8F12 /* MidiIO.cpp */; };
 		A94E00ED12072075009A8F12 /* MidiPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004212072075009A8F12 /* MidiPrereqs.h */; };
-		A94E00EE12072075009A8F12 /* OCVMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004412072075009A8F12 /* OCVMovie.h */; };
 		A94E00EF12072075009A8F12 /* PhysicsBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004612072075009A8F12 /* PhysicsBox.cpp */; };
 		A94E00F012072075009A8F12 /* PhysicsBox.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004712072075009A8F12 /* PhysicsBox.h */; };
 		A94E00F112072075009A8F12 /* PhysicsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004812072075009A8F12 /* PhysicsManager.cpp */; };
@@ -386,6 +388,8 @@
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* Cing_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cing_Prefix.pch; sourceTree = "<group>"; };
+		4368996E12502A6800EB4F68 /* MediaPlayerOCV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaPlayerOCV.cpp; sourceTree = "<group>"; };
+		4368996F12502A6800EB4F68 /* MediaPlayerOCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerOCV.h; sourceTree = "<group>"; };
 		43F990F1124E3C06009E5C1B /* SceneGraphElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneGraphElement.cpp; sourceTree = "<group>"; };
 		43F990F2124E3C06009E5C1B /* SceneGraphElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraphElement.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -458,7 +462,6 @@
 		A94E003E12072075009A8F12 /* Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse.h; sourceTree = "<group>"; };
 		A94E004012072075009A8F12 /* MidiIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MidiIO.cpp; sourceTree = "<group>"; };
 		A94E004212072075009A8F12 /* MidiPrereqs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiPrereqs.h; sourceTree = "<group>"; };
-		A94E004412072075009A8F12 /* OCVMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCVMovie.h; sourceTree = "<group>"; };
 		A94E004612072075009A8F12 /* PhysicsBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsBox.cpp; sourceTree = "<group>"; };
 		A94E004712072075009A8F12 /* PhysicsBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsBox.h; sourceTree = "<group>"; };
 		A94E004812072075009A8F12 /* PhysicsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsManager.cpp; sourceTree = "<group>"; };
@@ -474,8 +477,6 @@
 		A94E005212072075009A8F12 /* PhysicsUserAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsUserAPI.h; sourceTree = "<group>"; };
 		A94E005412072075009A8F12 /* MediaPlayerVLC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaPlayerVLC.cpp; sourceTree = "<group>"; };
 		A94E005512072075009A8F12 /* MediaPlayerVLC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerVLC.h; sourceTree = "<group>"; };
-		A94E005612072075009A8F12 /* OCVMovie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OCVMovie.cpp; sourceTree = "<group>"; };
-		A94E005712072075009A8F12 /* OCVMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCVMovie.h; sourceTree = "<group>"; };
 		A94E005812072075009A8F12 /* VideoPrereqs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPrereqs.h; sourceTree = "<group>"; };
 		A94EFFA612072075009A8F12 /* AudioInputFMOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioInputFMOD.cpp; sourceTree = "<group>"; };
 		A94EFFA712072075009A8F12 /* AudioInputFMOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioInputFMOD.h; sourceTree = "<group>"; };
@@ -666,9 +667,9 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A94EFFB912072075009A8F12 /* Cing.h */,
 				A94EFFA512072075009A8F12 /* audio */,
 				A94EFFAF12072075009A8F12 /* camerainput */,
-				A94EFFB912072075009A8F12 /* Cing.h */,
 				A94EFFBA12072075009A8F12 /* common */,
 				A94EFFD412072075009A8F12 /* computervision */,
 				A94EFFDD12072075009A8F12 /* framework */,
@@ -676,7 +677,6 @@
 				A94E002C12072075009A8F12 /* gui */,
 				A94E003412072075009A8F12 /* input */,
 				A94E003F12072075009A8F12 /* midi */,
-				A94E004312072075009A8F12 /* movies */,
 				A94E004512072075009A8F12 /* physics */,
 				A94E005312072075009A8F12 /* video */,
 			);
@@ -768,15 +768,6 @@
 			path = ../../../src/midi;
 			sourceTree = SOURCE_ROOT;
 		};
-		A94E004312072075009A8F12 /* movies */ = {
-			isa = PBXGroup;
-			children = (
-				A94E004412072075009A8F12 /* OCVMovie.h */,
-			);
-			name = movies;
-			path = ../../../src/movies;
-			sourceTree = SOURCE_ROOT;
-		};
 		A94E004512072075009A8F12 /* physics */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,10 +792,10 @@
 		A94E005312072075009A8F12 /* video */ = {
 			isa = PBXGroup;
 			children = (
+				4368996E12502A6800EB4F68 /* MediaPlayerOCV.cpp */,
+				4368996F12502A6800EB4F68 /* MediaPlayerOCV.h */,
 				A94E005412072075009A8F12 /* MediaPlayerVLC.cpp */,
 				A94E005512072075009A8F12 /* MediaPlayerVLC.h */,
-				A94E005612072075009A8F12 /* OCVMovie.cpp */,
-				A94E005712072075009A8F12 /* OCVMovie.h */,
 				A94E005812072075009A8F12 /* VideoPrereqs.h */,
 			);
 			name = video;
@@ -1077,7 +1068,6 @@
 				A94E00E812072075009A8F12 /* Keyboard.h in Headers */,
 				A94E00EA12072075009A8F12 /* Mouse.h in Headers */,
 				A94E00ED12072075009A8F12 /* MidiPrereqs.h in Headers */,
-				A94E00EE12072075009A8F12 /* OCVMovie.h in Headers */,
 				A94E00F012072075009A8F12 /* PhysicsBox.h in Headers */,
 				A94E00F212072075009A8F12 /* PhysicsManager.h in Headers */,
 				A94E00F412072075009A8F12 /* PhysicsObject.h in Headers */,
@@ -1089,6 +1079,7 @@
 				A97B90241236E68F00FF585F /* RtError.h in Headers */,
 				A97B90261236E68F00FF585F /* RtMidi.h in Headers */,
 				43F990F4124E3C06009E5C1B /* SceneGraphElement.h in Headers */,
+				4368997112502A6800EB4F68 /* MediaPlayerOCV.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1180,7 +1171,6 @@
 				A93261381237011D00A0B30D /* RtError.h in Headers */,
 				A93261391237011D00A0B30D /* MidiPrereqs.h in Headers */,
 				A932613A1237011D00A0B30D /* MidiIO.h in Headers */,
-				A932613C1237012300A0B30D /* OCVMovie.h in Headers */,
 				A932613D1237012800A0B30D /* PhysicsUserAPI.h in Headers */,
 				A932613F1237012800A0B30D /* PhysicsSphere.h in Headers */,
 				A93261411237012800A0B30D /* PhysicsPrereqs.h in Headers */,
@@ -1189,6 +1179,7 @@
 				A93261461237012800A0B30D /* PhysicsManager.h in Headers */,
 				A93261481237012800A0B30D /* PhysicsBox.h in Headers */,
 				43F990F6124E3C06009E5C1B /* SceneGraphElement.h in Headers */,
+				4368997312502A6800EB4F68 /* MediaPlayerOCV.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1338,6 +1329,7 @@
 				A94E00FA12072075009A8F12 /* PhysicsUserAPI.cpp in Sources */,
 				A97B90251236E68F00FF585F /* RtMidi.cpp in Sources */,
 				43F990F3124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */,
+				4368997012502A6800EB4F68 /* MediaPlayerOCV.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,6 +1401,7 @@
 				A93261471237012800A0B30D /* PhysicsManager.cpp in Sources */,
 				A93261491237012800A0B30D /* PhysicsBox.cpp in Sources */,
 				43F990F5124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */,
+				4368997212502A6800EB4F68 /* MediaPlayerOCV.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1643,6 +1636,7 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = Cing;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -1690,6 +1684,7 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = Cing;
+				SDKROOT = macosx10.5;
 				ZERO_LINK = NO;
 			};
 			name = Release;

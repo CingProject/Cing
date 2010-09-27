@@ -47,6 +47,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <vector>
 #include <stack>
 #include "common/eString.h"
+#include "common/MathUtils.h"
 
 namespace Cing
 {
@@ -221,8 +222,10 @@ namespace Cing
 		String						m_frameName;
 
 	    GraphicsType				m_coordSystem;
-		bool						m_showFps;				///< Indicates whether the frames per second should be shown or not
-		bool						m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
+		bool						m_showFps;			///< Indicates whether the frames per second should be shown or not
+		Ogre::Timer					m_fpsTimer;
+		Average						m_fpsAverage;
+		bool						m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 
 } // namespace Cing

@@ -91,7 +91,7 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
 
 	// Set mouse cursor and font
-	//m_CEGUISystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
+	//m_CEGUISystem->setDefaultMouseCursor((CEGUI::utf8*)"WindowsLook", (CEGUI::utf8*)"MouseArrow");
 	//m_CEGUISystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
 	CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font");
 

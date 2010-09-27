@@ -111,7 +111,8 @@
 #include "video/MediaPlayerVLC.h"
 #include "video/MediaPlayerGS.h"
 #endif
-#include "video/OCVMovie.h"
+#include "video/MediaPlayerOCV.h"
+
 
 // GUI
 #include "gui/GUIUserAPI.h"
@@ -147,6 +148,8 @@ typedef AudioInputFMOD	AudioInput;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 //typedef MediaPlayerVLC MediaPlayer;
 typedef MediaPlayerGS MediaPlayer;
+#elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+typedef MediaPlayerOCV MediaPlayer;
 #endif
 
 

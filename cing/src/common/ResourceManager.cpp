@@ -53,7 +53,7 @@ namespace Cing
 	// TODO: Clean this up. resourcesPathInBundle is only mac side!
 #elif __APPLE__
 	std::string ResourceManager::resourcesFileName			= "resources.cfg";
-	std::string ResourceManager::userResourcesDirName		= "Resources";
+	std::string ResourceManager::userResourcesDirName		= "../../data/";
 	std::string ResourceManager::userResourcesGroupName		= "UserData";
 	std::string ResourceManager::pluginsPath				= "plugins.cfg";
 	std::string ResourceManager::libDataPath				= "Contents/Resources/cing_bin/data/";
@@ -272,7 +272,8 @@ namespace Cing
 		//userDataPath = userExecPath + userResourcesDirName;
 		
 		resourcesPathInBundle	= String(bundlePath) + "/" + String(resourcesPath) + "/";
-		userDataPath	= String(bundlePath) + "/" + String(resourcesPath) + "/data/";
+		//userDataPath	= String(bundlePath) + "/" + String(resourcesPath) + "/data/";
+		userDataPath = String(bundlePath) + "/" + userResourcesDirName;
 		//libDataPath		= String(bundlePath) + "/" + String(resourcesPath) + "/cing_bin/data/";
 		libDataPath = String(bundlePath) + "/../../../../cing_bin/data/";
 		

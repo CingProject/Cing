@@ -1,0 +1,467 @@
+// !$*UTF8*$!
+{
+	431C2FC3124FF55D00494DD8 /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
+		activeSDKPreference = macosx10.5;
+		activeTarget = 431C349E124FFDC200494DD8 /* Simple_PlayingVideos */;
+		addToTargets = (
+			431C349E124FFDC200494DD8 /* Simple_PlayingVideos */,
+		);
+		breakpoints = (
+			43EA3CBE1250586200AD79D5 /* Simple_PlayingVideos.cpp:19 */,
+		);
+		codeSenseManager = 431C2FC8124FF55D00494DD8 /* Code sense */;
+		executables = (
+			431C34A0124FFDC200494DD8 /* Simple_BasicApplication */,
+		);
+		ignoreBreakpointsInProjectsDict = {
+		};
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXErrorsWarningsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXErrorsWarningsDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					333,
+					739.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXErrorsWarningsDataSource_TypeID,
+					PBXErrorsWarningsDataSource_MessageID,
+					PBXErrorsWarningsDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					769.58349609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					882,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					842,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 307292712;
+			PBXWorkspaceStateSaveDate = 307292712;
+		};
+		perUserProjectItems = {
+			436898A312501C6900EB4F68 /* PlistBookmark */ = 436898A312501C6900EB4F68 /* PlistBookmark */;
+			436898A512501C6900EB4F68 /* PlistBookmark */ = 436898A512501C6900EB4F68 /* PlistBookmark */;
+			43689952125029B100EB4F68 /* PBXTextBookmark */ = 43689952125029B100EB4F68 /* PBXTextBookmark */;
+			43689954125029B100EB4F68 /* PBXTextBookmark */ = 43689954125029B100EB4F68 /* PBXTextBookmark */;
+			43EA3CE01250599900AD79D5 /* PBXTextBookmark */ = 43EA3CE01250599900AD79D5 /* PBXTextBookmark */;
+			43EA3D541250DDAF00AD79D5 /* PBXTextBookmark */ = 43EA3D541250DDAF00AD79D5 /* PBXTextBookmark */;
+			43EA3D581250DDAF00AD79D5 /* PBXTextBookmark */ = 43EA3D581250DDAF00AD79D5 /* PBXTextBookmark */;
+			43EA3D5C1250DDAF00AD79D5 /* PBXTextBookmark */ = 43EA3D5C1250DDAF00AD79D5 /* PBXTextBookmark */;
+			43EA3D5D1250DDAF00AD79D5 /* PBXTextBookmark */ = 43EA3D5D1250DDAF00AD79D5 /* PBXTextBookmark */;
+			43EA3D611250DDAF00AD79D5 /* PBXTextBookmark */ = 43EA3D611250DDAF00AD79D5 /* PBXTextBookmark */;
+			43EA3D651250DDAF00AD79D5 /* PBXTextBookmark */ = 43EA3D651250DDAF00AD79D5 /* PBXTextBookmark */;
+			43EA3D6E1250DEA800AD79D5 /* PBXTextBookmark */ = 43EA3D6E1250DEA800AD79D5 /* PBXTextBookmark */;
+			43EA3D721250DEA800AD79D5 /* PBXTextBookmark */ = 43EA3D721250DEA800AD79D5 /* PBXTextBookmark */;
+			43EA3D8A1250E20500AD79D5 /* PBXTextBookmark */ = 43EA3D8A1250E20500AD79D5 /* PBXTextBookmark */;
+			43EA3D8F1250E20500AD79D5 /* PBXTextBookmark */ = 43EA3D8F1250E20500AD79D5 /* PBXTextBookmark */;
+			43EA3DDE1250E8D700AD79D5 /* PBXTextBookmark */ = 43EA3DDE1250E8D700AD79D5 /* PBXTextBookmark */;
+			43EA3E051250EA0D00AD79D5 /* PBXTextBookmark */ = 43EA3E051250EA0D00AD79D5 /* PBXTextBookmark */;
+			43EA3E081250EA2100AD79D5 /* PBXTextBookmark */ = 43EA3E081250EA2100AD79D5 /* PBXTextBookmark */;
+			43EA3E121250EA2B00AD79D5 /* PBXTextBookmark */ = 43EA3E121250EA2B00AD79D5 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	431C2FC7124FF55D00494DD8 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	431C2FC8124FF55D00494DD8 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	431C2FD0124FF73E00494DD8 /* ReadMe.txt */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 568}}";
+			sepNavSelRange = "{147, 0}";
+			sepNavVisRange = "{0, 678}";
+		};
+	};
+	431C2FD2124FF73E00494DD8 /* Simple_PlayingVideos.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 770}}";
+			sepNavSelRange = "{631, 0}";
+			sepNavVisRange = "{323, 516}";
+			sepNavWindowFrame = "{{15, -1}, {1232, 874}}";
+		};
+	};
+	431C349E124FFDC200494DD8 /* Simple_PlayingVideos */ = {
+		activeExec = 0;
+		executables = (
+			431C34A0124FFDC200494DD8 /* Simple_BasicApplication */,
+		);
+	};
+	431C34A0124FFDC200494DD8 /* Simple_BasicApplication */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = Simple_BasicApplication;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	436898A312501C6900EB4F68 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_PlayingVideos/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	436898A512501C6900EB4F68 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_PlayingVideos/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	43689952125029B100EB4F68 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD0124FF73E00494DD8 /* ReadMe.txt */;
+		name = "ReadMe.txt: 5";
+		rLen = 0;
+		rLoc = 147;
+		rType = 0;
+		vrLen = 678;
+		vrLoc = 0;
+	};
+	43689954125029B100EB4F68 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD0124FF73E00494DD8 /* ReadMe.txt */;
+		name = "ReadMe.txt: 5";
+		rLen = 0;
+		rLoc = 147;
+		rType = 0;
+		vrLen = 678;
+		vrLoc = 0;
+	};
+	43EA3CBE1250586200AD79D5 /* Simple_PlayingVideos.cpp:19 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 431C2FD2124FF73E00494DD8 /* Simple_PlayingVideos.cpp */;
+		functionName = "setup()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 19;
+		location = Simple_PlayingVideos;
+		modificationTime = 307292654.206221;
+		state = 1;
+	};
+	43EA3CE01250599900AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_PlayingVideos.cpp */;
+		name = "Simple_PlayingVideos.cpp: 20";
+		rLen = 0;
+		rLoc = 388;
+		rType = 0;
+		vrLen = 575;
+		vrLoc = 249;
+	};
+	43EA3CE81250599900AD79D5 /* MediaPlayerOCV.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MediaPlayerOCV.cpp;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/video/MediaPlayerOCV.cpp;
+		sourceTree = "<absolute>";
+	};
+	43EA3CED1250599900AD79D5 /* MediaPlayerOCV.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = MediaPlayerOCV.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/video/MediaPlayerOCV.h;
+		sourceTree = "<absolute>";
+	};
+	43EA3D541250DDAF00AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3D551250DDAF00AD79D5 /* FrameworkUserAPI.h */;
+		name = "FrameworkUserAPI.h: 41";
+		rLen = 14;
+		rLoc = 1303;
+		rType = 0;
+		vrLen = 1248;
+		vrLoc = 161;
+	};
+	43EA3D551250DDAF00AD79D5 /* FrameworkUserAPI.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = FrameworkUserAPI.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/framework/FrameworkUserAPI.h;
+		sourceTree = "<absolute>";
+	};
+	43EA3D581250DDAF00AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3D591250DDAF00AD79D5 /* OgreTimerImp.h */;
+		name = "OgreTimerImp.h: 61";
+		rLen = 0;
+		rLoc = 2350;
+		rType = 0;
+		vrLen = 1334;
+		vrLoc = 1528;
+	};
+	43EA3D591250DDAF00AD79D5 /* OgreTimerImp.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = OgreTimerImp.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/libraries/mac/xcode/Ogre3d/include/OSX/OgreTimerImp.h;
+		sourceTree = "<absolute>";
+	};
+	43EA3D5C1250DDAF00AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3CED1250599900AD79D5 /* MediaPlayerOCV.h */;
+		name = "MediaPlayerOCV.h: 68";
+		rLen = 4;
+		rLoc = 1863;
+		rType = 0;
+		vrLen = 1195;
+		vrLoc = 1220;
+	};
+	43EA3D5D1250DDAF00AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3D5E1250DDAF00AD79D5 /* FrameworkUserAPI.h */;
+		name = "FrameworkUserAPI.h: 41";
+		rLen = 14;
+		rLoc = 1303;
+		rType = 0;
+		vrLen = 1248;
+		vrLoc = 161;
+	};
+	43EA3D5E1250DDAF00AD79D5 /* FrameworkUserAPI.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = FrameworkUserAPI.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/framework/FrameworkUserAPI.h;
+		sourceTree = "<absolute>";
+	};
+	43EA3D611250DDAF00AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3CE81250599900AD79D5 /* MediaPlayerOCV.cpp */;
+		name = "MediaPlayerOCV.cpp: 262";
+		rLen = 5;
+		rLoc = 7661;
+		rType = 0;
+		vrLen = 702;
+		vrLoc = 6122;
+	};
+	43EA3D651250DDAF00AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3D661250DDAF00AD79D5 /* OgreTimerImp.h */;
+		name = "OgreTimerImp.h: 61";
+		rLen = 0;
+		rLoc = 2350;
+		rType = 0;
+		vrLen = 1334;
+		vrLoc = 1528;
+	};
+	43EA3D661250DDAF00AD79D5 /* OgreTimerImp.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = OgreTimerImp.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/libraries/mac/xcode/Ogre3d/include/OSX/OgreTimerImp.h;
+		sourceTree = "<absolute>";
+	};
+	43EA3D6E1250DEA800AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3D6F1250DEA800AD79D5 /* highgui.h */;
+		name = "highgui.h: 292";
+		rLen = 0;
+		rLoc = 10584;
+		rType = 0;
+		vrLen = 1677;
+		vrLoc = 10205;
+	};
+	43EA3D6F1250DEA800AD79D5 /* highgui.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = highgui.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/libraries/mac/xcode/OpenCV/include/OpenCV/highgui.h;
+		sourceTree = "<absolute>";
+	};
+	43EA3D721250DEA800AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3D731250DEA800AD79D5 /* highgui.h */;
+		name = "highgui.h: 292";
+		rLen = 0;
+		rLoc = 10584;
+		rType = 0;
+		vrLen = 1677;
+		vrLoc = 10205;
+	};
+	43EA3D731250DEA800AD79D5 /* highgui.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = highgui.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/libraries/mac/xcode/OpenCV/include/OpenCV/highgui.h;
+		sourceTree = "<absolute>";
+	};
+	43EA3D8A1250E20500AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3D8B1250E20500AD79D5 /* cvcap_ffmpeg.cpp */;
+		name = "cvcap_ffmpeg.cpp: 690";
+		rLen = 7;
+		rLoc = 22157;
+		rType = 0;
+		vrLen = 1214;
+		vrLoc = 21862;
+	};
+	43EA3D8B1250E20500AD79D5 /* cvcap_ffmpeg.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = cvcap_ffmpeg.cpp;
+		path = "/Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/src/OpenCV-2.1.0/src/highgui/cvcap_ffmpeg.cpp";
+		sourceTree = "<absolute>";
+	};
+	43EA3D8F1250E20500AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3D901250E20500AD79D5 /* cvcap_ffmpeg.cpp */;
+		name = "cvcap_ffmpeg.cpp: 690";
+		rLen = 7;
+		rLoc = 22157;
+		rType = 0;
+		vrLen = 1214;
+		vrLoc = 21862;
+	};
+	43EA3D901250E20500AD79D5 /* cvcap_ffmpeg.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = cvcap_ffmpeg.cpp;
+		path = "/Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/src/OpenCV-2.1.0/src/highgui/cvcap_ffmpeg.cpp";
+		sourceTree = "<absolute>";
+	};
+	43EA3DDE1250E8D700AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3CED1250599900AD79D5 /* MediaPlayerOCV.h */;
+		name = "MediaPlayerOCV.h: 53";
+		rLen = 101;
+		rLoc = 1351;
+		rType = 0;
+		vrLen = 1060;
+		vrLoc = 995;
+	};
+	43EA3DF01250E91F00AD79D5 /* MediaPlayerOCV.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MediaPlayerOCV.cpp;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/video/MediaPlayerOCV.cpp;
+		sourceTree = "<absolute>";
+	};
+	43EA3E051250EA0D00AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43EA3DF01250E91F00AD79D5 /* MediaPlayerOCV.cpp */;
+		name = "MediaPlayerOCV.cpp: 474";
+		rLen = 0;
+		rLoc = 11359;
+		rType = 0;
+		vrLen = 1035;
+		vrLoc = 10753;
+	};
+	43EA3E081250EA2100AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_PlayingVideos.cpp */;
+		name = "Simple_PlayingVideos.cpp: 30";
+		rLen = 0;
+		rLoc = 631;
+		rType = 0;
+		vrLen = 516;
+		vrLoc = 323;
+	};
+	43EA3E121250EA2B00AD79D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_PlayingVideos.cpp */;
+		name = "Simple_PlayingVideos.cpp: 30";
+		rLen = 0;
+		rLoc = 631;
+		rType = 0;
+		vrLen = 516;
+		vrLoc = 323;
+	};
+}

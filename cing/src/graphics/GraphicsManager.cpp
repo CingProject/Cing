@@ -74,6 +74,7 @@ namespace Cing
 	GraphicsManager::GraphicsManager():
 		m_bIsValid		( false ),
 		m_showFps		( false ),
+		m_fpsAverage	( 50 ),
 		m_pSceneManager( NULL ),
 		m_fill( true ),
 		m_stroke( true ),
@@ -123,8 +124,8 @@ bool GraphicsManager::init()
 	// Setup default values if user didn't call setup
 	setup( m_defaultWindowWidth, m_defaultWindowHeight );
 
-	// Init rendering engine and create main window
-	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise( true, "Cing" );
+	// Init rendering engine and create window 
+	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise(true, "Cing");
 	if ( !ogreWindow )
 		THROW_EXCEPTION( "Error creating application window" );
 
@@ -220,6 +221,9 @@ bool GraphicsManager::init()
 	// The class is now initialized
 	m_bIsValid = true;
 
+	// Reset fps timer
+	m_fpsTimer.reset();
+	
 	return true;
 }
 
@@ -299,8 +303,14 @@ void GraphicsManager::draw()
 	// Show fps
 	if ( m_showFps )
 	{
+		// Calculate fps (on mac frame stats work very inconsistent)
+		double fps = 1000.0f / ((double)m_fpsTimer.getMicroseconds() / 1000.0);
+		m_fpsAverage.addValue( fps );
+		m_fpsTimer.reset();
+		
 		std::ostringstream oss;
-		oss << "FPS: " << frameStats.lastFPS;
+		//oss << "FPS: " << frameStats.lastFPS;
+		oss << "FPS: " << m_fpsAverage.getValue();
 
 		pushMatrix();
 		resetMatrix();
@@ -399,10 +409,12 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		// Set render system settings specified by user
 		// TODO: Make all options available to user
 		// RTT possible values: FBO, PBuffer, Copy
-		selectedRenderSystem->setConfigOption( "RTT Preferred Mode", "FBO" );
+		selectedRenderSystem->setConfigOption( "RTT Preferred Mode", "Copy" );
 		selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
 		selectedRenderSystem->setConfigOption( "VSync","Yes" );
 		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
+		selectedRenderSystem->setConfigOption( "vsyncInterval", "1" );
+		selectedRenderSystem->setConfigOption( "Display Frequency", "60" );
 	}
 	else if ( mode == DIRECTX )
 	{
@@ -420,6 +432,7 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		selectedRenderSystem->setConfigOption( "Floating-point mode","Consistent" );
 		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
 	}
+ 
 
 	// Validate render system options
 	String optionsStatus = selectedRenderSystem->validateConfigOptions();

@@ -16,10 +16,11 @@ void setup()
 	size ( 720, 480 );	
 
 	// Local file
-	mediaPlayer.load( "CoundDown.wmv" );
+	mediaPlayer.load( "CountDown.wmv" );
 
 	// Load video streaming through http
-	//mediaPlayer.load("http://www.playthemagic.com/videos/buildingmusic/Video_Bucarest_Urban_Art_DEF_ROMANIA_Sorensen03.flv");
+	// NOTE: Windows only for now...
+	//mediaPlayer.load("http://www.playthemagic.com/videos/buildingmusic/testVideo.flv");
 
 	// Play it in loop
 	mediaPlayer.loop();
@@ -28,7 +29,7 @@ void setup()
 void draw()
 {
 	// Draw video on mouse position
-	mediaPlayer.update( );
+	mediaPlayer.update();
 	mediaPlayer.getImage().draw(0, 0);
 }
 

@@ -1,0 +1,171 @@
+// !$*UTF8*$!
+{
+	431C2FC3124FF55D00494DD8 /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
+		activeSDKPreference = macosx10.5;
+		activeTarget = 431C349E124FFDC200494DD8 /* Simple_MicInput */;
+		addToTargets = (
+			431C349E124FFDC200494DD8 /* Simple_MicInput */,
+		);
+		codeSenseManager = 431C2FC8124FF55D00494DD8 /* Code sense */;
+		executables = (
+			431C34A0124FFDC200494DD8 /* Simple_BasicApplication */,
+		);
+		ignoreBreakpointsInProjectsDict = {
+		};
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXErrorsWarningsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXErrorsWarningsDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					300,
+					45.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXErrorsWarningsDataSource_TypeID,
+					PBXErrorsWarningsDataSource_MessageID,
+					PBXErrorsWarningsDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					57.58349609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					882,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					842,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 307244016;
+			PBXWorkspaceStateSaveDate = 307244016;
+		};
+		perUserProjectItems = {
+			43689A2812502BFD00EB4F68 /* PlistBookmark */ = 43689A2812502BFD00EB4F68 /* PlistBookmark */;
+			43689A2912502BFD00EB4F68 /* PlistBookmark */ = 43689A2912502BFD00EB4F68 /* PlistBookmark */;
+		};
+		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	431C2FC7124FF55D00494DD8 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	431C2FC8124FF55D00494DD8 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	431C2FD2124FF73E00494DD8 /* Simple_MicInput.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 644}}";
+			sepNavSelRange = "{99, 0}";
+			sepNavVisRange = "{0, 730}";
+		};
+	};
+	431C349E124FFDC200494DD8 /* Simple_MicInput */ = {
+		activeExec = 0;
+		executables = (
+			431C34A0124FFDC200494DD8 /* Simple_BasicApplication */,
+		);
+	};
+	431C34A0124FFDC200494DD8 /* Simple_BasicApplication */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = Simple_BasicApplication;
+		sourceDirectories = (
+		);
+	};
+	43689A2812502BFD00EB4F68 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_MicInput/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	43689A2912502BFD00EB4F68 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_MicInput/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+}

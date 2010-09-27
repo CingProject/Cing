@@ -10,7 +10,7 @@ Sphere		spheres[110];		// Container of the 3d objects
 int			nSpheres	= 110;  // Number of spheres
 float		diameter	= 30;   // Radius
 float		maxDist		= 160;  // Max distance between connections
-float		ranValue	= 3;    // Random factor
+float		ranValue	= 1;    // Random factor
 PointLight	light;				// Lights in the scene
 
 void setup() {

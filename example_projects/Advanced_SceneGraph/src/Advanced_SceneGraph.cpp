@@ -49,6 +49,8 @@ void setup()
 
 	// Add the second light as child of one of the spheres
 	sphere1.addChild( light );
+	
+	showFps(true);
 }
 
 void draw()
