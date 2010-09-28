@@ -1073,11 +1073,11 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.cpp"
+						RelativePath="..\..\..\..\src\video\MediaPlayerOCV.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\video\OCVMovie.cpp"
+						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.cpp"
 						>
 					</File>
 				</Filter>
@@ -1093,11 +1093,11 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.h"
+						RelativePath="..\..\..\..\src\video\MediaPlayerOCV.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\video\OCVMovie.h"
+						RelativePath="..\..\..\..\src\video\MediaPlayerVLC.h"
 						>
 					</File>
 					<File

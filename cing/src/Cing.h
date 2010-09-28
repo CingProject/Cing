@@ -21,23 +21,22 @@
 
 #ifndef _Cing_H_
 #define _Cing_H_
-  
-#if OGRE_COMPILER == OGRE_COMPILER_MSVC
-	#define _CRT_SECURE_NO_WARNINGS
-#endif
-
+ 
 /**
  * \mainpage Cing Documentation
  *
  * \section intro Introduction
- * Cing is an open source C++ programming libary that can be used to create interactive audiovisual applications 
- * involving: audio, video, 2d and 3d graphics, computer vision... and much more.
+ * Cing in an open source library for creative programming which bridges the elegant and intuitive syntax 
+ * of Processing with the power and flexibility of C++. Cing intends to provide artists and designers with
+ * a tool for innovative and accessible experimentation with advanced capabilities such as: 3D & 2D graphics
+ * physics simulation, computer vision, interactivity, sound...
  *
- * Check the <b>CingExamples.sln</b> Visual Studio solution to have an idea about how the code looks like.
+ * Check the <b>CingExamples</b> Visual Studio solution/Xcode Project to have an idea about how the code looks like.
+ * Check the <b>CingProcessingExamples</b> Visual Studio solution/XCode Project to see Processing samples running in Cing.
  *
- * To see the documentatio of the main library areas go to the <b>namespaces</b> section.
+ * To see the documentatio of the main library areas go to the <b>namespaces</b> section and then go to <b>Cing</b>
  * 
- * More into: www.cing.cc
+ * More info: www.cing.cc
  */
 
 
@@ -47,6 +46,14 @@
  * It should include all the necessary files to access Cing functionality, so the users don't need to 
  * worry about including files or namespaces
  */
+
+//TODO: Review why when introducing OpenCV 2.1 all warning coming from casts appear in VSTudio
+#if OGRE_COMPILER == OGRE_COMPILER_MSVC
+	#define _CRT_SECURE_NO_WARNINGS
+	#pragma warning (disable : 4244 ) 
+	#pragma warning (disable : 4305 ) 
+	#pragma warning (disable : 4748 ) 
+#endif
 
 #include <cstdio>
 #include <cstring>
@@ -65,6 +72,7 @@
 #include "graphics/Transform.h"
 #include "graphics/Font.h"
 #include "graphics/GraphicsManager.h"
+#include "graphics/Color.h"
 
 // CameraInput
 #include "cameraInput/OCVCamera.h"
@@ -143,6 +151,9 @@ typedef	OCVCamera Capture;
 // Sound and Mic
 typedef SoundFMOD Sound;
 typedef AudioInputFMOD	AudioInput;
+
+// Graphics (Processing compatibility)
+typedef Color color;
   
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32

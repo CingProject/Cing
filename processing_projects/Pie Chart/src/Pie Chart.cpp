@@ -8,23 +8,20 @@ CREATE_APPLICATION( "Cing" );
 
 void setup() {
 
-	size(500,500);
+	size(200,200);
 
 	background(100);
 	smooth();
 	noStroke();
 
-	int diameter = 150;
-	
-	// TODO: clean up
+	float diameter = min(width, height) * 0.75;
 	int angs[] = {30, 10, 45, 35, 60, 38, 75, 67};
-
 	float lastAng = 0;
 
 	for (int i = 0; i < 8 ; i++){
 		fill(angs[i] * 3.0);
-		arc(width/2, height/2, diameter, diameter, lastAng, lastAng+(angs[i]));
-		lastAng += (angs[i]);  
+		arc(width/2, height/2, diameter, diameter, lastAng, lastAng+radians(angs[i]));
+		lastAng += radians(angs[i]);  
 	}
 
 }

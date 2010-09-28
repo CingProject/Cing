@@ -40,5 +40,10 @@
 // standard general utils
 #include <cstdio>
 
+//TODO: Review why when introducing OpenCV 2.1 all warning coming from casts appear in VSTudio
+#if OGRE_COMPILER == OGRE_COMPILER_MSVC
+	#define _CRT_SECURE_NO_WARNINGS
+	#pragma warning (disable : 4244 ) 
+#endif
 
 #endif // _CommonUtilsIncludes_h_

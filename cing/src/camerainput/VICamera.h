@@ -43,20 +43,20 @@ public:
 	~VICamera();
 
 	// Init / Release / Update
-	void	init 	( int deviceId, int width, int height, int fps, GraphicsType format, bool multithreaded = true );
-	void	update();
+	bool	init 	( int deviceId, int width, int height, int fps, GraphicsType format, bool multithreaded = true );
+	void	update	();
 	void	end		();	
 
 	// Query  Methods
-	bool					isValid			 () { return m_bIsValid; }
-	void					listDevices	 ();
-	videoInput&				getVideoInput() { return m_viCamera; }
+	bool					isValid			() { return m_bIsValid; }
+	void					listDevices		();
+	videoInput&				getVideoInput	() { return m_viCamera; }
 
 private:
 
 	// Attributes
 	videoInput			m_viCamera;		///< VideoInput object to communicate with the camera
-	bool						m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool				m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

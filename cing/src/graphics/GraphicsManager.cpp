@@ -413,8 +413,12 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
 		selectedRenderSystem->setConfigOption( "VSync","Yes" );
 		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
-		selectedRenderSystem->setConfigOption( "vsyncInterval", "1" );
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 		selectedRenderSystem->setConfigOption( "Display Frequency", "60" );
+		selectedRenderSystem->setConfigOption( "vsyncInterval", "1" );
+#endif
+
 	}
 	else if ( mode == DIRECTX )
 	{

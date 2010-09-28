@@ -25,12 +25,12 @@
 #include "LogManager.h"
 
 #if defined( _MSC_VER )
-#include  <io.h>
+	#include <direct.h>
+	#include  <io.h>
 #endif
+
 #include  <stdio.h>
 #include  <stdlib.h>
-
-
 
 
 namespace Cing
@@ -45,8 +45,12 @@ namespace Cing
 	std::string getWorkingDir() 
 	{ 
 		char path[2048]; 
-		getcwd(path, sizeof(path)); 
-		return path; 
+#if defined( _MSC_VER )
+			_getcwd(path, sizeof(path)); 
+#else
+			getcwd(path, sizeof(path)); 
+#endif
+			return path; 
 	}
 	
 	/**

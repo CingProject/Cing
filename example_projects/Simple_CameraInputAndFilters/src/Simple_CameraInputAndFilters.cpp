@@ -7,7 +7,7 @@ CREATE_APPLICATION( "Cing" );
  */
 
 Capture capture;
-Image color, gray, blurry, threshold;
+Image colorImg, grayImg, blurryImg, thresholdImg;
 
 void setup()
 {
@@ -17,10 +17,10 @@ void setup()
 	capture.init( 0, 320, 240, 25, RGB );
 
 	// Init images
-	color.init( 320, 240, RGB );
-	gray.init( 320, 240, RGB );
-	blurry.init( 320, 240, RGB );
-	threshold.init( 320, 240, RGB );
+	colorImg.init( 320, 240, RGB );
+	grayImg.init( 320, 240, RGB );
+	blurryImg.init( 320, 240, RGB );
+	thresholdImg.init( 320, 240, RGB );
 }
 
 void draw() 
@@ -28,24 +28,24 @@ void draw()
 	capture.update();
 
 	// color
-	color = capture.getImage();
-	color.draw( 0, 0);
+	colorImg = capture.getImage();
+	colorImg.draw( 0, 0);
 
 	// grayscale
-	gray = capture.getImage();
-	gray.toGray();
-	gray.draw( 320, 0, 0 );
+	grayImg = capture.getImage();
+	grayImg.toGray();
+	grayImg.draw( 320, 0, 0 );
 
 	// blurry
-	blurry = capture.getImage();
-	blurry.filter( BLUR, 5 );
-	blurry.draw( 0, 240, 0 );
+	blurryImg = capture.getImage();
+	blurryImg.filter( BLUR, 5 );
+	blurryImg.draw( 0, 240, 0 );
 
 	// threshold
-	threshold = capture.getImage();
-	threshold.toGray();
-	threshold.filter( THRESHOLD, 50 );
-	threshold.draw( 320, 240, 0 );
+	thresholdImg = capture.getImage();
+	thresholdImg.toGray();
+	thresholdImg.filter( THRESHOLD, 50 );
+	thresholdImg.draw( 320, 240, 0 );
 }
 
 void end()

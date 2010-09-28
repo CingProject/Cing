@@ -53,12 +53,19 @@ VICamera::~VICamera()
  * @param[in] height		height resolution capture
  * @param[in] fps				frames per second to capture
  * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
+ * @return True if the camera was correctly initialized, false otherwise
  */
-void VICamera::init( int deviceId, int width, int height, int fps, GraphicsType format, bool multithreaded /*= true*/ )
+bool VICamera::init( int deviceId, int width, int height, int fps, GraphicsType format, bool multithreaded /*= true*/ )
 {
 	// List connected devices
 	int numDevices = videoInput::listDevices();	
-	LOG( "Num devs: %d", numDevices );
+	if ( numDevices == 0 )
+	{
+		LOG_ERROR( "No camera device found" );
+		return false;
+	}
+	else
+		LOG( "Number of devices to capture found: %d", numDevices );
 
 	// uncomment for silent setup
 	//videosetVerbose(false);
@@ -70,15 +77,27 @@ void VICamera::init( int deviceId, int width, int height, int fps, GraphicsType 
 	m_viCamera.setIdealFramerate(deviceId, fps);
 
 	// Setup camera
-	m_viCamera.setupDevice( deviceId, width, height, VI_COMPOSITE ); 
+	bool result = m_viCamera.setupDevice( deviceId, width, height, VI_COMPOSITE ); 
+	if ( result == false )
+	{
+		LOG_ERROR( "Error setting up camera device for capture" );
+		return false;
+	}
 
 	// Init base class (with actual capture resolution)
-	BaseCameraInput::init( deviceId, m_viCamera.getWidth( deviceId ), m_viCamera.getHeight( deviceId ), fps, format );
+	result = BaseCameraInput::init( deviceId, m_viCamera.getWidth( deviceId ), m_viCamera.getHeight( deviceId ), fps, format );
+	if ( result == false )
+	{
+		LOG_ERROR( "Internal error initializing BaseCameraInput" );
+		end();
+		return false;
+	}
 
 	// Set capture format (optional)
 	//m_viCamera.setFormat(dev, VI_NTSC_M);					//optional set the format
 
 	m_bIsValid = true;
+	return true;
 }
 
 /**
@@ -95,9 +114,10 @@ void VICamera::update()
 		int npixels			= m_viCamera.getWidth( m_deviceId ) * m_viCamera.getHeight( m_deviceId );
 		size_t frameSize	= m_viCamera.getSize( m_deviceId );
 		GraphicsType format = ( npixels == frameSize )? GRAYSCALE: RGB;
+		int nChannels = format == RGB? 3: 1;
 
 		// we get the pixels by passing in out buffer which gets 
-		setNewFrameData(  m_viCamera.getPixels( m_deviceId, true, true ),  m_viCamera.getWidth( m_deviceId ),  m_viCamera.getHeight( m_deviceId ), format );
+		setNewFrameData(  m_viCamera.getPixels( m_deviceId, true, true ),  m_viCamera.getWidth( m_deviceId ),  m_viCamera.getHeight( m_deviceId ), format, m_viCamera.getWidth( m_deviceId ) * nChannels );
 		setNewFrame( true );
 	}
 }

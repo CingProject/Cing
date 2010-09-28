@@ -96,8 +96,6 @@ void fill( float gray );
 void fill( float gray, float alpha );
 void fill( float value1, float value2, float value3 );
 void fill( float value1, float value2, float value3, float alpha );
-void fill( int rgb );
-void fill( int rgb, float alpha );
 void fill( const Color& color );
 //void fill(hex)						NO HEX DATA TYPE
 //void fill(hex, alpha)					NO HEX DATA TYPE

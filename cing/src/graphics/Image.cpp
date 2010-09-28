@@ -902,9 +902,9 @@ namespace Cing
 			THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
 		// Convert from Radians to degrees(to keep compatibility with processing)
-		// TODO: should add the 180 only in Processing Mode?
-		start	= degrees(start) + 180;
-		end		= degrees(end) + 180;
+		// TODO: should keep the 360 flip only in Processing Mode?
+		start	= 360 - degrees(start);
+		end		= 360 - degrees(end);
 
 		// Get Stroke and Fill Color
 		GraphicsManager& graphManager	= GraphicsManager::getSingleton();

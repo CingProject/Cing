@@ -148,7 +148,8 @@ void Color::set( float red, float green, float blue, float alpha /*= 255.0f*/ )
 	r = red;
 	g = green;
 	b = blue;
-	a = alpha;}
+	a = alpha;
+}
 
 /**
  * @internal 

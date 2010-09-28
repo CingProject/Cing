@@ -155,7 +155,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib OIS.lib cv210.lib cvaux210.lib cxcore210.lib highgui210.lib ptypes.lib OgreBulletCollisions.lib OgreBulletDynamics.lib libbulletcollision.lib libbulletdynamics.lib libbulletmath.lib libconvexdecomposition.lib videoInput.lib fmodex_vc.lib CEGUIBase.lib OgreGUIRenderer.lib RtMidi.lib winmm.lib tinyxml_STL.lib OgreCollada.lib FCollada.lib LibXML.lib libvlc.dll.a libvlccore.dll.a"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\cing\libraries\win\visualStudio2008\BetaCairo\lib;..\..\cing\libraries\win\visualStudio2008\Bullet\lib;..\..\cing\libraries\win\visualStudio2008\cairo\lib;..\..\cing\libraries\win\visualStudio2008\Fmod\lib;..\..\cing\libraries\win\visualStudio2008\Ogre3d\lib;..\..\cing\libraries\win\visualStudio2008\OgreBullet\lib;..\..\cing\libraries\win\visualStudio2008\OpenCV\lib;..\..\cing\libraries\win\visualStudio2008\PortVideo\lib;..\..\cing\libraries\win\visualStudio2008\PTypes\lib;..\..\cing\libraries\win\visualStudio2008\RtMidi\lib;..\..\cing\libraries\win\visualStudio2008\VideoInput\lib;..\..\cing\libraries\win\visualStudio2008\OgreCollada\lib;..\..\cing\libraries\win\visualStudio2008\LibVLC\lib;..\..\cing\libraries\win\visualStudio2008\TinyXML\lib"

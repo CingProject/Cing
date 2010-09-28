@@ -239,14 +239,14 @@ inline float dist( float x1, float y1, float z1,  float x2, float y2, float z2 )
 }
 
 /**
-* @brief TODO
+* @brief Calculates the magnitude (or length) of a vector.
 */
 inline float mag( float x1, float y1)
 {
 	return sqrt((x1*x1) + (y1*y1) );
 }
 /**
-* @brief TODO
+* @brief Calculates the magnitude (or length) of a vector.
 */
 inline float mag( float x1, float y1, float z1)
 {

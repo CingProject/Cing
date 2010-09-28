@@ -44,12 +44,14 @@ enum CollisionShape
 const float				DEFAULT_STATIC_BODY_RESTITUTION		= 0.1f;
 const float				DEFAULT_STATIC_BODY_FRICTION		= 0.8f;
 
-const float				DEFAULT_DYNAMIC_BODY_RESTITUTION  = 0.6f;
-const float				DEFAULT_DYNAMIC_BODY_FRICTION     = 0.6f;
-const float				DEFAULT_DYNAMIC_BODY_MASS         = 1.0f;
+const float				DEFAULT_DYNAMIC_BODY_RESTITUTION	= 0.6f;
+const float				DEFAULT_DYNAMIC_BODY_FRICTION		= 0.6f;
+const float				DEFAULT_DYNAMIC_BODY_MASS			= 1.0f;
 
 const int				MAX_SIMULATION_SUBSTEPS				= 3;
 const float				FIXED_TIME_STEP						= 1.0f / 60.f;
+
+const Vector			DEFAULT_GRAVITY						= Vector(0,-50.0f,0);
 
 
 /**
@@ -67,7 +69,7 @@ public:
 	virtual ~PhysicsManager();
 
 	// Init / Release / Update
-	void	init		( Ogre::SceneManager& sceneManager, const Vector& gravityVector = Vector(0,-9.81f,0), const AABox &bounds = AABox (Vector (-10000, -10000, -10000), Vector (10000,  10000,  10000)));
+	void	init		( Ogre::SceneManager& sceneManager, const Vector& gravityVector = DEFAULT_GRAVITY, const AABox &bounds = AABox (Vector (-10000, -10000, -10000), Vector (10000,  10000,  10000)));
 	void	end			();
 	void	update	( unsigned long elapsedMillis );
 

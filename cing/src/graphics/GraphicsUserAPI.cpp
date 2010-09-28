@@ -265,30 +265,6 @@ void fill( float value1 , float value2, float value3, float alpha )
  * @brief Sets the color used to fill the shapes drawn after this call.
  *
  * It specifies color for shapes not using textures or lighting. Value range is 0..255
- * @param rgb Gray level. A value of 0 means black, and 255 means white.
- */
-void fill( int rgb )
-{
-	fill( Color( rgb ) );
-}
-
-/*
- * @brief Sets the color used to fill the shapes drawn after this call.
- *
- * It specifies color for shapes not using textures or lighting. Value range is 0..255
- * @param rgb Gray level. A value of 0 means black, and 255 means white.
- * @param alpha Alpha level. A value of 0 means transparent, and 255 means opaque.
- */
-void fill( int rgb, float alpha )
-{
-	fill( Color( rgb, alpha ) );
-
-}
-
-/*
- * @brief Sets the color used to fill the shapes drawn after this call.
- *
- * It specifies color for shapes not using textures or lighting. Value range is 0..255
  * @param color Variable of type Color containing the red, green, blue and alpha values for the new color
  */
 void fill( const Color& color )

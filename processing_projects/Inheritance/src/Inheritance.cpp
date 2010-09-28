@@ -5,7 +5,7 @@
 // fields and methods from another. An object that inherits from
 // another is called a subclass, and the object it inherits from 
 // is called a superclass. A subclass extends the superclass.
-
+	
 #include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
