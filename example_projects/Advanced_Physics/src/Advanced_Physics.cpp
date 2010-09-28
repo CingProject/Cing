@@ -33,6 +33,7 @@ PointLight			light;					// Lights in the scene
 void setup()
 {
 	size(1024,768);
+	//setFrameRate(60);
 
 	// Open GL coordinate system (Y axis grows up and 0,0 is at the center of the screen)
 	applyCoordinateSystemTransform(OPENGL3D);
@@ -65,8 +66,9 @@ void setup()
 	atractor.setDiffuseColor(255, 127, 0);
 
 	// plane
-	plane.init( 10000, 10000 );
-	plane.setPosition( 0, -200, 0 );
+	plane.init( 100000, 100000 );
+	plane.setPosition( 0, -1200, 0 );
+	plane.rotate(Vector::UNIT_X, PI);
 
 	// Enable physics plate as static object (that comes from the true parameter passed)
 	plane.enablePhysics( true );
@@ -136,9 +138,8 @@ void keyPressed()
 		float forceScale = 5000;
 		for ( int i = 0; i < MAX_ELEMENTS; i++ )
 		{
-			Vector randomDir(random(-1, 1), random(-1, 1), random(-1, 1));
-			box[i].applyCentralForce( Vector::UNIT_Y * randomDir * forceScale );
-			sphere[i].applyCentralForce( Vector::UNIT_Y * randomDir * forceScale );
+			 box[i].applyCentralForce( Vector::UNIT_Y * forceScale );
+			sphere[i].applyCentralForce( Vector::UNIT_Y * forceScale );
 		}
 	}
 	// t key: set velocity on all the objects towards the atractor

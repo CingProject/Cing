@@ -87,16 +87,17 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307293427;
-			PBXWorkspaceStateSaveDate = 307293427;
+			PBXPerProjectTemplateStateSaveDate = 307337821;
+			PBXWorkspaceStateSaveDate = 307337821;
 		};
 		perUserProjectItems = {
+			4351F8AA1251AC370021CB40 /* PBXTextBookmark */ = 4351F8AA1251AC370021CB40 /* PBXTextBookmark */;
+			4351F8AB1251AC370021CB40 /* PBXTextBookmark */ = 4351F8AB1251AC370021CB40 /* PBXTextBookmark */;
+			4353E62D12516C0A002C26B7 /* PBXTextBookmark */ = 4353E62D12516C0A002C26B7 /* PBXTextBookmark */;
+			4353E63112516C0A002C26B7 /* PBXTextBookmark */ = 4353E63112516C0A002C26B7 /* PBXTextBookmark */;
 			43EA3EC61250ED0500AD79D5 /* PlistBookmark */ = 43EA3EC61250ED0500AD79D5 /* PlistBookmark */;
 			43EA3EC81250ED0500AD79D5 /* PlistBookmark */ = 43EA3EC81250ED0500AD79D5 /* PlistBookmark */;
-			43EA3EDE1250ED7900AD79D5 /* PBXTextBookmark */ = 43EA3EDE1250ED7900AD79D5 /* PBXTextBookmark */;
-			43EA3EDF1250ED7900AD79D5 /* PBXTextBookmark */ = 43EA3EDF1250ED7900AD79D5 /* PBXTextBookmark */;
 			43EA3EE11250ED7900AD79D5 /* PBXTextBookmark */ = 43EA3EE11250ED7900AD79D5 /* PBXTextBookmark */;
-			43EA3EE21250ED7900AD79D5 /* PBXTextBookmark */ = 43EA3EE21250ED7900AD79D5 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
 		userBuildSettings = {
@@ -115,9 +116,9 @@
 	};
 	431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 2238}}";
-			sepNavSelRange = "{1760, 0}";
-			sepNavVisRange = "{659, 1057}";
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 2366}}";
+			sepNavSelRange = "{3078, 0}";
+			sepNavVisRange = "{2890, 944}";
 		};
 	};
 	431C349E124FFDC200494DD8 /* Advanced_Physics */ = {
@@ -150,6 +151,60 @@
 		sourceDirectories = (
 		);
 	};
+	4351F8AA1251AC370021CB40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
+		name = "Advanced_Physics.cpp: 128";
+		rLen = 0;
+		rLoc = 3078;
+		rType = 0;
+		vrLen = 945;
+		vrLoc = 2890;
+	};
+	4351F8AB1251AC370021CB40 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
+		name = "Advanced_Physics.cpp: 128";
+		rLen = 0;
+		rLoc = 3078;
+		rType = 0;
+		vrLen = 944;
+		vrLoc = 2890;
+	};
+	4353E62D12516C0A002C26B7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4353E62E12516C0A002C26B7 /* Object3D.h */;
+		name = "Object3D.h: 86";
+		rLen = 40;
+		rLoc = 2673;
+		rType = 0;
+		vrLen = 1731;
+		vrLoc = 1955;
+	};
+	4353E62E12516C0A002C26B7 /* Object3D.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = Object3D.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/graphics/Object3D.h;
+		sourceTree = "<absolute>";
+	};
+	4353E63112516C0A002C26B7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4353E63212516C0A002C26B7 /* Object3D.h */;
+		name = "Object3D.h: 86";
+		rLen = 40;
+		rLoc = 2673;
+		rType = 0;
+		vrLen = 1731;
+		vrLoc = 1955;
+	};
+	4353E63212516C0A002C26B7 /* Object3D.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = Object3D.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/graphics/Object3D.h;
+		sourceTree = "<absolute>";
+	};
 	43EA3EC61250ED0500AD79D5 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
@@ -172,59 +227,14 @@
 		rLen = 0;
 		rLoc = 2147483647;
 	};
-	43EA3EDE1250ED7900AD79D5 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
-		name = "Advanced_Physics.cpp: 61";
-		rLen = 0;
-		rLoc = 1760;
-		rType = 0;
-		vrLen = 1100;
-		vrLoc = 472;
-	};
-	43EA3EDF1250ED7900AD79D5 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 43EA3EE01250ED7900AD79D5 /* Advanced_Physics_Prefix.pch */;
-		rLen = 0;
-		rLoc = 2147483647;
-		rType = 0;
-	};
-	43EA3EE01250ED7900AD79D5 /* Advanced_Physics_Prefix.pch */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = Advanced_Physics_Prefix.pch;
-		path = "/Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Xcode Project Template/Template copy/Advanced_Physics_Prefix.pch";
-		sourceTree = "<absolute>";
-	};
 	43EA3EE11250ED7900AD79D5 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
 		name = "Advanced_Physics.cpp: 61";
 		rLen = 0;
-		rLoc = 1760;
+		rLoc = 1782;
 		rType = 0;
 		vrLen = 1100;
 		vrLoc = 472;
-	};
-	43EA3EE21250ED7900AD79D5 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 43EA3EE31250ED7900AD79D5 /* Advanced_Physics_Prefix.pch */;
-		name = "Advanced_Physics_Prefix.pch: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 177;
-		vrLoc = 0;
-	};
-	43EA3EE31250ED7900AD79D5 /* Advanced_Physics_Prefix.pch */ = {
-		isa = PBXFileReference;
-		name = Advanced_Physics_Prefix.pch;
-		path = "/Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Xcode Project Template/Template copy/Advanced_Physics_Prefix.pch";
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 568}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 177}";
-		};
 	};
 }

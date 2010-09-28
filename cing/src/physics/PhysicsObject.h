@@ -77,8 +77,8 @@ protected:
 	void	enableRigidBodyPhysics( OgreBulletCollisions::CollisionShape* collisionShape, bool staticObject );
 
 	// Protected attributes
-	OgreBulletDynamics::RigidBody*	m_rigidBody;				///< Physics rigid body that will control and define the physics of this object
-	bool														m_physicsEnabled;		///< Indicates whether the physics is activated for this object or not
+	OgreBulletDynamics::RigidBody*	m_rigidBody;			///< Physics rigid body that will control and define the physics of this object
+	bool							m_physicsEnabled;		///< Indicates whether the physics is activated for this object or not
 
 private:
 

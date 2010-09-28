@@ -20,6 +20,7 @@ void setup()
 {
 	size(1024, 768);
 	background(0);
+	setFrameRate(60);
 
 	// Setup lighting
 	ambientLight(30);

@@ -87,12 +87,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307306889;
-			PBXWorkspaceStateSaveDate = 307306889;
+			PBXPerProjectTemplateStateSaveDate = 307325364;
+			PBXWorkspaceStateSaveDate = 307325364;
 		};
 		perUserProjectItems = {
-			43A09964125152EC00B7DE8C /* PBXTextBookmark */ = 43A09964125152EC00B7DE8C /* PBXTextBookmark */;
-			43A09965125152EC00B7DE8C /* PBXTextBookmark */ = 43A09965125152EC00B7DE8C /* PBXTextBookmark */;
+			436903A6125169CF00C003EE /* PBXTextBookmark */ = 436903A6125169CF00C003EE /* PBXTextBookmark */;
+			436903B612516A0A00C003EE /* PBXTextBookmark */ = 436903B612516A0A00C003EE /* PBXTextBookmark */;
 			43EA3F7C1250F5B400AD79D5 /* PlistBookmark */ = 43EA3F7C1250F5B400AD79D5 /* PlistBookmark */;
 			43EA3F7E1250F5B400AD79D5 /* PlistBookmark */ = 43EA3F7E1250F5B400AD79D5 /* PlistBookmark */;
 		};
@@ -113,9 +113,9 @@
 	};
 	431C2FD2124FF73E00494DD8 /* Advanced_SceneGraph.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 952}}";
-			sepNavSelRange = "{657, 0}";
-			sepNavVisRange = "{0, 1229}";
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 992}}";
+			sepNavSelRange = "{950, 0}";
+			sepNavVisRange = "{49, 1226}";
 		};
 	};
 	431C349E124FFDC200494DD8 /* Advanced_SceneGraph */ = {
@@ -150,7 +150,7 @@
 		sourceDirectories = (
 		);
 	};
-	43A09964125152EC00B7DE8C /* PBXTextBookmark */ = {
+	436903A6125169CF00C003EE /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_SceneGraph.cpp */;
 		name = "Advanced_SceneGraph.cpp: 12";
@@ -160,15 +160,15 @@
 		vrLen = 1229;
 		vrLoc = 0;
 	};
-	43A09965125152EC00B7DE8C /* PBXTextBookmark */ = {
+	436903B612516A0A00C003EE /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_SceneGraph.cpp */;
-		name = "Advanced_SceneGraph.cpp: 12";
+		name = "Advanced_SceneGraph.cpp: 30";
 		rLen = 0;
-		rLoc = 657;
+		rLoc = 950;
 		rType = 0;
-		vrLen = 1229;
-		vrLoc = 0;
+		vrLen = 1230;
+		vrLoc = 18;
 	};
 	43EA3F7C1250F5B400AD79D5 /* PlistBookmark */ = {
 		isa = PlistBookmark;
