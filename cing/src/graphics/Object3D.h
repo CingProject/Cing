@@ -125,13 +125,19 @@ public:
 	void				setSelfIlluminationColor	( float value1, float value2, float value3 );
 	void				setSelfIlluminationColor	( float value1, float value2, float value3, float alpha );
 
-	void				setTexture								( const std::string& textureFileName );
-	void				setMaterial								( const std::string& materialName );
+	void				setTexture					( const std::string& textureFileName );
+	void				setMaterial					( const std::string& materialName );
 
-	void				setVisible								( bool visible );
+	void				setVisible					( bool visible );
+
+	// Shadows
+	void				castShadows				( bool cast );
+
+	// Materials
+	Ogre::MaterialPtr	getMaterial				();
 
 	// Debug methods
-	void				showBoundingBox						( bool show );
+	void				showBoundingBox			( bool show );
 
 	// Public Const static attributes
 	static const float OGRE_SCALE_CORRECTION; ///< Scale applied to all primitive objects in order to correct ogre scale bug with lighting

@@ -340,9 +340,9 @@ void noSmooth()
  *		- cursors: up, down movement
  *		- r: restore camera rotation to initial settings
  */
-void useDefault3DCameraControl( bool useDefault /*= true */ )
+void enableDefault3DCameraControl( bool useDefault /*= true */ )
 {
-	GraphicsManager::getSingleton().useDefault3DCameraControl( useDefault );
+	GraphicsManager::getSingleton().enableDefault3DCameraControl( useDefault );
 }
 
 /**
@@ -350,7 +350,7 @@ void useDefault3DCameraControl( bool useDefault /*= true */ )
  *
  * @param value if true, it activates mouse control, if false it deactivates it
  */
-void useMouseCameraControl( bool value  /*= true */)
+void enableMouseCameraControl( bool value  /*= true */)
 {
 	GraphicsManager::getSingleton().getDefaultCameraController().useMouse( value );
 }
@@ -360,7 +360,7 @@ void useMouseCameraControl( bool value  /*= true */)
  *
  * @param value if true, it activates keyboard control, if false it deactivates it
  */
-void useKeyboardCameraControl( bool value  /*= true */)
+void enableKeyboardCameraControl( bool value  /*= true */)
 {
 	GraphicsManager::getSingleton().getDefaultCameraController().useKeyboard( value );
 }
@@ -1131,4 +1131,16 @@ void applyCoordinateSystemTransform( const GraphicsType& coordSystem )
 {
 	GraphicsManager::getSingleton().applyCoordinateSystemTransform( coordSystem );
 }
+
+
+/**
+ * @brief Enables use of shadows. Should be called in the setup before initializing any 3d object.
+ * @param[in] technique Shadow technique to be used
+ */
+void enableShadows( ShadowTechnique technique )
+{
+	GraphicsManager::getSingleton().enableShadows( technique );
+}
+
+
 } // namespace Cing

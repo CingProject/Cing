@@ -46,7 +46,7 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	BaseLight::BaseLight():
-		m_pLight    		( NULL  ),
+	m_pLight    		( NULL  ),
 		m_lightFlare		( NULL  ),
 		m_lightFlareSet		( NULL  ),
 		m_bIsValid			( false )
@@ -105,6 +105,9 @@ namespace Cing
 
 		// Attach billboard to light scene node
 		m_sceneNode->attachObject( m_lightFlareSet );
+
+		// Set light position
+		m_sceneNode->setPosition( x, y, z );
 
 		// The class is now initialized
 		m_bIsValid = true;
@@ -302,6 +305,44 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to change the type of a Light not correctly initialized" );
 
 		m_pLight->setType( type );
+	}
+
+	/**
+	 * Sets the attenuation parameters of the light source i.e.how it diminishes with distance.
+     * Lights normally get fainter the further they are away. Also, each light is given a maximum range 
+	 * beyond which it cannot affect any objects. 
+	 *
+	 * Light attenuation is not applicable to directional lights since they have an infinite range and constant intensity. 
+	 * This is a standard attenuation approach. More information: http://www.ogre3d.org/tikiwiki/tiki-index.php?page=-Point%20Light%20Attenuation
+     *
+	 * @param[in] range		The absolute upper range of the light in world units 
+	 * @param[in] constant	The constant factor in the attenuation formula: 1.0 means never attenuate, 0.0 is complete attenuation 
+	 * @param[in] linear	The linear factor in the attenuation formula: 1 means attenuate evenly over the distance 
+	 * @param[in] quadratic The quadratic factor in the attenuation formula: adds a curvature to the attenuation formula. 
+	 */
+	void BaseLight::setAttenuation( float range, float constant, float linear, float quadratic )
+	{
+		if ( !isValid() )
+			THROW_EXCEPTION( "Error. Trying to change the type of a Light not correctly initialized" );
+		
+		float r = m_pLight->getAttenuationRange();
+		float c = m_pLight->getAttenuationConstant();
+		float l = m_pLight->getAttenuationLinear();
+		float q = m_pLight->getAttenuationQuadric();
+		m_pLight->setAttenuation(range, constant, linear, quadratic );
+	}
+
+
+	/**
+	* Configures the light to cast or not shadows
+	* @param[in] cast if true, light will cast shadows
+	*/
+	void BaseLight::castShadows( bool cast )
+	{
+		if ( !isValid() )
+			THROW_EXCEPTION( "Error. Trying to change the shadow settings on a Light not correctly initialized. init should be called first" );
+
+		m_pLight->setCastShadows(cast);
 	}
 
 	/**

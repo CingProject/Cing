@@ -76,7 +76,7 @@ public:
 
 	// Control methods
 	void	enable		( bool enable = true );
-
+	void	setGravity	( const Vector& gravity );
 
 	// Collision shape construction
 	OgreBulletCollisions::CollisionShape*		buildTriMeshShape			( Object3D& object );

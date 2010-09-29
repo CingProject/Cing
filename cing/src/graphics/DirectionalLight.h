@@ -14,35 +14,48 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
+  You  should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software Foundation,
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _PhysicsUserAPI_h_
-#define _PhysicsUserAPI_h_
+#ifndef _DirectionalLight_H_
+#define _DirectionalLight_H_
 
-#include "PhysicsPrereqs.h"
+#include "GraphicsPrereqs.h"
+#include "BaseLight.h"
+
 
 namespace Cing
 {
 
 /**
- * @brief Physics related functions that user can call 
+ * Directional Light. It is a light source that emits in one direction with parallel rays
+ * Therefore, position is ignored.
  */
+class DirectionalLight: public BaseLight
+{
+public:
 
-// Physics controll functions
-void enablePhysics( bool enable = true );
-void disablePhysics();
+	// Constructor / Destructor
+	 DirectionalLight();
+	~DirectionalLight();
 
-// Dynamics Simulation control
-void setGravity( float y );
-void setGravity( float x, float y, float z );
+	// Init / Release / Update
+	bool  init   ( float r, float g, float b, float nx, float ny, float nz );
+	void  end    ();
 
-// Debugging functions
-void drawPhysics( bool draw );
+	// Query methods
+	bool  isValid() const { return m_bIsValid; }
 
+
+private:
+
+	// Attributes
+	bool  m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+
+};
 
 } // namespace Cing
 
-#endif // _PhysicsUserAPI_h_
+#endif // _DirectionalLight_H_

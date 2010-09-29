@@ -65,6 +65,8 @@
 #include "graphics/Plane.h"
 #include "graphics/Sphere.h"
 #include "graphics/PointLight.h"
+#include "graphics/SpotLight.h"
+#include "graphics/DirectionalLight.h"
 #include "graphics/GraphicsTypes.h"
 #include "graphics/Image.h"
 #include "graphics/GraphicsUserAPI.h"

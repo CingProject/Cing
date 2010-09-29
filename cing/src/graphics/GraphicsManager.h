@@ -83,13 +83,6 @@ namespace Cing
 		Camera3D&					getActiveCamera           ()		{ return m_activeCamera; }
 		const Ogre::SceneManager&	getSceneManager           () const	{ return *m_pSceneManager; }
 		Ogre::SceneManager&			getSceneManager           ()		{ return *m_pSceneManager; }
-
-		// TODO: Experimental
-		void setSceneManager           ( Ogre::SceneManager* sm )
-		{
-			m_pSceneManager =  sm;
-		};
-
 		Ogre::SceneManager*			getSceneManagerPtr			()       { return m_pSceneManager; }
 		CameraController&			getDefaultCameraController	()		 { return m_defaultCamController; }
 
@@ -135,7 +128,7 @@ namespace Cing
 		void						showFps						( bool show );
 
 		// Camera control
-		void						useDefault3DCameraControl	( bool useDefault );
+		void						enableDefault3DCameraControl( bool value );
 
 		// Drawing images control (Temp)
 		void						addDrawableImage			( TexturedQuad* img );
@@ -146,21 +139,26 @@ namespace Cing
 		void						clearMatrixStack();
 
 		//Save frames
-		void save( const String& name )
-		{
-			m_saveFrame = true;
-			m_frameName = name;
-		};
+		void						save( const String& name );
 
 		// Import Collada
 		//bool loadCollada( const String& fileName );
 		// Coordinate systems
-		bool isProcessingMode() { return ( m_coordSystem == PROCESSING );	}	
-		void applyCoordinateSystemTransform( const GraphicsType& coordSystem );
+		bool						isProcessingMode				() { return ( m_coordSystem == PROCESSING );	}	
+		void						applyCoordinateSystemTransform	( const GraphicsType& coordSystem );
+
+		// Shawods
+		void						enableShadows				( ShadowTechnique technique );
+		void						setShadowFarDistance		( float distance ); 
+		bool						shadowsEnabled				() const { return m_shadowsEnabled; }
+		ShadowTechnique				getCurrentShadowTechnique	() const { return m_shadowTechnique; }
+
+
+		// Public Attributes (to be removed)
 
 		// 2D Canvas
-		Image						m_canvas;
-
+		Image						m_canvas;			///< Background image
+		
 		// 2D / 3D Transforms
 		std::stack < Transform >	m_transforms;		///< Stack to store transform objects
 		std::stack < Transform >	m_shapesTransforms;	///< Stack to store transform shapes. They have a different stack as their tranformations differ.
@@ -193,17 +191,17 @@ namespace Cing
 		int                        	m_defaultWindowWidth;
 		int                        	m_defaultWindowHeight;
 		GraphicMode                	m_defaultGraphicMode;
-		bool                       	m_setupCalled;        ///< True when the setup method has been already called
-		bool                       	m_fullscreen;         ///< If true, the applcation will run in full screen mode
-		int							m_fsaa;				/// < Antialiasing value (0..16). Depends on HW support
+		bool                       	m_setupCalled;			///< True when the setup method has been already called
+		bool                       	m_fullscreen;			///< If true, the applcation will run in full screen mode
+		int							m_fsaa;					/// < Antialiasing value (0..16). Depends on HW support
 
 		// Misc
-		DebugOverlay				m_debugOverlay;   ///< Debug overlay used to show debug information
-		//MovableText				m_systemFont;    ///< To print system info to screen
+		DebugOverlay				m_debugOverlay;			///< Debug overlay used to show debug information
+		//MovableText				m_systemFont;			///< To print system info to screen
 
 		// Styling properties
 		// TODO: Eliminates this. Change styles que to stack
-		int							m_rectMode;					///< Parameters input mode to draw rectangles
+		int							m_rectMode;				///< Parameters input mode to draw rectangles
 		int							m_ellipseMode;			///< Parameters input mode to draw ellipses
 		bool						m_fill;
 		bool						m_stroke;
@@ -213,13 +211,17 @@ namespace Cing
 
 		// To manage visibility of loaded images
 		// TODO optimize this
-		std::list< TexturedQuad* >	m_drawableImagesQueue; ///< Images that are being drawn by the user ar maked as not visible every frame
-		// to if the user does not call the draw one frame the image is not drawn
+		std::list< TexturedQuad* >	m_drawableImagesQueue;	///< Images that are being drawn by the user ar maked as not visible every frame
+															/// to if the user does not call the draw one frame the image is not drawn
 
 		//to allow screen capture and effects
 		Ogre::TexturePtr			m_RttTexture;
 		bool						m_saveFrame;
 		String						m_frameName;
+
+		// Shadows related
+		ShadowTechnique				m_shadowTechnique;	///< Current Shadow Technique
+		bool						m_shadowsEnabled;	///< True if any shadow technique has been enabled
 
 	    GraphicsType				m_coordSystem;
 		bool						m_showFps;			///< Indicates whether the frames per second should be shown or not

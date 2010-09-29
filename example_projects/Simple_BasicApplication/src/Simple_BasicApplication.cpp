@@ -17,6 +17,7 @@ void setup()
 void draw()
 {
 	// Associate the stroke grayscale value to the vertical position of the mouse
+	float value = map(mouseY, 0, height, 0, 255);
 	stroke(mouseY);
 
 	// Draw a line from the center of the window to the mouse

@@ -115,9 +115,10 @@ void CameraController::init( Camera3D& cameraToControl )
 	m_freeCam->setRotationFactor( 0.2f );
 	m_cameraCS->registerCameraMode("Free",m_freeCam);
 
-	// Set initial position
-	m_cameraCS->getOgreCamera()->setPosition( Ogre::Vector3( 0, 0, 2000.0 ) );
-	m_camera->getOgreCamera()->getSceneManager()->getRootSceneNode()->setScale(1,1,1);
+	// Set the camera position
+	LOG( "Default Camera Controller forces OPENGL3D coordinate system" );
+	GraphicsManager::getSingleton().applyCoordinateSystemTransform(OPENGL3D);
+	m_cameraCS->getOgreCamera()->setPosition( Vector( 0, 0, 2000.0 ) );
 
 	// Set the initial camera mode (Free)
 	m_cameraCS->setCameraTarget(GraphicsManager::getSingleton().getSceneManager().getRootSceneNode());

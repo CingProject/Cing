@@ -87,7 +87,8 @@ namespace Cing
 		m_defaultGraphicMode( OPENGL ),
 		m_fullscreen( false ),
 		m_fsaa(0),
-		m_saveFrame(false)
+		m_saveFrame(false),
+		m_shadowsEnabled(false)
 {
 }
 
@@ -175,7 +176,7 @@ bool GraphicsManager::init()
 	//m_debugOverlay.init();
 
 	// Not Use default camera controller (the user would need to activate it)
-	useDefault3DCameraControl( false );
+	enableDefault3DCameraControl( false );
 
 	// Init the cvFont
 	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
@@ -259,7 +260,8 @@ void GraphicsManager::end()
 	ShapeManager::getSingleton().end();
 
 	// The class is not valid anymore
-	m_bIsValid = false;
+	m_bIsValid			= false;
+	m_shadowsEnabled	= false;
 }
 
 /**
@@ -409,7 +411,7 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		// Set render system settings specified by user
 		// TODO: Make all options available to user
 		// RTT possible values: FBO, PBuffer, Copy
-		selectedRenderSystem->setConfigOption( "RTT Preferred Mode", "Copy" );
+		selectedRenderSystem->setConfigOption( "RTT Preferred Mode", "FBO" );
 		selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
 		selectedRenderSystem->setConfigOption( "VSync","Yes" );
 		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
@@ -451,18 +453,19 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 }
 
 /**
-* @internal
-* @brief   Reset style stack
-*/
+ * @internal
+ * @brief   Reset style stack
+ */
 void GraphicsManager::clearStyleStack()
 {
 	m_styles.clear();
 	m_styles.push_front(Style(Color(255,255,255), Color(0,0,0), 1));
 };
+
 /**
-* @internal
-* @brief   Reset matrix stack (Clear and add one identity transform)
-*/
+ * @internal
+ * @brief   Reset matrix stack (Clear and add one identity transform)
+ */
 void GraphicsManager::clearMatrixStack()
 {
 	while ( !m_transforms.empty() )
@@ -475,10 +478,20 @@ void GraphicsManager::clearMatrixStack()
 };
 
 /**
-* @internal
-* @brief   Returns true if the system supports vertex programs (vertex shaders)
-* @return  true if the system supports vertex programs (vertex shaders)
-*/
+ * @brief   Saves an image with the current frame on screen. The image is saved in the data folder
+ * @param   name name of the image to be saved/exported
+ */
+void GraphicsManager::save( const String& name )
+{
+	m_saveFrame = true;
+	m_frameName = name;
+};
+
+/**
+ * @internal
+ * @brief   Returns true if the system supports vertex programs (vertex shaders)
+ * @return  true if the system supports vertex programs (vertex shaders)
+ */
 bool GraphicsManager::hasVertexProgramsSupport() const
 {
 	// Get system capabilities
@@ -618,7 +631,7 @@ void GraphicsManager::showFps( bool show )
 *		- pg up/down: moves camera up and down
 *		- r: restore camera rotation to initial settings
 */
-void GraphicsManager::useDefault3DCameraControl( bool useDefault )
+void GraphicsManager::enableDefault3DCameraControl( bool useDefault )
 {
 	// Check application correctly initialized (could not be if the user didn't call size function)
 	Application::getSingleton().checkSubsystemsInit();
@@ -738,7 +751,47 @@ void GraphicsManager::applyCoordinateSystemTransform( const GraphicsType& coordS
 	default:
 		break;
 	}
-
 }
+
+/**
+ * @brief Enables use of shadows. Should be called in the setup before initializing any 3d object.
+ *
+ * @param[in] technique Shadow technique to use
+ */
+void GraphicsManager::enableShadows( ShadowTechnique technique )
+{
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Application::getSingleton().checkSubsystemsInit();
+
+	if ( !isValid() )
+	{
+		LOG_ERROR( "enableShadows error. setup() has not been called yet" );
+		return;
+	}
+
+	m_pSceneManager->setShadowTechnique( (Ogre::ShadowTechnique)technique );
+	m_shadowTechnique	= technique;
+	m_shadowsEnabled	= true;
+}
+
+/**
+ * @brief Sets the far distance at which the shadows will still be rendered. Used to optimize performance.
+ *
+ * @param[in] distance Distance it world units. At this distance form the camera, shadows won't be rendered any more.
+ */
+void GraphicsManager::setShadowFarDistance( float distance )
+{
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Application::getSingleton().checkSubsystemsInit();
+
+	if ( !isValid() )
+	{
+		LOG_ERROR( "enableShadows error. setup() has not been called yet" );
+		return;
+	}
+	
+	m_pSceneManager->setShadowFarDistance( distance );
+}
+
 
 } // namespace Cing

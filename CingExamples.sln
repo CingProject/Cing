@@ -77,6 +77,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_CameraInputAndFilter
 		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_Shadows", "example_projects\Advanced_Shadows\Advanced_Shadows.vcproj", "{AA863A62-D3CA-4484-B222-52A8623739F3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FE179849-DD52-473E-BE15-5A5E52BFFF1F} = {FE179849-DD52-473E-BE15-5A5E52BFFF1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -147,6 +152,10 @@ Global
 		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Debug|Win32.Build.0 = Debug|Win32
 		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.ActiveCfg = Release|Win32
 		{9C85F056-E0AC-46D8-A228-6D95A7D4D27D}.Release|Win32.Build.0 = Release|Win32
+		{AA863A62-D3CA-4484-B222-52A8623739F3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AA863A62-D3CA-4484-B222-52A8623739F3}.Debug|Win32.Build.0 = Debug|Win32
+		{AA863A62-D3CA-4484-B222-52A8623739F3}.Release|Win32.ActiveCfg = Release|Win32
+		{AA863A62-D3CA-4484-B222-52A8623739F3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

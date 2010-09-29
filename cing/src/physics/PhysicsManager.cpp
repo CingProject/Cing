@@ -154,6 +154,18 @@ void PhysicsManager::enable( bool enable /*= true*/ )
 
 
 /**
+ * @brief Sets the dynamics simulation gravity vector
+ *
+ * @param gravity New gravity for the physics simulation
+ */
+void PhysicsManager::setGravity	( const Vector& gravity )
+{
+	if ( isValid() && m_enabled )
+		getWorld()->getBulletDynamicsWorld()->setGravity( OgreBulletCollisions::OgreBtConverter::to( gravity ) );
+
+}
+
+/**
  * @brief Updates the physics state
  *
  * @param elapsedMillis Time elapsed since last frame in milliseconds

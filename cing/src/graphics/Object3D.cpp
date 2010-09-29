@@ -109,6 +109,16 @@ namespace Cing
 		{
 			// Load the mesh (in case it has not been loaded before)
 			Ogre::MeshPtr pMesh = Ogre::MeshManager::getSingleton().load( meshName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME );
+			
+
+			// Check if stencil shadows are enabled to build the mesh edges
+			bool shadowsEnabled = GraphicsManager::getSingleton().shadowsEnabled();
+			if ( shadowsEnabled && 
+				 ((GraphicsManager::getSingleton().getCurrentShadowTechnique() == STENCIL_ADDITIVE) || 
+				 (GraphicsManager::getSingleton().getCurrentShadowTechnique() == STENCIL_MODULATIVE)  ) )
+			{		
+				pMesh->buildEdgeList();
+			}
 
 			// TODO remove this from here
 			// Build tangent vectors (for normal mapping), all our meshes use only 1 texture coordset 
@@ -804,6 +814,35 @@ namespace Cing
 	}
 
 	/**
+	 * Configures the object to cast or not shadows
+	 * @param[in] cast if true, light will cast shadows
+	 */
+	void Object3D::castShadows( bool cast )
+	{
+		if ( isValid() )
+			m_entity->setCastShadows(cast);
+	}
+
+	/**
+	 * Returns a reference to the material of the object
+	 * @return material of the object
+	 */	
+	Ogre::MaterialPtr Object3D::getMaterial()
+	{	
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Call to getMaterial when the object has not been initialized yet. Returning empty material" );
+			return m_materialCopy;
+		}
+
+		// Check if the material is duplicated
+		if ( m_materialCopy.isNull() )
+			return m_entity->getSubEntity(0)->getMaterial();
+		else
+			return m_materialCopy;
+	}
+
+	/**
 	* @internal 
 	* @brief Shows the object's bounding box (or hides it)
 	*
@@ -811,7 +850,8 @@ namespace Cing
 	*/
 	void Object3D::showBoundingBox( bool show )
 	{
-		m_sceneNode->showBoundingBox( show );
+		if ( m_sceneNode )
+			m_sceneNode->showBoundingBox( show );
 	}
 
 	/**

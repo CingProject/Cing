@@ -124,6 +124,13 @@ namespace Cing
 	};
 
 
+	// Shadow techniques
+	enum ShadowTechnique
+	{
+		STENCIL_ADDITIVE	= Ogre::SHADOWTYPE_STENCIL_ADDITIVE,
+		STENCIL_MODULATIVE	= Ogre::SHADOWTYPE_STENCIL_MODULATIVE
+	};
+
 	/// Lights
 	typedef Ogre::Light       		Light;
 	typedef Ogre::SceneNode       	SceneNode;

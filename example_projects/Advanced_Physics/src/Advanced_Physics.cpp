@@ -38,6 +38,11 @@ void setup()
 	// Open GL coordinate system (Y axis grows up and 0,0 is at the center of the screen)
 	applyCoordinateSystemTransform(OPENGL3D);
 
+	// Setup physics
+	enablePhysics();
+	setGravity(-50);
+
+
 	// init spheres and boxes
 	int coordX = -1000;
 	int coordY = 100;
@@ -78,7 +83,7 @@ void setup()
 	light.init( 100, 100, 100, 0, 0, 200 );	
 
 	// Activate default 3d camera controler (mouse+keys)
-	useDefault3DCameraControl();
+	enableDefault3DCameraControl();
 
 	// Little helper to show the Frames per Second (vertical sync is on, so max is 60fps)
 	showFps();

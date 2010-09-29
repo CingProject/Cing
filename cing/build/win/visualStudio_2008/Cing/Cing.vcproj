@@ -682,11 +682,19 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\..\..\src\graphics\DirectionalLight.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\..\..\src\graphics\LightingUserAPI.h"
 							>
 						</File>
 						<File
 							RelativePath="..\..\..\..\src\graphics\PointLight.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\SpotLight.h"
 							>
 						</File>
 					</Filter>
@@ -874,11 +882,19 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\..\..\src\graphics\DirectionalLight.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\..\..\..\src\graphics\LightingUserAPI.cpp"
 							>
 						</File>
 						<File
 							RelativePath="..\..\..\..\src\graphics\PointLight.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\graphics\SpotLight.cpp"
 							>
 						</File>
 					</Filter>

@@ -22,6 +22,10 @@
 #include "PhysicsUserAPI.h"
 #include "PhysicsManager.h"
 
+#include "OgreBullet/Dynamics/include/OgreBulletDynamicsWorld.h"
+#include "OgreBullet/Collisions/include/Utils/OgreBulletConverter.h"
+
+
 namespace Cing
 {
 
@@ -40,6 +44,19 @@ void disablePhysics()
 { 
 	enablePhysics( false ); 
 }
+
+/// Sets physcis simulation gravity (only vertical axis)
+void setGravity( float y )
+{
+	setGravity( 0, y, 0 );
+}
+
+/// Sets physcis simulation gravity (any axis)
+void setGravity( float x, float y, float z )
+{
+	PhysicsManager::getSingleton().setGravity( Vector(x, y, z) );
+}
+
 
 /*
  * @brief Controls if the physic data (collision volumes and contact points) should be drawn or not

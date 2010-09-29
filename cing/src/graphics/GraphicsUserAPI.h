@@ -142,9 +142,9 @@ void vertex			(float x, float y, float z);
 void setRenderMode( RenderMode mode );
 
 // Camera 3D related functions
-void	useDefault3DCameraControl	( bool useDefault = true );
-void	useMouseCameraControl		( bool value = true );
-void	useKeyboardCameraControl	( bool value = true );
+void	enableDefault3DCameraControl( bool value = true );
+void	enableMouseCameraControl	( bool value = true );
+void	enableKeyboardCameraControl	( bool value = true );
 
 // Debugle methods
 void	showFps ( bool show = true  );
@@ -209,6 +209,11 @@ void textAlign		(int halign, int valign = TOP);
 void textMode		(TextMode mode);
 void textSize		(float size);
 
+
+//-----------------------------------------------------------------------------------
+// Shadows
+//-----------------------------------------------------------------------------------
+void enableShadows( ShadowTechnique technique );
 
 } // namespace Cing
 

@@ -681,7 +681,8 @@ namespace Cing
 			m_filePath = dataFolder + path;
 			if ( !fileExists( m_filePath ) )
 			{
-				LOG_ERROR( "MediaPlayer: File %s not found in data folder.", path );
+				LOG_ERROR( "MediaPlayer: File %s not found in data folder.", path.c_str() );
+				LOG_ERROR( "Absolute path to file: %s", m_filePath.c_str() );
 				return false;
 			}
 

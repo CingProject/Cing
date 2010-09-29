@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "PointLight.h"
+#include "DirectionalLight.h"
 
 namespace Cing
 {
@@ -28,7 +28,7 @@ namespace Cing
 	* @internal
 	* @brief Constructor. Initializes class attributes.
 	*/
-	PointLight::PointLight():
+	DirectionalLight::DirectionalLight():
 m_bIsValid( false )
 {
 }
@@ -37,7 +37,7 @@ m_bIsValid( false )
 * @internal
 * @brief Destructor. Class release.
 */
-PointLight::~PointLight()
+DirectionalLight::~DirectionalLight()
 {
 	// Release resources
 	end();
@@ -50,26 +50,26 @@ PointLight::~PointLight()
 * @param[in] r Red component of the diffuse color of the light.    Value Range: 0..255
 * @param[in] g Green component of the diffuse color of the light.  Value Range: 0..255
 * @param[in] b Blue component of the diffuse color of the light.   Value Range: 0..255
-* @param[in] x x coordinate (horizontal axis) of the light in the scene
-* @param[in] y y coordinate (vertical axis) of the light in the scene
-* @param[in] z z coordinate (depth) of the light in the scene
+* @param[in] nx x direction(horizontal axis) of the light in the scene
+* @param[in] ny y direction (vertical axis) of the light in the scene
+* @param[in] nz z direction (depth) of the light in the scene
 * @return true if the initialization was ok | false otherwise
 */
-bool PointLight::init( float r, float g, float b, float x, float y, float z )
+bool DirectionalLight::init( float r, float g, float b, float nx, float ny, float nz )
 {
 	// Check if the class is already initialized
 	if ( isValid() )
 		return true;
 
 	// Init base light
-	BaseLight::init( r, g, b, x, y, z );
+	BaseLight::init( r, g, b, nx, ny, nz );
 
 	// Setup light
-	setPosition( x, y, z );
+	setDirection( nx, ny, nz );
 	setDiffuseColor( r, g, b );
 
 	// Set light type
-	setLightType( Light::LT_POINT );
+	setLightType( Light::LT_DIRECTIONAL );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -82,7 +82,7 @@ bool PointLight::init( float r, float g, float b, float x, float y, float z )
 * @brief Releases the class resources. 
 * After this method is called the class is not valid anymore.
 */
-void PointLight::end()
+void DirectionalLight::end()
 {
 	// Check if the class is already released
 	if ( !isValid() )
