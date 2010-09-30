@@ -27,6 +27,7 @@
 #include "common/LogManager.h"
 
 // Extern libs
+#undef nil
 #include "PTypes/include/pasync.h" // for portable sleep
 
 namespace Cing

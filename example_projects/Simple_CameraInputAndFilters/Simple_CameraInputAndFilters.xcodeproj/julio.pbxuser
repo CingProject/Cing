@@ -1,5 +1,25 @@
 // !$*UTF8*$!
 {
+	431304EC12550ADF000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_CameraInputAndFilters.cpp */;
+		name = "Simple_CameraInputAndFilters.cpp: 5";
+		rLen = 0;
+		rLoc = 99;
+		rType = 0;
+		vrLen = 768;
+		vrLoc = 0;
+	};
+	431304ED12550ADF000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_CameraInputAndFilters.cpp */;
+		name = "Simple_CameraInputAndFilters.cpp: 5";
+		rLen = 0;
+		rLoc = 99;
+		rType = 0;
+		vrLen = 768;
+		vrLoc = 0;
+	};
 	431C2FC3124FF55D00494DD8 /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
@@ -87,12 +107,14 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307243929;
-			PBXWorkspaceStateSaveDate = 307243929;
+			PBXPerProjectTemplateStateSaveDate = 307563229;
+			PBXWorkspaceStateSaveDate = 307563229;
 		};
 		perUserProjectItems = {
-			436899E912502BA000EB4F68 /* PlistBookmark */ = 436899E912502BA000EB4F68 /* PlistBookmark */;
-			436899EA12502BA000EB4F68 /* PlistBookmark */ = 436899EA12502BA000EB4F68 /* PlistBookmark */;
+			431304EC12550ADF000EE8B2 /* PBXTextBookmark */ = 431304EC12550ADF000EE8B2 /* PBXTextBookmark */;
+			431304ED12550ADF000EE8B2 /* PBXTextBookmark */ = 431304ED12550ADF000EE8B2 /* PBXTextBookmark */;
+			439E06EB125474470069B752 /* PlistBookmark */ = 439E06EB125474470069B752 /* PlistBookmark */;
+			439E06ED125474470069B752 /* PlistBookmark */ = 439E06ED125474470069B752 /* PlistBookmark */;
 		};
 		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
 		userBuildSettings = {
@@ -111,9 +133,9 @@
 	};
 	431C2FD2124FF73E00494DD8 /* Simple_CameraInputAndFilters.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 644}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 854}}";
 			sepNavSelRange = "{99, 0}";
-			sepNavVisRange = "{0, 730}";
+			sepNavVisRange = "{0, 768}";
 		};
 	};
 	431C349E124FFDC200494DD8 /* Simple_CameraInputAndFilters */ = {
@@ -146,7 +168,7 @@
 		sourceDirectories = (
 		);
 	};
-	436899E912502BA000EB4F68 /* PlistBookmark */ = {
+	439E06EB125474470069B752 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
 		fallbackIsa = PBXBookmark;
@@ -157,7 +179,7 @@
 		rLen = 0;
 		rLoc = 2147483647;
 	};
-	436899EA12502BA000EB4F68 /* PlistBookmark */ = {
+	439E06ED125474470069B752 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
 		fallbackIsa = PBXBookmark;

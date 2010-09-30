@@ -1,5 +1,37 @@
 // !$*UTF8*$!
 {
+	43130463125509EC000EE8B2 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_LoadingXML/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	43130464125509EC000EE8B2 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_LoadingXML/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	43130465125509EC000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_LoadingXML.cpp */;
+		name = "Simple_LoadingXML.cpp: 8";
+		rLen = 0;
+		rLoc = 282;
+		rType = 0;
+		vrLen = 1030;
+		vrLoc = 268;
+	};
 	431C2FC3124FF55D00494DD8 /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
@@ -68,6 +100,22 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					822.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
 			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
 				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
@@ -90,20 +138,20 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307243987;
-			PBXWorkspaceStateSaveDate = 307243987;
+			PBXPerProjectTemplateStateSaveDate = 307562975;
+			PBXWorkspaceStateSaveDate = 307562975;
 		};
 		perUserProjectItems = {
-			434D8F6012501A5500018B6D /* PlistBookmark */ = 434D8F6012501A5500018B6D /* PlistBookmark */;
+			43130463125509EC000EE8B2 /* PlistBookmark */ = 43130463125509EC000EE8B2 /* PlistBookmark */;
+			43130464125509EC000EE8B2 /* PlistBookmark */ = 43130464125509EC000EE8B2 /* PlistBookmark */;
+			43130465125509EC000EE8B2 /* PBXTextBookmark */ = 43130465125509EC000EE8B2 /* PBXTextBookmark */;
 			434D8F6312501A5500018B6D /* PlistBookmark */ = 434D8F6312501A5500018B6D /* PlistBookmark */;
 			434D8F6412501A5500018B6D /* PBXTextBookmark */ = 434D8F6412501A5500018B6D /* PBXTextBookmark */;
 			43689A1812502BEB00EB4F68 /* PBXTextBookmark */ = 43689A1812502BEB00EB4F68 /* PBXTextBookmark */;
 			43689A1912502BEB00EB4F68 /* PBXTextBookmark */ = 43689A1912502BEB00EB4F68 /* PBXTextBookmark */;
 			43689A1A12502BEB00EB4F68 /* PBXTextBookmark */ = 43689A1A12502BEB00EB4F68 /* PBXTextBookmark */;
 			43689A1B12502BEB00EB4F68 /* PBXTextBookmark */ = 43689A1B12502BEB00EB4F68 /* PBXTextBookmark */;
-			43689A1C12502BEB00EB4F68 /* PBXTextBookmark */ = 43689A1C12502BEB00EB4F68 /* PBXTextBookmark */;
 			43689A1D12502BEB00EB4F68 /* PBXTextBookmark */ = 43689A1D12502BEB00EB4F68 /* PBXTextBookmark */;
-			43689A1E12502BEB00EB4F68 /* PlistBookmark */ = 43689A1E12502BEB00EB4F68 /* PlistBookmark */;
 		};
 		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
 		userBuildSettings = {
@@ -192,17 +240,6 @@
 		modificationTime = 307239511.424603;
 		state = 1;
 	};
-	434D8F6012501A5500018B6D /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_LoadingXML/Info.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
 	434D8F6312501A5500018B6D /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
@@ -264,16 +301,6 @@
 		vrLen = 1030;
 		vrLoc = 268;
 	};
-	43689A1C12502BEB00EB4F68 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 434D8F4E12501A0300018B6D /* xmlFileTest.xml */;
-		name = "xmlFileTest.xml: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 177;
-		vrLoc = 0;
-	};
 	43689A1D12502BEB00EB4F68 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 431C34AE124FFE1B00494DD8 /* plugins.cfg */;
@@ -283,16 +310,5 @@
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 0;
-	};
-	43689A1E12502BEB00EB4F68 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_LoadingXML/Info.plist;
-		rLen = 0;
-		rLoc = 2147483647;
 	};
 }

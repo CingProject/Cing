@@ -100,7 +100,7 @@ namespace Cing
 		m_lightFlareSet->setMaterialName( "Examples/Flare" );
 		m_lightFlare = m_lightFlareSet->createBillboard( Vector( 0, 0, 0 ) );
 		m_lightFlare->setColour( Color( r, g, b, 255 ).normalized() );
-		m_lightFlare->setDimensions(10, 10);
+		m_lightFlare->setDimensions(30, 30);
 		m_lightFlareSet->setVisible( false );
 
 		// Attach billboard to light scene node

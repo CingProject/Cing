@@ -1,5 +1,25 @@
 // !$*UTF8*$!
 {
+	4313046C125509FD000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_MicInput.cpp */;
+		name = "Simple_MicInput.cpp: 5";
+		rLen = 0;
+		rLoc = 99;
+		rType = 0;
+		vrLen = 1259;
+		vrLoc = 0;
+	};
+	4313046D125509FD000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_MicInput.cpp */;
+		name = "Simple_MicInput.cpp: 5";
+		rLen = 0;
+		rLoc = 99;
+		rType = 0;
+		vrLen = 1259;
+		vrLoc = 0;
+	};
 	431C2FC3124FF55D00494DD8 /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
@@ -35,7 +55,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					22,
 					300,
-					57.58349609375,
+					770,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXExecutablesDataSource_ActiveFlagID,
@@ -56,6 +76,30 @@
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.XCSCMDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					858,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_SCM_ColumnID,
 					PBXFileDataSource_FiletypeID,
 					PBXFileDataSource_Filename_ColumnID,
 					PBXFileDataSource_Built_ColumnID,
@@ -87,12 +131,14 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307244016;
-			PBXWorkspaceStateSaveDate = 307244016;
+			PBXPerProjectTemplateStateSaveDate = 307562991;
+			PBXWorkspaceStateSaveDate = 307562991;
 		};
 		perUserProjectItems = {
-			43689A2812502BFD00EB4F68 /* PlistBookmark */ = 43689A2812502BFD00EB4F68 /* PlistBookmark */;
-			43689A2912502BFD00EB4F68 /* PlistBookmark */ = 43689A2912502BFD00EB4F68 /* PlistBookmark */;
+			4313046C125509FD000EE8B2 /* PBXTextBookmark */ = 4313046C125509FD000EE8B2 /* PBXTextBookmark */;
+			4313046D125509FD000EE8B2 /* PBXTextBookmark */ = 4313046D125509FD000EE8B2 /* PBXTextBookmark */;
+			439E06C3125473F40069B752 /* PlistBookmark */ = 439E06C3125473F40069B752 /* PlistBookmark */;
+			439E06C5125473F40069B752 /* PlistBookmark */ = 439E06C5125473F40069B752 /* PlistBookmark */;
 		};
 		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
 		userBuildSettings = {
@@ -111,9 +157,9 @@
 	};
 	431C2FD2124FF73E00494DD8 /* Simple_MicInput.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 644}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 826}}";
 			sepNavSelRange = "{99, 0}";
-			sepNavVisRange = "{0, 730}";
+			sepNavVisRange = "{0, 1259}";
 		};
 	};
 	431C349E124FFDC200494DD8 /* Simple_MicInput */ = {
@@ -146,7 +192,7 @@
 		sourceDirectories = (
 		);
 	};
-	43689A2812502BFD00EB4F68 /* PlistBookmark */ = {
+	439E06C3125473F40069B752 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
 		fallbackIsa = PBXBookmark;
@@ -157,7 +203,7 @@
 		rLen = 0;
 		rLoc = 2147483647;
 	};
-	43689A2912502BFD00EB4F68 /* PlistBookmark */ = {
+	439E06C5125473F40069B752 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
 		fallbackIsa = PBXBookmark;

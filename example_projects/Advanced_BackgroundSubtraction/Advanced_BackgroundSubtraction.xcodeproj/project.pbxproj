@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		431303E1125508BE000EE8B2 /* libhighgui.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431303E0125508BE000EE8B2 /* libhighgui.dylib */; };
+		431303E2125508C4000EE8B2 /* libhighgui.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 431303E0125508BE000EE8B2 /* libhighgui.dylib */; };
 		431C34B0124FFE1B00494DD8 /* plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 431C34AE124FFE1B00494DD8 /* plugins.cfg */; };
 		431C34B1124FFE6B00494DD8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 431C3448124FFB3800494DD8 /* Info.plist */; };
 		431C34B2124FFE9600494DD8 /* Advanced_BackgroundSubtraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 431C2FD2124FF73E00494DD8 /* Advanced_BackgroundSubtraction.cpp */; };
@@ -113,6 +115,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				431303E2125508C4000EE8B2 /* libhighgui.dylib in Copy Frameworks */,
 				431C3AC41250022300494DD8 /* libfmodex.dylib in Copy Frameworks */,
 				431C3AC71250023E00494DD8 /* Ogre.framework in Copy Frameworks */,
 				431C3AC81250023E00494DD8 /* OgreBullet.framework in Copy Frameworks */,
@@ -163,6 +166,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		431303E0125508BE000EE8B2 /* libhighgui.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhighgui.dylib; path = ../../cing/libraries/mac/xcode/OpenCV/lib/libhighgui.dylib; sourceTree = SOURCE_ROOT; };
 		431C2FCF124FF73E00494DD8 /* CingConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CingConfig.xml; sourceTree = "<group>"; };
 		431C2FD0124FF73E00494DD8 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		431C2FD2124FF73E00494DD8 /* Advanced_BackgroundSubtraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Advanced_BackgroundSubtraction.cpp; sourceTree = "<group>"; };
@@ -1355,6 +1359,7 @@
 				431C3A62124FFEDC00494DD8 /* libOgreTerrain.dylib in Frameworks */,
 				431C3B0C125006A700494DD8 /* libOIS.a in Frameworks */,
 				431C3B16125006DF00494DD8 /* libptypes.a in Frameworks */,
+				431303E1125508BE000EE8B2 /* libhighgui.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2732,6 +2737,7 @@
 		431C3451124FFD8A00494DD8 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				431303E0125508BE000EE8B2 /* libhighgui.dylib */,
 				431C3B15125006DF00494DD8 /* libptypes.a */,
 				431C3B0B125006A700494DD8 /* libOIS.a */,
 				431C3B081250066600494DD8 /* libtinyxml.a */,
@@ -2931,7 +2937,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "install_name_tool -change ./libfmodex.dylib @loader_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"";
+			shellScript = "install_name_tool -change ./libfmodex.dylib @loader_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\n\ninstall_name_tool -change /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/tmp/OpenCV-2.1.0/lib/Release/libhighgui.dylib @loader_path/../Frameworks/libhighgui.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\n\ninstall_name_tool -change /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/tmp/OpenCV-2.1.0/lib/Release/libcxcore.dylib @loader_path/../Frameworks/libcxcore.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\n\ninstall_name_tool -change /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/tmp/OpenCV-2.1.0/lib/Release/libcxcore.dylib @loader_path/../Frameworks/libcxcore.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/libhighgui.dylib\"\n\ninstall_name_tool -change /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/tmp/OpenCV-2.1.0/lib/Release/libcv.dylib @loader_path/../Frameworks/libcv.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/libhighgui.dylib\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3105,6 +3111,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
@@ -3114,6 +3121,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Ogre3d/lib/Release\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/PTypes/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
 				OBJROOT = build;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -3179,6 +3187,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
@@ -3188,6 +3197,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Ogre3d/lib/Release\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/PTypes/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
 				OBJROOT = build;
 				OTHER_LDFLAGS = (
 					"-framework",

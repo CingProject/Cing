@@ -344,11 +344,11 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>43EA3EBA1250ECE200AD79D5</string>
+										<string>431304E012550ACD000EE8B2</string>
 										<key>history</key>
 										<array>
 											<string>43EA3EA81250ECA100AD79D5</string>
-											<string>43EA3EB91250ECE200AD79D5</string>
+											<string>431304D412550ABF000EE8B2</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -410,9 +410,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>43EA3EAC1250ECA100AD79D5</string>
+				<string>431304D612550ABF000EE8B2</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>43EA3EAD1250ECA100AD79D5</string>
+				<string>431304D712550ABF000EE8B2</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -531,7 +531,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>307293410.07761902</real>
+	<real>307563213.91649997</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -631,7 +631,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>431C3A92124FFF5B00494DD8</string>
-				<string>43EA3EAE1250ECA100AD79D5</string>
+				<string>431304D812550ABF000EE8B2</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -642,7 +642,7 @@
 			<key>WindowToolGUID</key>
 			<string>431C3A92124FFF5B00494DD8</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -673,8 +673,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {316, 198}}</string>
-											<string>{{316, 0}, {378, 198}}</string>
+											<string>{{0, 0}, {316, 201}}</string>
+											<string>{{316, 0}, {378, 201}}</string>
 										</array>
 									</dict>
 									<key>VerticalSplitView</key>
@@ -689,8 +689,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {694, 198}}</string>
-											<string>{{0, 198}, {694, 183}}</string>
+											<string>{{0, 0}, {694, 201}}</string>
+											<string>{{0, 201}, {694, 180}}</string>
 										</array>
 									</dict>
 								</dict>
@@ -723,7 +723,7 @@
 										<real>148</real>
 									</array>
 									<key>Frame</key>
-									<string>{{316, 0}, {378, 198}}</string>
+									<string>{{316, 0}, {378, 201}}</string>
 									<key>RubberWindowFrame</key>
 									<string>207 322 694 422 0 0 1440 878 </string>
 								</dict>
@@ -751,13 +751,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>43EA3EB11250ECCC00AD79D5</string>
+				<string>431304D912550ABF000EE8B2</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>43EA3EB21250ECCC00AD79D5</string>
-				<string>43EA3EB31250ECCC00AD79D5</string>
-				<string>43EA3EB41250ECCC00AD79D5</string>
-				<string>43EA3EB51250ECCC00AD79D5</string>
-				<string>43EA3EB61250ECCC00AD79D5</string>
+				<string>431304DA12550ABF000EE8B2</string>
+				<string>431304DB12550ABF000EE8B2</string>
+				<string>431304DC12550ABF000EE8B2</string>
+				<string>431304DD12550ABF000EE8B2</string>
+				<string>431304DE12550ABF000EE8B2</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -919,7 +919,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>43EA3EB71250ECCC00AD79D5</string>
+				<string>431304DF12550ABF000EE8B2</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

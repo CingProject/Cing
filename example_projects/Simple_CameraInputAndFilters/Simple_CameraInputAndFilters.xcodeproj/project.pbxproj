@@ -21,7 +21,6 @@
 		431C3A61124FFEDC00494DD8 /* libOgreRTShaderSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C345D124FFD8A00494DD8 /* libOgreRTShaderSystem.dylib */; };
 		431C3A62124FFEDC00494DD8 /* libOgreTerrain.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C345E124FFD8A00494DD8 /* libOgreTerrain.dylib */; };
 		431C3A63124FFEE400494DD8 /* libcv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C3469124FFD8A00494DD8 /* libcv.dylib */; };
-		431C3A64124FFEE400494DD8 /* libcvaux.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346A124FFD8A00494DD8 /* libcvaux.dylib */; };
 		431C3A65124FFEE400494DD8 /* libcxcore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346B124FFD8A00494DD8 /* libcxcore.dylib */; };
 		431C3A67124FFEE400494DD8 /* libml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346D124FFD8A00494DD8 /* libml.dylib */; };
 		431C3A68124FFEE400494DD8 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346E124FFD8A00494DD8 /* libfmodex.dylib */; };
@@ -37,9 +36,7 @@
 		431C3A8E124FFF0800494DD8 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C3478124FFD8A00494DD8 /* IOKit.framework */; };
 		431C3A94124FFF8500494DD8 /* libCing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C34AD124FFE1100494DD8 /* libCing.a */; };
 		431C3ABF1250022300494DD8 /* libcv.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 431C3469124FFD8A00494DD8 /* libcv.dylib */; };
-		431C3AC01250022300494DD8 /* libcvaux.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346A124FFD8A00494DD8 /* libcvaux.dylib */; };
 		431C3AC11250022300494DD8 /* libcxcore.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346B124FFD8A00494DD8 /* libcxcore.dylib */; };
-		431C3AC21250022300494DD8 /* libhighgui.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346C124FFD8A00494DD8 /* libhighgui.dylib */; };
 		431C3AC31250022300494DD8 /* libml.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346D124FFD8A00494DD8 /* libml.dylib */; };
 		431C3AC41250022300494DD8 /* libfmodex.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346E124FFD8A00494DD8 /* libfmodex.dylib */; };
 		431C3AC51250023600494DD8 /* CEGUIOgreRenderer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 431C3458124FFD8A00494DD8 /* CEGUIOgreRenderer.framework */; };
@@ -68,7 +65,9 @@
 		431C3B0F125006BD00494DD8 /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C3B081250066600494DD8 /* libtinyxml.a */; };
 		431C3B10125006BD00494DD8 /* libCCS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C3B031250064D00494DD8 /* libCCS.a */; };
 		431C3B16125006DF00494DD8 /* libptypes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C3B15125006DF00494DD8 /* libptypes.a */; };
-		436899A112502B4000EB4F68 /* libhighgui.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 431C346C124FFD8A00494DD8 /* libhighgui.dylib */; };
+		439E08841254DCF00069B752 /* libcvaux.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 439E06E71254742F0069B752 /* libcvaux.dylib */; };
+		439E0BCF125501150069B752 /* libhighgui.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 439E0BCE125501150069B752 /* libhighgui.dylib */; };
+		439E0BD11255012B0069B752 /* libhighgui.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 439E0BCE125501150069B752 /* libhighgui.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,15 +112,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				439E0BD11255012B0069B752 /* libhighgui.dylib in Copy Frameworks */,
+				439E08841254DCF00069B752 /* libcvaux.dylib in Copy Frameworks */,
 				431C3AC41250022300494DD8 /* libfmodex.dylib in Copy Frameworks */,
 				431C3AC71250023E00494DD8 /* Ogre.framework in Copy Frameworks */,
 				431C3AC81250023E00494DD8 /* OgreBullet.framework in Copy Frameworks */,
 				431C3AC51250023600494DD8 /* CEGUIOgreRenderer.framework in Copy Frameworks */,
 				431C3AC61250023600494DD8 /* CEGUIBase.framework in Copy Frameworks */,
 				431C3ABF1250022300494DD8 /* libcv.dylib in Copy Frameworks */,
-				431C3AC01250022300494DD8 /* libcvaux.dylib in Copy Frameworks */,
 				431C3AC11250022300494DD8 /* libcxcore.dylib in Copy Frameworks */,
-				431C3AC21250022300494DD8 /* libhighgui.dylib in Copy Frameworks */,
 				431C3AC31250022300494DD8 /* libml.dylib in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -1291,9 +1290,7 @@
 		431C3467124FFD8A00494DD8 /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = ../../cing/libraries/mac/xcode/Ogre3d/Frameworks/Ogre.framework; sourceTree = SOURCE_ROOT; };
 		431C3468124FFD8A00494DD8 /* OgreBullet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreBullet.framework; path = ../../cing/libraries/mac/xcode/OgreBullet/Frameworks/OgreBullet.framework; sourceTree = SOURCE_ROOT; };
 		431C3469124FFD8A00494DD8 /* libcv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcv.dylib; path = ../../cing/libraries/mac/xcode/OpenCV/lib/libcv.dylib; sourceTree = SOURCE_ROOT; };
-		431C346A124FFD8A00494DD8 /* libcvaux.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcvaux.dylib; path = ../../cing/libraries/mac/xcode/OpenCV/lib/libcvaux.dylib; sourceTree = SOURCE_ROOT; };
 		431C346B124FFD8A00494DD8 /* libcxcore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcxcore.dylib; path = ../../cing/libraries/mac/xcode/OpenCV/lib/libcxcore.dylib; sourceTree = SOURCE_ROOT; };
-		431C346C124FFD8A00494DD8 /* libhighgui.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhighgui.dylib; path = ../../cing/libraries/mac/xcode/OpenCV/lib/libhighgui.dylib; sourceTree = SOURCE_ROOT; };
 		431C346D124FFD8A00494DD8 /* libml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libml.dylib; path = ../../cing/libraries/mac/xcode/OpenCV/lib/libml.dylib; sourceTree = SOURCE_ROOT; };
 		431C346E124FFD8A00494DD8 /* libfmodex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodex.dylib; path = ../../cing/libraries/mac/xcode/Fmod/lib/libfmodex.dylib; sourceTree = SOURCE_ROOT; };
 		431C3470124FFD8A00494DD8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -1313,6 +1310,8 @@
 		431C3B081250066600494DD8 /* libtinyxml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtinyxml.a; path = ../../cing/libraries/mac/xcode/TinyXML/lib/libtinyxml.a; sourceTree = SOURCE_ROOT; };
 		431C3B0B125006A700494DD8 /* libOIS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOIS.a; path = ../../cing/libraries/mac/xcode/Ogre3d/lib/Release/libOIS.a; sourceTree = SOURCE_ROOT; };
 		431C3B15125006DF00494DD8 /* libptypes.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libptypes.a; path = ../../cing/libraries/mac/xcode/PTypes/lib/libptypes.a; sourceTree = SOURCE_ROOT; };
+		439E06E71254742F0069B752 /* libcvaux.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcvaux.dylib; path = ../../cing/libraries/mac/xcode/OpenCV/lib/libcvaux.dylib; sourceTree = SOURCE_ROOT; };
+		439E0BCE125501150069B752 /* libhighgui.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhighgui.dylib; path = ../../cing/libraries/mac/xcode/OpenCV/lib/libhighgui.dylib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1320,7 +1319,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				436899A112502B4000EB4F68 /* libhighgui.dylib in Frameworks */,
+				439E0BCF125501150069B752 /* libhighgui.dylib in Frameworks */,
 				431C3B0F125006BD00494DD8 /* libtinyxml.a in Frameworks */,
 				431C3B10125006BD00494DD8 /* libCCS.a in Frameworks */,
 				431C3A68124FFEE400494DD8 /* libfmodex.dylib in Frameworks */,
@@ -1338,7 +1337,6 @@
 				431C3A88124FFF0800494DD8 /* CoreData.framework in Frameworks */,
 				431C3A89124FFF0800494DD8 /* Foundation.framework in Frameworks */,
 				431C3A63124FFEE400494DD8 /* libcv.dylib in Frameworks */,
-				431C3A64124FFEE400494DD8 /* libcvaux.dylib in Frameworks */,
 				431C3A65124FFEE400494DD8 /* libcxcore.dylib in Frameworks */,
 				431C3A67124FFEE400494DD8 /* libml.dylib in Frameworks */,
 				431C3A5F124FFED800494DD8 /* RenderSystem_GL.dylib in Frameworks */,
@@ -2732,6 +2730,8 @@
 		431C3451124FFD8A00494DD8 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				439E0BCE125501150069B752 /* libhighgui.dylib */,
+				439E06E71254742F0069B752 /* libcvaux.dylib */,
 				431C3B15125006DF00494DD8 /* libptypes.a */,
 				431C3B0B125006A700494DD8 /* libOIS.a */,
 				431C3B081250066600494DD8 /* libtinyxml.a */,
@@ -2739,9 +2739,7 @@
 				431C345A124FFD8A00494DD8 /* Ogre */,
 				431C3452124FFD8A00494DD8 /* Cegui */,
 				431C3469124FFD8A00494DD8 /* libcv.dylib */,
-				431C346A124FFD8A00494DD8 /* libcvaux.dylib */,
 				431C346B124FFD8A00494DD8 /* libcxcore.dylib */,
-				431C346C124FFD8A00494DD8 /* libhighgui.dylib */,
 				431C346D124FFD8A00494DD8 /* libml.dylib */,
 				431C346E124FFD8A00494DD8 /* libfmodex.dylib */,
 				431C3459124FFD8A00494DD8 /* Cg.framework */,
@@ -2931,7 +2929,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "install_name_tool -change ./libfmodex.dylib @loader_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"";
+			shellScript = "install_name_tool -change ./libfmodex.dylib @loader_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\n\ninstall_name_tool -change /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/tmp/OpenCV-2.1.0/lib/Release/libhighgui.dylib @loader_path/../Frameworks/libhighgui.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\n\ninstall_name_tool -change /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/tmp/OpenCV-2.1.0/lib/Release/libcxcore.dylib @loader_path/../Frameworks/libcxcore.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\n\ninstall_name_tool -change /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/tmp/OpenCV-2.1.0/lib/Release/libcxcore.dylib @loader_path/../Frameworks/libcxcore.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/libhighgui.dylib\"\n\ninstall_name_tool -change /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Dependencies/CingDependencies/trunk/mac/tmp/OpenCV-2.1.0/lib/Release/libcv.dylib @loader_path/../Frameworks/libcv.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/libhighgui.dylib\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3105,8 +3103,13 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_11)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_11 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Fmod/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OgreCCS/lib\"";
@@ -3114,6 +3117,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Ogre3d/lib/Release\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/PTypes/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
 				OBJROOT = build;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -3179,8 +3183,13 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_11)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Ogre3d/Frameworks\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_11 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Fmod/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OgreCCS/lib\"";
@@ -3188,6 +3197,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/Ogre3d/lib/Release\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/PTypes/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(SRCROOT)/../../cing/libraries/mac/xcode/OpenCV/lib\"";
 				OBJROOT = build;
 				OTHER_LDFLAGS = (
 					"-framework",

@@ -1,5 +1,25 @@
 // !$*UTF8*$!
 {
+	4313045B125509DE000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_LoadingAndDrawingInImages.cpp */;
+		name = "Simple_LoadingAndDrawingInImages.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 586;
+		vrLoc = 0;
+	};
+	4313045C125509DE000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_LoadingAndDrawingInImages.cpp */;
+		name = "Simple_LoadingAndDrawingInImages.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 586;
+		vrLoc = 0;
+	};
 	431C2FC3124FF55D00494DD8 /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
@@ -65,6 +85,22 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					822.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
 			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
 				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
@@ -87,18 +123,18 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307243953;
-			PBXWorkspaceStateSaveDate = 307243953;
+			PBXPerProjectTemplateStateSaveDate = 307562962;
+			PBXWorkspaceStateSaveDate = 307562962;
 		};
 		perUserProjectItems = {
-			434D8F2B1250199600018B6D /* PlistBookmark */ = 434D8F2B1250199600018B6D /* PlistBookmark */;
+			4313045B125509DE000EE8B2 /* PBXTextBookmark */ = 4313045B125509DE000EE8B2 /* PBXTextBookmark */;
+			4313045C125509DE000EE8B2 /* PBXTextBookmark */ = 4313045C125509DE000EE8B2 /* PBXTextBookmark */;
 			434D8F2C1250199600018B6D /* PBXTextBookmark */ = 434D8F2C1250199600018B6D /* PBXTextBookmark */;
 			434D8F2E1250199600018B6D /* PlistBookmark */ = 434D8F2E1250199600018B6D /* PlistBookmark */;
 			434D8F2F1250199600018B6D /* PBXBookmark */ = 434D8F2F1250199600018B6D /* PBXBookmark */;
 			434D8F301250199600018B6D /* PBXTextBookmark */ = 434D8F301250199600018B6D /* PBXTextBookmark */;
 			43689A0112502BC900EB4F68 /* PBXBookmark */ = 43689A0112502BC900EB4F68 /* PBXBookmark */;
-			43689A0212502BC900EB4F68 /* PBXBookmark */ = 43689A0212502BC900EB4F68 /* PBXBookmark */;
-			43689A0E12502BCE00EB4F68 /* PlistBookmark */ = 43689A0E12502BCE00EB4F68 /* PlistBookmark */;
+			439E06B2125473D60069B752 /* PlistBookmark */ = 439E06B2125473D60069B752 /* PlistBookmark */;
 		};
 		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
 		userBuildSettings = {
@@ -124,9 +160,9 @@
 	};
 	431C2FD2124FF73E00494DD8 /* Simple_LoadingAndDrawingInImages.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 644}}";
-			sepNavSelRange = "{99, 0}";
-			sepNavVisRange = "{0, 730}";
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 630}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 586}";
 		};
 	};
 	431C349E124FFDC200494DD8 /* Simple_LoadingAndDrawingInImages */ = {
@@ -158,17 +194,6 @@
 		name = Simple_BasicApplication;
 		sourceDirectories = (
 		);
-	};
-	434D8F2B1250199600018B6D /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_LoadingAndDrawingInImages/Info.plist;
-		rLen = 0;
-		rLoc = 2147483647;
 	};
 	434D8F2C1250199600018B6D /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -209,11 +234,7 @@
 		isa = PBXBookmark;
 		fRef = 434D8F071250196E00018B6D /* muybridge.jpg */;
 	};
-	43689A0212502BC900EB4F68 /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 434D8F071250196E00018B6D /* muybridge.jpg */;
-	};
-	43689A0E12502BCE00EB4F68 /* PlistBookmark */ = {
+	439E06B2125473D60069B752 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
 		fallbackIsa = PBXBookmark;

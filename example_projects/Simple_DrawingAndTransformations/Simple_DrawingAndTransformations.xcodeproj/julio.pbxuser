@@ -1,5 +1,46 @@
 // !$*UTF8*$!
 {
+	4313043812550950000EE8B2 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_DrawingAndTransformations/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	4313043A12550950000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_DrawingAndTransformations.cpp */;
+		name = "Simple_DrawingAndTransformations.cpp: 5";
+		rLen = 0;
+		rLoc = 99;
+		rType = 0;
+		vrLen = 667;
+		vrLoc = 0;
+	};
+	43130440125509C1000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_DrawingAndTransformations.cpp */;
+		name = "Simple_DrawingAndTransformations.cpp: 5";
+		rLen = 0;
+		rLoc = 99;
+		rType = 0;
+		vrLen = 667;
+		vrLoc = 0;
+	};
+	43130441125509C1000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Simple_DrawingAndTransformations.cpp */;
+		name = "Simple_DrawingAndTransformations.cpp: 5";
+		rLen = 0;
+		rLoc = 99;
+		rType = 0;
+		vrLen = 667;
+		vrLoc = 0;
+	};
 	431C2FC3124FF55D00494DD8 /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
@@ -65,6 +106,22 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					822.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
 			PBXConfiguration.PBXFileTableDataSource3.XCSCMDataSource = {
 				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
@@ -111,12 +168,15 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307243919;
-			PBXWorkspaceStateSaveDate = 307243919;
+			PBXPerProjectTemplateStateSaveDate = 307562932;
+			PBXWorkspaceStateSaveDate = 307562932;
 		};
 		perUserProjectItems = {
-			436899C212502B6D00EB4F68 /* PlistBookmark */ = 436899C212502B6D00EB4F68 /* PlistBookmark */;
-			436899DD12502B9400EB4F68 /* PlistBookmark */ = 436899DD12502B9400EB4F68 /* PlistBookmark */;
+			4313043812550950000EE8B2 /* PlistBookmark */ = 4313043812550950000EE8B2 /* PlistBookmark */;
+			4313043A12550950000EE8B2 /* PBXTextBookmark */ = 4313043A12550950000EE8B2 /* PBXTextBookmark */;
+			43130440125509C1000EE8B2 /* PBXTextBookmark */ = 43130440125509C1000EE8B2 /* PBXTextBookmark */;
+			43130441125509C1000EE8B2 /* PBXTextBookmark */ = 43130441125509C1000EE8B2 /* PBXTextBookmark */;
+			439E069B125473B90069B752 /* PlistBookmark */ = 439E069B125473B90069B752 /* PlistBookmark */;
 		};
 		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
 		userBuildSettings = {
@@ -135,9 +195,9 @@
 	};
 	431C2FD2124FF73E00494DD8 /* Simple_DrawingAndTransformations.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 644}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 742}}";
 			sepNavSelRange = "{99, 0}";
-			sepNavVisRange = "{0, 730}";
+			sepNavVisRange = "{0, 667}";
 		};
 	};
 	431C349E124FFDC200494DD8 /* Simple_DrawingAndTransformations */ = {
@@ -170,18 +230,7 @@
 		sourceDirectories = (
 		);
 	};
-	436899C212502B6D00EB4F68 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_DrawingAndTransformations/Info.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	436899DD12502B9400EB4F68 /* PlistBookmark */ = {
+	439E069B125473B90069B752 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
 		fallbackIsa = PBXBookmark;

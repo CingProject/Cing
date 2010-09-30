@@ -3,6 +3,10 @@ CREATE_APPLICATION( "Cing" );
 
 /*   
  * This example shows how to use shadows in Cing (Stencil Shadows in this case)
+ * keys: 
+ *	- o: shadows on/off
+ *	- 1: set light attenuation
+ *	- 2: remove light attenuation (light never ends)
  */
 
 PointLight			light;
@@ -20,7 +24,7 @@ void setup()
 
 	// Setup lighting
 	ambientLight(10);
-	light.init(255, 255, 255, width/2, height/2 + 100, 0);
+	light.init(255, 255, 255, width/2 + 100, height/2 + 100, 100);
 	
 	// Uncomment this line to see the position of the light
 	//light.drawDebug();

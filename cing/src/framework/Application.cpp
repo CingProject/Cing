@@ -41,6 +41,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/CommonUserAPI.h"
 
 // Extern
+#undef nil
 #include "PTypes/include/pasync.h"
 
 

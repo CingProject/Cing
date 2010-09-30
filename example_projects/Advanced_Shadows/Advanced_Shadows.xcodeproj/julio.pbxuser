@@ -1,0 +1,293 @@
+// !$*UTF8*$!
+{
+	431304B212550A7D000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Shadows.cpp */;
+		name = "Advanced_Shadows.cpp: 9";
+		rLen = 0;
+		rLoc = 249;
+		rType = 0;
+		vrLen = 662;
+		vrLoc = 963;
+	};
+	431304BE12550A8D000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Shadows.cpp */;
+		name = "Advanced_Shadows.cpp: 9";
+		rLen = 0;
+		rLoc = 249;
+		rType = 0;
+		vrLen = 662;
+		vrLoc = 963;
+	};
+	431C2FC3124FF55D00494DD8 /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
+		activeSDKPreference = macosx10.5;
+		activeTarget = 431C349E124FFDC200494DD8 /* Advanced_Shadows */;
+		addToTargets = (
+			431C349E124FFDC200494DD8 /* Advanced_Shadows */,
+		);
+		codeSenseManager = 431C2FC8124FF55D00494DD8 /* Code sense */;
+		executables = (
+			431C34A0124FFDC200494DD8 /* Simple_BasicApplication */,
+		);
+		ignoreBreakpointsInProjectsDict = {
+		};
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXErrorsWarningsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXErrorsWarningsDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					300,
+					45.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXErrorsWarningsDataSource_TypeID,
+					PBXErrorsWarningsDataSource_MessageID,
+					PBXErrorsWarningsDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					57.58349609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					882,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					822.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					842,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 307563115;
+			PBXWorkspaceStateSaveDate = 307563115;
+		};
+		perUserProjectItems = {
+			431304B212550A7D000EE8B2 /* PBXTextBookmark */ = 431304B212550A7D000EE8B2 /* PBXTextBookmark */;
+			431304BE12550A8D000EE8B2 /* PBXTextBookmark */ = 431304BE12550A8D000EE8B2 /* PBXTextBookmark */;
+			434905071254235C004F3CC1 /* PBXTextBookmark */ = 434905071254235C004F3CC1 /* PBXTextBookmark */;
+			434905091254235C004F3CC1 /* PBXTextBookmark */ = 434905091254235C004F3CC1 /* PBXTextBookmark */;
+			4349050C1254235C004F3CC1 /* PBXTextBookmark */ = 4349050C1254235C004F3CC1 /* PBXTextBookmark */;
+			4349050D1254235C004F3CC1 /* PBXTextBookmark */ = 4349050D1254235C004F3CC1 /* PBXTextBookmark */;
+			4349050F1254235C004F3CC1 /* PBXTextBookmark */ = 4349050F1254235C004F3CC1 /* PBXTextBookmark */;
+			43ED70A71253F88C00EC45D9 /* PlistBookmark */ = 43ED70A71253F88C00EC45D9 /* PlistBookmark */;
+			43ED70A91253F88C00EC45D9 /* PlistBookmark */ = 43ED70A91253F88C00EC45D9 /* PlistBookmark */;
+		};
+		sourceControlManager = 431C2FC7124FF55D00494DD8 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	431C2FC7124FF55D00494DD8 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	431C2FC8124FF55D00494DD8 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	431C2FD2124FF73E00494DD8 /* Advanced_Shadows.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 1400}}";
+			sepNavSelRange = "{249, 0}";
+			sepNavVisRange = "{963, 662}";
+			sepNavWindowFrame = "{{15, -1}, {1232, 874}}";
+		};
+	};
+	431C349E124FFDC200494DD8 /* Advanced_Shadows */ = {
+		activeExec = 0;
+		executables = (
+			431C34A0124FFDC200494DD8 /* Simple_BasicApplication */,
+		);
+	};
+	431C34A0124FFDC200494DD8 /* Simple_BasicApplication */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = Simple_BasicApplication;
+		sourceDirectories = (
+		);
+	};
+	434905071254235C004F3CC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 434905081254235C004F3CC1 /* BaseLight.h */;
+		name = "BaseLight.h: 40";
+		rLen = 0;
+		rLoc = 1132;
+		rType = 0;
+		vrLen = 1113;
+		vrLoc = 991;
+	};
+	434905081254235C004F3CC1 /* BaseLight.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = BaseLight.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/graphics/BaseLight.h;
+		sourceTree = "<absolute>";
+	};
+	434905091254235C004F3CC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4349050A1254235C004F3CC1 /* BaseLight.cpp */;
+		name = "BaseLight.cpp: 103";
+		rLen = 0;
+		rLoc = 3569;
+		rType = 0;
+		vrLen = 1541;
+		vrLoc = 2477;
+	};
+	4349050A1254235C004F3CC1 /* BaseLight.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = BaseLight.cpp;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/graphics/BaseLight.cpp;
+		sourceTree = "<absolute>";
+	};
+	4349050C1254235C004F3CC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Shadows.cpp */;
+		name = "Advanced_Shadows.cpp: 23";
+		rLen = 4;
+		rLoc = 524;
+		rType = 0;
+		vrLen = 982;
+		vrLoc = 275;
+	};
+	4349050D1254235C004F3CC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4349050E1254235C004F3CC1 /* BaseLight.h */;
+		name = "BaseLight.h: 40";
+		rLen = 0;
+		rLoc = 1132;
+		rType = 0;
+		vrLen = 1113;
+		vrLoc = 991;
+	};
+	4349050E1254235C004F3CC1 /* BaseLight.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = BaseLight.h;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/graphics/BaseLight.h;
+		sourceTree = "<absolute>";
+	};
+	4349050F1254235C004F3CC1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 434905101254235C004F3CC1 /* BaseLight.cpp */;
+		name = "BaseLight.cpp: 103";
+		rLen = 0;
+		rLoc = 3569;
+		rType = 0;
+		vrLen = 1541;
+		vrLoc = 2477;
+	};
+	434905101254235C004F3CC1 /* BaseLight.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = BaseLight.cpp;
+		path = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/cing/src/graphics/BaseLight.cpp;
+		sourceTree = "<absolute>";
+	};
+	43ED70A71253F88C00EC45D9 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Advanced_Shadows/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	43ED70A91253F88C00EC45D9 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 431C3448124FFB3800494DD8 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Advanced_Shadows/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+}

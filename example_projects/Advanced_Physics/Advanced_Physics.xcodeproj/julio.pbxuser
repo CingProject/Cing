@@ -1,5 +1,25 @@
 // !$*UTF8*$!
 {
+	431304C312550A9A000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
+		name = "Advanced_Physics.cpp: 36";
+		rLen = 0;
+		rLoc = 1053;
+		rType = 0;
+		vrLen = 975;
+		vrLoc = 782;
+	};
+	431304C412550A9A000EE8B2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
+		name = "Advanced_Physics.cpp: 36";
+		rLen = 0;
+		rLoc = 1053;
+		rType = 0;
+		vrLen = 975;
+		vrLoc = 782;
+	};
 	431C2FC3124FF55D00494DD8 /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 431C34A0124FFDC200494DD8 /* Simple_BasicApplication */;
@@ -65,6 +85,22 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					822.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
 			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
 				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
@@ -87,12 +123,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 307337821;
-			PBXWorkspaceStateSaveDate = 307337821;
+			PBXPerProjectTemplateStateSaveDate = 307563151;
+			PBXWorkspaceStateSaveDate = 307563151;
 		};
 		perUserProjectItems = {
-			4351F8AA1251AC370021CB40 /* PBXTextBookmark */ = 4351F8AA1251AC370021CB40 /* PBXTextBookmark */;
-			4351F8AB1251AC370021CB40 /* PBXTextBookmark */ = 4351F8AB1251AC370021CB40 /* PBXTextBookmark */;
+			431304C312550A9A000EE8B2 /* PBXTextBookmark */ = 431304C312550A9A000EE8B2 /* PBXTextBookmark */;
+			431304C412550A9A000EE8B2 /* PBXTextBookmark */ = 431304C412550A9A000EE8B2 /* PBXTextBookmark */;
 			4353E62D12516C0A002C26B7 /* PBXTextBookmark */ = 4353E62D12516C0A002C26B7 /* PBXTextBookmark */;
 			4353E63112516C0A002C26B7 /* PBXTextBookmark */ = 4353E63112516C0A002C26B7 /* PBXTextBookmark */;
 			43EA3EC61250ED0500AD79D5 /* PlistBookmark */ = 43EA3EC61250ED0500AD79D5 /* PlistBookmark */;
@@ -116,9 +152,10 @@
 	};
 	431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 2366}}";
-			sepNavSelRange = "{3078, 0}";
-			sepNavVisRange = "{2890, 944}";
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 2170}}";
+			sepNavSelRange = "{1053, 0}";
+			sepNavVisRange = "{782, 975}";
+			sepNavWindowFrame = "{{15, -1}, {1232, 874}}";
 		};
 	};
 	431C349E124FFDC200494DD8 /* Advanced_Physics */ = {
@@ -150,26 +187,6 @@
 		name = Simple_BasicApplication;
 		sourceDirectories = (
 		);
-	};
-	4351F8AA1251AC370021CB40 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
-		name = "Advanced_Physics.cpp: 128";
-		rLen = 0;
-		rLoc = 3078;
-		rType = 0;
-		vrLen = 945;
-		vrLoc = 2890;
-	};
-	4351F8AB1251AC370021CB40 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
-		name = "Advanced_Physics.cpp: 128";
-		rLen = 0;
-		rLoc = 3078;
-		rType = 0;
-		vrLen = 944;
-		vrLoc = 2890;
 	};
 	4353E62D12516C0A002C26B7 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -232,7 +249,7 @@
 		fRef = 431C2FD2124FF73E00494DD8 /* Advanced_Physics.cpp */;
 		name = "Advanced_Physics.cpp: 61";
 		rLen = 0;
-		rLoc = 1782;
+		rLoc = 1762;
 		rType = 0;
 		vrLen = 1100;
 		vrLoc = 472;

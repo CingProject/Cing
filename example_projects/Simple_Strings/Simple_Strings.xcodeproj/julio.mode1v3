@@ -284,12 +284,15 @@
 						<dict>
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
-								<string>1C37FBAC04509CD000000102</string>
+								<string>431C2FC1124FF55D00494DD8</string>
+								<string>431C2FD1124FF73E00494DD8</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>2</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -341,17 +344,16 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>43689C6B12504BFD00EB4F68</string>
+										<string>4313048F12550A31000EE8B2</string>
 										<key>history</key>
 										<array>
 											<string>43689ACA12502F2C00EB4F68</string>
-											<string>43689C0112503A2F00EB4F68</string>
+											<string>4313048E12550A31000EE8B2</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>43689AD212502F2C00EB4F68</string>
 											<string>43689AD712502F2C00EB4F68</string>
-											<string>43689BFA12503A2F00EB4F68</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -409,9 +411,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>43689A9812502E4800EB4F68</string>
+				<string>4313049012550A31000EE8B2</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>43689A9912502E4800EB4F68</string>
+				<string>4313049112550A31000EE8B2</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -530,7 +532,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>307252221.95817697</real>
+	<real>307563045.79882199</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -545,13 +547,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C530D57069F1CE1000CFCEE</string>
-		<string>43689ADE12502F2C00EB4F68</string>
-		<string>43689ADF12502F2C00EB4F68</string>
-		<string>43689ADB12502F2C00EB4F68</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>431C3A92124FFF5B00494DD8</string>
 		<string>/Users/julio/Desktop/Julio/InstalacionesInteractivas/Cing/MacOSVersion/Cing/Cing/trunk/example_projects/Simple_Strings/Simple_Strings.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

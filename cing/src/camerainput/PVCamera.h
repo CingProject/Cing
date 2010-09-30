@@ -37,6 +37,7 @@
 #include "OpenCV/cxtypes.h"
 
 // PTypes
+#undef nil
 #include "PTypes/include/pasync.h"
 
 namespace Cing

@@ -28,6 +28,7 @@
 				43A09A231251544900B7DE8C /* PBXTargetDependency */,
 				43A09A251251544900B7DE8C /* PBXTargetDependency */,
 				43A09A271251544900B7DE8C /* PBXTargetDependency */,
+				43ED709D1253F82B00EC45D9 /* PBXTargetDependency */,
 			);
 			name = CingSamples;
 			productName = CingSamples;
@@ -53,197 +54,211 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099781251533400B7DE8C /* Simple_CameraInputAndFilters.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_CameraInputAndFilters.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_CameraInputAndFilters;
 		};
 		43A0998B1251534400B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099831251534400B7DE8C /* Simple_DrawingAndTransformations.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_DrawingAndTransformations.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_DrawingAndTransformations;
 		};
 		43A099971251539F00B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A0998F1251539F00B7DE8C /* Simple_Fonts.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_Fonts.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_Fonts;
 		};
 		43A099A1125153A500B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A09999125153A400B7DE8C /* Simple_LoadingAndDrawingInImages.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_LoadingAndDrawingInImages.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_LoadingAndDrawingInImages;
 		};
 		43A099AC125153A900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099A3125153A800B7DE8C /* Simple_LoadingXML.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_LoadingXML.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_LoadingXML;
 		};
 		43A099B6125153B000B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099AE125153AF00B7DE8C /* Simple_MicInput.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_MicInput.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_MicInput;
 		};
 		43A099C0125153B600B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099B8125153B600B7DE8C /* Simple_PlayingSounds.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_PlayingSounds.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_PlayingSounds;
 		};
 		43A099CB125153BC00B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099C2125153BC00B7DE8C /* Simple_PlayingVideos.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_PlayingVideos.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_PlayingVideos;
 		};
 		43A099D6125153C400B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099CD125153C400B7DE8C /* Simple_Strings.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Simple_Strings.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Simple_Strings;
 		};
 		43A099E0125153CD00B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099D8125153CD00B7DE8C /* Advanced_3dDrawing.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Advanced_3dDrawing.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Advanced_3dDrawing;
 		};
 		43A099EA125153D300B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099E2125153D300B7DE8C /* Advanced_BackgroundSubtraction.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Advanced_BackgroundSubtraction.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Advanced_BackgroundSubtraction;
 		};
 		43A099F4125153D800B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099EC125153D700B7DE8C /* Advanced_BlobDetection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Advanced_BlobDetection.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Advanced_BlobDetection;
 		};
 		43A099FE125153DC00B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099F6125153DC00B7DE8C /* Advanced_Physics.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Advanced_Physics.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Advanced_Physics;
 		};
 		43A09A08125153E100B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A09A00125153E100B7DE8C /* Advanced_SceneGraph.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 431C349F124FFDC200494DD8 /* Advanced_SceneGraph.app */;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
 			remoteInfo = Advanced_SceneGraph;
 		};
 		43A09A0C1251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099E2125153D300B7DE8C /* Advanced_BackgroundSubtraction.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Advanced_BackgroundSubtraction */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Advanced_BackgroundSubtraction;
 		};
 		43A09A0E1251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099AE125153AF00B7DE8C /* Simple_MicInput.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_MicInput */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_MicInput;
 		};
 		43A09A101251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099EC125153D700B7DE8C /* Advanced_BlobDetection.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Advanced_BlobDetection */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Advanced_BlobDetection;
 		};
 		43A09A121251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099C2125153BC00B7DE8C /* Simple_PlayingVideos.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_PlayingVideos */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_PlayingVideos;
 		};
 		43A09A141251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099B8125153B600B7DE8C /* Simple_PlayingSounds.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_PlayingSounds */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_PlayingSounds;
 		};
 		43A09A161251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099F6125153DC00B7DE8C /* Advanced_Physics.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Advanced_Physics */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Advanced_Physics;
 		};
 		43A09A181251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099831251534400B7DE8C /* Simple_DrawingAndTransformations.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_DrawingAndTransformations */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_DrawingAndTransformations;
 		};
 		43A09A1A1251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099CD125153C400B7DE8C /* Simple_Strings.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_Strings */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_Strings;
 		};
 		43A09A1C1251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099781251533400B7DE8C /* Simple_CameraInputAndFilters.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_CameraInputAndFilters */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_CameraInputAndFilters;
 		};
 		43A09A1E1251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A09A00125153E100B7DE8C /* Advanced_SceneGraph.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Advanced_SceneGraph */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Advanced_SceneGraph;
 		};
 		43A09A201251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A0998F1251539F00B7DE8C /* Simple_Fonts.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_Fonts */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_Fonts;
 		};
 		43A09A221251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A09999125153A400B7DE8C /* Simple_LoadingAndDrawingInImages.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_LoadingAndDrawingInImages */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_LoadingAndDrawingInImages;
 		};
 		43A09A241251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099A3125153A800B7DE8C /* Simple_LoadingXML.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Simple_LoadingXML */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Simple_LoadingXML;
 		};
 		43A09A261251544900B7DE8C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43A099D8125153CD00B7DE8C /* Advanced_3dDrawing.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 431C349E124FFDC200494DD8 /* Advanced_3dDrawing */;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
 			remoteInfo = Advanced_3dDrawing;
+		};
+		43ED70991253F81200EC45D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43ED70911253F81200EC45D9 /* Advanced_Shadows.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 431C349F124FFDC200494DD8;
+			remoteInfo = Advanced_Shadows;
+		};
+		43ED709C1253F82B00EC45D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43ED70911253F81200EC45D9 /* Advanced_Shadows.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 431C349E124FFDC200494DD8;
+			remoteInfo = Advanced_Shadows;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -263,6 +278,7 @@
 		43A099EC125153D700B7DE8C /* Advanced_BlobDetection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Advanced_BlobDetection.xcodeproj; path = example_projects/Advanced_BlobDetection/Advanced_BlobDetection.xcodeproj; sourceTree = "<group>"; };
 		43A099F6125153DC00B7DE8C /* Advanced_Physics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Advanced_Physics.xcodeproj; path = example_projects/Advanced_Physics/Advanced_Physics.xcodeproj; sourceTree = "<group>"; };
 		43A09A00125153E100B7DE8C /* Advanced_SceneGraph.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Advanced_SceneGraph.xcodeproj; path = example_projects/Advanced_SceneGraph/Advanced_SceneGraph.xcodeproj; sourceTree = "<group>"; };
+		43ED70911253F81200EC45D9 /* Advanced_Shadows.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Advanced_Shadows.xcodeproj; path = example_projects/Advanced_Shadows/Advanced_Shadows.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -386,6 +402,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		43ED70921253F81200EC45D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43ED709A1253F81200EC45D9 /* Advanced_Shadows.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A909007412370A2B0040FA33 = {
 			isa = PBXGroup;
 			children = (
@@ -401,6 +425,7 @@
 				43A099CD125153C400B7DE8C /* Simple_Strings.xcodeproj */,
 				43A099D8125153CD00B7DE8C /* Advanced_3dDrawing.xcodeproj */,
 				43A09A00125153E100B7DE8C /* Advanced_SceneGraph.xcodeproj */,
+				43ED70911253F81200EC45D9 /* Advanced_Shadows.xcodeproj */,
 				43A099F6125153DC00B7DE8C /* Advanced_Physics.xcodeproj */,
 				43A099E2125153D300B7DE8C /* Advanced_BackgroundSubtraction.xcodeproj */,
 				43A099EC125153D700B7DE8C /* Advanced_BlobDetection.xcodeproj */,
@@ -444,6 +469,10 @@
 				{
 					ProductGroup = 43A09A01125153E100B7DE8C /* Products */;
 					ProjectRef = 43A09A00125153E100B7DE8C /* Advanced_SceneGraph.xcodeproj */;
+				},
+				{
+					ProductGroup = 43ED70921253F81200EC45D9 /* Products */;
+					ProjectRef = 43ED70911253F81200EC45D9 /* Advanced_Shadows.xcodeproj */;
 				},
 				{
 					ProductGroup = 434D8ECC125017A600018B6D /* Products */;
@@ -599,6 +628,13 @@
 			remoteRef = 43A09A08125153E100B7DE8C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		43ED709A1253F81200EC45D9 /* Advanced_Shadows.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Advanced_Shadows.app;
+			remoteRef = 43ED70991253F81200EC45D9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXTargetDependency section */
@@ -676,6 +712,11 @@
 			isa = PBXTargetDependency;
 			name = Advanced_3dDrawing;
 			targetProxy = 43A09A261251544900B7DE8C /* PBXContainerItemProxy */;
+		};
+		43ED709D1253F82B00EC45D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Advanced_Shadows;
+			targetProxy = 43ED709C1253F82B00EC45D9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

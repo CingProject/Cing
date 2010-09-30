@@ -33,8 +33,7 @@ PointLight			light;					// Lights in the scene
 void setup()
 {
 	size(1024,768);
-	//setFrameRate(60);
-
+	
 	// Open GL coordinate system (Y axis grows up and 0,0 is at the center of the screen)
 	applyCoordinateSystemTransform(OPENGL3D);
 
@@ -80,7 +79,7 @@ void setup()
 
 	// Init lights and set the ambient light
 	ambientLight( 70 );
-	light.init( 100, 100, 100, 0, 0, 200 );	
+	light.init( 100, 100, 100, 0, 2000, 500 );	
 
 	// Activate default 3d camera controler (mouse+keys)
 	enableDefault3DCameraControl();

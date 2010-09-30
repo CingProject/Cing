@@ -16,7 +16,7 @@ void setup()
 	size ( 720, 480 );	
 
 	// Local file
-	mediaPlayer.load( "CountDown.wmv" );
+	mediaPlayer.load( "CountDown.mov" );
 
 	// Load video streaming through http
 	// NOTE: Windows only for now...
