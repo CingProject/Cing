@@ -101,6 +101,9 @@ namespace Cing
 
 		void			setTransparency	( float alpha );
 		void			setRenderQueue	( Ogre::RenderQueueGroupID group ); 
+		bool			hasAlpha		() const;
+		void			enableDepthWrite( bool value );
+		void			enableDepthCheck( bool value );
 
 
 
@@ -110,6 +113,7 @@ namespace Cing
 		void	generateUniqueNames	();
 		void	set2dRendering			();
 		void	set3dRendering			();
+		void	configureSceneBlending	();
 		void	setbackgroundRendering	();
 		void	applyTransformations	( float x, float y, float z, float imgWidth, float imgHeight );
 		void	applyTransformations2D	( float x, float y, float imgWidth, float imgHeight );
@@ -127,6 +131,8 @@ namespace Cing
 		Ogre::ManualObject*			m_quad;							///< Ogre manual object that contains the geometry (vertex) of the quad
 		GraphicsType				m_format;						///< Format of the image
 		Ogre::uint32				m_3dQueryFlags;					///< Query flags of ogre when the object is being renderd in 3d		
+		float						m_alpha;						///< Transparency of the object. Range 0...255.
+		
 
 		float						m_xScale, m_yScale, m_zScale;	///< Scale of the node
 

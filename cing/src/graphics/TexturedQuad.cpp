@@ -119,6 +119,7 @@ namespace Cing
 		m_textHeight    = (float)textureHeight;	
 		m_format		= format;
 		m_render2D  = false;
+		m_alpha			= 255;
 
 		// Generate unique names for texture, material and ogre manual object
 		generateUniqueNames();
@@ -166,7 +167,7 @@ namespace Cing
 		material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 		material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
-		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( false );
+		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
 		material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
 //		material->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
 
@@ -220,6 +221,9 @@ namespace Cing
 
 		// Register in graphics manager so that it is marked as invisible every frame
 		GraphicsManager::getSingleton().addDrawableImage( this );
+
+		// By default: 3d render
+		set3dRendering();
 
 		// The class is now initialized
 		m_bIsValid = true;
@@ -420,6 +424,9 @@ namespace Cing
 		if ( m_render2D )
 			set3dRendering();
 
+		// Set transparency settings
+		configureSceneBlending();
+
 		// Apply current transformations to the pivot node
 		applyTransformations(x, y, z, width, height);
 
@@ -458,6 +465,8 @@ namespace Cing
 		if ( m_render2D )
 			set3dRendering();
 
+		// Set transparency settings
+		configureSceneBlending();
 
 		// Find center
 		float xCenter = (x1 + x2 + x3 + x4)/4.0f;
@@ -517,6 +526,9 @@ namespace Cing
 		if ( !m_render2D )
 			set2dRendering();
 
+		// Set transparency settings
+		configureSceneBlending();
+
 		// Apply transformations to the pivot node
  		applyTransformations2D(x, y, imgWidth, imgHeight);
 
@@ -549,6 +561,9 @@ namespace Cing
 		// If the object was set to render in 3d -> set it to render in 2d
 		if ( !m_render2D )
 			set2dRendering();
+
+		// Set transparency settings
+		configureSceneBlending();
 
 		// Apply current transformations to the pivot node
 		applyTransformations2D(0, 0, 1, 1);
@@ -628,6 +643,9 @@ namespace Cing
 	 */
 	void TexturedQuad::setTransparency( float alpha )
 	{
+		// Store alpha value
+		m_alpha = alpha;
+
 		// Move into 0..1 range
 		float alphaNormalized = map( alpha, 0, 255, 0.0f, 1.0f );
 
@@ -652,6 +670,25 @@ namespace Cing
 	{
 		if ( isValid() )
 			m_quad->setRenderQueueGroup( group );
+	}
+
+
+	bool TexturedQuad::hasAlpha() const
+	{
+		return Ogre::PixelUtil::hasAlpha( (Ogre::PixelFormat)m_format );
+	}
+
+
+	void TexturedQuad::enableDepthWrite( bool value )
+	{
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( value );
+	}
+	
+	void TexturedQuad::enableDepthCheck( bool value )
+	{
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( value );
 	}
 
 	/**
@@ -836,6 +873,7 @@ namespace Cing
 		m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( true );
+		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
 		m_quad->setUseIdentityProjection( false );
 		m_quad->setUseIdentityView( false );
 		m_quad->setQueryFlags( m_3dQueryFlags );
@@ -844,7 +882,31 @@ namespace Cing
 		m_render2D = false;
 	}
 
+	/**
+	 * @internal
+	 * @brief Configures render settings based on alpha of the image or the quad 
+	 */
+	void TexturedQuad::configureSceneBlending()
+	{
+		// If the image has alpha channel
+		if ( hasAlpha() || (m_alpha < 255) )
+		{
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
+			enableDepthWrite(false);
+			enableDepthCheck(true);
+		}
+		// This image has no alpha channel
+		else
+		{
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_REPLACE );	
+			enableDepthWrite(true);
+			enableDepthCheck(true);
+		}
+
+	}
 	
 	/**
 	 * @internal
