@@ -22,6 +22,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _IL_AudioInput_FMOD_H
 #define _IL_AudioInput_FMOD_H
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "BaseAudioInput.h"
 #include "AudioPrereqs.h"
 #include "common/MathUtils.h"

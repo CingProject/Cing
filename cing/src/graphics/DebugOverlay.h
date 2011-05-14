@@ -22,6 +22,9 @@
 #ifndef _DebugOverlay_H_
 #define _DebugOverlay_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 
 namespace Cing

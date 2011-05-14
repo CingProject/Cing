@@ -22,6 +22,10 @@
 #ifndef _LightingUserAPI_h_
 #define _LightingUserAPI_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 
 namespace Cing

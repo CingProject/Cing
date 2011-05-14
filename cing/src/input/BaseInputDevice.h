@@ -22,6 +22,9 @@
 #ifndef _BaseInputDevice_H_
 #define _BaseInputDevice_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 // Stl includes
 #include <map>
 

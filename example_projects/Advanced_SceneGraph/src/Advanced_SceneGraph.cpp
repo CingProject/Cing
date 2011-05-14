@@ -27,7 +27,7 @@ void setup()
 	light.init(200, 200, 200, 0, 3, 0);
 
 	// Uncomment this line to see the position of the light
-	//light.drawDebug(true);
+	light.drawDebug(true);
 
 	// Init 3d object's properties
 	box.init(50, 25, 75);

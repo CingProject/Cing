@@ -22,6 +22,10 @@
 #ifndef _UserAppGlobals_H_
 #define _UserAppGlobals_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "FrameworkPrereqs.h"
 #include <string>
 

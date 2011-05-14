@@ -19,6 +19,9 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsUserAPI.h"
 #include "GraphicsManager.h"
 #include "ShapeManager.h"
@@ -1142,5 +1145,87 @@ void enableShadows( ShadowTechnique technique )
 	GraphicsManager::getSingleton().enableShadows( technique );
 }
 
+/**
+ * @brief Returns the screen coordinate (range 0..1) that relates to the received world coordinate
+ * @param[in] worldCoordinate The world coordinate to transform to screen coordinate. The output coordinate will be in the range [0,1)
+ */
+Vector2d worldToScreenNormalized( const Vector& worldCoordinate )
+{
+	Vector posToTransform = worldCoordinate;
+	const Matrix4& viewMatrix = GraphicsManager::getSingleton().getActiveCamera().getOgreCamera()->getViewMatrix();
+	const Matrix4& projMatrix = GraphicsManager::getSingleton().getActiveCamera().getOgreCamera()->getProjectionMatrix();
+
+	// Transform this into (non homogenous) clip space 
+	Vector hcsPosition = projMatrix * (viewMatrix * worldCoordinate); 
+
+	// Normalize coordinates
+	Vector2d screenPos;
+	screenPos.x = ((hcsPosition.x * 0.5f) + 0.5f);// 0 <= x <= 1 // left := 0,right := 1
+	screenPos.y = 1.0f - ((hcsPosition.y * 0.5f) + 0.5f);// 0 <= y <= 1 // bottom := 0,top := 1
+
+	return screenPos;
+}
+
+/**
+ * @brief Returns the screen coordinate that relates to the received world coordinate
+ * @param[in] worldCoordinate The world coordinate to transform to screen coordinate (in pixel units)
+ */
+Vector2d worldToScreen( const Vector& worldCoordinate )
+{
+	Vector2d screenCoords = worldToScreenNormalized( worldCoordinate );
+	
+	// Transform to pixel units (right now they are normalized, that is, in the range 0..1)
+	screenCoords.x *= width;
+	screenCoords.y *= height;
+
+	return screenCoords;
+}
+
+
+/**
+ * @brief Returns the world coordinate that relates to the received screen coordinate
+ * @param[in] screenCoordinate The screen coordinate to transform to world coordinate
+ * @param[in] distanceToCamera Distance from the camera position, where the 3d world should be calculated
+ */
+Vector screenToWorld( const Vector2d& screenCoordinate, float distanceToCamera )
+{
+	// Get current camera (TODO make this parameter)
+	Ogre::Camera* camera = GraphicsManager::getSingleton().getActiveCamera().getOgreCamera();
+	Ogre::Viewport* viewport = camera->getViewport();
+	if ( !camera || !viewport)
+	{
+		LOG_ERROR( "getCameraToViewportRay. Cannot get current Ogre Camera or Viewport, one fo them is NULL" );
+		return Vector(-1, -1, -1);
+	}
+
+	// Check boundaries
+	if ( (screenCoordinate.x  < 0) || (screenCoordinate.x  > width) ||
+		 (screenCoordinate.y  < 0) || (screenCoordinate.y  > height) )
+	{
+		LOG_ERROR( "getCameraToViewportRay. Screen coordinates are out of the screen. Cannot project them to world coordinates." );
+		return Vector(-1, -1, -1);
+
+	}
+
+	// Calculate normalized screen coordinate (0..1)
+	float scrx = screenCoordinate.x / viewport->getActualWidth(); 
+	float scry = screenCoordinate.y / viewport->getActualHeight();
+
+	// Cast the ray to world coordinates
+	Ogre::Ray	ray = camera->getCameraToViewportRay(scrx, scry);
+	
+	return ray.getPoint(distanceToCamera);
+
+}
+
+/**
+ * @brief Returns the world coordinate that relates to the received screen coordinate
+ * @param[in] screenCoordinate The screen coordinate to transform to world coordinate
+ * @param[in] distanceToCamera Distance from the camera position, where the 3d world should be calculated
+ */
+Vector screenToWorld( const Vector& screenCoordinate, float distanceToCamera )
+{
+	return screenToWorld( Vector2d(screenCoordinate.x, screenCoordinate.y), distanceToCamera );
+}
 
 } // namespace Cing

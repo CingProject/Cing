@@ -21,6 +21,9 @@
 #ifndef _BaseInputDeviceInl_H_
 #define _BaseInputDeviceInl_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 /**
  * @internal
  * @file: BaseInputDevice template method definitions

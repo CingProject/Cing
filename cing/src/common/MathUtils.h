@@ -22,11 +22,16 @@
 #ifndef _Cing_MathUtils_H_
 #define _Cing_MathUtils_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "CommonPrereqs.h"
 #include "CommonTypes.h"
 
 #include "PerlinNoise.h"
 #include "framework/UserAppGlobals.h"
+#include "common/LogManager.h"
 
 #include "OgreBitwise.h"
 
@@ -151,6 +156,12 @@ inline void randomSeed( int seed )
  */
 inline int random( int min, int max )
 {
+	// Check min is higher than max
+	if ( min > max )
+	{
+		return random(max, min);
+	}
+
     return min + ( rand() % ( max - min+1 ) );
 }
 
@@ -171,6 +182,12 @@ inline int random( int max )
 template< typename T >
 inline T random( T min, T max )
 {
+	// Check min is higher than max
+	if ( min > max )
+	{
+		return random(max, min);
+	}
+
     // Number 0..1
     T normalizedRandom = static_cast<T>( rand()) / RAND_MAX;
 
@@ -264,7 +281,6 @@ inline float mag( float x1, float y1, float z1)
  *  map(v,0,1,100,200);
  * @endcode
  */
-
 inline float map( float value, float low1, float hight1, float low2, float hight2 )
 {
     // Clamp value with limits of input range
@@ -272,12 +288,11 @@ inline float map( float value, float low1, float hight1, float low2, float hight
     value = (value > hight1) ?  hight1 : value;
 
     // Map to range 0..1
-    float v = (value-low1) / fabs(hight1-low1);
+	float v = (value-low1) / std::abs(hight1-low1);
 
     // Map to output range
-    return v * fabs(hight2-low2) + low2;
+	return v * std::abs(hight2-low2) + low2;
 }
-
 
 /*
  * @brief Constrains a value so it does not exceed a range

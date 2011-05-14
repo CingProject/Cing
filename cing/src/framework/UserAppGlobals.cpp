@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "UserAppGlobals.h"
 #include "input/InputManager.h"
 #include "common/eString.h"
@@ -49,11 +52,11 @@ namespace Cing
 	Keyboard&				keyboard		= InputManager::m_keyboard;
 
 	// Time
-	double					elapsedSec		= 0;
-	unsigned long			elapsedMillis	= 0;
-	unsigned long			elapsedMicros	= 0;
-	double					secFromStart	= 0;
-	unsigned long	 		millisFromStart	= 0;
+	double					elapsedSec		= 1;
+	unsigned long			elapsedMillis	= 1;
+	unsigned long			elapsedMicros	= 1;
+	double					secFromStart	= 1;
+	unsigned long	 		millisFromStart	= 1;
 
 	// Frame count
 	unsigned long  			frameCount      = 0;

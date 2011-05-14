@@ -22,6 +22,10 @@
 #ifndef _SOUND_FMOD_H
 #define _SOUND_FMOD_H
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "BaseSound.h"
 #include "AudioPrereqs.h"
 

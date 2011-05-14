@@ -22,6 +22,9 @@
 #ifndef _Window_H_
 #define _Window_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 #include "graphics/Color.h"
 // OGRE

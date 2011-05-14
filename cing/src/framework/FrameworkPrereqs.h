@@ -22,6 +22,10 @@
 #ifndef _FrameworkPrereqs_H_
 #define _FrameworkPrereqs_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 /**
  * Prereqs File: This header file contains forward class declarations of the 
  * Framework namespace to speed up compiling.

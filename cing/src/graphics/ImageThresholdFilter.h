@@ -22,6 +22,10 @@
 #ifndef _ImageThresholdFilter_H_
 #define _ImageThresholdFilter_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 
 namespace Cing

@@ -22,6 +22,10 @@
 #ifndef _AppFramework_H_
 #define _AppFramework_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 
 namespace Cing
 {

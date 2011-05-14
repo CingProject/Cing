@@ -23,6 +23,10 @@
 #define _Sound_h
 
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 namespace Cing
 {
 

@@ -26,6 +26,9 @@ Code from: http://www.ogre3d.org/wiki/index.php/DynamicLineDrawing
 #ifndef DYNAMIC_RENDERABLE_H
 #define DYNAMIC_RENDERABLE_H
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "OgreSimpleRenderable.h"
 
 namespace Cing

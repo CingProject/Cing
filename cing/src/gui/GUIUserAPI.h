@@ -22,6 +22,9 @@
 #ifndef _GUIUserAPI_h_
 #define _GUIUserAPI_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GUIPrereqs.h"
 
 namespace Cing

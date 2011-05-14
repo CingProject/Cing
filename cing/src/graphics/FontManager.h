@@ -22,6 +22,10 @@
 #ifndef _FontManager_H_
 #define _FontManager_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 #include "FontProperties.h"
 #include "MovableText.h"

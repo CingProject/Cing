@@ -18,6 +18,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #if defined( _MSC_VER )
 #include "windows.h"
 #endif
@@ -92,12 +96,22 @@ namespace Cing
 		catch ( Exception& e ) 
 		{
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			LOG_ERROR( "Internal Exception: %s", e.getErrorMessage().c_str() );
+			LOG_ERROR( "Exception: %s", e.getErrorMessage().c_str() );
+			//fallback();
 #else
 			std::cerr << "An exception has occurred: " << e.getErrorMessage();
 #endif
 
 		}
+		catch(const std::exception& e) 
+		{
+			std::cerr << "APP EXCEPTION: " <<  e.what();
+		} 
+		catch (...)
+		{
+			std::cerr << "Unidentified exception";
+		}
+
 	}
 
 

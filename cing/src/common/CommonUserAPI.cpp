@@ -19,8 +19,11 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "CommonUserAPI.h"
-#include "LogManager.h"
 #include "eString.h"
 
 #include <stdarg.h>
@@ -117,29 +120,18 @@ void println( String &msg )
   println( msg.toChar() );
 }
 
-
 /**
- * @brief Indicates whether the informative system messages should be output to the debug output
+ * @brief Set the output log level. The lower the level, the more verbose Cing will be.
  *
- * @note If you are not debugging an application, is better in terms of performance no to set this
- * value to true.
- * @param value if true, normal system log messages will be output to the debug output
+ * @note If you are not debugging an application, is better in terms of performance no to set the LOG_ERROR as log level
+ * to avoid having to much log messages
+ * @param level Log Level (LOG_ERROR, LOG_NORMAL, or LOG_TRIVIAL);
  */
-void logNormalMsgsToDebugOutput( bool value )
+void setLogLevel ( LogMessageLevel level )
 {
-	LogManager::getSingleton().logNormalMsgsToDebugOutput( value );
+	LogManager::getSingleton().setLogLevel( (LogManager::LogMessageLevel)level );
 }
 
 
-/**
- * @brief Indicates whether the error system messages should be output to the debug output
- *
- * @note It can affect the performance, but ideally there should be not error messages in an applciation
- * @param value if true, error system log messages will be output to the debug output
- */
-void logErrorMsgsToDebugOutput( bool value )
-{
-	LogManager::getSingleton().logErrorMsgsToDebugOutput( value );
-}
 
 } // namespace Cing

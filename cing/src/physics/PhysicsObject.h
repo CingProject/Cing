@@ -22,6 +22,9 @@
 #ifndef _PhysicsObject_h_
 #define _PhysicsObject_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "PhysicsPrereqs.h"
 
 // Graphics

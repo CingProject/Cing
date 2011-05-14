@@ -22,6 +22,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _MediaPlayerOCV_H_
 #define _MediaPlayerOCV_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 // Graphics
 #include "graphics/Image.h"
 
@@ -32,7 +35,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OpenCV/highgui.h"
 
 // Common
-#undef nil
 #include "PTypes/include/pasync.h"
 
 namespace Cing

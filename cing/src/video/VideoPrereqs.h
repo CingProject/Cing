@@ -27,6 +27,9 @@
  * Movie (playback) namespace  to speed up compiling.
  */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 // General includes
 #include <cstdio>
 

@@ -22,6 +22,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _Cing_CommonTypes_H_
 #define _Cing_CommonTypes_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 // Ogre
 #include "OgreVector2.h"
 #include "OgreVector3.h"
@@ -38,12 +42,15 @@ namespace Cing
 	// Math
 	typedef Ogre::Vector2     		Point2d;
 	typedef Ogre::Vector2     		Vector2d;
+	typedef Vector2d     			Vector2;
 
 	typedef Ogre::Vector3     		Point;
 	typedef Ogre::Vector3     		Vector;
+	typedef Vector	     			Vector3;
 
 	typedef Ogre::Vector4     		Point4d;
 	typedef Ogre::Vector4     		Vector4d;
+	typedef Vector4d     			Vector4;
 
 	typedef Ogre::Quaternion		Quaternion;
 
@@ -54,7 +61,6 @@ namespace Cing
 	// Spatial
 	typedef Ogre::AxisAlignedBox	AABox;
 	typedef Ogre::Box				BoxArea;
-
 } // namespace Cing
 
 #endif // _CommonTypes_H_

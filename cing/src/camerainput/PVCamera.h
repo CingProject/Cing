@@ -22,6 +22,9 @@
 #ifndef _PVCamera_H_
 #define _PVCamera_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "CameraInputPrereqs.h"
 #include "BaseCameraInput.h"
 
@@ -76,9 +79,9 @@ public:
 private:
 
 	// Attributes
-  cameraEngine*     m_pvCamera;         ///< Object that allows access to the camera through port video library
-  RingBuffer*       m_ringBuffer;       ///< Circular buffer to store camera frames. Shared usage between this class and the PVCaptureThread class.
-  PVCaptureThread*  m_captureThread;    ///< Thread to capture images from the camera
+  	cameraEngine*     m_pvCamera;         ///< Object that allows access to the camera through port video library
+  	RingBuffer*       m_ringBuffer;       ///< Circular buffer to store camera frames. Shared usage between this class and the PVCaptureThread class.
+  	PVCaptureThread*  m_captureThread;    ///< Thread to capture images from the camera
 	bool              m_bIsValid;	        ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };

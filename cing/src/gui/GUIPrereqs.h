@@ -22,6 +22,9 @@
 #ifndef _Cing_GUIPrereqs_H_
 #define _Cing_GUIPrereqs_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 /**
  * Prereqs File: This header file contains forward class declarations of the
  * GUI namespace to speed up compiling.

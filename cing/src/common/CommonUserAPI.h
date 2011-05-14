@@ -22,7 +22,13 @@
 #ifndef _CommonUserAPI_h_
 #define _CommonUserAPI_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "CommonPrereqs.h"
+#include "CommonConstants.h"
+#include "LogManager.h" 
 
 namespace Cing
 {
@@ -39,8 +45,7 @@ void	print( String &msg );
 void	println( String &msg );
 
 // System log level control
-void	logNormalMsgsToDebugOutput( bool value );
-void	logErrorMsgsToDebugOutput	( bool value );
+void	setLogLevel					( LogMessageLevel level );
 
 
 } // namespace Cing

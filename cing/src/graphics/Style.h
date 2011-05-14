@@ -22,6 +22,9 @@
 #ifndef _Style_H_
 #define _Style_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 #include "Graphics/Color.h"
 

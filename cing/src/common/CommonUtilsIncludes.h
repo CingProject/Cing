@@ -22,6 +22,10 @@
 #ifndef _Cing_CommonUtilsIncludes_h_
 #define _Cing_CommonUtilsIncludes_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 /// @file This file contains the includes of all the common system utils of the library
 
 // common general utils

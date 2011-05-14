@@ -22,6 +22,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _BaseCameraInput_H_
 #define _BaseCameraInput_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "CameraInputPrereqs.h"
 #include "common/MathUtils.h"
 

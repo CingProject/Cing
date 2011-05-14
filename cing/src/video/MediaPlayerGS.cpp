@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "MediaPlayerGS.h"
 #include "GStreamerManager.h"
 
@@ -29,10 +32,13 @@ Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
 // Common
 #include "common/CommonUtilsIncludes.h"
 #include "common/XMLElement.h"
+#include "common/LogManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
 
+// Graphics
+#include "graphics/Color.h"
 
 namespace Cing
 {
@@ -99,12 +105,11 @@ namespace Cing
 		switch (GST_MESSAGE_TYPE(message))
 		{
 		case GST_MESSAGE_EOS:
-			LOG( "End of stream" );
+			//LOG_TRIVIAL( "End of stream" );
 			player->onEndOfStream();
 			break;
 
 		case GST_MESSAGE_ERROR:
-			LOG_ERROR( "Received GStreamer GST_MESSAGE_ERROR" );
 			player->stop();
 
 			// Get error info
@@ -151,7 +156,10 @@ namespace Cing
 		m_bIsValid		( false ),
 		m_pixelFormat	( RGB	),
 		m_mute			( false ),
-		m_volume		( 1.0f  )
+		m_volume		( 1.0f  ),
+		m_endOfFileReached	(false),
+		m_paused			(false),
+		m_playing			(false)
 	{
 	}
 
@@ -176,7 +184,10 @@ namespace Cing
 		m_bIsValid		( false ),
 		m_pixelFormat	( RGB	),
 		m_mute			( false ),
-		m_volume		( 1.0f  )
+		m_volume		( 1.0f  ),
+		m_endOfFileReached	(false),
+		m_paused			(false),
+		m_playing			(false)
 	{
 		// Load the movie
 		load( filename, RGB, fps );
@@ -196,8 +207,12 @@ namespace Cing
 	 */
 	bool MediaPlayerGS::init()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// GStreamer Init
 		return GStreamerManager::initGStreamer();
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -210,10 +225,13 @@ namespace Cing
 	 */
 	bool MediaPlayerGS::load( const char* fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Init the player (to make sure GStreamer is initialized)
 		bool result = init();
 		if ( !result )
 		{
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could not load it correctly.", fileName );
 			end();
 			return false;
 		}
@@ -222,6 +240,7 @@ namespace Cing
 		result = buildPathToFile( fileName );
 		if ( !result )
 		{
+			LOG_ERROR( "MediaPlayerGS::load. File %s Not Found", fileName );
 			end();
 			return false;
 		}
@@ -230,6 +249,7 @@ namespace Cing
 		result = createPipeline();
 		if ( !result )
 		{
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the pipeline to play it.", fileName );
 			end();
 			return false;
 		}
@@ -240,6 +260,7 @@ namespace Cing
 		result = createVideoSink();
 		if ( !result )
 		{
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the sink to play it.", fileName );
 			end();
 			return false;
 		}
@@ -248,6 +269,7 @@ namespace Cing
 		result = configureVideoFormat( requestedVideoFormat );
 		if ( !result )
 		{
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, Image format could not be configured.", fileName );
 			end();
 			return false;
 		}
@@ -269,6 +291,9 @@ namespace Cing
 		}
 		m_videoDuration = duration / 1000000000.0;
 
+		// Also store the number of frames
+		m_nFrames  =  m_videoFps * m_videoDuration;
+
 		// Check if the requested fps is different than the actual video fps -> if so, change it
  		if ( (fps > 0) && (equal(fps, m_videoFps) == false) )
 		{
@@ -278,8 +303,17 @@ namespace Cing
 
 		LOG( "MediaPlayer: File %s correctly loaded", m_fileName.c_str() );
 
+		// Init other vars
+		m_endOfFileReached	= false;
+		m_loopPending		= false;
+		m_paused			= false;
+		m_playing			= false;
+	
 		// The object is valid when the file is loaded
 		m_bIsValid = true;
+
+		LOG_EXIT_FUNCTION;
+
 		return true;
 	}
 
@@ -289,6 +323,8 @@ namespace Cing
 	*/
 	void MediaPlayerGS::end()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if already released
 		if ( !isValid() )
 			return;
@@ -308,6 +344,10 @@ namespace Cing
 		m_bIsValid			= false;
 		m_newBufferReady	= false;
 		m_loopPending		= false;
+		m_paused			= false;
+		m_playing			= false;
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -315,12 +355,16 @@ namespace Cing
 	 */
 	void MediaPlayerGS::update()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if we have to loop
 		if ( m_loopPending )
 		{
 			jump(0);
 			m_loopPending = false;
 		}
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -328,6 +372,8 @@ namespace Cing
 	 */
 	Image& MediaPlayerGS::getImage()
 	{		
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -342,6 +388,8 @@ namespace Cing
 		if ( m_newBufferReady )
 			copyBufferIntoImage();
 
+		LOG_EXIT_FUNCTION;
+
 		return m_frameImg;
 	}
 
@@ -352,6 +400,8 @@ namespace Cing
 	 **/
 	bool MediaPlayerGS::isPlaying()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -359,12 +409,28 @@ namespace Cing
 			return false;
 		}
 
-		GstState currentState;
-		GstStateChangeReturn ret = gst_element_get_state( GST_ELEMENT(m_pipeline), &currentState, NULL, 0 );
-		if ( currentState == GST_STATE_PLAYING )
-			return true;
-		else
+		LOG_EXIT_FUNCTION;
+
+		return m_playing;
+	}
+
+	/**
+	 * Returns true if the media is paused, false otherwise     
+	 **/
+	bool MediaPlayerGS::isPaused()
+	{
+		LOG_ENTER_FUNCTION;
+	
+		// Check if video is ok
+		if ( !isValid() )
+		{
+			LOG_ERROR( "MediaPlayerGS not corretly initialized" );
 			return false;
+	}
+
+		LOG_EXIT_FUNCTION;
+
+		return m_paused;
 	}
 
 
@@ -373,6 +439,8 @@ namespace Cing
 	 **/
 	float MediaPlayerGS::time()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -389,6 +457,8 @@ namespace Cing
 			return 0;
 		}
 
+		LOG_EXIT_FUNCTION;
+
 		return currentPosition / 1000000000.0f;
 	}
 
@@ -397,6 +467,8 @@ namespace Cing
 	 **/
 	void MediaPlayerGS::play()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -407,13 +479,22 @@ namespace Cing
 		// Clean bus to avoid accumulation of messages
 		flushBusMsg();
 
+		// If the end of the file was reached, reset the playhead to the beginning
+		if ( m_endOfFileReached )
+		{
+			jump(0);
+			m_endOfFileReached	= false;
+		}
+
 		// no loop mode
 		m_loop = false;
+		m_paused			= false;
+		m_playing			= true;
 		
 		// Play Stream
-		GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING);
-		if ( (ret != GST_STATE_CHANGE_SUCCESS) && (ret != GST_STATE_CHANGE_ASYNC) )
-			LOG_ERROR( "GStreamer Error playing video. Error Code %d", ret );
+		setPipelineState(GST_STATE_PLAYING);
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -421,6 +502,8 @@ namespace Cing
 	 **/
 	void MediaPlayerGS::loop()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -431,13 +514,23 @@ namespace Cing
 		// Clean bus to avoid accumulation of messages
 		flushBusMsg();
 
+		// If the end of the file was reached, reset the playhead to the beginning
+		if ( m_endOfFileReached )
+		{
+			jump(0);
+			m_endOfFileReached	= false;
+		}
+
+
 		// loop mode
 		m_loop = true;  
+		m_paused		= false;
+		m_playing		= true;
 
 		// Play Stream
-		GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING);
-		if ( (ret != GST_STATE_CHANGE_SUCCESS) && (ret != GST_STATE_CHANGE_ASYNC) )
-			LOG_ERROR( "GStreamer Error playing video. Error Code %d", ret );
+		setPipelineState(GST_STATE_PLAYING);
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -445,6 +538,8 @@ namespace Cing
 	 **/
 	void MediaPlayerGS::stop()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -452,10 +547,14 @@ namespace Cing
 			return;
 		}
 
-		// stop the media
-		GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(m_pipeline), GST_STATE_NULL);
-		if ( (ret != GST_STATE_CHANGE_SUCCESS) && (ret != GST_STATE_CHANGE_ASYNC) )
-			LOG_ERROR( "GStreamer Error playing video. Error Code %d", ret );
+		// Reset playhead and pause
+		jump(0);
+		setPipelineState(GST_STATE_PAUSED);
+		
+		m_paused	= false;
+		m_playing	= false;
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -463,6 +562,8 @@ namespace Cing
 	 **/
 	void MediaPlayerGS::pause()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -471,9 +572,11 @@ namespace Cing
 		}
 
 		// pause the media
-		GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED);
-		if ( (ret != GST_STATE_CHANGE_SUCCESS) && (ret != GST_STATE_CHANGE_ASYNC) )
-			LOG_ERROR( "GStreamer Error playing video. Error Code %d", ret );
+		setPipelineState(GST_STATE_PAUSED);
+		m_paused	= true;
+		m_playing	= false;
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -482,6 +585,8 @@ namespace Cing
 	 **/
 	void MediaPlayerGS::jump( float whereInSecs )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -489,23 +594,59 @@ namespace Cing
 			return;
 		}
 
+		// Clamp time position
+		whereInSecs = constrain( whereInSecs, 0, duration() );
+
 		// Clean bus to avoid accumulation of messages
 		flushBusMsg();
 
 		// If we have a new buffer available, clear the flag, we don't want it anymore after the seek
-		if ( m_newBufferReady )
 			m_newBufferReady	= false;
 
 		// Perform the seek
-		GstSeekFlags	flags		= (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT);
-		int				currentPos	= 0;
+		GstSeekFlags	flags		= (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE);
+		gint64			currentPos	= whereInSecs * GST_SECOND; /// Time in Gstreamer is in nano seconds
 		double			speed		= 1.0;
 		GstFormat		format		= GST_FORMAT_TIME;
-		gboolean ret = gst_element_seek(GST_ELEMENT(m_pipeline), speed, format, flags, GST_SEEK_TYPE_SET, currentPos, GST_SEEK_TYPE_NONE, -1);
+		gboolean ret = gst_element_seek(GST_ELEMENT(m_pipeline), speed, format, flags, GST_SEEK_TYPE_SET, currentPos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 		if ( ret != 1 )
 		{
 			LOG_ERROR( "MediaPlayerGS::jump. Error performing GStreamer seek" );
 		}
+
+		// Get Current state
+		GstState currentState, pendingState;
+		GstStateChangeReturn currentRet = gst_element_get_state(GST_ELEMENT(m_pipeline), &currentState, &pendingState, 2000 * GST_MSECOND );
+
+		// Play the pipeline (to get the new frame after the seek), but tell it to return to pause if it's not currently playing
+		if ( currentState == GST_STATE_PAUSED )
+		{
+			setPipelineState(GST_STATE_PLAYING);
+			setPipelineState(GST_STATE_PAUSED);
+		}
+
+		LOG_EXIT_FUNCTION;
+	}
+
+	/**
+	 * Jumps to a specific location within a movie (specified in frame number)
+	 * @param whereInSecs Where to jump in the movie (in seconds)
+	 **/
+	void MediaPlayerGS::jumpToFrame	( unsigned int frameNumber )
+	{
+		LOG_ENTER_FUNCTION;
+	
+		// Clamp time position
+		frameNumber = constrain( frameNumber, 0, numberOfFrames()-1 );
+
+		// Calculate time in seconds for this frame
+		double whereInSecs = (double)frameNumber / fps();
+		
+		// Jump to that second
+		jump( whereInSecs );
+
+		LOG_EXIT_FUNCTION;
+
 	}
 
 	/**
@@ -515,6 +656,8 @@ namespace Cing
 	 **/
 	void MediaPlayerGS::speed( float rate )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -526,11 +669,14 @@ namespace Cing
 		GstSeekFlags	flags		= (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SKIP | GST_SEEK_FLAG_ACCURATE);
 		int				currentPos	= 0;
 		GstFormat		format		= GST_FORMAT_TIME;
-		gboolean ret = gst_element_seek(GST_ELEMENT(m_pipeline), rate, format, flags, GST_SEEK_TYPE_NONE, currentPos, GST_SEEK_TYPE_NONE, -1);
+		gboolean ret = gst_element_seek(GST_ELEMENT(m_pipeline), rate, format, flags, GST_SEEK_TYPE_NONE, currentPos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 		if ( ret != 1 )
 		{
 			LOG_ERROR( "MediaPlayerGS::speed. Error performing GStreamer seek" );
 		}
+
+		LOG_EXIT_FUNCTION;
+
 	}
 
 	/**
@@ -538,6 +684,8 @@ namespace Cing
 	 **/
 	void MediaPlayerGS::toggleMute()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -555,6 +703,8 @@ namespace Cing
 		// otherwise -> reset previous volume
 		else
 			setVolume( m_volume );
+
+		LOG_EXIT_FUNCTION;
 	}	
 
 	/**
@@ -563,6 +713,8 @@ namespace Cing
 	 **/
 	void MediaPlayerGS::setVolume( float volume )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -571,6 +723,8 @@ namespace Cing
 		}
 
 		g_object_set (G_OBJECT(m_pipeline), "volume", volume, (const char*)NULL);
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -588,6 +742,9 @@ namespace Cing
 
 		float volume;
 		g_object_get (G_OBJECT(m_pipeline), "volume", &volume, (const char*)NULL);
+
+		LOG_EXIT_FUNCTION;
+
 		return volume;
 	}
 
@@ -598,6 +755,8 @@ namespace Cing
 	 */
 	void MediaPlayerGS::onNewBuffer( GstBuffer* newBuffer )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Check buffer
 		if ( newBuffer == NULL )
 			return;
@@ -646,6 +805,7 @@ namespace Cing
 		// operation done
 		m_bufferMutex.unlock();
 
+		LOG_EXIT_FUNCTION;
 	}
 
  
@@ -654,11 +814,22 @@ namespace Cing
 	 */
 	void MediaPlayerGS::onEndOfStream()
 	{
+		LOG_ENTER_FUNCTION;
+
 		// Check if we need to loop
 		if ( m_loop )
 		{
 			m_loopPending = true;
 		}
+		// End of playback
+		else
+		{
+			// Flag the end of the stream
+			m_endOfFileReached	= true;
+			m_paused			= false;
+			m_playing			= false;
+		}
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -667,6 +838,8 @@ namespace Cing
 	 */
 	bool MediaPlayerGS::buildPathToFile( const String& path )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Store incomming path as the filename (if it's a local file, the use would have passed the file path
 		// relative to the data folder)
 		m_fileName = path;
@@ -690,6 +863,8 @@ namespace Cing
 			m_filePath = "file:///" + m_filePath;
 		}
 
+		LOG_EXIT_FUNCTION;
+
 		return true;
 	}
 
@@ -699,6 +874,8 @@ namespace Cing
 	 */
 	bool MediaPlayerGS::createPipeline()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Create the GStreamer pipeline (playbin2 is an all-in-one audio and video player)
 		m_pipeline = gst_element_factory_make ("playbin2", NULL);
 		if ( m_pipeline == NULL )
@@ -715,8 +892,35 @@ namespace Cing
 		gst_bus_set_sync_handler (GST_BUS(bus), (GstBusSyncHandler)onSyncBusMessageHandler, this);
 		gst_object_unref(bus); 
 
+		LOG_EXIT_FUNCTION;
+
 		return true;
 	}
+
+	/**
+	 * Sets a specific state to the pipeline
+	 * @state state to be set. The state change might not syncrhonous.
+	 */	
+	void MediaPlayerGS::setPipelineState( GstState state )
+	{
+		LOG_ENTER_FUNCTION;
+	
+		// Check if video is ok
+		if ( !isValid() )
+		{
+			LOG_ERROR( "MediaPlayerGS is not valid yet. Cannot change the pipeline state. Did you call load()?" );
+			return;
+		}
+
+		// Change the state
+		GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(m_pipeline), state);
+		if ( (ret != GST_STATE_CHANGE_SUCCESS) && (ret != GST_STATE_CHANGE_ASYNC) )
+			LOG_ERROR( "GStreamer Error, State could not be changed in the pipeline. Error Code %d", ret );
+
+		LOG_EXIT_FUNCTION;
+	}
+
+
 
 	/**
 	 * Creates and configues the GStreamer video sink that will allow our app to get the decoded video frames
@@ -724,6 +928,8 @@ namespace Cing
 	 */
 	bool MediaPlayerGS::createVideoSink()
 	{
+		LOG_ENTER_FUNCTION;
+	
 		// Create our video sink
 		m_appSink = gst_element_factory_make("appsink", NULL);
 		if ( m_appSink == NULL )
@@ -748,6 +954,8 @@ namespace Cing
 		g_object_set(G_OBJECT(m_appSink), "emit-signals", true, NULL);
 		g_signal_connect(G_OBJECT(m_appSink), "new-buffer", G_CALLBACK(onNewBufferHandler), this);
 
+		LOG_EXIT_FUNCTION;
+
 		// all fine
 		return true;
 	}
@@ -759,6 +967,8 @@ namespace Cing
 	 */
 	bool MediaPlayerGS::configureVideoFormat( GraphicsType requestedVideoFormat )
 	{
+		LOG_ENTER_FUNCTION;
+
 		// Define the video format in GStreamer terms (according to the requested Cing video format)
 		m_outputGstVideoFormat = cingToGstPixelFormat( requestedVideoFormat );
 
@@ -813,6 +1023,8 @@ namespace Cing
 			return false;
 		}
 
+		LOG_EXIT_FUNCTION;
+
 		// all good
 		return true;
 	}
@@ -823,6 +1035,8 @@ namespace Cing
 	 */
 	void MediaPlayerGS::copyBufferIntoImage()
 	{
+		LOG_ENTER_FUNCTION;
+
 		// Check if video is ok
 		if ( !isValid() || !m_newBufferReady)
 			return;
@@ -833,6 +1047,8 @@ namespace Cing
 
 		// Clear new buffer flag
 		m_newBufferReady	= false;
+		
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -840,6 +1056,8 @@ namespace Cing
 	 */
 	void MediaPlayerGS::flushBusMsg()
 	{
+		LOG_ENTER_FUNCTION;
+	
         // Flush messages on the bus
         GstBus *bus = gst_element_get_bus(GST_ELEMENT(m_pipeline));
         if(bus)
@@ -851,6 +1069,8 @@ namespace Cing
             gst_object_unref(bus);
             bus = NULL;
         }
+
+		LOG_EXIT_FUNCTION;
 	}
 
 	/**
@@ -861,6 +1081,8 @@ namespace Cing
 	 */
 	const char* MediaPlayerGS::cingToGstPixelFormat( GraphicsType cingPixelFormat )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		switch( cingPixelFormat )
 		{
 			case RGB: 
@@ -880,6 +1102,8 @@ namespace Cing
 			break;
 		};
 
+		LOG_EXIT_FUNCTION;
+
 		// Not recognized -> default to RGB
 		return GST_VIDEO_CAPS_RGB;
 	}
@@ -892,11 +1116,15 @@ namespace Cing
 	 */
 	GraphicsType MediaPlayerGS::gstToCingPixelFormat( const String& gstVideoFormat )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		if ( gstVideoFormat == GST_VIDEO_CAPS_RGB )		return RGB;
 		if ( gstVideoFormat == GST_VIDEO_CAPS_RGBA )	return RGBA;
 		if ( gstVideoFormat == GST_VIDEO_CAPS_BGR )		return BGR;
 		if ( gstVideoFormat == GST_VIDEO_CAPS_BGRA )	return BGRA;
 		
+		LOG_EXIT_FUNCTION;
+
 		// Format not supported by Cing Images -> default to RGB
 		return RGB;
 	}
@@ -910,10 +1138,14 @@ namespace Cing
 	 */
 	bool MediaPlayerGS::checkVideoFormatMatch( GstVideoFormat gstVideoFormat, GraphicsType cingVideoFormat )
 	{
+		LOG_ENTER_FUNCTION;
+	
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_RGB)	&& ( cingVideoFormat == RGB ) )		return true;
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_RGBA)	&& ( cingVideoFormat == RGBA ) )	return true;
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_BGR)	&& ( cingVideoFormat == BGR ) )		return true;
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_BGRA)	&& ( cingVideoFormat == BGRA ) )	return true;
+
+		LOG_EXIT_FUNCTION;
 
 		// Formats do not match
 		return false;

@@ -22,6 +22,10 @@
 #ifndef _SpotLight_H_
 #define _SpotLight_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 #include "BaseLight.h"
 

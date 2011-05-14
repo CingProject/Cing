@@ -22,6 +22,10 @@
 #ifndef _Plane_h_
 #define _Plane_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 #include "Object3D.h"
 

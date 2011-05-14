@@ -19,6 +19,10 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "FrameworkUserAPI.h"
 #include "UserAppGlobals.h"
 #include "graphics/GraphicsManager.h"
@@ -29,10 +33,34 @@ namespace Cing
   /**
    * @brief Makes the application run in full screen mode
    */
-  void fullscreen()
+  void fullscreen(int width, int height, GraphicMode mode )
   {
-    GraphicsManager::getSingleton().fullscreen();
+		// Resolution not specified
+		if (height == -1) 
+		{
+			GraphicsManager::getSingleton().fullscreen();
+		}
+		// Resolution specified
+		else
+		{
+			GraphicsManager::getSingleton().fullscreen();
+
+			// Set up window and render system configuration
+			GraphicsManager::getSingleton().setup( width, height, mode );
+
+			// Init application subsystems (necessary for the user to load any graphic resource)
+			Application::getSingleton().initSubSystems();		
+		}
   }
+
+	/**
+ 	 * @brief Defines whether the app should sync with diaplay refresh or not  
+	 */
+	void vSync( bool value/* = true*/ )
+	{
+		GraphicsManager::getSingleton().vSync( value );
+	}
+
 
   /**
    * @brief Sets the full screen antialiasing

@@ -22,6 +22,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _Cing_Transform_H_
 #define _Cing_Transform_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 #include "Common/CommonTypes.h"
 
@@ -75,7 +78,7 @@ namespace Cing
 		void	setScale	( float x, float y, float z );
 
 		// Other
-		Vector	applyTransform( Vector input );
+		Vector	applyTransform( const Vector& input );
 		void	identity();
 		void	printMatrix();
 		void	applyMatrix( float m00, float m01, float m02, float m03,

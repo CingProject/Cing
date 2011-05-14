@@ -22,6 +22,10 @@
 #ifndef _ImageDifferenceFilter_H_
 #define _ImageDifferenceFilter_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 
 namespace Cing

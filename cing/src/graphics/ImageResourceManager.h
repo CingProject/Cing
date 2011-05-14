@@ -22,6 +22,9 @@
 #ifndef _ImageResourceManager_H_
 #define _ImageResourceManager_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 
 // OpenCv includes

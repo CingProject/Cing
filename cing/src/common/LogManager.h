@@ -22,6 +22,9 @@
 #ifndef _CingLogManager_h_
 #define _CingLogManager_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "CommonPrereqs.h"
 #include "Singleton.h"
 
@@ -29,22 +32,37 @@
 #include "OgreLogManager.h"
 
 // Macros for handy use of log system
+#define LOG_ENABLED
 
 // Visual studio
-#if defined( _MSC_VER )
-	#define LOG(x, ...)					Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_NORMAL, x, __VA_ARGS__ )	
-	#define LOG_ERROR(x, ...)			Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_ERROR, x, __VA_ARGS__ )
-	#define LOG_ERROR_NTIMES(n, x, ...)	static int count = 0; \
-										if ( ++count <= n )	  \
-											Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_ERROR, x, __VA_ARGS__ )
+#if defined( _MSC_VER ) && defined(LOG_ENABLED)
+
+	#define LOG_TRIVIAL(msg, ...)			Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_TRIVIAL, msg, __VA_ARGS__ )	
+	#define LOG(msg, ...)					Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_NORMAL, msg, __VA_ARGS__ )	
+	#define LOG_NORMAL LOG
+	#define LOG_ERROR(msg, ...)				Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_CRITICAL, msg, __VA_ARGS__ )
+	#define LOG_CRITICAL LOG_ERROR
+	#define LOG_ERROR_NTIMES(n, msg, ...)	{ static int count = 0; \
+											if ( ++count <= n )	  \
+											Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_CRITICAL, msg, __VA_ARGS__ ); }
+	#define LOG_ENTER_FUNCTION LOG_TRIVIAL( __FUNCTION__ " - enter" )
+	#define LOG_EXIT_FUNCTION  LOG_TRIVIAL( __FUNCTION__ " - exit" )
 
 // GNU
-#else
+#elif defined(LOG_ENABLED)
 	#define LOG(x, args...)			LogManager::getSingleton().logMessage( LogManager::LOG_NORMAL, x, ## args )
 	#define LOG_ERROR(x, args...)	LogManager::getSingleton().logMessage( LogManager::LOG_ERROR, x, ## args )
 	#define LOG_ERROR_NTIMES(n, x, args...)	static int count = 0; \
 										if ( ++count <= n )	  \
 										Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_ERROR, x, ## args )
+// No LOG
+#else
+	#define LOG_TRIVIAL(msg, ...)		
+	#define LOG(msg, ...)				
+	#define LOG_NORMAL LOG
+	#define LOG_ERROR(msg, ...)			
+	#define LOG_CRITICAL LOG_ERROR
+	#define LOG_ERROR_NTIMES(n, msg, ...)
 #endif
 
 
@@ -79,9 +97,10 @@ public:
 	// Available log levels
 	enum LogMessageLevel
 	{
-		LOG_NORMAL	= Ogre::LML_NORMAL,		///< Normal log level. It means that there is some problem, but the application can continue executing
-		LOG_ERROR		= Ogre::LML_CRITICAL,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
-		LOG_SILENT												///< No message will be output
+		LOG_TRIVIAL		= Ogre::LML_TRIVIAL,	///< Trivial log level. It means that there is no problem, it is just informational.
+		LOG_NORMAL		= Ogre::LML_NORMAL,		///< Normal log level. It means that there is some problem, but the application can continue executing
+		LOG_CRITICAL	= Ogre::LML_CRITICAL,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
+		LOG_SILENT								///< No message will be output
 	};
 
 	// Singleton needs
@@ -94,9 +113,9 @@ public:
 	void	init 				( bool logToOutput = true, bool logToFile = true );
 	void	end					();
 
-	// Log control
-	void	logNormalMsgsToDebugOutput( bool value );
-	void	logErrorMsgsToDebugOutput	( bool value );
+	// Log control	
+	void	setLogLevel			( LogMessageLevel level );
+	void	enable				( bool value = true ) { m_enabled = value; }	
 
 	// Query  Methods
 	bool	isValid			() { return m_bIsValid; }
@@ -105,7 +124,11 @@ public:
 	void	logMessage	( LogMessageLevel level, const char* msg, ... );
 
 	// Constants
-	static const std::string logFileName; ///< Name of the log file
+	static std::string logFileName; ///< Name of the log file
+
+
+	// Gets
+	LogMessageLevel getLogLevel() const { return m_debugOutputLogLevel; }
 
 private:
 	// Private constructor to ensure singleton
@@ -114,10 +137,11 @@ private:
 	// Attributes
 	Ogre::Log*				m_log;								///< Log used to output messages
 	Ogre::Log*				m_ogreLog;						///< Ogre Log, used to output ogre engine messages
-	LogMessageLevel		m_debugOutputLogLevel;///< Min log level for a message to be directed to the debug output
-	bool							m_logToOutput;				///< If true messages will be directed to output
-	bool							m_logToFile;					///< If true messages will be directed to the log file
-	bool							m_bIsValid;						///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	LogMessageLevel			m_debugOutputLogLevel;///< Min log level for a message to be directed to the debug output
+	bool					m_logToOutput;				///< If true messages will be directed to output
+	bool					m_logToFile;					///< If true messages will be directed to the log file
+	bool					m_bIsValid;						///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool					m_enabled;
 
 };
 

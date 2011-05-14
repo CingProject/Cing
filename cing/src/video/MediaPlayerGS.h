@@ -22,6 +22,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _MediaPlayerGS_H_
 #define _MediaPlayerGS_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 // Graphics
 #include "graphics/Image.h"
 
@@ -57,10 +60,14 @@ namespace Cing
 		// Query methods
 		bool    isValid   () const { return m_bIsValid; }
 		bool    isPlaying ();
+		bool	isPaused  		();
 		float   duration  () const { return (float)m_videoDuration; }
 		float   time      ();
 		int     getWidth  () const { return m_videoWidth; }
 		int     getHeight () const { return m_videoHeight; }
+		float   fps		  		() const { return m_videoFps; }
+		float   frameRate 		() const { return m_videoFps; }
+		int		numberOfFrames	() const { return m_nFrames; } 
 
 		// Media control
 		void    play    ();
@@ -69,7 +76,8 @@ namespace Cing
 		void    pause   ();
 		void    setLoop ( bool loop ) { m_loop = loop; }
 		void    noLoop  () { setLoop( false  ); }
-		void    jump    ( float whereInSecs );
+		void    jump		( float whereInSecs );		///< Note: For accurate frame level positioning, videos should have keyframes in all frames.
+		void    jumpToFrame	( unsigned int frameNumber );
 		void    speed   ( float rate );
 
 		// Audio Specific Control
@@ -88,6 +96,7 @@ namespace Cing
 		// Internal methods
 		bool			buildPathToFile			( const String& path );
 		bool			createPipeline			();
+		void			setPipelineState		( GstState state );
 		bool			createVideoSink			();
 		bool			configureVideoFormat	( GraphicsType requestedVideoFormat );
 		void			copyBufferIntoImage		();
@@ -106,12 +115,16 @@ namespace Cing
 		String					m_filePath;			///< Full path of the loaded video
 		double         			m_videoDuration;	///< Duration in seconds
 		float                 	m_videoFps;			///< Frames per second of the loaded video
+		int						m_nFrames;			///< Total number of frames of the video
 		int                   	m_videoWidth;		///< Width in pixels of the loaded video
 		int                   	m_videoHeight;		///< Height in pixels of the loaded video
 
-		// Playback Settings
+		// Playback Settings/Info
 		bool                  	m_loop;				///< If true, the video will loop
 		bool					m_loopPending;		///< Loop pending 
+		bool					m_endOfFileReached; ///< True when the playback head reached the end of the file
+		bool					m_playing;			///< True if the stream is playing (the user called play() or loop() not necessarily that the pipeline is already in playing state)
+		bool					m_paused;			///< True if the stream is paused (tue user called pause(), not that the pipeline state is paused)
 
 		// Audio settings	
 		bool					m_mute;				///< True if volume is mutted (0)

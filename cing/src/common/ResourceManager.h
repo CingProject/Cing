@@ -22,6 +22,10 @@
 #ifndef _CingResourceManager_h_
 #define _CingResourceManager_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "CommonPrereqs.h"
 #include "Singleton.h"
 

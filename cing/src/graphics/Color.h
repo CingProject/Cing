@@ -22,6 +22,9 @@
 #ifndef _Cing_Color_h_
 #define _Cing_Color_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 
 // Ogre

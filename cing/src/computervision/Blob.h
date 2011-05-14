@@ -22,6 +22,10 @@
 #ifndef _Blob_H_
 #define _Blob_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "ComputerVisionPrereqs.h"
 #include <vector>
 

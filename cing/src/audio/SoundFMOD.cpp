@@ -5,6 +5,9 @@
 * Implements the class for sounds for the Interactive Lib
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 //#include "windef.h"
 
 // Includes from Audio

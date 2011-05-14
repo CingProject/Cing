@@ -21,6 +21,10 @@
 #ifndef _IL_AudioInput_H
 #define _IL_AudioInput_H
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 namespace Cing
 {
 

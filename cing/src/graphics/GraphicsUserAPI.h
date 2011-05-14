@@ -22,6 +22,9 @@
 #ifndef _GraphicsUserAPI_h_
 #define _GraphicsUserAPI_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 #include "MovableText.h"
 
@@ -214,6 +217,17 @@ void textSize		(float size);
 // Shadows
 //-----------------------------------------------------------------------------------
 void enableShadows( ShadowTechnique technique );
+
+
+//-----------------------------------------------------------------------------------
+// Coordinate System related
+//-----------------------------------------------------------------------------------
+
+Vector2d	worldToScreen			( const Vector& worldCoordinate );
+Vector2d	worldToScreenNormalized	( const Vector& worldCoordinate );
+Vector		screenToWorld			( const Vector2d& screenCoordinate, float distanceToCamera );
+Vector		screenToWorld			( const Vector& screenCoordinate, float distanceToCamera );
+
 
 } // namespace Cing
 

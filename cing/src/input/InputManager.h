@@ -22,6 +22,9 @@
 #ifndef _InputManager_H_
 #define _InputManager_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "InputPrereqs.h"
 #include "Mouse.h"
 #include "Keyboard.h"

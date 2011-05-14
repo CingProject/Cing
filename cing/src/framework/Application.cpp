@@ -19,6 +19,10 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "Application.h"
 #include "UserAppFunctionDeclaration.h"
 #include "UserAppGlobals.h"
@@ -43,7 +47,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Extern
 #undef nil
 #include "PTypes/include/pasync.h"
-
 
 namespace Cing
 {
@@ -79,7 +82,7 @@ bool Application::initApp()
 		return true;
 
 	// Init random number generator seed
-	//TODO: setRandomSeed( timeGetTime() )
+	setRandomSeed( time(NULL) );
 
 	// First, init the subsystems needed by any user call (the rest will be init in the initSubSystems method
 	// called when the user calls the size function
@@ -153,11 +156,11 @@ void Application::drawApp()
 	while( (GraphicsManager::getSingleton().getMainWindow().isClosed() == false) && !m_finish )
 	{
 		// Store elapsed from timers
-		elapsedMicros  = m_timer.getMicroseconds();
+		elapsedMicros	= m_timer.getMicroseconds();
 		elapsedMillis	= m_timer.getMilliseconds();
-		elapsedSec			=  elapsedMillis / 1000.0;
-		secFromStart		= m_absTimer.getMilliseconds() / 1000.0;
-		millisFromStart= m_absTimer.getMilliseconds();
+		elapsedSec		=  elapsedMicros / 1000000.0;
+		secFromStart	= m_absTimer.getMicroseconds() / 1000000.0;
+		millisFromStart	= m_absTimer.getMilliseconds();
 		m_timer.reset();
 
 		// Update input manager

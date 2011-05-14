@@ -19,6 +19,10 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "ResourceManager.h"
 #include "Exception.h"
 #include "eString.h"
@@ -117,12 +121,12 @@ namespace Cing
 		
 		// Get Cing data path
 		LOG( "Cing Data Folder: %s", cingDataFolder.c_str());
-	//	if ( cingDataFolder != "" )
-	//	{
-	//		libDataPath = cingDataFolder;
-	//	}
-	//	else
-	//		LOG_ERROR( "Cing Data Folder is empty: libDataPath will use default value: %s",  libDataPath.c_str() );
+		if ( cingDataFolder != "" )
+		{
+			libDataPath = cingDataFolder;
+		}
+		else
+			LOG_ERROR( "Cing Data Folder is empty: libDataPath will use default value: %s",  libDataPath.c_str() );
 		
 		// Load resource paths from config file
 		Ogre::ConfigFile  cf;

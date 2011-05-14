@@ -19,6 +19,9 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "SceneGraphElement.h"
 #include "GraphicsManager.h"
 #include "common/CommonUtilsIncludes.h"

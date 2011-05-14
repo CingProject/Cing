@@ -22,6 +22,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _TexturedQuad_H_
 #define _TexturedQuad_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 
 #include "common/CommonTypes.h"
@@ -84,6 +88,7 @@ namespace Cing
 		Ogre::ManualObject*	getManualObject	() 			{ return m_quad;		}
 		Ogre::TexturePtr	getOgreTexture	() const 	{ return m_ogreTexture; }
 		Ogre::SceneNode*	getSceneNode	()			{ return m_quadSceneNode;   }
+		const Ogre::SceneNode*	getSceneNode	() const	{ return m_quadSceneNode;   }
 		Ogre::SceneNode*	getPivotSceneNode()			{ return m_pivotSceneNode;   }
 		const String&		getMaterialName	() const	{ return m_ogreMaterialName; }
 

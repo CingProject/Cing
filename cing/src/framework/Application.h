@@ -22,6 +22,10 @@
 #ifndef _Cing_Application_H_
 #define _Cing_Application_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 // Common
 #include "common/Singleton.h"
 

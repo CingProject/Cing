@@ -28,6 +28,10 @@
  */
 
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 /// Contains all classes necessary to capture input images from video cameras
 namespace Cing
 {  

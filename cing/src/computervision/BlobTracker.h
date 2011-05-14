@@ -22,6 +22,10 @@
 #ifndef _BlobTracker_H_
 #define _BlobTracker_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "computerVision/BlobFinder.h"
 #include "computerVision/Blob.h"
 

@@ -22,6 +22,10 @@
 #ifndef _PointLight_H_
 #define _PointLight_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 #include "BaseLight.h"
 

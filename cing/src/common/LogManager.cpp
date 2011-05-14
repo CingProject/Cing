@@ -19,7 +19,13 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "LogManager.h"
+#include "eString.h"
+
+#include <PTypes/include/ptime.h>
 
 // GUI
 #include "gui/GUIManagerCEGUI.h"
@@ -29,12 +35,11 @@
 #include <Windows.h>
 #endif
 
-
 namespace Cing
 {
 
 // Static member init
-const std::string LogManager::logFileName = "Cing.log";
+std::string LogManager::logFileName = "Cing";
 
 /**
  * @internal
@@ -44,7 +49,8 @@ LogManager::LogManager():
 	m_log			( NULL  ),
 	m_logToOutput	( false ),
 	m_logToFile		( false ),
-	m_bIsValid		( false )
+	m_bIsValid		( false ),
+	m_enabled		( false )
 {
 }
 
@@ -67,10 +73,10 @@ LogManager::~LogManager()
  * @param logToFile		if true logs will be directed to the log file
  * @note both parameters are independent
  */
-void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= false*/ )
+void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= true*/ )
 {
 	// Store log configuration
-	m_logToOutput = logToOutput;
+	m_logToOutput	= logToOutput;
 	m_logToFile		= logToFile;
 
 	// By default just lot error messages to debug output
@@ -79,19 +85,25 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= false*/ )
 	// Get ogre log pointer (just in case)
 	m_ogreLog = Ogre::LogManager::getSingleton().getDefaultLog();
 
-	// Create custom log (the default log from now on)
+	// Add the date to the log file name
+	pt::datetime currentTime =  pt::now(false);
+	int year, month, day;
+	int hour, min, sec, msec;
+	pt::decodedate(currentTime, year, month, day);
+	pt::decodetime(currentTime, hour, min, sec, msec);
+
+	logFileName += "-" + intToString(year) + intToString(month) + intToString(day) + "_";
+	logFileName += intToString(hour) + "-" + intToString(min) + "-" + intToString(sec);
+	logFileName += ".log";
+
+	// Create custom log (the default log for Cing from now on, not for Ogre which will output to Ogre.log)
 	m_log = Ogre::LogManager::getSingleton().createLog( logFileName, false, logToOutput, !logToFile );
 
-	// Set log level depending on release/debug configuration
-#if defined(_DEBUG)
-	m_ogreLog->setLogDetail( Ogre::LL_NORMAL );
-	m_log->setLogDetail( Ogre::LL_BOREME );
-#else
-	m_ogreLog->setLogDetail( Ogre::LL_NORMAL );
-	m_log->setLogDetail( Ogre::LL_NORMAL );
-#endif
+	// Set log level
+	setLogLevel(m_debugOutputLogLevel);
 
 	m_bIsValid = true;
+	m_enabled  = true;
 }
 
 /**
@@ -101,40 +113,51 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= false*/ )
  */
 void LogManager::end()
 {
-	m_bIsValid = false;
+	m_bIsValid	= false;
+	m_enabled	= false;
 }
 
 /**
- * @internal
- * @brief Indicates whether the informative system messages should be output to the debug output
+ * @brief Set the output log level. The lower the level, the more verbose Cing will be.
  *
- * @note If you are not debugging an application, is better in terms of performance no to set this
- * value to true.
- * @param value if true, normal system log messages will be output to the debug output
+ * @note If you are not debugging an application, is better in terms of performance no to set the LOG_ERROR as log level
+ * to avoid having to many log messages
+ * @param level Log Level (LOG_ERROR, LOG_NORMAL, or LOG_TRIVIAL);
  */
-void LogManager::logNormalMsgsToDebugOutput( bool value )
+void LogManager::setLogLevel( LogMessageLevel level )
 {
-	if ( value )
-		m_debugOutputLogLevel = LOG_NORMAL;
-	else
-		m_debugOutputLogLevel = LOG_ERROR;
+	if ( !m_bIsValid )
+	{
+		std::cerr << "LogManager::setLogLevel Error: cannot set error level. LogManager may not be initialized yet";
+		return;
+	}
+
+	Ogre::LoggingLevel loggingLevel = Ogre::LL_NORMAL;
+	switch( level )
+	{
+		// We want all logs (from trivial to errors) to be reported
+		case LOG_TRIVIAL:
+			loggingLevel = Ogre::LL_BOREME; 
+		break;
+
+		// We want normal and critical logs to be reported (but not trivial)
+		case LOG_NORMAL:
+			loggingLevel = Ogre::LL_NORMAL; 
+		break;
+	
+		// We want only critical logs to be reported
+		case LOG_CRITICAL:
+			loggingLevel = Ogre::LL_LOW; 
+		break;
+
+	}
+
+	// Set level to both Cing and Ogre logs
+	m_ogreLog->setLogDetail( loggingLevel );
+	m_log->setLogDetail( loggingLevel );
+	m_debugOutputLogLevel = level;
 }
 
-
-/**
- * @internal
- * @brief Indicates whether the error system messages should be output to the debug output
- *
- * @note It can affect the performance, but ideally there should be not error messages in an applciation
- * @param value if true, error system log messages will be output to the debug output
- */
-void LogManager::logErrorMsgsToDebugOutput( bool value )
-{
-	if ( value )
-		m_debugOutputLogLevel = LOG_ERROR;
-	else
-		m_debugOutputLogLevel = LOG_SILENT;
-}
 
 /**
  * @internal
@@ -145,6 +168,9 @@ void LogManager::logErrorMsgsToDebugOutput( bool value )
  */
 void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 {
+    if ( !m_bIsValid || !m_enabled )
+        return;
+
 	// Extract string parameters
 	char			msgFormated[1024];
 	va_list		args;
@@ -153,23 +179,29 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	va_end		(args);
 
 	// Log message normally
-	if ( m_log )
+	if ( m_log && (level >= m_debugOutputLogLevel) )
 	{
 		m_log->logMessage( msgFormated, (Ogre::LogMessageLevel)level );
 	}
 	// Log is not ready yet (probably we are initializing the app)
-	else
+	else if (level >= m_debugOutputLogLevel)
 		printf("%s\n", msgFormated);
+	
 
 	// Send it to the debug console
 	// TODO: decide policy
-	//if ( level >= m_debugOutputLogLevel )
-	//	GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
+	if ( level >= m_debugOutputLogLevel )
+    {
+		GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
+    }
 
 	// If we are in windows and debug -> log to visual studio output
 #if defined(WIN32)
+	if ( level >= m_debugOutputLogLevel )
+	{
 		OutputDebugString( msgFormated );	// In release, only critical messages
 		OutputDebugString( "\n" );
+	}
 #endif
 }
 

@@ -22,9 +22,14 @@
 #ifndef _OutputDebugTextBoxCEGUI_h_
 #define _OutputDebugTextBoxCEGUI_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GUIPrereqs.h"
 
 #include "OgrePlatform.h"
+
+#include "PTypes/include/pasync.h"
 
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
@@ -60,6 +65,7 @@ public:
 	void	setHeight	( float pxHeight );
 	void	setAlpha	( float alpha );
 
+	void	enable		( bool value ) { m_enabled = value; }
 
 	// Query  Methods
 	bool	isValid		() { return m_bIsValid; }
@@ -74,6 +80,9 @@ private:
 	// Attributes
 	CEGUI::Listbox* m_listBox;		///< Displays all the output messages
 	bool			m_bIsValid;		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool			m_enabled;
+    pt::mutex		m_mutex;
+
 
 };
 

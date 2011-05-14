@@ -22,6 +22,10 @@
 #ifndef _BackgroundSubtraction_h_
 #define _BackgroundSubtraction_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "ComputerVisionPrereqs.h"
 
 // Graphics

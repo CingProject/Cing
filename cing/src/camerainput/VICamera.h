@@ -22,6 +22,10 @@
 #ifndef _VICamera_h_
 #define _VICamera_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "CameraInputPrereqs.h"
 #include "BaseCameraInput.h"
 #include "VideoInput/include/videoInput.h"

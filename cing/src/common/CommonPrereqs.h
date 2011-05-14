@@ -22,6 +22,10 @@
 #ifndef _CommonPrereqs_H_
 #define _CommonPrereqs_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 /**
  * Prereqs File: This header file contains forward class declarations of the 
  * Common namespace to speed up compiling.

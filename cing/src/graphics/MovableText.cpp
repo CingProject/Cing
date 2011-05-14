@@ -8,6 +8,9 @@
  * @update	2009 by Cing team for the Cing project
  */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "MovableText.h"
 
 // Common

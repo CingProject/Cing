@@ -22,6 +22,10 @@
 #ifndef _FrameworkUserAPI_h_
 #define _FrameworkUserAPI_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "FrameworkPrereqs.h"
 #include "Application.h"
 #include "graphics/GraphicsTypes.h"
@@ -29,7 +33,8 @@
 namespace Cing
 {
 // Application setup
-void fullscreen ();
+void fullscreen ( int width = -1, int height = -1, GraphicMode mode = OPENGL );
+void vSync		( bool value = true ); // Note: must be called before size or fullscreen
 void FSAA		( int fsaa );
 void size       ( int width, int height, GraphicMode mode = OPENGL );
 

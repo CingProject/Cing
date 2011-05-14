@@ -18,6 +18,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "Image.h"
 #include "ImageResourceManager.h"
 #include "GraphicsManager.h"
@@ -117,9 +121,10 @@ namespace Cing
 	*/
 	void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
 	{
-		// Check if the class is already initialized
+		// Check if the class is already initialized to free resources first
+		// TODO: check if values are really different... 
 		if ( isValid() )
-			THROW_EXCEPTION( "Image already initialized" );
+			end();
 
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
@@ -754,7 +759,7 @@ namespace Cing
 		cv::Mat alphaCanvasImage;
 
 		// If there is transparency involved
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
 			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
@@ -796,13 +801,22 @@ namespace Cing
 			}																														 
 		}																															  	
 
-		// If there is transparency involved -> blend the result
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		// If there is transparency involved -> blend the result and release the temp image used for transparency
+		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
-			// Blend the result
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+			ImageResourceManager::getSingleton().releaseImage( tempImage );
 
-			// Release temp image
+			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+			// This warning is to nofity it
+			if ( graphManager.getStroke() && (strokeColor.a < 255) )
+				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+
+		}
+		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+		{
+			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
 			ImageResourceManager::getSingleton().releaseImage( tempImage );
 		}
 
@@ -919,7 +933,7 @@ namespace Cing
 		cv::Mat alphaCanvasImage;
 
 		// If there is transparency involved
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
 			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
@@ -986,13 +1000,22 @@ namespace Cing
 			}
 		}
 
-		// If there is transparency involved -> blend the result
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		// If there is transparency involved -> blend the result and release the temp image used for transparency
+		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
-			// Blend the result
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+			ImageResourceManager::getSingleton().releaseImage( tempImage );
 
-			// Release temp image
+			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+			// This warning is to nofity it
+			if ( graphManager.getStroke() && (strokeColor.a < 255) )
+				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+
+		}
+		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+		{
+			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
 			ImageResourceManager::getSingleton().releaseImage( tempImage );
 		}
 
@@ -1090,7 +1113,7 @@ namespace Cing
 		cv::Mat alphaCanvasImage;
 
 		// If there is transparency involved
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
 			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
@@ -1133,13 +1156,22 @@ namespace Cing
 			}																														 
 		}																															 
 			
-		// If there is transparency involved -> blend the result
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		// If there is transparency involved -> blend the result and release the temp image used for transparency
+		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
-			// Blend the result
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+			ImageResourceManager::getSingleton().releaseImage( tempImage );
 
-			// Release temp image
+			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+			// This warning is to nofity it
+			if ( graphManager.getStroke() && (strokeColor.a < 255) )
+				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+
+		}
+		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+		{
+			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
 			ImageResourceManager::getSingleton().releaseImage( tempImage );
 		}
 
@@ -1179,7 +1211,7 @@ namespace Cing
 		cv::Mat alphaCanvasImage;
 
 		// If there is transparency involved
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
 			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
@@ -1264,13 +1296,22 @@ namespace Cing
 			}
 		}
 
-		// If there is transparency involved -> blend the result
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		// If there is transparency involved -> blend the result and release the temp image used for transparency
+		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
-			// Blend the result
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+			ImageResourceManager::getSingleton().releaseImage( tempImage );
 
-			// Release temp image
+			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+			// This warning is to nofity it
+			if ( graphManager.getStroke() && (strokeColor.a < 255) )
+				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+
+		}
+		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+		{
+			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
 			ImageResourceManager::getSingleton().releaseImage( tempImage );
 		}
 
@@ -1319,7 +1360,7 @@ namespace Cing
 		cv::Mat alphaCanvasImage;
 
 		// If there is transparency involved
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
 			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
@@ -1404,13 +1445,22 @@ namespace Cing
 			}
 		}
 
-		// If there is transparency involved -> blend the result
-		if ( (strokeColor.a < 255) || (fillColor.a < 255)  )
+		// If there is transparency involved -> blend the result and release the temp image used for transparency
+		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
-			// Blend the result
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+			ImageResourceManager::getSingleton().releaseImage( tempImage );
 
-			// Release temp image
+			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+			// This warning is to nofity it
+			if ( graphManager.getStroke() && (strokeColor.a < 255) )
+				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+
+		}
+		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+		{
+			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
 			ImageResourceManager::getSingleton().releaseImage( tempImage );
 		}
 
@@ -1666,7 +1716,7 @@ namespace Cing
 		if ( other.getWidth() != getWidth() || other.getHeight() != getHeight())
 			THROW_EXCEPTION( "Images with different sizes" );
 
-		percentage = map( percentage, 0, 100, 0.0f, 1.0f );
+		percentage = map( percentage, 0, 100, 0.0, 1.0 );
 		cv::addWeighted( m_cvImage, 1.0 - percentage, &other.getCVImage(), percentage, 0.0f, m_cvImage );
 	}
 
@@ -1691,6 +1741,9 @@ namespace Cing
 			THROW_EXCEPTION( "Invalid number of channels in image" )
 				break;
 		}
+
+		// Update texture when the next drawing call is made by the user
+		m_bUpdateTexture = true;
 	}
 
 	/**

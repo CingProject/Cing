@@ -11,6 +11,10 @@
 #ifndef _IL_AUDIO_SHARED_H
 #define _IL_AUDIO_SHARED_H
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "AudioPrereqs.h"
 
 // Includes

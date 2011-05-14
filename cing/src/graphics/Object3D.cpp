@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "Object3D.h"
 
 // Graphics
@@ -812,6 +815,20 @@ namespace Cing
 		if ( isValid() )
 			m_sceneNode->setVisible( visible );
 	}
+
+	/**
+	 * @brief Sets the render queue in which this object will be rendered. This allows to control
+	 * which objects are rendered first ant which last.ç
+	 * @note Render queue index values range from 0 to 105, being 0 de background objects and 105 the las objects to be rendered (such as GUI)
+	 *
+	 * @param queue Number of the queue
+	 */
+	void Object3D::setRenderQueueGroup( int queue )
+	{
+		if ( isValid() )
+			m_entity->setRenderQueueGroup( queue );
+	}
+
 
 	/**
 	 * Configures the object to cast or not shadows

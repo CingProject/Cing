@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 // Graphics includes
 #include "GraphicsManager.h"
 #include "Window.h"
@@ -86,6 +89,7 @@ namespace Cing
 		m_defaultWindowHeight( 480 ),
 		m_defaultGraphicMode( OPENGL ),
 		m_fullscreen( false ),
+		m_vSync(true),
 		m_fsaa(0),
 		m_saveFrame(false),
 		m_shadowsEnabled(false)
@@ -405,15 +409,14 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 
 		// Set render system settings
 		selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );
-		if ( !m_fullscreen )
-			selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
+		selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
 
 		// Set render system settings specified by user
 		// TODO: Make all options available to user
 		// RTT possible values: FBO, PBuffer, Copy
 		selectedRenderSystem->setConfigOption( "RTT Preferred Mode", "FBO" );
 		selectedRenderSystem->setConfigOption( "Colour Depth", "32" );
-		selectedRenderSystem->setConfigOption( "VSync","Yes" );
+		selectedRenderSystem->setConfigOption( "VSync",m_vSync? "Yes": "No" );
 		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
@@ -430,11 +433,10 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 
 		// Set render system settings specified by user
 		selectedRenderSystem->setConfigOption("Full Screen", m_fullscreen? "Yes": "No" );
-		if ( !m_fullscreen )
-			selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
+		selectedRenderSystem->setConfigOption("Video Mode", videoMode.str().c_str() );
 
 		// Rest options with default values
-		selectedRenderSystem->setConfigOption("VSync","Yes");
+		selectedRenderSystem->setConfigOption("VSync", m_vSync? "Yes": "No" );
 		selectedRenderSystem->setConfigOption( "Floating-point mode","Consistent" );
 		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
 	}

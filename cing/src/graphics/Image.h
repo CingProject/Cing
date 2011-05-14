@@ -22,6 +22,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _Image_H_
 #define _Image_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 #include "TexturedQuad.h"
 
@@ -111,16 +115,17 @@ namespace Cing
 		void updateTexture();
 
 		// Query methods
-		bool			isValid		() const	{ return m_bIsValid; }
-		IplImage		getCVImage	() const	{ return (IplImage)m_cvImage; }
-		cv::Mat&		getCVMat	()			{ return m_cvImage; }
-		int				getWidth	() const;
-		int				getHeight	() const;
-		GraphicsType	getFormat	() const;
-		int				getNChannels() const	{ return m_nChannels; }
-		Color			getPixel	( int x, int y ) const;
-		Ogre::TexturePtr getOgreTexture() { return m_quad.getOgreTexture(); }
-		TexturedQuad&	getTexturedQuad() { return m_quad; }
+		bool				isValid			() const	{ return m_bIsValid; }
+		IplImage			getCVImage		() const	{ return (IplImage)m_cvImage; }
+		cv::Mat&			getCVMat		()			{ return m_cvImage; }
+		int					getWidth		() const;
+		int					getHeight		() const;
+		GraphicsType		getFormat		() const;
+		int					getNChannels	() const	{ return m_nChannels; }
+		Color				getPixel		( int x, int y ) const;
+		Ogre::TexturePtr 	getOgreTexture	() { return m_quad.getOgreTexture(); }
+		TexturedQuad&		getTexturedQuad	() { return m_quad; }
+		const TexturedQuad&	getTexturedQuad	() const { return m_quad; }
 
 		// Operators and operations
 		void operator =	( const Image& other );

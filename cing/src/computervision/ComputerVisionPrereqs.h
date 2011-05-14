@@ -22,6 +22,10 @@
 #ifndef _ComputerVisionPrereqs_H_
 #define _ComputerVisionPrereqs_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 /**
  * Prereqs File: This header file contains forward class declarations of the 
  * ComputerVision namespace to speed up compiling.

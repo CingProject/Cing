@@ -27,6 +27,10 @@
  * @file Singleton related utilities
  */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "CommonPrereqs.h"
 #ifndef NULL
 	#define NULL 0

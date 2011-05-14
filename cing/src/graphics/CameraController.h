@@ -22,6 +22,9 @@
 #ifndef _CameraController_h_
 #define _CameraController_h_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 #include "common/CommonTypes.h"
 

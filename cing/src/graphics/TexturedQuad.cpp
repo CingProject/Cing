@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "TexturedQuad.h"
 
 #include <limits.h>
@@ -157,13 +160,15 @@ namespace Cing
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName,
 			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		// Assign texture to material and set materia properties
-		material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
+		Ogre::TextureUnitState* texUnit = material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
+		texUnit->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP); // note: clamp fixes glitch in edges of 2d images
+
 		material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 		material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( true );
-		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
+		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
+		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( false );
 		material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
-		material->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
+//		material->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
 
 
 		/*
@@ -445,7 +450,7 @@ namespace Cing
 	{
 		if ( !isValid() )
 		{
-			LOG_ERROR( "Trying to draw a textured quad not initialized" );
+			LOG_ERROR_NTIMES( 1, "Trying to draw a textured quad not initialized" );
 			return;
 		}
 
@@ -453,15 +458,15 @@ namespace Cing
 		if ( m_render2D )
 			set3dRendering();
 
-		// Apply current transformations to the pivot node
-		applyTransformations(0, 0, 0, 1, 1);
-		
 
 		// Find center
 		float xCenter = (x1 + x2 + x3 + x4)/4.0f;
 		float yCenter = (y1 + y2 + y3 + y4)/4.0f;
 		float zCenter = (z1 + z2 + z3 + z4)/4.0f;
 
+		// Apply current transformations to the pivot node
+		applyTransformations(xCenter, yCenter, zCenter, 1, 1);
+		
 		// Generate the geometry of the quad
 		m_quad->beginUpdate( 0 );
 
@@ -504,7 +509,7 @@ namespace Cing
 	{
 		if ( !isValid() )
 		{
-			LOG_ERROR( "Trying to draw a textured quad not initialized" );
+			LOG_ERROR_NTIMES( 1, "Trying to draw a textured quad not initialized" );
 			return;
 		}
 
@@ -537,7 +542,7 @@ namespace Cing
 	{
 		if ( !isValid() )
 		{
-			LOG_ERROR( "Trying to draw a textured quad not initialized" );
+			LOG_ERROR_NTIMES( 1, "Trying to draw a textured quad not initialized" );
 			return;
 		}
 
@@ -855,9 +860,22 @@ namespace Cing
 		m_pivotSceneNode->setOrientation( Quaternion::IDENTITY );
 		m_pivotSceneNode->setScale( Vector::UNIT_SCALE );
 
+		// Note: if we extract from the transformatin matrix the rotation with getRotQuaternion()
+		// The rotation seems to be affected by the matrix scale. To avoid this we extract he axis/angle pair
+		// and build a Quaternion, which seems to solve the problem
+		Matrix4 tranformation = currentTransformation.getTransformMatrix();
+		Matrix3 rot;
+		Vector axis;
+		Ogre::Radian angle;
+		Quaternion q;
+		tranformation.extract3x3Matrix( rot );
+		rot.ToAxisAngle( axis, angle );
+		q.FromAngleAxis( angle, axis );
+
 		// Apply current transformations to the pivot Node
 		m_pivotSceneNode->translate( currentTransformation.getPosition() );
-		m_pivotSceneNode->rotate( currentTransformation.getRotQuaternion(), Ogre::Node::TS_PARENT );
+		//m_pivotSceneNode->rotate( currentTransformation.getRotQuaternion(), Ogre::Node::TS_PARENT );
+		m_pivotSceneNode->setOrientation( q );
 		m_pivotSceneNode->scale( currentTransformation.getScale() );
 
 		// Finally, set coordinates/scale for the quad scene node in the selected system

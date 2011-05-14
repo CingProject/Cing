@@ -19,6 +19,9 @@
  Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "MediaPlayerOCV.h"
 
 // Common
@@ -229,6 +232,9 @@ namespace Cing
 			LOG_ERROR_NTIMES( 1, "MediaPlayerOCV not corretly initialized. No new frame will be returned" );
 			return m_frameImg;
 		}
+		
+		// Update, just in case there are pending operations
+		update();
 		
 		// Check if we have a new buffer to copy
 		if ( m_newBufferReady )
@@ -478,7 +484,7 @@ namespace Cing
 		
 		// Retrieve frame
 		m_capture.retrieve( m_frameImg.getCVMat(), 0 );
-		m_frameImg.setUpdateTexture(true);
+		m_frameImg.updateTexture();
 		
 		// Clear new buffer flag
 		m_newBufferReady	= false;

@@ -22,6 +22,10 @@
 #ifndef _Cing_Exception_H_
 #define _Cing_Exception_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include <string>
 
 // Macro to throw an an exception

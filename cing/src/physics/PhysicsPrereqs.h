@@ -27,6 +27,9 @@
  * Physics namespace  to speed up compiling.
  */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 //TODO: Review the need for this warning pragma
 #if OGRE_COMPILER == OGRE_COMPILER_MSVC
 	#pragma warning (disable : 4748 ) 

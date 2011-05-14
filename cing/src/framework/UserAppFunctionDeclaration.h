@@ -22,6 +22,10 @@
 #ifndef _UserAppFunctionDeclaration_H_
 #define _UserAppFunctionDeclaration_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 /// MAIN FUNCTIONS
 
 /// Starts the application. Called at the start of the application (To initialize data, configure screen...etc)

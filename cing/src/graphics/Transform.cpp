@@ -19,6 +19,9 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "Transform.h"
 #include "GraphicsManager.h"
 
@@ -147,9 +150,9 @@ void Transform::scale(  float x, float y, float z )
 	// Apply transform
 	// TODO: Check this. When we apply the scale, the result of the rotation
 	// value in the matrix changes... Check this with Processing (documented in issue list)
-	Quaternion qbefore = m_4x4.extractQuaternion();
+	//Quaternion qbefore = m_4x4.extractQuaternion();
 	m_4x4 = m_4x4.concatenate(Ogre::Matrix4::getScale( x, y, z ));
-	Quaternion qafter = m_4x4.extractQuaternion();
+	//Quaternion qafter = m_4x4.extractQuaternion();
 }
 
 /**
@@ -202,7 +205,7 @@ Vector Transform::getScale()
  *
  * @param mode
  */
-Vector Transform::applyTransform( Vector input )
+Vector Transform::applyTransform( const Vector& input )
 {
 	return m_4x4*input;
 };

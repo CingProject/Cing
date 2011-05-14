@@ -19,6 +19,9 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GUIManagerCEGUI.h"
 
 // Framework
@@ -75,6 +78,10 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 	// Init CEGUI for version 0.7
 	m_CEGUIRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
 	m_CEGUISystem	= CEGUI::System::getSingletonPtr();
+
+	// Set the actual window size to CEGUI
+	m_CEGUIRenderer->setDisplaySize( CEGUI::Size(Ogre::Real(width), Ogre::Real(height)));
+	m_CEGUISystem->notifyDisplaySizeChanged(CEGUI::Size(Ogre::Real(width), Ogre::Real(height)));
 
 	// Working for CEGUI 0.6
 	//m_CEGUIRenderer = new CEGUI::OgreCEGUIRenderer( ogreWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, ogreSceneManager );

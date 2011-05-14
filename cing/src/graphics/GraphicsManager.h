@@ -22,6 +22,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _GraphicsManager_H_
 #define _GraphicsManager_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "GraphicsPrereqs.h"
 #include "Window.h"
 #include "Camera3D.h"
@@ -74,6 +77,7 @@ namespace Cing
 		// App window setup
 		void						setup						( int windowWidth, int windowHeight, GraphicMode mode = OPENGL );
 		void						fullscreen					()		{ m_fullscreen = true; }
+		void						vSync						(bool value )		{ m_vSync = value; }
 		void						FSAA						( int fsaa )		{ m_fsaa = fsaa; }
 
 		// Query methods
@@ -153,6 +157,8 @@ namespace Cing
 		bool						shadowsEnabled				() const { return m_shadowsEnabled; }
 		ShadowTechnique				getCurrentShadowTechnique	() const { return m_shadowTechnique; }
 
+        Ogre::TexturePtr			getRttTexture               () { return m_RttTexture; }
+
 
 		// Public Attributes (to be removed)
 
@@ -193,6 +199,7 @@ namespace Cing
 		GraphicMode                	m_defaultGraphicMode;
 		bool                       	m_setupCalled;			///< True when the setup method has been already called
 		bool                       	m_fullscreen;			///< If true, the applcation will run in full screen mode
+		bool                       	m_vSync;				///< If true, the applcation sync with dispay render (usually 60fps)
 		int							m_fsaa;					/// < Antialiasing value (0..16). Depends on HW support
 
 		// Misc

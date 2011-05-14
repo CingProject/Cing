@@ -19,6 +19,10 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "XMLElement.h"
 #include "LogManager.h"
 #include "Release.h"
@@ -330,7 +334,7 @@ String XMLElement::getStringAttribute( const String& name, String defaultValue /
   // Check state
   if ( !m_rootElem )
   {
-    LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
+    LOG_ERROR( "Trying to call getStringAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
     return defaultValue;
   }
 

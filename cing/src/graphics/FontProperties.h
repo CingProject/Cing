@@ -22,6 +22,10 @@
 #ifndef _FontProperties_H_
 #define _FontProperties_H_
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
+
 #include "GraphicsPrereqs.h"
 #include "Color.h"
 #include "Font.h"

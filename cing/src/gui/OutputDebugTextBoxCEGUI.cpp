@@ -19,6 +19,9 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "OutputDebugTextBoxCEGUI.h"
 #include "GUIManagerCEGUI.h"
 
@@ -39,7 +42,7 @@ namespace Cing
 // Static members init
 const int		OutputDebugTextBoxCEGUI::DEFAULT_TEXT_BOX_HEIGHT		= 150;
 const float		OutputDebugTextBoxCEGUI::DEFAULT_TRANSPARENCY		= 0.5f;
-const int		OutputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 300;
+const int		OutputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 100;
 
 /**
  * @internal
@@ -47,7 +50,8 @@ const int		OutputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 300;
  */
 OutputDebugTextBoxCEGUI::OutputDebugTextBoxCEGUI():
 	m_listBox( NULL ),
-	m_bIsValid  ( false )
+	m_bIsValid  ( false ),
+	m_enabled(false)
 {
 }
 
@@ -85,6 +89,7 @@ void OutputDebugTextBoxCEGUI::init()
 	GUIManagerCEGUI::getSingleton().addGUIELement( m_listBox );
 
 	m_bIsValid = true;
+	m_enabled = true;
 }
 
 /**
@@ -96,6 +101,7 @@ void OutputDebugTextBoxCEGUI::end()
 {
 
 	m_bIsValid = false;
+	m_enabled = false;
 }
 
 /**
@@ -110,6 +116,9 @@ void OutputDebugTextBoxCEGUI::print( const char* text )
 		LOG_ERROR( "Trying to print to the OutputDebugTextBoxCEGUI, but it has not been initialized" );
 		return;
 	}
+
+	// Thread safe
+    pt::scopelock lock( m_mutex );
 
 	// If this is the first item -> add a new one
 	if ( m_listBox->getItemCount() == 0 )
@@ -138,6 +147,13 @@ void OutputDebugTextBoxCEGUI::println( const char* text )
 	if ( !isValid() )
 		return;
 
+	if ( !m_enabled )
+		return;
+
+	// Thread safe
+    pt::scopelock lock( m_mutex );
+
+
 	// Check the message limit
 	if ( m_listBox->getItemCount() >= DEFAULT_MAX_MESSAGES )
 		m_listBox->removeItem( m_listBox->getListboxItemFromIndex( 0 ) );
@@ -162,6 +178,10 @@ void OutputDebugTextBoxCEGUI::clear()
 		return;
 	}
 
+	if ( !m_enabled )
+		return;
+
+
 	m_listBox->resetList();
 }
 
@@ -179,6 +199,9 @@ void OutputDebugTextBoxCEGUI::setVisible( bool visible )
 		return;
 	}
 
+	if ( !m_enabled )
+		return;
+
 	m_listBox->setVisible( visible );
 }
 
@@ -195,6 +218,9 @@ void OutputDebugTextBoxCEGUI::setHeight( float pxHeight )
 		return;
 	}
 
+	if ( !m_enabled )
+		return;
+
 	m_listBox->setHeight( CEGUI::UDim( 0, pxHeight ) );
 }
 
@@ -210,6 +236,9 @@ void OutputDebugTextBoxCEGUI::setAlpha( float alpha )
 		LOG_ERROR( "Trying to set the OutputDebugTextBoxCEGUI height, but it has not been initialized" );
 		return;
 	}
+
+	if ( !m_enabled )
+		return;
 
 	m_listBox->setAlpha( alpha );
 }
