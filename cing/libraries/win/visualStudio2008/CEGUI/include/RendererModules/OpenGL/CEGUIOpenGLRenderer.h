@@ -4,7 +4,7 @@
     author:     Paul D Turner
 *************************************************************************/
 /***************************************************************************
- *   Copyright (C) 2004 - 2009 Paul D Turner & The CEGUI Development Team
+ *   Copyright (C) 2004 - 2010 Paul D Turner & The CEGUI Development Team
  *
  *   Permission is hereby granted, free of charge, to any person obtaining
  *   a copy of this software and associated documentation files (the
@@ -78,6 +78,72 @@ public:
         //! Disable texture targets.
         TTT_NONE
     };
+
+    /*!
+    \brief
+        Convenience function that creates the required objects to initialise the
+        CEGUI system.
+
+        The created Renderer will use the current OpenGL viewport as it's
+        default surface size.
+
+        This will create and initialise the following objects for you:
+        - CEGUI::OpenGLRenderer
+        - CEGUI::DefaultResourceProvider
+        - CEGUI::System
+
+    \param tt_type
+        Specifies one of the TextureTargetType enumerated values indicating the
+        desired TextureTarget type to be used.  Defaults to TTT_AUTO.
+
+    \return
+        Reference to the CEGUI::OpenGLRenderer object that was created.
+    */
+    static OpenGLRenderer& bootstrapSystem(
+                                    const TextureTargetType tt_type = TTT_AUTO);
+
+    /*!
+    \brief
+        Convenience function that creates the required objects to initialise the
+        CEGUI system.
+
+        The created Renderer will use the current OpenGL viewport as it's
+        default surface size.
+
+        This will create and initialise the following objects for you:
+        - CEGUI::OpenGLRenderer
+        - CEGUI::DefaultResourceProvider
+        - CEGUI::System
+
+    \param display_size
+        Size object describing the initial display resolution.
+
+    \param tt_type
+        Specifies one of the TextureTargetType enumerated values indicating the
+        desired TextureTarget type to be used.  Defaults to TTT_AUTO.
+
+    \return
+        Reference to the CEGUI::OpenGLRenderer object that was created.
+    */
+    static OpenGLRenderer& bootstrapSystem(const Size& display_size,
+                                  const TextureTargetType tt_type = TTT_AUTO);
+
+    /*!
+    \brief
+        Convenience function to cleanup the CEGUI system and related objects
+        that were created by calling the bootstrapSystem function.
+
+        This function will destroy the following objects for you:
+        - CEGUI::System
+        - CEGUI::DefaultResourceProvider
+        - CEGUI::OpenGLRenderer
+
+    \note
+        If you did not initialise CEGUI by calling the bootstrapSystem function,
+        you should \e not call this, but rather delete any objects you created
+        manually.
+    */
+    static void destroySystem();
 
     /*!
     \brief
@@ -198,6 +264,9 @@ public:
     */
     static float getNextPOTSize(const float f);
 
+    //! set the render states for the specified BlendMode.
+    void setupRenderingBlendMode(const BlendMode mode, const bool force = false);
+
 private:
     /*!
     \brief
@@ -265,6 +334,8 @@ private:
     bool d_initExtraStates;
     //! pointer to a helper that creates TextureTargets supported by the system.
     OGLTextureTargetFactory* d_textureTargetFactory;
+    //! What blend mode we think is active.
+    BlendMode d_activeBlendMode;
   };
 
 } // End of  CEGUI namespace section

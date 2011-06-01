@@ -51,6 +51,7 @@ namespace Cing
 	String		toString( T input );
 	String		intToString(int inputNumber);
 	int			stringToInt(const String& str);
+	float		stringToFloat(const String& str);
 
 
 	/**

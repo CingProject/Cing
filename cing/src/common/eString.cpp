@@ -48,6 +48,15 @@ int stringToInt(const String& str)
 	return intNumber;
 }
 
+float stringToFloat(const String& str)
+{
+	float intNumber;
+	std::stringstream s(str);
+	s >> intNumber;
+	return intNumber;
+}
+
+
 
 
 
