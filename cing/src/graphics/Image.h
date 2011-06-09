@@ -68,7 +68,7 @@ namespace Cing
 		void		end					();
 
 		// Image data
-		void			setData( const unsigned char* imageData, int width, int height, GraphicsType format, int widthStep = -1 );
+		void			setData( const unsigned char* imageData, int width = -1, int height = -1, GraphicsType format = UNDEFINED, int widthStep = -1 );
 		unsigned char*	getData();
 		unsigned char*	pixels() { return getData(); }
 		Image*			clone ();

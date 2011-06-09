@@ -50,8 +50,12 @@ namespace Cing
 	template< typename T>
 	String		toString( T input );
 	String		intToString(int inputNumber);
-	int			stringToInt(const String& str);
-	float		stringToFloat(const String& str);
+	int			stringToInt(const std::string& str);
+	float		stringToFloat(const std::string& str);
+
+	// Tokenize utils
+	void						split(const std::string& str, char delim, std::vector<std::string>& tokens );
+	std::vector<std::string>	split(const std::string& str, char delim );
 
 
 	/**

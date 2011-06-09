@@ -340,13 +340,23 @@ namespace Cing
 	* @param format		format Format of the image passed
 	* @param widthStep	optional parameter in case the width step is not width*nChannels. Usually you should not use it.
 	*/
-	void Image::setData( const unsigned char* imageData, int width, int height, GraphicsType format, int widthStep /*= -1*/ )
+	void Image::setData( const unsigned char* imageData, int width /*= -1*/, int height /*= -1*/, GraphicsType format /*= UNDEFINED*/, int widthStep /*= -1*/ )
 	{
 		if ( !isValid() )
 		{
 			LOG_ERROR( "Trying to set data to an invalid image (it has not been initialized)" );
 			return;
 		}
+
+		// if the width/height are not specified, assume the are the same as this image
+		if ( width == -1 )
+			width = getWidth();
+		if ( height == -1 )
+			height = getHeight();
+
+		// if the format is not specified, assume is the same
+		if ( format == UNDEFINED )
+			format = m_format;
 
 		// Check dimensions
 		int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );

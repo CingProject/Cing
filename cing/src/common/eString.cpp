@@ -40,7 +40,7 @@ String intToString(int inputNumber)
 }
 
 /// Converts a string to int
-int stringToInt(const String& str)
+int stringToInt(const std::string& str)
 {
 	int intNumber;
 	std::stringstream s(str);
@@ -48,7 +48,7 @@ int stringToInt(const String& str)
 	return intNumber;
 }
 
-float stringToFloat(const String& str)
+float stringToFloat(const std::string& str)
 {
 	float intNumber;
 	std::stringstream s(str);
@@ -56,9 +56,35 @@ float stringToFloat(const String& str)
 	return intNumber;
 }
 
+/**
+ * @brief Splits a string into a series of tokens (delimited by a delimiter character).
+ * @param str			The string to split or tokenize
+ * @param delim			The charactar delimiter
+ * @param tokens[out]	This vector of strings stores the found individual tokens
+ */
+void split(const std::string& str, char delim, std::vector<std::string>& tokens )
+{
+    std::stringstream ss(str);
+    std::string item;
+    while ( std::getline( ss, item, delim ) )
+    {
+        tokens.push_back( item );
+    }
+}
 
-
-
+/**
+ * @brief Splits a string into a series of tokens (delimited by a delimiter character). This is a less optimal version than the previous
+ * as it returns a copy vector with the found tokens
+ * @param str		The string to split or tokenize
+ * @param delim		The charactar delimiter
+ * @return 			A vector containing the found individual tokens
+ */
+std::vector<std::string> split(const std::string& str, char delim )
+{
+	std::vector<std::string> tokens;
+	split(str, delim, tokens);
+	return tokens;
+}
 
 /**
  * @brief Returns the character located at a specific position within the string
