@@ -165,5 +165,7 @@ typedef MediaPlayerGS MediaPlayer;
 typedef MediaPlayerOCV MediaPlayer;
 #endif
 
+// Video writing
+typedef OCVCamera VideoRecorder;
 
 #endif // _Vision_H_
