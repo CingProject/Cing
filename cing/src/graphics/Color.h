@@ -50,8 +50,8 @@ public:
 	Color( float red,  float green, float blue );
 	Color( float red,  float green, float blue, float alpha );
 
-	Color( int rgb );
-	Color( int rgb, float alpha );
+	Color( int gray );
+	Color( int gray, float alpha );
 
 	Color( Ogre::ColourValue color );
 
