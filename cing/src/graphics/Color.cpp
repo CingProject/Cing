@@ -135,6 +135,10 @@ Color::Color(  Ogre::ColourValue color ):
 	m_lowRange( 0.0f ), 
 	m_hightRange( 255.0f )
 {
+	color.r = map( color.r, 0.0, 1.0, 0, 255);
+	color.g = map( color.g, 0.0, 1.0, 0, 255);
+	color.b = map( color.b, 0.0, 1.0, 0, 255);
+	
 	set( color.r, color.g, color.b, color.a );
 }
 /**
