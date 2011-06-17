@@ -259,12 +259,12 @@ namespace Cing
 				int from_to[] = { 0,2,  1,1,  2,0,  3,3 };
 				cv::mixChannels( &imgData, 1, &m_cvImage, 1, from_to, 4 );
 			}
-			// Format not "under control" -> not touching byte order
-			else
-			{
-				LOG( "Image::load. Format not \"under control\". Not altering byte order, colors could be swapped" );
-				imgData.copyTo(m_cvImage);
-			}
+
+		}// Format not "under control" -> not touching byte order
+		else
+		{
+			LOG( "Image::load. Format not \"under control\". Not altering byte order, colors could be swapped" );
+			imgData.copyTo(m_cvImage);
 		}
 
 		// Create the texture quad (to draw image)
