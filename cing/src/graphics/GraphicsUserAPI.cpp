@@ -632,8 +632,7 @@ void ellipse( int x, int y, int width, int height)
 	float pitch = orient.getPitch().valueRadians();
 	float roll	= orient.getRoll().valueRadians();
 
-	// Note: widtha and height are swaped becuase the way opencv expects them (TODO: check)
-	GraphicsManager::getSingleton().m_canvas.ellipse( (int)v1.x, (int)v1.y, (int)scale.y, (int)scale.x );
+	GraphicsManager::getSingleton().m_canvas.ellipse( (int)v1.x, (int)v1.y, (int)scale.x, (int)scale.y );
 
 
 }
