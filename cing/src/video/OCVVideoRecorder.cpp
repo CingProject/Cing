@@ -51,10 +51,10 @@ bool OCVVideoRecorder::init( int width, int height ,std::string fileName)
 	BaseVideoRecorder::init(  width, height,fileName );
 
 	// Init OpenCv video recorder. Open a dialog box for CODEC selection...
-	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
+	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
 
 	// TODO: Check CV_FOURCC manual initialization failure
-	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), CV_FOURCC('C', 'V', 'I', 'D'), m_fps, cvSize( m_width, m_height), isColor );
+	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), CV_FOURCC('D', 'I', 'B', ' '), m_fps, cvSize( m_width, m_height), true );
 
 	if ( m_cvVideoWriter->isOpened() )
 		m_bIsValid = true;	// The class is now initialized
@@ -84,10 +84,10 @@ bool OCVVideoRecorder::init( int width, int height ,std::string fileName, int fp
 	BaseVideoRecorder::init( width, height, fileName, fps );
 
 	// Init OpenCv video recorder. Open a dialog box for CODEC selection...
-	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
+	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
 
 	// TODO: Check CV_FOURCC manual initialization failure
-	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), CV_FOURCC('C', 'V', 'I', 'D'), m_fps, cvSize( m_width, m_height), isColor );
+	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), CV_FOURCC('D', 'I', 'B', ' '), m_fps, cvSize( m_width, m_height), true );
 
 	if ( m_cvVideoWriter->isOpened() )
 		m_bIsValid = true;	// The class is now initialized
