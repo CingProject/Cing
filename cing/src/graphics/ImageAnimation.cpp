@@ -112,7 +112,6 @@ namespace Cing
 			if ( controller )
 			{
 				controller->setEnabled(false);
-				jump(0);
 			}
 		}
 		else
@@ -122,20 +121,6 @@ namespace Cing
 		}
 	}
 
-	/**
-	 * Jumps to a specific frame of the animation
-	 */
-	void ImageAnimation::jump( unsigned int frameNumber )
-	{
-		Ogre::MaterialPtr material = getTexturedQuad().getMaterial();
-		if ( !material.isNull() )
-			material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setCurrentFrame(frameNumber);
-		else
-		{
-			LOG_ERROR( "ImageAnimation::jump: invalid animation. Did you call load() to initialize it?" );
-			return;
-		}
-	}
 
 	/**
 	 * Returns the duration of the animation in seconds

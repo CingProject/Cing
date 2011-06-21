@@ -47,7 +47,6 @@ namespace Cing
 		// Playback control
 		void		play();
 		void		stop();
-		void		jump( unsigned int frameNumber );
 
 		// Getters
 		float		getAnimationDuration();
