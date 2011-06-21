@@ -69,6 +69,7 @@
 #include "graphics/DirectionalLight.h"
 #include "graphics/GraphicsTypes.h"
 #include "graphics/Image.h"
+#include "graphics/ImageAnimation.h"
 #include "graphics/GraphicsUserAPI.h"
 #include "graphics/LightingUserAPI.h"
 #include "graphics/Transform.h"
