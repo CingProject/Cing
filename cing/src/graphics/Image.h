@@ -28,6 +28,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "GraphicsPrereqs.h"
 #include "TexturedQuad.h"
+#include "Color.h"
 
 // Ogre
 #include "OgreImage.h"
@@ -99,6 +100,10 @@ namespace Cing
 		void  	rect	( int x, int y, int width, int height );
 		void  	text	( int x1, int y1, const char* text );
 		void  	fill    ( const Color& color );
+		void  	fill    ( float gray ) { fill( Color(gray, gray, gray) ); }
+		void  	fill    ( float gray, float alpha ) { fill( Color(gray, gray, gray, alpha) ); }
+		void  	fill    ( float r, float g, float b ) { fill( Color(r, g, b) ); }
+		void  	fill    ( float r, float g, float b, float a ) { fill( Color(r, g, b, a) ); }
 
 		// Image processing
 		void	filter	( ImageProcessingFilters type );

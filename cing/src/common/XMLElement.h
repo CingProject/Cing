@@ -59,20 +59,20 @@ namespace Cing
 		~XMLElement	();
 
 		// Init / Release / Update
-		void	load 	( const std::string& xmlFileName );
+		bool	load 	( const std::string& xmlFileName );
 		void	end		();
 
 		// Query  Methods
-		int						getChildCount	    ();
-		XMLElement		getChild			    ( int index );
-		XMLElement		getChild			    ( const std::string& path );
-		void          getChildren       ( XMLElementArray& children, const String& path = "NO_PATH" );
-		String        getContent        ();
-		int           getIntAttribute   ( const String& name, int defaultValue = 0 );
-		float         getFloatAttribute ( const String& name, float defaultValue = 0.0f );
-		String        getStringAttribute( const String& name, String defaultValue = "" );
-		String        getName           ();
-		bool					isValid				    () { return m_bIsValid; }
+		int				getChildCount		();
+		XMLElement		getChild			( int index );
+		XMLElement		getChild			( const std::string& path );
+		void			getChildren       	( XMLElementArray& children, const String& path = "NO_PATH" );
+		String			getContent        	();
+		int				getIntAttribute   	( const String& name, int defaultValue = 0 );
+		float			getFloatAttribute 	( const String& name, float defaultValue = 0.0f );
+		String			getStringAttribute	( const String& name, String defaultValue = "" );
+		String			getName           	();
+		bool			isValid				() { return m_bIsValid; }
 
 	private:
 
