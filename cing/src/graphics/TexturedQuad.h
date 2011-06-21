@@ -81,16 +81,17 @@ namespace Cing
 		void	updateTexture	( char* textureData, int width, int height, GraphicsType format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
 
 		// Query methods
-		bool  				isValid         () const 	{ return m_bIsValid; }
-		int					getTextWidth	() const 	{ return (int)m_textWidth;	}
-		int					getTextHeight	() const 	{ return (int)m_textHeight;	}
-		GraphicsType		getFormat		() const 	{ return m_format;		}
-		Ogre::ManualObject*	getManualObject	() 			{ return m_quad;		}
-		Ogre::TexturePtr	getOgreTexture	() const 	{ return m_ogreTexture; }
-		Ogre::SceneNode*	getSceneNode	()			{ return m_quadSceneNode;   }
+		bool  					isValid         () const 	{ return m_bIsValid; }
+		int						getTextWidth	() const 	{ return (int)m_textWidth;	}
+		int						getTextHeight	() const 	{ return (int)m_textHeight;	}
+		GraphicsType			getFormat		() const 	{ return m_format;		}
+		Ogre::ManualObject*		getManualObject	() 			{ return m_quad;		}
+		Ogre::MaterialPtr		getMaterial		() 			{ return m_ogreMaterial; }
+		Ogre::TexturePtr		getOgreTexture	() const 	{ return m_ogreTexture; }
+		Ogre::SceneNode*		getSceneNode	()			{ return m_quadSceneNode;   }
 		const Ogre::SceneNode*	getSceneNode	() const	{ return m_quadSceneNode;   }
-		Ogre::SceneNode*	getPivotSceneNode()			{ return m_pivotSceneNode;   }
-		const String&		getMaterialName	() const	{ return m_ogreMaterialName; }
+		Ogre::SceneNode*		getPivotSceneNode()			{ return m_pivotSceneNode;   }
+		const String&			getMaterialName	() const	{ return m_ogreMaterialName; }
 
 
 		// Texture coordinate control
@@ -125,6 +126,7 @@ namespace Cing
 		static long               m_quadCounter;          			///< Used to generate unique names for the quad materials, textures and ogre manual objects
 
 		// Attributes
+		Ogre::MaterialPtr			m_ogreMaterial;					///< Material used to render the quad
 		Ogre::TexturePtr			m_ogreTexture;          		///< Ogre texture (to render the quad with it)  
 		Ogre::SceneNode*			m_quadSceneNode;        		///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
 		Ogre::SceneNode*			m_pivotSceneNode;        		///< Pivot scene node (parent of the quadSceneNode. Used to concatenate transformations

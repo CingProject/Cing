@@ -158,18 +158,18 @@ namespace Cing
 		}
 
 		// Create a material for the quad
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName,
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		m_ogreMaterial = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		
 		// Assign texture to material and set materia properties
-		Ogre::TextureUnitState* texUnit = material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
+		Ogre::TextureUnitState* texUnit = m_ogreMaterial->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
 		texUnit->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP); // note: clamp fixes glitch in edges of 2d images
 
-		material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
-		material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
-		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
-		material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
-//		material->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
+		m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+		m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( false );
+		m_ogreMaterial->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
+		m_ogreMaterial->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
+		m_ogreMaterial->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
+//		m_ogreMaterial->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
 
 
 		/*
@@ -177,9 +177,9 @@ namespace Cing
 		TODO: We need an easy way to change images transparency!!
 		//Modified by Jorge 25/feb/2009
 
-		//material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
-		//material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_COLOUR );
-		//material->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(1,1,0.5,0.5));
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_COLOUR );
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(1,1,0.5,0.5));
 
 
 		static_cast<MaterialPtr>( MaterialManager::getSingleton( ).getByName( "Overlay/TwoTextures" ) )
