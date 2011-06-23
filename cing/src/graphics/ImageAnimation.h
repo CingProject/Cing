@@ -42,7 +42,7 @@ namespace Cing
 	public:
 
 		// Init / Release / Update / Save / Clone
-		void		load	( const std::string& baseName, int nFrames, float durationSecs );
+		bool		load	( const std::string& baseName, int nFrames, float durationSecs );
 
 		// Playback control
 		void		play();

@@ -45,14 +45,14 @@ namespace Cing
 	 * @param nFrames		Number of frames in the animation
 	 * @param durationSecs	Duration in seconds for the whole secuence to be played.
 	 */
-	void ImageAnimation::load( const std::string& baseName, int nFrames, float durationSecs )
+	bool ImageAnimation::load( const std::string& baseName, int nFrames, float durationSecs )
 	{
 		// File the last dot to extract the base image name (with no extension)
 		size_t lastDot = baseName.find_last_of( "." );
 		if ( lastDot == std::string::npos )
 		{
 			LOG_ERROR( "ImageAnimation::load Could not load the animation. baseName does not contain any dot/extension" );
-			return;
+			return false;
 		}
 
 		// Build the name for the first image (to load it)
@@ -73,9 +73,11 @@ namespace Cing
 			{
 				LOG_ERROR( "ImageAnimation::load Could not load the animation. Null material found." );
 				end();
-				return;
+				return false ;
 			}
 		}
+
+		return true;
 	}
 
 
