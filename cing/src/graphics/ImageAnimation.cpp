@@ -47,6 +47,7 @@ namespace Cing
 	 */
 	bool ImageAnimation::load( const std::string& baseName, int nFrames, float durationSecs )
 	{
+		m_nFrames = nFrames;
 		// File the last dot to extract the base image name (with no extension)
 		size_t lastDot = baseName.find_last_of( "." );
 		if ( lastDot == std::string::npos )
@@ -137,6 +138,24 @@ namespace Cing
 		{
 			LOG_ERROR( "ImageAnimation::getAnimationDuration: Requesting animation duration on an invalid animation. Did you call load() to initialize it?" );
 			return 0.0f;
+		}
+	}
+
+	bool ImageAnimation::setCurrentFrame(int newCurrentFrame)
+	{
+		Ogre::MaterialPtr material = getTexturedQuad().getMaterial();
+		if ( !material.isNull()){
+			if( newCurrentFrame >=0 ){
+				material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setCurrentFrame(newCurrentFrame);
+				return true;
+			}else{
+				LOG_ERROR( "ImageAnimation::setCurrentFrame: newCurrentFrame < 0" );
+				return false;
+			}
+		}else
+		{
+			LOG_ERROR( "ImageAnimation::getAnimationDuration: Requesting animation duration on an invalid animation. Did you call load() to initialize it?" );
+			return false;
 		}
 	}
 	

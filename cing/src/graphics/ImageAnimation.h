@@ -50,8 +50,13 @@ namespace Cing
 
 		// Getters
 		float		getAnimationDuration();
+		int			getNumberFrames(){return m_nFrames;}
+
+		//Setters
+		bool setCurrentFrame(int newCurrentFrame);
 
 	private:
+		int m_nFrames;
 	};
 
 } // namespace Cing
