@@ -132,7 +132,6 @@ namespace Cing
 		Ogre::SceneNode*			m_pivotSceneNode;        		///< Pivot scene node (parent of the quadSceneNode. Used to concatenate transformations
 		Ogre::ManualObject*			m_quad;							///< Ogre manual object that contains the geometry (vertex) of the quad
 		GraphicsType				m_format;						///< Format of the image
-		Ogre::uint32				m_3dQueryFlags;					///< Query flags of ogre when the object is being renderd in 3d		
 		float						m_alpha;						///< Transparency of the object. Range 0...255.
 		
 

@@ -166,8 +166,6 @@ namespace Cing
 
 		m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 		m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( false );
-		m_ogreMaterial->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
-		m_ogreMaterial->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
 		m_ogreMaterial->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
 //		m_ogreMaterial->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
 
@@ -876,7 +874,6 @@ namespace Cing
 		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
 		m_quad->setUseIdentityProjection( false );
 		m_quad->setUseIdentityView( false );
-		m_quad->setQueryFlags( m_3dQueryFlags );
 
 		// mark the object as 3d rendering
 		m_render2D = false;
@@ -894,7 +891,7 @@ namespace Cing
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
-			enableDepthWrite(false);
+			//enableDepthWrite(false);
 			enableDepthCheck(true);
 		}
 		// This image has no alpha channel
