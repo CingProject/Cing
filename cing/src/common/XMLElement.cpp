@@ -118,6 +118,7 @@ bool XMLElement::load( const std::string& xmlFileName )
 		return false;
 	}
 
+
 	m_bIsValid = true;
 	return true;
 }
