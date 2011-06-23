@@ -90,7 +90,7 @@ XMLElement::~XMLElement()
  * @brief Loads an xml file
  * @param xmlFileName  Name of the xml file to load. It must be in the application data folder
  */
-void XMLElement::load( const std::string& xmlFileName )
+bool XMLElement::load( const std::string& xmlFileName )
 {
 	// Check if load has already been called
 	if ( isValid() )
@@ -106,16 +106,20 @@ void XMLElement::load( const std::string& xmlFileName )
 	if ( m_xmlDoc->Error() )
 	{
 		LOG_ERROR( "Error loading %s: %s", xmlFileName.c_str(), m_xmlDoc->ErrorDesc() );
-		return;
+		return false;
 	}
 
 	// Get root element
 	m_rootElem = m_xmlDoc->RootElement();
 	if ( !m_rootElem )
+	{
 		LOG_ERROR( "Error loading %s, There is no root element", xmlFileName.c_str() );
+		return false;
+	}
 
 
 	m_bIsValid = true;
+	return true;
 }
 
 /**

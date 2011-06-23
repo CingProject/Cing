@@ -59,7 +59,7 @@ namespace Cing
 		~XMLElement	();
 
 		// Init / Release / Update
-		void	load 	( const std::string& xmlFileName );
+		bool	load 	( const std::string& xmlFileName );
 		void	end		();
 
 		// Query  Methods
