@@ -145,18 +145,24 @@ namespace Cing
 		void copy( const Image& img );
 
 		// Texture update control
-		void					setUpdateTexture( bool updateTextureFlag = true );	
-		bool					getUpdateTexture() const;	
+		void	setUpdateTexture( bool updateTextureFlag = true );	
+		bool	getUpdateTexture() const;	
 
 		// Texture coordinate flip
-		void					flipVertical		();
-		bool					isVFlipped			() const { return m_bVFlipped; }
+		void	flipVertical		();
+		bool	isVFlipped			() const { return m_bVFlipped; }
+
+		// Render Queue control
+		void	forceRenderQueue	( unsigned int renderQueueId ) { m_quad.forceRenderQueue( renderQueueId ); }
+		void	restoreRenderQueue	() { m_quad.restoreRenderQueue(); }
 
 		TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
 	private:
 		// Attributes
 		static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
 		static ImageThresholdFilter    m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
+
+		std::string						m_path;				///< Path to the image file (relative to data folder)
 
 		cv::Mat 						m_cvImage;			///< Contains the image compatible with openCV
 		Ogre::Image						m_image;			///< Contains the image data (loaded from file or dynamically created)
