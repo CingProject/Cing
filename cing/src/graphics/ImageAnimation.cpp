@@ -140,7 +140,10 @@ namespace Cing
 			return 0.0f;
 		}
 	}
-
+	/**
+	 * @brief Set the current frame of the animation. Useful when duration = 0 so the animation is controlled manually
+	 * @param newCurrentFrame		new current frame of the animation
+	 */
 	bool ImageAnimation::setCurrentFrame(int newCurrentFrame)
 	{
 		Ogre::MaterialPtr material = getTexturedQuad().getMaterial();
