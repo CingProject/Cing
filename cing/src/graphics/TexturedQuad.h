@@ -92,6 +92,8 @@ namespace Cing
 		const Ogre::SceneNode*	getSceneNode	() const	{ return m_quadSceneNode;   }
 		Ogre::SceneNode*		getPivotSceneNode()			{ return m_pivotSceneNode;   }
 		const String&			getMaterialName	() const	{ return m_ogreMaterialName; }
+		bool					hasAlpha		() const;
+
 
 
 		// Texture coordinate control
@@ -100,11 +102,12 @@ namespace Cing
 		// Operators 
 		void			operator=		( const TexturedQuad& other );
 
-		void			setTransparency	( float alpha );
-		void			setRenderQueue	( Ogre::RenderQueueGroupID group ); 
-		bool			hasAlpha		() const;
-		void			enableDepthWrite( bool value );
-		void			enableDepthCheck( bool value );
+		// Texture render control
+		void			setTransparency		( float alpha );
+		void			forceRenderQueue	( unsigned int renderQueueId );
+		void			restoreRenderQueue	() { m_renderQueueForced = false; }
+		void			enableDepthWrite	( bool value );
+		void			enableDepthCheck	( bool value );
 
 
 
@@ -134,6 +137,8 @@ namespace Cing
 		GraphicsType				m_format;						///< Format of the image
 		float						m_alpha;						///< Transparency of the object. Range 0...255.
 		
+		Ogre::uint8					m_forcedRenderQueue;			///< Render queue to be used by this quad. Forced by the user
+		bool						m_renderQueueForced;			///< True if the render queue has been forced by the user
 
 		float						m_xScale, m_yScale, m_zScale;	///< Scale of the node
 

@@ -74,7 +74,8 @@ namespace Cing
 		m_xScale				( 1.0f ),
 		m_yScale				( 1.0f ),
 		m_zScale				( 1.0f ),
-		m_bIsValid				( false )
+		m_bIsValid				( false ),
+		m_renderQueueForced		( false )
 	{
 	}
 
@@ -164,9 +165,9 @@ namespace Cing
 		Ogre::TextureUnitState* texUnit = m_ogreMaterial->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
 		texUnit->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP); // note: clamp fixes glitch in edges of 2d images
 
-		m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
-		m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( false );
 		m_ogreMaterial->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( false );
 //		m_ogreMaterial->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
 
 
@@ -661,21 +662,28 @@ namespace Cing
 	}
 
 	/*
-	 * Sets the Ogre Scene Manager render queue for this quad
-	 * @param group render queue
+	 * Sets the Ogre Scene Manager render queue for this quad.
+	 * The method is called "force" as this class usually handles automatically the render queue group for the object depending 
+	 * on whether it is being rendered in 2d (x, y) or 3d (x, y, z). When this method is called, that is not set automatically anymore.
+	 * You can to go back to the auto behaviour by calling restoreRenderQueue();
+	 * @param group render queue. Important, the range is 0..105. There are no more render queues in Ogre.
 	 */
-	void TexturedQuad::setRenderQueue( Ogre::RenderQueueGroupID group )
+	void TexturedQuad::forceRenderQueue( unsigned int renderQueueId )
 	{
 		if ( isValid() )
-			m_quad->setRenderQueueGroup( group );
+		{
+			// Check range
+			if ( (renderQueueId < Ogre::RENDER_QUEUE_BACKGROUND) || (renderQueueId > Ogre::RENDER_QUEUE_MAX) )
+			{
+				LOG_WARNING( "TexturedQuad::forceRenderQueue. Render queue range in 0..105. Constraining received value, which is out of range" );
+				renderQueueId = (unsigned int)constrain((float)renderQueueId, (float)Ogre::RENDER_QUEUE_BACKGROUND, (float)Ogre::RENDER_QUEUE_MAX);
+			}
+
+			m_renderQueueForced = true;
+			m_forcedRenderQueue = renderQueueId;
+			m_quad->setRenderQueueGroup( (Ogre::RenderQueueGroupID)m_forcedRenderQueue );
+		}
 	}
-
-
-	bool TexturedQuad::hasAlpha() const
-	{
-		return Ogre::PixelUtil::hasAlpha( (Ogre::PixelFormat)m_format );
-	}
-
 
 	void TexturedQuad::enableDepthWrite( bool value )
 	{
@@ -732,6 +740,15 @@ namespace Cing
 		Ogre::PixelBox newData( width, height, 1, (Ogre::PixelFormat)format, textureData );
 		Ogre::PixelBox dest( (size_t)m_textWidth, (size_t)m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
 		m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData, dest );
+	}
+
+	/**
+	 * @brief Returns true if the texture of this quad has alpha channel on it, and false otherwise
+	 * @return true if the texture of this quad has alpha channel on it, and false otherwise
+	 */
+	bool TexturedQuad::hasAlpha() const
+	{
+		return Ogre::PixelUtil::hasAlpha( (Ogre::PixelFormat)m_format );
 	}
 
 	/**
@@ -826,7 +843,8 @@ namespace Cing
 	void TexturedQuad::setbackgroundRendering()
 	{
 		// Properties to be rendered in 2d
-		m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
+		if ( !m_renderQueueForced )
+			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
 
@@ -848,9 +866,9 @@ namespace Cing
 	void TexturedQuad::set2dRendering()
 	{
 		// Properties to be rendered in 2d
-		m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
+		if ( !m_renderQueueForced )
+			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( true );
 		m_quad->setUseIdentityProjection(true);
 		m_quad->setUseIdentityView(true);
 		Ogre::AxisAlignedBox aabb;
@@ -868,10 +886,9 @@ namespace Cing
 	void TexturedQuad::set3dRendering()
 	{
 		// Set properties for 3d rendering
-		m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
+		if ( !m_renderQueueForced )
+			m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( true );
-		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
 		m_quad->setUseIdentityProjection( false );
 		m_quad->setUseIdentityView( false );
 
@@ -891,7 +908,7 @@ namespace Cing
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
-			//enableDepthWrite(false);
+			enableDepthWrite(false);
 			enableDepthCheck(true);
 		}
 		// This image has no alpha channel

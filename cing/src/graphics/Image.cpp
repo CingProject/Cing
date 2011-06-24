@@ -55,7 +55,8 @@ namespace Cing
 	Image::Image():
 		m_bIsValid( false ),
 		m_bVFlipped( false ),
-		m_bUpdateTexture( false )
+		m_bUpdateTexture( false ),
+		m_path( "NOT_LOADED_FROM_FILE")
 	{
 	}
 
@@ -67,7 +68,8 @@ namespace Cing
 	Image::Image( const Image& img ):
 		m_bIsValid( false ),
 		m_bVFlipped( img.isVFlipped() ),
-		m_bUpdateTexture( false )
+		m_bUpdateTexture( false ),
+		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		init( img );
 	}
@@ -83,7 +85,8 @@ namespace Cing
 	Image::Image( int width, int height, GraphicsType format /*= RGB*/ ):
 		m_bIsValid( false ),
 		m_bVFlipped( false ),
-		m_bUpdateTexture( false )
+		m_bUpdateTexture( false ),
+		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		init( width, height, format );
 	}
@@ -96,7 +99,8 @@ namespace Cing
 	*/
 	Image::Image( const std::string& name ):
 		m_bVFlipped( false ),
-		m_bIsValid( false )
+		m_bIsValid( false ),
+		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		load( name );
 	}
@@ -209,8 +213,9 @@ namespace Cing
 		if ( isValid () )
 			end();
 
-		// Load image from file
+		// Load image from file and store its path
 		m_image.load( name, ResourceManager::userResourcesGroupName );
+		m_path = name;
 
 		// Check if image was loaded ok
 		if ( m_image.getData() )
