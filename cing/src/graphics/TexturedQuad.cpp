@@ -842,21 +842,15 @@ namespace Cing
 	*/
 	void TexturedQuad::setbackgroundRendering()
 	{
-		// Properties to be rendered in 2d
+		// Properties to be rendered as background (render queue and no depth write)
 		if ( !m_renderQueueForced )
 			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
+		
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
 
-		m_quad->setUseIdentityProjection(true);
-		m_quad->setUseIdentityView(true);
-		Ogre::AxisAlignedBox aabb;
-		aabb.setInfinite();
-		m_quad->setBoundingBox(aabb);
-
-		// mark the object as 2d rendering
-		m_render2D = true;
-
+		// The rest is the same as in 2d rendering
+		set2dRendering();
 	}
 
 	/**
