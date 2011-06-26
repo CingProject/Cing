@@ -294,13 +294,6 @@ namespace Cing
 		// Also store the number of frames
 		m_nFrames  =  m_videoFps * m_videoDuration;
 
-		// Check if the requested fps is different than the actual video fps -> if so, change it
- 		if ( (fps > 0) && (equal(fps, m_videoFps) == false) )
-		{
-			float newSpeed = fps/m_videoFps;
-			speed( newSpeed );
-		}
-
 		LOG( "MediaPlayer: File %s correctly loaded", m_fileName.c_str() );
 
 		// Init other vars
@@ -311,6 +304,14 @@ namespace Cing
 	
 		// The object is valid when the file is loaded
 		m_bIsValid = true;
+
+		// Check if the requested fps is different than the actual video fps -> if so, change it
+ 		if ( (fps > 0) && (equal(fps, m_videoFps) == false) )
+		{
+			float newSpeed = fps/m_videoFps;
+			speed( newSpeed );
+		}
+
 
 		LOG_EXIT_FUNCTION;
 
