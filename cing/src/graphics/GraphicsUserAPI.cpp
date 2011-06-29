@@ -23,6 +23,7 @@
 #include "Cing-Precompiled.h"
 
 #include "GraphicsUserAPI.h"
+#include "GraphicsTypes.h"
 #include "GraphicsManager.h"
 #include "ShapeManager.h"
 #include "Image.h"
@@ -1134,6 +1135,9 @@ void applyCoordinateSystemTransform( const GraphicsType& coordSystem )
 	GraphicsManager::getSingleton().applyCoordinateSystemTransform( coordSystem );
 }
 
+//-----------------------------------------------------------------------------------
+// Shadows
+//-----------------------------------------------------------------------------------
 
 /**
  * @brief Enables use of shadows. Should be called in the setup before initializing any 3d object.
@@ -1143,6 +1147,11 @@ void enableShadows( ShadowTechnique technique )
 {
 	GraphicsManager::getSingleton().enableShadows( technique );
 }
+
+//-----------------------------------------------------------------------------------
+// Coordinate System related
+//-----------------------------------------------------------------------------------
+
 
 /**
  * @brief Returns the screen coordinate (range 0..1) that relates to the received world coordinate
@@ -1226,5 +1235,14 @@ Vector screenToWorld( const Vector& screenCoordinate, float distanceToCamera )
 {
 	return screenToWorld( Vector2d(screenCoordinate.x, screenCoordinate.y), distanceToCamera );
 }
+
+//----------------------------------------------------------------------------------- 
+// Helpers
+//----------------------------------------------------------------------------------- 
+unsigned int numberOfChannels ( GraphicsType format )
+{
+	return Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
+}
+
 
 } // namespace Cing

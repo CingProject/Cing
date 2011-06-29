@@ -28,7 +28,6 @@ Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
 // GStreamer
 #include <gst/video/video.h>
 
-
 // Common
 #include "common/CommonUtilsIncludes.h"
 #include "common/XMLElement.h"
@@ -39,6 +38,7 @@ Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
 
 // Graphics
 #include "graphics/Color.h"
+#include "graphics/GraphicsUserAPI.h"
 
 namespace Cing
 {
@@ -223,7 +223,7 @@ namespace Cing
 	 * @param fps			Desired Frames per Second for the playback. -1 means to use the fps of the movie file.
 	 * @return true if the video was succesfully loaded
 	 */
-	bool MediaPlayerGS::load( const char* fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
+	bool MediaPlayerGS::load( const std::string& fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
 	{
 		LOG_ENTER_FUNCTION;
 	
@@ -870,7 +870,7 @@ namespace Cing
 	}
 
 	/**
-	 * Creates and configues the GStreamer pipeline that will allow the media playback and control
+	 * Creates and configures the GStreamer pipeline that will allow the media playback and control
 	 * @return true if there was no problem
 	 */
 	bool MediaPlayerGS::createPipeline()
@@ -924,7 +924,7 @@ namespace Cing
 
 
 	/**
-	 * Creates and configues the GStreamer video sink that will allow our app to get the decoded video frames
+	 * Creates and configures the GStreamer video sink that will allow our app to get the decoded video frames
 	 * @return true if there was no problem
 	 */
 	bool MediaPlayerGS::createVideoSink()
@@ -1009,6 +1009,14 @@ namespace Cing
 		// Get current video format and dimensions
 		GstVideoFormat currentVideoFormat;
 		gst_video_format_parse_caps( caps, &currentVideoFormat, &m_videoWidth, &m_videoHeight );
+
+		// Get Buffer size for each component
+		unsigned int nChannels = numberOfChannels( m_pixelFormat );
+		int stride = 0;
+		for ( unsigned int i = 0; i < nChannels; ++i )
+		{
+			stride = gst_video_format_get_row_stride( currentVideoFormat, i, m_videoWidth );
+		}
 
 		// Get current fps
 		gint  fps_n, fps_d;
