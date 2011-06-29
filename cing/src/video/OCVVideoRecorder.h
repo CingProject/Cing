@@ -28,7 +28,7 @@ namespace Cing
 
 		// BaseVideoRecorder Interface
 		virtual bool		init( int width, int height, std::string fileName);
-		virtual bool		init( int width, int height, std::string fileName, int fps);
+		virtual bool		init( int width, int height, std::string fileName, float fps);
 		virtual void		end();
 		virtual void		update();
 

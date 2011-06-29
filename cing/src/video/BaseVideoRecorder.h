@@ -25,7 +25,7 @@ namespace Cing
 
 		// Init / Release / Update (to be implemented in subclasses)
 		virtual bool		init            ( int width, int height, std::string fileName);
-		virtual bool		init            ( int width, int height, std::string fileName, int fps);
+		virtual bool		init            ( int width, int height, std::string fileName, float fps);
 
 		//virtual bool		init            ( std::string outputFileName = "", int width = 320, int height = 240, int fps = 25, Cing::GraphicsType format = Cing::RGB );
 
@@ -46,7 +46,7 @@ namespace Cing
 
 		// Attributes
 		std::string			m_fileName;					///< Output file name	
-		int					m_fps;                		///< Video frames per second
+		float				m_fps;                		///< Video frames per second
 		int					m_width, m_height;    		///< Video resolution
 
 	private:

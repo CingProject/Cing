@@ -74,7 +74,7 @@ bool BaseVideoRecorder::init( int width, int height, std::string fileName)
 * @param[in] fileName	Output file name
 * @param[in] fps		frames per second to capture
 */
-bool BaseVideoRecorder::init( int width, int height, std::string fileName, int fps)
+bool BaseVideoRecorder::init( int width, int height, std::string fileName, float fps)
 {
 	// Check if the class is already initialized
 	if ( isValid() )

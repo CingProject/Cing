@@ -74,7 +74,7 @@ bool OCVVideoRecorder::init( int width, int height ,std::string fileName)
 * @param[in] fps		FPS
 * @return true if the initialization was ok | false otherwise
 */
-bool OCVVideoRecorder::init( int width, int height ,std::string fileName, int fps/* = 25 */)
+bool OCVVideoRecorder::init( int width, int height ,std::string fileName, float fps/* = 25 */)
 {
 	// Check if the class is already initialized
 	if ( isValid() )
@@ -87,7 +87,7 @@ bool OCVVideoRecorder::init( int width, int height ,std::string fileName, int fp
 	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
 
 	// TODO: Check CV_FOURCC manual initialization failure
-	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), CV_FOURCC('D', 'I', 'B', ' '), m_fps, cvSize( m_width, m_height), true );
+	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), CV_FOURCC('D', 'I', 'B', ' '), fps, cvSize( m_width, m_height), true );
 
 	if ( m_cvVideoWriter->isOpened() )
 		m_bIsValid = true;	// The class is now initialized
