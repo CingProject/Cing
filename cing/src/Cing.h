@@ -123,6 +123,7 @@
 #include "video/MediaPlayerGS.h"
 #endif
 #include "video/MediaPlayerOCV.h"
+#include "video/OCVVideoRecorder.h"
 
 
 // GUI
@@ -167,6 +168,6 @@ typedef MediaPlayerOCV MediaPlayer;
 #endif
 
 // Video writing
-typedef OCVCamera VideoRecorder;
+typedef OCVVideoRecorder VideoRecorder;
 
 #endif // _Vision_H_
