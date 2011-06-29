@@ -786,6 +786,40 @@ namespace Cing
 		m_quad->end();
 	}
 
+		/**
+	* @brief Flips the texture coordinates horizontally
+	*/
+	void TexturedQuad::flipHorizontal( bool flip /*= true*/ )
+	{
+		// Update geometry to flip texture coordinates
+		// We recreate the object instead of updating it because this is an extrange use, and for the normal
+		// use is better in terms of performance to have static objects (in terms of vertex data)
+		m_quad->clear();
+		m_quad->begin( m_ogreMaterialName );
+
+		if ( flip ) 
+		{
+			// m_quad positions and texture coordinates
+			m_quad->position( -0.5, -0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, -0.5, 0.0);	m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, 0.5, 0.0);	m_quad->textureCoord( 0, 0 );
+			m_quad->position( -0.5, 0.5, 0.0);  m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+		}
+		else
+		{
+			m_quad->position( -0.5, -0.5, 0.0);	m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, -0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, 0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+			m_quad->position( -0.5, 0.5, 0.0);  m_quad->textureCoord( 0, 0 );
+		}
+
+		// quad indexes (two triangles)
+		m_quad->triangle( 0, 1, 2 );
+		m_quad->triangle( 0, 2, 3 );
+
+		// Finish updating geometry
+		m_quad->end();
+	}
 
 	/**
 	* @brief Copies the data of the received texture quad
