@@ -52,7 +52,7 @@ namespace Cing
 
 		// Init / Release / Update
 		bool    init    ();
-		bool    load    ( const char* fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
+		bool    load    ( const std::string& fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
 		void    end     ();
 		void    update  ();
 		Image&  getImage();

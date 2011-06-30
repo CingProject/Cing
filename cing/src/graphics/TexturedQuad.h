@@ -98,6 +98,7 @@ namespace Cing
 
 		// Texture coordinate control
 		void			flipVertical	(bool flip = true);
+		void			flipHorizontal	(bool flip = true);
 
 		// Operators 
 		void			operator=		( const TexturedQuad& other );

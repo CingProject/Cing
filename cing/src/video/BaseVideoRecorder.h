@@ -40,7 +40,7 @@ namespace Cing
 		bool				isValid			() const { return m_bIsValid;   }
 		int					getWidth        () const { return m_width;      }
 		int					getHeight       () const { return m_height;     }
-		int					getFPS          () const { return m_fps;        }
+		float				getFPS          () const { return m_fps;        }
 
 	protected:
 
