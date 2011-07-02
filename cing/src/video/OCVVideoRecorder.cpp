@@ -37,44 +37,14 @@ OCVVideoRecorder::~OCVVideoRecorder()
 * @internal
 * @brief Initializes the class so it becomes valid.
 *
-* @param[in] width		width resolution capture
-* @param[in] height		height resolution capture
-* @param[in] fileName	Output file name
-*/
-bool OCVVideoRecorder::init( int width, int height ,std::string fileName)
-{
-	// Check if the class is already initialized
-	if ( isValid() )
-		return true;
-
-	// Init base class (with actual capture resolution)
-	BaseVideoRecorder::init(  width, height,fileName );
-
-	// Init OpenCv video recorder. Open a dialog box for CODEC selection...
-	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
-
-	// TODO: Check CV_FOURCC manual initialization failure
-	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), CV_FOURCC('D', 'I', 'B', ' '), m_fps, cvSize( m_width, m_height), true );
-
-	if ( m_cvVideoWriter->isOpened() )
-		m_bIsValid = true;	// The class is now initialized
-	else
-		m_bIsValid = false;
-
-	return m_bIsValid;
-}
-
-/**
-* @internal
-* @brief Initializes the class so it becomes valid.
-*
 * @param[in] width		Width resolution
 * @param[in] height		Height resolution
 * @param[in] fileName	Output file name
 * @param[in] fps		FPS
+* @param[in] fourcc		Defines the codec to be used  (it should be on the system to work). Default is DIB which is uncompressed avi
 * @return true if the initialization was ok | false otherwise
 */
-bool OCVVideoRecorder::init( int width, int height ,std::string fileName, float fps/* = 25 */)
+bool OCVVideoRecorder::init( int width, int height , const std::string& fileName, float fps /* = 25 */, int fourcc /*= CV_FOURCC('D', 'I', 'B', ' ')*/ )
 {
 	// Check if the class is already initialized
 	if ( isValid() )
@@ -87,12 +57,18 @@ bool OCVVideoRecorder::init( int width, int height ,std::string fileName, float 
 	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
 
 	// TODO: Check CV_FOURCC manual initialization failure
-	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), CV_FOURCC('D', 'I', 'B', ' '), fps, cvSize( m_width, m_height), true );
+	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), fourcc, fps, cvSize( m_width, m_height), true );
 
 	if ( m_cvVideoWriter->isOpened() )
+	{
+		LOG( "Video recorder correctly initialized" );
 		m_bIsValid = true;	// The class is now initialized
+	}
 	else
+	{
+		LOG_ERROR( "OCVVideoRecorder::init Error: Video recorder could not be initialized. Maybe the FourCC/Codec is not available in the system?" );
 		m_bIsValid = false;
+	}
 
 	return m_bIsValid;
 }

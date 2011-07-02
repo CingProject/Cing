@@ -27,8 +27,7 @@ namespace Cing
 		virtual ~OCVVideoRecorder();
 
 		// BaseVideoRecorder Interface
-		virtual bool		init( int width, int height, std::string fileName);
-		virtual bool		init( int width, int height, std::string fileName, float fps);
+		virtual bool		init( int width, int height, const std::string& fileName, float fps = 25, int fourcc = CV_FOURCC('D', 'I', 'B', ' ')  );
 		virtual void		end();
 		virtual void		update();
 
