@@ -64,8 +64,8 @@ namespace Cing
 		void		init				( int width, int height, GraphicsType format = RGB );
 		void		initAsRenderTarget	( int width, int height );
 		void		init				( const Image& img );
-		void		load				( const std::string& name );
-		void		save				( const std::string& name );
+		bool		load				( const std::string& path );
+		void		save				( const std::string& path );
 		void		end					();
 
 		// Image data
@@ -158,6 +158,9 @@ namespace Cing
 
 		TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
 	private:
+		// Private methods
+		bool	loadImageFromDisk	( const std::string& textureName, const std::string& texturePath );
+
 		// Attributes
 		static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
 		static ImageThresholdFilter    m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
@@ -170,7 +173,9 @@ namespace Cing
 		bool							m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
 		bool							m_bVFlipped;		///< True if the image texture coordinates are flipped vertically 
 		bool							m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
+		bool							m_loadedFromFile;	///< True if the image was loaded from file
 		GraphicsType					m_format;			///< Format of the image
+		GraphicsType					m_loadedFormat;		///< Format in which the image was loaded (if loaded from file)
 	};
 
 } // namespace Cing

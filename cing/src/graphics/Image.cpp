@@ -32,6 +32,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/LogManager.h"
 #include "common/MathUtils.h"
 #include "common/CommonConstants.h"
+#include "common/SystemUtils.h"
 
 // Framework
 #include "framework/Application.h"
@@ -56,6 +57,7 @@ namespace Cing
 		m_bIsValid( false ),
 		m_bVFlipped( false ),
 		m_bUpdateTexture( false ),
+		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
 	{
 	}
@@ -69,6 +71,7 @@ namespace Cing
 		m_bIsValid( false ),
 		m_bVFlipped( img.isVFlipped() ),
 		m_bUpdateTexture( false ),
+		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		init( img );
@@ -86,6 +89,7 @@ namespace Cing
 		m_bIsValid( false ),
 		m_bVFlipped( false ),
 		m_bUpdateTexture( false ),
+		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		init( width, height, format );
@@ -100,6 +104,7 @@ namespace Cing
 	Image::Image( const std::string& name ):
 		m_bVFlipped( false ),
 		m_bIsValid( false ),
+		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		load( name );
@@ -141,7 +146,8 @@ namespace Cing
 		m_quad.init( m_cvImage.cols, m_cvImage.rows, format );
 
 		// Store the format
-		m_format = format;
+		m_format			= format;
+		m_loadedFromFile	= false;
 
 		// The class is now initialized
 		m_bIsValid = true;
@@ -175,8 +181,10 @@ namespace Cing
 		m_quad.init( m_cvImage.cols, m_cvImage.rows, m_format, true );
 
 		// The class is now initialized
-		m_bIsValid = true;
-		m_bUpdateTexture = true;
+		m_bIsValid			= true;
+		m_bUpdateTexture	= true;
+		m_loadedFromFile	= false;
+
 	}
 
 	/**
@@ -191,8 +199,43 @@ namespace Cing
 
 		this->operator=( img );
 
-		m_bIsValid = true;
-		m_bUpdateTexture = false;
+		m_bIsValid			= true;
+		m_bUpdateTexture	= false;
+		m_loadedFromFile	= false;
+	}
+
+	/**
+	 * @brief Loads an image file from disk and loads it into the texture manager so it is accessible just by the file name
+	 * @param textureName  Name to give to the texture in the texture manager once the file is loaded (could be the filename including ext).
+	 * @param texturePath  Full path to the texture file
+	 */
+	bool Image::loadImageFromDisk(const std::string& textureName, const std::string& texturePath) 
+	{ 
+		bool image_loaded = false; 
+	
+		// Load the file stream
+		std::ifstream ifs(texturePath.c_str(), std::ios::binary|std::ios::in); 
+		if (ifs.is_open()) 
+		{ 
+			// Make sure it has extension to know the file type
+			Ogre::String tex_ext; 
+			Ogre::String::size_type index_of_extension = texturePath.find_last_of('.'); 
+			if (index_of_extension != Ogre::String::npos) 
+			{ 
+				// Create the ogre data stream from the file stream
+				tex_ext = texturePath.substr(index_of_extension+1); 
+				Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(texturePath, &ifs, false)); 
+				
+				// Load the stream into the Ogre Image
+				m_image.load(data_stream, tex_ext); 
+				
+				// Load the texture to make it available in the future just by using the texture name
+				Ogre::TextureManager::getSingleton().loadImage(textureName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image, Ogre::TEX_TYPE_2D, 0, 1.0f); 
+				image_loaded = true; 
+			} 
+			ifs.close(); 
+		} 
+		return image_loaded; 
 	}
 
 	/**
@@ -202,9 +245,9 @@ namespace Cing
 	*
 	* @note Supported image formats are: .bmp, .jpg, .gif, .raw, .png, .tga and .dds.
 	*
-	* @param name  Name of the file to be loaded. It must be placed in the data directory.
+	* @param path  Path of the file to be loaded. It can be relative to the data folder, or absolute.
 	*/
-	void Image::load( const std::string& name  )
+	bool Image::load( const std::string& path )
 	{
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
@@ -213,17 +256,40 @@ namespace Cing
 		if ( isValid () )
 			end();
 
-		// Load image from file and store its path
-		m_image.load( name, ResourceManager::userResourcesGroupName );
-		m_path = name;
+		// Build absolute path
+		m_path = path;
+		if ( isPathAbsolute( m_path ) == false )
+		{	
+			m_path = dataFolder + m_path;
+		}
+
+		// Confirm that it exists
+		if ( fileExists( m_path ) == false )
+		{
+			LOG_ERROR( "The image file %s could not be found", m_path.c_str() );
+			return false;
+		}
+
+		// Load the image from disk
+		std::string basePath, fileName;
+		splitFilename( m_path, fileName, basePath );
+		bool loaded = loadImageFromDisk( fileName, m_path );
+		if ( !loaded )
+		{
+			LOG_ERROR( "The image %s could not be loaded at %s", path.c_str(), m_path.c_str() );
+			return false;
+		}
+
+		// This file has been loaded from file
+		m_loadedFromFile = true;
 
 		// Check if image was loaded ok
 		if ( m_image.getData() )
-			LOG( "Image %s succesfully loaded", name.c_str() );
+			LOG( "Image %s succesfully loaded", m_path.c_str() );
 		else
 		{
-			LOG( "Error loading Image %s", name.c_str() );
-			return;
+			LOG( "Error loading Image %s", m_path.c_str() );
+			return false;
 		}
 
 		// Store image format (for images loaded from file, we force it to be RGB or RGBA)
@@ -231,8 +297,6 @@ namespace Cing
 			m_format = RGBA;
 		else
 			m_format = RGB;
-
-		//m_format = (GraphicsType)m_image.getFormat();
 
 		// Create the image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
@@ -242,8 +306,8 @@ namespace Cing
 		cv::Mat imgData(m_cvImage.rows, m_cvImage.cols, CV_MAKETYPE(CV_8U,m_nChannels), m_image.getData(), m_image.getWidth() * m_nChannels);
 
 		// Check if we need to flip the channels red and green (for example png and jpgs are loaded as BGR by Ogre)
-		GraphicsType currentImageFormat = (GraphicsType)m_image.getFormat();
-		if ( (currentImageFormat == BGR) || (currentImageFormat == BGRA) )
+		m_loadedFormat = (GraphicsType)m_image.getFormat();
+		if ( (m_loadedFormat == BGR) || (m_loadedFormat == BGRA) )
 		{
 			// No alpha channel
 			if ( m_nChannels == 3 )
@@ -284,6 +348,8 @@ namespace Cing
 
 		// Now we can release the image used by the image loader
 		m_image.freeMemory();
+
+		return true;
 	}
 
 	/**
@@ -303,8 +369,19 @@ namespace Cing
 		// TODO: Pass data from IplImage to m_image to save the data
 		m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage.data, m_cvImage.cols, m_cvImage.rows, 1, (Ogre::PixelFormat)getFormat() );
 
-		// Add the user app data folder to the name
-		m_image.save( ResourceManager::userDataPath + name );
+		// Check the path: if it's relative, it should be relative to the data folder
+		if ( isPathAbsolute( name ) )
+		{
+			LOG( "Saving image in %s", name.c_str() );
+			m_image.save( name );
+		}
+		// Relative path: pre-pend the data folder
+		else
+		{
+			LOG( "Saving image in %s", (ResourceManager::userDataPath + name).c_str() );
+			m_image.save( ResourceManager::userDataPath + name );
+		}
+
 	}
 
 	/**
