@@ -95,5 +95,42 @@ namespace Cing
 		
 		return false;
 	}
+
+
+	/** Splits a path into the basePath (the folder) and the file name (just filename + extension.
+     * @param[in]	path Path to split
+     * @param[out]	outFileName The filename + extension (no folders in path)
+     * @param[out]	outBasePath Full path to the folder that contains the file
+	 */
+	void splitFilename( const std::string& path, std::string& outFileName, std::string& outBasePath )
+	{
+		Ogre::StringUtil::splitFilename( path, outFileName, outBasePath  );
+	}
+
+	/**
+	 * @brief Returns true if the received path is absolutel, false if it's relative
+	 * @todo: This method might not be totally generic, potentially fix it using boost::filesystem or poco::filesystem
+	 * @param path Path to check
+	 * @return true if the received path is absolutel, false if it's relative
+	 */
+	bool isPathAbsolute( const std::string& path )
+	{
+		// Split the path
+		std::string basePath, fileName;
+		splitFilename( path, fileName, basePath );
+
+		// Windows case (lookf
+#if defined(WIN32)
+		if ( basePath.find( ":" ) != std::string::npos )
+			return true;
+#else
+		// Unix based
+		if ( Ogre::StringUtil::startsWith( basePath, "/" ) )
+			return true;
+#endif
+
+		return false;
+	}
+
 	
 } // namespace Cing
