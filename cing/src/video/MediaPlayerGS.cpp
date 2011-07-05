@@ -756,7 +756,7 @@ namespace Cing
 	 */
 	void MediaPlayerGS::onNewBuffer( GstBuffer* newBuffer )
 	{
-		LOG_ENTER_FUNCTION;
+		//LOG_ENTER_FUNCTION;
 	
 		// Check buffer
 		if ( newBuffer == NULL )
@@ -806,7 +806,7 @@ namespace Cing
 		// operation done
 		m_bufferMutex.unlock();
 
-		LOG_EXIT_FUNCTION;
+		//LOG_EXIT_FUNCTION;
 	}
 
  
