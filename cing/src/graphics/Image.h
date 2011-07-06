@@ -58,7 +58,7 @@ namespace Cing
 		Image				( const Image& img );
 		Image				( int width, int height, GraphicsType format = RGB );
 		Image				( const std::string& name );
-		~Image			();
+		virtual ~Image		();
 
 		// Init / Release / Update / Save / Clone
 		void		init				( int width, int height, GraphicsType format = RGB );
