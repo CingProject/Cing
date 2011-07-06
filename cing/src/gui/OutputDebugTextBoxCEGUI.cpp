@@ -88,8 +88,8 @@ void OutputDebugTextBoxCEGUI::init()
 	// Add list box (text box) to the gui manager
 	GUIManagerCEGUI::getSingleton().addGUIELement( m_listBox );
 
-	m_bIsValid = true;
-	m_enabled = true;
+	m_bIsValid	= true;
+	m_enabled	= false;
 }
 
 /**
