@@ -55,6 +55,12 @@ float stringToFloat(const std::string& str)
 	s >> intNumber;
 	return intNumber;
 }
+unsigned long stringToUint32(const std::string& str) {
+	unsigned long uint32Number;
+	std::stringstream s(str);
+	s >> uint32Number;
+	return uint32Number;
+}
 
 /**
  * @brief Splits a string into a series of tokens (delimited by a delimiter character).
