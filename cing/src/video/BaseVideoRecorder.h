@@ -24,11 +24,7 @@ namespace Cing
 		virtual ~BaseVideoRecorder();
 
 		// Init / Release / Update (to be implemented in subclasses)
-		virtual bool		init            ( int width, int height, std::string fileName);
-		virtual bool		init            ( int width, int height, std::string fileName, float fps);
-
-		//virtual bool		init            ( std::string outputFileName = "", int width = 320, int height = 240, int fps = 25, Cing::GraphicsType format = Cing::RGB );
-
+		virtual bool		init            ( int width, int height, const std::string& fileName, float fps = 25);
 		virtual void		end             ();
 		virtual void		update          () = 0;
 
@@ -45,7 +41,7 @@ namespace Cing
 	protected:
 
 		// Attributes
-		std::string			m_fileName;					///< Output file name	
+		std::string			m_path;						///< Output file name	
 		float				m_fps;                		///< Video frames per second
 		int					m_width, m_height;    		///< Video resolution
 

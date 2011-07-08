@@ -5,6 +5,7 @@
 
 // OpenCv
 #include "OpenCV/cv.h"
+#include "OpenCV/cxcore.h"
 
 // Common
 #include "common/Exception.h"
@@ -53,11 +54,18 @@ bool OCVVideoRecorder::init( int width, int height , const std::string& fileName
 	// Init base class (with actual capture resolution)
 	BaseVideoRecorder::init( width, height, fileName, fps );
 
-	// Init OpenCv video recorder. Open a dialog box for CODEC selection...
-	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
+	LOG( "OCVVideoRecorder::init. Creating video file at %s", m_path.c_str() );
 
 	// TODO: Check CV_FOURCC manual initialization failure
-	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), fourcc, fps, cvSize( m_width, m_height), true );
+	try
+	{
+		m_cvVideoWriter = new cv::VideoWriter( m_path.c_str(), fourcc, fps, cvSize( m_width, m_height), true );
+	}
+	catch( cv::Exception& e )
+	{
+		LOG_ERROR( "OCVVideoRecorder::init. Error creating video file: %s", e.what() );
+		return false;
+	}
 
 	if ( m_cvVideoWriter->isOpened() )
 	{
