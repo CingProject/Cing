@@ -46,6 +46,7 @@ OCVVideoRecorder::~OCVVideoRecorder()
 */
 bool OCVVideoRecorder::init( int width, int height , const std::string& fileName, float fps /* = 25 */, int fourcc /*= CV_FOURCC('D', 'I', 'B', ' ')*/ )
 {
+	LOG_ENTER_FUNCTION;
 	// Check if the class is already initialized
 	if ( isValid() )
 		return true;
@@ -57,6 +58,7 @@ bool OCVVideoRecorder::init( int width, int height , const std::string& fileName
 	//m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), -1, m_fps, cvSize( m_width, m_height), true );
 
 	// TODO: Check CV_FOURCC manual initialization failure
+	LOG_TRIVIAL("OCVVideoRecorder::init( int width=%d, int height=%d , const std::string& fileName=%s, float fps=%f, int fourcc =%d )",width,height,fileName.c_str(),fps, fourcc);
 	m_cvVideoWriter = new cv::VideoWriter( m_fileName.c_str(), fourcc, fps, cvSize( m_width, m_height), true );
 
 	if ( m_cvVideoWriter->isOpened() )
@@ -69,7 +71,7 @@ bool OCVVideoRecorder::init( int width, int height , const std::string& fileName
 		LOG_ERROR( "OCVVideoRecorder::init Error: Video recorder could not be initialized. Maybe the FourCC/Codec is not available in the system?" );
 		m_bIsValid = false;
 	}
-
+	LOG_EXIT_FUNCTION;
 	return m_bIsValid;
 }
 
