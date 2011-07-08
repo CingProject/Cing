@@ -231,7 +231,7 @@ namespace Cing
 		bool result = init();
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could not load it correctly.", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could not load it correctly.", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -240,7 +240,7 @@ namespace Cing
 		result = buildPathToFile( fileName );
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. File %s Not Found", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. File %s Not Found", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -249,7 +249,7 @@ namespace Cing
 		result = createPipeline();
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the pipeline to play it.", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the pipeline to play it.", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -260,7 +260,7 @@ namespace Cing
 		result = createVideoSink();
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the sink to play it.", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the sink to play it.", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -269,7 +269,7 @@ namespace Cing
 		result = configureVideoFormat( requestedVideoFormat );
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, Image format could not be configured.", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, Image format could not be configured.", fileName.c_str() );
 			end();
 			return false;
 		}
