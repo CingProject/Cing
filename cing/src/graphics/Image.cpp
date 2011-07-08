@@ -230,7 +230,7 @@ namespace Cing
 				m_image.load(data_stream, tex_ext); 
 				
 				// Load the texture to make it available in the future just by using the texture name
-				Ogre::TextureManager::getSingleton().loadImage(textureName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image, Ogre::TEX_TYPE_2D, 0, 1.0f); 
+				//Ogre::TextureManager::getSingleton().loadImage(textureName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image, Ogre::TEX_TYPE_2D, 0, 1.0f); 
 				image_loaded = true; 
 			} 
 			ifs.close(); 
@@ -279,7 +279,7 @@ namespace Cing
 			LOG_ERROR( "The image %s could not be loaded at %s", path.c_str(), m_path.c_str() );
 			return false;
 		}
-
+		//m_image.load( "m_path", ResourceManager::userResourcesGroupName );
 		// This file has been loaded from file
 		m_loadedFromFile = true;
 
