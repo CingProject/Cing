@@ -54,7 +54,7 @@ bool OCVVideoRecorder::init( int width, int height , const std::string& fileName
 	// Init base class (with actual capture resolution)
 	BaseVideoRecorder::init( width, height, fileName, fps );
 
-	LOG( "OCVVideoRecorder::init. Creating video file at %s", m_path.c_str() );
+	LOG( "OCVVideoRecorder::init. Creating video file at location %s", m_path.c_str() );
 
 	// TODO: Check CV_FOURCC manual initialization failure
 	try
