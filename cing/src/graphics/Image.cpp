@@ -369,19 +369,25 @@ namespace Cing
 		// TODO: Pass data from IplImage to m_image to save the data
 		m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage.data, m_cvImage.cols, m_cvImage.rows, 1, (Ogre::PixelFormat)getFormat() );
 
-		// Check the path: if it's relative, it should be relative to the data folder
-		if ( isPathAbsolute( name ) )
+		// Store the desired path for the new image
+		std::string savePath = name;
+
+		// Check the path: if it's relative, it should be relative to the data folder, if it's absolute don't change it
+		if ( isPathAbsolute( savePath ) == false  )
+			savePath = ResourceManager::userDataPath + name;
+
+		// Make sure the path exists
+		std::string folder, fileName;
+		splitFilename( savePath, fileName, folder );
+		if ( !folderExists(folder) )
 		{
-			LOG( "Saving image in %s", name.c_str() );
-			m_image.save( name );
-		}
-		// Relative path: pre-pend the data folder
-		else
-		{
-			LOG( "Saving image in %s", (ResourceManager::userDataPath + name).c_str() );
-			m_image.save( ResourceManager::userDataPath + name );
+			LOG_ERROR( "Image::save. Error, cannot save image to %s. Does folder %s exist?", savePath.c_str(), folder.c_str() );
+			return;
 		}
 
+		// Folder exists, Save image
+		LOG( "Saving image in %s", savePath.c_str() );
+		m_image.save( savePath );
 	}
 
 	/**
@@ -463,6 +469,15 @@ namespace Cing
 	 * @return the image data (buffer)
 	 */	
 	unsigned char* Image::getData() 
+	{ 
+		return isValid()? m_cvImage.data: NULL; 
+	}
+
+	/**
+	 * @brief Returns the image data (buffer) - const version
+	 * @return the image data (buffer)
+	 */	
+	const unsigned char* Image::getData() const
 	{ 
 		return isValid()? m_cvImage.data: NULL; 
 	}
@@ -738,8 +753,9 @@ namespace Cing
 			init( other.getWidth(), other.getHeight(), other.getFormat() );
 
 		// Check if the size of the image differs
-		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) || (other.getFormat() != getFormat()) )
+		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) )
 		{
+			LOG( "Image will be recreated as the size of both images differ" );
 			end();
 			init( other.getWidth(), other.getHeight(), other.getFormat() );
 			
@@ -747,10 +763,43 @@ namespace Cing
 			if ( m_bVFlipped )
 				m_quad.flipVertical();
 		}
+	
+		// Check if we have to convert from color to gray
+		if ( (other.getNChannels() == 3) && (getNChannels() == 1) )
+		{
+			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is color (3 channels) but we are grayscale (1 channel). Image will be converted to grayscale in order to be assigned" );
 
-		// Copy the data
-		const unsigned char* imageData = const_cast<Image&>(other).getData();
-		setData( imageData, getWidth(), getHeight(), getFormat() );
+			// Convert image
+			cv::cvtColor( other.getCVMat(), getCVMat(), CV_RGB2GRAY );
+		}
+		// Same but the received image has also alpha channel
+		else if ( (other.getNChannels() == 4) && (getNChannels() == 1) )
+		{
+			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is color + alpha (4 channels) but we are grayscale (1 channel). Image will be converted to grayscale in order to be assigned" );
+
+			// Convert image
+			cv::cvtColor( other.getCVMat(), getCVMat(), CV_RGBA2GRAY );
+		}
+		// Other direction: the received image is gray and we are color - convert it
+		else if ( (other.getNChannels() == 1) && (getNChannels() == 3) ) 
+		{
+			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is gray (1 channel) but we are color (3 channel). Image will be converted to color in order to be assigned" );
+
+			// Convert image
+			cv::cvtColor( other.getCVMat(), getCVMat(), CV_GRAY2RGB );
+		}
+		// Same but we have alpha
+		else if ( (other.getNChannels() == 1) && (getNChannels() == 4) ) {
+			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is gray (1 channel) but we are color + alpha (4 channel). Image will be converted to color in order to be assigned" );
+
+			// Convert image
+			cv::cvtColor( other.getCVMat(), getCVMat(), CV_GRAY2RGBA );
+		}
+		// Looks like we have the same number of channels, just copy over
+		else
+		{
+			setData( other.getData(), getWidth(), getHeight(), getFormat() );
+		}
 
 		// Load image data to texture
 		updateTexture();

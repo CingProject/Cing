@@ -69,10 +69,12 @@ namespace Cing
 		void		end					();
 
 		// Image data
-		void			setData( const unsigned char* imageData, int width = -1, int height = -1, GraphicsType format = UNDEFINED, int widthStep = -1 );
-		unsigned char*	getData();
-		unsigned char*	pixels() { return getData(); }
-		Image*			clone ();
+		void					setData	( const unsigned char* imageData, int width = -1, int height = -1, GraphicsType format = UNDEFINED, int widthStep = -1 );
+		unsigned char*			getData	();
+		const unsigned char*	getData	() const;
+		unsigned char*			pixels	() { return getData(); }
+		const unsigned char*	pixels	() const { return getData(); }
+		Image*					clone	();
 
 		// Transformations
 		void			setOrientation	( const Vector& axis, float angle );
@@ -123,6 +125,7 @@ namespace Cing
 		bool				isValid			() const	{ return m_bIsValid; }
 		IplImage			getCVImage		() const	{ return (IplImage)m_cvImage; }
 		cv::Mat&			getCVMat		()			{ return m_cvImage; }
+		const cv::Mat&		getCVMat		() const	{ return m_cvImage; }
 		int					getWidth		() const;
 		int					getHeight		() const;
 		GraphicsType		getFormat		() const;
