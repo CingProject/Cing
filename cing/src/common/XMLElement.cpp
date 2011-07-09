@@ -334,7 +334,7 @@ float XMLElement::getFloatAttribute( const String& name, float defaultValue /*= 
  * @param defaultValue Default value that will be returned in case the attribute does not exist
  * @return        a String attribute of the xml Element.
  */
-String XMLElement::getStringAttribute( const String& name, String defaultValue /*= ""*/ )
+String XMLElement::getStringAttribute( const String& name, const String& defaultValue /*= ""*/ )
 {
   // Check state
   if ( !m_rootElem )

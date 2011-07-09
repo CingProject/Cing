@@ -42,6 +42,7 @@ Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
 
 namespace Cing
 {
+
 	// GStreamer Callback functions
 
 	/**
@@ -159,7 +160,8 @@ namespace Cing
 		m_volume		( 1.0f  ),
 		m_endOfFileReached	(false),
 		m_paused			(false),
-		m_playing			(false)
+		m_playing			(false),
+		m_useGrayScale		(false)
 	{
 	}
 
@@ -187,7 +189,8 @@ namespace Cing
 		m_volume		( 1.0f  ),
 		m_endOfFileReached	(false),
 		m_paused			(false),
-		m_playing			(false)
+		m_playing			(false),
+		m_useGrayScale		(false)
 	{
 		// Load the movie
 		load( filename, RGB, fps );
@@ -278,6 +281,11 @@ namespace Cing
 		m_frameImg.init( m_videoWidth, m_videoHeight, m_pixelFormat );
 		m_bufferSizeInBytes = m_videoWidth * m_videoHeight * m_frameImg.getNChannels();
 		m_internalBuffer	= new unsigned char[m_bufferSizeInBytes];
+
+		// Init grayscale image if it was requested
+		if ( m_useGrayScale )
+			m_frameImgGray.init( m_videoWidth, m_videoHeight, GRAYSCALE );
+
 
 		// Query video duration
 		GstFormat format = GST_FORMAT_TIME;
@@ -378,19 +386,28 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR_NTIMES( 1, "MediaPlayerGS not corretly initialized. No new frame will be returned" );
-			return m_frameImg;
+			LOG_ERROR_NTIMES( 1, "MediaPlayerGS not corretly initialized. No valid will be returned" );
 		}
+		else
+		{
+			// Update, just in case there are pending operations
+			update();
 
-		// Update, just in case there are pending operations
-		update();
-
-		// Check if we have a new buffer to copy
-		if ( m_newBufferReady )
-			copyBufferIntoImage();
+			// Check if we have a new buffer to copy
+			if ( m_newBufferReady )
+				copyBufferIntoImage();
+		}
 
 		LOG_EXIT_FUNCTION;
 
+		// Return color or gray image
+		if ( m_useGrayScale )
+		{
+			// Convert it to gray and regurn it
+			m_frameImgGray = m_frameImg;
+			return m_frameImgGray;
+		}
+		// Returning color image
 		return m_frameImg;
 	}
 
@@ -1109,6 +1126,15 @@ namespace Cing
 			case BGRA:
 				return GST_VIDEO_CAPS_BGRA;
 			break;
+
+			case GRAYSCALE:
+				LOG_ERROR("MediaPlayerGS Gstreamer 0.10.28 does not support Gray scale videos. Making conversion every frame" );
+				m_useGrayScale = true;
+				return GST_VIDEO_CAPS_RGB;
+			break;
+			default: 
+				LOG_ERROR( "MediaPlayerGS Could not set the right pixel format (unknown). Defaulting to RGB" );
+				break;
 		};
 
 		LOG_EXIT_FUNCTION;
@@ -1153,6 +1179,10 @@ namespace Cing
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_RGBA)	&& ( cingVideoFormat == RGBA ) )	return true;
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_BGR)	&& ( cingVideoFormat == BGR ) )		return true;
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_BGRA)	&& ( cingVideoFormat == BGRA ) )	return true;
+
+		// NOTE: This is a hack tu support grayscale without gstreamer support, so we convert the buffer every frame
+		// TODO: Change this when a GStreamer upadte gives this support
+		if ( (gstVideoFormat == GST_VIDEO_FORMAT_RGB)	&& ( cingVideoFormat == GRAYSCALE ) ) return true;
 
 		LOG_EXIT_FUNCTION;
 

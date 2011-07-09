@@ -91,6 +91,8 @@ namespace Cing
 #if defined( _MSC_VER )
 		if( (_access( folderPath.c_str() , 0 )) != -1 )
 			return true;
+#elif
+		LOG_ERROR( "folderExists NOT IMPLEMENTED IN THIS SYSTEM OR COMPILTER" );
 #endif
 		
 		return false;
