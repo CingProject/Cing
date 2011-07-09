@@ -343,7 +343,13 @@ String XMLElement::getStringAttribute( const String& name, String defaultValue /
     return defaultValue;
   }
 
-  return m_rootElem->Attribute( name.toChar() );
+  // Get the attribute
+  const char* result = m_rootElem->Attribute( name.c_str() );
+  
+  // If it does not exist, return the default value
+  if ( !result )
+	  return defaultValue;
+  return result;
 }
 
 /**
