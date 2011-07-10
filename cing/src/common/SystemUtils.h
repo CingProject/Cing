@@ -46,8 +46,12 @@ namespace Cing
 	bool 		folderExists( const std::string& folderPath );
 
 	// Paths
-	void		splitFilename	( const std::string& path, std::string& outBasePath, std::string& outFileName );
-	bool		isPathAbsolute	( const std::string& path );
+	void		splitFilename		( const std::string& path, std::string& outBasePath, std::string& outFileName );
+	bool		isPathAbsolute		( const std::string& path );
+
+	// Memory handling
+	double		getCurrentMemoryUseMb( unsigned long processID );
+
 	
 } // namespace
 
