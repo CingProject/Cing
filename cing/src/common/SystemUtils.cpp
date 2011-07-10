@@ -31,10 +31,16 @@
 #if defined( _MSC_VER )
 	#include <direct.h>
 	#include  <io.h>
-#endif
+	#include <cctype>
 
-#include  <stdio.h>
-#include  <stdlib.h>
+	#include <tlhelp32.h>
+	#include <winsvc.h>
+	#include <stdio.h>
+	#include <psapi.h>
+	#endif
+
+	#include  <stdio.h>
+	#include  <stdlib.h>
 
 
 namespace Cing
@@ -92,7 +98,7 @@ namespace Cing
 		if( (_access( folderPath.c_str() , 0 )) != -1 )
 			return true;
 #elif
-		LOG_ERROR( "folderExists NOT IMPLEMENTED IN THIS SYSTEM OR COMPILTER" );
+		LOG_ERROR( "folderExists NOT IMPLEMENTED IN THIS SYSTEM OR COMPILER" );
 #endif
 		
 		return false;
@@ -132,6 +138,51 @@ namespace Cing
 #endif
 
 		return false;
+	}
+
+
+	/**
+	 * @brief Returns the current use of ram memory Mb
+	 * @NOTE only Windows now
+	 * @param	processID the process to retrieve the memory usage
+	 * @return	the current use of ram memory  in Mb
+	 */
+	double getCurrentMemoryUseMb( unsigned long processID )
+	{
+#if defined(WIN32)
+		#pragma comment(lib,"psapi.lib") //add lib
+
+		 HANDLE hProcess;
+		 PROCESS_MEMORY_COUNTERS pmc;
+
+		 // Print information about the memory usage of the process.
+		 hProcess = OpenProcess(  PROCESS_QUERY_INFORMATION |PROCESS_VM_READ,FALSE, processID );
+		 if (NULL == hProcess)
+		  return 0;
+
+		 double memKb = 0;
+
+		 // Get he process info (for now just mem in Kb)
+		 if ( GetProcessMemoryInfo( hProcess, &pmc, sizeof(pmc)) )
+		 {
+			memKb = pmc.WorkingSetSize/1024.0/1024.0;
+		  //printf( "\tPageFaultCount: %i Kb\n", pmc.PageFaultCount );
+		  //printf( "\tYour app's PEAK MEMORY CONSUMPTION: %i Kb\n", pmc.PeakWorkingSetSize/(1024) );
+		  //printf( "\tYour app's CURRENT MEMORY CONSUMPTION: 0x%08X\n", pmc.WorkingSetSize );
+		  //LOG_NORMAL( "Current memory used: %i Kb\n", pmc.WorkingSetSize/(1024) );
+		  //printf( "\tQuotaPeakPagedPoolUsage: %i Kb\n", pmc.QuotaPeakPagedPoolUsage/(1024) );
+		  //printf( "\tQuotaPagedPoolUsage: %i Kb\n", pmc.QuotaPagedPoolUsage/(1024) );
+		  //printf( "\tQuotaPeakNonPagedPoolUsage: %i Kb\n", pmc.QuotaPeakNonPagedPoolUsage/(1024) );
+		  //printf( "\tQuotaNonPagedPoolUsage: %i Kb\n", pmc.QuotaNonPagedPoolUsage/(1024) );
+		  //printf( "\tPagefileUsage: %i Kb\n", pmc.PagefileUsage/(1024) ); 
+		  //printf( "\tPeakPagefileUsage: %i Kb\n", pmc.PeakPagefileUsage/(1024) );
+		 }
+
+		 CloseHandle( hProcess );
+		 return memKb;
+#else
+		LOG_ERROR( "getCurrentMemoryUse() NOT IMPLEMENTED IN THIS SYSTEM OR COMPILER" );
+#endif
 	}
 
 	
