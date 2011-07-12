@@ -224,6 +224,11 @@ namespace Cing
 		// By default: 3d render
 		set3dRendering();
 
+		// calculate the necessary scale 2d values for scale 1 (initial) - so basically initializes m_2dWidth and m_2dHeight in case the image is rendered
+		// in screen space in the first frame without setting the scale
+		m_2dWidth = (m_textWidth / (float)width) * 2.0f;
+		m_2dHeight = (m_textHeight / (float)height) * 2.0f;
+
 		// The class is now initialized
 		m_bIsValid = true;
 
@@ -1014,9 +1019,6 @@ namespace Cing
 		// Pivot orientation Orientation
 		m_pivotSceneNode->setOrientation( currentTransformation.getRotQuaternion() );
 
-		// Translate quad position, so that the image is drawn from the top-left corner
-		m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
-
 		// Calculate the transformed coordinates in 3d space
 		Vector pos = currentTransformation.applyTransform( Vector(x, y, 0) );
 
@@ -1031,6 +1033,9 @@ namespace Cing
 			setScale2d( imgWidth, imgHeight );
 			setPosition2d( pos.x, pos.y );
 		}
+
+		// Finally, Translate quad position, so that the image is drawn from the top-left corner
+		m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
 	}
 
 } // namespace Cing
