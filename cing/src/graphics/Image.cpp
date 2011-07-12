@@ -821,8 +821,8 @@ namespace Cing
 			setData( other.getData(), getWidth(), getHeight(), getFormat() );
 		}
 
-		// Load image data to texture
-		updateTexture();
+		// Load image data to texture in next draw
+		setUpdateTexture();
 
 		// Now this image is valid
 		m_bIsValid = true;
