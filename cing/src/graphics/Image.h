@@ -57,6 +57,7 @@ namespace Cing
 		Image				();
 		Image				( const Image& img );
 		Image				( int width, int height, GraphicsType format = RGB );
+		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB );
 		Image				( const std::string& name );
 		virtual ~Image		();
 

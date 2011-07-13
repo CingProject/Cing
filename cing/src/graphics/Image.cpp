@@ -96,6 +96,26 @@ namespace Cing
 	}
 
 	/**
+	* @brief Creates an image of the specified size and format, loading initial data
+	*
+	* @param data	Data to be set to the image once created
+	* @param width  Width of the image to be created
+	* @param height Height of the image to be created
+	* @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
+	*/
+	Image::Image( unsigned char* data, int width, int height, GraphicsType format /*= RGB*/ ):
+		m_bIsValid( false ),
+		m_bVFlipped( false ),
+		m_bUpdateTexture( false ),
+		m_loadedFromFile(false),
+		m_path( "NOT_LOADED_FROM_FILE")	
+	{
+		init( width, height, format );
+		setData( data );
+	}
+
+
+	/**
 	* @brief Creates an image from a file. The image loaded can be modified afterwards.
 	* @note The image file specified should be placed on the data directory of the application
 	*
@@ -801,8 +821,8 @@ namespace Cing
 			setData( other.getData(), getWidth(), getHeight(), getFormat() );
 		}
 
-		// Load image data to texture
-		updateTexture();
+		// Load image data to texture in next draw
+		setUpdateTexture();
 
 		// Now this image is valid
 		m_bIsValid = true;
