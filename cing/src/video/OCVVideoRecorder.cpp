@@ -87,6 +87,8 @@ bool OCVVideoRecorder::init( int width, int height , const std::string& fileName
 */
 void OCVVideoRecorder::end()
 {
+	BaseVideoRecorder::end();
+
 	// Check if the class is already released
 	if ( !isValid() )
 		return;

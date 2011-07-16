@@ -46,10 +46,6 @@ BaseVideoRecorder::~BaseVideoRecorder()
 */
 bool BaseVideoRecorder::init( int width, int height, const std::string& fileName, float fps /*= 25*/)
 {
-	// Check if the class is already initialized
-	if ( isValid() )
-		return true;
-
 	// Build absolute path
 	m_path = fileName;
 	if ( isPathAbsolute( m_path ) == false )
@@ -58,7 +54,11 @@ bool BaseVideoRecorder::init( int width, int height, const std::string& fileName
 	}
 
 	if( m_path.size() == 0 )
+	{
 		LOG_CRITICAL("OCVVideoRecorder::init() - Output file name inside VideoRecorder is empty, you must provide a name for the output file");
+		m_bIsValid = false;
+		return false;
+	}
 
 	// Store data
 	m_width			= width;
