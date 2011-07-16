@@ -528,6 +528,10 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="Logging"
+						>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter
