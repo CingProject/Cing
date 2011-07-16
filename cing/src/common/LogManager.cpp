@@ -204,14 +204,8 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 		OutputDebugString( msgFormated );	// In release, only critical messages
 		OutputDebugString( "\n" );
 	}
-#endif
 
-		// Extract string parameters
-	//char		msgFormated[2048];
-	///*va_list		args;*/
-	//va_start	(args, msg);
-	//vsprintf	(msgFormated, msg, args);
-	//va_end		(args);
+	// Windows Event logger
 	int windows_log_level = 0;
 	WindowsEventLogger* wel = &WindowsEventLogger::getSingleton(); 
 	if ( wel && wel->getUseWindowsEventLogger() )
@@ -233,6 +227,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 		wel->write(msgFormated, level);
 	}
 
+#endif
 }
 
 } // namespace Cing

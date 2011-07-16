@@ -440,6 +440,14 @@
 						RelativePath="..\..\..\..\src\common\SystemUtils.h"
 						>
 					</File>
+					<File
+						RelativePath="..\..\..\..\src\common\WindowsEventLogger.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\common\XEventLog.h"
+						>
+					</File>
 					<Filter
 						Name="XML"
 						>
@@ -483,6 +491,30 @@
 					<File
 						RelativePath="..\..\..\..\src\common\SystemUtils.cpp"
 						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\common\WindowsEventLogger.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\common\XEventLog.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<Filter
 						Name="XML"
