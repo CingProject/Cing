@@ -174,7 +174,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
         return;
 
 	// Extract string parameters
-	char			msgFormated[1024];
+	char			msgFormated[4096];
 	va_list		args;
 	va_start	(args, msg);
 	vsprintf	(msgFormated, msg, args);
