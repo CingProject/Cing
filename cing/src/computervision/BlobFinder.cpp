@@ -107,7 +107,7 @@ void BlobFinder::update( const Image& inImage )
 	if ( (m_minBlobArea < 0) || (m_maxBlobArea < 0) )
 	{
 		m_minBlobArea = 10;
-		m_maxBlobArea = inImage.getWidth() * inImage.getHeight();
+		m_maxBlobArea = (float)inImage.getWidth() * (float)inImage.getHeight();
 	}
 
 	// Check both images have same size and it is the same than the filter size
