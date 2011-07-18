@@ -224,7 +224,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 				break;
 		}
 
-		wel->write(msgFormated, level);
+		wel->write(msgFormated, windows_log_level);
 	}
 
 #endif
