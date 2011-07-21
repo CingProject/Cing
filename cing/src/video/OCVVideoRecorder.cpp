@@ -115,9 +115,9 @@ void OCVVideoRecorder::addFrame( Cing::Image& newFrame )
 	if (isOpen)
 	{
 		// HACK: Convert RGB2BGR then BGR2RGB
-		cvtColor(newFrame.getCVMat(), newFrame.getCVMat(), CV_RGB2BGR);
+		//cvtColor(newFrame.getCVMat(), newFrame.getCVMat(), CV_RGB2BGR);
 		(*m_cvVideoWriter) << newFrame.getCVMat();
-		cvtColor(newFrame.getCVMat(), newFrame.getCVMat(), CV_BGR2RGB);
+		//cvtColor(newFrame.getCVMat(), newFrame.getCVMat(), CV_BGR2RGB);
 	}
 	else
 		LOG_CRITICAL("OCVVideoRecorder::addFrame() - Warning: OCVVideoRecorder is closed");
