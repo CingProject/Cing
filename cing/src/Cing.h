@@ -116,6 +116,7 @@
 // Audio
 #include "audio/SoundFMOD.h"
 #include "audio/AudioInputFMOD.h"
+#include "audio/SoundOpenAL.h"
 
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
