@@ -208,26 +208,26 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 
 	// all windows event logging will be executed directly
 	// Windows Event logger
-	//int windows_log_level = 0;
-	//WindowsEventLogger* wel = &WindowsEventLogger::getSingleton(); 
-	//if ( wel && wel->getUseWindowsEventLogger() )
-	//{
-	//	// convert the ogre log level to windows log level
-	//	switch( level )
-	//	{
-	//		case LOG_CRITICAL:
-	//			windows_log_level = EVENTLOG_ERROR_TYPE;
-	//			break;
-	//		case LOG_NORMAL:
-	//			windows_log_level = EVENTLOG_WARNING_TYPE;
-	//			break;
-	//		default:
-	//			windows_log_level = EVENTLOG_INFORMATION_TYPE;
-	//			break;
-	//	}
+	int windows_log_level = 0;
+	WindowsEventLogger* wel = &WindowsEventLogger::getSingleton(); 
+	if ( wel && wel->getUseWindowsEventLogger() )
+	{
+		// convert the ogre log level to windows log level
+		switch( level )
+		{
+			case LOG_CRITICAL:
+				windows_log_level = EVENTLOG_ERROR_TYPE;
+				break;
+			case LOG_NORMAL:
+				windows_log_level = EVENTLOG_WARNING_TYPE;
+				break;
+			default:
+				windows_log_level = EVENTLOG_INFORMATION_TYPE;
+				break;
+		}
 
-	//	wel->write(msgFormated, windows_log_level);
-	//}
+		wel->write(msgFormated, windows_log_level);
+	}
 
 #endif
 }
