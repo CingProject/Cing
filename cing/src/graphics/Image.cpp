@@ -829,6 +829,31 @@ namespace Cing
 	}
 
 	/**
+	* @brief  Equality comparison operator, returns a boolean.
+	*
+	* @param other Image to compare
+	*/
+	bool Image::operator==(const Image& other) const {
+		bool is_equal = true;
+		
+		char *original_data = this->getCVImage().imageData; 
+		char *other_data = other.getCVImage().imageData;
+
+		if(this->getCVImage().width != other.getCVImage().width || this->getCVImage().height != other.getCVImage().height || this->getCVImage().nChannels != other.getCVImage().nChannels)
+			is_equal = false;
+		else {
+			for(int i=0; i < this->getCVImage().imageSize; ++i) {
+				if( original_data[i] != other_data[i] ) {
+					is_equal = false;
+					break;
+				}
+			}
+		}
+
+		return is_equal;
+	}
+
+	/**
 	* @brief  Duplicate an image, returns new Image object.
 	*
 	* @param other Image to copy

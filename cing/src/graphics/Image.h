@@ -143,6 +143,7 @@ namespace Cing
 		void operator +=( float scalar );
 		void operator -=( const Image& img );
 		void operator +=( const Image& img );
+		bool operator ==( const Image& other) const;
 		void blend		( const Image& other, float percentage );
 
 		// Other
