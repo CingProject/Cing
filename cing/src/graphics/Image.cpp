@@ -269,12 +269,72 @@ namespace Cing
 	*/
 	bool Image::load( const std::string& path )
 	{
+/*
+		// Check application correctly initialized (could not be if the user didn't calle size function)
+		Application::getSingleton().checkSubsystemsInit();
+
+		// Build absolute path
+		m_path = path;
+		if ( isPathAbsolute( m_path ) == false )
+		{	
+			m_path = dataFolder + m_path;
+		}
+
+		// Confirm that it exists
+		if ( fileExists( m_path ) == false )
+		{
+			LOG_ERROR( "The image file %s could not be found", m_path.c_str() );
+			return false;
+		}
+
+		// Load the image from disk
+		std::string basePath, fileName;
+		splitFilename( m_path, fileName, basePath );
+
+		// If the image has already been initialized -> release it first
+		if ( isValid () )
+			m_cvImage.release();
+
+		// Load from disk
+		m_cvImage = cv::imread( m_path );
+
+		// Set format
+		switch ( m_cvImage.channels() )
+		{
+		case 1:
+			m_format = GRAYSCALE;
+		case 3:
+			m_format = RGB; 
+			break;
+		case 4:
+			m_format = RGBA; 
+			break;
+		}
+		 
+		// Create the texture quad (to draw image)
+		if ( !isValid () )
+			m_quad.init( (int)m_cvImage.cols, (int)m_cvImage.rows, m_format );
+		else if ( m_cvImage.cols != m_quad.getTextWidth() || m_cvImage.rows != m_quad.getTextHeight() )
+			m_quad.reset( (int)m_cvImage.cols, (int)m_cvImage.rows, m_format );
+
+		//m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+
+		// Load image data to texture
+		updateTexture();
+
+		// The class is now initialized
+		m_bIsValid = true;
+		m_bUpdateTexture = false;
+
+		return true;
+
+*/
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
 		// If the image has already been initialized -> release it first
-		if ( isValid () )
-			end();
+		//if ( isValid () )
+		//	end();
 
 		// Build absolute path
 		m_path = path;
@@ -299,7 +359,7 @@ namespace Cing
 			LOG_ERROR( "The image %s could not be loaded at %s", path.c_str(), m_path.c_str() );
 			return false;
 		}
-		//m_image.load( "m_path", ResourceManager::userResourcesGroupName );
+
 		// This file has been loaded from file
 		m_loadedFromFile = true;
 
@@ -320,6 +380,11 @@ namespace Cing
 
 		// Create the image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
+		
+		// If the image has already been initialized -> release it first
+		if ( isValid () )
+			m_cvImage.release();
+
 		m_cvImage.create( m_image.getHeight(), m_image.getWidth(), CV_MAKETYPE(CV_8U,m_nChannels) );
 
 		// Create OpenCV header for the image data comming from the file (to copy it later to our opencv image)
@@ -356,8 +421,13 @@ namespace Cing
 			imgData.copyTo(m_cvImage);
 		}
 
-		// Create the texture quad (to draw image)
-		m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+		imgData.release();
+
+		// Create the texture quad (to draw image) or reset its width and height
+		if ( !isValid () )
+			m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format  );
+		else if ( (int)m_image.getWidth() != (int)m_quad.getTextWidth() || (int)m_image.getHeight() != m_quad.getTextHeight() )
+			m_quad.reset( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
 
 		// Load image data to texture
 		updateTexture();
@@ -370,6 +440,7 @@ namespace Cing
 		m_image.freeMemory();
 
 		return true;
+		
 	}
 
 	/**
