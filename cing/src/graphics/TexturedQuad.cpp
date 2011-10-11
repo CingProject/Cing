@@ -1038,4 +1038,57 @@ namespace Cing
 		m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
 	}
 
+	/**
+	 * @internal
+	 * @brief Reset texture and quad sizes if needed. NOTE: Not tested yet!
+	 */
+	bool TexturedQuad::reset( int textureWidth, int textureHeight, GraphicsType format )
+	{
+		// Modify texture and quad size
+		
+		// Check if the class is already initialized
+		if ( !isValid() )
+			return false;
+
+		// Get power of 2 texture size
+		m_textWidthP2 = (float)textureWidth;
+		m_textHeightP2 = (float)textureHeight;
+
+		// Store the texture data
+		m_textWidth     = (float)textureWidth;
+		m_textHeight    = (float)textureHeight;	
+		m_format		= format;
+		m_render2D		= false;
+		m_alpha			= 255;
+	
+		m_ogreTexture->setWidth(m_textWidth);
+		m_ogreTexture->setHeight(m_textHeight);
+
+		// Update vertex data
+		m_quad->beginUpdate(0);
+
+		// Center mode (Julio -> TODO)
+		m_quad->position( -0.5, -0.5, 0.0);	m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+		m_quad->position( 0.5, -0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+		m_quad->position( 0.5, 0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+		m_quad->position( -0.5, 0.5, 0.0);  m_quad->textureCoord( 0, 0 );
+
+		// m_quad indexes (two triangles)
+		m_quad->triangle( 0, 1, 2 );
+		m_quad->triangle( 0, 2, 3 );
+		m_quad->end();
+
+		// By default: 3d render
+		set3dRendering();
+
+		// calculate the necessary scale 2d values for scale 1 (initial) - so basically initializes m_2dWidth and m_2dHeight in case the image is rendered
+		// in screen space in the first frame without setting the scale
+		m_2dWidth = (m_textWidth / (float)width) * 2.0f;
+		m_2dHeight = (m_textHeight / (float)height) * 2.0f;
+
+		// The class is now initialized
+		m_bIsValid = true;
+
+		return true;
+	}
 } // namespace Cing
