@@ -78,8 +78,8 @@ namespace Cing
 		Image*					clone	();
 
 		// Transformations
-		void			setOrientation	( const Vector& axis, float angle );
-		void			rotate			( const Vector& axis, float angle );
+		void			setOrientation	( const Vector& axis, float angleRadians );
+		void			rotate			( const Vector& axis, float angleRadians ); ///< Rotates around an axis specificed by the provided normalization vector, by an amount in radians provided by the angle specificed
 		void			setScale		( float xScale, float yScale, float zScale );
 
 		// Draw on scene

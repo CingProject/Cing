@@ -869,12 +869,12 @@ namespace Cing
 	* @param[in] axis	rotation axis
 	* @param[in] angle rotation angle (degrees)
 	*/
-	void Image::setOrientation( const Vector& axis, float angle )
+	void Image::setOrientation( const Vector& axis, float angleRadians )
 	{
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to rotate an invalid image" );
 
-		m_quad.setOrientation( axis, angle );
+		m_quad.setOrientation( axis, angleRadians );
 	}
 
 
@@ -884,12 +884,12 @@ namespace Cing
 	* @param[in] axis	rotation axis
 	* @param[in] angle rotation angle (degrees)
 	*/
-	void Image::rotate( const Vector& axis, float angle )
+	void Image::rotate( const Vector& axis, float angleRadians )
 	{
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to rotate an invalid image" );
 
-		m_quad.rotate( axis, angle );
+		m_quad.rotate( axis, angleRadians );
 	}
 
 	/**
