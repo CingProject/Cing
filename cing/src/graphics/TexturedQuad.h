@@ -50,8 +50,9 @@ namespace Cing
 		~TexturedQuad();
 
 		// Init / Release 
-		bool  init            ( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false );
-		void  end             ();
+		bool  init				( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false );
+		void  end				();
+		bool  reset				( int textureWidth, int textureHeight, GraphicsType format );
 
 		// Set methods
 		void  	setPosition     ( float x, float y, float z );
@@ -110,8 +111,6 @@ namespace Cing
 		void			enableDepthWrite	( bool value );
 		void			enableDepthCheck	( bool value );
 
-
-
 	protected:
 
 		// Private methods
@@ -122,6 +121,7 @@ namespace Cing
 		void	setbackgroundRendering	();
 		void	applyTransformations	( float x, float y, float z, float imgWidth, float imgHeight );
 		void	applyTransformations2D	( float x, float y, float imgWidth, float imgHeight );
+
 
 		// Constant / static attributes
 		static const std::string  MANUAL_OBJECT_NAME;     			///< Name of the manual object (which is the quad)
