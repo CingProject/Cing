@@ -59,11 +59,13 @@ struct Blob
     Point				center;		///< Center of the Blob
 	BlobContourPoints	nodes;		///< Points of the Blob's contour
 
+	CvSeq*      contour;///< Internal stuff. OpenCv contour
+
 private:
     // This is done to avoid making contour attribute public
     friend class BlobFinder; 
 
-    CvSeq*      contour;///< Internal stuff. OpenCv contour
+
 };
 
 /**

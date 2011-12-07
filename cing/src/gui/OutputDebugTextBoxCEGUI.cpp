@@ -49,9 +49,9 @@ const int		OutputDebugTextBoxCEGUI::DEFAULT_MAX_MESSAGES		= 100;
  * @brief Constructor. Initializes class attributes.
  */
 OutputDebugTextBoxCEGUI::OutputDebugTextBoxCEGUI():
-	m_listBox( NULL ),
+	m_listBox	( NULL ),
 	m_bIsValid  ( false ),
-	m_enabled(false)
+	m_enabled	( true )
 {
 }
 
@@ -88,8 +88,13 @@ void OutputDebugTextBoxCEGUI::init()
 	// Add list box (text box) to the gui manager
 	GUIManagerCEGUI::getSingleton().addGUIELement( m_listBox );
 
-	m_bIsValid = true;
-	m_enabled = true;
+	// The text box is valid from now on
+	m_bIsValid	= true;
+
+
+	// But by default we want it non visible and disabled by default
+	setVisible(false);
+	m_enabled	= false;
 }
 
 /**

@@ -32,6 +32,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/LogManager.h"
 #include "common/MathUtils.h"
 #include "common/CommonConstants.h"
+#include "common/SystemUtils.h"
 
 // Framework
 #include "framework/Application.h"
@@ -55,7 +56,9 @@ namespace Cing
 	Image::Image():
 		m_bIsValid( false ),
 		m_bVFlipped( false ),
-		m_bUpdateTexture( false )
+		m_bUpdateTexture( false ),
+		m_loadedFromFile(false),
+		m_path( "NOT_LOADED_FROM_FILE")
 	{
 	}
 
@@ -67,7 +70,9 @@ namespace Cing
 	Image::Image( const Image& img ):
 		m_bIsValid( false ),
 		m_bVFlipped( img.isVFlipped() ),
-		m_bUpdateTexture( false )
+		m_bUpdateTexture( false ),
+		m_loadedFromFile(false),
+		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		init( img );
 	}
@@ -83,10 +88,32 @@ namespace Cing
 	Image::Image( int width, int height, GraphicsType format /*= RGB*/ ):
 		m_bIsValid( false ),
 		m_bVFlipped( false ),
-		m_bUpdateTexture( false )
+		m_bUpdateTexture( false ),
+		m_loadedFromFile(false),
+		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		init( width, height, format );
 	}
+
+	/**
+	* @brief Creates an image of the specified size and format, loading initial data
+	*
+	* @param data	Data to be set to the image once created
+	* @param width  Width of the image to be created
+	* @param height Height of the image to be created
+	* @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
+	*/
+	Image::Image( unsigned char* data, int width, int height, GraphicsType format /*= RGB*/ ):
+		m_bIsValid( false ),
+		m_bVFlipped( false ),
+		m_bUpdateTexture( false ),
+		m_loadedFromFile(false),
+		m_path( "NOT_LOADED_FROM_FILE")	
+	{
+		init( width, height, format );
+		setData( data );
+	}
+
 
 	/**
 	* @brief Creates an image from a file. The image loaded can be modified afterwards.
@@ -96,7 +123,9 @@ namespace Cing
 	*/
 	Image::Image( const std::string& name ):
 		m_bVFlipped( false ),
-		m_bIsValid( false )
+		m_bIsValid( false ),
+		m_loadedFromFile(false),
+		m_path( "NOT_LOADED_FROM_FILE")
 	{
 		load( name );
 	}
@@ -137,7 +166,8 @@ namespace Cing
 		m_quad.init( m_cvImage.cols, m_cvImage.rows, format );
 
 		// Store the format
-		m_format = format;
+		m_format			= format;
+		m_loadedFromFile	= false;
 
 		// The class is now initialized
 		m_bIsValid = true;
@@ -171,8 +201,10 @@ namespace Cing
 		m_quad.init( m_cvImage.cols, m_cvImage.rows, m_format, true );
 
 		// The class is now initialized
-		m_bIsValid = true;
-		m_bUpdateTexture = true;
+		m_bIsValid			= true;
+		m_bUpdateTexture	= true;
+		m_loadedFromFile	= false;
+
 	}
 
 	/**
@@ -187,8 +219,43 @@ namespace Cing
 
 		this->operator=( img );
 
-		m_bIsValid = true;
-		m_bUpdateTexture = false;
+		m_bIsValid			= true;
+		m_bUpdateTexture	= false;
+		m_loadedFromFile	= false;
+	}
+
+	/**
+	 * @brief Loads an image file from disk and loads it into the texture manager so it is accessible just by the file name
+	 * @param textureName  Name to give to the texture in the texture manager once the file is loaded (could be the filename including ext).
+	 * @param texturePath  Full path to the texture file
+	 */
+	bool Image::loadImageFromDisk(const std::string& textureName, const std::string& texturePath) 
+	{ 
+		bool image_loaded = false; 
+	
+		// Load the file stream
+		std::ifstream ifs(texturePath.c_str(), std::ios::binary|std::ios::in); 
+		if (ifs.is_open()) 
+		{ 
+			// Make sure it has extension to know the file type
+			Ogre::String tex_ext; 
+			Ogre::String::size_type index_of_extension = texturePath.find_last_of('.'); 
+			if (index_of_extension != Ogre::String::npos) 
+			{ 
+				// Create the ogre data stream from the file stream
+				tex_ext = texturePath.substr(index_of_extension+1); 
+				Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(texturePath, &ifs, false)); 
+				
+				// Load the stream into the Ogre Image
+				m_image.load(data_stream, tex_ext); 
+				
+				// Load the texture to make it available in the future just by using the texture name
+				//Ogre::TextureManager::getSingleton().loadImage(textureName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image, Ogre::TEX_TYPE_2D, 0, 1.0f); 
+				image_loaded = true; 
+			} 
+			ifs.close(); 
+		} 
+		return image_loaded; 
 	}
 
 	/**
@@ -198,27 +265,111 @@ namespace Cing
 	*
 	* @note Supported image formats are: .bmp, .jpg, .gif, .raw, .png, .tga and .dds.
 	*
-	* @param name  Name of the file to be loaded. It must be placed in the data directory.
+	* @param path  Path of the file to be loaded. It can be relative to the data folder, or absolute.
 	*/
-	void Image::load( const std::string& name  )
+	bool Image::load( const std::string& path )
 	{
+/*
+		// Check application correctly initialized (could not be if the user didn't calle size function)
+		Application::getSingleton().checkSubsystemsInit();
+
+		// Build absolute path
+		m_path = path;
+		if ( isPathAbsolute( m_path ) == false )
+		{	
+			m_path = dataFolder + m_path;
+		}
+
+		// Confirm that it exists
+		if ( fileExists( m_path ) == false )
+		{
+			LOG_ERROR( "The image file %s could not be found", m_path.c_str() );
+			return false;
+		}
+
+		// Load the image from disk
+		std::string basePath, fileName;
+		splitFilename( m_path, fileName, basePath );
+
+		// If the image has already been initialized -> release it first
+		if ( isValid () )
+			m_cvImage.release();
+
+		// Load from disk
+		m_cvImage = cv::imread( m_path );
+
+		// Set format
+		switch ( m_cvImage.channels() )
+		{
+		case 1:
+			m_format = GRAYSCALE;
+		case 3:
+			m_format = RGB; 
+			break;
+		case 4:
+			m_format = RGBA; 
+			break;
+		}
+		 
+		// Create the texture quad (to draw image)
+		if ( !isValid () )
+			m_quad.init( (int)m_cvImage.cols, (int)m_cvImage.rows, m_format );
+		else if ( m_cvImage.cols != m_quad.getTextWidth() || m_cvImage.rows != m_quad.getTextHeight() )
+			m_quad.reset( (int)m_cvImage.cols, (int)m_cvImage.rows, m_format );
+
+		//m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+
+		// Load image data to texture
+		updateTexture();
+
+		// The class is now initialized
+		m_bIsValid = true;
+		m_bUpdateTexture = false;
+
+		return true;
+
+*/
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
 		// If the image has already been initialized -> release it first
-		if ( isValid () )
-			end();
+		//if ( isValid () )
+		//	end();
 
-		// Load image from file
-		m_image.load( name, ResourceManager::userResourcesGroupName );
+		// Build absolute path
+		m_path = path;
+		if ( isPathAbsolute( m_path ) == false )
+		{	
+			m_path = dataFolder + m_path;
+		}
+
+		// Confirm that it exists
+		if ( fileExists( m_path ) == false )
+		{
+			LOG_ERROR( "The image file %s could not be found", m_path.c_str() );
+			return false;
+		}
+
+		// Load the image from disk
+		std::string basePath, fileName;
+		splitFilename( m_path, fileName, basePath );
+		bool loaded = loadImageFromDisk( fileName, m_path );
+		if ( !loaded )
+		{
+			LOG_ERROR( "The image %s could not be loaded at %s", path.c_str(), m_path.c_str() );
+			return false;
+		}
+
+		// This file has been loaded from file
+		m_loadedFromFile = true;
 
 		// Check if image was loaded ok
 		if ( m_image.getData() )
-			LOG( "Image %s succesfully loaded", name.c_str() );
+			LOG( "Image %s succesfully loaded", m_path.c_str() );
 		else
 		{
-			LOG( "Error loading Image %s", name.c_str() );
-			return;
+			LOG( "Error loading Image %s", m_path.c_str() );
+			return false;
 		}
 
 		// Store image format (for images loaded from file, we force it to be RGB or RGBA)
@@ -227,18 +378,21 @@ namespace Cing
 		else
 			m_format = RGB;
 
-		//m_format = (GraphicsType)m_image.getFormat();
-
 		// Create the image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
+		
+		// If the image has already been initialized -> release it first
+		if ( isValid () )
+			m_cvImage.release();
+
 		m_cvImage.create( m_image.getHeight(), m_image.getWidth(), CV_MAKETYPE(CV_8U,m_nChannels) );
 
 		// Create OpenCV header for the image data comming from the file (to copy it later to our opencv image)
 		cv::Mat imgData(m_cvImage.rows, m_cvImage.cols, CV_MAKETYPE(CV_8U,m_nChannels), m_image.getData(), m_image.getWidth() * m_nChannels);
 
 		// Check if we need to flip the channels red and green (for example png and jpgs are loaded as BGR by Ogre)
-		GraphicsType currentImageFormat = (GraphicsType)m_image.getFormat();
-		if ( (currentImageFormat == BGR) || (currentImageFormat == BGRA) )
+		m_loadedFormat = (GraphicsType)m_image.getFormat();
+		if ( (m_loadedFormat == BGR) || (m_loadedFormat == BGRA) )
 		{
 			// No alpha channel
 			if ( m_nChannels == 3 )
@@ -259,16 +413,21 @@ namespace Cing
 				int from_to[] = { 0,2,  1,1,  2,0,  3,3 };
 				cv::mixChannels( &imgData, 1, &m_cvImage, 1, from_to, 4 );
 			}
-			// Format not "under control" -> not touching byte order
-			else
-			{
-				LOG( "Image::load. Format not \"under control\". Not altering byte order, colors could be swapped" );
-				imgData.copyTo(m_cvImage);
-			}
+
+		}// Format not "under control" -> not touching byte order
+		else
+		{
+			LOG( "Image::load. Format not \"under control\". Not altering byte order, colors could be swapped" );
+			imgData.copyTo(m_cvImage);
 		}
 
-		// Create the texture quad (to draw image)
-		m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+		imgData.release();
+
+		// Create the texture quad (to draw image) or reset its width and height
+		if ( !isValid () )
+			m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format  );
+		else if ( (int)m_image.getWidth() != (int)m_quad.getTextWidth() || (int)m_image.getHeight() != m_quad.getTextHeight() )
+			m_quad.reset( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
 
 		// Load image data to texture
 		updateTexture();
@@ -279,6 +438,9 @@ namespace Cing
 
 		// Now we can release the image used by the image loader
 		m_image.freeMemory();
+
+		return true;
+		
 	}
 
 	/**
@@ -298,8 +460,25 @@ namespace Cing
 		// TODO: Pass data from IplImage to m_image to save the data
 		m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage.data, m_cvImage.cols, m_cvImage.rows, 1, (Ogre::PixelFormat)getFormat() );
 
-		// Add the user app data folder to the name
-		m_image.save( ResourceManager::userDataPath + name );
+		// Store the desired path for the new image
+		std::string savePath = name;
+
+		// Check the path: if it's relative, it should be relative to the data folder, if it's absolute don't change it
+		if ( isPathAbsolute( savePath ) == false  )
+			savePath = ResourceManager::userDataPath + name;
+
+		// Make sure the path exists
+		std::string folder, fileName;
+		splitFilename( savePath, fileName, folder );
+		if ( !folderExists(folder) )
+		{
+			LOG_ERROR( "Image::save. Error, cannot save image to %s. Does folder %s exist?", savePath.c_str(), folder.c_str() );
+			return;
+		}
+
+		// Folder exists, Save image
+		LOG( "Saving image in %s", savePath.c_str() );
+		m_image.save( savePath );
 	}
 
 	/**
@@ -340,13 +519,23 @@ namespace Cing
 	* @param format		format Format of the image passed
 	* @param widthStep	optional parameter in case the width step is not width*nChannels. Usually you should not use it.
 	*/
-	void Image::setData( const unsigned char* imageData, int width, int height, GraphicsType format, int widthStep /*= -1*/ )
+	void Image::setData( const unsigned char* imageData, int width /*= -1*/, int height /*= -1*/, GraphicsType format /*= UNDEFINED*/, int widthStep /*= -1*/ )
 	{
 		if ( !isValid() )
 		{
 			LOG_ERROR( "Trying to set data to an invalid image (it has not been initialized)" );
 			return;
 		}
+
+		// if the width/height are not specified, assume the are the same as this image
+		if ( width == -1 )
+			width = getWidth();
+		if ( height == -1 )
+			height = getHeight();
+
+		// if the format is not specified, assume is the same
+		if ( format == UNDEFINED )
+			format = m_format;
 
 		// Check dimensions
 		int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
@@ -371,6 +560,15 @@ namespace Cing
 	 * @return the image data (buffer)
 	 */	
 	unsigned char* Image::getData() 
+	{ 
+		return isValid()? m_cvImage.data: NULL; 
+	}
+
+	/**
+	 * @brief Returns the image data (buffer) - const version
+	 * @return the image data (buffer)
+	 */	
+	const unsigned char* Image::getData() const
 	{ 
 		return isValid()? m_cvImage.data: NULL; 
 	}
@@ -646,8 +844,9 @@ namespace Cing
 			init( other.getWidth(), other.getHeight(), other.getFormat() );
 
 		// Check if the size of the image differs
-		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) || (other.getFormat() != getFormat()) )
+		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) )
 		{
+			LOG( "Image will be recreated as the size of both images differ" );
 			end();
 			init( other.getWidth(), other.getHeight(), other.getFormat() );
 			
@@ -655,16 +854,70 @@ namespace Cing
 			if ( m_bVFlipped )
 				m_quad.flipVertical();
 		}
+	
+		// Check if we have to convert from color to gray
+		if ( (other.getNChannels() == 3) && (getNChannels() == 1) )
+		{
+			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is color (3 channels) but we are grayscale (1 channel). Image will be converted to grayscale in order to be assigned" );
 
-		// Copy the data
-		const unsigned char* imageData = const_cast<Image&>(other).getData();
-		setData( imageData, getWidth(), getHeight(), getFormat() );
+			// Convert image
+			cv::cvtColor( other.getCVMat(), getCVMat(), CV_RGB2GRAY );
+		}
+		// Same but the received image has also alpha channel
+		else if ( (other.getNChannels() == 4) && (getNChannels() == 1) )
+		{
+			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is color + alpha (4 channels) but we are grayscale (1 channel). Image will be converted to grayscale in order to be assigned" );
 
-		// Load image data to texture
-		updateTexture();
+			// Convert image
+			cv::cvtColor( other.getCVMat(), getCVMat(), CV_RGBA2GRAY );
+		}
+		// Other direction: the received image is gray and we are color - convert it
+		else if ( (other.getNChannels() == 1) && (getNChannels() == 3) ) 
+		{
+			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is gray (1 channel) but we are color (3 channel). Image will be converted to color in order to be assigned" );
+
+			// Convert image
+			cv::cvtColor( other.getCVMat(), getCVMat(), CV_GRAY2RGB );
+		}
+		// Same but we have alpha
+		else if ( (other.getNChannels() == 1) && (getNChannels() == 4) ) {
+			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is gray (1 channel) but we are color + alpha (4 channel). Image will be converted to color in order to be assigned" );
+
+			// Convert image
+			cv::cvtColor( other.getCVMat(), getCVMat(), CV_GRAY2RGBA );
+		}
+		// Looks like we have the same number of channels, just copy over
+		else
+		{
+			setData( other.getData(), getWidth(), getHeight(), getFormat() );
+		}
+
+		// Load image data to texture in next draw
+		setUpdateTexture();
 
 		// Now this image is valid
 		m_bIsValid = true;
+	}
+
+	/**
+	* @brief  Equality comparison operator, returns a boolean.
+	*
+	* @param other Image to compare
+	*/
+	bool Image::operator==(const Image& other) const {
+
+		char *original_data = this->getCVImage().imageData; 
+		char *other_data = other.getCVImage().imageData;
+
+		if(this->getCVImage().width != other.getCVImage().width || this->getCVImage().height != other.getCVImage().height || this->getCVImage().nChannels != other.getCVImage().nChannels)
+			return false;
+		else
+		{
+			if( 0 == memcmp(original_data,other_data,other.getCVImage().imageSize) )
+				return true;
+			else
+				return false;
+		}
 	}
 
 	/**
@@ -687,12 +940,12 @@ namespace Cing
 	* @param[in] axis	rotation axis
 	* @param[in] angle rotation angle (degrees)
 	*/
-	void Image::setOrientation( const Vector& axis, float angle )
+	void Image::setOrientation( const Vector& axis, float angleRadians )
 	{
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to rotate an invalid image" );
 
-		m_quad.setOrientation( axis, angle );
+		m_quad.setOrientation( axis, angleRadians );
 	}
 
 
@@ -702,12 +955,12 @@ namespace Cing
 	* @param[in] axis	rotation axis
 	* @param[in] angle rotation angle (degrees)
 	*/
-	void Image::rotate( const Vector& axis, float angle )
+	void Image::rotate( const Vector& axis, float angleRadians )
 	{
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to rotate an invalid image" );
 
-		m_quad.rotate( axis, angle );
+		m_quad.rotate( axis, angleRadians );
 	}
 
 	/**

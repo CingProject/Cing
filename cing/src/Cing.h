@@ -69,6 +69,7 @@
 #include "graphics/DirectionalLight.h"
 #include "graphics/GraphicsTypes.h"
 #include "graphics/Image.h"
+#include "graphics/ImageAnimation.h"
 #include "graphics/GraphicsUserAPI.h"
 #include "graphics/LightingUserAPI.h"
 #include "graphics/Transform.h"
@@ -115,6 +116,7 @@
 // Audio
 #include "audio/SoundFMOD.h"
 #include "audio/AudioInputFMOD.h"
+#include "audio/SoundOpenAL.h"
 
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -122,6 +124,7 @@
 #include "video/MediaPlayerGS.h"
 #endif
 #include "video/MediaPlayerOCV.h"
+#include "video/OCVVideoRecorder.h"
 
 
 // GUI
@@ -165,5 +168,7 @@ typedef MediaPlayerGS MediaPlayer;
 typedef MediaPlayerOCV MediaPlayer;
 #endif
 
+// Video writing
+typedef OCVVideoRecorder VideoRecorder;
 
 #endif // _Vision_H_

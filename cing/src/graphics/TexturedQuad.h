@@ -50,8 +50,9 @@ namespace Cing
 		~TexturedQuad();
 
 		// Init / Release 
-		bool  init            ( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false );
-		void  end             ();
+		bool  init				( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false );
+		void  end				();
+		bool  reset				( int textureWidth, int textureHeight, GraphicsType format );
 
 		// Set methods
 		void  	setPosition     ( float x, float y, float z );
@@ -81,31 +82,34 @@ namespace Cing
 		void	updateTexture	( char* textureData, int width, int height, GraphicsType format ) { updateTexture( reinterpret_cast< unsigned char* >( textureData ), width, height, format ); }
 
 		// Query methods
-		bool  				isValid         () const 	{ return m_bIsValid; }
-		int					getTextWidth	() const 	{ return (int)m_textWidth;	}
-		int					getTextHeight	() const 	{ return (int)m_textHeight;	}
-		GraphicsType		getFormat		() const 	{ return m_format;		}
-		Ogre::ManualObject*	getManualObject	() 			{ return m_quad;		}
-		Ogre::TexturePtr	getOgreTexture	() const 	{ return m_ogreTexture; }
-		Ogre::SceneNode*	getSceneNode	()			{ return m_quadSceneNode;   }
+		bool  					isValid         () const 	{ return m_bIsValid; }
+		int						getTextWidth	() const 	{ return (int)m_textWidth;	}
+		int						getTextHeight	() const 	{ return (int)m_textHeight;	}
+		GraphicsType			getFormat		() const 	{ return m_format;		}
+		Ogre::ManualObject*		getManualObject	() 			{ return m_quad;		}
+		Ogre::MaterialPtr		getMaterial		() 			{ return m_ogreMaterial; }
+		Ogre::TexturePtr		getOgreTexture	() const 	{ return m_ogreTexture; }
+		Ogre::SceneNode*		getSceneNode	()			{ return m_quadSceneNode;   }
 		const Ogre::SceneNode*	getSceneNode	() const	{ return m_quadSceneNode;   }
-		Ogre::SceneNode*	getPivotSceneNode()			{ return m_pivotSceneNode;   }
-		const String&		getMaterialName	() const	{ return m_ogreMaterialName; }
+		Ogre::SceneNode*		getPivotSceneNode()			{ return m_pivotSceneNode;   }
+		const String&			getMaterialName	() const	{ return m_ogreMaterialName; }
+		bool					hasAlpha		() const;
+
 
 
 		// Texture coordinate control
 		void			flipVertical	(bool flip = true);
+		void			flipHorizontal	(bool flip = true);
 
 		// Operators 
 		void			operator=		( const TexturedQuad& other );
 
-		void			setTransparency	( float alpha );
-		void			setRenderQueue	( Ogre::RenderQueueGroupID group ); 
-		bool			hasAlpha		() const;
-		void			enableDepthWrite( bool value );
-		void			enableDepthCheck( bool value );
-
-
+		// Texture render control
+		void			setTransparency		( float alpha );
+		void			forceRenderQueue	( unsigned int renderQueueId );
+		void			restoreRenderQueue	() { m_renderQueueForced = false; }
+		void			enableDepthWrite	( bool value );
+		void			enableDepthCheck	( bool value );
 
 	protected:
 
@@ -118,6 +122,7 @@ namespace Cing
 		void	applyTransformations	( float x, float y, float z, float imgWidth, float imgHeight );
 		void	applyTransformations2D	( float x, float y, float imgWidth, float imgHeight );
 
+
 		// Constant / static attributes
 		static const std::string  MANUAL_OBJECT_NAME;     			///< Name of the manual object (which is the quad)
 		static const std::string  MATERIAL_NAME;          			///< Name of the material where the texture will be placed
@@ -125,14 +130,16 @@ namespace Cing
 		static long               m_quadCounter;          			///< Used to generate unique names for the quad materials, textures and ogre manual objects
 
 		// Attributes
+		Ogre::MaterialPtr			m_ogreMaterial;					///< Material used to render the quad
 		Ogre::TexturePtr			m_ogreTexture;          		///< Ogre texture (to render the quad with it)  
 		Ogre::SceneNode*			m_quadSceneNode;        		///< Quad scene node inside the scene (used to modify the scale, orientation...etc)
 		Ogre::SceneNode*			m_pivotSceneNode;        		///< Pivot scene node (parent of the quadSceneNode. Used to concatenate transformations
 		Ogre::ManualObject*			m_quad;							///< Ogre manual object that contains the geometry (vertex) of the quad
 		GraphicsType				m_format;						///< Format of the image
-		Ogre::uint32				m_3dQueryFlags;					///< Query flags of ogre when the object is being renderd in 3d		
 		float						m_alpha;						///< Transparency of the object. Range 0...255.
 		
+		Ogre::uint8					m_forcedRenderQueue;			///< Render queue to be used by this quad. Forced by the user
+		bool						m_renderQueueForced;			///< True if the render queue has been forced by the user
 
 		float						m_xScale, m_yScale, m_zScale;	///< Scale of the node
 

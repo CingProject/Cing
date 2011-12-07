@@ -31,10 +31,16 @@
 #if defined( _MSC_VER )
 	#include <direct.h>
 	#include  <io.h>
-#endif
+	#include <cctype>
 
-#include  <stdio.h>
-#include  <stdlib.h>
+	#include <tlhelp32.h>
+	#include <winsvc.h>
+	#include <stdio.h>
+	#include <psapi.h>
+	#endif
+
+	#include  <stdio.h>
+	#include  <stdlib.h>
 
 
 namespace Cing
@@ -91,9 +97,93 @@ namespace Cing
 #if defined( _MSC_VER )
 		if( (_access( folderPath.c_str() , 0 )) != -1 )
 			return true;
+#elif
+		LOG_ERROR( "folderExists NOT IMPLEMENTED IN THIS SYSTEM OR COMPILER" );
 #endif
 		
 		return false;
 	}
+
+
+	/** Splits a path into the basePath (the folder) and the file name (just filename + extension.
+     * @param[in]	path Path to split
+     * @param[out]	outFileName The filename + extension (no folders in path)
+     * @param[out]	outBasePath Full path to the folder that contains the file
+	 */
+	void splitFilename( const std::string& path, std::string& outFileName, std::string& outBasePath )
+	{
+		Ogre::StringUtil::splitFilename( path, outFileName, outBasePath  );
+	}
+
+	/**
+	 * @brief Returns true if the received path is absolutel, false if it's relative
+	 * @todo: This method might not be totally generic, potentially fix it using boost::filesystem or poco::filesystem
+	 * @param path Path to check
+	 * @return true if the received path is absolutel, false if it's relative
+	 */
+	bool isPathAbsolute( const std::string& path )
+	{
+		// Split the path
+		std::string basePath, fileName;
+		splitFilename( path, fileName, basePath );
+
+		// Windows case (lookf
+#if defined(WIN32)
+		if ( basePath.find( ":" ) != std::string::npos )
+			return true;
+#else
+		// Unix based
+		if ( Ogre::StringUtil::startsWith( basePath, "/" ) )
+			return true;
+#endif
+
+		return false;
+	}
+
+
+	/**
+	 * @brief Returns the current use of ram memory Mb
+	 * @NOTE only Windows now
+	 * @param	processID the process to retrieve the memory usage
+	 * @return	the current use of ram memory  in Mb
+	 */
+	double getCurrentMemoryUseMb( unsigned long processID )
+	{
+#if defined(WIN32)
+		#pragma comment(lib,"psapi.lib") //add lib
+
+		 HANDLE hProcess;
+		 PROCESS_MEMORY_COUNTERS pmc;
+
+		 // Print information about the memory usage of the process.
+		 hProcess = OpenProcess(  PROCESS_QUERY_INFORMATION |PROCESS_VM_READ,FALSE, processID );
+		 if (NULL == hProcess)
+		  return 0;
+
+		 double memKb = 0;
+
+		 // Get he process info (for now just mem in Kb)
+		 if ( GetProcessMemoryInfo( hProcess, &pmc, sizeof(pmc)) )
+		 {
+			memKb = pmc.WorkingSetSize/1024.0/1024.0;
+		  //printf( "\tPageFaultCount: %i Kb\n", pmc.PageFaultCount );
+		  //printf( "\tYour app's PEAK MEMORY CONSUMPTION: %i Kb\n", pmc.PeakWorkingSetSize/(1024) );
+		  //printf( "\tYour app's CURRENT MEMORY CONSUMPTION: 0x%08X\n", pmc.WorkingSetSize );
+		  //LOG_NORMAL( "Current memory used: %i Kb\n", pmc.WorkingSetSize/(1024) );
+		  //printf( "\tQuotaPeakPagedPoolUsage: %i Kb\n", pmc.QuotaPeakPagedPoolUsage/(1024) );
+		  //printf( "\tQuotaPagedPoolUsage: %i Kb\n", pmc.QuotaPagedPoolUsage/(1024) );
+		  //printf( "\tQuotaPeakNonPagedPoolUsage: %i Kb\n", pmc.QuotaPeakNonPagedPoolUsage/(1024) );
+		  //printf( "\tQuotaNonPagedPoolUsage: %i Kb\n", pmc.QuotaNonPagedPoolUsage/(1024) );
+		  //printf( "\tPagefileUsage: %i Kb\n", pmc.PagefileUsage/(1024) ); 
+		  //printf( "\tPeakPagefileUsage: %i Kb\n", pmc.PeakPagefileUsage/(1024) );
+		 }
+
+		 CloseHandle( hProcess );
+		 return memKb;
+#else
+		LOG_ERROR( "getCurrentMemoryUse() NOT IMPLEMENTED IN THIS SYSTEM OR COMPILER" );
+#endif
+	}
+
 	
 } // namespace Cing

@@ -39,8 +39,6 @@ namespace Cing
 {
 
 // Static member init
-const float         BlobFinder::DEFAULT_MIN_AREA    = 10;
-const float         BlobFinder::DEFAULT_MAX_AREA    = 320 * 240 * 0.75f;
 const unsigned int  BlobFinder::DEFAULT_MAX_BLOBS   = 20;
 
 
@@ -51,9 +49,9 @@ const unsigned int  BlobFinder::DEFAULT_MAX_BLOBS   = 20;
 BlobFinder::BlobFinder():
   m_findContoursStorage ( NULL  ),
   m_contour             ( NULL  ),
-	m_nBlobs							( 0			),
-  m_minBlobArea         ( DEFAULT_MIN_AREA ),
-  m_maxBlobArea         ( DEFAULT_MAX_AREA ),
+	m_nBlobs			( 0			),
+  m_minBlobArea         ( -1 ),
+  m_maxBlobArea         ( -1 ),
   m_maxBlobs            ( DEFAULT_MAX_BLOBS ),
   m_bIsValid            ( false )
 {
@@ -101,13 +99,20 @@ void BlobFinder::end()
  */
 void BlobFinder::update( const Image& inImage )
 {
-  // Check valid
-  if ( !isValid() )
-    THROW_EXCEPTION( "Trying to compute blobs, with the BlobFinder not initialized. Init method should be called" );
+	// Check valid
+	if ( !isValid() )
+	THROW_EXCEPTION( "Trying to compute blobs, with the BlobFinder not initialized. Init method should be called" );
 
-  // Check both images have same size and it is the same than the filter size
-  if( (inImage.getNChannels() != 1) && (inImage.getNChannels() != 3) )
-    THROW_EXCEPTION( "Trying to compute blobs on images with non supporte format -> only RGB or GRAYSCALE images supported" );
+	// Check blob area... and if it has not been set, set it to the max and min (no lower than 10, to avoid opencv issues)
+	if ( (m_minBlobArea < 0) || (m_maxBlobArea < 0) )
+	{
+		m_minBlobArea = 10;
+		m_maxBlobArea = (float)inImage.getWidth() * (float)inImage.getHeight();
+	}
+
+	// Check both images have same size and it is the same than the filter size
+	if( (inImage.getNChannels() != 1) && (inImage.getNChannels() != 3) )
+	THROW_EXCEPTION( "Trying to compute blobs on images with non supporte format -> only RGB or GRAYSCALE images supported" );
 
 	// Request temp image to work with
 	IplImage* cvTempImage = ImageResourceManager::getSingleton().getImage( inImage.getWidth(), inImage.getHeight(), 1 );
@@ -115,36 +120,36 @@ void BlobFinder::update( const Image& inImage )
 	// If they have different number of channels -> convert them
 	if ( inImage.getNChannels() == 3 )
 		cvConvertImage( &inImage.getCVImage(), cvTempImage );
-  // just one channel -> Copy the input image
+	// just one channel -> Copy the input image
 	else 
 		cvCopy( &inImage.getCVImage(), cvTempImage );
 
-  // Find blobs (openCV contours)	
-  int retrivalMode = CV_RETR_EXTERNAL; // CV_RETR_CCOMP
-  cvFindContours( cvTempImage, m_findContoursStorage, &m_contour, sizeof(CvContour), retrivalMode, CV_CHAIN_APPROX_SIMPLE );
+	// Find blobs (openCV contours)	
+	int retrivalMode = CV_RETR_EXTERNAL; // CV_RETR_CCOMP
+	cvFindContours( cvTempImage, m_findContoursStorage, &m_contour, sizeof(CvContour), retrivalMode, CV_CHAIN_APPROX_SIMPLE );
 
-  // Extract found contours    
+	// Extract found contours    
 
-  // Iterate through found contours and store them..
-  m_blobs.clear();
-  for( ; m_contour != 0; m_contour = m_contour->h_next )
-  {
-    // Get contour area
-    double area = fabs( cvContourArea( m_contour, CV_WHOLE_SEQ ) );
+	// Iterate through found contours and store them..
+	m_blobs.clear();
+	for( ; m_contour != 0; m_contour = m_contour->h_next )
+	{
+	// Get contour area
+	double area = fabs( cvContourArea( m_contour, CV_WHOLE_SEQ ) );
 
-    // If it has a good size (between min and max)
-    if ( ( area > m_maxBlobArea ) || ( area < m_minBlobArea ) )
-      continue;
+	// If it has a good size (between min and max)
+	if ( ( area > m_maxBlobArea ) || ( area < m_minBlobArea ) )
+	  continue;
 
-    // Store new Blob
-    m_blobs.push_back( Blob( area, m_contour ) );
-  }
+	// Store new Blob
+	m_blobs.push_back( Blob( area, m_contour ) );
+	}
 
 	// Release temp image
 	ImageResourceManager::getSingleton().releaseImage( cvTempImage );
 
-  // Extract information of found blobs
-  extractBlobsInformation();
+	// Extract information of found blobs
+	extractBlobsInformation();
 
 	// Clear OpenCV contours storage 
 	cvClearMemStorage( m_findContoursStorage );

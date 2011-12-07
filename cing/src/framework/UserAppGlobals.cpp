@@ -59,7 +59,7 @@ namespace Cing
 	unsigned long	 		millisFromStart	= 1;
 
 	// Frame count
-	unsigned long  			frameCount      = 0;
+	unsigned long long  	frameCount      = 0;
 	float					frameRate       = 0.0f;   
 
 	// Ogre / Advanced

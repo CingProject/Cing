@@ -26,6 +26,7 @@
 
 // Common
 #include "common/CommonUtilsIncludes.h"
+#include "common/LogManager.h"
 
 // Graphics
 #include "graphics/ImageResourceManager.h"
@@ -143,6 +144,8 @@ void BackgroundSubtraction::storeBackground( const Image& backgroundImage )
 				( backgroundImage.getHeight() != m_backgroundImage->height) ||
 				( backgroundImage.getNChannels() != m_backgroundImage->nChannels) )
 	{
+		LOG_TRIVIAL( "BackgroundSubtraction::storeBackground: WARNING Creating a new image to store the background (we don't have one or it has a different size of number of channels)" );
+
 		// Release old image (if it exists) and create the new one
 		cvReleaseImage( &m_backgroundImage );
 		m_backgroundImage = cvCloneImage( &backgroundImage.getCVImage() );

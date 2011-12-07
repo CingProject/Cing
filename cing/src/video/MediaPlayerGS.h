@@ -52,22 +52,22 @@ namespace Cing
 
 		// Init / Release / Update
 		bool    init    ();
-		bool    load    ( const char* fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
+		bool    load    ( const std::string& fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
 		void    end     ();
 		void    update  ();
 		Image&  getImage();
 
 		// Query methods
-		bool    isValid   () const { return m_bIsValid; }
-		bool    isPlaying ();
-		bool	isPaused  		();
-		float   duration  () const { return (float)m_videoDuration; }
-		float   time      ();
-		int     getWidth  () const { return m_videoWidth; }
-		int     getHeight () const { return m_videoHeight; }
-		float   fps		  		() const { return m_videoFps; }
-		float   frameRate 		() const { return m_videoFps; }
-		int		numberOfFrames	() const { return m_nFrames; } 
+		bool    		isValid   () const { return m_bIsValid; }
+		bool    		isPlaying ();
+		bool			isPaused  		();
+		float   		duration  () const { return (float)m_videoDuration; }
+		float   		time      ();
+		unsigned int    getWidth  () const { return m_videoWidth; }
+		unsigned int    getHeight () const { return m_videoHeight; }
+		float   		fps		  		() const { return m_videoFps; }
+		float   		frameRate 		() const { return m_videoFps; }
+		unsigned int	numberOfFrames	() const { return m_nFrames; } 
 
 		// Media control
 		void    play    ();
@@ -137,6 +137,8 @@ namespace Cing
 		String					m_outputGstVideoFormat;///< GStreamer output buffer video format
 		GraphicsType			m_pixelFormat;		///< Pixel format in which new image frames will be stored
 		Image					m_frameImg;			///< Image containing the buffer of the current video frame
+		Image					m_frameImgGray;		///< Image containing the buffer of the current video frame in gray scale in case gray format is requested (GStreamer 0.10.28 does not support gray yet)
+		bool					m_useGrayScale;		///< True if the requested output format is grayscale 
 		bool					m_newBufferReady;	///< True when there is a new buffer ready
 
 		// Internal stuff

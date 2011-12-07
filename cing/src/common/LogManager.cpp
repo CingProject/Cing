@@ -24,6 +24,8 @@
 
 #include "LogManager.h"
 #include "eString.h"
+#include "WindowsEventLogger.h"
+
 
 #include <PTypes/include/ptime.h>
 
@@ -80,7 +82,7 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= true*/ )
 	m_logToFile		= logToFile;
 
 	// By default just lot error messages to debug output
-	m_debugOutputLogLevel = LOG_ERROR;
+	m_debugOutputLogLevel = LOG_NORMAL;
 
 	// Get ogre log pointer (just in case)
 	m_ogreLog = Ogre::LogManager::getSingleton().getDefaultLog();
@@ -172,7 +174,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
         return;
 
 	// Extract string parameters
-	char			msgFormated[1024];
+	char			msgFormated[4096];
 	va_list		args;
 	va_start	(args, msg);
 	vsprintf	(msgFormated, msg, args);
@@ -202,6 +204,31 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 		OutputDebugString( msgFormated );	// In release, only critical messages
 		OutputDebugString( "\n" );
 	}
+
+
+	// all windows event logging will be executed directly
+	// Windows Event logger
+	int windows_log_level = 0;
+	WindowsEventLogger* wel = &WindowsEventLogger::getSingleton(); 
+	if ( wel && wel->getUseWindowsEventLogger() )
+	{
+		// convert the ogre log level to windows log level
+		switch( level )
+		{
+			case LOG_CRITICAL:
+				windows_log_level = EVENTLOG_ERROR_TYPE;
+				break;
+			case LOG_NORMAL:
+				windows_log_level = EVENTLOG_WARNING_TYPE;
+				break;
+			default:
+				windows_log_level = EVENTLOG_INFORMATION_TYPE;
+				break;
+		}
+
+		wel->write(msgFormated, windows_log_level);
+	}
+
 #endif
 }
 
