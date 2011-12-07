@@ -282,7 +282,7 @@ void GraphicsManager::draw()
 								0,
 								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
 								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
-	m_canvas.getTexturedQuad().setRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
+	m_canvas.getTexturedQuad().forceRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
 
 
 	// Update 3d primitive drawing	( shape, lines,...)

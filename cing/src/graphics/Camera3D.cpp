@@ -111,7 +111,8 @@ namespace Cing
 		*/
 
 		// Set Frustum
-		m_pOgreCamera->setNearClipDistance( 10 );
+		m_pOgreCamera->setNearClipDistance( 100 );
+		m_pOgreCamera->setFarClipDistance( 4000 );
 
 
 		// The class is now initialized

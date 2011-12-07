@@ -28,7 +28,6 @@ Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
 // GStreamer
 #include <gst/video/video.h>
 
-
 // Common
 #include "common/CommonUtilsIncludes.h"
 #include "common/XMLElement.h"
@@ -39,9 +38,11 @@ Inc., 59 Tem_mediaPlayerle Place, Suite 330, Boston, MA  02111-1307  USA
 
 // Graphics
 #include "graphics/Color.h"
+#include "graphics/GraphicsUserAPI.h"
 
 namespace Cing
 {
+
 	// GStreamer Callback functions
 
 	/**
@@ -159,7 +160,8 @@ namespace Cing
 		m_volume		( 1.0f  ),
 		m_endOfFileReached	(false),
 		m_paused			(false),
-		m_playing			(false)
+		m_playing			(false),
+		m_useGrayScale		(false)
 	{
 	}
 
@@ -187,7 +189,8 @@ namespace Cing
 		m_volume		( 1.0f  ),
 		m_endOfFileReached	(false),
 		m_paused			(false),
-		m_playing			(false)
+		m_playing			(false),
+		m_useGrayScale		(false)
 	{
 		// Load the movie
 		load( filename, RGB, fps );
@@ -223,7 +226,7 @@ namespace Cing
 	 * @param fps			Desired Frames per Second for the playback. -1 means to use the fps of the movie file.
 	 * @return true if the video was succesfully loaded
 	 */
-	bool MediaPlayerGS::load( const char* fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
+	bool MediaPlayerGS::load( const std::string& fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
 	{
 		LOG_ENTER_FUNCTION;
 	
@@ -231,7 +234,7 @@ namespace Cing
 		bool result = init();
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could not load it correctly.", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could not load it correctly.", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -240,7 +243,7 @@ namespace Cing
 		result = buildPathToFile( fileName );
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. File %s Not Found", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. File %s Not Found", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -249,7 +252,7 @@ namespace Cing
 		result = createPipeline();
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the pipeline to play it.", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the pipeline to play it.", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -260,7 +263,7 @@ namespace Cing
 		result = createVideoSink();
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the sink to play it.", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, GStreamer could create the sink to play it.", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -269,7 +272,7 @@ namespace Cing
 		result = configureVideoFormat( requestedVideoFormat );
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, Image format could not be configured.", fileName );
+			LOG_ERROR( "MediaPlayerGS::load. Error loading %s, Image format could not be configured.", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -278,6 +281,11 @@ namespace Cing
 		m_frameImg.init( m_videoWidth, m_videoHeight, m_pixelFormat );
 		m_bufferSizeInBytes = m_videoWidth * m_videoHeight * m_frameImg.getNChannels();
 		m_internalBuffer	= new unsigned char[m_bufferSizeInBytes];
+
+		// Init grayscale image if it was requested
+		if ( m_useGrayScale )
+			m_frameImgGray.init( m_videoWidth, m_videoHeight, GRAYSCALE );
+
 
 		// Query video duration
 		GstFormat format = GST_FORMAT_TIME;
@@ -294,13 +302,6 @@ namespace Cing
 		// Also store the number of frames
 		m_nFrames  =  m_videoFps * m_videoDuration;
 
-		// Check if the requested fps is different than the actual video fps -> if so, change it
- 		if ( (fps > 0) && (equal(fps, m_videoFps) == false) )
-		{
-			float newSpeed = fps/m_videoFps;
-			speed( newSpeed );
-		}
-
 		LOG( "MediaPlayer: File %s correctly loaded", m_fileName.c_str() );
 
 		// Init other vars
@@ -311,6 +312,14 @@ namespace Cing
 	
 		// The object is valid when the file is loaded
 		m_bIsValid = true;
+
+		// Check if the requested fps is different than the actual video fps -> if so, change it
+ 		if ( (fps > 0) && (equal(fps, m_videoFps) == false) )
+		{
+			float newSpeed = fps/m_videoFps;
+			speed( newSpeed );
+		}
+
 
 		LOG_EXIT_FUNCTION;
 
@@ -377,19 +386,28 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR_NTIMES( 1, "MediaPlayerGS not corretly initialized. No new frame will be returned" );
-			return m_frameImg;
+			LOG_ERROR_NTIMES( 1, "MediaPlayerGS not corretly initialized. No valid will be returned" );
 		}
+		else
+		{
+			// Update, just in case there are pending operations
+			update();
 
-		// Update, just in case there are pending operations
-		update();
-
-		// Check if we have a new buffer to copy
-		if ( m_newBufferReady )
-			copyBufferIntoImage();
+			// Check if we have a new buffer to copy
+			if ( m_newBufferReady )
+				copyBufferIntoImage();
+		}
 
 		LOG_EXIT_FUNCTION;
 
+		// Return color or gray image
+		if ( m_useGrayScale )
+		{
+			// Convert it to gray and regurn it
+			m_frameImgGray = m_frameImg;
+			return m_frameImgGray;
+		}
+		// Returning color image
 		return m_frameImg;
 	}
 
@@ -755,7 +773,7 @@ namespace Cing
 	 */
 	void MediaPlayerGS::onNewBuffer( GstBuffer* newBuffer )
 	{
-		LOG_ENTER_FUNCTION;
+		//LOG_ENTER_FUNCTION;
 	
 		// Check buffer
 		if ( newBuffer == NULL )
@@ -805,7 +823,7 @@ namespace Cing
 		// operation done
 		m_bufferMutex.unlock();
 
-		LOG_EXIT_FUNCTION;
+		//LOG_EXIT_FUNCTION;
 	}
 
  
@@ -869,7 +887,7 @@ namespace Cing
 	}
 
 	/**
-	 * Creates and configues the GStreamer pipeline that will allow the media playback and control
+	 * Creates and configures the GStreamer pipeline that will allow the media playback and control
 	 * @return true if there was no problem
 	 */
 	bool MediaPlayerGS::createPipeline()
@@ -923,7 +941,7 @@ namespace Cing
 
 
 	/**
-	 * Creates and configues the GStreamer video sink that will allow our app to get the decoded video frames
+	 * Creates and configures the GStreamer video sink that will allow our app to get the decoded video frames
 	 * @return true if there was no problem
 	 */
 	bool MediaPlayerGS::createVideoSink()
@@ -1008,6 +1026,14 @@ namespace Cing
 		// Get current video format and dimensions
 		GstVideoFormat currentVideoFormat;
 		gst_video_format_parse_caps( caps, &currentVideoFormat, &m_videoWidth, &m_videoHeight );
+
+		// Get Buffer size for each component
+		unsigned int nChannels = numberOfChannels( m_pixelFormat );
+		int stride = 0;
+		for ( unsigned int i = 0; i < nChannels; ++i )
+		{
+			stride = gst_video_format_get_row_stride( currentVideoFormat, i, m_videoWidth );
+		}
 
 		// Get current fps
 		gint  fps_n, fps_d;
@@ -1100,6 +1126,15 @@ namespace Cing
 			case BGRA:
 				return GST_VIDEO_CAPS_BGRA;
 			break;
+
+			case GRAYSCALE:
+				LOG_ERROR("MediaPlayerGS Gstreamer 0.10.28 does not support Gray scale videos. Making conversion every frame" );
+				m_useGrayScale = true;
+				return GST_VIDEO_CAPS_RGB;
+			break;
+			default: 
+				LOG_ERROR( "MediaPlayerGS Could not set the right pixel format (unknown). Defaulting to RGB" );
+				break;
 		};
 
 		LOG_EXIT_FUNCTION;
@@ -1144,6 +1179,10 @@ namespace Cing
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_RGBA)	&& ( cingVideoFormat == RGBA ) )	return true;
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_BGR)	&& ( cingVideoFormat == BGR ) )		return true;
 		if ( (gstVideoFormat == GST_VIDEO_FORMAT_BGRA)	&& ( cingVideoFormat == BGRA ) )	return true;
+
+		// NOTE: This is a hack tu support grayscale without gstreamer support, so we convert the buffer every frame
+		// TODO: Change this when a GStreamer upadte gives this support
+		if ( (gstVideoFormat == GST_VIDEO_FORMAT_RGB)	&& ( cingVideoFormat == GRAYSCALE ) ) return true;
 
 		LOG_EXIT_FUNCTION;
 

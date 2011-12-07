@@ -28,6 +28,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "GraphicsPrereqs.h"
 #include "TexturedQuad.h"
+#include "Color.h"
 
 // Ogre
 #include "OgreImage.h"
@@ -56,26 +57,29 @@ namespace Cing
 		Image				();
 		Image				( const Image& img );
 		Image				( int width, int height, GraphicsType format = RGB );
+		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB );
 		Image				( const std::string& name );
-		~Image			();
+		virtual ~Image		();
 
 		// Init / Release / Update / Save / Clone
 		void		init				( int width, int height, GraphicsType format = RGB );
 		void		initAsRenderTarget	( int width, int height );
 		void		init				( const Image& img );
-		void		load				( const std::string& name );
-		void		save				( const std::string& name );
+		bool		load				( const std::string& path );
+		void		save				( const std::string& path );
 		void		end					();
 
 		// Image data
-		void			setData( const unsigned char* imageData, int width, int height, GraphicsType format, int widthStep = -1 );
-		unsigned char*	getData();
-		unsigned char*	pixels() { return getData(); }
-		Image*			clone ();
+		void					setData	( const unsigned char* imageData, int width = -1, int height = -1, GraphicsType format = UNDEFINED, int widthStep = -1 );
+		unsigned char*			getData	();
+		const unsigned char*	getData	() const;
+		unsigned char*			pixels	() { return getData(); }
+		const unsigned char*	pixels	() const { return getData(); }
+		Image*					clone	();
 
 		// Transformations
-		void			setOrientation	( const Vector& axis, float angle );
-		void			rotate			( const Vector& axis, float angle );
+		void			setOrientation	( const Vector& axis, float angleRadians );
+		void			rotate			( const Vector& axis, float angleRadians ); ///< Rotates around an axis specificed by the provided normalization vector, by an amount in radians provided by the angle specificed
 		void			setScale		( float xScale, float yScale, float zScale );
 
 		// Draw on scene
@@ -99,6 +103,10 @@ namespace Cing
 		void  	rect	( int x, int y, int width, int height );
 		void  	text	( int x1, int y1, const char* text );
 		void  	fill    ( const Color& color );
+		void  	fill    ( float gray ) { fill( Color(gray, gray, gray) ); }
+		void  	fill    ( float gray, float alpha ) { fill( Color(gray, gray, gray, alpha) ); }
+		void  	fill    ( float r, float g, float b ) { fill( Color(r, g, b) ); }
+		void  	fill    ( float r, float g, float b, float a ) { fill( Color(r, g, b, a) ); }
 
 		// Image processing
 		void	filter	( ImageProcessingFilters type );
@@ -118,6 +126,7 @@ namespace Cing
 		bool				isValid			() const	{ return m_bIsValid; }
 		IplImage			getCVImage		() const	{ return (IplImage)m_cvImage; }
 		cv::Mat&			getCVMat		()			{ return m_cvImage; }
+		const cv::Mat&		getCVMat		() const	{ return m_cvImage; }
 		int					getWidth		() const;
 		int					getHeight		() const;
 		GraphicsType		getFormat		() const;
@@ -134,24 +143,34 @@ namespace Cing
 		void operator +=( float scalar );
 		void operator -=( const Image& img );
 		void operator +=( const Image& img );
+		bool operator ==( const Image& other) const;
 		void blend		( const Image& other, float percentage );
 
 		// Other
 		void copy( const Image& img );
 
 		// Texture update control
-		void					setUpdateTexture( bool updateTextureFlag = true );	
-		bool					getUpdateTexture() const;	
+		void	setUpdateTexture( bool updateTextureFlag = true );	
+		bool	getUpdateTexture() const;	
 
 		// Texture coordinate flip
-		void					flipVertical		();
-		bool					isVFlipped			() const { return m_bVFlipped; }
+		void	flipVertical		();
+		bool	isVFlipped			() const { return m_bVFlipped; }
+
+		// Render Queue control
+		void	forceRenderQueue	( unsigned int renderQueueId ) { m_quad.forceRenderQueue( renderQueueId ); }
+		void	restoreRenderQueue	() { m_quad.restoreRenderQueue(); }
 
 		TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
 	private:
+		// Private methods
+		bool	loadImageFromDisk	( const std::string& textureName, const std::string& texturePath );
+
 		// Attributes
 		static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
 		static ImageThresholdFilter    m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
+
+		std::string						m_path;				///< Path to the image file (relative to data folder)
 
 		cv::Mat 						m_cvImage;			///< Contains the image compatible with openCV
 		Ogre::Image						m_image;			///< Contains the image data (loaded from file or dynamically created)
@@ -159,7 +178,9 @@ namespace Cing
 		bool							m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
 		bool							m_bVFlipped;		///< True if the image texture coordinates are flipped vertically 
 		bool							m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
+		bool							m_loadedFromFile;	///< True if the image was loaded from file
 		GraphicsType					m_format;			///< Format of the image
+		GraphicsType					m_loadedFormat;		///< Format in which the image was loaded (if loaded from file)
 	};
 
 } // namespace Cing

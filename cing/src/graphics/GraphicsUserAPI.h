@@ -229,6 +229,12 @@ Vector		screenToWorld			( const Vector2d& screenCoordinate, float distanceToCame
 Vector		screenToWorld			( const Vector& screenCoordinate, float distanceToCamera );
 
 
+//----------------------------------------------------------------------------------- 
+// Helpers
+//----------------------------------------------------------------------------------- 
+unsigned int numberOfChannels ( GraphicsType format );
+
+
 } // namespace Cing
 
 #endif // _GraphicsUserAPI_h_

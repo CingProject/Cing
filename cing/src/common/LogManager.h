@@ -40,6 +40,7 @@
 	#define LOG_TRIVIAL(msg, ...)			Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_TRIVIAL, msg, __VA_ARGS__ )	
 	#define LOG(msg, ...)					Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_NORMAL, msg, __VA_ARGS__ )	
 	#define LOG_NORMAL LOG
+	#define LOG_WARNING LOG
 	#define LOG_ERROR(msg, ...)				Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_CRITICAL, msg, __VA_ARGS__ )
 	#define LOG_CRITICAL LOG_ERROR
 	#define LOG_ERROR_NTIMES(n, msg, ...)	{ static int count = 0; \

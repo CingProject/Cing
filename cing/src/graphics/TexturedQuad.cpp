@@ -74,7 +74,8 @@ namespace Cing
 		m_xScale				( 1.0f ),
 		m_yScale				( 1.0f ),
 		m_zScale				( 1.0f ),
-		m_bIsValid				( false )
+		m_bIsValid				( false ),
+		m_renderQueueForced		( false )
 	{
 	}
 
@@ -158,18 +159,16 @@ namespace Cing
 		}
 
 		// Create a material for the quad
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName,
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		m_ogreMaterial = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		
 		// Assign texture to material and set materia properties
-		Ogre::TextureUnitState* texUnit = material->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
+		Ogre::TextureUnitState* texUnit = m_ogreMaterial->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
 		texUnit->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP); // note: clamp fixes glitch in edges of 2d images
 
-		material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
-		material->getTechnique(0)->getPass(0)->setLightingEnabled( false );
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
-		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
-		material->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
-//		material->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
+		m_ogreMaterial->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( false );
+//		m_ogreMaterial->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
 
 
 		/*
@@ -177,9 +176,9 @@ namespace Cing
 		TODO: We need an easy way to change images transparency!!
 		//Modified by Jorge 25/feb/2009
 
-		//material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
-		//material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_COLOUR );
-		//material->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(1,1,0.5,0.5));
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_COLOUR );
+		//m_ogreMaterial->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(1,1,0.5,0.5));
 
 
 		static_cast<MaterialPtr>( MaterialManager::getSingleton( ).getByName( "Overlay/TwoTextures" ) )
@@ -224,6 +223,11 @@ namespace Cing
 
 		// By default: 3d render
 		set3dRendering();
+
+		// calculate the necessary scale 2d values for scale 1 (initial) - so basically initializes m_2dWidth and m_2dHeight in case the image is rendered
+		// in screen space in the first frame without setting the scale
+		m_2dWidth = (m_textWidth / (float)width) * 2.0f;
+		m_2dHeight = (m_textHeight / (float)height) * 2.0f;
 
 		// The class is now initialized
 		m_bIsValid = true;
@@ -663,21 +667,28 @@ namespace Cing
 	}
 
 	/*
-	 * Sets the Ogre Scene Manager render queue for this quad
-	 * @param group render queue
+	 * Sets the Ogre Scene Manager render queue for this quad.
+	 * The method is called "force" as this class usually handles automatically the render queue group for the object depending 
+	 * on whether it is being rendered in 2d (x, y) or 3d (x, y, z). When this method is called, that is not set automatically anymore.
+	 * You can to go back to the auto behaviour by calling restoreRenderQueue();
+	 * @param group render queue. Important, the range is 0..105. There are no more render queues in Ogre.
 	 */
-	void TexturedQuad::setRenderQueue( Ogre::RenderQueueGroupID group )
+	void TexturedQuad::forceRenderQueue( unsigned int renderQueueId )
 	{
 		if ( isValid() )
-			m_quad->setRenderQueueGroup( group );
+		{
+			// Check range
+			if ( (renderQueueId < Ogre::RENDER_QUEUE_BACKGROUND) || (renderQueueId > Ogre::RENDER_QUEUE_MAX) )
+			{
+				LOG_WARNING( "TexturedQuad::forceRenderQueue. Render queue range in 0..105. Constraining received value, which is out of range" );
+				renderQueueId = (unsigned int)constrain((float)renderQueueId, (float)Ogre::RENDER_QUEUE_BACKGROUND, (float)Ogre::RENDER_QUEUE_MAX);
+			}
+
+			m_renderQueueForced = true;
+			m_forcedRenderQueue = renderQueueId;
+			m_quad->setRenderQueueGroup( (Ogre::RenderQueueGroupID)m_forcedRenderQueue );
+		}
 	}
-
-
-	bool TexturedQuad::hasAlpha() const
-	{
-		return Ogre::PixelUtil::hasAlpha( (Ogre::PixelFormat)m_format );
-	}
-
 
 	void TexturedQuad::enableDepthWrite( bool value )
 	{
@@ -737,6 +748,15 @@ namespace Cing
 	}
 
 	/**
+	 * @brief Returns true if the texture of this quad has alpha channel on it, and false otherwise
+	 * @return true if the texture of this quad has alpha channel on it, and false otherwise
+	 */
+	bool TexturedQuad::hasAlpha() const
+	{
+		return Ogre::PixelUtil::hasAlpha( (Ogre::PixelFormat)m_format );
+	}
+
+	/**
 	* @brief Flips the texture coordinates vertically
 	*/
 	void TexturedQuad::flipVertical( bool flip /*= true*/ )
@@ -771,6 +791,40 @@ namespace Cing
 		m_quad->end();
 	}
 
+		/**
+	* @brief Flips the texture coordinates horizontally
+	*/
+	void TexturedQuad::flipHorizontal( bool flip /*= true*/ )
+	{
+		// Update geometry to flip texture coordinates
+		// We recreate the object instead of updating it because this is an extrange use, and for the normal
+		// use is better in terms of performance to have static objects (in terms of vertex data)
+		m_quad->clear();
+		m_quad->begin( m_ogreMaterialName );
+
+		if ( flip ) 
+		{
+			// m_quad positions and texture coordinates
+			m_quad->position( -0.5, -0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, -0.5, 0.0);	m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, 0.5, 0.0);	m_quad->textureCoord( 0, 0 );
+			m_quad->position( -0.5, 0.5, 0.0);  m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+		}
+		else
+		{
+			m_quad->position( -0.5, -0.5, 0.0);	m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, -0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+			m_quad->position( 0.5, 0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+			m_quad->position( -0.5, 0.5, 0.0);  m_quad->textureCoord( 0, 0 );
+		}
+
+		// quad indexes (two triangles)
+		m_quad->triangle( 0, 1, 2 );
+		m_quad->triangle( 0, 2, 3 );
+
+		// Finish updating geometry
+		m_quad->end();
+	}
 
 	/**
 	* @brief Copies the data of the received texture quad
@@ -827,20 +881,15 @@ namespace Cing
 	*/
 	void TexturedQuad::setbackgroundRendering()
 	{
-		// Properties to be rendered in 2d
-		m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
+		// Properties to be rendered as background (render queue and no depth write)
+		if ( !m_renderQueueForced )
+			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
+		
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
 
-		m_quad->setUseIdentityProjection(true);
-		m_quad->setUseIdentityView(true);
-		Ogre::AxisAlignedBox aabb;
-		aabb.setInfinite();
-		m_quad->setBoundingBox(aabb);
-
-		// mark the object as 2d rendering
-		m_render2D = true;
-
+		// The rest is the same as in 2d rendering
+		set2dRendering();
 	}
 
 	/**
@@ -850,9 +899,9 @@ namespace Cing
 	void TexturedQuad::set2dRendering()
 	{
 		// Properties to be rendered in 2d
-		m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
+		if ( !m_renderQueueForced )
+			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( true );
 		m_quad->setUseIdentityProjection(true);
 		m_quad->setUseIdentityView(true);
 		Ogre::AxisAlignedBox aabb;
@@ -870,13 +919,11 @@ namespace Cing
 	void TexturedQuad::set3dRendering()
 	{
 		// Set properties for 3d rendering
-		m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
+		if ( !m_renderQueueForced )
+			m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( true );
-		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( true );
 		m_quad->setUseIdentityProjection( false );
 		m_quad->setUseIdentityView( false );
-		m_quad->setQueryFlags( m_3dQueryFlags );
 
 		// mark the object as 3d rendering
 		m_render2D = false;
@@ -972,9 +1019,6 @@ namespace Cing
 		// Pivot orientation Orientation
 		m_pivotSceneNode->setOrientation( currentTransformation.getRotQuaternion() );
 
-		// Translate quad position, so that the image is drawn from the top-left corner
-		m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
-
 		// Calculate the transformed coordinates in 3d space
 		Vector pos = currentTransformation.applyTransform( Vector(x, y, 0) );
 
@@ -989,6 +1033,62 @@ namespace Cing
 			setScale2d( imgWidth, imgHeight );
 			setPosition2d( pos.x, pos.y );
 		}
+
+		// Finally, Translate quad position, so that the image is drawn from the top-left corner
+		m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
 	}
 
+	/**
+	 * @internal
+	 * @brief Reset texture and quad sizes if needed. NOTE: Not tested yet!
+	 */
+	bool TexturedQuad::reset( int textureWidth, int textureHeight, GraphicsType format )
+	{
+		// Modify texture and quad size
+		
+		// Check if the class is already initialized
+		if ( !isValid() )
+			return false;
+
+		// Get power of 2 texture size
+		m_textWidthP2 = (float)textureWidth;
+		m_textHeightP2 = (float)textureHeight;
+
+		// Store the texture data
+		m_textWidth     = (float)textureWidth;
+		m_textHeight    = (float)textureHeight;	
+		m_format		= format;
+		m_render2D		= false;
+		m_alpha			= 255;
+	
+		m_ogreTexture->setWidth(m_textWidth);
+		m_ogreTexture->setHeight(m_textHeight);
+
+		// Update vertex data
+		m_quad->beginUpdate(0);
+
+		// Center mode (Julio -> TODO)
+		m_quad->position( -0.5, -0.5, 0.0);	m_quad->textureCoord( 0, m_textHeight / m_textHeightP2 );
+		m_quad->position( 0.5, -0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, m_textHeight / m_textHeightP2 );
+		m_quad->position( 0.5, 0.5, 0.0);	m_quad->textureCoord( m_textWidth / m_textWidthP2, 0 );
+		m_quad->position( -0.5, 0.5, 0.0);  m_quad->textureCoord( 0, 0 );
+
+		// m_quad indexes (two triangles)
+		m_quad->triangle( 0, 1, 2 );
+		m_quad->triangle( 0, 2, 3 );
+		m_quad->end();
+
+		// By default: 3d render
+		set3dRendering();
+
+		// calculate the necessary scale 2d values for scale 1 (initial) - so basically initializes m_2dWidth and m_2dHeight in case the image is rendered
+		// in screen space in the first frame without setting the scale
+		m_2dWidth = (m_textWidth / (float)width) * 2.0f;
+		m_2dHeight = (m_textHeight / (float)height) * 2.0f;
+
+		// The class is now initialized
+		m_bIsValid = true;
+
+		return true;
+	}
 } // namespace Cing

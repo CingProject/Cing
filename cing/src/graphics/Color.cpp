@@ -99,27 +99,27 @@ Color::Color( float  red, float green, float blue, float alpha ):
  * @brief Initializes the color with a specific color values (depending on the color range
  * which by default is 0..255, and RGB color model (red, green, blue).
  *
- * @param rgb Gray color. Red, green and blue with the same value
+ * @param gray Gray color. Red, green and blue with the same value
  */
-Color::Color( int rgb ): 
+Color::Color( int gray ): 
 	m_lowRange( 0.0f ), 
 	m_hightRange( 255.0f )
 {
-	set( (float)rgb, (float)rgb, (float)rgb, m_hightRange );
+	set( (float)gray, (float)gray, (float)gray, m_hightRange );
 }
 
 /**
  * @brief Initializes the color with a specific color values (depending on the color range
  * which by default is 0..255, and RGB color model (red, green, blue).
  *
- * @param rgb Gray color.	Red, green and blue with the same value
+ * @param gray Gray color.	Red, green and blue with the same value
  * @param alpha				Transparency value (0 = transparent, 255 = opaque)
  */
-Color::Color( int rgb, float alpha ): 
+Color::Color( int gray, float alpha ): 
 	m_lowRange( 0.0f ), 
 	m_hightRange( 255.0f )
 {
-	set( (float)rgb, (float)rgb, (float)rgb, alpha );
+	set( (float)gray, (float)gray, (float)gray, alpha );
 }
 
 /**
@@ -135,6 +135,10 @@ Color::Color(  Ogre::ColourValue color ):
 	m_lowRange( 0.0f ), 
 	m_hightRange( 255.0f )
 {
+	color.r = map( color.r, 0.0, 1.0, 0, 255);
+	color.g = map( color.g, 0.0, 1.0, 0, 255);
+	color.b = map( color.b, 0.0, 1.0, 0, 255);
+	
 	set( color.r, color.g, color.b, color.a );
 }
 /**
