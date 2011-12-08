@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -130,7 +130,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2008\OpenCV\include;..\..\cing\libraries\win\visualStudio2008\LibVLC\include;..\..\cing\libraries\win\visualStudio2008"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="true"
 				MinimalRebuild="false"
