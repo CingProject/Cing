@@ -954,11 +954,10 @@ void scale(	float x, float y)
 	GraphicsManager::getSingleton().m_shapesTransforms.top().scale( x, y, 1 );
 };
 /**
- * @brief
- *
- * @param mode
+ * @brief Saves the current frame been rendered into an image file
+ * @param name Path (relative to data folder or absolute) for the file to be created
  */
-void save( const String& name )
+void saveCurrentFrame( const String& name )
 {
 	GraphicsManager::getSingleton().save( name );
 };

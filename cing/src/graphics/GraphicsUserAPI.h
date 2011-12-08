@@ -186,7 +186,8 @@ void scale		( float x, float y );
 void applyCoordinateSystemTransform( const GraphicsType& coordSystem );
 
 //Save frames
-void save( const String& name );
+void saveCurrentFrame( const String& name );
+
 //-----------------------------------------------------------------------------------
 // Typography
 //-----------------------------------------------------------------------------------
