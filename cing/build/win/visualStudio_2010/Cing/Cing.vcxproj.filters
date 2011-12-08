@@ -1,0 +1,744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Materials">
+      <UniqueIdentifier>{7caf17cc-43bd-42f6-af27-a3736fa6beb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Materials\Scripts">
+      <UniqueIdentifier>{ba7e4e91-ebca-4f38-9bd1-67d0a6986831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{d2e97e8a-3205-4167-986b-c82bed60ce9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Audio">
+      <UniqueIdentifier>{dcbd6333-64b0-4ed3-b70e-9e13124aea05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Audio\Header Files">
+      <UniqueIdentifier>{d851a0dd-87ff-44dc-ae13-f11407fffd66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Audio\Source Files">
+      <UniqueIdentifier>{5674dc4b-0cbc-4171-81b4-a8d28fe4f568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Physics">
+      <UniqueIdentifier>{b8dd73fb-8701-4441-b4ef-60e2c09a46c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Physics\Source Files">
+      <UniqueIdentifier>{3e3b4abb-2986-43a6-a6e7-f3bf996aad89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Physics\Source Files\Physics Objects">
+      <UniqueIdentifier>{7a956b6c-a52f-4111-acdd-b4d9a5de3f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Physics\Header Files">
+      <UniqueIdentifier>{a8d6d84c-eecf-4ef9-a0cd-b1d09d0d2df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Physics\Header Files\Physics Objects">
+      <UniqueIdentifier>{fe0eaea8-dbbe-49ff-85b8-d63486db52a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\CameraInput">
+      <UniqueIdentifier>{579261ec-1ab5-426f-a9e6-de098385e174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\CameraInput\Source Files">
+      <UniqueIdentifier>{0b4cdece-e173-4841-9c0c-e52ebfed72f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\CameraInput\Header Files">
+      <UniqueIdentifier>{c6306fae-13c8-432a-945c-2f0edfeea983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common">
+      <UniqueIdentifier>{0f8a0cb2-e47b-476b-9acb-e3dac2db23f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Header Files">
+      <UniqueIdentifier>{86894dde-d2f5-443d-88bc-6e78b2bb1a70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Header Files\XML">
+      <UniqueIdentifier>{8439a98b-b507-4868-926c-abf33b6959fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Source Files">
+      <UniqueIdentifier>{b5ffe211-89f3-4017-a479-9ab854844766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Source Files\XML">
+      <UniqueIdentifier>{7d6a2bc7-981b-498f-a24a-e1ecf8921998}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Source Files\Logging">
+      <UniqueIdentifier>{aecb0bd7-084a-44e3-9274-f536ccbd8158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\ComputerVision">
+      <UniqueIdentifier>{b2ef73ed-ab23-4c77-af96-8b4fe5280be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\ComputerVision\Source Files">
+      <UniqueIdentifier>{187a10eb-3e9d-4c51-b692-50b8c6d19307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\ComputerVision\Header Files">
+      <UniqueIdentifier>{8437d7fc-c7c0-4552-9618-0e62918ed7e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Framework">
+      <UniqueIdentifier>{a72143d2-4b69-45ae-8198-4e91f6e72b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Framework\Source Files">
+      <UniqueIdentifier>{7914c552-2389-4a01-a117-cae48862b4fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Framework\Header Files">
+      <UniqueIdentifier>{cc616bb3-997e-4b1a-bd09-892ca9ac7538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics">
+      <UniqueIdentifier>{762e4269-bc1c-4119-8a0e-2264299a83e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Header Files">
+      <UniqueIdentifier>{b1fdb9af-cb55-4393-96c5-752f645697ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Header Files\3DObjects">
+      <UniqueIdentifier>{003c4c18-a935-4c86-b28b-37cde9ade51f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Header Files\Image">
+      <UniqueIdentifier>{a7c5a957-ed9d-4c6d-b102-7aec4f4ddc12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Header Files\Lighting">
+      <UniqueIdentifier>{7a5bf672-dfca-4fe8-966f-24ecda690be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Header Files\ImageProcessing">
+      <UniqueIdentifier>{da859e5c-316a-405a-a8a9-b81597f103f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Header Files\Typography">
+      <UniqueIdentifier>{fb54c885-2cde-4c4d-80af-2ae046fd5f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Source Files">
+      <UniqueIdentifier>{4ffc6400-2bc6-4c6c-a0f0-61fd21b827ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Source Files\3DObjects">
+      <UniqueIdentifier>{6fa8ab2f-385b-4867-9a56-c0f9e8f9c372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Source Files\Image">
+      <UniqueIdentifier>{8342dc62-50c9-4503-8ff5-aee58a969043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Source Files\Lighting">
+      <UniqueIdentifier>{9b7275b1-17df-4774-91a5-bf067c24aab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Source Files\ImageProcessing">
+      <UniqueIdentifier>{2f4144b0-21b7-4576-b214-adf1ebf4bc12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Source Files\Typography">
+      <UniqueIdentifier>{c3259a20-e09e-41c0-901e-1d61c2e1402f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\GUI">
+      <UniqueIdentifier>{bec76620-31bf-48cf-9e7c-984942fa3693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\GUI\Source Files">
+      <UniqueIdentifier>{fd766e90-4fa8-496e-895e-10a9ca6c8029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\GUI\Header Files">
+      <UniqueIdentifier>{9b86e7d8-2c7f-42aa-b03c-692f13ad4400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Input">
+      <UniqueIdentifier>{3b667def-7910-4f31-bb19-63ec131db634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Input\Source Files">
+      <UniqueIdentifier>{250384b5-91de-4238-9018-64cdc6bc34e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Input\Header Files">
+      <UniqueIdentifier>{18a1b451-6d55-4e29-bef4-9c9ac31693cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Midi">
+      <UniqueIdentifier>{6d8b7fa5-c21d-4d07-a8bb-4d39e468f1f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Midi\Header Files">
+      <UniqueIdentifier>{0774bb07-6a00-4ed5-a4a5-361f3a47b4bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Midi\Source Files">
+      <UniqueIdentifier>{1ac6273f-9687-424b-8578-451b63fea2b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Video">
+      <UniqueIdentifier>{ede2b4e2-c8c1-484a-a4be-9c6d1cac1c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Video\Source Files">
+      <UniqueIdentifier>{caefa210-52a8-4775-86e5-de23b05845bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Video\Header Files">
+      <UniqueIdentifier>{d2ff68d4-ce95-4547-9a3e-e9a9238fa204}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Basic_Cing.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Example.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\src\input\BaseInputDevice.inl">
+      <Filter>Src\Input\Header Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\Cing-Precompiled.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\audio\AudioInputFMOD.cpp">
+      <Filter>Src\Audio\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\audio\AudioInputOpenAL.cpp">
+      <Filter>Src\Audio\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\audio\SoundFMOD.cpp">
+      <Filter>Src\Audio\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\audio\SoundManagerFMOD.cpp">
+      <Filter>Src\Audio\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\audio\SoundManagerOpenAL.cpp">
+      <Filter>Src\Audio\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\audio\SoundOpenAL.cpp">
+      <Filter>Src\Audio\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsManager.cpp">
+      <Filter>Src\Physics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsUserAPI.cpp">
+      <Filter>Src\Physics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsBox.cpp">
+      <Filter>Src\Physics\Source Files\Physics Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsObject.cpp">
+      <Filter>Src\Physics\Source Files\Physics Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsPlane.cpp">
+      <Filter>Src\Physics\Source Files\Physics Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsSphere.cpp">
+      <Filter>Src\Physics\Source Files\Physics Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\camerainput\BaseCameraInput.cpp">
+      <Filter>Src\CameraInput\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\camerainput\OCVCamera.cpp">
+      <Filter>Src\CameraInput\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\camerainput\PVCamera.cpp">
+      <Filter>Src\CameraInput\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\camerainput\VICamera.cpp">
+      <Filter>Src\CameraInput\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\CommonUserAPI.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\eString.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\Exception.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\LogManager.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\PerlinNoise.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\ResourceManager.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\SystemUtils.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\WindowsEventLogger.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\XEventLog.cpp">
+      <Filter>Src\Common\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\XMLElement.cpp">
+      <Filter>Src\Common\Source Files\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\XMLVisitor.cpp">
+      <Filter>Src\Common\Source Files\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\computervision\BackgroundSubtraction.cpp">
+      <Filter>Src\ComputerVision\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\computervision\BlobFinder.cpp">
+      <Filter>Src\ComputerVision\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\computervision\BlobTracker.cpp">
+      <Filter>Src\ComputerVision\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\framework\AppFramework.cpp">
+      <Filter>Src\Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\framework\Application.cpp">
+      <Filter>Src\Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\framework\FrameworkUserAPI.cpp">
+      <Filter>Src\Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\framework\UserAppGlobals.cpp">
+      <Filter>Src\Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Camera3D.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\CameraController.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Color.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\DebugOverlay.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\GraphicsManager.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\GraphicsUserAPI.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\ImageResourceManager.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\SceneGraphElement.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Shape.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\ShapeManager.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Style.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Transform.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Window.cpp">
+      <Filter>Src\Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Box.cpp">
+      <Filter>Src\Graphics\Source Files\3DObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Object3D.cpp">
+      <Filter>Src\Graphics\Source Files\3DObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Plane.cpp">
+      <Filter>Src\Graphics\Source Files\3DObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Sphere.cpp">
+      <Filter>Src\Graphics\Source Files\3DObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Image.cpp">
+      <Filter>Src\Graphics\Source Files\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\ImageAnimation.cpp">
+      <Filter>Src\Graphics\Source Files\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\TexturedQuad.cpp">
+      <Filter>Src\Graphics\Source Files\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\BaseLight.cpp">
+      <Filter>Src\Graphics\Source Files\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\DirectionalLight.cpp">
+      <Filter>Src\Graphics\Source Files\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\LightingUserAPI.cpp">
+      <Filter>Src\Graphics\Source Files\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\PointLight.cpp">
+      <Filter>Src\Graphics\Source Files\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\SpotLight.cpp">
+      <Filter>Src\Graphics\Source Files\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\BaseImageFilter.cpp">
+      <Filter>Src\Graphics\Source Files\ImageProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\ImageDifferenceFilter.cpp">
+      <Filter>Src\Graphics\Source Files\ImageProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\ImageThresholdFilter.cpp">
+      <Filter>Src\Graphics\Source Files\ImageProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Font.cpp">
+      <Filter>Src\Graphics\Source Files\Typography</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\FontManager.cpp">
+      <Filter>Src\Graphics\Source Files\Typography</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\MovableText.cpp">
+      <Filter>Src\Graphics\Source Files\Typography</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\TextArea.cpp">
+      <Filter>Src\Graphics\Source Files\Typography</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\gui\GUIManagerCEGUI.cpp">
+      <Filter>Src\GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\gui\GUIUserAPI.cpp">
+      <Filter>Src\GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\gui\OutputDebugTextBoxCEGUI.cpp">
+      <Filter>Src\GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input\InputManager.cpp">
+      <Filter>Src\Input\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input\Keyboard.cpp">
+      <Filter>Src\Input\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input\Mouse.cpp">
+      <Filter>Src\Input\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\midi\MidiIO.cpp">
+      <Filter>Src\Midi\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\video\BaseVideoRecorder.cpp">
+      <Filter>Src\Video\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\video\GStreamerManager.cpp">
+      <Filter>Src\Video\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\video\MediaPlayerGS.cpp">
+      <Filter>Src\Video\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\video\MediaPlayerOCV.cpp">
+      <Filter>Src\Video\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\video\MediaPlayerVLC.cpp">
+      <Filter>Src\Video\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\video\OCVVideoRecorder.cpp">
+      <Filter>Src\Video\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\AudioInputFMOD.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\AudioInputOpenAL.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\AudioPrereqs.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\BaseAudioInput.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\BaseSound.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\SoundFMOD.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\SoundManagerFMOD.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\SoundManagerOpenAL.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\audio\SoundOpenAL.h">
+      <Filter>Src\Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsManager.h">
+      <Filter>Src\Physics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsPrereqs.h">
+      <Filter>Src\Physics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsUserAPI.h">
+      <Filter>Src\Physics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsBox.h">
+      <Filter>Src\Physics\Header Files\Physics Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsObject.h">
+      <Filter>Src\Physics\Header Files\Physics Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsPlane.h">
+      <Filter>Src\Physics\Header Files\Physics Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsSphere.h">
+      <Filter>Src\Physics\Header Files\Physics Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\camerainput\BaseCameraInput.h">
+      <Filter>Src\CameraInput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\camerainput\CameraInputPrereqs.h">
+      <Filter>Src\CameraInput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\camerainput\OCVCamera.h">
+      <Filter>Src\CameraInput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\camerainput\PVCamera.h">
+      <Filter>Src\CameraInput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\camerainput\VICamera.h">
+      <Filter>Src\CameraInput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\CommonConstants.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\CommonPrereqs.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\CommonTypes.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\CommonUserAPI.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\CommonUtilsIncludes.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\eString.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\Exception.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\LogManager.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\MathUtils.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\PerlinNoise.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\Release.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\ResourceManager.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\Singleton.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\SystemUtils.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\WindowsEventLogger.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\XEventLog.h">
+      <Filter>Src\Common\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\XMLElement.h">
+      <Filter>Src\Common\Header Files\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\XMLVisitor.h">
+      <Filter>Src\Common\Header Files\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\computervision\BackgroundSubtraction.h">
+      <Filter>Src\ComputerVision\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\computervision\Blob.h">
+      <Filter>Src\ComputerVision\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\computervision\BlobFinder.h">
+      <Filter>Src\ComputerVision\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\computervision\BlobTracker.h">
+      <Filter>Src\ComputerVision\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\computervision\ComputerVisionPrereqs.h">
+      <Filter>Src\ComputerVision\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\framework\AppFramework.h">
+      <Filter>Src\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\framework\Application.h">
+      <Filter>Src\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\framework\AppMain.h">
+      <Filter>Src\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\framework\FrameworkPrereqs.h">
+      <Filter>Src\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\framework\FrameworkUserAPI.h">
+      <Filter>Src\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\framework\UserAppFunctionDeclaration.h">
+      <Filter>Src\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\framework\UserAppGlobals.h">
+      <Filter>Src\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Camera3D.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\CameraController.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Color.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\DebugOverlay.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\DynamicLines.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\DynamicRenderable.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\GraphicsManager.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\GraphicsPrereqs.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\GraphicsTypes.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\GraphicsUserAPI.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\ImageResourceManager.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\SceneGraphElement.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Shape.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\ShapeManager.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Style.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Transform.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Window.h">
+      <Filter>Src\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Box.h">
+      <Filter>Src\Graphics\Header Files\3DObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Object3D.h">
+      <Filter>Src\Graphics\Header Files\3DObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Plane.h">
+      <Filter>Src\Graphics\Header Files\3DObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Sphere.h">
+      <Filter>Src\Graphics\Header Files\3DObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Image.h">
+      <Filter>Src\Graphics\Header Files\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\ImageAnimation.h">
+      <Filter>Src\Graphics\Header Files\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\TexturedQuad.h">
+      <Filter>Src\Graphics\Header Files\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\BaseLight.h">
+      <Filter>Src\Graphics\Header Files\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\DirectionalLight.h">
+      <Filter>Src\Graphics\Header Files\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\LightingUserAPI.h">
+      <Filter>Src\Graphics\Header Files\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\PointLight.h">
+      <Filter>Src\Graphics\Header Files\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\SpotLight.h">
+      <Filter>Src\Graphics\Header Files\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\BaseImageFilter.h">
+      <Filter>Src\Graphics\Header Files\ImageProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\ImageDifferenceFilter.h">
+      <Filter>Src\Graphics\Header Files\ImageProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\ImageThresholdFilter.h">
+      <Filter>Src\Graphics\Header Files\ImageProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\Font.h">
+      <Filter>Src\Graphics\Header Files\Typography</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\FontManager.h">
+      <Filter>Src\Graphics\Header Files\Typography</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\FontProperties.h">
+      <Filter>Src\Graphics\Header Files\Typography</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\MovableText.h">
+      <Filter>Src\Graphics\Header Files\Typography</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\OgreFontHelper.h">
+      <Filter>Src\Graphics\Header Files\Typography</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\graphics\TextArea.h">
+      <Filter>Src\Graphics\Header Files\Typography</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\gui\GUIManagerCEGUI.h">
+      <Filter>Src\GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\gui\GUIManagerQuickGUI.h">
+      <Filter>Src\GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\gui\GUIPrereqs.h">
+      <Filter>Src\GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\gui\GUIUserAPI.h">
+      <Filter>Src\GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\gui\OutputDebugTextBoxCEGUI.h">
+      <Filter>Src\GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\BaseInputDevice.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\InputManager.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\InputPrereqs.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\InputTypes.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\Keyboard.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\Mouse.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\midi\midiIO.h">
+      <Filter>Src\Midi\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\midi\MidiPrereqs.h">
+      <Filter>Src\Midi\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\video\BaseVideoRecorder.h">
+      <Filter>Src\Video\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\video\GStreamerManager.h">
+      <Filter>Src\Video\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\video\MediaPlayerGS.h">
+      <Filter>Src\Video\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\video\MediaPlayerOCV.h">
+      <Filter>Src\Video\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\video\MediaPlayerVLC.h">
+      <Filter>Src\Video\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\video\OCVVideoRecorder.h">
+      <Filter>Src\Video\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\video\VideoPrereqs.h">
+      <Filter>Src\Video\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\Cing.h" />
+  </ItemGroup>
+</Project>
