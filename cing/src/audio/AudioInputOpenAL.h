@@ -15,7 +15,7 @@ namespace Cing
 	//-------------------------------------------------------------------------------------------------
 	// Implements the BaseAudioInput interface using OpenAL. 
 	//
-	// Note: This class records a sound into a buffer but there's no interface int he SoundOpenAL to
+	// Note: This class records a sound into a buffer but there's no interface in the SoundOpenAL to
 	// play that sound. There should be an interface to create a sound based on a buffer and the size
 	// (number of samples) of that buffer in SoundOpenAL for this to make sense
 	//-------------------------------------------------------------------------------------------------
