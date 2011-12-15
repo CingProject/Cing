@@ -37,7 +37,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "input/InputManager.h"
 
 // Physics
-#include "physics/PhysicsManager.h"
+//#include "physics/PhysicsManager.h"
 
 // Common
 #include "common/CommonUtilsIncludes.h"
@@ -128,7 +128,7 @@ void Application::endApp()
 	InputManager::getSingleton().end();
 
 	// Release physics manager
-	PhysicsManager::getSingleton().end();
+	//PhysicsManager::getSingleton().end();
 
 	// Release GUI Manager
 	GUIManagerCEGUI::getSingleton().end();
@@ -178,7 +178,7 @@ void Application::drawApp()
 		}
 
 		// Update physics
-		PhysicsManager::getSingleton().update( elapsedMillis  );
+		//PhysicsManager::getSingleton().update( elapsedMillis  );
 
 		// Update rendering
 		GraphicsManager::getSingleton().draw();

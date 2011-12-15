@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalOptions>/MP /Zm118 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/MP /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_44;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_42;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\;..\..\..\..\libraries\win\visualStudio2008\OpenAL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
