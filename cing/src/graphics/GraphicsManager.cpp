@@ -668,6 +668,10 @@ void GraphicsManager::addDrawableImage( TexturedQuad* img)
 */
 void GraphicsManager::removeDrawableImage( TexturedQuad* img)
 {
+	// Security check: if the queue is empty, do nothing
+	if ( m_drawableImagesQueue.empty() )
+		return;
+
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
 	for (; it != m_drawableImagesQueue.end(); ++it )
 		if ( *it == img )
