@@ -52,7 +52,8 @@ LogManager::LogManager():
 	m_logToOutput	( false ),
 	m_logToFile		( false ),
 	m_bIsValid		( false ),
-	m_enabled		( false )
+	m_enabled		( false ),
+	m_debugOutputLogLevel (LOG_NORMAL)
 {
 }
 
@@ -170,15 +171,29 @@ void LogManager::setLogLevel( LogMessageLevel level )
  */
 void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 {
-    if ( !m_bIsValid || !m_enabled )
-        return;
-
 	// Extract string parameters
-	char			msgFormated[4096];
+	char		msgFormated[4096];
 	va_list		args;
 	va_start	(args, msg);
 	vsprintf	(msgFormated, msg, args);
 	va_end		(args);
+	
+	if ( !m_bIsValid || !m_enabled )
+	{
+		if ( level >= m_debugOutputLogLevel )
+		{
+			std::cout << "Cing Log not enabled yet. Log: " << msgFormated; 
+
+			// If on windows also output to the debug console
+#if defined(WIN32)
+			OutputDebugString( msgFormated );	// In release, only critical messages
+			OutputDebugString( "\n" );
+#endif
+		}
+
+		return;
+	}
+     
 
 	// Log message normally
 	if ( m_log && (level >= m_debugOutputLogLevel) )
