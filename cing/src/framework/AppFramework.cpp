@@ -105,14 +105,15 @@ namespace Cing
 		}
 		catch(const std::exception& e) 
 		{
-			std::cerr << "APP EXCEPTION: " <<  e.what();
+			LOG_ERROR( " Stl Exception: %s", e.what() );
 		} 
 		catch (...)
 		{
-			std::cerr << "Unidentified exception";
+			LOG_ERROR( "Unidentified exception" );
 		}
 
 	}
 
 
 } // namespace Cing
+	
