@@ -15,6 +15,9 @@
 #ifndef XEVENTLOG_H
 #define XEVENTLOG_H
 
+#if defined(WIN32)
+
+
 #include "WinNT.h"
 
 class CXEventLog
@@ -43,4 +46,8 @@ protected:
 	void	SetAppName(LPCTSTR lpszApp);
 };
 
+#endif // defined(WIN32)
+
 #endif //XEVENTLOG_H
+
+
