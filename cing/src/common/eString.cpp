@@ -42,24 +42,33 @@ String intToString(int inputNumber)
 /// Converts a string to int
 int stringToInt(const std::string& str)
 {
-	int intNumber;
+	int number;
 	std::stringstream s(str);
-	s >> intNumber;
-	return intNumber;
+	s >> number;
+	return number;
 }
 
 float stringToFloat(const std::string& str)
 {
-	float intNumber;
+	float number;
 	std::stringstream s(str);
-	s >> intNumber;
-	return intNumber;
+	s >> number;
+	return number;
 }
-unsigned long stringToUint32(const std::string& str) {
-	unsigned long uint32Number;
+
+double stringToDouble(const std::string& str)
+{
+	double number;
 	std::stringstream s(str);
-	s >> uint32Number;
-	return uint32Number;
+	s >> number;
+	return number;
+}
+
+unsigned long stringToUint32(const std::string& str) {
+	unsigned long number;
+	std::stringstream s(str);
+	s >> number;
+	return number;
 }
 
 /**
