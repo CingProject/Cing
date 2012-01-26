@@ -28,6 +28,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "CommonPrereqs.h"
 #include "eString.h"
+#include "LogManager.h"
 
 #include "OgreSharedPtr.h"
 #include "TinyXML/include/tinyxml.h"
@@ -70,16 +71,53 @@ namespace Cing
 		String			getContent        	();
 		int				getIntAttribute   	( const String& name, int defaultValue = 0 );
 		float			getFloatAttribute 	( const String& name, float defaultValue = 0.0f );
+		double			getDoubleAttribute 	( const String& name, double defaultValue = 0.0 );
 		String			getStringAttribute	( const String& name, const String& defaultValue = "" );
 		String			getName           	();
 		bool			isValid				() { return m_bIsValid; }
 
+		/** Template form of the attribute query which will try to read the
+			attribute into the specified type in case it is not supported by other query methods.
+			Be careful to make sure to call this with the correct type.
+			
+			NOTE: This method doesn't work correctly for 'string' types.
+
+			@return read value
+		*/
+		template< typename T > T getAttribute( const std::string& name, T defaultValue ) const
+		{
+			// Check state
+			if ( !m_rootElem )
+			{
+				LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
+				return defaultValue;
+			}
+
+			// Try to get the attribute's value
+			T   value		= defaultValue;
+			int retValue	= m_rootElem->QueryValueAttribute( name.c_str(), &value );
+
+			// Error check
+			if ( retValue == TIXML_WRONG_TYPE )
+			{
+				LOG_ERROR( "XMLElement::getAttribute: tag %s's attribute %s type is not recognized, returning default value", m_rootElem->Value(), name.c_str());
+				value = defaultValue;
+			}
+			else if ( retValue == TIXML_NO_ATTRIBUTE )
+			{
+				LOG_ERROR( "XMLElement::getAttribute: tag %s does not contain an attribute named %s, returning default value", m_rootElem->Value(), name.c_str());
+				value = defaultValue;
+			}
+
+			return value;
+		}
+
 	private:
 
 		// Attributes
-		XMLDocSharedPtr   m_xmlDoc;
-		TiXmlElement*	    m_rootElem;		///< Xml's root element
-		bool			        m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+		XMLDocSharedPtr		m_xmlDoc;
+		TiXmlElement*		m_rootElem;		///< Xml's root element
+		bool			    m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 	};
 

@@ -119,6 +119,8 @@ bool XMLElement::load( const std::string& xmlFileName )
 	}
 
 
+	LOG( "XMLElement: File %s succesfuly loaded", fileAbsPath.c_str() );
+
 	m_bIsValid = true;
 	return true;
 }
@@ -299,12 +301,26 @@ int XMLElement::getIntAttribute( const String& name, int defaultValue /*= 0 */)
   // Check state
   if ( !m_rootElem )
   {
-        LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
+	LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
     return defaultValue;
   }
 
+  // Try to get the attribute's value
   int value = defaultValue;
-  m_rootElem->QueryIntAttribute( name.c_str(), &value );
+  int retValue = m_rootElem->QueryIntAttribute( name.c_str(), &value );
+
+  // Error check
+  if ( retValue == TIXML_WRONG_TYPE )
+  {
+	LOG_ERROR( "XMLElement::getIntAttribute: tag %s's attribute %s type is not [int], returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue );
+	value = defaultValue;
+  }
+  else if ( retValue == TIXML_NO_ATTRIBUTE )
+  {
+	LOG_ERROR( "XMLElement::getIntAttribute: tag %s does not contain an attribute named %s, returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue );
+	value = defaultValue;
+  }
+
   return value;
 }
 
@@ -323,8 +339,54 @@ float XMLElement::getFloatAttribute( const String& name, float defaultValue /*= 
     return defaultValue;
   }
 
+  // Try to get the attribute's value
   float value = defaultValue;
-  m_rootElem->QueryFloatAttribute( name.toChar(), &value );
+  int retValue = m_rootElem->QueryFloatAttribute( name.c_str(), &value );
+
+  // Error check
+  if ( retValue == TIXML_WRONG_TYPE )
+  {
+	LOG_ERROR( "XMLElement::getFloatAttribute: tag %s's attribute %s type is not [float], returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue );
+	value = defaultValue;
+  }
+  else if ( retValue == TIXML_NO_ATTRIBUTE )
+  {
+	LOG_ERROR( "XMLElement::getFloatAttribute: tag %s does not contain an attribute named %s, returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue );
+	value = defaultValue;
+  }
+  return value;
+}
+
+/**
+ * @brief Returns a double attribute of the xml Element.
+ * @param name    Name of the attribute to be returned
+ * @param defaultValue Default value that will be returned in case the attribute does not exist
+ * @return        a double attribute of the xml Element.
+ */
+double XMLElement::getDoubleAttribute( const String& name, double defaultValue /*= 0.0*/ )
+{
+  // Check state
+  if ( !m_rootElem )
+  {
+	  LOG_ERROR( "Trying to call getIntAttribute() in a XMLElement no correctly initialized. You should call load() or assign an initialized XMLElement before using this object)" );
+	  return defaultValue;
+  }
+
+  // Try to get the attribute's value
+  double value = defaultValue;
+  int retValue = m_rootElem->QueryDoubleAttribute( name.c_str(), &value );
+
+  // Error check
+  if ( retValue == TIXML_WRONG_TYPE )
+  {
+	LOG_ERROR( "XMLElement::getDoubleAttribute: tag %s's attribute %s type is not [double], returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue );
+	value = defaultValue;
+  }
+  else if ( retValue == TIXML_NO_ATTRIBUTE )
+  {
+	LOG_ERROR( "XMLElement::getDoubleAttribute: tag %s does not contain an attribute named %s, returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue );
+	value = defaultValue;
+  }
   return value;
 }
 
@@ -348,7 +410,10 @@ String XMLElement::getStringAttribute( const String& name, const String& default
   
   // If it does not exist, return the default value
   if ( !result )
-	  return defaultValue;
+  {	
+	LOG_ERROR( "XMLElement::getStringAttribute: tag %s does not contain an attribute named %s, returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue );
+	return defaultValue;
+  }
   return result;
 }
 
