@@ -95,6 +95,8 @@
 #include "common/CommonUtilsIncludes.h"
 #include "common/CommonConstants.h"
 #include "common/XMLElement.h"
+#include "common/XMLSettings.h"
+#include "common/MemoryDumper.h"
 
 // Input
 #include "input/InputTypes.h"
