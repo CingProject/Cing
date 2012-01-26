@@ -1061,8 +1061,8 @@ namespace Cing
 		m_render2D		= false;
 		m_alpha			= 255;
 	
-		m_ogreTexture->setWidth(m_textWidth);
-		m_ogreTexture->setHeight(m_textHeight);
+		m_ogreTexture->setWidth( (size_t)m_textWidth );
+		m_ogreTexture->setHeight( (size_t)m_textHeight );
 
 		// Update vertex data
 		m_quad->beginUpdate(0);
