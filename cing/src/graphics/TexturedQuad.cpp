@@ -50,6 +50,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/Exception.h"
 #include "common/MathUtils.h"
 #include "common/LogManager.h"
+#include "common/CommonConstants.h"
 
 namespace Cing
 {
@@ -987,15 +988,20 @@ namespace Cing
 		m_pivotSceneNode->setOrientation( q );
 		m_pivotSceneNode->scale( currentTransformation.getScale() );
 
-		// Finally, set coordinates/scale for the quad scene node in the selected system
+		// Finally, set scale for the quad scene node in the selected system
 		if ( GraphicsManager::getSingleton().isProcessingMode() )
 		{
-			m_quadSceneNode->setPosition( x + imgWidth/2, y + imgHeight/2, z );
 			m_quadSceneNode->setScale( (float)imgWidth, (float)-imgHeight, 1 );
 		}else{
-			m_quadSceneNode->setPosition( x + imgWidth/2, y + imgHeight/2, z );
 			m_quadSceneNode->setScale( (float)imgWidth, (float)imgHeight, 1 );
 		}
+
+		// And the position, considering the current Image Mode
+		if ( GraphicsManager::getSingleton().getImageMode() == CORNER )
+			m_quadSceneNode->setPosition( x + imgWidth/2, y + imgHeight/2, z );
+		// Center mode
+		else 
+			m_quadSceneNode->setPosition( x, y, z );
 
 	}
 
@@ -1035,7 +1041,9 @@ namespace Cing
 		}
 
 		// Finally, Translate quad position, so that the image is drawn from the top-left corner
-		m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
+		if ( GraphicsManager::getSingleton().getImageMode() == CORNER )
+			m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
+		// If it's center, we don't need to change anything
 	}
 
 	/**

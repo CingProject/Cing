@@ -120,6 +120,9 @@ namespace Cing
 
 		void 						smooth						() { m_smooth = true; }
 
+		int							getImageMode				() const { return m_imageMode; }
+		void             			setImageMode				(  int	mode );
+
 		int							getRectMode					() const { return m_rectMode; }
 		void             			setRectMode					(  int	mode );
 
@@ -207,7 +210,8 @@ namespace Cing
 		//MovableText				m_systemFont;			///< To print system info to screen
 
 		// Styling properties
-		// TODO: Eliminates this. Change styles que to stack
+		// TODO: Eliminates this. Change styles queue to stack
+		int							m_imageMode;			///< Parameters input mode to draw images
 		int							m_rectMode;				///< Parameters input mode to draw rectangles
 		int							m_ellipseMode;			///< Parameters input mode to draw ellipses
 		bool						m_fill;

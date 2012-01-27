@@ -82,6 +82,7 @@ namespace Cing
 		m_fill( true ),
 		m_stroke( true ),
 		m_smooth( false ),
+		m_imageMode( CORNER ),
 		m_rectMode( CORNER ),
 		m_ellipseMode( CENTER ),
 		m_setupCalled( false ),
@@ -682,19 +683,57 @@ void GraphicsManager::removeDrawableImage( TexturedQuad* img)
 }
 
 /**
-* @brief Modifies the location from which rectangles draw
-*/
+ * @brief Modifies the location from which images draw
+ * Valid values are: CORNER, CORNERS, CENTER (CORNERS not implemented yet)
+ */
+void GraphicsManager::setImageMode( int	mode )
+{
+	// Check valid mode
+	if ( (mode != CORNERS) && (mode != CORNER) && (mode != CENTER) )
+	{		
+		LOG_ERROR( "setImageMode: mode %d not supported. Supported modes are CENTER, CORNER, or CORNERS", mode );
+		return;
+	}
+	else if ( mode == CORNERS )
+	{
+		LOG_WARNING( "setImageMode. CORNERS Image Mode is not implemented yet. Defaulting to CORNER" );
+		m_imageMode = CORNER;	
+	}
+	else
+		m_imageMode = mode;
+}
+
+
+/**
+ * @brief Modifies the location from which rectangles draw
+ * Valid values are: CORNER, CORNERS, CENTER
+ */
 void GraphicsManager::setRectMode( int	mode )
 {
-	m_rectMode = mode;
+	// Check valid mode
+	if ( (mode != CORNERS) && (mode != CORNER) && (mode != CENTER) )
+	{		
+		LOG_ERROR( "setRectMode: mode %d not supported. Supported modes are CENTER, CORNER, or CORNERS", mode );
+		return;
+	}
+	else
+		m_rectMode = mode;
 }
 
 /**
-* @brief Modifies the location from which ellipses draw
-*/
+ * @brief Modifies the location from which ellipses draw
+ * Valid values are: CORNER, CORNERS, CENTER
+ */
 void GraphicsManager::setEllipseMode( int	mode )
 {
-	m_ellipseMode = mode;
+	// Check valid mode
+	if ( (mode != CORNERS) && (mode != CORNER) && (mode != CENTER) )
+	{		
+		LOG_ERROR( "setEllipseMode: mode %d not supported. Supported modes are CENTER, CORNER, or CORNERS", mode );
+		return;
+	}
+	else
+		m_ellipseMode = mode;
 }
 
 

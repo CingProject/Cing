@@ -108,26 +108,27 @@ void fill( const Color& color );
 // Shape / 2D Primitives
 //-----------------------------------------------------------------------------------
 
-void strokeWeight( int weight );
+void strokeWeight	( int weight );
 
-void noFill		();
-void noStroke	();
-void smooth		();
-void noSmooth	();
+void noFill			();
+void noStroke		();
+void smooth			();
+void noSmooth		();
 
-void line		( int x1, int y1, int x2, int y2 );
-void point		( int x, int y );
-void triangle	( int x1, int y1, int x2, int y2, int x3, int y3 );
-void rect		( int x1, int y1, int width, int height );
-void quad		( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
-void ellipse	( int x, int y, int width, int height);
-void arc		( int x, int y,  int width, int height, float start, float stop );
+void line			( int x1, int y1, int x2, int y2 );
+void point			( int x, int y );
+void triangle		( int x1, int y1, int x2, int y2, int x3, int y3 );
+void rect			( int x1, int y1, int width, int height );
+void quad			( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
+void ellipse		( int x, int y, int width, int height);
+void arc			( int x, int y,  int width, int height, float start, float stop );
 
-void rectMode    ( int mode );
-void ellipseMode ( int mode );
+void imageMode		( int mode );
+void rectMode		( int mode );
+void ellipseMode	( int mode );
 
-void pushStyle();
-void popStyle ();
+void pushStyle		();
+void popStyle 		();
 //-----------------------------------------------------------------------------------
 // Shape / 3D Primitives
 //-----------------------------------------------------------------------------------

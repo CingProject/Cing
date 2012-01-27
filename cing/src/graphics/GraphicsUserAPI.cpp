@@ -663,6 +663,25 @@ void arc( int x, int y,  int width, int height, float start, float stop )
 }
 
 /**
+ * @brief  	Modifies the location from which images draw. The default mode is
+ * rectMode(CORNER), which specifies the location to be the upper left corner of
+ * the shape and uses the third and fourth parameters of rect() to specify the width
+ * and height. The syntax rectMode(CORNERS) uses the first and second parameters
+ * of rect() to set the location of one corner and uses the third and fourth parameters
+ * to set the opposite corner. The syntax rectMode(CENTER) draws the image from its
+ * center point and uses the third and forth parameters of rect() to specify the image's
+ * width and height. The syntax rectMode(RADIUS) draws the image from its center point
+ * and uses the third and forth parameters of rect() to specify half of the image's
+ * width and height
+ *
+ * @param mode
+ */
+void imageMode( int mode )
+{
+	GraphicsManager::getSingleton().setImageMode( mode );
+}
+
+/**
  * @brief  	Modifies the location from which rectangles draw. The default mode is
  * rectMode(CORNER), which specifies the location to be the upper left corner of
  * the shape and uses the third and fourth parameters of rect() to specify the width
