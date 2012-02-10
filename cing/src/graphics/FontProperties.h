@@ -45,27 +45,32 @@ namespace Cing
 		String		text;
 		float		size;
 		float		x, y, z, width, height;
+		float		leading;			/// Size in pixels for spacing between lines
+		int			resolution;			/// Resolution (for True Type fonts)
 		int			halign;				/// RIGHT, CENTER, LEFT
 		int			valign;				/// TOP, BOTTOM, CENTER, or BASELINE			
-		TextMode	mode;				/// MODEL, SCREEN, (SHAPE? -> not for now)
 		Color		color;
 		bool		render2d;			/// If true, the text will be rendered in screen coordinates (2d)
+		bool		wordWrap;			/// If true, words will not be split when rendering text within a box, if possible. If false, words will be split if necessary
 
 		// Constructor
 		FontProperties() 
 		{
 			// Default values
-			fontName	= "DefaultFont";
-			size		= 25;		// Use default size (the one specified in the ttf when loaed)
+			fontName	= "DefaultFont";				// Should be Font::DEFAULT_FONT_NAME but for some reason it appears blank when assigning so
+			size		= Font::DEFAULT_FONT_SIZE;		// Use default size (the one specified in the ttf when loaed)
+			resolution	= Font::DEFAULT_FONT_RESOLUTION;
 			x			= 0;
 			y			= 0;
 			z			= 0;
 			width		= -1;		// Any width	(all the screen)
 			height		= -1;		// Any height (all the screen)
+			leading		= -1;		// Default leading
 			halign		= LEFT;
 			valign		= TOP;
 			color		= Color::White;
 			render2d	= true;
+			wordWrap	= true;
 		}
 
 		// Comparison operator
@@ -77,10 +82,12 @@ namespace Cing
 			if ( !equal( y, other.y) ) 						return false;
 			if ( !equal( width, other.width) )				return false;
 			if ( !equal( height, other.height) )			return false;
+			if ( !resolution != other.resolution )			return false;
+			if ( !equal( leading, other.leading) )			return false;
 			if ( halign != other.halign )					return false;
 			if ( valign != other.valign )					return false;
-			if ( mode	!= other.mode )						return false;
 			if ( color	!= other.color )					return false;
+			if ( wordWrap != other.wordWrap )				return false;
 
 			// all is the same...
 			return true;
