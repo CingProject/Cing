@@ -206,12 +206,18 @@ void text( float text, float x, float y );
 //void text(stringdata, x, y, width, height, z)
 
 
+// Text setters
+void 	textFont		(Font& font);
+void 	textFont		(Font& font, float size);
+void 	textAlign		(int halign, int valign = TOP);
+void 	textSize		(float size);
+void	textResolution	(int resolution);
+void	textLeading		(float leading);
+void	textWordWrap	(bool wordWrap);
 
-void textFont		(const Font& font);
-void textFont		(const Font& font, float size);
-void textAlign		(int halign, int valign = TOP);
-void textMode		(TextMode mode);
-void textSize		(float size);
+// Text getters
+float	textWidth		( const std::string& text );
+float	textHeight		( const std::string& text, float textBoxWidth = -1 );
 
 
 //-----------------------------------------------------------------------------------
@@ -224,9 +230,9 @@ void enableShadows( ShadowTechnique technique );
 // Coordinate System related
 //-----------------------------------------------------------------------------------
 
-Vector2d	worldToScreen			( const Vector& worldCoordinate );
-Vector2d	worldToScreenNormalized	( const Vector& worldCoordinate );
-Vector		screenToWorld			( const Vector2d& screenCoordinate, float distanceToCamera );
+Vector2		worldToScreen			( const Vector& worldCoordinate );
+Vector2		worldToScreenNormalized	( const Vector& worldCoordinate );
+Vector		screenToWorld			( const Vector2& screenCoordinate, float distanceToCamera );
 Vector		screenToWorld			( const Vector& screenCoordinate, float distanceToCamera );
 
 
