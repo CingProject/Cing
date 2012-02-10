@@ -365,7 +365,7 @@ namespace Cing
 
 		// Check if image was loaded ok
 		if ( m_image.getData() )
-			LOG( "Image %s succesfully loaded", m_path.c_str() );
+			LOG( "Image succesfully loaded: %s ", m_path.c_str() );
 		else
 		{
 			LOG( "Error loading Image %s", m_path.c_str() );
