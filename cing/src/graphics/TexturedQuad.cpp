@@ -668,7 +668,7 @@ namespace Cing
 	}
 
 	/*
-	 * Sets the Ogre Scene Manager render queue for this quad.
+	 * Sets the Ogre Scene Manager render queue for this quad. The higher the value (0..105) the later/more on top the quad is rendered
 	 * The method is called "force" as this class usually handles automatically the render queue group for the object depending 
 	 * on whether it is being rendered in 2d (x, y) or 3d (x, y, z). When this method is called, that is not set automatically anymore.
 	 * You can to go back to the auto behaviour by calling restoreRenderQueue();
