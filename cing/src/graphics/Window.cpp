@@ -69,17 +69,17 @@ Window::~Window()
  */
 bool Window::init( Ogre::RenderWindow* pOgreWindow )
 {
-  // Check if the class is already initialized
-  if ( isValid() )
-    return true;
+	// Check if the class is already initialized
+	if ( isValid() )
+		return true;
 
-  // Check window pointer
-  if ( !pOgreWindow )
-    THROW_EXCEPTION( "Internal Error: Invalid window" );
-	
+	// Check window pointer
+	if ( !pOgreWindow )
+		THROW_EXCEPTION( "Internal Error: Invalid window" );
 
-  // Store Ogre window handle
-  m_pOgreWindow = pOgreWindow;
+
+	// Store Ogre window handle
+	m_pOgreWindow = pOgreWindow;
 
 	// The class is now initialized
 	m_bIsValid = true;
