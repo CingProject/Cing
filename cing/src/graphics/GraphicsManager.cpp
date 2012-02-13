@@ -251,6 +251,9 @@ void GraphicsManager::end()
 	m_defaultCamController.end();
 	m_activeCamera.end();
 
+	// Release canvas
+	m_canvas.end();
+
 	// Release scene manager
 	Ogre::Root::getSingleton().destroySceneManager( m_pSceneManager );
 	m_pSceneManager = NULL;

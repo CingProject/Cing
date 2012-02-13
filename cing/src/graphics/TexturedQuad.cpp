@@ -76,7 +76,8 @@ namespace Cing
 		m_yScale				( 1.0f ),
 		m_zScale				( 1.0f ),
 		m_bIsValid				( false ),
-		m_renderQueueForced		( false )
+		m_renderQueueForced		( false ),
+		m_sm					( NULL )
 	{
 	}
 
@@ -101,7 +102,7 @@ namespace Cing
 	* @param[in] renderTarget if true, this texture will be used as render target (to render a scene as view from a camera)
 	* @return true if the initialization was ok | false otherwise
 	*/
-	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget /*= false*/ )
+	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget /*= false*/, Ogre::SceneManager* sm )
 	{
 		// Check if the class is already initialized
 		if ( isValid() )
@@ -188,8 +189,12 @@ namespace Cing
 		*/
 
 		// Create the manual object (is used to define geometry on the fly)
-		Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
-		m_quad = sceneManager.createManualObject( m_ogreManualObjectName );
+		if ( sm == NULL )
+			m_sm = GraphicsManager::getSingleton().getSceneManagerPtr();
+		else
+			m_sm = sm;
+
+		m_quad = m_sm->createManualObject( m_ogreManualObjectName );
 
 		// Generate the geometry of the quad
 		m_quad->begin( m_ogreMaterialName );
@@ -215,7 +220,7 @@ namespace Cing
 		m_quad->end();
 
 		// Create scene nodes (pivot and quadSceneNode) and add the manual object
-		m_pivotSceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
+		m_pivotSceneNode = m_sm->getRootSceneNode()->createChildSceneNode();
 		m_quadSceneNode  = m_pivotSceneNode->createChildSceneNode();
 		m_quadSceneNode->attachObject( m_quad );
 
@@ -265,15 +270,22 @@ namespace Cing
 		if ( !isValid() )
 			return;
 
-		// Destroy quad quad object
-		Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
-		if ( sceneManager )
+		// Destroy quad object
+		//Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
+
+		if ( m_sm != NULL )
 		{
+			// TODO: Hack to avoid crash on exit
+			if( m_sm->getName().compare( "" ) == 0 )
+			{
+				return;
+			}
+
 			// Remove the nodes
-			sceneManager->getRootSceneNode()->removeChild( m_pivotSceneNode );
+			m_sm->getRootSceneNode()->removeChild( m_pivotSceneNode );
 
 			// Destroy the manual object
-			sceneManager->destroyManualObject( m_ogreManualObjectName );
+			m_sm->destroyManualObject( m_ogreManualObjectName );		
 
 			// Destroy material
 			Ogre::MaterialManager::getSingleton().remove( m_ogreMaterialName );

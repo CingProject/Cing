@@ -55,17 +55,18 @@ namespace Cing
 
 		// Constructor / Destructor
 		Image				();
-		Image				( const Image& img );
-		Image				( int width, int height, GraphicsType format = RGB );
-		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB );
-		Image				( const std::string& name );
+		Image				( const Image& img, Ogre::SceneManager* sm = NULL );
+		Image				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
+		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
+		Image				( const std::string& name, Ogre::SceneManager* sm = NULL );
 		virtual ~Image		();
 
 		// Init / Release / Update / Save / Clone
-		void		init				( int width, int height, GraphicsType format = RGB );
+		void		init				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		void		initAsRenderTarget	( int width, int height );
-		void		init				( const Image& img );
-		bool		load				( const std::string& path );
+		void		init				( const Image& img, Ogre::SceneManager* sm = NULL );
+		//bool		load				( const std::string& path );
+		bool		load				( const std::string& path, Ogre::SceneManager* sm = NULL );
 		void		save				( const std::string& path );
 		void		end					();
 

@@ -50,7 +50,7 @@ namespace Cing
 		~TexturedQuad();
 
 		// Init / Release 
-		bool  init				( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false );
+		bool  init				( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false, Ogre::SceneManager* sm = NULL );
 		void  end				();
 		bool  reset				( int textureWidth, int textureHeight, GraphicsType format );
 
@@ -111,6 +111,11 @@ namespace Cing
 		void			enableDepthWrite	( bool value );
 		void			enableDepthCheck	( bool value );
 
+		void setSceneNode( Ogre::SceneNode* node)   { m_quadSceneNode = node; };
+		void setPivotSceneNode( Ogre::SceneNode* node)   { m_pivotSceneNode = node; };
+
+		Ogre::SceneManager* getSceneManager() { return m_sm; }
+
 	protected:
 
 		// Private methods
@@ -130,6 +135,7 @@ namespace Cing
 		static long               m_quadCounter;          			///< Used to generate unique names for the quad materials, textures and ogre manual objects
 
 		// Attributes
+		Ogre::SceneManager*			m_sm;							///< SceneManager
 		Ogre::MaterialPtr			m_ogreMaterial;					///< Material used to render the quad
 		Ogre::TexturePtr			m_ogreTexture;          		///< Ogre texture (to render the quad with it)  
 		Ogre::SceneNode*			m_quadSceneNode;        		///< Quad scene node inside the scene (used to modify the scale, orientation...etc)

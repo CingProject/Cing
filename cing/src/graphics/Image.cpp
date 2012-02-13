@@ -42,6 +42,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 // OpenCV
 #include "OpenCV/cxcore.h"
+#include "OgreSceneManager.h"
 
 namespace Cing
 {
@@ -67,14 +68,14 @@ namespace Cing
 	*
 	* @param
 	*/
-	Image::Image( const Image& img ):
+	Image::Image( const Image& img, Ogre::SceneManager* sm /*= NULL*/ ):
 		m_bIsValid( false ),
 		m_bVFlipped( img.isVFlipped() ),
 		m_bUpdateTexture( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
 	{
-		init( img );
+		init( img, sm );
 	}
 
 	/**
@@ -85,14 +86,14 @@ namespace Cing
 	* @param height Height of the image to be created
 	* @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
 	*/
-	Image::Image( int width, int height, GraphicsType format /*= RGB*/ ):
+	Image::Image( int width, int height, GraphicsType format /*= RGB*/, Ogre::SceneManager* sm /*= NULL*/):
 		m_bIsValid( false ),
 		m_bVFlipped( false ),
 		m_bUpdateTexture( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
 	{
-		init( width, height, format );
+		init( width, height, format, sm );
 	}
 
 	/**
@@ -103,14 +104,14 @@ namespace Cing
 	* @param height Height of the image to be created
 	* @param format Format of the image to be created. Possible formats are: RGB, ARGB, GRAYSCALE
 	*/
-	Image::Image( unsigned char* data, int width, int height, GraphicsType format /*= RGB*/ ):
+	Image::Image( unsigned char* data, int width, int height, GraphicsType format /*= RGB*/, Ogre::SceneManager* sm /*= NULL*/ ):
 		m_bIsValid( false ),
 		m_bVFlipped( false ),
 		m_bUpdateTexture( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")	
 	{
-		init( width, height, format );
+		init( width, height, format, sm );
 		setData( data );
 	}
 
@@ -121,13 +122,13 @@ namespace Cing
 	*
 	* @param name  Name of the file to be loaded. It must be placed in the data directory.
 	*/
-	Image::Image( const std::string& name ):
+	Image::Image( const std::string& name, Ogre::SceneManager* sm ):
 		m_bVFlipped( false ),
 		m_bIsValid( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
 	{
-		load( name );
+		load( name, sm );
 	}
 
 	/**
@@ -148,7 +149,7 @@ namespace Cing
 	* @param height Height of the image to be created
 	* @param format Format of the image to be created. Possible formats are: RGB, RGBA, GRAYSCALE
 	*/
-	void Image::init( int width, int height, GraphicsType format /*= RGB*/  )
+	void Image::init( int width, int height, GraphicsType format /*= RGB*/, Ogre::SceneManager* sm /*= NULL*/  )
 	{
 		// Check if the class is already initialized to free resources first
 		// TODO: check if values are really different... 
@@ -161,9 +162,9 @@ namespace Cing
 		// Create the empty IplImage image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
-
+		
 		// Create the texture quad (to draw image)
-		m_quad.init( m_cvImage.cols, m_cvImage.rows, format );
+		m_quad.init( m_cvImage.cols, m_cvImage.rows, format, false, sm );
 
 		// Store the format
 		m_format			= format;
@@ -212,7 +213,7 @@ namespace Cing
 	*
 	* @param img Image to be copied
 	*/
-	void Image::init( const Image& img )
+	void Image::init( const Image& img, Ogre::SceneManager* sm /*= NULL*/ )
 	{
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
@@ -266,8 +267,9 @@ namespace Cing
 	* @note Supported image formats are: .bmp, .jpg, .gif, .raw, .png, .tga and .dds.
 	*
 	* @param path  Path of the file to be loaded. It can be relative to the data folder, or absolute.
+	* @param path  SceneManager container
 	*/
-	bool Image::load( const std::string& path )
+	bool Image::load( const std::string& path, Ogre::SceneManager* sm )
 	{
 /*
 		// Check application correctly initialized (could not be if the user didn't calle size function)
@@ -329,6 +331,7 @@ namespace Cing
 		return true;
 
 */
+
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
@@ -423,11 +426,21 @@ namespace Cing
 
 		imgData.release();
 
-		// Create the texture quad (to draw image) or reset its width and height
-		if ( !isValid () )
-			m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format  );
-		else if ( (int)m_image.getWidth() != (int)m_quad.getTextWidth() || (int)m_image.getHeight() != m_quad.getTextHeight() )
-			m_quad.reset( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+		if ( sm ==NULL )
+		{
+			// Create the texture quad (to draw image) or reset its width and height
+			if ( !isValid () )
+				m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format  );
+			else if ( (int)m_image.getWidth() != (int)m_quad.getTextWidth() || (int)m_image.getHeight() != m_quad.getTextHeight() )
+				m_quad.reset( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+		}else{
+			// Create the texture quad (to draw image) or reset its width and height
+			if ( !isValid () )
+				m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format, false, sm  );
+			else if ( (int)m_image.getWidth() != (int)m_quad.getTextWidth() || (int)m_image.getHeight() != m_quad.getTextHeight() )
+				m_quad.reset( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+		}
+
 
 		// Load image data to texture
 		updateTexture();
@@ -495,7 +508,7 @@ namespace Cing
 		// TODO: This is a hack to avoid a crash comming from cvReleaseImage
 		// when it is called by a static object destructor (global Image variable created by the user)
 		// when there is image copy involved
-		Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
+		Ogre::SceneManager* sceneManager = getTexturedQuad().getSceneManager();
 		if ( sceneManager == NULL )
 			return;
 
@@ -840,15 +853,21 @@ namespace Cing
 		Application::getSingleton().checkSubsystemsInit();
 
 		// Check if the image is initialized -> if not initialize with "other"'s format and size
+
+		Ogre::SceneManager* sm = NULL;
+
 		if ( !isValid() )
-			init( other.getWidth(), other.getHeight(), other.getFormat() );
+		{
+			Ogre::SceneManager* sm = ( const_cast< Cing::Image* > ( &other ) )->getTexturedQuad().getSceneManager();
+			init( other.getWidth(), other.getHeight(), other.getFormat(), sm );
+		}
 
 		// Check if the size of the image differs
-		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) )
+		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) && sm != NULL )
 		{
 			LOG( "Image will be recreated as the size of both images differ" );
 			end();
-			init( other.getWidth(), other.getHeight(), other.getFormat() );
+			init( other.getWidth(), other.getHeight(), other.getFormat(), sm );
 			
 			// Check if the image was v flipped
 			if ( m_bVFlipped )
