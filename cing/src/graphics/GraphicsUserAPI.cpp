@@ -1007,6 +1007,8 @@ void text( const String& text, float x, float y )
 	currentFontProperties.text				= text;
 	currentFontProperties.x					= x;
 	currentFontProperties.y					= y;
+	currentFontProperties.width				= -1;
+	currentFontProperties.height			= -1;
 	
 	// Add the text to the manager so that it gets rendered in the next draw
 	FontManager::getSingleton().addText();
@@ -1035,6 +1037,8 @@ void text( const String& text, float x, float y, float z )
 	currentFontProperties.x					= x;
 	currentFontProperties.y					= y;
 	currentFontProperties.z					= z;
+	currentFontProperties.width				= -1;
+	currentFontProperties.height			= -1;
 
 	// Add the text to the manager so that it gets rendered in the next draw
 	FontManager::getSingleton().addText();
@@ -1046,7 +1050,7 @@ void text( const String& text, float x, float y, float z )
  * @param x			x coordinate where the text will be printed
  * @param y			y coordinate where the text will be printed
  * @param width		width of the text box that will be printed
- * @param height	height of the text box that will be printed
+ * @param height	height of the text box that will be printed. If -1, the height will not be limited
  */
 void text( const String& text, float x, float y, float width, float height )
 {
@@ -1092,7 +1096,7 @@ void text( const String& text, float x, float y, float z, float width, float hei
  * Sets the font used to draw from now on
  * @param font	font used to draw in future calls to text
  */
-void textFont(const Font& font)
+void textFont(Font& font)
 {
 	textFont( font, font.getFontSize() );
 }
@@ -1102,13 +1106,52 @@ void textFont(const Font& font)
  * @param font	font used to draw in future calls to text
  * @param size	size that will be used to draw the text. It is best to specify the size in the font.load call.
  */
-void textFont(const Font& font, float size)
+void textFont(Font& font, float size)
 {
+	// Now update the properties (to set it as active font)
 	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
 	currentFontProperties.fontName			= font.getFontName();
 	currentFontProperties.size				= size;
 
 	FontManager::getSingleton().setActiveFont( font );
+
+}
+
+/**
+ * Sets the font resolution (default is 96)
+ * @param resolution resolution that will be used to draw the text.
+ */
+void textResolution(int resolution)
+{
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.resolution = resolution;
+
+	FontManager::getSingleton().updateActiveFontProperties();
+}
+
+/**
+ * Sets the spacing between lines of text in units of pixels. 
+ * This setting will be used in all subsequent calls to the text() function.
+ * @param leading distance in pixels between different lines of text
+ */
+void textLeading(float leading)
+{
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.leading			= leading;
+
+	FontManager::getSingleton().updateActiveFontProperties();
+}	
+
+/**
+ * Allows (if set to true), to have line breaks only between and not within words, except when a single word is longer than a line.
+ * @param wordWrap if true, words will not be split to break lines in a text block. If false, words will be split 
+ */
+void textWordWrap(bool wordWrap)
+{
+	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
+	currentFontProperties.wordWrap			= wordWrap;
+
+	FontManager::getSingleton().updateActiveFontProperties();
 }
 
 
@@ -1125,16 +1168,6 @@ void textAlign(int halign, int valign)
 }
 
 /**
- * Sets rendering mode for the text calls in the future
- * @param mode	Mode to render future text. MODEL: 3d space, SCREEN: 2d space, on top of all 3d stuff
- */
-void textMode(TextMode mode)
-{
-	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
-	currentFontProperties.mode				= mode;
-}
-
-/**
  * Sets font size in pixels of the subsequent text calls
  * @param size	size in pixels of the subsequent text calls. Always is better to specify the size in the Font.load
  * to ensuze best rendering quality
@@ -1143,7 +1176,37 @@ void textSize(float size)
 {
 	FontProperties& currentFontProperties	= FontManager::getSingleton().getActiveFontProperties();
 	currentFontProperties.size				= size;
+	FontManager::getSingleton().updateActiveFontProperties();
 }
+
+/* 
+ * Calculates and returns the width of any character or text string, considering the active font and it's properties
+ * 
+ * @param text Text to analyze for it's pixel length
+ * @return the width of the received text in pixels
+ */ 
+float textWidth( const std::string& text )
+{
+	return FontManager::getSingleton().textWidth( text );
+}
+
+/* 
+ * Calculates and returns the height of any character or text string, considering the active font and it's properties, plus
+ * the received text box width (so that if the text will be limited in width, we can know how much vertical space it will take, 
+ * which will depend on the total number of lines we need).
+ * 
+ * @param text			Text to analyze for it's pixel height
+ * @param textBoxWidth	If left blank, the text height will be calculated based on it's new line '\n' characters. Otherwise this
+ * specifies the horizontal limit (width of the text box that will be used to render the text, and will end up determining the number o
+ * lines that are required to draw it).
+ * @return the height of the received text in pixels
+ */
+float textHeight( const std::string& text, float textBoxWidth /*= -1*/ )
+{
+	return FontManager::getSingleton().textHeight( text, textBoxWidth );
+}
+
+
 
 /**
  * Sets the 3d coordinate system. Thre are two systems: OPENGL3D and PROCESSING (default)
@@ -1176,7 +1239,7 @@ void enableShadows( ShadowTechnique technique )
  * @brief Returns the screen coordinate (range 0..1) that relates to the received world coordinate
  * @param[in] worldCoordinate The world coordinate to transform to screen coordinate. The output coordinate will be in the range [0,1)
  */
-Vector2d worldToScreenNormalized( const Vector& worldCoordinate )
+Vector2 worldToScreenNormalized( const Vector& worldCoordinate )
 {
 	Vector posToTransform = worldCoordinate;
 	const Matrix4& viewMatrix = GraphicsManager::getSingleton().getActiveCamera().getOgreCamera()->getViewMatrix();
@@ -1186,7 +1249,7 @@ Vector2d worldToScreenNormalized( const Vector& worldCoordinate )
 	Vector hcsPosition = projMatrix * (viewMatrix * worldCoordinate); 
 
 	// Normalize coordinates
-	Vector2d screenPos;
+	Vector2 screenPos;
 	screenPos.x = ((hcsPosition.x * 0.5f) + 0.5f);// 0 <= x <= 1 // left := 0,right := 1
 	screenPos.y = 1.0f - ((hcsPosition.y * 0.5f) + 0.5f);// 0 <= y <= 1 // bottom := 0,top := 1
 
@@ -1197,9 +1260,9 @@ Vector2d worldToScreenNormalized( const Vector& worldCoordinate )
  * @brief Returns the screen coordinate that relates to the received world coordinate
  * @param[in] worldCoordinate The world coordinate to transform to screen coordinate (in pixel units)
  */
-Vector2d worldToScreen( const Vector& worldCoordinate )
+Vector2 worldToScreen( const Vector& worldCoordinate )
 {
-	Vector2d screenCoords = worldToScreenNormalized( worldCoordinate );
+	Vector2 screenCoords = worldToScreenNormalized( worldCoordinate );
 	
 	// Transform to pixel units (right now they are normalized, that is, in the range 0..1)
 	screenCoords.x *= width;
@@ -1214,7 +1277,7 @@ Vector2d worldToScreen( const Vector& worldCoordinate )
  * @param[in] screenCoordinate The screen coordinate to transform to world coordinate
  * @param[in] distanceToCamera Distance from the camera position, where the 3d world should be calculated
  */
-Vector screenToWorld( const Vector2d& screenCoordinate, float distanceToCamera )
+Vector screenToWorld( const Vector2& screenCoordinate, float distanceToCamera )
 {
 	// Get current camera (TODO make this parameter)
 	Ogre::Camera* camera = GraphicsManager::getSingleton().getActiveCamera().getOgreCamera();
@@ -1252,7 +1315,7 @@ Vector screenToWorld( const Vector2d& screenCoordinate, float distanceToCamera )
  */
 Vector screenToWorld( const Vector& screenCoordinate, float distanceToCamera )
 {
-	return screenToWorld( Vector2d(screenCoordinate.x, screenCoordinate.y), distanceToCamera );
+	return screenToWorld( Vector2(screenCoordinate.x, screenCoordinate.y), distanceToCamera );
 }
 
 //----------------------------------------------------------------------------------- 

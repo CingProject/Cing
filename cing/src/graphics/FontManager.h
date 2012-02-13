@@ -58,13 +58,19 @@ public:
 	void                    postRender  ();
 
 	// Set methods
-	void					setActiveFont	( const Font& font );
-	void					addText			();
+	void					setActiveFont				( Font& font );
+	void					addText						();
+	void					updateActiveFontProperties	();
 
   	// Query methods
 	FontProperties&			getActiveFontProperties	() { return m_activeFontProperties; }
 	bool                    isValid					() const { return m_bIsValid && m_activeFont; }
-
+	float					textWidth				( const std::string& text );
+	float					textHeight				( const std::string& text, float textBoxWidth );
+	int						textLineBreakCount		( const std::string& text, float textBoxWidth );
+	float					characterHeight			();
+	float					spaceWidth				();
+	
 private:
 
 	// private types
@@ -78,7 +84,7 @@ private:
 
 	// Attributes
 	FontProperties				m_activeFontProperties;	///< Font properties used in the next call to text to render a string of text
-	const Font*					m_activeFont;			///< Active font (activated calling textFont function
+	Font*						m_activeFont;			///< Active font (activated calling textFont function)
 	Font						m_defaultFont;			///< Font to use in case the user does not want to create one...
 	TextList					m_activeFontsToRender;	///< Text areas to be rendered in the next draw call
 	size_t						m_nextFontToUse;		///< Index to reuse previously used fonts

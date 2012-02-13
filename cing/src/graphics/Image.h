@@ -158,7 +158,7 @@ namespace Cing
 		void	flipVertical		();
 		bool	isVFlipped			() const { return m_bVFlipped; }
 
-		// Render Queue control
+		// Render Queue control: The higher the value (0..105) the later/more on top the quad is rendered
 		void	forceRenderQueue	( unsigned int renderQueueId ) { m_quad.forceRenderQueue( renderQueueId ); }
 		void	restoreRenderQueue	() { m_quad.restoreRenderQueue(); }
 

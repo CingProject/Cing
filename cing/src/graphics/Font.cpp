@@ -23,8 +23,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Cing-Precompiled.h"
 
 #include "Font.h"
-
-
+#include "FontProperties.h"
 
 // OGRE
 #include "OgreOverlayManager.h"
@@ -74,7 +73,7 @@ namespace Cing
 		if ( isValid() )
 			return true;
 
-		// PArametros por tocar sobre font
+		// Available ogre font parameters
 		// antialias_colour
 		// Parametros para tocar sobre textOverlay
 		//m_pText->setParameter("char_height", "16");
@@ -92,10 +91,21 @@ namespace Cing
 		// Store the font name data
 		m_fontName	= ttfName;
 		m_fontSize	= size;
+		m_fontSizeOfTexture = size;
 		m_fontRes	= resolution;
 
+		// If it's the default font, don't load, just get it's pointer
+		if (ttfName == "DefaultFont" )
+		{
+			// get the font manager
+			Ogre::FontManager &fontMgr = Ogre::FontManager::getSingleton();
+
+			// get font pointer and load it
+			m_font = fontMgr.getByName( ttfName, "General" );
+			m_font->load();
+		}
 		// If it is not the defautl font -> create it
-		if (ttfName != "DefaultFont" )
+		else
 		{
 			// get the font manager
 			Ogre::FontManager &fontMgr = Ogre::FontManager::getSingleton();
@@ -123,10 +133,17 @@ namespace Cing
 			m_font->load();
 		}
 
-		// The class is now initialized
-		m_bIsValid = true;
+		// Set the class valid if the font was loded
+		m_bIsValid =  m_font->isLoaded();
 
-		return true;
+		// Report
+		if ( m_bIsValid )
+			LOG( "Font succesfully loaded: %s", ttfName.c_str() );
+		else
+			LOG_ERROR( "Font could NOT be loaded: %s. Is the absolute path correct? or is the font in the data folder? Is the file .otf or .ttf?",  ttfName.c_str() );
+	
+
+		return m_bIsValid;
 	}
 
 	/**
@@ -151,7 +168,10 @@ namespace Cing
 	{
 		// Check if the class is ok
 		if ( !isValid() )
+		{
+			LOG_ERROR( "Font::getTextWitdhInPixels. Error: Font is not valid. Please call Font::load before" );
 			return 0.0f;
+		}
 
 		float pixelWidth = 0;
 		for(String::const_iterator i = m_fontName.begin(); i < m_fontName.end();i++)
@@ -166,6 +186,67 @@ namespace Cing
 
 		pixelWidth *= m_fontSize;
 		return pixelWidth;
+	}
+
+	/**
+	* @brief Returns the width of the text (in pixels) taking in to account the current font, size...etc
+	*/
+	int Font::getMaxBearingY() const
+	{
+		// Check if the class is ok
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Font::getMaxBearingY. Error: Font is not valid. Please call Font::load before" );
+			return 0;
+		}
+		return m_font->getTrueTypeMaxBearingY();
+	}
+
+	/*
+	 * Sets the font properties from those received as parameters
+	 * @param fontProperties Font properties to be set into the current font.	 
+	 */ 
+	void Font::updateFontAttributes( const FontProperties& fontProperties )
+	{
+		// Check if the class is ok
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Font::updateFontAttributes. Error: Font is not valid. Please call Font::load before" );
+			return;
+		}
+
+		m_fontName	= fontProperties.fontName;
+		m_fontSize	= fontProperties.size;
+		m_fontRes	= fontProperties.resolution;
+
+		m_font->setSource( m_fontName );
+		m_font->setTrueTypeSize( m_fontSize );
+		m_font->setTrueTypeResolution( m_fontRes );
+
+		// If the new font size is bigger than the current TTF size of this font, re create the texture (it's slow, but otherwise could look blurry)
+		if ( m_fontSize > getFontSizeOfTexture() )
+			reCreateFontTexture();
+	}
+
+	/*
+	 * @internal 
+	 * Re-creates the texture associated with this texture. This could be necesssary if trying to draw a font with a size
+	 * higher than it was initially created (it will be blurry). Just change it calling textFont( font, newSize ) and it will be recreated.
+	 */ 
+	void Font::reCreateFontTexture()
+	{
+		// Check if the class is ok
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Font::reCreateFontTexture. Error: Font is not valid. Please call Font::load before" );
+			return;
+		}
+
+		// Reload font (will re-create the texture)
+		m_font->reload();
+
+		// Update the font size on texture
+		m_fontSizeOfTexture = m_fontSize;
 	}
 
 

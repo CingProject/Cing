@@ -59,6 +59,8 @@ namespace Cing
 	void						split(const std::string& str, char delim, std::vector<std::string>& tokens );
 	std::vector<std::string>	split(const std::string& str, char delim );
 
+	// Converts to UTF string (in case you need to handle characters like accents and such
+	Ogre::UTFString ConvertToUTF( const std::string& String);
 
 	/**
 	* @internal

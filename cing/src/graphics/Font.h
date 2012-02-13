@@ -34,8 +34,12 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Common
 #include "common/eString.h"
 
+
 namespace Cing
 {
+
+	// Forward declarations
+	struct FontProperties;
 
 	/**
 	* @internal
@@ -56,10 +60,17 @@ namespace Cing
 		// Query methods
 		const String&	getFontName			() const { return m_fontName; }
 		float			getFontSize			() const { return m_fontSize; }
+		float			getFontSizeOfTexture() const { return m_fontSizeOfTexture; }
 		int				getFontResolution	() const { return m_fontRes; }
 		float			getTextWitdhInPixels() const;
+		int				getMaxBearingY		() const;
 		Ogre::FontPtr	getOgreFont			() const { return Ogre::FontPtr( m_font ); }
 		bool			isValid				() const { return m_bIsValid; }
+
+		// Set/configure
+		void			updateFontAttributes( const FontProperties& fontProperties );
+		void			reCreateFontTexture	();
+
 
 		// Const static attributes
 		static const std::string	DEFAULT_FONT_NAME;       ///< Default font name
@@ -70,12 +81,13 @@ namespace Cing
 	private:
 
 		// Attributes
-		Ogre::FontPtr					m_font;
-		String							m_fontName;
-		float							m_fontSize;
-		int								m_fontRes;
+		Ogre::FontPtr		m_font;				///< Pointer to the Ogre Font used underneth
+		String				m_fontName;			///< Name of the font (the .otf or .ttf file)
+		float				m_fontSize;			///< Font size used to draw text (it could be different than the original size used to create the texture)
+		float				m_fontSizeOfTexture;///< Size of the font used to create the texture (this is what really will define the sharpness of the font)
+		int					m_fontRes;			///< Resolution of the TTF font
 
-		bool  m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+		bool				m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 	};
 

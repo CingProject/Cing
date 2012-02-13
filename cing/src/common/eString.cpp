@@ -101,6 +101,27 @@ std::vector<std::string> split(const std::string& str, char delim )
 	return tokens;
 }
 
+/*
+ * @brief Converts a string into a Ogre UTF string. This is necessary if you need to handle non ascii characters (like accents: ó á and such).
+ * @note Source: http://www.ogre3d.org/forums/viewtopic.php?t=32814&highlight=utfstring
+ * @param String String to convert
+ * @return the converted to UTF string
+ */
+Ogre::UTFString ConvertToUTF( const std::string& String)
+{
+   Ogre::UTFString UTFString;
+   int i;
+   Ogre::UTFString::code_point cp;
+   for (i=0; i<(int)String.size(); ++i)
+   {
+      cp = String[i];
+      cp &= 0xFF;
+      UTFString.append(1, cp);
+   }
+	return UTFString;
+}
+
+
 /**
  * @brief Returns the character located at a specific position within the string
  * @param index Index of the caracter to retrieve

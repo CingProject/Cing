@@ -298,10 +298,6 @@ void GraphicsManager::draw()
 	// Render scene
 	Ogre::Root::getSingleton().renderOneFrame();
 
-	// Update the Font Manager post render
-	FontManager::getSingleton().postRender();
-
-
 	// Update window
 	m_mainWindow.update();
 
@@ -341,6 +337,9 @@ void GraphicsManager::draw()
 		m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(ResourceManager::userDataPath + m_frameName );
 		m_saveFrame = false;
 	}
+
+	// Update the Font Manager post render (will make fonts not in use any more invisible)
+	FontManager::getSingleton().postRender();
 
 	// Mark all drawable images as not visible
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
