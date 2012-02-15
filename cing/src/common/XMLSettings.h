@@ -61,6 +61,8 @@ public:
 	Cing::XMLElement	get( const std::string& name );
 	Cing::XMLElement&	getRootNode(){ return m_xmlFile; };	
 
+	// Save
+	bool				save( const std::string&  xmlFileName );
 protected:
 	Cing::XMLElement	m_xmlFile; ///< Root node of the xml file
 
