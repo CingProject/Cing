@@ -433,4 +433,104 @@ String XMLElement::getName()
   return m_rootElem->Value();
 }
 
+/**
+ * @brief Saves this document to file
+ * @param xmlFileName    Name of the file
+ * @return        none
+ */
+bool XMLElement::save( const std::string& xmlFileName )
+{
+	// Check state
+	if ( !m_rootElem )
+	{
+		LOG_ERROR( "Trying to call save() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+		return false;
+	}
+
+	if ( !m_xmlDoc->SaveFile( xmlFileName.c_str() ) )
+	{
+		LOG_ERROR( "XMLElement: Save to file error. Check input path: %s", xmlFileName.c_str() );
+		return false;
+	}
+	return true;
+}
+
+/**
+ * @brief Sets a double attribute
+ * @param name    Name of the attribute
+ * @param val   Value
+ */
+void XMLElement::setAttribute( const std::string& name, double val )
+{
+	// Check state
+	if ( !m_rootElem )
+	{
+		LOG_ERROR( "Trying to call setAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+		return;
+	}
+	m_rootElem->SetDoubleAttribute( name.c_str(), val );
+}
+
+/**
+ * @brief Sets an int attribute
+ * @param name    Name of the attribute
+ * @param val   Value
+ */
+void XMLElement::setAttribute( const std::string& name, int val )
+{
+	// Check state
+	if ( !m_rootElem )
+	{
+		LOG_ERROR( "Trying to call setAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+		return;
+	}
+	m_rootElem->SetAttribute( name.c_str(), val );
+}
+
+/**
+ * @brief Sets an int attribute
+ * @param name    Name of the attribute
+ * @param val   Value
+ */
+void XMLElement::setAttribute( const std::string& name, const std::string& val )
+{
+	// Check state
+	if ( !m_rootElem )
+	{
+		LOG_ERROR( "Trying to call setAttribute() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+		return;
+	}
+	m_rootElem->SetAttribute( name.c_str(), val );
+}
+
+/**
+ * @brief Sets value for this element
+ * @param val   Value
+ */
+void XMLElement::setContent( int val )
+{
+	// Check state
+	if ( !m_rootElem )
+	{
+		LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+		return;
+	}
+	m_rootElem->FirstChild()->SetValue( ( intToString( val ) ) );
+}
+
+/**
+ * @brief Sets value for this element
+ * @param val   Value
+ */
+void XMLElement::setContent( const std::string& val )
+{
+	// Check state
+	if ( !m_rootElem )
+	{
+		LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+		return;
+	}
+	m_rootElem->FirstChild()->SetValue( val );
+}
+
 } // namespace Cing

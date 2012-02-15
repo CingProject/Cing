@@ -63,6 +63,9 @@ namespace Cing
 		bool	load 	( const std::string& xmlFileName );
 		void	end		();
 
+		// Save to file
+		bool save( const std::string& xmlFileName );
+
 		// Query  Methods
 		int				getChildCount		();
 		XMLElement		getChild			( int index );
@@ -75,6 +78,16 @@ namespace Cing
 		String			getStringAttribute	( const String& name, const String& defaultValue = "" );
 		String			getName           	();
 		bool			isValid				() { return m_bIsValid; }
+
+		TiXmlElement*	getRootTiXmlElement	() { return m_rootElem; }
+
+		// Set methods
+		void			setAttribute	( const std::string& name, double val );
+		void			setAttribute	( const std::string& name, int val );
+		void			setAttribute	( const std::string& name, const std::string& val );
+
+		void			setContent		( int val );
+		void			setContent		( const std::string& val );
 
 		/** Template form of the attribute query which will try to read the
 			attribute into the specified type in case it is not supported by other query methods.
@@ -111,7 +124,6 @@ namespace Cing
 
 			return value;
 		}
-
 	private:
 
 		// Attributes

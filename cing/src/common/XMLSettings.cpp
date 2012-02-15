@@ -410,6 +410,24 @@ Cing::Vector XMLSettings::getAttribute( const std::string& tagName, const Cing::
     return Cing::Vector( x, y, z );
 }
 
+/**
+ * @brief Save to file
+ * @param xmlFileName		File name
+ */
+bool XMLSettings::save( const std::string& xmlFileName )
+{
+	// Store the xml doc inside data folder
+	std::string fullPath( dataFolder );
+	fullPath += xmlFileName;
+
+	if( !m_xmlFile.save( fullPath ) )
+	{
+		LOG_ERROR( "XMLSettings: Save to file error. Check this path is valid: %s", xmlFileName.c_str() );
+		return false;
+	}
+	return true;
+}
+
 } // namespace
 
 
