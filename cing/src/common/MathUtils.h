@@ -94,7 +94,7 @@ T max( T value1, T value2 )
 
 /**
  * @brief Returns the absolute value of the received number
- * @param[in] number Number to get the absolute value
+ * @param[in] value Number to get the absolute value
  * @return the absolute value of the received number
  */
 template< typename T >
@@ -569,6 +569,7 @@ inline float lerp( float value1, float value2, float amt )
 /*
  * @brief Stores values and returns the average of all of them
  */
+template <typename T>
 struct Average
 {
 	Average()
@@ -585,8 +586,17 @@ struct Average
 		index = 0;
 	}
 
+	/// @param Sets the number of values that this Average will store.
+	void setNumberValues( int _nValues )
+	{
+		nValues = _nValues;
+		values.resize(0);
+		values.reserve( nValues );
+		index = 0;
+	}
+
 	/// @brief ads a value to average
-	void addValue( double value )
+	void addValue( const T& value )
 	{
 		if ( values.size() < nValues )
 			values.push_back( value );
@@ -597,17 +607,22 @@ struct Average
 		index = (++index) % values.capacity();
 	}
 
-	/// @brief returns the ave
-	double getValue()
+	/// @brief returns the average value
+	T getValue()
 	{
-		double sum = std::accumulate( values.begin(), values.end(), 0.0 );
-		return sum / (double)values.size();
+		T sum = std::accumulate( values.begin(), values.end(), T(0.0) );
+		return sum / (float)values.size();
 	}
 
-	std::vector< double >	values;
-	size_t								nValues;
-	size_t								index;
+	std::vector< T >	values;
+	size_t					nValues;
+	size_t					index;
 };
+
+// Helpers for most common Average types
+typedef Average<double> AverageDouble;
+typedef Average<float>	AverageFloat;
+typedef Average<int>	AverageInt;
 
 } // namespace Cing
 

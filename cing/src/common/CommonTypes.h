@@ -62,6 +62,10 @@ namespace Cing
 	// Spatial
 	typedef Ogre::AxisAlignedBox	AABox;
 	typedef Ogre::Box				BoxArea;
+
+	// Timing
+	typedef Ogre::Timer				Timer;
+
 } // namespace Cing
 
 #endif // _CommonTypes_H_

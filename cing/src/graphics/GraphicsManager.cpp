@@ -295,15 +295,8 @@ void GraphicsManager::draw()
 	// Update default camera controller
 	m_defaultCamController.update();
 
-	// Render scene
-	Ogre::Root::getSingleton().renderOneFrame();
-
-	// Update window
-	m_mainWindow.update();
-
-	// Get Frame stats
+	// Get Frame stats (and display fps if enabled)
 	const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
-
 	frameRate = frameStats.avgFPS;
 
 	// Show fps
@@ -322,13 +315,18 @@ void GraphicsManager::draw()
 		resetMatrix();
 		pushStyle();
 		stroke(0);
-		fill(220);
+		fill(255, 0, 0);
 		text( oss.str(), 10, 0 );
 		popStyle();
 		popMatrix();
 	}
-	//else
-	//	m_systemFont.show( false );
+
+
+	// Render scene
+	Ogre::Root::getSingleton().renderOneFrame();
+
+	// Update window
+	m_mainWindow.update();
 
 	// Render the viewport to texture and save to disk if required
 	if ( m_saveFrame )

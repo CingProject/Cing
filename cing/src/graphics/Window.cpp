@@ -41,12 +41,12 @@ namespace Cing
  * @brief Constructor. Initializes class attributes.
  */
 Window::Window():
-  m_bIsValid      ( false ),
-  m_mainViewport  ( NULL  ),
-  m_stats         ( NULL  ),
-	m_width					( -1    ),
-	m_height				( -1    ),
-  m_pOgreWindow   ( NULL  )
+	m_bIsValid      ( false ),
+	m_mainViewport  ( NULL  ),
+	m_stats         ( NULL  ),
+	m_width			( -1    ),
+	m_height		( -1    ),
+	m_pOgreWindow   ( NULL  )
 {
 }
 
@@ -90,6 +90,9 @@ bool Window::init( Ogre::RenderWindow* pOgreWindow )
 	m_width		= metrics.width;
 	m_height	= metrics.height;
 
+	// Init the stats
+	m_stats = &m_pOgreWindow->getStatistics();
+	
 	return true;
 }
 
@@ -114,14 +117,14 @@ void Window::end()
  */
 void Window::update()
 {
-  // Pump windows messages
+	// Pump windows messages
 	// This is block only on mac: more info: http://www.ogre3d.org/forums/viewtopic.php?f=5&t=48491&start=100
 //#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-  Ogre::WindowEventUtilities::messagePump();
+	Ogre::WindowEventUtilities::messagePump();
 //#endif
 
-  // Get window statistics
-  m_stats = &m_pOgreWindow->getStatistics();
+	// Get window statistics	
+	m_stats = &m_pOgreWindow->getStatistics();
 }
 
 /**
