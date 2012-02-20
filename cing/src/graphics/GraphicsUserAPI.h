@@ -219,6 +219,7 @@ void	textWordWrap	(bool wordWrap);
 float	textWidth		( const std::string& text );
 float	textHeight		( const std::string& text, float textBoxWidth = -1 );
 
+std::vector< std::string > splitInLines( const std::string& text, float textBoxWidth );
 
 //-----------------------------------------------------------------------------------
 // Shadows

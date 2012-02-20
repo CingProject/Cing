@@ -1206,7 +1206,16 @@ float textHeight( const std::string& text, float textBoxWidth /*= -1*/ )
 	return FontManager::getSingleton().textHeight( text, textBoxWidth );
 }
 
-
+   /**
+	* @brief Split a text area into lines. Returns a vector of strings.
+	* @param text			Input text
+	* @param textBoxWidth	This specifies the horizontal limit (width of the text box that will be used to render the text,
+	* and will end up determining the number o lines that are required to draw it).
+	*/
+std::vector< std::string > splitInLines( const std::string& text, float textBoxWidth )
+{
+	return FontManager::getSingleton().splitInLines( text, textBoxWidth );
+}
 
 /**
  * Sets the 3d coordinate system. Thre are two systems: OPENGL3D and PROCESSING (default)

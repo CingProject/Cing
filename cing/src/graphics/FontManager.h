@@ -63,13 +63,14 @@ public:
 	void					updateActiveFontProperties	();
 
   	// Query methods
-	FontProperties&			getActiveFontProperties	() { return m_activeFontProperties; }
-	bool                    isValid					() const { return m_bIsValid && m_activeFont; }
-	float					textWidth				( const std::string& text );
-	float					textHeight				( const std::string& text, float textBoxWidth );
-	int						textLineBreakCount		( const std::string& text, float textBoxWidth );
-	float					characterHeight			();
-	float					spaceWidth				();
+	FontProperties&				getActiveFontProperties	() { return m_activeFontProperties; }
+	bool						isValid					() const { return m_bIsValid && m_activeFont; }
+	float						textWidth				( const std::string& text );
+	float						textHeight				( const std::string& text, float textBoxWidth );
+	int							textLineBreakCount		( const std::string& text, float textBoxWidth );
+	float						characterHeight			();
+	float						spaceWidth				();
+	std::vector<std::string>	splitInLines			( const std::string& str, float textBoxWidth );
 	
 private:
 

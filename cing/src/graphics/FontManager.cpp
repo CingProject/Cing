@@ -341,5 +341,58 @@ namespace Cing
 		return m_activeFontsToRender.back();
 	}
 
+   /**
+	* @brief Split a text area into lines. Returns a vector of strings.
+	*/
+	std::vector<std::string> FontManager::splitInLines( const std::string& str, float textBoxWidth )
+	{
+		std::vector<std::string>	lines;
+
+		std::string					tempLine	= "";
+		std::string					currentChar = "";
+		std::string					word		= "";
+		float						wordWidth	= 0;
+		float						lineWidth	= 0;
+
+		for (int i = 0; i < (int)str.size() ; i++)
+		{
+			currentChar = str.substr( i, 1 );
+
+			// Split text into words			
+			if ( currentChar == " " )
+			{
+
+				wordWidth = textWidth( word );
+				lineWidth = textWidth( tempLine );
+
+				// add space before calculate width
+				word += currentChar;
+
+				// Calculate if current line + new word exceeds max width
+				if ( ( lineWidth + wordWidth ) - 10 > textBoxWidth )
+				{
+					// Store current line and add current word to next one
+					lines.push_back( tempLine );
+					tempLine = word;
+				}else{
+
+					// Add this word to current line
+					tempLine += word;
+				}
+				word = "";
+			}
+			else
+				word += currentChar;
+
+			// If this is the last character / line, add it
+			if ( i == ((int)str.size()-1) )
+			{
+				tempLine += word;
+				lines.push_back( tempLine );
+			}
+		}
+
+		return lines;
+	}
 
 } // namespace
