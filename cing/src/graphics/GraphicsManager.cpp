@@ -203,8 +203,10 @@ bool GraphicsManager::init()
 	for (int i = 0; i < m_canvas.getWidth() * m_canvas.getHeight(); i++)
 		pixels.push_back( Color( 200, 200, 200 ) );
 
-	// Set image background color
+	// Set image background color and render queue
 	m_canvas.fill(Color(200));
+	m_canvas.forceRenderQueue( Ogre::RenderQueueGroupID::RENDER_QUEUE_BACKGROUND );
+
 
 	// Init RTT texture and setup viewport
 	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_BYTE_RGBA, Ogre::TU_RENDERTARGET);
