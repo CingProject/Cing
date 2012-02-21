@@ -190,7 +190,7 @@ bool GraphicsManager::init()
 	//GUIManager::getSingleton().init();
 
 	// Init 2dCanvas
-	m_canvas.init(width, height, RGB);
+	m_canvas.init(width, height, RGBA);
 
 	// Init style queue
 	m_styles.push_front( Style(Color(255,255,255), Color(0,0,0), 1) );
@@ -207,16 +207,11 @@ bool GraphicsManager::init()
 	m_canvas.fill(Color(200));
 
 	// Init RTT texture and setup viewport
-	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_R8G8B8, Ogre::TU_RENDERTARGET);
+	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_BYTE_RGBA, Ogre::TU_RENDERTARGET);
 	Ogre::RenderTarget* rttTex	= m_RttTexture->getBuffer()->getRenderTarget();
 	rttTex->setAutoUpdated(false);
 	Ogre::Viewport* vp	= rttTex->addViewport( m_activeCamera.getOgreCamera() );
 	vp->setOverlaysEnabled(true);
-
-	// Init the default font / text
-	//m_systemFont.init( width, height);
-	//m_systemFont.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
-	//m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
 
 	// Set default coordinate system:
 	m_coordSystem = OPENGL3D;
@@ -280,14 +275,6 @@ void GraphicsManager::draw()
 {
 	// Reset the "global" matrix stack
 	clearMatrixStack();
-
-	// Update the background image
-	m_canvas.drawBackground(	0,
-								0,
-								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
-								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
-	m_canvas.getTexturedQuad().forceRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
-
 
 	// Update 3d primitive drawing	( shape, lines,...)
 	ShapeManager::getSingleton().update();
@@ -753,8 +740,11 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 
 	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
 
-	cvSet( &m_canvas.getCVImage(), cvScalar(color.r,color.g,color.b) );
-	m_canvas.setUpdateTexture(true);
+	// Set the canvas color
+	m_canvas.fill( color );
+
+	// Make it visible for the next render
+	m_canvas.drawBackground( 0, 0, (float)width, (float)height);
 }
 
 /**
