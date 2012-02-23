@@ -756,8 +756,8 @@ namespace Cing
 		// Update texture
 		//m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
 		Ogre::PixelBox newData( width, height, 1, (Ogre::PixelFormat)format, textureData );
-		Ogre::PixelBox dest( (size_t)m_textWidth, (size_t)m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
-		m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData, dest );
+		//Ogre::PixelBox dest( (size_t)m_textWidth, (size_t)m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
+		m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData );
 	}
 
 	/**
