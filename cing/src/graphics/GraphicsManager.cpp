@@ -205,7 +205,7 @@ bool GraphicsManager::init()
 
 	// Set image background color and render queue
 	m_canvas.fill(Color(200));
-	m_canvas.forceRenderQueue( Ogre::RenderQueueGroupID::RENDER_QUEUE_BACKGROUND );
+	m_canvas.forceRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
 
 
 	// Init RTT texture and setup viewport
