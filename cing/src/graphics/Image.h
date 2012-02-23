@@ -136,6 +136,7 @@ namespace Cing
 		Ogre::TexturePtr 	getOgreTexture	() { return m_quad.getOgreTexture(); }
 		TexturedQuad&		getTexturedQuad	() { return m_quad; }
 		const TexturedQuad&	getTexturedQuad	() const { return m_quad; }
+		const std::string&	getPath			() const { return m_path; }
 
 		// Operators and operations
 		void operator =	( const Image& other );
