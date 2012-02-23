@@ -590,7 +590,7 @@ struct Average
 	void setNumberValues( int _nValues )
 	{
 		nValues = _nValues;
-		values.resize(0);
+		values.clear();
 		values.reserve( nValues );
 		index = 0;
 	}
