@@ -224,6 +224,10 @@ namespace Cing
 			return 0.0f;
 		}
 
+		// Empty text case
+		if ( text == "" )
+			return 0.0f;
+			
 		// Check valid viewport
 		if ( !GraphicsManager::getSingleton().getMainWindow().getMainViewport() )
 		{
@@ -266,6 +270,10 @@ namespace Cing
 			LOG_ERROR( "FontManager::textWidth. FontManager is not Valid or not Initialized. Maybe there is no active font set? Call textFont to set the active font" );
 			return 0.0f;
 		}
+
+		// Check empty text case
+		if ( text == "" )
+			return 0.0f;
 
 		// TODO: this is not the ideal way to calculate this (it should just be on the font class, but for now)
 		MovableText* newText = getNewText();
