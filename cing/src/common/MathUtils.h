@@ -585,7 +585,10 @@ struct Average
 		values.reserve( nValues );
 		index = 0;
 	}
-
+	~Average()
+	{
+		values.clear();
+	}
 	/// @param Sets the number of values that this Average will store.
 	void setNumberValues( int _nValues )
 	{
