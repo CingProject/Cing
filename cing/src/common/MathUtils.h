@@ -607,7 +607,7 @@ struct Average
 			values[index] = value;
 
 		// calculate new index
-		index = (++index) % values.capacity();
+		index = (++index) % nValues;
 	}
 
 	/// @brief returns the average value
@@ -617,7 +617,7 @@ struct Average
 		return sum / (float)values.size();
 	}
 
-	std::vector< T >	values;
+	std::vector< T >		values;
 	size_t					nValues;
 	size_t					index;
 };
