@@ -660,6 +660,13 @@ namespace Cing
 	 */
 	void TexturedQuad::setTransparency( float alpha )
 	{
+		// Check quad is valid
+		if ( !isValid() )
+		{
+			LOG_ERROR( "setTransparency. Error: set transparency value as Image/Texture has not been initialized. Please call load or init before setting the render queue" );
+			return;
+		}
+
 		// Store alpha value
 		m_alpha = alpha;
 
@@ -688,29 +695,47 @@ namespace Cing
 	 */
 	void TexturedQuad::forceRenderQueue( unsigned int renderQueueId )
 	{
-		if ( isValid() )
+		// Check quad is valid
+		if ( !isValid() )
 		{
-			// Check range
-			if ( (renderQueueId < Ogre::RENDER_QUEUE_BACKGROUND) || (renderQueueId > Ogre::RENDER_QUEUE_MAX) )
-			{
-				LOG_WARNING( "TexturedQuad::forceRenderQueue. Render queue range in 0..105. Constraining received value, which is out of range" );
-				renderQueueId = (unsigned int)constrain((float)renderQueueId, (float)Ogre::RENDER_QUEUE_BACKGROUND, (float)Ogre::RENDER_QUEUE_MAX);
-			}
-
-			m_renderQueueForced = true;
-			m_forcedRenderQueue = renderQueueId;
-			m_quad->setRenderQueueGroup( (Ogre::RenderQueueGroupID)m_forcedRenderQueue );
+			LOG_ERROR( "forceRenderQueue. Error: Cannot force render queue as Image/Texture has not been initialized. Please call load or init before setting the render queue" );
+			return;
 		}
+
+		// Check range
+		if ( (renderQueueId < Ogre::RENDER_QUEUE_BACKGROUND) || (renderQueueId > Ogre::RENDER_QUEUE_MAX) )
+		{
+			LOG_WARNING( "TexturedQuad::forceRenderQueue. Render queue range in 0..105. Constraining received value, which is out of range" );
+			renderQueueId = (unsigned int)constrain((float)renderQueueId, (float)Ogre::RENDER_QUEUE_BACKGROUND, (float)Ogre::RENDER_QUEUE_MAX);
+		}
+
+		m_renderQueueForced = true;
+		m_forcedRenderQueue = renderQueueId;
+		m_quad->setRenderQueueGroup( (Ogre::RenderQueueGroupID)m_forcedRenderQueue );
 	}
 
 	void TexturedQuad::enableDepthWrite( bool value )
 	{
+		// Check quad is valid
+		if ( !isValid() )
+		{
+			LOG_ERROR( "enableDepthWrite. Error: set depth write value as Image/Texture has not been initialized. Please call load or init before setting the render queue" );
+			return;
+		}
+
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( value );
 	}
 	
 	void TexturedQuad::enableDepthCheck( bool value )
 	{
+		// Check quad is valid
+		if ( !isValid() )
+		{
+			LOG_ERROR( "enableDepthCheck. Error: set depth check value as Image/Texture has not been initialized. Please call load or init before setting the render queue" );
+			return;
+		}
+
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( value );
 	}
