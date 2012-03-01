@@ -278,6 +278,9 @@ void GraphicsManager::draw()
 	// Reset the "global" matrix stack
 	clearMatrixStack();
 
+	// Set canvas to be drawn
+	m_canvas.drawBackground( 0, 0, (float)width, (float)height);
+
 	// Update 3d primitive drawing	( shape, lines,...)
 	ShapeManager::getSingleton().update();
 
