@@ -614,6 +614,9 @@ struct Average
 	T getValue()
 	{
 		T sum = std::accumulate( values.begin(), values.end(), T(0.0) );
+
+		if ( values.size() == 0 ) return T();
+
 		return sum / (float)values.size();
 	}
 
