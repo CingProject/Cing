@@ -499,7 +499,7 @@ inline float map( float value, float low1, float hight1, float low2, float hight
  *
  * @param value value to constrain
  * @param min   min value of the valid range
- * @param min   min value of the valid range
+ * @param max   max value of the valid range
  *
  * @return the constrained value
  */
@@ -509,6 +509,23 @@ inline float constrain( float value, float min, float max )
 	if ( value < min )	return min;
 	return value;
 }
+
+/*
+ * @brief Returns true if a number is within a defined range, false otherwise
+ *
+ * @param value value to check
+ * @param min   min value of the valid range
+ * @param max   max value of the valid range
+ *
+ * @return the constrained value
+ */
+inline bool inRange( float value, float min, float max )
+{
+	if (( value <= max ) && ( value >= min ))
+		return true;
+	return false;
+}
+
 
 /**
  * @brief Returns the angle between two vectors. They must be normalized
