@@ -117,6 +117,10 @@ void Window::end()
  */
 void Window::update()
 {
+  // Check if the class is already released
+  if ( !isValid() )
+    return;
+
 	// Pump windows messages
 	// This is block only on mac: more info: http://www.ogre3d.org/forums/viewtopic.php?f=5&t=48491&start=100
 //#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_LINUX
@@ -141,7 +145,6 @@ bool Window::isClosed() const
 }
 
 /**
- * @internal
  * @brief Returns true if the window is in full screen mode. False otherwise.
  * @return true if the window is in full screen mode. False otherwise.
  */
@@ -151,6 +154,18 @@ bool Window::isFullScreen() const
     return false;
 
   return m_pOgreWindow->isFullScreen();
+}
+
+/**
+ * @brief Returns true if the window is active (has the focus), false otherwise
+ * @return true if the window is active (has the focus), false otherwise
+ */
+bool Window::isActive() const
+{
+  if ( !isValid() )
+    return false;
+
+  return m_pOgreWindow->isActive();
 }
 
 /**

@@ -26,6 +26,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "input/InputManager.h"
 #include "common/eString.h"
 #include "graphics/Color.h"
+#include "graphics/Window.h"
 
 namespace Cing
 {
@@ -65,6 +66,8 @@ namespace Cing
 	// Ogre / Advanced
 	Ogre::SceneManager*		ogreSceneManager	= NULL;
 	Ogre::Camera*			ogreCamera			= NULL;
+	Window*					appWindow			= NULL;
+
 
 
 	// Pixel manipulation

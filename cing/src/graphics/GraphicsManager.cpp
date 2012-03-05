@@ -95,6 +95,8 @@ namespace Cing
 		m_saveFrame(false),
 		m_shadowsEnabled(false)
 {
+	// Store the window in global var
+	appWindow = &m_mainWindow;
 }
 
 /**

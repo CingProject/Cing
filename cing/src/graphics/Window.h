@@ -70,6 +70,7 @@ public:
 	bool                                  	isValid               	() const { return m_bIsValid; }
 	bool                                  	isClosed              	() const;
 	bool                                  	isFullScreen          	() const;
+	bool									isActive				() const;
 	int										getWidth				() const { return m_width; }
 	int										getHeight				() const { return m_height; }
 	void                                  	getMetrics            	( TWindowMetrics& metrics ) const;
