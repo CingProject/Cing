@@ -1136,4 +1136,23 @@ namespace Cing
 
 		return true;
 	}
+
+	/**
+	 * @brief Sets the material for the object
+	 *
+	 * @param materialName Name of the material to assign. It must be located in the data folder.
+	 */
+	void TexturedQuad::setMaterial( const std::string& materialName )
+	{
+		// Check if the material exist
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName );
+		if ( !material.isNull() )
+		{
+			m_quad->setMaterialName( 0, materialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME );
+		}
+		// TODO: Log -> material does not exist
+		else
+			LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName.c_str() );
+	}
+
 } // namespace Cing
