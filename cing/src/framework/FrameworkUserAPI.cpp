@@ -86,7 +86,7 @@ void windowBorder( bool border )
  * @brief Allows to set the monitor index for the main window (allows to set windows in secondary monitors)
  * @param index Monitor index to use for main window
  */
-void windowMonitorIndex	( bool index  )
+void windowMonitorIndex	( unsigned int index  )
 {
 	GraphicsManager::getSingleton().windowMonitorIndex( index );
 }
