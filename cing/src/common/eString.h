@@ -56,11 +56,12 @@ namespace Cing
 	unsigned long	stringToUint32(const std::string& str);
 
 	// Tokenize utils
-	void						split(const std::string& str, char delim, std::vector<std::string>& tokens );
-	std::vector<std::string>	split(const std::string& str, char delim );
+	void						split	(const std::string& str, char delim, std::vector<std::string>& tokens );
+	std::vector<std::string>	split	(const std::string& str, char delim );
 
-	// Converts to UTF string (in case you need to handle characters like accents and such
-	Ogre::UTFString ConvertToUTF( const std::string& String);
+	// String format conversion
+	std::wstring				toWString	( const std::string& str );
+	Ogre::UTFString				toUTF		( const std::string& str );
 
 	/**
 	* @internal
@@ -81,7 +82,7 @@ namespace Cing
 		String				substring	( int beginIndex );
 		String				substring	( int beginIndex, int endIndex );
 		const char*			toChar		() const { return c_str(); }
-		//Ogre::UTFString		toUTF		() const;
+		Ogre::UTFString		toUTF		() const;
 
 
 		// Compare

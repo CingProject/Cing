@@ -140,7 +140,7 @@ namespace Cing
 		newText->setTextAreaWidth( m_activeFontProperties.width );
 		newText->setTextAreaHeight( m_activeFontProperties.height );
 		newText->setTextAlignment(m_activeFontProperties.halign, m_activeFontProperties.valign);
-		newText->setCaption( m_activeFontProperties.text.toChar() );
+		newText->setCaption( m_activeFontProperties.text.toUTF() );
 		newText->setWordWrap( m_activeFontProperties.wordWrap );
 
 		// Text display properties

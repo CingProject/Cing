@@ -211,7 +211,7 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 	bool	newWord			= true; // Marks we are starting a new word
 	float	totalTextHeight = lineLeading;
 
-	Ogre::DisplayString stringToAnalyze = ConvertToUTF( text );
+	Ogre::DisplayString stringToAnalyze = toUTF( text );
 
 	// Go through the text to find line breaks due to characters or due to the text block width
 	for (Ogre::DisplayString::iterator i = stringToAnalyze.begin(); i != stringToAnalyze.end(); ++i)

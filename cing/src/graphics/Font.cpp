@@ -125,10 +125,17 @@ namespace Cing
 			// set the dpi
 			m_font->setTrueTypeResolution( resolution );
 
-			// Generate all character range
-			// Complete character set -> until 255
-			m_font->addCodePointRange(Ogre::Font::CodePointRange(33, 255));
-
+			// Generate supported character range (if the user added a specific range, otherwise default 33-166 will be used)
+			// NOTE: Complete character set -> until 512, Details about UTF-8 codepoints here: http://www.utf8-chartable.de/
+			if ( m_codePointRangeList.empty() == false )
+			{
+				Ogre::Font::CodePointRangeList::iterator it;
+				for ( it = m_codePointRangeList.begin(); it != m_codePointRangeList.end(); ++it )
+				{
+					m_font->addCodePointRange( *it );
+				}
+			}
+				
 			// load the ttf (creates the texture with the font characters)
 			m_font->load();
 		}
@@ -201,6 +208,19 @@ namespace Cing
 		}
 		return m_font->getTrueTypeMaxBearingY();
 	}
+
+	/*
+	 * Adds a code point range to the supported character range for this font.
+	 * It allows to support wider character range like accents or apostrophes, but it will make the font use bigger 
+	 * textures, so if you don't need special characters, no need to call this :)
+	 * @note This should be called before the load method is called.
+	 * @param fontProperties Font properties to be set into the current font.	 
+	 */ 
+	void Font::addCodePointRange( unsigned int min, unsigned int max )
+	{
+		m_codePointRangeList.push_back( Ogre::Font::CodePointRange(min, max) );
+	}
+
 
 	/*
 	 * Sets the font properties from those received as parameters

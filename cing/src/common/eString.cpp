@@ -101,20 +101,33 @@ std::vector<std::string> split(const std::string& str, char delim )
 	return tokens;
 }
 
+/* 
+ * @brief Convert a string into a wstring for cases in whic you need to display accent or apostrophes and you need wider character range.
+ * @paran string to convert
+ * @return converted string to wide chars
+ */ 
+std::wstring toWString( const std::string& str )
+{
+  std::wstringstream wstrm;
+  wstrm << str.c_str();
+  return wstrm.str();
+
+}
+
 /*
  * @brief Converts a string into a Ogre UTF string. This is necessary if you need to handle non ascii characters (like accents: ó á and such).
  * @note Source: http://www.ogre3d.org/forums/viewtopic.php?t=32814&highlight=utfstring
- * @param String String to convert
+ * @param str String to convert
  * @return the converted to UTF string
  */
-Ogre::UTFString ConvertToUTF( const std::string& String)
+Ogre::UTFString toUTF( const std::string& str)
 {
    Ogre::UTFString UTFString;
    int i;
    Ogre::UTFString::code_point cp;
-   for (i=0; i<(int)String.size(); ++i)
+   for (i=0; i<(int)str.size(); ++i)
    {
-      cp = String[i];
+      cp = str[i];
       cp &= 0xFF;
       UTFString.append(1, cp);
    }
@@ -209,20 +222,16 @@ void String::replaceSubStr( const String& subStrToFind, const String& subStrToRe
 }
 
 
-
-/*Ogre::UTFString String::toUTF() const
+/*
+ * @brief Converts a string into a Ogre UTF string. This is necessary if you need to handle non ascii characters (like accents: ó á and such).
+ * @note Source: http://www.ogre3d.org/forums/viewtopic.php?t=32814&highlight=utfstring
+ * @param str String to convert
+ * @return the converted to UTF string
+ */
+Ogre::UTFString String::toUTF() const
 {
-   Ogre::UTFString UTFString;
-   int i;
-   Ogre::UTFString::code_point cp;
-   for (i=0; i<(int)this->size(); ++i)
-   {
-      cp = (*this)[i];
-      cp &= 0xFF;
-      UTFString.append(1, cp);
-   }
-   return UTFString;
-}*/
+	return Cing::toUTF(*this);
+}
 
 }
 

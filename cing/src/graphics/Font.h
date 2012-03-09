@@ -68,6 +68,7 @@ namespace Cing
 		bool			isValid				() const { return m_bIsValid; }
 
 		// Set/configure
+		void			addCodePointRange	( unsigned int min, unsigned int max );
 		void			updateFontAttributes( const FontProperties& fontProperties );
 		void			reCreateFontTexture	();
 
@@ -81,13 +82,16 @@ namespace Cing
 	private:
 
 		// Attributes
-		Ogre::FontPtr		m_font;				///< Pointer to the Ogre Font used underneth
-		String				m_fontName;			///< Name of the font (the .otf or .ttf file)
-		float				m_fontSize;			///< Font size used to draw text (it could be different than the original size used to create the texture)
-		float				m_fontSizeOfTexture;///< Size of the font used to create the texture (this is what really will define the sharpness of the font)
-		int					m_fontRes;			///< Resolution of the TTF font
+		Ogre::FontPtr					m_font;				///< Pointer to the Ogre Font used underneth
+		String							m_fontName;			///< Name of the font (the .otf or .ttf file)
+		float							m_fontSize;			///< Font size used to draw text (it could be different than the original size used to create the texture)
+		float							m_fontSizeOfTexture;///< Size of the font used to create the texture (this is what really will define the sharpness of the font)
+		int								m_fontRes;			///< Resolution of the TTF font
 
-		bool				m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+		// Code point range (if added by user)
+		Ogre::Font::CodePointRangeList	m_codePointRangeList;///< This allows the user to add wider code point range to include special characters like accents or apostrophes
+
+		bool							m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 	};
 
