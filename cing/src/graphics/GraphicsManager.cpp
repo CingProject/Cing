@@ -92,6 +92,8 @@ namespace Cing
 		m_fullscreen( false ),
 		m_vSync(true),
 		m_fsaa(0),
+		m_windowBorder(true),
+		m_windowMonitorIndex(0),
 		m_saveFrame(false),
 		m_shadowsEnabled(false)
 {
@@ -132,15 +134,30 @@ bool GraphicsManager::init()
 	// Setup default values if user didn't call setup
 	setup( m_defaultWindowWidth, m_defaultWindowHeight );
 
-	// Init rendering engine and create window 
-	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise(true, "Cing");
+	// Init Ogre
+	ogreRoot.initialise(false, appName);
+
+	// Create the app window
+	Ogre::NameValuePairList windowParams;
+	windowParams["title"] = appName;
+	windowParams["border"] = m_windowBorder? "fixed": "none";
+	windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
+	windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
+	//windowParams["left"] = "0";
+	//windowParams["top"] = "0";
+	windowParams["depthBuffer"] = "true";
+	windowParams["externalWindowHandle"] = "None";
+	windowParams["FSAA"] = toString(m_fsaa);
+	windowParams["displayFrequency"] = toString(60);
+	windowParams["vsync"] = toString(m_vSync);
+	Ogre::RenderWindow* ogreWindow = ogreRoot.createRenderWindow(appName, width, height, m_fullscreen, &windowParams) ;
 	if ( !ogreWindow )
 		THROW_EXCEPTION( "Error creating application window" );
 
 	// Create main window
 	m_mainWindow.init( ogreWindow );
 
-	// Set global window size variables
+	// Set global window size variables (in case they changed with the window creation for some reason
 	width	= m_mainWindow.getWidth();
 	height	= m_mainWindow.getHeight();
 
@@ -351,6 +368,10 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 	// Check if setup has already been called
 	if ( m_setupCalled )
 		return;
+
+	// Store width and height in globals
+	width	= windowWidth;
+	height	= windowHeight;
 
 	// Get ogre root to configure it
 	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();

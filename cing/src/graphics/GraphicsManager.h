@@ -79,6 +79,8 @@ namespace Cing
 		void						fullscreen					()		{ m_fullscreen = true; }
 		void						vSync						(bool value )		{ m_vSync = value; }
 		void						FSAA						( int fsaa )		{ m_fsaa = fsaa; }
+		void						windowBorder				( bool border )		{ m_windowBorder = border; }
+		void						windowMonitorIndex			( unsigned int index ) { m_windowMonitorIndex = index; }
 
 		// Query methods
 		bool						isValid                   () const	{ return m_bIsValid; }
@@ -204,6 +206,8 @@ namespace Cing
 		bool                       	m_fullscreen;			///< If true, the applcation will run in full screen mode
 		bool                       	m_vSync;				///< If true, the applcation sync with dispay render (usually 60fps)
 		int							m_fsaa;					/// < Antialiasing value (0..16). Depends on HW support
+		bool						m_windowBorder;			/// If true, the main window will have regular frame/border, if false, it won't have any
+		unsigned int				m_windowMonitorIndex;	/// Monitor index for the main window (allows to set windows in secondary monitors)
 
 		// Misc
 		DebugOverlay				m_debugOverlay;			///< Debug overlay used to show debug information

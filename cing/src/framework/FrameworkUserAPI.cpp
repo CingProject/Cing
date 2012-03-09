@@ -30,128 +30,149 @@
 namespace Cing
 {
 
-  /**
-   * @brief Makes the application run in full screen mode
-   */
-  void fullscreen(int width, int height, GraphicMode mode )
-  {
-		// Resolution not specified
-		if (height == -1) 
-		{
-			GraphicsManager::getSingleton().fullscreen();
-		}
-		// Resolution specified
-		else
-		{
-			GraphicsManager::getSingleton().fullscreen();
-
-			// Set up window and render system configuration
-			GraphicsManager::getSingleton().setup( width, height, mode );
-
-			// Init application subsystems (necessary for the user to load any graphic resource)
-			Application::getSingleton().initSubSystems();		
-		}
-  }
-
-	/**
- 	 * @brief Defines whether the app should sync with diaplay refresh or not  
-	 */
-	void vSync( bool value/* = true*/ )
+/**
+ * @brief Makes the application run in full screen mode
+ */
+void fullscreen(int width, int height, GraphicMode mode )
+{
+	// Resolution not specified
+	if (height == -1) 
 	{
-		GraphicsManager::getSingleton().vSync( value );
+		GraphicsManager::getSingleton().fullscreen();
 	}
-
-
-  /**
-   * @brief Sets the full screen antialiasing
-   */
-  void FSAA( int fsaa )
-  {
-    GraphicsManager::getSingleton().FSAA( fsaa );
-  }
-
-
-  /**
-   * @brief Configures the application window size and render system used
-   * @note It should be called first to any other graphics related function
-   * @param windowWidth   width of the application's window
-   * @param windowHeight  height of the application's window
-   * @param mode          specifies the render driver to use. Default OPENGL
-   */
-  void size( int width, int height, GraphicMode mode )
-  {
-    // Set up window and render system configuration
-    GraphicsManager::getSingleton().setup( width, height, mode );
-
-    // Init application subsystems (necessary for the user to load any graphic resource)
-    Application::getSingleton().initSubSystems();
-  }
-
-
-	/**
-	 * @internal
-	 * @brief Finishes the application
-	 *
-	 * @param
-	 */
-	void exit()
+	// Resolution specified
+	else
 	{
-		Application::getSingleton().exit();
-	}
+		GraphicsManager::getSingleton().fullscreen();
 
-    /**
-	 * @internal
-	 * @brief Force the application to stop running for a specified time in milliseconds
-	 *
-	 * @param milliseconds
-	 */
-	void delay( unsigned int milliseconds)
-	{
-		Application::getSingleton().delay( milliseconds );
-	}
+		// Set up window and render system configuration
+		GraphicsManager::getSingleton().setup( width, height, mode );
 
-	/**
-	 * @internal
-	 * @brief Force the application to continuosly call user draw() function
-	 *
-	 * @param
-	 */
-	void loop()
-	{
-		Application::getSingleton().loop();
+		// Init application subsystems (necessary for the user to load any graphic resource)
+		Application::getSingleton().initSubSystems();		
 	}
+}
 
-	/**
-	 * @internal
-	 * @brief Force the application to stop call user draw() function
-	 *
-	 * @param
-	 */
-	void noLoop()
-	{
-		Application::getSingleton().noLoop();
-	}
+/**
+ * @brief Defines whether the app should sync with diaplay refresh or not  
+ */
+void vSync( bool value/* = true*/ )
+{
+	GraphicsManager::getSingleton().vSync( value );
+}
 
-	/**
-	 * @internal
-	 * @brief Force the application to  call user draw() function one time
-	 *
-	 * @param
-	 */
-	void redraw()
-	{
-		Application::getSingleton().redraw();
-	}
 
-	/**
-	 * @brief Forces the application to execute at a specific frame rate( if possible)
-	 *
-	 * @param forcedFrameRate new frame rate that the application will try to achieve
-	 */
-	void setFrameRate( int frameRate )
-	{
-		Application::getSingleton().frameRate( frameRate );
-	}
+/**
+ * @brief Sets the full screen antialiasing
+ * @param fsaa Antialiasing level to be used when in full screen
+ */
+void FSAA( int fsaa )
+{
+	GraphicsManager::getSingleton().FSAA( fsaa );
+}
+
+
+
+/**
+ * @brief Allows to remove the window border/frame (if set to false)
+ * @param if false, the window won't have border/frame
+ */
+void windowBorder( bool border )
+{
+	GraphicsManager::getSingleton().windowBorder( border );
+}
+
+/**
+ * @brief Allows to set the monitor index for the main window (allows to set windows in secondary monitors)
+ * @param index Monitor index to use for main window
+ */
+void windowMonitorIndex	( bool index  )
+{
+	GraphicsManager::getSingleton().windowMonitorIndex( index );
+}
+
+
+/**
+* @brief Configures the application window size and render system used
+* @note It should be called first to any other graphics related function
+* @param windowWidth   width of the application's window
+* @param windowHeight  height of the application's window
+* @param mode          specifies the render driver to use. Default OPENGL
+*/
+void size( int width, int height, GraphicMode mode )
+{
+	// Set up window and render system configuration
+	GraphicsManager::getSingleton().setup( width, height, mode );
+
+	// Init application subsystems (necessary for the user to load any graphic resource)
+	Application::getSingleton().initSubSystems();
+}
+
+
+/**
+ * @internal
+ * @brief Finishes the application
+ *
+ * @param
+ */
+void exit()
+{
+	Application::getSingleton().exit();
+}
+
+/**
+ * @internal
+ * @brief Force the application to stop running for a specified time in milliseconds
+ *
+ * @param milliseconds
+ */
+void delay( unsigned int milliseconds)
+{
+	Application::getSingleton().delay( milliseconds );
+}
+
+/**
+ * @internal
+ * @brief Force the application to continuosly call user draw() function
+ *
+ * @param
+ */
+void loop()
+{
+	Application::getSingleton().loop();
+}
+
+/**
+ * @internal
+ * @brief Force the application to stop call user draw() function
+ *
+ * @param
+ */
+void noLoop()
+{
+	Application::getSingleton().noLoop();
+}
+
+/**
+ * @internal
+ * @brief Force the application to  call user draw() function one time
+ *
+ * @param
+ */
+void redraw()
+{
+	Application::getSingleton().redraw();
+}
+
+/**
+ * @brief Forces the application to execute at a specific frame rate( if possible)
+ *
+ * @param forcedFrameRate new frame rate that the application will try to achieve
+ */
+void setFrameRate( int frameRate )
+{
+	Application::getSingleton().frameRate( frameRate );
+}
 
 
 } // namespace Cing

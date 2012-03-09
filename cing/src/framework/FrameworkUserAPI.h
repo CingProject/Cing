@@ -33,10 +33,12 @@
 namespace Cing
 {
 // Application setup
-void fullscreen ( int width = -1, int height = -1, GraphicMode mode = OPENGL );
-void vSync		( bool value = true ); // Note: must be called before size or fullscreen
-void FSAA		( int fsaa );
-void size       ( int width, int height, GraphicMode mode = OPENGL );
+void fullscreen 		( int width = -1, int height = -1, GraphicMode mode = OPENGL );
+void vSync				( bool value = true ); // Note: must be called before size or fullscreen
+void FSAA				( int fsaa );
+void windowBorder		( bool border );
+void windowMonitorIndex	( bool index  );
+void size				( int width, int height, GraphicMode mode = OPENGL );
 
 // Application control
 void exit();
