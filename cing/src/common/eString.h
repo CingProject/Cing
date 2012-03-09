@@ -47,8 +47,9 @@ namespace Cing
 	class String;
 
 	/// String utils
-	template< typename T>
-	String			toString( T input );
+	template< typename T>	inline String	toString( T input );
+	template<>				inline String	toString<bool>( bool input );
+
 	String			intToString(int inputNumber);
 	int				stringToInt(const std::string& str);
 	float			stringToFloat(const std::string& str);
@@ -102,6 +103,13 @@ namespace Cing
 		std::stringstream s;
 		s << input;
 		return s.str();
+	}
+
+	// Template specialization for boolean types (to print true or false)
+	template<>
+	String	toString<bool>( bool input )
+	{
+		return input == true? "true": "false";
 	}
 
 } // namespace Cing
