@@ -605,7 +605,7 @@ void MovableText::_setupGeometry()
 			// (as the line break has been forced by us to make the text fit)
 			if ( IsSpace(character) )
 				mRenderOp.vertexData->vertexCount -= 6;
-			else
+			else if ( i != mCaption.begin() )
 				--i;
 			continue;
 		} else if ( IsSpace(character) ) // space
@@ -757,13 +757,17 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 	// Need to break any line due to size limit?
 	if ( m_textAreaWidth > 0 )
 	{
-		float lineLength = 0;
-		bool breakLineToWrapWord	= false; // Marks we have to break a word, even if wordwrap is enabled (as it doesn't fit in the whole width of the text box)
-		bool newWord			= true; // Marks we are starting a new word
+		float	lineLength = 0;
+		bool	breakLineToWrapWord	= false; // Marks we have to break a word, even if wordwrap is enabled (as it doesn't fit in the whole width of the text box)
+		bool	newWord				= true; // Marks we are starting a new word
+		float	charLength			= 0.0f;
+		int		itemsInLine			= 0;	// This can be chars or words
  		for (Ogre::DisplayString::iterator i = mCaption.begin(); i != mCaption.end(); ++i)
 		{
 			// Get current character
 			Ogre::Font::CodePoint character = OGRE_DEREF_DISPLAYSTRING_ITERATOR(i);
+			charLength = 0.0f;
+			itemsInLine++;
 
 			// New line?
 			if ( IsNewLine(character) )
@@ -801,14 +805,17 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 				}
 				// Check just one character at a time (as there is no wordwap we break at any point)
 				else
-					lineLength += mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0f * mViewportAspectCoef;
+				{
+					charLength = mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0f * mViewportAspectCoef;
+					lineLength += charLength;
+				}
 
 				// Reset the new word flag, as this is a regular character
 				newWord = false;
 			}
 
-			// If the text does not fit in the width anymore -> insert line break
-			if ( (lineLength > m_textAreaWidth) || breakLineToWrapWord )
+			// If the text does not fit in the width anymore -> insert line break (unless it is just one char that does not fit, in this case we leave it)
+			if ( ((lineLength > m_textAreaWidth) || breakLineToWrapWord) && (itemsInLine != 1) )
 			{
 				// Insert forced line break to fit in the text area space
 				int lineBreakIndex = (i - mCaption.begin());
@@ -824,9 +831,11 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 				lineLength		= 0;
 				breakLineToWrapWord = false;
 				newWord			= true;
+				itemsInLine		= 0;
 
-				// Go back one index
-				--i;
+				// Go back one index (unless not even one char fits in which case we'll just put it in there anyway)
+				if ( (i != mCaption.begin()) && (lineBreakIndex != forcedLineBreaks.back() ) )
+					--i;
 			}
 
 		}
