@@ -834,7 +834,7 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 				itemsInLine		= 0;
 
 				// Go back one index (unless not even one char fits in which case we'll just put it in there anyway)
-				if ( (i != mCaption.begin()) && (lineBreakIndex != forcedLineBreaks.back() ) )
+				if ( i != mCaption.begin()  )
 					--i;
 			}
 
