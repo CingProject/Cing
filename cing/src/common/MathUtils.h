@@ -591,6 +591,7 @@ struct Average
 {
 	Average()
 	{
+		cacheValid = false;
 		nValues = 3;
 		values.reserve( nValues );
 		index = 0;
@@ -598,17 +599,20 @@ struct Average
 	/// @param nValues number of values to store
 	Average( int _nValues )
 	{
+		cacheValid = false;
 		nValues = _nValues;
 		values.reserve( nValues );
 		index = 0;
 	}
 	~Average()
 	{
+		cacheValid = false;
 		values.clear();
 	}
 	/// @param Sets the number of values that this Average will store.
 	void setNumberValues( int _nValues )
 	{
+		cacheValid = false;
 		nValues = _nValues;
 		values.clear();
 		values.reserve( nValues );
@@ -625,21 +629,33 @@ struct Average
 
 		// calculate new index
 		index = (++index) % nValues;
+
+		// Cache not valid anymore (until getValue is called again)
+		cacheValid = false;
 	}
 
 	/// @brief returns the average value
 	T getValue()
 	{
-		T sum = std::accumulate( values.begin(), values.end(), T(0.0) );
+		// No values still
+		if ( values.size() == 0 ) 
+			return T();
 
-		if ( values.size() == 0 ) return T();
+		// Check if we have a valid cache and return it if so
+		if ( cacheValid )
+			return cache;
 
-		return sum / (float)values.size();
+		// No chache:  Calculate current average (and store in cache)
+		cache		= std::accumulate( values.begin(), values.end(), T(0.0) ) / (float)values.size();
+		cacheValid	= true;
+		return cache;
 	}
 
 	std::vector< T >		values;
 	size_t					nValues;
 	size_t					index;
+	T						cache;
+	bool					cacheValid;
 };
 
 // Helpers for most common Average types
