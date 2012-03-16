@@ -210,6 +210,7 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 	bool	breakLineToWrapWord = false;
 	bool	newWord			= true; // Marks we are starting a new word
 	float	totalTextHeight = lineLeading;
+	float nextWordLength;
 
 	Ogre::DisplayString stringToAnalyze = toUTF( text );
 
@@ -218,6 +219,7 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 	{
 		// Get current character
 		Ogre::Font::CodePoint character = OGRE_DEREF_DISPLAYSTRING_ITERATOR(i);
+		nextWordLength = 0;
 
 		// Space character?
 		if ( IsSpace(character) )
@@ -229,13 +231,13 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 		else
 		{
 			// Get the length of the next word
-			float nextWordLength = getWordLength(i, stringToAnalyze.end());
+			nextWordLength = getWordLength(i, stringToAnalyze.end());
 
 			// Wordwrap is activated -> check whole words (only if possible, maybe the word itself is longer than textarea width)
-			if ( mwordWrap && (nextWordLength < textBlockWidth) && newWord )
+			if ( mwordWrap && ((textBlockWidth == -1 ) || (nextWordLength < textBlockWidth)) && newWord )
 			{
 				// have to break the line?
-				if ( (lineLength + nextWordLength) > textBlockWidth )
+				if ( ( (lineLength + nextWordLength) > textBlockWidth ) && (textBlockWidth != -1) )
 					breakLineToWrapWord = true;
 				// word fits altogether
 
@@ -262,8 +264,9 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 			// Add the height of this line
 			totalTextHeight += lineLeading;
 			
-			// Go back one index
-			--i;
+			// Go back one index (if this is not a new line char or something with 0 length)
+			if ( ( nextWordLength > 0 ) || (IsNewLine(character) == false) )
+				--i;
 		}
 	}
 
