@@ -251,6 +251,9 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 			// Check just one character at a time
 			else
 				lineLength += mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0f * mViewportAspectCoef;
+
+			// Reset the new word flag, as this is a regular character
+			newWord = false;
 		}
 
 		// If the text does not fit in the width anymore -> insert line break
