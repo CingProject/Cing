@@ -228,7 +228,7 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 			newWord = true;
 		}
 		// "Normal" character
-		else
+		else if ( IsNewLine(character ) == false )
 		{
 			// Get the length of the next word
 			nextWordLength = getWordLength(i, stringToAnalyze.end());
@@ -239,8 +239,8 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 				// have to break the line?
 				if ( ( (lineLength + nextWordLength) > textBlockWidth ) && (textBlockWidth != -1) )
 					breakLineToWrapWord = true;
-				// word fits altogether
 
+				// word fits altogether
 				else
 				{
 					lineLength += nextWordLength;
