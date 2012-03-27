@@ -495,19 +495,30 @@ inline float map( float value, float low1, float hight1, float low2, float hight
 }
 
 /*
- * @brief Constrains a value so it does not exceed a range
+ * @brief Constrains a value so it does not exceed a range (boundary limits for the range can be in any order)
  *
  * @param value value to constrain
- * @param min   min value of the valid range
- * @param max   max value of the valid range
+ * @param limit1   first boundary to constrain value (it could be higher or lower than limit2)
+ * @param limit2   second boundary to constrain value (it could be higher or lower than limit1)
  *
  * @return the constrained value
  */
-inline float constrain( float value, float min, float max )
+inline float constrain( float value, float limit1, float limit2 )
 {
-	if ( value > max )	return max;
-	if ( value < min )	return min;
-	return value;
+	// Case where limit1 is lower than limit2
+	if ( limit1 < limit2 )
+	{
+		if ( value > limit2 )	return limit2;
+		if ( value < limit1 )	return limit1;
+		return value;
+	}
+	// other case: limit2 is lower than limit1 (so they are in inverse order)
+	else 
+	{
+		if ( value > limit1 )	return limit1;
+		if ( value < limit2 )	return limit2;
+		return value;
+	}
 }
 
 /*
