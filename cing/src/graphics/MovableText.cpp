@@ -37,7 +37,7 @@ MovableText::MovableText() :
 			mTimeUntilNextToggle(0), mSpaceWidth(0), mUpdateColors(true), mOnTop(false), mHorizontalAlignment(LEFT),
 			mVerticalAlignment(TOP), m_textAreaWidth(-1),
 			m_textAreaHeight(-1), mAllocSize(0), mwordWrap(true), mAlwaysFaceCamera(false), mRender2D(false), m_bIsValid(false),
-			m_maxSquaredRadius(-1), mScale( Vector::UNIT_SCALE )
+			m_maxSquaredRadius(-1), mScale( Vector::UNIT_SCALE ), mViewportAspectCoef( 1.0f ), m_leading( -1 )
 {
 
 	// Create unique name
@@ -200,16 +200,85 @@ void MovableText::setBackgroundTransparency( float transparency )
 																						transparency);
 }
 
+float MovableText::getTextBlockHeightPixels( const std::string& text, float textBlockWidth )
+{
+	// TODO: Remove redundant code between here and calculateLineBreaks method
+	
+	float	lineLeading = equal( m_leading, -1 )? mCharHeight * 1.275f: m_leading;
+	float	spaceWidth	= mpFont->getGlyphAspectRatio(UNICODE_ZERO) * mCharHeight /** 2.0f */* mViewportAspectCoef;
+	float	lineLength	= 0;
+	bool	breakLineToWrapWord = false;
+	bool	newWord			= true; // Marks we are starting a new word
+	float	totalTextHeight = lineLeading;
+	float nextWordLength;
+
+	Ogre::DisplayString stringToAnalyze = toUTF( text );
+
+	// Go through the text to find line breaks due to characters or due to the text block width
+	for (Ogre::DisplayString::iterator i = stringToAnalyze.begin(); i != stringToAnalyze.end(); ++i)
+	{
+		// Get current character
+		Ogre::Font::CodePoint character = OGRE_DEREF_DISPLAYSTRING_ITERATOR(i);
+		nextWordLength = 0;
+
+		// Space character?
+		if ( IsSpace(character) )
+		{
+			lineLength += spaceWidth;
+			newWord = true;
+		}
+		// "Normal" character
+		else if ( IsNewLine(character ) == false )
+		{
+			// Get the length of the next word
+			nextWordLength = getWordLength(i, stringToAnalyze.end());
+
+			// Wordwrap is activated -> check whole words (only if possible, maybe the word itself is longer than textarea width)
+			if ( mwordWrap && ((textBlockWidth == -1 ) || (nextWordLength < textBlockWidth)) && newWord )
+			{
+				// have to break the line?
+				if ( ( (lineLength + nextWordLength) > textBlockWidth ) && (textBlockWidth != -1) )
+					breakLineToWrapWord = true;
+
+				// word fits altogether
+				else
+				{
+					lineLength += nextWordLength;
+					Ogre::DisplayString::iterator captionEndIt = stringToAnalyze.end();
+					advanceWord(i, captionEndIt);
+				}
+			}
+			// Check just one character at a time
+			else
+				lineLength += mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0f * mViewportAspectCoef;
+
+			// Reset the new word flag, as this is a regular character
+			newWord = false;
+		}
+
+		// If the text does not fit in the width anymore -> insert line break
+		if ( ( (textBlockWidth > 0) && (lineLength > textBlockWidth)) || breakLineToWrapWord || IsNewLine(character) )
+		{
+			// Reset vars
+			lineLength		= 0;
+			breakLineToWrapWord = false;
+			newWord			= true;
+
+			// Add the height of this line
+			totalTextHeight += lineLeading;
+			
+			// Go back one index (if this is not a new line char or something with 0 length)
+			if ( ( nextWordLength > 0 ) || (IsNewLine(character) == false) )
+				--i;
+		}
+	}
+
+	return totalTextHeight;
+}
 
 void MovableText::setPosition( float x, float y )
 {
-	// Calculate position depending on the current camera setting
-	if ( GraphicsManager::getSingleton().isProcessingMode() )
-	{
-		y = height - y;
-		//getParentNode()->setScale( getParentNode()->getScale() * Vector(1, -1, 1) );
-	}
-
+	// In 2d coordinates are normalized to range [-1..1]
 	float _2dXPos = (x / (float)width) * 2.0f - 1;
 	float _2dYPos = -((y / (float)height) * 2.0f - 1);
 	getParentNode()->setPosition( _2dXPos, _2dYPos, 0 );
@@ -261,20 +330,44 @@ void MovableText::setScale( float x, float y )
 	set2dRendering();
 
 	// Screen aspect ratio
-	float hAspectRatio = (float)height/(float)width;
-	float vAspectRatio = (float)width/(float)height;
+	//float hAspectRatio = (float)height/(float)width;
+	//float vAspectRatio = (float)width/(float)height;
 	//hAspectRatio = 1.0f;
-	vAspectRatio = 1.0f;
+	//vAspectRatio = 1.0f;
+
+	//int vpWidth		= GraphicsManager::getSingleton().getMainWindow().getMainViewport()->getActualWidth();
+	//int vpHeight	= GraphicsManager::getSingleton().getMainWindow().getMainViewport()->getActualHeight();
+	//float viewportAspectCoef = (float)vpHeight/(float)vpWidth;
+
+//mPixelCharHeight = static_cast<unsigned short>(mCharHeight * vpHeight);
+//mPixelScaleX = 1.0f / vpWidth;
+//mPixelScaleY = 1.0f / vpHeight;
+
+
+	float ttfSize		= mpFont->getTrueTypeSize();
+	float ttfResolution = mpFont->getTrueTypeResolution();
+	float coef = ttfSize * ttfResolution / 72.0f;
+
 
 	// Adjust scale (to screen coordinates: -1..1)
 	// NOTE: Check this expression! looks too convoluted.
 	// When reviewing make sure text works well in both 3d and 2d and in Processing and Normal3D coordinate system
-	float scaleFactor = (mCharHeight / (float)height) /  (mCharHeight/2.0f) / vAspectRatio;
+	float scaleFactor = ((mCharHeight * 2.0f * mViewportAspectCoef) / (float)height) /  (mCharHeight/2.0f) / mViewportAspectCoef;
+	float scaleFactorX = abs(x) / (float)width * 2.0 * 2.0f ;
+	float scaleFactorY = abs(y) / (float)height * 2.0f * 2.0f;
+
+	// Font height in pixels
+	//float fontHeightPixels	= mpFont->getTrueTypeSize() * mpFont->getTrueTypeResolution() / 72.0f;
+	//float fontHeightPixels	= mpFont->getTrueTypeSize() * viewportAspectCoef * 2.0f;
+	//float scaleFactor		= (fontHeightPixels / (float)height) * 2;
 
 	// Calculate and set scale adjusted to screen coordinates
-	mScale.x = x * scaleFactor * hAspectRatio;
-	mScale.y = y * scaleFactor;
-	mScale.z = scaleFactor;
+	//mScale.x = x * scaleFactor * hAspectRatio;
+
+	mScale.x = x * scaleFactorX / mViewportAspectCoef;
+	mScale.y = y * scaleFactorY / mViewportAspectCoef;
+	mScale.z = scaleFactorX;
+
 	getParentNode()->setScale( mScale );
 
 	mNeedUpdate = true;
@@ -286,12 +379,11 @@ void MovableText::setScale( float x, float y )
 void MovableText::setScale( float x, float y, float z )
 {
 	// Adjust scale
-	float scaleFactor = (mCharHeight / (float)height);
-	scaleFactor = 1.0f;
+	float scaleFactor = 2.0f;
 
 	mScale.x = x * scaleFactor;
 	mScale.y = y * scaleFactor;
-	mScale.z = scaleFactor;
+	mScale.z = z;
 	getParentNode()->setScale( mScale );
 }
 
@@ -342,11 +434,10 @@ void MovableText::checkMemoryAllocation( size_t numChars )
 		bind->setBinding(COLOUR_BINDING, vbuf);
 
 		mAllocSize = numChars;
+	}
 
 		// force color buffer regeneration
 		mUpdateColors = true;
-	}
-
 }
 
 void MovableText::_setupGeometry()
@@ -375,16 +466,24 @@ void MovableText::_setupGeometry()
 	// Cing
 	mViewportAspectCoef = 1.0f;
 
+	//int vpWidth		= GraphicsManager::getSingleton().getMainWindow().getMainViewport()->getActualWidth();
+	//int vpHeight	= GraphicsManager::getSingleton().getMainWindow().getMainViewport()->getActualHeight();
+	//mViewportAspectCoef = (float)vpHeight/(float)vpWidth;
+
+
 	// Starting point
 	float left = 0 * 2.0 - 1.0;
 	float top = -((0 * 2.0) - 1.0);
 
 	// Derive space with from a number 0
 	// Cing note: width half of the width ogre was using (though to testing, it looks closer to the font look this way)
-	if ( mSpaceWidth == 0 )
-	{
-		mSpaceWidth = mpFont->getGlyphAspectRatio(UNICODE_ZERO) * mCharHeight;//  * 2.0 * mViewportAspectCoef;
-	}
+	// Cing note II: removed the * 2.0. See http://www.ogre3d.org/forums/viewtopic.php?f=3&t=61237 Looks like the * 2.0f was introduced at some point
+	// but it just makes spaces too big
+	mSpaceWidth = mpFont->getGlyphAspectRatio(UNICODE_ZERO) * mCharHeight /** 2.0f */* mViewportAspectCoef;
+
+	// Line leading (distance in pixels between lines)
+	// Note: the 1.275f comes from Processing, to keep the same default line leading (if no leading is specified manually)
+	float lineLeading = equal( m_leading, -1 )? mCharHeight * 1.275f: m_leading;
 
 	// Calculate vertical offset depending on the vertical alignment
 	float verticalOffset = 0;
@@ -476,7 +575,7 @@ void MovableText::_setupGeometry()
 		if ( IsNewLine(character) )
 		{
 			left = 0.0f * 2.0f - 1.0f;
-			top -= mCharHeight * 2.0f;
+			top -= lineLeading;
 			newLine = true;
 			// Also reduce tri count
 			mRenderOp.vertexData->vertexCount -= 6;
@@ -502,7 +601,7 @@ void MovableText::_setupGeometry()
 		{
 			// Normal line break stuff (but without reducing tris)
 			left = 0.0f * 2.0f - 1.0f;
-			top -= mCharHeight * 2.0f;
+			top -= lineLeading;
 			newLine = true;
 
 			// Remove this line break from the list of line breaks to process
@@ -512,7 +611,7 @@ void MovableText::_setupGeometry()
 			// (as the line break has been forced by us to make the text fit)
 			if ( IsSpace(character) )
 				mRenderOp.vertexData->vertexCount -= 6;
-			else
+			else if ( i != mCaption.begin() )
 				--i;
 			continue;
 		} else if ( IsSpace(character) ) // space
@@ -532,8 +631,8 @@ void MovableText::_setupGeometry()
 	vbuf->unlock();
 
 	// Update color?
-	//if (mUpdateColors)
-	//	this->_updateColors();
+	if (mUpdateColors)
+		this->_updateColors();
 
 	// update AABB/Sphere radius (for ogre movable object)
 	// Note: for some strange reason texts must be scale by 2 to have the correct pixel size
@@ -664,40 +763,45 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 	// Need to break any line due to size limit?
 	if ( m_textAreaWidth > 0 )
 	{
-		float lineLength = 0;
-		bool breakToWrapWord = false;
-		for (Ogre::DisplayString::iterator i = mCaption.begin(); i != mCaption.end(); ++i)
+		float	lineLength = 0;
+		bool	breakLineToWrapWord	= false; // Marks we have to break a word, even if wordwrap is enabled (as it doesn't fit in the whole width of the text box)
+		bool	newWord				= true; // Marks we are starting a new word
+		float	charLength			= 0.0f;
+		int		itemsInLine			= 0;	// This can be chars or words
+ 		for (Ogre::DisplayString::iterator i = mCaption.begin(); i != mCaption.end(); ++i)
 		{
 			// Get current character
 			Ogre::Font::CodePoint character = OGRE_DEREF_DISPLAYSTRING_ITERATOR(i);
+			charLength = 0.0f;
+			itemsInLine++;
 
 			// New line?
 			if ( IsNewLine(character) )
 			{
 				lineLength = 0;
+				newWord = true;
 				continue;
 			}
 			// Space?
-
 			else if ( IsSpace(character) )
 			{
 				lineLength += mSpaceWidth;
+				newWord = true;
 			}
 			// "Normal" character
-
 			else
 			{
 				// Get the length of the next word
 				float nextWordLength = getWordLength(i, mCaption.end());
 
-				// Wordwrap is activated -> check whole words (only if possible, maybe the word itself is longer than textarea width)
-				if ( mwordWrap && (nextWordLength < m_textAreaWidth))
+				// Wordwrap is activated (check if for new words only) -> but the whole word does not fit. This could be a matter of moving it to the next line,
+				// but it could also be that the word itself is longer than the text area width, in which case we wil have to break it anyway
+				if ( mwordWrap && (nextWordLength < m_textAreaWidth) && newWord )
 				{
-					// have to break the line?
+					// have to break the line? This would move this word to the next line, as we know it will fit in that case
 					if ( (lineLength + nextWordLength) > m_textAreaWidth )
-						breakToWrapWord = true;
+						breakLineToWrapWord = true;
 					// word fits altogether
-
 					else
 					{
 						lineLength += nextWordLength;
@@ -705,28 +809,39 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 						advanceWord(i, captionEndIt);
 					}
 				}
-				// Check just one character at a time
-
+				// Check just one character at a time (as there is no wordwap we break at any point)
 				else
-					lineLength += mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0f * mViewportAspectCoef;
+				{
+					charLength = mpFont->getGlyphAspectRatio(character) * mCharHeight * 2.0f * mViewportAspectCoef;
+					lineLength += charLength;
+				}
+
+				// Reset the new word flag, as this is a regular character
+				newWord = false;
 			}
 
-			// If the text does not fit in the width anymore -> insert line break
-			if ( (lineLength > m_textAreaWidth) || breakToWrapWord )
+			// If the text does not fit in the width anymore -> insert line break (unless it is just one char that does not fit, in this case we leave it)
+			if ( ((lineLength > m_textAreaWidth) || breakLineToWrapWord) && (itemsInLine != 1) )
 			{
 				// Insert forced line break to fit in the text area space
-				int lineBreakIndex = (i - mCaption.begin()) + 1;
+				int lineBreakIndex = (i - mCaption.begin());
 
 				// If the break is due to the word wrap we need to go back one index (so that the word is not split)
-				if ( breakToWrapWord )
+				if ( breakLineToWrapWord )
 					lineBreakIndex--;
 
 				// Store the line break for later processing
 				forcedLineBreaks.push_back(lineBreakIndex);
 
 				// Reset vars
-				lineLength = 0;
-				breakToWrapWord = false;
+				lineLength		= 0;
+				breakLineToWrapWord = false;
+				newWord			= true;
+				itemsInLine		= 0;
+
+				// Go back one index (unless not even one char fits in which case we'll just put it in there anyway)
+				if ( i != mCaption.begin()  )
+					--i;
 			}
 
 		}
@@ -738,7 +853,7 @@ float MovableText::getWordLength( Ogre::DisplayString::iterator it, const Ogre::
 	float length = 0;
 	while ( (it != end) && !IsNewLine(*it) && !IsSpace(*it) )
 	{
-		length += mpFont->getGlyphAspectRatio(*it) * mCharHeight;
+		length += mpFont->getGlyphAspectRatio(*it) * mCharHeight * 2.0f * mViewportAspectCoef;
 		++it;
 	}
 

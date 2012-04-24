@@ -439,10 +439,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\common\LogManager.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\..\src\common\MathUtils.h"
 						>
 					</File>
@@ -466,14 +462,6 @@
 						RelativePath="..\..\..\..\src\common\SystemUtils.h"
 						>
 					</File>
-					<File
-						RelativePath="..\..\..\..\src\common\WindowsEventLogger.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\..\src\common\XEventLog.h"
-						>
-					</File>
 					<Filter
 						Name="XML"
 						>
@@ -482,7 +470,35 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\..\..\src\common\XMLSettings.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\..\..\src\common\XMLVisitor.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Memory"
+						>
+						<File
+							RelativePath="..\..\..\..\src\common\MemoryDumper.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Log"
+						>
+						<File
+							RelativePath="..\..\..\..\src\common\LogManager.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\common\WindowsEventLogger.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\common\XEventLog.h"
 							>
 						</File>
 					</Filter>
@@ -503,10 +519,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\src\common\LogManager.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\..\src\common\PerlinNoise.cpp"
 						>
 					</File>
@@ -518,30 +530,6 @@
 						RelativePath="..\..\..\..\src\common\SystemUtils.cpp"
 						>
 					</File>
-					<File
-						RelativePath="..\..\..\..\src\common\WindowsEventLogger.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\..\src\common\XEventLog.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
 					<Filter
 						Name="XML"
 						>
@@ -550,13 +538,53 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\..\..\src\common\XMLSettings.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\..\..\..\src\common\XMLVisitor.cpp"
 							>
 						</File>
 					</Filter>
 					<Filter
-						Name="Logging"
+						Name="Log"
 						>
+						<File
+							RelativePath="..\..\..\..\src\common\LogManager.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\common\WindowsEventLogger.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\src\common\XEventLog.cpp"
+							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									UsePrecompiledHeader="0"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									UsePrecompiledHeader="0"
+								/>
+							</FileConfiguration>
+						</File>
+					</Filter>
+					<Filter
+						Name="Memory"
+						>
+						<File
+							RelativePath="..\..\..\..\src\common\MemoryDumper.cpp"
+							>
+						</File>
 					</Filter>
 				</Filter>
 			</Filter>

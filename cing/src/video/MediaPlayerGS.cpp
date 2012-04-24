@@ -243,7 +243,7 @@ namespace Cing
 		result = buildPathToFile( fileName );
 		if ( !result )
 		{
-			LOG_ERROR( "MediaPlayerGS::load. File %s Not Found", fileName.c_str() );
+			LOG_ERROR( "MediaPlayerGS::load. File Not Found: %s", fileName.c_str() );
 			end();
 			return false;
 		}
@@ -302,7 +302,7 @@ namespace Cing
 		// Also store the number of frames
 		m_nFrames  =  m_videoFps * m_videoDuration;
 
-		LOG( "MediaPlayer: File %s correctly loaded", m_fileName.c_str() );
+		LOG( "MediaPlayer: File correctly loaded: %s", m_fileName.c_str() );
 
 		// Init other vars
 		m_endOfFileReached	= false;

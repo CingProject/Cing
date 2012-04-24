@@ -41,12 +41,12 @@ namespace Cing
  * @brief Constructor. Initializes class attributes.
  */
 Window::Window():
-  m_bIsValid      ( false ),
-  m_mainViewport  ( NULL  ),
-  m_stats         ( NULL  ),
-	m_width					( -1    ),
-	m_height				( -1    ),
-  m_pOgreWindow   ( NULL  )
+	m_bIsValid      ( false ),
+	m_mainViewport  ( NULL  ),
+	m_stats         ( NULL  ),
+	m_width			( -1    ),
+	m_height		( -1    ),
+	m_pOgreWindow   ( NULL  )
 {
 }
 
@@ -69,17 +69,17 @@ Window::~Window()
  */
 bool Window::init( Ogre::RenderWindow* pOgreWindow )
 {
-  // Check if the class is already initialized
-  if ( isValid() )
-    return true;
+	// Check if the class is already initialized
+	if ( isValid() )
+		return true;
 
-  // Check window pointer
-  if ( !pOgreWindow )
-    THROW_EXCEPTION( "Internal Error: Invalid window" );
-	
+	// Check window pointer
+	if ( !pOgreWindow )
+		THROW_EXCEPTION( "Internal Error: Invalid window" );
 
-  // Store Ogre window handle
-  m_pOgreWindow = pOgreWindow;
+
+	// Store Ogre window handle
+	m_pOgreWindow = pOgreWindow;
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -90,6 +90,9 @@ bool Window::init( Ogre::RenderWindow* pOgreWindow )
 	m_width		= metrics.width;
 	m_height	= metrics.height;
 
+	// Init the stats
+	m_stats = &m_pOgreWindow->getStatistics();
+	
 	return true;
 }
 
@@ -114,14 +117,18 @@ void Window::end()
  */
 void Window::update()
 {
-  // Pump windows messages
+  // Check if the class is already released
+  if ( !isValid() )
+    return;
+
+	// Pump windows messages
 	// This is block only on mac: more info: http://www.ogre3d.org/forums/viewtopic.php?f=5&t=48491&start=100
 //#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-  Ogre::WindowEventUtilities::messagePump();
+	Ogre::WindowEventUtilities::messagePump();
 //#endif
 
-  // Get window statistics
-  m_stats = &m_pOgreWindow->getStatistics();
+	// Get window statistics	
+	m_stats = &m_pOgreWindow->getStatistics();
 }
 
 /**
@@ -138,7 +145,6 @@ bool Window::isClosed() const
 }
 
 /**
- * @internal
  * @brief Returns true if the window is in full screen mode. False otherwise.
  * @return true if the window is in full screen mode. False otherwise.
  */
@@ -148,6 +154,18 @@ bool Window::isFullScreen() const
     return false;
 
   return m_pOgreWindow->isFullScreen();
+}
+
+/**
+ * @brief Returns true if the window is active (has the focus), false otherwise
+ * @return true if the window is active (has the focus), false otherwise
+ */
+bool Window::isActive() const
+{
+  if ( !isValid() )
+    return false;
+
+  return m_pOgreWindow->isActive();
 }
 
 /**

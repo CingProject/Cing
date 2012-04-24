@@ -50,6 +50,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/Exception.h"
 #include "common/MathUtils.h"
 #include "common/LogManager.h"
+#include "common/CommonConstants.h"
 
 namespace Cing
 {
@@ -75,7 +76,8 @@ namespace Cing
 		m_yScale				( 1.0f ),
 		m_zScale				( 1.0f ),
 		m_bIsValid				( false ),
-		m_renderQueueForced		( false )
+		m_renderQueueForced		( false ),
+		m_sm					( NULL )
 	{
 	}
 
@@ -100,7 +102,7 @@ namespace Cing
 	* @param[in] renderTarget if true, this texture will be used as render target (to render a scene as view from a camera)
 	* @return true if the initialization was ok | false otherwise
 	*/
-	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget /*= false*/ )
+	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget /*= false*/, Ogre::SceneManager* sm )
 	{
 		// Check if the class is already initialized
 		if ( isValid() )
@@ -187,8 +189,12 @@ namespace Cing
 		*/
 
 		// Create the manual object (is used to define geometry on the fly)
-		Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
-		m_quad = sceneManager.createManualObject( m_ogreManualObjectName );
+		if ( sm == NULL )
+			m_sm = GraphicsManager::getSingleton().getSceneManagerPtr();
+		else
+			m_sm = sm;
+
+		m_quad = m_sm->createManualObject( m_ogreManualObjectName );
 
 		// Generate the geometry of the quad
 		m_quad->begin( m_ogreMaterialName );
@@ -214,7 +220,7 @@ namespace Cing
 		m_quad->end();
 
 		// Create scene nodes (pivot and quadSceneNode) and add the manual object
-		m_pivotSceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
+		m_pivotSceneNode = m_sm->getRootSceneNode()->createChildSceneNode();
 		m_quadSceneNode  = m_pivotSceneNode->createChildSceneNode();
 		m_quadSceneNode->attachObject( m_quad );
 
@@ -264,15 +270,22 @@ namespace Cing
 		if ( !isValid() )
 			return;
 
-		// Destroy quad quad object
-		Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
-		if ( sceneManager )
+		// Destroy quad object
+		//Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
+
+		if ( m_sm != NULL )
 		{
+			// TODO: Hack to avoid crash on exit
+			if( m_sm->getName().compare( "" ) == 0 )
+			{
+				return;
+			}
+
 			// Remove the nodes
-			sceneManager->getRootSceneNode()->removeChild( m_pivotSceneNode );
+			m_sm->getRootSceneNode()->removeChild( m_pivotSceneNode );
 
 			// Destroy the manual object
-			sceneManager->destroyManualObject( m_ogreManualObjectName );
+			m_sm->destroyManualObject( m_ogreManualObjectName );		
 
 			// Destroy material
 			Ogre::MaterialManager::getSingleton().remove( m_ogreMaterialName );
@@ -647,6 +660,13 @@ namespace Cing
 	 */
 	void TexturedQuad::setTransparency( float alpha )
 	{
+		// Check quad is valid
+		if ( !isValid() )
+		{
+			LOG_ERROR( "setTransparency. Error: set transparency value as Image/Texture has not been initialized. Please call load or init before setting the render queue" );
+			return;
+		}
+
 		// Store alpha value
 		m_alpha = alpha;
 
@@ -667,7 +687,7 @@ namespace Cing
 	}
 
 	/*
-	 * Sets the Ogre Scene Manager render queue for this quad.
+	 * Sets the Ogre Scene Manager render queue for this quad. The higher the value (0..105) the later/more on top the quad is rendered
 	 * The method is called "force" as this class usually handles automatically the render queue group for the object depending 
 	 * on whether it is being rendered in 2d (x, y) or 3d (x, y, z). When this method is called, that is not set automatically anymore.
 	 * You can to go back to the auto behaviour by calling restoreRenderQueue();
@@ -675,29 +695,47 @@ namespace Cing
 	 */
 	void TexturedQuad::forceRenderQueue( unsigned int renderQueueId )
 	{
-		if ( isValid() )
+		// Check quad is valid
+		if ( !isValid() )
 		{
-			// Check range
-			if ( (renderQueueId < Ogre::RENDER_QUEUE_BACKGROUND) || (renderQueueId > Ogre::RENDER_QUEUE_MAX) )
-			{
-				LOG_WARNING( "TexturedQuad::forceRenderQueue. Render queue range in 0..105. Constraining received value, which is out of range" );
-				renderQueueId = (unsigned int)constrain((float)renderQueueId, (float)Ogre::RENDER_QUEUE_BACKGROUND, (float)Ogre::RENDER_QUEUE_MAX);
-			}
-
-			m_renderQueueForced = true;
-			m_forcedRenderQueue = renderQueueId;
-			m_quad->setRenderQueueGroup( (Ogre::RenderQueueGroupID)m_forcedRenderQueue );
+			LOG_ERROR( "forceRenderQueue. Error: Cannot force render queue as Image/Texture has not been initialized. Please call load or init before setting the render queue" );
+			return;
 		}
+
+		// Check range
+		if ( (renderQueueId < Ogre::RENDER_QUEUE_BACKGROUND) || (renderQueueId > Ogre::RENDER_QUEUE_MAX) )
+		{
+			LOG_WARNING( "TexturedQuad::forceRenderQueue. Render queue range in 0..105. Constraining received value, which is out of range" );
+			renderQueueId = (unsigned int)constrain((float)renderQueueId, (float)Ogre::RENDER_QUEUE_BACKGROUND, (float)Ogre::RENDER_QUEUE_MAX);
+		}
+
+		m_renderQueueForced = true;
+		m_forcedRenderQueue = renderQueueId;
+		m_quad->setRenderQueueGroup( (Ogre::RenderQueueGroupID)m_forcedRenderQueue );
 	}
 
 	void TexturedQuad::enableDepthWrite( bool value )
 	{
+		// Check quad is valid
+		if ( !isValid() )
+		{
+			LOG_ERROR( "enableDepthWrite. Error: set depth write value as Image/Texture has not been initialized. Please call load or init before setting the render queue" );
+			return;
+		}
+
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( value );
 	}
 	
 	void TexturedQuad::enableDepthCheck( bool value )
 	{
+		// Check quad is valid
+		if ( !isValid() )
+		{
+			LOG_ERROR( "enableDepthCheck. Error: set depth check value as Image/Texture has not been initialized. Please call load or init before setting the render queue" );
+			return;
+		}
+
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( value );
 	}
@@ -743,8 +781,8 @@ namespace Cing
 		// Update texture
 		//m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
 		Ogre::PixelBox newData( width, height, 1, (Ogre::PixelFormat)format, textureData );
-		Ogre::PixelBox dest( (size_t)m_textWidth, (size_t)m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
-		m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData, dest );
+		//Ogre::PixelBox dest( (size_t)m_textWidth, (size_t)m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
+		m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData );
 	}
 
 	/**
@@ -987,15 +1025,20 @@ namespace Cing
 		m_pivotSceneNode->setOrientation( q );
 		m_pivotSceneNode->scale( currentTransformation.getScale() );
 
-		// Finally, set coordinates/scale for the quad scene node in the selected system
+		// Finally, set scale for the quad scene node in the selected system
 		if ( GraphicsManager::getSingleton().isProcessingMode() )
 		{
-			m_quadSceneNode->setPosition( x + imgWidth/2, y + imgHeight/2, z );
 			m_quadSceneNode->setScale( (float)imgWidth, (float)-imgHeight, 1 );
 		}else{
-			m_quadSceneNode->setPosition( x + imgWidth/2, y + imgHeight/2, z );
 			m_quadSceneNode->setScale( (float)imgWidth, (float)imgHeight, 1 );
 		}
+
+		// And the position, considering the current Image Mode
+		if ( GraphicsManager::getSingleton().getImageMode() == CORNER )
+			m_quadSceneNode->setPosition( x + imgWidth/2, y + imgHeight/2, z );
+		// Center mode
+		else 
+			m_quadSceneNode->setPosition( x, y, z );
 
 	}
 
@@ -1035,7 +1078,9 @@ namespace Cing
 		}
 
 		// Finally, Translate quad position, so that the image is drawn from the top-left corner
-		m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
+		if ( GraphicsManager::getSingleton().getImageMode() == CORNER )
+			m_quadSceneNode->setPosition( m_2dWidth/2.0f, -m_2dHeight/2.0f, 0 );
+		// If it's center, we don't need to change anything
 	}
 
 	/**
@@ -1061,8 +1106,8 @@ namespace Cing
 		m_render2D		= false;
 		m_alpha			= 255;
 	
-		m_ogreTexture->setWidth(m_textWidth);
-		m_ogreTexture->setHeight(m_textHeight);
+		m_ogreTexture->setWidth( (size_t)m_textWidth );
+		m_ogreTexture->setHeight( (size_t)m_textHeight );
 
 		// Update vertex data
 		m_quad->beginUpdate(0);
@@ -1091,4 +1136,23 @@ namespace Cing
 
 		return true;
 	}
+
+	/**
+	 * @brief Sets the material for the object
+	 *
+	 * @param materialName Name of the material to assign. It must be located in the data folder.
+	 */
+	void TexturedQuad::setMaterial( const std::string& materialName )
+	{
+		// Check if the material exist
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName );
+		if ( !material.isNull() )
+		{
+			m_quad->setMaterialName( 0, materialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME );
+		}
+		// TODO: Log -> material does not exist
+		else
+			LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName.c_str() );
+	}
+
 } // namespace Cing

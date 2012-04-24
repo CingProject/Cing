@@ -67,6 +67,7 @@ namespace Cing
 		void    setSpaceWidth				(float width);
 		void	setWordWrap					(bool wordWrap) { mwordWrap = wordWrap; }
 		void    setTextAlignment			(int horizontalAlignment, int verticalAlignment);
+		void	setLeading					( float leading ) { m_leading = leading; }
 		void    setPosition					( float x, float y );
 		void    setPosition					( float x, float y, float z );
 		void    setPosition					( const Vector& pos ) { setPosition( pos.x, pos.y, pos.z ); }
@@ -95,6 +96,9 @@ namespace Cing
 		AABox							getAABB					()			{ return mAABB; }
 		Ogre::Node*						getNode					()			{ return mParentNode; }
 		const Vector&					getScale				() const	{ return mScale; }
+
+		// Calculators
+		float							getTextBlockHeightPixels( const std::string& text, float textBlockWidth );
 
 		bool							isVisible				() const	{ return MovableObject::isVisible(); }
 
@@ -162,6 +166,7 @@ namespace Cing
 		Ogre::DisplayString			mCaption;
 		int							mHorizontalAlignment;
 		int							mVerticalAlignment;
+		float						m_leading; // Distance in pixels between different text lines
 
 		Color						mColor;
 		Ogre::RenderOperation		mRenderOp;

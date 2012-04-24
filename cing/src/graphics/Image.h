@@ -55,17 +55,18 @@ namespace Cing
 
 		// Constructor / Destructor
 		Image				();
-		Image				( const Image& img );
-		Image				( int width, int height, GraphicsType format = RGB );
-		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB );
-		Image				( const std::string& name );
+		Image				( const Image& img, Ogre::SceneManager* sm = NULL );
+		Image				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
+		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
+		Image				( const std::string& name, Ogre::SceneManager* sm = NULL );
 		virtual ~Image		();
 
 		// Init / Release / Update / Save / Clone
-		void		init				( int width, int height, GraphicsType format = RGB );
+		void		init				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		void		initAsRenderTarget	( int width, int height );
-		void		init				( const Image& img );
-		bool		load				( const std::string& path );
+		void		init				( const Image& img, Ogre::SceneManager* sm = NULL );
+		//bool		load				( const std::string& path );
+		bool		load				( const std::string& path, Ogre::SceneManager* sm = NULL );
 		void		save				( const std::string& path );
 		void		end					();
 
@@ -135,6 +136,7 @@ namespace Cing
 		Ogre::TexturePtr 	getOgreTexture	() { return m_quad.getOgreTexture(); }
 		TexturedQuad&		getTexturedQuad	() { return m_quad; }
 		const TexturedQuad&	getTexturedQuad	() const { return m_quad; }
+		const std::string&	getPath			() const { return m_path; }
 
 		// Operators and operations
 		void operator =	( const Image& other );
@@ -157,7 +159,7 @@ namespace Cing
 		void	flipVertical		();
 		bool	isVFlipped			() const { return m_bVFlipped; }
 
-		// Render Queue control
+		// Render Queue control: The higher the value (0..105) the later/more on top the quad is rendered
 		void	forceRenderQueue	( unsigned int renderQueueId ) { m_quad.forceRenderQueue( renderQueueId ); }
 		void	restoreRenderQueue	() { m_quad.restoreRenderQueue(); }
 

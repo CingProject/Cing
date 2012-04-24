@@ -2,12 +2,16 @@
 #define _WINDOWS_EVENT_LOGGER
 
 #include "Cing-Precompiled.h"
+
+#if defined(WIN32)
+
+
 #include "common/Singleton.h"
 #include <windows.h>
 #include "XEventLog.h"
 
 namespace Cing {
-	class WindowsEventLogger : public Cing::Singleton<WindowsEventLogger>
+	class WindowsEventLogger : public Cing::SingletonStatic<WindowsEventLogger>
 	{
 
 	public:
@@ -30,5 +34,8 @@ namespace Cing {
 	};
 
 }
+
+#endif // defined(WIN32)
+
 
 #endif

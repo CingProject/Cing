@@ -39,6 +39,9 @@
 #include "elements/CEGUIScrollablePane.h"
 #include "elements/CEGUIListbox.h"
 
+// Graphics
+#include "graphics/GraphicsManager.h"
+
 
 namespace Cing
 {
@@ -76,7 +79,7 @@ GUIManagerCEGUI::~GUIManagerCEGUI()
 void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* ogreSceneManager )
 {
 	// Init CEGUI for version 0.7
-	m_CEGUIRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
+	m_CEGUIRenderer = &CEGUI::OgreRenderer::bootstrapSystem( *GraphicsManager::getSingleton().getMainWindow().getOgreWindow() );
 	m_CEGUISystem	= CEGUI::System::getSingletonPtr();
 
 	// Set the actual window size to CEGUI

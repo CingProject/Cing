@@ -47,17 +47,22 @@ namespace Cing
 	class String;
 
 	/// String utils
-	template< typename T>
-	String		toString( T input );
-	String		intToString(int inputNumber);
-	int			stringToInt(const std::string& str);
-	float		stringToFloat(const std::string& str);
-	unsigned long stringToUint32(const std::string& str);
+	template< typename T>	inline String	toString( T input );
+	template<>				inline String	toString<bool>( bool input );
+
+	String			intToString(int inputNumber);
+	int				stringToInt(const std::string& str);
+	float			stringToFloat(const std::string& str);
+	double			stringToDouble(const std::string& str);
+	unsigned long	stringToUint32(const std::string& str);
 
 	// Tokenize utils
-	void						split(const std::string& str, char delim, std::vector<std::string>& tokens );
-	std::vector<std::string>	split(const std::string& str, char delim );
+	void						split	(const std::string& str, char delim, std::vector<std::string>& tokens );
+	std::vector<std::string>	split	(const std::string& str, char delim );
 
+	// String format conversion
+	std::wstring				toWString	( const std::string& str );
+	Ogre::UTFString				toUTF		( const std::string& str );
 
 	/**
 	* @internal
@@ -78,7 +83,7 @@ namespace Cing
 		String				substring	( int beginIndex );
 		String				substring	( int beginIndex, int endIndex );
 		const char*			toChar		() const { return c_str(); }
-		//Ogre::UTFString		toUTF		() const;
+		Ogre::UTFString		toUTF		() const;
 
 
 		// Compare
@@ -98,6 +103,13 @@ namespace Cing
 		std::stringstream s;
 		s << input;
 		return s.str();
+	}
+
+	// Template specialization for boolean types (to print true or false)
+	template<>
+	String	toString<bool>( bool input )
+	{
+		return input == true? "true": "false";
 	}
 
 } // namespace Cing
