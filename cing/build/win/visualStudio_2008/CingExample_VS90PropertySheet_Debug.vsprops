@@ -28,7 +28,7 @@
 	/>
 	<UserMacro
 		Name="CING_ROOT"
-		Value="..\cing\cing\"
+		Value="..\..\cing\"
 		PerformEnvironmentSet="true"
 	/>
 </VisualStudioPropertySheet>
