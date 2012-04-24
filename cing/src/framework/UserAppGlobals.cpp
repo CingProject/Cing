@@ -26,6 +26,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "input/InputManager.h"
 #include "common/eString.h"
 #include "graphics/Color.h"
+#include "graphics/Window.h"
 
 namespace Cing
 {
@@ -65,12 +66,14 @@ namespace Cing
 	// Ogre / Advanced
 	Ogre::SceneManager*		ogreSceneManager	= NULL;
 	Ogre::Camera*			ogreCamera			= NULL;
+	Window*					appWindow			= NULL;
+
 
 
 	// Pixel manipulation
 	std::vector < Color > pixels;
 
 	// PerlinNoise global object
-	PerlinNoise _noise = PerlinNoise(4,0.63f,1.6f,0);
+	PerlinNoise _noise = PerlinNoise(6,0.43f,1.6f,0);
 
 } // namespace Cing

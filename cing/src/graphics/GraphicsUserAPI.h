@@ -108,26 +108,27 @@ void fill( const Color& color );
 // Shape / 2D Primitives
 //-----------------------------------------------------------------------------------
 
-void strokeWeight( int weight );
+void strokeWeight	( int weight );
 
-void noFill		();
-void noStroke	();
-void smooth		();
-void noSmooth	();
+void noFill			();
+void noStroke		();
+void smooth			();
+void noSmooth		();
 
-void line		( int x1, int y1, int x2, int y2 );
-void point		( int x, int y );
-void triangle	( int x1, int y1, int x2, int y2, int x3, int y3 );
-void rect		( int x1, int y1, int width, int height );
-void quad		( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
-void ellipse	( int x, int y, int width, int height);
-void arc		( int x, int y,  int width, int height, float start, float stop );
+void line			( int x1, int y1, int x2, int y2 );
+void point			( int x, int y );
+void triangle		( int x1, int y1, int x2, int y2, int x3, int y3 );
+void rect			( int x1, int y1, int width, int height );
+void quad			( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
+void ellipse		( int x, int y, int width, int height);
+void arc			( int x, int y,  int width, int height, float start, float stop );
 
-void rectMode    ( int mode );
-void ellipseMode ( int mode );
+void imageMode		( int mode );
+void rectMode		( int mode );
+void ellipseMode	( int mode );
 
-void pushStyle();
-void popStyle ();
+void pushStyle		();
+void popStyle 		();
 //-----------------------------------------------------------------------------------
 // Shape / 3D Primitives
 //-----------------------------------------------------------------------------------
@@ -206,13 +207,20 @@ void text( float text, float x, float y );
 //void text(stringdata, x, y, width, height, z)
 
 
+// Text setters
+void 	textFont		(Font& font);
+void 	textFont		(Font& font, float size);
+void 	textAlign		(int halign, int valign = TOP);
+void 	textSize		(float size);
+void	textResolution	(int resolution);
+void	textLeading		(float leading);
+void	textWordWrap	(bool wordWrap);
 
-void textFont		(const Font& font);
-void textFont		(const Font& font, float size);
-void textAlign		(int halign, int valign = TOP);
-void textMode		(TextMode mode);
-void textSize		(float size);
+// Text getters
+float	textWidth		( const std::string& text );
+float	textHeight		( const std::string& text, float textBoxWidth = -1 );
 
+std::vector< std::string > splitInLines( const std::string& text, float textBoxWidth );
 
 //-----------------------------------------------------------------------------------
 // Shadows
@@ -224,9 +232,9 @@ void enableShadows( ShadowTechnique technique );
 // Coordinate System related
 //-----------------------------------------------------------------------------------
 
-Vector2d	worldToScreen			( const Vector& worldCoordinate );
-Vector2d	worldToScreenNormalized	( const Vector& worldCoordinate );
-Vector		screenToWorld			( const Vector2d& screenCoordinate, float distanceToCamera );
+Vector2		worldToScreen			( const Vector& worldCoordinate );
+Vector2		worldToScreenNormalized	( const Vector& worldCoordinate );
+Vector		screenToWorld			( const Vector2& screenCoordinate, float distanceToCamera );
 Vector		screenToWorld			( const Vector& screenCoordinate, float distanceToCamera );
 
 

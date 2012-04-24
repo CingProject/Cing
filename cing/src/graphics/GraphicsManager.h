@@ -79,6 +79,8 @@ namespace Cing
 		void						fullscreen					()		{ m_fullscreen = true; }
 		void						vSync						(bool value )		{ m_vSync = value; }
 		void						FSAA						( int fsaa )		{ m_fsaa = fsaa; }
+		void						windowBorder				( bool border )		{ m_windowBorder = border; }
+		void						windowMonitorIndex			( unsigned int index ) { m_windowMonitorIndex = index; }
 
 		// Query methods
 		bool						isValid                   () const	{ return m_bIsValid; }
@@ -119,6 +121,9 @@ namespace Cing
 		bool						getSmooth 					() const { return m_smooth; }
 
 		void 						smooth						() { m_smooth = true; }
+
+		int							getImageMode				() const { return m_imageMode; }
+		void             			setImageMode				(  int	mode );
 
 		int							getRectMode					() const { return m_rectMode; }
 		void             			setRectMode					(  int	mode );
@@ -201,13 +206,16 @@ namespace Cing
 		bool                       	m_fullscreen;			///< If true, the applcation will run in full screen mode
 		bool                       	m_vSync;				///< If true, the applcation sync with dispay render (usually 60fps)
 		int							m_fsaa;					/// < Antialiasing value (0..16). Depends on HW support
+		bool						m_windowBorder;			/// If true, the main window will have regular frame/border, if false, it won't have any
+		unsigned int				m_windowMonitorIndex;	/// Monitor index for the main window (allows to set windows in secondary monitors)
 
 		// Misc
 		DebugOverlay				m_debugOverlay;			///< Debug overlay used to show debug information
 		//MovableText				m_systemFont;			///< To print system info to screen
 
 		// Styling properties
-		// TODO: Eliminates this. Change styles que to stack
+		// TODO: Eliminates this. Change styles queue to stack
+		int							m_imageMode;			///< Parameters input mode to draw images
 		int							m_rectMode;				///< Parameters input mode to draw rectangles
 		int							m_ellipseMode;			///< Parameters input mode to draw ellipses
 		bool						m_fill;
@@ -233,7 +241,7 @@ namespace Cing
 	    GraphicsType				m_coordSystem;
 		bool						m_showFps;			///< Indicates whether the frames per second should be shown or not
 		Ogre::Timer					m_fpsTimer;
-		Average						m_fpsAverage;
+		AverageDouble				m_fpsAverage;
 		bool						m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 

@@ -31,7 +31,7 @@ namespace Cing
 {
 
 // General Framework functions
-void RunApplication( const char* appName );
+void RunApplication( const char* _appName );
 
 } // namespace
 

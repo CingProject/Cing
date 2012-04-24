@@ -62,6 +62,9 @@ bool ShapeManager::init()
 	m_shapesManualObject->setDynamic(true);
 	m_shapesManualObject->estimateVertexCount( estimatedVertexCount );
 
+	// Set to main render queue
+	m_shapesManualObject->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
+
 	// Attach m_polys sceneNode
 	m_shapesSceneNode = GraphicsManager::getSingleton().getSceneManager().getRootSceneNode()->createChildSceneNode();
 	m_shapesSceneNode->attachObject(m_shapesManualObject);

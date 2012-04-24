@@ -54,13 +54,13 @@ namespace Cing
 	*      end:       At the end of the execution.
 	*      draw:      Called every frame. Here the application can draw and update its state.
 	*/
-	void RunApplication( const char* appName )
+	void RunApplication( const char* _appName )
 	{
 
 		try
 		{
 			// Store app name
-			appName = appName;
+			appName = _appName;
 
 			// Init application
 			Application::getSingleton().initApp();
@@ -105,14 +105,15 @@ namespace Cing
 		}
 		catch(const std::exception& e) 
 		{
-			std::cerr << "APP EXCEPTION: " <<  e.what();
+			LOG_ERROR( " Stl Exception: %s", e.what() );
 		} 
 		catch (...)
 		{
-			std::cerr << "Unidentified exception";
+			LOG_ERROR( "Unidentified exception" );
 		}
 
 	}
 
 
 } // namespace Cing
+	

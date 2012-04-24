@@ -93,6 +93,7 @@ bool Application::initApp()
 	// Init the log manager
 	// Note: If the log manager is initalized before the Resource Manager, Ogre.log file won't be created
 	LogManager::getSingleton().init();
+	
 	// Init user application
 	setup();
 

@@ -44,6 +44,7 @@ namespace Cing
 
 // Forward declarations
 class Mouse;
+class Window;
 
 
 // Window
@@ -79,6 +80,7 @@ extern float						frameRate;			///< Current app framerate (approx)
 // Advanced 
 extern Ogre::SceneManager*			ogreSceneManager;	///< Ogre Scene Manager. Almost all communication with ogre is done through this object
 extern Ogre::Camera*				ogreCamera;			///< Ogre Camera used to render the scene
+extern Window*						appWindow;			///< App window
 
 // Pixel manipulation
 extern std::vector < Color >		pixels;

@@ -82,6 +82,7 @@ namespace Cing
 		m_fill( true ),
 		m_stroke( true ),
 		m_smooth( false ),
+		m_imageMode( CORNER ),
 		m_rectMode( CORNER ),
 		m_ellipseMode( CENTER ),
 		m_setupCalled( false ),
@@ -91,9 +92,13 @@ namespace Cing
 		m_fullscreen( false ),
 		m_vSync(true),
 		m_fsaa(0),
+		m_windowBorder(true),
+		m_windowMonitorIndex(0),
 		m_saveFrame(false),
 		m_shadowsEnabled(false)
 {
+	// Store the window in global var
+	appWindow = &m_mainWindow;
 }
 
 /**
@@ -129,15 +134,30 @@ bool GraphicsManager::init()
 	// Setup default values if user didn't call setup
 	setup( m_defaultWindowWidth, m_defaultWindowHeight );
 
-	// Init rendering engine and create window 
-	Ogre::RenderWindow* ogreWindow = ogreRoot.initialise(true, "Cing");
+	// Init Ogre
+	ogreRoot.initialise(false, appName);
+
+	// Create the app window
+	Ogre::NameValuePairList windowParams;
+	windowParams["title"] = appName;
+	windowParams["border"] = m_windowBorder? "fixed": "none";
+	windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
+	windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
+	//windowParams["left"] = "0";
+	//windowParams["top"] = "0";
+	windowParams["depthBuffer"] = "true";
+	windowParams["externalWindowHandle"] = "None";
+	windowParams["FSAA"] = toString(m_fsaa);
+	windowParams["displayFrequency"] = toString(60);
+	windowParams["vsync"] = toString(m_vSync);
+	Ogre::RenderWindow* ogreWindow = ogreRoot.createRenderWindow(appName, width, height, m_fullscreen, &windowParams) ;
 	if ( !ogreWindow )
 		THROW_EXCEPTION( "Error creating application window" );
 
 	// Create main window
 	m_mainWindow.init( ogreWindow );
 
-	// Set global window size variables
+	// Set global window size variables (in case they changed with the window creation for some reason
 	width	= m_mainWindow.getWidth();
 	height	= m_mainWindow.getHeight();
 
@@ -189,7 +209,7 @@ bool GraphicsManager::init()
 	//GUIManager::getSingleton().init();
 
 	// Init 2dCanvas
-	m_canvas.init(width, height, RGB);
+	m_canvas.init(width, height, RGBA);
 
 	// Init style queue
 	m_styles.push_front( Style(Color(255,255,255), Color(0,0,0), 1) );
@@ -202,20 +222,17 @@ bool GraphicsManager::init()
 	for (int i = 0; i < m_canvas.getWidth() * m_canvas.getHeight(); i++)
 		pixels.push_back( Color( 200, 200, 200 ) );
 
-	// Set image background color
+	// Set image background color and render queue
 	m_canvas.fill(Color(200));
+	m_canvas.forceRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
+
 
 	// Init RTT texture and setup viewport
-	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_R8G8B8, Ogre::TU_RENDERTARGET);
+	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_BYTE_RGBA, Ogre::TU_RENDERTARGET);
 	Ogre::RenderTarget* rttTex	= m_RttTexture->getBuffer()->getRenderTarget();
 	rttTex->setAutoUpdated(false);
 	Ogre::Viewport* vp	= rttTex->addViewport( m_activeCamera.getOgreCamera() );
 	vp->setOverlaysEnabled(true);
-
-	// Init the default font / text
-	//m_systemFont.init( width, height);
-	//m_systemFont.setPos( 0.01f, 0.01f );		        // Text position, using relative co-ordinates
-	//m_systemFont.setCol( Color( 100 ) );	// Text color (Red, Green, Blue, Alpha)  
 
 	// Set default coordinate system:
 	m_coordSystem = OPENGL3D;
@@ -250,6 +267,9 @@ void GraphicsManager::end()
 	m_defaultCamController.end();
 	m_activeCamera.end();
 
+	// Release canvas
+	m_canvas.end();
+
 	// Release scene manager
 	Ogre::Root::getSingleton().destroySceneManager( m_pSceneManager );
 	m_pSceneManager = NULL;
@@ -277,13 +297,8 @@ void GraphicsManager::draw()
 	// Reset the "global" matrix stack
 	clearMatrixStack();
 
-	// Update the background image
-	m_canvas.drawBackground(	0,
-								0,
-								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualWidth(),
-								(float)m_mainWindow.getOgreWindow()->getViewport(0)->getActualHeight());
-	m_canvas.getTexturedQuad().forceRenderQueue( Ogre::RENDER_QUEUE_BACKGROUND );
-
+	// Set canvas to be drawn
+	m_canvas.drawBackground( 0, 0, (float)width, (float)height);
 
 	// Update 3d primitive drawing	( shape, lines,...)
 	ShapeManager::getSingleton().update();
@@ -291,19 +306,8 @@ void GraphicsManager::draw()
 	// Update default camera controller
 	m_defaultCamController.update();
 
-	// Render scene
-	Ogre::Root::getSingleton().renderOneFrame();
-
-	// Update the Font Manager post render
-	FontManager::getSingleton().postRender();
-
-
-	// Update window
-	m_mainWindow.update();
-
-	// Get Frame stats
+	// Get Frame stats (and display fps if enabled)
 	const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
-
 	frameRate = frameStats.avgFPS;
 
 	// Show fps
@@ -322,13 +326,18 @@ void GraphicsManager::draw()
 		resetMatrix();
 		pushStyle();
 		stroke(0);
-		fill(220);
+		fill(255, 0, 0);
 		text( oss.str(), 10, 0 );
 		popStyle();
 		popMatrix();
 	}
-	//else
-	//	m_systemFont.show( false );
+
+
+	// Render scene
+	Ogre::Root::getSingleton().renderOneFrame();
+
+	// Update window
+	m_mainWindow.update();
 
 	// Render the viewport to texture and save to disk if required
 	if ( m_saveFrame )
@@ -337,6 +346,9 @@ void GraphicsManager::draw()
 		m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(ResourceManager::userDataPath + m_frameName );
 		m_saveFrame = false;
 	}
+
+	// Update the Font Manager post render (will make fonts not in use any more invisible)
+	FontManager::getSingleton().postRender();
 
 	// Mark all drawable images as not visible
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
@@ -356,6 +368,10 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 	// Check if setup has already been called
 	if ( m_setupCalled )
 		return;
+
+	// Store width and height in globals
+	width	= windowWidth;
+	height	= windowHeight;
 
 	// Get ogre root to configure it
 	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
@@ -668,6 +684,10 @@ void GraphicsManager::addDrawableImage( TexturedQuad* img)
 */
 void GraphicsManager::removeDrawableImage( TexturedQuad* img)
 {
+	// Security check: if the queue is empty, do nothing
+	if ( m_drawableImagesQueue.empty() )
+		return;
+
 	std::list< TexturedQuad* >::iterator it = m_drawableImagesQueue.begin();
 	for (; it != m_drawableImagesQueue.end(); ++it )
 		if ( *it == img )
@@ -678,19 +698,57 @@ void GraphicsManager::removeDrawableImage( TexturedQuad* img)
 }
 
 /**
-* @brief Modifies the location from which rectangles draw
-*/
+ * @brief Modifies the location from which images draw
+ * Valid values are: CORNER, CORNERS, CENTER (CORNERS not implemented yet)
+ */
+void GraphicsManager::setImageMode( int	mode )
+{
+	// Check valid mode
+	if ( (mode != CORNERS) && (mode != CORNER) && (mode != CENTER) )
+	{		
+		LOG_ERROR( "setImageMode: mode %d not supported. Supported modes are CENTER, CORNER, or CORNERS", mode );
+		return;
+	}
+	else if ( mode == CORNERS )
+	{
+		LOG_WARNING( "setImageMode. CORNERS Image Mode is not implemented yet. Defaulting to CORNER" );
+		m_imageMode = CORNER;	
+	}
+	else
+		m_imageMode = mode;
+}
+
+
+/**
+ * @brief Modifies the location from which rectangles draw
+ * Valid values are: CORNER, CORNERS, CENTER
+ */
 void GraphicsManager::setRectMode( int	mode )
 {
-	m_rectMode = mode;
+	// Check valid mode
+	if ( (mode != CORNERS) && (mode != CORNER) && (mode != CENTER) )
+	{		
+		LOG_ERROR( "setRectMode: mode %d not supported. Supported modes are CENTER, CORNER, or CORNERS", mode );
+		return;
+	}
+	else
+		m_rectMode = mode;
 }
 
 /**
-* @brief Modifies the location from which ellipses draw
-*/
+ * @brief Modifies the location from which ellipses draw
+ * Valid values are: CORNER, CORNERS, CENTER
+ */
 void GraphicsManager::setEllipseMode( int	mode )
 {
-	m_ellipseMode = mode;
+	// Check valid mode
+	if ( (mode != CORNERS) && (mode != CORNER) && (mode != CENTER) )
+	{		
+		LOG_ERROR( "setEllipseMode: mode %d not supported. Supported modes are CENTER, CORNER, or CORNERS", mode );
+		return;
+	}
+	else
+		m_ellipseMode = mode;
 }
 
 
@@ -710,8 +768,11 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 
 	m_mainWindow.getOgreWindow()->getViewport(0)->setBackgroundColour( color.normalized() );
 
-	cvSet( &m_canvas.getCVImage(), cvScalar(color.r,color.g,color.b) );
-	m_canvas.setUpdateTexture(true);
+	// Set the canvas color
+	m_canvas.fill( color );
+
+	// Make it visible for the next render
+	m_canvas.drawBackground( 0, 0, (float)width, (float)height);
 }
 
 /**

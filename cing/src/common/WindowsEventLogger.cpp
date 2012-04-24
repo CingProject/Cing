@@ -2,7 +2,10 @@
 #include "WindowsEventLogger.h"
 #include "XEventLog.h"
 
-namespace Cing {
+#if defined(WIN32)
+
+namespace Cing 
+{
 	WindowsEventLogger::WindowsEventLogger()
 	{
 		m_useWindowsEventLogger = false;
@@ -41,3 +44,5 @@ namespace Cing {
 		}
 	}
 }
+
+#endif // defined(WIN32)

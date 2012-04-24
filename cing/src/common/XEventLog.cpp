@@ -27,6 +27,9 @@
 //#include "stdafx.h"
 //#include "Cing-Precompiled.h"
 
+#if defined(WIN32)
+
+
 // if you are not using MFC, you must have the following three includes:
 #include <windows.h>
 #include <TCHAR.h>
@@ -443,3 +446,4 @@ void CXEventLog::SetAppName(LPCTSTR lpszApp)
 	}
 }
 
+#endif // defined(WIN32)

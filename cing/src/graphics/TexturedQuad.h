@@ -50,7 +50,7 @@ namespace Cing
 		~TexturedQuad();
 
 		// Init / Release 
-		bool  init				( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false );
+		bool  init				( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false, Ogre::SceneManager* sm = NULL );
 		void  end				();
 		bool  reset				( int textureWidth, int textureHeight, GraphicsType format );
 
@@ -95,33 +95,37 @@ namespace Cing
 		const String&			getMaterialName	() const	{ return m_ogreMaterialName; }
 		bool					hasAlpha		() const;
 
-
-
 		// Texture coordinate control
 		void			flipVertical	(bool flip = true);
 		void			flipHorizontal	(bool flip = true);
 
 		// Operators 
-		void			operator=		( const TexturedQuad& other );
+		void			operator = ( const TexturedQuad& other );
 
-		// Texture render control
+		// Texture / material control
 		void			setTransparency		( float alpha );
 		void			forceRenderQueue	( unsigned int renderQueueId );
 		void			restoreRenderQueue	() { m_renderQueueForced = false; }
 		void			enableDepthWrite	( bool value );
 		void			enableDepthCheck	( bool value );
 
+		void			setMaterial			( const std::string& materialName );
+
+		void			setSceneNode		( Ogre::SceneNode* node)   { m_quadSceneNode = node; };
+		void			setPivotSceneNode	( Ogre::SceneNode* node)   { m_pivotSceneNode = node; };
+
+		Ogre::SceneManager* getSceneManager	() { return m_sm; }
+
 	protected:
 
 		// Private methods
-		void	generateUniqueNames	();
+		void	generateUniqueNames		();
 		void	set2dRendering			();
 		void	set3dRendering			();
 		void	configureSceneBlending	();
 		void	setbackgroundRendering	();
 		void	applyTransformations	( float x, float y, float z, float imgWidth, float imgHeight );
 		void	applyTransformations2D	( float x, float y, float imgWidth, float imgHeight );
-
 
 		// Constant / static attributes
 		static const std::string  MANUAL_OBJECT_NAME;     			///< Name of the manual object (which is the quad)
@@ -130,6 +134,7 @@ namespace Cing
 		static long               m_quadCounter;          			///< Used to generate unique names for the quad materials, textures and ogre manual objects
 
 		// Attributes
+		Ogre::SceneManager*			m_sm;							///< SceneManager
 		Ogre::MaterialPtr			m_ogreMaterial;					///< Material used to render the quad
 		Ogre::TexturePtr			m_ogreTexture;          		///< Ogre texture (to render the quad with it)  
 		Ogre::SceneNode*			m_quadSceneNode;        		///< Quad scene node inside the scene (used to modify the scale, orientation...etc)

@@ -40,17 +40,15 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 namespace Cing
 {
 	// Math
-	typedef Ogre::Vector2     		Point2d;
-	typedef Ogre::Vector2     		Vector2d;
-	typedef Vector2d     			Vector2;
+	typedef Ogre::Vector2     		Point2;
+	typedef Ogre::Vector2     		Vector2;
 
 	typedef Ogre::Vector3     		Point;
 	typedef Ogre::Vector3     		Vector;
 	typedef Vector	     			Vector3;
 
-	typedef Ogre::Vector4     		Point4d;
-	typedef Ogre::Vector4     		Vector4d;
-	typedef Vector4d     			Vector4;
+	typedef Ogre::Vector4     		Point4;
+	typedef Ogre::Vector4     		Vector4;
 
 	typedef Ogre::Quaternion		Quaternion;
 
@@ -58,9 +56,16 @@ namespace Cing
 	typedef Ogre::Matrix3			Matrix3;
 	typedef Ogre::Matrix4			Matrix4;
 
+	// 2D
+	typedef Ogre::RealRect			Rect;
+
 	// Spatial
 	typedef Ogre::AxisAlignedBox	AABox;
 	typedef Ogre::Box				BoxArea;
+
+	// Timing
+	typedef Ogre::Timer				Timer;
+
 } // namespace Cing
 
 #endif // _CommonTypes_H_

@@ -89,7 +89,7 @@ namespace Cing
 	private:
 		// Attributes
 		Ogre::Timer		m_timer;					///< Timer to check the capture fps
-		Average			m_realFpsAverage;			///< Real fps average
+		AverageDouble	m_realFpsAverage;			///< Real fps average
 		double			m_realFps;					///< Real captured fps
 		Image			m_currentCameraImage; 		///< Image captured from the camera 
 		Image			m_tempImage;				///< Image used to convert received frames to working format
