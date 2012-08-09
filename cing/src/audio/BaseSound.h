@@ -50,10 +50,10 @@ namespace Cing
          * @brief Loads a sound file.
 				 * If already had a file loaded, it will be discarded, loading
 				 * the new file.
-         * @param [in] filename Filename (relative to application)
+         * @param [in] fileName Filename (relative to application)
          *
          **/
-        virtual void load( const char* filename ) = 0;
+        virtual void load( const std::string& fileName ) = 0;
 
         /**
          * @brief Plays the sound.
