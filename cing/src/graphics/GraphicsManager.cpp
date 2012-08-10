@@ -31,6 +31,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "ShapeManager.h"
 #include "FontManager.h"
 #include "GraphicsUserApi.h"
+#include "RTTRectSaveManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
@@ -340,12 +341,32 @@ void GraphicsManager::draw()
 	m_mainWindow.update();
 
 	// Render the viewport to texture and save to disk if required
-	if ( m_saveFrame )
-	{
+
+    if ( m_saveFrame || !m_rectSaveList.empty() )
+    {
 		m_RttTexture->getBuffer()->getRenderTarget()->update();
-		m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(ResourceManager::userDataPath + m_frameName );
-		m_saveFrame = false;
-	}
+    
+        if ( m_saveFrame )
+	    {
+		    m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(ResourceManager::userDataPath + m_frameName );
+		    m_saveFrame = false;
+	    }
+
+        for ( std::vector<TNameRect>::const_iterator it = m_rectSaveList.begin(); it != m_rectSaveList.end(); ++it )
+        {
+            const Rect& rect = it->second;
+            Ogre::PixelFormat pf = m_RttTexture->getBuffer()->getRenderTarget()->suggestPixelFormat();
+            size_t w = m_RttTexture->getWidth();
+            size_t h = m_RttTexture->getHeight();
+            void* buffer = malloc( Ogre::PixelUtil::getMemorySize( w, h, 1, pf ) );
+            
+            Ogre::PixelBox* pbox = new Ogre::PixelBox( Ogre::Box( 0, 0, w-1, h-1 ), pf, buffer );
+            m_RttTexture->getBuffer()->getRenderTarget()->copyContentsToMemory( *pbox, Ogre::RenderTarget::FB_AUTO );
+            RTTRectSaveManager::getSingleton().storePicture( it->first, rect, pbox );
+        }
+        m_rectSaveList.clear();
+    }
+
 
 	// Update the Font Manager post render (will make fonts not in use any more invisible)
 	FontManager::getSingleton().postRender();
@@ -499,10 +520,20 @@ void GraphicsManager::clearMatrixStack()
  * @brief   Saves an image with the current frame on screen. The image is saved in the data folder
  * @param   name name of the image to be saved/exported
  */
-void GraphicsManager::save( const String& name )
+void GraphicsManager::saveFrame( const String& name )
 {
 	m_saveFrame = true;
 	m_frameName = name;
+};
+
+/**
+ * @brief   Saves an image with a rectangle taken from the current frame on screen. The image is saved in the data folder
+ * @param   name name of the image to be saved/exported
+ * @param   rect rectangle to be saved
+ */
+void GraphicsManager::saveFrame( const String& name, const Rect& rect )
+{
+    m_rectSaveList.push_back( TNameRect( name, rect ) );
 };
 
 /**
