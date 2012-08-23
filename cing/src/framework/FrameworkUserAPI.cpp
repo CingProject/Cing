@@ -174,5 +174,14 @@ void setFrameRate( int frameRate )
 	Application::getSingleton().frameRate( frameRate );
 }
 
+/**
+ * Registers a plugin that will be init/updated/ended by the application framework
+ */
+void registerPlugin( Plugin& plugin )
+{
+	Application::getSingleton().registerPlugin( plugin );
+}
+
+
 
 } // namespace Cing

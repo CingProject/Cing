@@ -50,6 +50,9 @@ void noLoop();
 void redraw();
 void setFrameRate( int frameRate );
 
+// Plugin related
+void registerPlugin( Plugin& plugin );
+
 } // namespace Cing
 
 #endif // _FrameworkUserAPI_h_
