@@ -211,12 +211,14 @@ inline T random( T max )
  * @brief Compares two float numbers with an error margin
  * @param[in] f1 first float to compare
  * @param[in] f2 second float to compare
+ * @param[in] epsilon difference between the values to consider them equal
  * @return true if both floats are equal (approx) | false otherwise
  */
-inline bool equal( float f1, float f2 )
+template< typename T >
+inline bool equal( T f1, T f2, T epsilon = (T)EPSILON )
 {
     // Compare the abs difference between the float
-    if( fabs( f1 - f2 ) < EPSILON )
+    if( abs( f1 - f2 ) < epsilon )
         return true;
     else
         return false;
