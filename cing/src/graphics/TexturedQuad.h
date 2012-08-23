@@ -116,8 +116,9 @@ namespace Cing
 
 		Ogre::SceneManager* getSceneManager	() { return m_sm; }
 
-		// Shadow related
-		void			setCastShadows( bool castShadows );
+		// Lighting, Shadow and other material settings
+		void			enableLighting		( bool lighting );
+		void			enableCastShadows	( bool castShadows );
 
 	protected:
 

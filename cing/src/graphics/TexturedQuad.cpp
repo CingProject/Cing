@@ -169,7 +169,6 @@ namespace Cing
 
 		m_ogreMaterial->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
 		//m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
-		//m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( false );
 //		m_ogreMaterial->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
 
 
@@ -1156,20 +1155,39 @@ namespace Cing
 	}
 
 	/**
-	 * @brief Sets the material for the object
+	 * @brief Enables / disables this quad casting shadows
 	 *
-	 * @param materialName Name of the material to assign. It must be located in the data folder.
+	 * @param castShadows true makes the material cast shadows, false disables it
 	 */
-	void TexturedQuad::setCastShadows( bool castShadows )
+	void TexturedQuad::enableCastShadows( bool castShadows )
 	{
 		// Check if the class is already initialized
 		if ( !isValid() || !m_quad )
 		{
-			LOG_ERROR( "TexturedQuad::setCastShadows Error: Texture quad is not valid or has not bee initialized yet" );
+			LOG_ERROR( "TexturedQuad::enableCastShadows Error: Texture quad is not valid or has not bee initialized yet" );
 			return;
 		}
 
 		m_quad->setCastShadows( castShadows );
+	}
+
+	/**
+	 * @brief Enables / disables this material being affected by dynamic lighting in the scene
+	 *
+	 * @param lighting true makes the material be altered by dynamic lighting, false, the material is not affected by
+	 * global scene lighting or the lights in the scene
+	 */
+	void TexturedQuad::enableLighting( bool lighting )
+	{
+		// Check if the class is already initialized
+		if ( !isValid() || m_ogreMaterial.isNull() )
+		{
+			LOG_ERROR( "TexturedQuad::enableLighting Error: Texture quad is not valid or has not bee initialized yet" );
+			return;
+		}
+
+		if ( m_ogreMaterial->getTechnique(0) && m_ogreMaterial->getTechnique(0)->getPass(0) )
+			m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( lighting );
 	}
 
 } // namespace Cing
