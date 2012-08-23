@@ -45,6 +45,7 @@ ShaderGenerator::ShaderGenerator():
  */
 ShaderGenerator::~ShaderGenerator()
 {
+	end();
 
 	// Clear vars
 	m_shaderGenerator = NULL;
@@ -138,7 +139,8 @@ void ShaderGenerator::end()
 
 	delete m_materialMgrListener;
 	m_materialMgrListener = NULL;
-	
+
+	m_valid = false;
 }
 
 /**

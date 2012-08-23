@@ -1441,24 +1441,6 @@ material Examples/Rockwall
 	}
 }
 
-material RockwallNew
-{
-   receive_shadows on
-   
-   technique
-   {
-      pass
-      {
-         cull_hardware none
-         
-         texture_unit
-         {
-            texture rockwall.tga
-         }
-      }
-   }
-}
-
 material Examples/Aureola
 {
 	technique
