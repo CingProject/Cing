@@ -116,6 +116,9 @@ namespace Cing
 
 		Ogre::SceneManager* getSceneManager	() { return m_sm; }
 
+		// Shadow related
+		void			setCastShadows( bool castShadows );
+
 	protected:
 
 		// Private methods

@@ -121,7 +121,7 @@ namespace Cing
 		m_textWidth     = (float)textureWidth;
 		m_textHeight    = (float)textureHeight;	
 		m_format		= format;
-		m_render2D  = false;
+		m_render2D		= false;
 		m_alpha			= 255;
 
 		// Generate unique names for texture, material and ogre manual object
@@ -1153,6 +1153,23 @@ namespace Cing
 		// TODO: Log -> material does not exist
 		else
 			LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName.c_str() );
+	}
+
+	/**
+	 * @brief Sets the material for the object
+	 *
+	 * @param materialName Name of the material to assign. It must be located in the data folder.
+	 */
+	void TexturedQuad::setCastShadows( bool castShadows )
+	{
+		// Check if the class is already initialized
+		if ( !isValid() || !m_quad )
+		{
+			LOG_ERROR( "TexturedQuad::setCastShadows Error: Texture quad is not valid or has not bee initialized yet" );
+			return;
+		}
+
+		m_quad->setCastShadows( castShadows );
 	}
 
 } // namespace Cing
