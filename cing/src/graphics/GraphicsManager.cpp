@@ -215,10 +215,10 @@ bool GraphicsManager::initReSources()
 	// Init the cvFont
 	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
 
-
-	// Init 2dCanvas (and make sure it does not cast shadows)
+	// Init 2dCanvas (and make sure it does not cast shadows and does not receive dynamic lighting)
 	m_canvas.init(width, height, RGBA);
-	m_canvas.getTexturedQuad().setCastShadows( false );
+	m_canvas.getTexturedQuad().enableCastShadows( false );
+	m_canvas.getTexturedQuad().enableLighting( false );
 
 	// Init style queue
 	m_styles.push_front( Style(Color(255,255,255), Color(0,0,0), 1) );
