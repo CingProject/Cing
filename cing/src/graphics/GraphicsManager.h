@@ -67,12 +67,13 @@ namespace Cing
 		friend class SingletonStatic< GraphicsManager >;
 
 		// Destructor
-		virtual ~GraphicsManager														();
+ 		virtual ~GraphicsManager								();
 
-		// Init / Release / Draw
-		bool						init                      ();
-		void						end                       ();
-		void						draw                      ();
+		// Life cycle (in order of "appearance")
+		bool						createWindow				();
+		bool						initReSources				();
+		void						draw						();
+		void						end							();
 
 		// App window setup
 		void						setup						( int windowWidth, int windowHeight, GraphicMode mode = OPENGL );
