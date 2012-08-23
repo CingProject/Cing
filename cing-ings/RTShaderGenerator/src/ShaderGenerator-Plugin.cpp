@@ -99,7 +99,7 @@ bool ShaderGenerator::init()
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(ResourceManager::libDataPath + "/RTShaderLib/materials", "FileSystem");
 
 		// Set shader cache path.
-		std::string cachePath = ResourceManager::libDataPath + "/RTShaderLib/cache/"
+		std::string cachePath = ResourceManager::libDataPath + "/RTShaderLib/cache/";
 		m_shaderGenerator->setShaderCachePath(cachePath);      
 
 		// Set the scene manager.
