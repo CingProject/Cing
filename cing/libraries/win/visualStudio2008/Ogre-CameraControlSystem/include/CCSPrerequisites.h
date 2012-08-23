@@ -1,5 +1,5 @@
 /* -------------------------------------------------------
-Copyright (c) 2009 Alberto G. Salguero (agsh@ugr.es)
+Copyright (c) 2012 Alberto G. Salguero (alberto.salguero at uca.es)
 
 Permission is hereby granted, free of charge, to any
 person obtaining a copy of this software and associated
@@ -54,7 +54,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /// Version defines
 #define CCS_VERSION_MAJOR 0
-#define CCS_VERSION_MINOR 4
-#define CCS_VERSION_PATCH 0
+#define CCS_VERSION_MINOR 5
+#define CCS_VERSION_PATCH 1
 
 #endif

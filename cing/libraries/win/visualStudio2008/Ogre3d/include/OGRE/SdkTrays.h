@@ -4,7 +4,7 @@
  (Object-oriented Graphics Rendering Engine)
  For the latest info, see http://www.ogre3d.org/
  
- Copyright (c) 2000-2009 Torus Knot Software Ltd
+ Copyright (c) 2000-2011 Torus Knot Software Ltd
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -2766,13 +2766,13 @@ namespace OgreBites
 					oss << std::fixed << std::setprecision(1) << stats.avgFPS;
 					Ogre::String str = oss.str();
 					for (int i = str.length() - 5; i > 0; i -= 3) { str.insert(i, 1, ','); }
-					values.push_back(s);
+					values.push_back(str);
 
 					oss.str("");
 					oss << std::fixed << std::setprecision(1) << stats.bestFPS;
 					str = oss.str();
 					for (int i = str.length() - 5; i > 0; i -= 3) { str.insert(i, 1, ','); }
-					values.push_back(s);
+					values.push_back(str);
 
 					oss.str("");
 					oss << std::fixed << std::setprecision(1) << stats.worstFPS;

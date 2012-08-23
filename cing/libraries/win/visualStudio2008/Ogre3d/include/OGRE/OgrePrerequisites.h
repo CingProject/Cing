@@ -4,7 +4,7 @@ This source file is a part of OGRE
 
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2009 Torus Knot Software Ltd
+Copyright (c) 2000-2011 Torus Knot Software Ltd
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -55,7 +55,7 @@ namespace Ogre {
     // Define ogre version
     #define OGRE_VERSION_MAJOR 1
     #define OGRE_VERSION_MINOR 7
-    #define OGRE_VERSION_PATCH 2
+    #define OGRE_VERSION_PATCH 4
 	#define OGRE_VERSION_SUFFIX ""
     #define OGRE_VERSION_NAME "Cthugha"
 

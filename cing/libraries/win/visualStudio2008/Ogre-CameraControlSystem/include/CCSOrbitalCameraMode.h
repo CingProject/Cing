@@ -1,5 +1,5 @@
 /* -------------------------------------------------------
-Copyright (c) 2009 Alberto G. Salguero (agsh@ugr.es)
+Copyright (c) 2012 Alberto G. Salguero (alberto.salguero at uca.es)
 
 Permission is hereby granted, free of charge, to any
 person obtaining a copy of this software and associated
@@ -44,14 +44,19 @@ namespace CCS
 	public:
 
 		OrbitalCameraMode(CameraControlSystem* cam, Ogre::Real initialZoom = 1
-			, Ogre::Radian initialHorizontalRotation = Ogre::Radian(0), Ogre::Radian initialVerticalRotation = Ogre::Radian(0)) 
-            : ChaseFreeYawAxisCameraMode(cam, Ogre::Vector3::ZERO, Ogre::Quaternion::IDENTITY)
+			, Ogre::Radian initialHorizontalRotation = Ogre::Radian(0), Ogre::Radian initialVerticalRotation = Ogre::Radian(0)
+			, bool resetToInitialPosition = true, Ogre::Real collisionmargin = 0.1f) 
+			: ChaseFreeYawAxisCameraMode(cam, Ogre::Vector3::ZERO, Ogre::Quaternion::IDENTITY, collisionmargin)
 			, mZoomFactor(1)
-            , mRotationFactor(0.13f)
+            , mRotationFactor(0.13)
 			, mInitialRotHorizontal(initialHorizontalRotation)
 			, mInitialRotVertical(initialVerticalRotation)
 			, mInitialZoom(initialZoom)			
+			, mZoom(initialZoom)
+			, mRotHorizontal(0)
+			, mRotVertical(0)
 			, mZoomDisplacement(0)
+			, mResetToInitialPosition(resetToInitialPosition)
         {
 			this->setCameraTightness(1);
 		};
@@ -140,6 +145,8 @@ namespace CCS
 		 * @param val the amount of zoom (use negative values to zoom in)
 		 */
         inline virtual void setZoom(Ogre::Real val){ mZoom = val; }
+
+		virtual void reset();
 		
     protected:
         
@@ -154,6 +161,7 @@ namespace CCS
 		Ogre::Radian mRotHorizontalDisplacement;
 	    Ogre::Radian mRotVerticalDisplacement;
 		Ogre::Real mZoomDisplacement;
+		bool mResetToInitialPosition;
 	};
 
 }

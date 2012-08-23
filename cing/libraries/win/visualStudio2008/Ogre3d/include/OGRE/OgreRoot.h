@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2009 Torus Knot Software Ltd
+Copyright (c) 2000-2011 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -655,13 +655,21 @@ namespace Ogre
 		bool createRenderWindows(const RenderWindowDescriptionList& renderWindowDescriptions,
 			RenderWindowList& createdWindows);
 	
-        /** Destroys a rendering window.
+        /** Detaches a RenderTarget from the active render system.
         */
         void detachRenderTarget( RenderTarget* pWin );
 
-        /** Destroys a named rendering window.
+        /** Detaches a named RenderTarget from the active render system.
         */
         void detachRenderTarget( const String & name );
+
+        /** Destroys the given RenderTarget.
+        */
+        void destroyRenderTarget(RenderTarget* target);
+
+        /** Destroys the given named RenderTarget.
+        */
+        void destroyRenderTarget(const String &name);
 
         /** Retrieves a pointer to the a named render window.
         */
