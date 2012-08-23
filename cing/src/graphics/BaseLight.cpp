@@ -146,6 +146,31 @@ namespace Cing
 	}
 
 	/**
+	 * @brief Enagles/disables the light
+	 * @param[in] enable true will enable the light, false will disable it
+	 */
+	void BaseLight::enable( bool enable )
+	{
+		if ( !isValid() )
+			THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
+
+		m_pLight->setVisible( enable );
+	}
+
+	/**
+	 * @brief Returns true if the light is currently enabled, false otherwise
+	 * @return true if the light is currently enabled, false otherwise
+	 */
+	bool BaseLight::isEnabled() const
+	{
+		if ( !isValid() )
+			THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
+
+		return m_pLight->isVisible();
+	}
+
+
+	/**
 	* @internal
 	* @brief Sets the new position of the light.
 	* @param[in] x new x coordinate (horizontal axis) of the light in the scene
@@ -158,7 +183,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set position in a Light not correctly initialized" );
 
 		// Set the absolute light position
-		m_sceneNode->setPosition( x, y, z );
+		m_pLight->setPosition( x, y, z );
 	}
 
 	/**
@@ -173,7 +198,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set position in a Light not correctly initialized" );
 
 		// Set the absolute light position
-		m_sceneNode->setPosition( x, y, 0.0f );
+		m_pLight->setPosition( x, y, 0.0f );
 	}
 
 	/**
@@ -187,7 +212,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set position in a Light not correctly initialized" );
 
 		// Set the absolute light position
-		m_sceneNode->setPosition( pos.x, pos.y, pos.z );
+		m_pLight->setPosition( pos.x, pos.y, pos.z );
 	}
 
 	/**
@@ -203,7 +228,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
 
 		// Set the absolute light direction
-		m_sceneNode->setDirection( x, y, z );
+		m_pLight->setDirection( x, y, z );
 	}
 
 	/**
@@ -218,7 +243,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
 
 		// Set the absolute light direction
-		m_sceneNode->setDirection( x, y, 0.0f );
+		m_pLight->setDirection( x, y, 0.0f );
 	}
 
 	/**
@@ -232,7 +257,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
 
 		// Set the absolute light direction
-		m_sceneNode->setDirection( dir.x, dir.y, dir.z );
+		m_pLight->setDirection( dir.x, dir.y, dir.z );
 	}
 
 	/**
@@ -359,7 +384,8 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to draw a Light not correctly initialized" );
 
-		m_lightFlareSet->setVisible( draw );
+		m_pLight->setDebugDisplayEnabled( true );
+		//m_lightFlareSet->setVisible( draw );
 	}
 
 	/**
