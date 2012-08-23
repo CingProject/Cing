@@ -109,6 +109,9 @@ namespace Cing
 		m_pOgreCamera->setNearClipDistance( 5 );
 		m_pOgreCamera->setFarClipDistance( 4000 );
 
+		// Shadow far distance (in case there are shadows)
+		m_pOgreSceneManager->setShadowFarDistance( m_pOgreCamera->getFarClipDistance() );
+
 		// The class is now initialized
 		m_bIsValid = true;
 
