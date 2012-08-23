@@ -310,12 +310,12 @@ namespace Cing
 	* @param axis	Axis of rotation
 	* @param angle Angle of rotation in degrees around the specified axis
 	*/
-	void Object3D::setOrientation( const Vector& axis, float angle )
+	void Object3D::setOrientation( const Vector& axis, float angleDegrees )
 	{
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to set orientation in Object3D not correctly initialized" );
 
-		Quaternion q( Ogre::Radian( Ogre::Degree( angle ) ), axis );
+		Quaternion q( Ogre::Radian( Ogre::Degree( angleDegrees ) ), axis );
 		m_sceneNode->setOrientation( q );
 	}
 
