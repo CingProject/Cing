@@ -75,7 +75,7 @@ public:
 
 	
 	// Change render states for generated shaders
-	bool setLightingModel	( ShaderGeneratorLightingModel newModel );
+	bool setLightingModel	( ShaderGeneratorLightingModel newModel, const std::string& textureName = "" );
 	bool setShadowModel		( ShaderGeneratorShadowModel newModel );
 
 	// Shadow controls

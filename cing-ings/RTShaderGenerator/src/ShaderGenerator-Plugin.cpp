@@ -145,10 +145,11 @@ void ShaderGenerator::end()
 
 /**
  * Sets a lighting model that will be applied to all materials
- * @param newModel new lighting model that will be applied (previous model will be removed)
+ * @param newModel New lighting model that will be applied (previous model will be removed)
+ * @param textureName Only applicable to normal mapping. Should be the name of the normal map texture to use.
  * @return true if the lighting model was correctly applied, false otheriwse
  */
-bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel )
+bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, const std::string& textureName /*= ""*/ )
 {
 	// check system is ok
 	if ( !m_valid )
@@ -168,7 +169,9 @@ bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel )
 	// first, clear previous applied lighting models
 	clearLightingRenderStates();
 
-	Ogre::RTShader::SubRenderState* newLightModel = NULL;
+	// vars used in the switch
+	Ogre::RTShader::SubRenderState* newLightModel		= NULL;
+	Ogre::RTShader::NormalMapLighting* normalMapSubRS	= NULL;
 
 	// then, apply new lighting model
 	switch ( newModel )
@@ -197,6 +200,40 @@ bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel )
 			
 			// Add the subrender state, all working.
 			globalRenderState->addTemplateSubRenderState(newLightModel);    
+		break;
+
+		case NormalMapLightingTangentSpace:
+			//Create a global subrender state for normal mapping. This will be applied to all materials in the scene.
+			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::NormalMapLighting::Type);
+			if ( !newLightModel )
+			{
+				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating NormalMapLighting sub render state. Normal mapping Lighting will not be applied." );
+				return false;
+			}
+			
+			normalMapSubRS = static_cast<Ogre::RTShader::NormalMapLighting*>(newLightModel);			
+			normalMapSubRS->setNormalMapSpace(Ogre::RTShader::NormalMapLighting::NMS_TANGENT);
+			normalMapSubRS->setNormalMapTextureName(textureName);	
+
+			// Add the subrender state, all working.
+			globalRenderState->addTemplateSubRenderState(normalMapSubRS);    
+		break;
+
+		case NormalMapLightingObjectSpace:
+			//Create a global subrender state for normal mapping. This will be applied to all materials in the scene.
+			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::NormalMapLighting::Type);
+			if ( !newLightModel )
+			{
+				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating NormalMapLighting sub render state. Normal mapping Lighting will not be applied." );
+				return false;
+			}
+			
+			normalMapSubRS = static_cast<Ogre::RTShader::NormalMapLighting*>(newLightModel);			
+			normalMapSubRS->setNormalMapSpace(Ogre::RTShader::NormalMapLighting::NMS_OBJECT);
+			normalMapSubRS->setNormalMapTextureName(textureName);	
+
+			// Add the subrender state, all working.
+			globalRenderState->addTemplateSubRenderState(normalMapSubRS);    
 		break;
 	};
 
@@ -339,16 +376,17 @@ void ShaderGenerator::setupPSSMShadows( Ogre::ShadowTechnique technique )
 	m_sceneManager->setShadowTechnique(technique);
 
 	// 3 textures per light
-	//m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_SPOTLIGHT, 3);
-	m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_POINT, 3);
+	m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_SPOTLIGHT, 3);
+	//m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_POINT, 3);
 	//m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_DIRECTIONAL, 3);
 	
-	m_sceneManager->setShadowTextureSettings(2048, 3, Ogre::PF_FLOAT32_R);
+	m_sceneManager->setShadowTextureSettings(1024, 3, Ogre::PF_FLOAT32_R);
 	m_sceneManager->setShadowTextureSelfShadow(true);
 	//m_sceneManager->setShadowCasterRenderBackFaces(false);
 
 	// Set up caster material - this is just a standard depth/shadow map caster
 	m_sceneManager->setShadowTextureCasterMaterial("PSSM/shadow_caster");
+	//m_sceneManager->setShadowTextureCasterMaterial("Ogre/shadow/depth/caster");
 
 	// Disable fog on the caster pass.
 	Ogre::MaterialPtr passCaterMaterial = Ogre::MaterialManager::getSingleton().getByName("PSSM/shadow_caster");
@@ -362,7 +400,7 @@ void ShaderGenerator::setupPSSMShadows( Ogre::ShadowTechnique technique )
 	// Create the shadow camera setup
 	Ogre::PSSMShadowCameraSetup* pssmSetup = new Ogre::PSSMShadowCameraSetup();
 
-	// For now we use default split points, but likelye they should be adjusted depedning on the camara/light settings
+	// For now we use default split points, but likely they should be adjusted depedning on the camara/light settings
 	// This would be the code to do it
 	//pssmSetup->calculateSplitPoints(3, nearClipPlane, farClipPlane);
 	//pssmSetup->setSplitPadding(10);
