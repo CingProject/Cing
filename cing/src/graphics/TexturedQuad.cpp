@@ -1155,6 +1155,28 @@ namespace Cing
 	}
 
 	/**
+	 * @brief This is a shortcut to set or change the main (or first) texture unit for the material used in the quad
+	 *
+	 * @param fileName Name of the image file to use (absolute or local to data folder)
+	 */
+	void TexturedQuad::setTexture( const std::string& fileName )
+	{
+		// Check if the class is already initialized
+		if ( !isValid() || m_ogreMaterial.isNull() )
+		{
+			LOG_ERROR( "TexturedQuad::setTexture Error: Texture quad is not valid or has not bee initialized yet" );
+			return;
+		}
+
+		// Change the texture name for the first texture unit state (checking all pointers are valid)
+		if ( m_ogreMaterial->getTechnique(0) && m_quad->getSection(0) && m_ogreMaterial->getTechnique(0)->getPass(0) && m_ogreMaterial->getTechnique(0)->getPass(0)->getTextureUnitState(0) )
+		{
+			Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName( m_quad->getSection(0)->getMaterialName() );
+			mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName( fileName );
+		}
+	}
+
+	/**
 	 * @brief Enables / disables this quad casting shadows
 	 *
 	 * @param castShadows true makes the material cast shadows, false disables it

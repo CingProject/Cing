@@ -96,29 +96,30 @@ namespace Cing
 		bool					hasAlpha		() const;
 
 		// Texture coordinate control
-		void			flipVertical	(bool flip = true);
-		void			flipHorizontal	(bool flip = true);
+		void					flipVertical	(bool flip = true);
+		void					flipHorizontal	(bool flip = true);
 
 		// Operators 
-		void			operator = ( const TexturedQuad& other );
+		void					operator = ( const TexturedQuad& other );
 
 		// Texture / material control
-		void			setTransparency		( float alpha );
-		void			forceRenderQueue	( unsigned int renderQueueId );
-		void			restoreRenderQueue	() { m_renderQueueForced = false; }
-		void			enableDepthWrite	( bool value );
-		void			enableDepthCheck	( bool value );
+		void					setTransparency		( float alpha );
+		void					forceRenderQueue	( unsigned int renderQueueId );
+		void					restoreRenderQueue	() { m_renderQueueForced = false; }
+		void					enableDepthWrite	( bool value );
+		void					enableDepthCheck	( bool value );
 
-		void			setMaterial			( const std::string& materialName );
+		void					setMaterial			( const std::string& materialName );
+		void					setTexture			( const std::string& fileName );
 
-		void			setSceneNode		( Ogre::SceneNode* node)   { m_quadSceneNode = node; };
-		void			setPivotSceneNode	( Ogre::SceneNode* node)   { m_pivotSceneNode = node; };
+		void					setSceneNode		( Ogre::SceneNode* node)   { m_quadSceneNode = node; };
+		void					setPivotSceneNode	( Ogre::SceneNode* node)   { m_pivotSceneNode = node; };
 
-		Ogre::SceneManager* getSceneManager	() { return m_sm; }
+		Ogre::SceneManager*		getSceneManager	() { return m_sm; }
 
 		// Lighting, Shadow and other material settings
-		void			enableLighting		( bool lighting );
-		void			enableCastShadows	( bool castShadows );
+		void					enableLighting		( bool lighting );
+		void					enableCastShadows	( bool castShadows );
 
 	protected:
 
