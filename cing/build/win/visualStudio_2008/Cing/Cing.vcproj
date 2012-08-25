@@ -174,11 +174,23 @@
 				Name="Scripts"
 				>
 				<File
-					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Basic_Cing.material"
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\CingMaterials.material"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Examples-Advanced.material"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Examples.material"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\OffsetMapping.material"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\cing_bin\data\RTShaderLib\materials\RTShaderSystem.material"
 					>
 				</File>
 			</Filter>

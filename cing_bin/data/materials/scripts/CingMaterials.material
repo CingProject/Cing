@@ -1,0 +1,137 @@
+//------------------------
+// Basic Materials
+//------------------------
+
+ 
+// Empty material, used as default material for new objects (unless otherwise specified)
+material EmptyMaterial
+{
+   technique
+   {
+      pass
+      {
+      }   
+   }
+}
+
+ 
+// Empty material with no culling, used as default material for new objects (unless otherwise specified)
+material EmptyMaterialNoCulling
+{
+   technique
+   {
+      pass
+      {
+			cull_hardware none
+      }   
+   }
+}
+
+// This material allow to render the vertex color
+material VertexColorMaterial
+{
+    technique
+    {
+        pass
+        {
+         	cull_hardware none
+        	scene_blend alpha_blend
+        	lighting off
+            ambient  vertexcolour
+            diffuse  vertexcolour
+            emissive vertexcolour
+        }
+    }
+}
+
+material Superhero
+{
+	transparency_casts_shadows on
+
+	technique
+	{
+		pass
+		{	
+			lighting on
+			cull_hardware none
+			scene_blend alpha_blend
+
+			depth_write off
+				
+			texture_unit
+			{
+				tex_address_mode clamp
+				texture superhero.png
+			}
+		}
+	}
+}
+
+// PSSM shadow caster mateiral: Use this to support transparent materials/textures casting shadows when using PSSM Shadow maps
+material ShadowCasterAlpha
+{
+   technique
+   {
+      shadow_caster_material "ShadowCasterAlpha/shadow_caster_alpha"
+      
+      pass
+      {
+         cull_hardware none
+         cull_software none
+
+         ambient 0.5 0.5 0.5 1
+         diffuse 0.6 0.6 0.6 1
+         
+         alpha_rejection greater_equal 192
+         
+         texture_unit
+         {
+            texture c-letter
+         }
+      }
+   }
+}
+
+material ShadowCasterAlpha/shadow_caster_alpha : PSSM/shadow_caster_alpha
+{
+   technique
+   {
+      pass
+      {
+         // See: http://www.ogre3d.org/forums/viewtopic.php?f=3&t=44817
+         fog_override true
+
+         texture_unit
+         {
+            // Pass the texture with alpha channel to the caster
+            texture c-letter
+         }
+      }
+   }
+}
+
+
+material PSSM/shadow_caster_alpha
+{
+   technique
+   {
+      // all this will do is write depth and depth² to red and green
+      pass
+      {
+         // Disable backface culling
+         cull_hardware none
+         cull_software none
+         
+         // Make sure that when including this material in another with 'shadow_caster_material' that it does not inherit alpha_rejection from it
+         alpha_rejection always_pass
+      
+         vertex_program_ref PSSM/shadow_caster_alpha_vs
+         {
+         }
+
+         fragment_program_ref PSSM/shadow_caster_alpha_ps
+         {
+         }
+      }
+   }
+}

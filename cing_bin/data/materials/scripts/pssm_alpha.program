@@ -1,0 +1,36 @@
+// PSSM shadow caster with support for alpha textures (eg. trees)
+// Supports RTSS shadow receivers
+
+// declare the vertex shader (CG for the language)
+vertex_program PSSM/shadow_caster_alpha_vs cg
+{
+   // source file
+   source pssm_alpha.cg
+   // will run on vertex shader 1.1+
+   profiles vs_1_1 arbvp1
+   // entry function
+   entry_point shadow_caster_alpha_vs
+
+   default_params
+   {
+      param_named_auto wvpMat worldviewproj_matrix
+      // this is the scene's depth range
+      //param_named_auto depthRange         scene_depth_range
+      //param_named_auto optimalAdustFactor   custom 0
+   }
+}
+
+// declare the fragment shader (CG for the language)
+fragment_program PSSM/shadow_caster_alpha_ps cg
+{
+   // source file
+   source pssm_alpha.cg
+   // will run on pixel shader 2.0+
+   profiles ps_2_0 arbfp1
+   // entry function
+   entry_point shadow_caster_alpha_ps
+
+   default_params
+   {
+   }
+}
