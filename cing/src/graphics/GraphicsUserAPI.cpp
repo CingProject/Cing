@@ -1249,6 +1249,15 @@ void enableShadows( ShadowTechnique technique )
 	GraphicsManager::getSingleton().enableShadows( technique );
 }
 
+/**
+ * @brief Sets the shadow color used to modulate areas in shaodw (when shadows that modulate are enabled)
+ * @param[in] color color of the shadow. Range 0..255
+ */
+void setShadowColor( const Color& color )
+{
+	GraphicsManager::getSingleton().setShadowColor( color );
+}
+
 //-----------------------------------------------------------------------------------
 // Coordinate System related
 //-----------------------------------------------------------------------------------

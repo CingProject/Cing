@@ -160,6 +160,7 @@ namespace Cing
 
 		// Shawods
 		void						enableShadows				( ShadowTechnique technique );
+		void						setShadowColor				( const Color& color );
 		void						setShadowFarDistance		( float distance ); 
 		bool						shadowsEnabled				() const { return m_shadowsEnabled; }
 		ShadowTechnique				getCurrentShadowTechnique	() const { return m_shadowTechnique; }

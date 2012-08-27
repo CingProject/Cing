@@ -872,6 +872,25 @@ void GraphicsManager::enableShadows( ShadowTechnique technique )
 	m_shadowsEnabled	= true;
 }
 
+
+/**
+ * @brief Sets the shadow color used to modulate areas in shaodw (when shadows that modulate are enabled)
+ * @param color color of the shadow. Range 0..255
+ */
+void GraphicsManager::setShadowColor( const Color& color )
+{
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Application::getSingleton().checkSubsystemsInit();
+
+	if ( !isValid() )
+	{
+		LOG_ERROR( "enableShadows error. setup() has not been called yet" );
+		return;
+	}
+
+	m_pSceneManager->setShadowColour( color.normalized() );
+}
+
 /**
  * @brief Sets the far distance at which the shadows will still be rendered. Used to optimize performance.
  *
