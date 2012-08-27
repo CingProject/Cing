@@ -21,6 +21,7 @@
 
 // Precompiled headers
 #include "Cing-Precompiled.h"
+#include "OgreColourValue.h"
 
 
 /** 
@@ -34,7 +35,11 @@ public:
 
 	ShaderGeneratorTechniqueResolverListener(Ogre::RTShader::ShaderGenerator* pShaderGenerator)
 	{
-		m_shaderGenerator = pShaderGenerator;			
+		m_shaderGenerator	= pShaderGenerator;	
+		m_specularEnable	= true;
+		m_specularColor		= Ogre::ColourValue::White;
+		m_shininess			= 32.0;
+
 	}
 
 	/** This is the hook point where shader based technique will be created.
@@ -54,14 +59,30 @@ public:
 			bool techniqueCreated;
 
 			// Create shader generated technique for this material.
-			techniqueCreated = m_shaderGenerator->createShaderBasedTechnique(
-				originalMaterial->getName(), 
-				Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
-				schemeName);	
+			techniqueCreated = m_shaderGenerator->createShaderBasedTechnique( originalMaterial->getName(), 
+																			  Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
+																			  schemeName);	
 
 			// Case technique registration succeeded.
 			if (techniqueCreated)
 			{
+				// Enable specular?
+				Ogre::MaterialPtr curMaterial = Ogre::MaterialManager::getSingleton().getByName(originalMaterial->getName());
+				Ogre::Pass* curPass = NULL;
+				if ( curMaterial->getTechnique(0) && curMaterial->getTechnique(0)->getPass(0) )
+					curPass = curMaterial->getTechnique(0)->getPass(0);
+
+				if (curPass && m_specularEnable)
+				{
+					curPass->setSpecular(m_specularColor);
+					curPass->setShininess(m_shininess);
+				}
+				else if ( curPass )
+				{
+					curPass->setSpecular(Ogre::ColourValue::Black);
+					curPass->setShininess(0.0);
+				}
+
 				// Force creating the shaders for the generated technique.
 				m_shaderGenerator->validateMaterial(schemeName, originalMaterial->getName());
 				
@@ -86,4 +107,8 @@ public:
 
 protected:	
 	Ogre::RTShader::ShaderGenerator*	m_shaderGenerator;	///< The shader generator instance.		
+	bool								m_specularEnable;	///< If true, all materials will have specular enabled
+	Ogre::ColourValue					m_specularColor;	///< Color of the specular shine
+	double								m_shininess;		///< Shininess is the 'inverse of specular color splattering' coefficient. If this is big (e.g : 64) you get a very tiny dot with a quite strong color (on round surface).  If this is 0, you get a simple color layer (the dot has become very wide). Default 32
+
 };
