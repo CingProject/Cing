@@ -75,6 +75,7 @@ namespace Cing
 		void  	setLightType      	( Light::LightTypes type );
 
 		void  	setAttenuation		( float range, float constant, float linear, float quadratic );
+		void	setAttenuation		( float range );
 
 		// Shadows
 		void	castShadows			( bool cast );

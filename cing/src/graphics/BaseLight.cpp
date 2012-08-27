@@ -183,7 +183,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set position in a Light not correctly initialized" );
 
 		// Set the absolute light position
-		m_pLight->setPosition( x, y, z );
+		m_sceneNode->setPosition( x, y, z );
 	}
 
 	/**
@@ -198,7 +198,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set position in a Light not correctly initialized" );
 
 		// Set the absolute light position
-		m_pLight->setPosition( x, y, 0.0f );
+		m_sceneNode->setPosition( x, y, 0.0f );
 	}
 
 	/**
@@ -212,7 +212,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set position in a Light not correctly initialized" );
 
 		// Set the absolute light position
-		m_pLight->setPosition( pos.x, pos.y, pos.z );
+		m_sceneNode->setPosition( pos.x, pos.y, pos.z );
 	}
 
 	/**
@@ -227,8 +227,12 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
 
+		// Normalize direction
+		Vector dir(x, y, z);
+		dir.normalise();
+
 		// Set the absolute light direction
-		m_pLight->setDirection( x, y, z );
+		m_pLight->setDirection( dir );
 	}
 
 	/**
@@ -242,8 +246,12 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
 
+		// Normalize direction
+		Vector dir(x, y, 0.0f);
+		dir.normalise();
+
 		// Set the absolute light direction
-		m_pLight->setDirection( x, y, 0.0f );
+		m_pLight->setDirection( dir );
 	}
 
 	/**
@@ -256,16 +264,16 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to set direction in a Light not correctly initialized" );
 
-		// Set the absolute light direction
-		m_pLight->setDirection( dir.x, dir.y, dir.z );
+		// Set the absolute light direction (normalized)
+		m_pLight->setDirection( dir.normalisedCopy() );
 	}
 
 	/**
 	* @internal
 	* @brief Sets the diffuse (general) color of the light
-	* @param[in] r Red component of the new color of the light.    Value Range: 0..1
-	* @param[in] g Green component of the new color of the light.  Value Range: 0..1
-	* @param[in] b Blue component of the new color of the light.   Value Range: 0..1
+	* @param[in] r Red component of the new color of the light.    Value Range: 0..255
+	* @param[in] g Green component of the new color of the light.  Value Range: 0..255
+	* @param[in] b Blue component of the new color of the light.   Value Range: 0..255
 	*/
 	void BaseLight::setDiffuseColor( float r, float g, float b )
 	{
@@ -292,9 +300,9 @@ namespace Cing
 	/**
 	* @internal
 	* @brief Sets the specular (shines) color of the light
-	* @param[in] r Red component of the new specular color of the light.    Value Range: 0..1
-	* @param[in] g Green component of the new specular color of the light.  Value Range: 0..1
-	* @param[in] b Blue component of the new specular color of the light.   Value Range: 0..1
+	* @param[in] r Red component of the new specular color of the light.    Value Range: 0..255
+	* @param[in] g Green component of the new specular color of the light.  Value Range: 0..255
+	* @param[in] b Blue component of the new specular color of the light.   Value Range: 0..255
 	*/
 	void BaseLight::setSpecularColor( float r, float g, float b )
 	{
@@ -351,7 +359,7 @@ namespace Cing
 	void BaseLight::setAttenuation( float range, float constant, float linear, float quadratic )
 	{
 		if ( !isValid() )
-			THROW_EXCEPTION( "Error. Trying to change the type of a Light not correctly initialized" );
+			THROW_EXCEPTION( "Error. Trying to set the light attenuation for a Light not correctly initialized" );
 		
 		float r = m_pLight->getAttenuationRange();
 		float c = m_pLight->getAttenuationConstant();
@@ -360,6 +368,18 @@ namespace Cing
 		m_pLight->setAttenuation(range, constant, linear, quadratic );
 	}
 
+	/**
+	 * Helper function to set the attenuation parameters of the light so that it fades to disaapear at 'range' distance from the position
+	 * Light attenuation is not applicable to directional lights since they have an infinite range and constant intensity. 
+	 * This is a standard attenuation approach. More information: http://www.ogre3d.org/tikiwiki/tiki-index.php?page=-Point%20Light%20Attenuation
+     *
+	 * @param[in] range	The absolute upper range of the light in world units (the other attenuation parameters are automatically calculated in this method)
+	 */
+	void BaseLight::setAttenuation( float range )
+	{		
+		// Calculation based on: http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Light+Attenuation+Shortcut
+		setAttenuation( range, 1.0f, 4.5f/range, 75.0f/(range*range) );
+	}
 
 	/**
 	* Configures the light to cast or not shadows
@@ -384,8 +404,8 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to draw a Light not correctly initialized" );
 
-		m_pLight->setDebugDisplayEnabled( true );
-		//m_lightFlareSet->setVisible( draw );
+		//m_pLight->setDebugDisplayEnabled( true );
+		m_lightFlareSet->setVisible( draw );
 	}
 
 	/**
