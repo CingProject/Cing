@@ -78,7 +78,13 @@ public:
 	bool setLightingModel	( ShaderGeneratorLightingModel newModel, const std::string& textureName = "" );
 	bool setShadowModel		( ShaderGeneratorShadowModel newModel );
 
-	// Shadow controls
+	// Shadow related controls (NOTE: these should be called before enabling shadows)
+	void enableDirLightCastShadows	( bool enable ) 		{ m_dirLightCastShadows = enable; }
+	void enablePointLightCastShadows( bool enable )			{ m_pointLightCastShadows = enable; }
+	void enableSpotLightCastShadows	( bool enable )			{ m_spotLightCastShadows = enable; }
+	void enableSelfShadow			( bool enable )			{ m_selfShadows = enable; }
+	void setSizePerShadowTexture	( unsigned int size )	{ m_sizePerShadowTexture = size; }
+
 
 private:
 	// private methods
@@ -104,6 +110,13 @@ private:
 	//bool								m_reflectionMapEnable;	///< The current reflection map effect state.
 	//RTShader::SubRenderStateFactory*	m_reflectionMapFactory;	///< The custom reflection map shader extension factory.
 	//RTShader::SubRenderState*			m_reflectionMapSubRS;	///< The reflection map sub render state.
+
+	// Shadow settings
+	bool								m_dirLightCastShadows;	///< If true, directional lights will be able to cast shadows (if the light has castShadows enabled). Default is true.
+	bool								m_pointLightCastShadows;///< If true, point lights will be able to cast shadows (if the light has castShadows enabled). Default is false.
+	bool								m_spotLightCastShadows;	///< If true, spot lights will be able to cast shadows (if the light has castShadows enabled). Default is false.
+	bool								m_selfShadows;			///< If true, self shadowing will happen. Default is true.
+	unsigned int						m_sizePerShadowTexture;	///< Size for each shadow texture (3 of this size will be used per light type). Default 1024.
 
 	std::string							m_shaderLibsPath;		///< The path of the RTShader Libs (where created shader cache will be stored)
 };

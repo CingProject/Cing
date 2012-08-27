@@ -38,6 +38,14 @@ ShaderGenerator::ShaderGenerator():
 {
 	setPluginInitTime(INIT_BEFORE_RESOURCE_INIT);
 	setPluginEndTime(END_AFTER_USER);
+
+	// Some default settings
+	m_dirLightCastShadows	= true;
+	m_spotLightCastShadows	= false;
+	m_pointLightCastShadows = false;
+	m_selfShadows			= true;
+	m_sizePerShadowTexture	= 1024;
+
 }
 
 /**
@@ -375,13 +383,26 @@ void ShaderGenerator::setupPSSMShadows( Ogre::ShadowTechnique technique )
 
 	m_sceneManager->setShadowTechnique(technique);
 
-	// 3 textures per light
-	m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_SPOTLIGHT, 3);
-	//m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_POINT, 3);
-	//m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_DIRECTIONAL, 3);
-	
-	m_sceneManager->setShadowTextureSettings(1024, 3, Ogre::PF_FLOAT32_R);
-	m_sceneManager->setShadowTextureSelfShadow(true);
+	// Enable ligh types
+	int lightTypeEnabledCount = 0;
+	if ( m_dirLightCastShadows )
+	{
+		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_DIRECTIONAL, 3);
+		++lightTypeEnabledCount;
+	}
+	if ( m_pointLightCastShadows )
+	{
+		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_POINT, 3);
+		++lightTypeEnabledCount;
+	}
+	if ( m_spotLightCastShadows )
+	{
+		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_SPOTLIGHT, 3);
+		++lightTypeEnabledCount;
+	}
+
+	m_sceneManager->setShadowTextureSettings(m_sizePerShadowTexture, lightTypeEnabledCount*3, Ogre::PF_FLOAT32_R);
+	m_sceneManager->setShadowTextureSelfShadow(m_selfShadows);
 	//m_sceneManager->setShadowCasterRenderBackFaces(false);
 
 	// Set up caster material - this is just a standard depth/shadow map caster
