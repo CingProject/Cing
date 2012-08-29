@@ -168,10 +168,34 @@ namespace Cing
 	*/
 	void ResourceManager::end()
 	{
-
 		m_bIsValid = false;
 	}
 
+
+	/**
+	* @brief Adds another resource location to be loaded (which may contain any asset: material scripts, shaders, textures, models...)
+	* 
+	* @param path Path to the folder to be added. It may be an absolute path, or relative to the executable
+	* @param recursive If true, all the folders contained within the specified path will be added recursively. If false, only 
+	* the specified folder will be added.
+	*/
+	void ResourceManager::addResourceLocation( const std::string path, bool recursive /*= true*/ )
+	{	
+		if ( !isValid() )
+		{
+			LOG_ERROR( "ResourceManager::addResourceLocation. Error: Trying to add a resource location before the ResourceManager has been initialized" );
+			return;
+		}
+
+		std::string absPath = path;
+		// if the path is not absolute, build it
+		if ( isPathAbsolute( absPath ) == false )
+			absPath = userExecPath + path;
+
+		// Add the resource and initialise it
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation( absPath, "FileSystem", userResourcesGroupName, recursive );
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup( userResourcesGroupName );
+	}
 
 	/**
 	* @internal
