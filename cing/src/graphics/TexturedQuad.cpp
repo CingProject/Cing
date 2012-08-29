@@ -234,6 +234,9 @@ namespace Cing
 		m_2dWidth = (m_textWidth / (float)width) * 2.0f;
 		m_2dHeight = (m_textHeight / (float)height) * 2.0f;
 
+		// No shadow casting in textured quads by default
+		enableCastShadows(false);
+
 		// The class is now initialized
 		m_bIsValid = true;
 
@@ -367,7 +370,7 @@ namespace Cing
 	}
 
 	/**
-	* @brief Sets the rotation of the quad (in relation to its parents)
+	* @brief Sets the orientation of the quad (in relation to its parents)
 	*
 	* @param[in] axis	rotation axis
 	* @param[in] angle rotation angle (degrees)
@@ -376,6 +379,16 @@ namespace Cing
 	{
 		Quaternion q( Ogre::Radian( Ogre::Degree( angle ) ), axis );
 		m_quadSceneNode->setOrientation( q );
+	}
+
+	/**
+	* @brief Sets the orientation of the quad (in relation to its parents)
+	*
+	* @param[in] orientation quaternion containing the orientation information
+	*/
+	void TexturedQuad::setOrientation( const Quaternion& orientation )
+	{
+		m_quadSceneNode->setOrientation( orientation );
 	}
 
 	/**

@@ -906,6 +906,18 @@ namespace Cing
 		m_quad.setOrientation( axis, angleRadians );
 	}
 
+	/**
+	* @brief Sets the rotation of the image (in relation to its parents)
+	*
+	* @param[in] orientation quaternion containing the orientation information
+	*/
+	void Image::setOrientation( const Quaternion& orientation )
+	{
+		if ( !isValid() )
+			THROW_EXCEPTION( "Trying to rotate an invalid image" );
+
+		m_quad.setOrientation( orientation );
+	}
 
 	/**
 	* @brief Adds rotation of the image (in relation to its parents)

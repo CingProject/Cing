@@ -60,6 +60,7 @@ namespace Cing
 		void	setScale		( float xScale, float yScale, float zScale );
 		void	setScale2d		( float xScale, float yScale );
 		void	setOrientation	( const Vector& axis, float angle );
+		void	setOrientation	( const Quaternion& orientation );
 		void	rotate			( const Vector& axis, float angle );
 		void  	setVisible      ( bool visible );
 		void  	setAdditiveMode ( bool value );
