@@ -68,6 +68,7 @@ material Superhero
 }
 
 // PSSM shadow caster mateiral: Use this to support transparent materials/textures casting shadows when using PSSM Shadow maps
+// Note: the material works better (for shadow casting), with alpha_rejection than with alpha_blend
 material ShadowCasterAlpha
 {
    technique
@@ -86,7 +87,8 @@ material ShadowCasterAlpha
          
          texture_unit
          {
-            texture c-letter
+			tex_address_mode clamp
+            texture c-letter.png
          }
       }
    }
@@ -196,7 +198,7 @@ material RTSS/ShadowCasterAlpha_MultiLightType
 		 
 			 texture_unit
 			 {
-				texture superhero.png
+				texture c-letter.png
 			 }
 		}						
 	}
@@ -214,7 +216,7 @@ material ShadowCasterAlpha/shadow_caster_alpha : PSSM/shadow_caster_alpha
          texture_unit
          {
             // Pass the texture with alpha channel to the caster
-            texture c-letter
+            texture c-letter.png
          }
       }
    }
