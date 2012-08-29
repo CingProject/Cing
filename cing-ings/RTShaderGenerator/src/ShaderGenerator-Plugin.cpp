@@ -112,7 +112,7 @@ bool ShaderGenerator::init()
 		m_shaderGenerator->setShaderCachePath(cachePath);      
 
 		// Set the scene manager.
-		m_shaderGenerator->addSceneManager(m_sceneManager); // Don't forget to change this to fit your needs.
+		m_shaderGenerator->addSceneManager(m_sceneManager);
 		LOG("ShaderGenerator Initialized Correctly");
 		
 		m_materialMgrListener = new ShaderGeneratorTechniqueResolverListener(m_shaderGenerator);				
@@ -152,6 +152,40 @@ void ShaderGenerator::end()
 }
 
 /**
+ * Adds a scene manager that will also use the RT Shader system to render its objects
+ * @param sceneManager to add
+ */
+void ShaderGenerator::addSceneManager( Ogre::SceneManager* sceneManager )
+{
+	// check system is ok
+	if ( !isValid() )
+	{
+		LOG_ERROR( "ShaderGenerator::addSceneManager Error ShaderGenerator is not valid or not correctly initialized." );
+		return;
+	}
+	
+	if ( m_shaderGenerator )
+		m_shaderGenerator->addSceneManager(sceneManager);
+}
+
+/**
+ * Removes a scene manager that will stop being bond to the RT Shader system to render its objects
+ * @param sceneManager to remove from the list
+ */
+void ShaderGenerator::removeSceneManager( Ogre::SceneManager* sceneManager )
+{
+	// check system is ok
+	if ( !isValid() )
+	{
+		LOG_ERROR( "ShaderGenerator::removeSceneManager Error ShaderGenerator is not valid or not correctly initialized." );
+		return;
+	}
+
+	if ( m_shaderGenerator )
+		m_shaderGenerator->removeSceneManager(sceneManager);
+}
+
+/**
  * Sets a lighting model that will be applied to all materials
  * @param newModel New lighting model that will be applied (previous model will be removed)
  * @param textureName Only applicable to normal mapping. Should be the name of the normal map texture to use.
@@ -160,7 +194,7 @@ void ShaderGenerator::end()
 bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, const std::string& textureName /*= ""*/ )
 {
 	// check system is ok
-	if ( !m_valid )
+	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::setLightingModel Error ShaderGenerator is not valid or not correctly initialized." );
 		return false;
@@ -255,7 +289,7 @@ bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, c
 bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
 {
 	// check system is ok
-	if ( !m_valid )
+	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::setLightingModel Error ShaderGenerator is not valid or not correctly initialized." );
 		return false;
@@ -375,7 +409,7 @@ void ShaderGenerator::clearShadowRenderStates()
 void ShaderGenerator::setupPSSMShadows( Ogre::ShadowTechnique technique )
 {
 	// Make sure the scene manager pointer is good
-	if ( !m_sceneManager )
+	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::setupPSSMShadows. Error: Scene Manager pointer is NULL" );
 		return;

@@ -22,12 +22,22 @@
 #ifndef ShaderGenerator_H
 #define ShaderGenerator_H
 
+// Include library to link here to make easier using the plugin (only windows for now).
+
+
 #include "RTShaderSystem/OgreRTShaderSystem.h"
 #include "common/CommonUtilsIncludes.h"
 
 #include "framework/CingPlugin.h"
 
 // TODO: pragma to include lib in visual studio
+#if defined(WIN32)
+#ifdef _DEBUG
+		#pragma comment(lib,"OgreRTShaderSystem_d.lib")
+#else
+		#pragma comment(lib,"OgreRTShaderSystem.lib")
+#endif
+#endif 
 
 ///< Lighting models.
 enum ShaderGeneratorLightingModel
@@ -69,10 +79,15 @@ public:
 	ShaderGenerator();
 	~ShaderGenerator();
 
+	// Scene manager should be set before the pluing init is called
 	void setSceneManger	(Ogre::SceneManager* sceneManager ) { m_sceneManager = sceneManager; } ///< If not called, the global ogreScenenManager will be used
 	bool init			();
 	void end			();
+	bool isValid		() const { return m_valid && (m_sceneManager != NULL) && (m_shaderGenerator != NULL); }
 
+	// Scene manager(s) related
+	void addSceneManager( Ogre::SceneManager* sceneManager );
+	void removeSceneManager( Ogre::SceneManager* sceneManager );
 	
 	// Change render states for generated shaders
 	bool setLightingModel	( ShaderGeneratorLightingModel newModel, const std::string& textureName = "" );
