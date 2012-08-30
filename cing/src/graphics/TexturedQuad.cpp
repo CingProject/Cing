@@ -234,11 +234,11 @@ namespace Cing
 		m_2dWidth = (m_textWidth / (float)width) * 2.0f;
 		m_2dHeight = (m_textHeight / (float)height) * 2.0f;
 
-		// No shadow casting in textured quads by default
-		enableCastShadows(false);
-
 		// The class is now initialized
 		m_bIsValid = true;
+
+		// No shadow casting in textured quads by default
+		enableCastShadows(false);
 
 		return true;
 	}
