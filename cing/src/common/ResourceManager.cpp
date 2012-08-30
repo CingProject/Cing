@@ -155,9 +155,6 @@ namespace Cing
 			}
 		}
 
-		// Add the resource location of the user data
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation( userDataPath, typeName, userResourcesGroupName, true );
-
 		m_bIsValid = true;
 	}
 
@@ -173,11 +170,28 @@ namespace Cing
 
 
 	/**
+	 * @brief Adds resource locations added by the user, so that the assets there are available
+	 */
+	void ResourceManager::loadUserResourceLocations()
+	{
+		// Add the resource location of the user data
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation( userDataPath, "FileSystem", userResourcesGroupName, true );
+
+		// Finally add any extra resource locations the user might have added
+		std::list<ResourceLocation>::iterator it = m_userAdditionalResourceLocations.begin();
+		for ( ; it != m_userAdditionalResourceLocations.end(); ++it )
+		{
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation( it->absPath, "FileSystem", userResourcesGroupName, it->recursive );
+		}
+	}
+
+	/**
 	* @brief Adds another resource location to be loaded (which may contain any asset: material scripts, shaders, textures, models...)
 	* 
 	* @param path Path to the folder to be added. It may be an absolute path, or relative to the executable
 	* @param recursive If true, all the folders contained within the specified path will be added recursively. If false, only 
 	* the specified folder will be added.
+	* @note This method must be called first thing in the setup(), before creating the window with size/fullscreen
 	*/
 	void ResourceManager::addResourceLocation( const std::string path, bool recursive /*= true*/ )
 	{	
@@ -193,8 +207,11 @@ namespace Cing
 			absPath = userExecPath + path;
 
 		// Add the resource and initialise it
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation( absPath, "FileSystem", userResourcesGroupName, recursive );
-		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup( userResourcesGroupName );
+		//static int idCounter = 0;
+		//std::string newResourceGroupName = userResourcesGroupName + toString(idCounter++);
+		//Ogre::ResourceGroupManager::getSingleton().addResourceLocation( absPath, "FileSystem", userResourcesGroupName, recursive );
+		//Ogre::ResourceGroupManager::getSingleton().loadResourceGroup( userResourcesGroupName );
+		m_userAdditionalResourceLocations.push_back( ResourceLocation(absPath, recursive) );
 	}
 
 	/**

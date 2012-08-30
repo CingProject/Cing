@@ -248,6 +248,9 @@ void Application::initSubSystems()
 	// any of the subsystems initialized below).
 	m_bIsValid = true;
 
+	// Load user resource locations
+	ResourceManager::getSingleton().loadUserResourceLocations();
+
 	// Init plugins that require it at this point
 	initPlugins( INIT_BEFORE_GRAPHICS );
 

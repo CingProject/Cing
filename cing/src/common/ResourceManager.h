@@ -49,8 +49,9 @@ public:
 	~ResourceManager();
 
 	// Init / Release / Update
-	void	init 	();
-	void	end		();	
+	void	init 						();
+	void	end							();
+	void	loadUserResourceLocations	();
 
 	// Query  Methods
 	bool	isValid	() { return m_bIsValid; }
@@ -78,8 +79,17 @@ private:
 	void extractUserAppPathLINUX	();
 	void extractUserAppPathMAC		();
 	
+	// Private types
+	struct ResourceLocation
+	{
+		ResourceLocation( const std::string& _absPath, bool _recursive): absPath(_absPath), recursive(_recursive) {}
+		std::string absPath;
+		bool		recursive;
+	};
+
 	// Attributes
-	bool	m_bIsValid;	  ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	std::list<ResourceLocation>	m_userAdditionalResourceLocations;	///< New resource locations that will be added
+	bool						m_bIsValid;							///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 
