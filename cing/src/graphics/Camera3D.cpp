@@ -107,7 +107,7 @@ namespace Cing
 
 		// Set Frustum
 		m_pOgreCamera->setNearClipDistance( 5 );
-		m_pOgreCamera->setFarClipDistance( 4000 );
+		m_pOgreCamera->setFarClipDistance( 5000 );
 
 		// Shadow far distance (in case there are shadows)
 		m_pOgreSceneManager->setShadowFarDistance( m_pOgreCamera->getFarClipDistance() );
