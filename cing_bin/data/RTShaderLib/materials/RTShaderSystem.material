@@ -58,6 +58,31 @@ material RTSS/NormalMapping_SinglePass
 	}
 }
 
+
+material RTSS/NormalMapping_SinglePass_ObjectSpace
+{
+	technique
+	{
+		pass
+		{
+			// Comment the specular in order to use only diffuse based normal map technique.
+			specular 1.0 1.0 1.0 32
+			
+			texture_unit
+			{
+				texture Panels_Diffuse.png
+			}				
+			
+			// RT Shader system section.
+ 			rtshader_system
+ 			{	 	
+ 				// Override lighting stage with normal map lighting.
+ 				lighting_stage normal_map Panels_Normal_Object.png object_space 0 bilinear 1 -1.0
+ 			}			
+		}				
+	}
+}
+
 // This is a multi pass nroaml map lighting based material.
 // It acts as any other multi light material.
 // This material defined to use only one type of light per lighting pass because the RTSS need to
