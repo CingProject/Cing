@@ -88,7 +88,9 @@ public:
 	unsigned long long getFrameCount() { return m_frameCount; };
 
 	// Plugins for the application	
-	void registerPlugin	( Plugin& plugin );
+	void			registerPlugin	( Plugin& plugin );
+	Cing::Plugin*	getPlugin		( const std::string& pluginName );
+
 
 private:
 	// private constructor to ensure singleton

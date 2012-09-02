@@ -60,11 +60,14 @@ enum PluginUpdateTime
 class Plugin
 {
 public:
-	Plugin(): m_initTime(NO_INIT), m_endTime(NO_END), m_updateTime(NO_UPDATE) {}
+	Plugin( const std::string& pluginName ): m_initTime(NO_INIT), m_endTime(NO_END), m_updateTime(NO_UPDATE), m_pluginName(pluginName) {}
 
 	virtual bool		init	()	{ return true; };	///< Override this method if you want your pluing init to be called. To define the call time, use setPluginInitTime method
 	virtual void		end		()	{};					///< Override this method if you want your pluing init to be called. To define the call time, use setPluginInitTime method
 	virtual bool		update	()	{ return true; };	///< Override this method if you want the plugin to have its update method called every frame
+
+	// Getters
+	const std::string&	getName	()	const { return m_pluginName; }
 
 	// Plugin method call times
 	void				setPluginInitTime	( PluginInitTime time)	{ m_initTime = time; }
@@ -78,6 +81,7 @@ private:
 	PluginInitTime		m_initTime;		///< Moment when the plugin init() method should be called by the app framework
 	PluginEndTime		m_endTime;		///< Moment when the plugin end() method should be called by the app framework
 	PluginUpdateTime	m_updateTime;	///< Moment when the plugin update() method should be called by the app framework
+	std::string			m_pluginName;	///< Name of the plugin (can be used to retrieve the plugin from anywhere in the code)
 };
 
 } // namespace

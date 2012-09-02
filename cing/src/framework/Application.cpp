@@ -418,6 +418,27 @@ void Application::registerPlugin( Plugin& plugin )
 }
 
 /**
+ * Returns a plugin registered in the system with a specific name. If there are several, the first will be returned.
+ * @param pluginName name of the plugin to be returned.
+ * @return pointer to the plugin if found, NULL if not found
+ */
+Cing::Plugin* Application::getPlugin( const std::string& pluginName )
+{
+	// search for a plugin with the received name (and return the first found
+	for ( PluginList::iterator it = m_plugins.begin(); it != m_plugins.end(); ++it )
+	{
+		Plugin* plugin = *it;
+		if ( plugin && (plugin->getName() == pluginName) )
+		{
+			return plugin;
+		}
+	}
+
+	// not found
+	return NULL;
+}
+
+/**
  * Calls the init methods for all the plugins whose init time matches the received parameter  time
  *
  * @param time The pluings with init time matching this parameter will have the init() method called.

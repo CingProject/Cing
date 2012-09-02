@@ -182,6 +182,16 @@ void registerPlugin( Plugin& plugin )
 	Application::getSingleton().registerPlugin( plugin );
 }
 
+/**
+ * Returns a plugin registered in the system with a specific name. If there are several, the first will be returned.
+ * @param pluginName name of the plugin to be returned.
+ * @return pointer to the plugin if found, NULL if not found
+ */
+Cing::Plugin* getPlugin( const std::string& pluginName )
+{
+	return Application::getSingleton().getPlugin( pluginName );
+}
+
 
 
 } // namespace Cing

@@ -51,7 +51,8 @@ void redraw();
 void setFrameRate( int frameRate );
 
 // Plugin related
-void registerPlugin( Plugin& plugin );
+void			registerPlugin	( Plugin& plugin );
+Cing::Plugin*	getPlugin		( const std::string& pluginName );
 
 } // namespace Cing
 
