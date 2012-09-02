@@ -90,8 +90,9 @@ public:
 	void removeSceneManager( Ogre::SceneManager* sceneManager );
 	
 	// Change render states for generated shaders
-	bool setLightingModel	( ShaderGeneratorLightingModel newModel, const std::string& textureName = "" );
-	bool setShadowModel		( ShaderGeneratorShadowModel newModel );
+	bool setLightingModel			( ShaderGeneratorLightingModel newModel, const std::string& textureName = "" );
+	bool setLightingModelToMaterial	( ShaderGeneratorLightingModel newModel, const std::string& materialName, const std::string& textureName = "", unsigned int pasIndex = 0 );
+	bool setShadowModel				( ShaderGeneratorShadowModel newModel );
 
 	// Shadow related controls (NOTE: these should be called before enabling shadows)
 	void enableDirLightCastShadows	( bool enable ) 		{ m_dirLightCastShadows = enable; }
@@ -100,12 +101,15 @@ public:
 	void enableSelfShadow			( bool enable )			{ m_selfShadows = enable; }
 	void setSizePerShadowTexture	( unsigned int size )	{ m_sizePerShadowTexture = size; }
 
+	// Material generation
+	void invalidateMaterial			( const std::string& materialName );
 
 private:
 	// private methods
-	void clearLightingRenderStates	();
-	void clearShadowRenderStates	();
-	void setupPSSMShadows			( Ogre::ShadowTechnique technique );
+	bool setLightingModelToRenderState	( Ogre::RTShader::RenderState* renderState, ShaderGeneratorLightingModel newModel, const std::string& textureName = "" );
+	void clearLightingRenderStates		();
+	void clearShadowRenderStates		();
+	void setupPSSMShadows				( Ogre::ShadowTechnique technique );
 
 
 	bool								m_valid;				///< True when the system has been correctly initialized		

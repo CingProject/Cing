@@ -33,6 +33,7 @@ using namespace Cing;
  * Clears attributes, but does not init the shader generation system
  */
 ShaderGenerator::ShaderGenerator():	
+	Cing::Plugin( "ShaderGenerator" ),
 	m_shaderGenerator(NULL), m_materialMgrListener(NULL), m_curLightingModel(PerVertexLighting), m_perPixelFogEnable(false),
 	m_specularEnable(false), m_shaderLibsPath(""), m_valid(false), m_sceneManager(NULL), m_viewPort(NULL)
 {
@@ -203,81 +204,13 @@ bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, c
 	// Get the global render state to apply the new lighting model to it
 	Ogre::RTShader::RenderState* globalRenderState = m_shaderGenerator->getRenderState(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
 	if ( !globalRenderState )
-				{
-		LOG_ERROR( "ShaderGenerator::setLightingModel Error getting global render state. Per Pixel Lighting will not be applied." );
+	{
+		LOG_ERROR( "ShaderGenerator::setLightingModel Error getting global render state. New Lighting model will not be applied." );
 		return false;
 	}	
 
-	// first, clear previous applied lighting models
-	clearLightingRenderStates();
-
-	// vars used in the switch
-	Ogre::RTShader::SubRenderState* newLightModel		= NULL;
-	Ogre::RTShader::NormalMapLighting* normalMapSubRS	= NULL;
-
-	// then, apply new lighting model
-	switch ( newModel )
-	{
-		case PerVertexLighting:
-			//Create a global subrender state for per pixel lighting. This will be applied to all materials in the scene.
-			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::FFPLighting::Type);
-			if ( !newLightModel )
-			{
-				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating PerVertexLighting sub render state. Per Vertex Lighting will not be applied." );
-				return false;
-			}
-			
-			// Add the subrender state, and we're done
-			globalRenderState->addTemplateSubRenderState(newLightModel);    
-		break;
-
-		case PerPixelLighting:
-			//Create a global subrender state for per pixel lighting. This will be applied to all materials in the scene.
-			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::PerPixelLighting::Type);
-			if ( !newLightModel )
-			{
-				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating PerPixelLighting sub render state. Per Pixel Lighting will not be applied." );
-				return false;
-			}
-			
-			// Add the subrender state, all working.
-			globalRenderState->addTemplateSubRenderState(newLightModel);    
-		break;
-
-		case NormalMapLightingTangentSpace:
-			//Create a global subrender state for normal mapping. This will be applied to all materials in the scene.
-			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::NormalMapLighting::Type);
-			if ( !newLightModel )
-			{
-				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating NormalMapLighting sub render state. Normal mapping Lighting will not be applied." );
-				return false;
-			}
-			
-			normalMapSubRS = static_cast<Ogre::RTShader::NormalMapLighting*>(newLightModel);			
-			normalMapSubRS->setNormalMapSpace(Ogre::RTShader::NormalMapLighting::NMS_TANGENT);
-			normalMapSubRS->setNormalMapTextureName(textureName);	
-
-			// Add the subrender state, all working.
-			globalRenderState->addTemplateSubRenderState(normalMapSubRS);    
-		break;
-
-		case NormalMapLightingObjectSpace:
-			//Create a global subrender state for normal mapping. This will be applied to all materials in the scene.
-			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::NormalMapLighting::Type);
-			if ( !newLightModel )
-			{
-				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating NormalMapLighting sub render state. Normal mapping Lighting will not be applied." );
-				return false;
-			}
-			
-			normalMapSubRS = static_cast<Ogre::RTShader::NormalMapLighting*>(newLightModel);			
-			normalMapSubRS->setNormalMapSpace(Ogre::RTShader::NormalMapLighting::NMS_OBJECT);
-			normalMapSubRS->setNormalMapTextureName(textureName);	
-
-			// Add the subrender state, all working.
-			globalRenderState->addTemplateSubRenderState(normalMapSubRS);    
-		break;
-	};
+	// Set the lighting model to the render state
+	setLightingModelToRenderState(globalRenderState, newModel, textureName);
 
 	// Invalidate the scheme in order to re-generate all shaders based technique related to this scheme.
 	m_shaderGenerator->invalidateScheme(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
@@ -286,7 +219,15 @@ bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, c
 	return true;
 }
 
-bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
+/**
+ * Sets a lighting model that will be applied to a specific material
+ * @param newModel New lighting model that will be applied (previous model will be removed)
+ * @param materialName Material that will use the new lighting model
+ * @param textureName Only applicable to normal mapping. Should be the name of the normal map texture to use.
+ * @param pasIndex Advanced optional parameter that allows to apply the new lighting model only to a specific pass for the material
+ * @return true if the lighting model was correctly applied, false otheriwse
+ */
+bool ShaderGenerator::setLightingModelToMaterial( ShaderGeneratorLightingModel newModel, const std::string& materialName, const std::string& textureName /*= ""*/, unsigned int pasIndex /*= 0*/ )
 {
 	// check system is ok
 	if ( !isValid() )
@@ -295,11 +236,73 @@ bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
 		return false;
 	}
 
+	// Create the shader based technique of this material.
+	bool success = m_shaderGenerator->createShaderBasedTechnique(materialName, Ogre::MaterialManager::DEFAULT_SCHEME_NAME, Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
+
+	// Setup custom shader sub render states according to current setup.
+	if (success)
+	{					
+		Ogre::MaterialPtr curMaterial	= Ogre::MaterialManager::getSingleton().getByName(materialName);
+		Ogre::Pass* curPass				= curMaterial->getTechnique(0)->getPass(0);
+
+		if (m_specularEnable)
+		{
+			curPass->setSpecular(Ogre::ColourValue::White);
+			curPass->setShininess(32.0);
+		}
+		else
+		{
+			curPass->setSpecular(Ogre::ColourValue::Black);
+			curPass->setShininess(0.0);
+		}
+		
+
+		// Grab the first pass render state. 
+		// NOTE: For more complicated samples iterate over the passes and build each one of them as desired.
+		Ogre::RTShader::RenderState* renderState = m_shaderGenerator->getRenderState(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, materialName, pasIndex);
+
+		// Get the global render state to apply the new lighting model to it
+		if ( !renderState )
+		{
+			LOG_ERROR( "ShaderGenerator::setLightingModel Error getting material render state. New Lighting model will not be applied." );
+			return false;
+		}	
+
+		// Remove all sub render states.
+		renderState->reset();
+
+		// Set the lighting model to the render state
+		success = setLightingModelToRenderState(renderState, newModel, textureName);
+
+		// Invalidate the scheme in order to re-generate all shaders based technique related to this scheme.
+		m_shaderGenerator->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, materialName);
+
+		return success;
+	}
+
+	// all good
+	return success;
+}
+
+/**
+ * Sets a shadowing model that will be applied to all materials
+ * @param newModel New shadow model that will be applied (previous model will be removed)
+ * @return true if the shadow model was correctly applied, false otheriwse
+ */
+bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
+{
+	// check system is ok
+	if ( !isValid() )
+	{
+		LOG_ERROR( "ShaderGenerator::setShadowModel Error ShaderGenerator is not valid or not correctly initialized." );
+		return false;
+	}
+
 	// Get the global render state to apply the new lighting model to it
 	Ogre::RTShader::RenderState* globalRenderState = m_shaderGenerator->getRenderState(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
 	if ( !globalRenderState )
 	{
-		LOG_ERROR( "ShaderGenerator::setLightingModel Error getting global render state. Per Pixel Lighting will not be applied." );
+		LOG_ERROR( "ShaderGenerator::setShadowModel Error getting global render state. Per Pixel Lighting will not be applied." );
 		return false;
 	}	
 
@@ -337,6 +340,122 @@ bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
 	// all good
 	return true;
 }
+
+/**
+ * Invalidates a material so that it is regenerated again with the Real Time Shader System
+ * @param materialName Name of the material to be re-generated
+ */
+void ShaderGenerator::invalidateMaterial( const std::string& materialName )
+{
+	// check system is ok
+	if ( !isValid() )
+	{
+		LOG_ERROR( "ShaderGenerator::invalidateMaterial Error ShaderGenerator is not valid or not correctly initialized." );
+		return;
+	}
+
+	m_shaderGenerator->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, materialName);
+}
+
+
+/**
+ * Sets a lighting model to a RT Shader system render state, which could be the global (to apply the lighting to all materials in the scene)
+ * or could be the render state of a specific material (to apply the lightintg model to that specific material only)
+ * @param renderState The Render state to apply the lighting model to
+ * @param newModel New Lighting model to apply to the render state
+ * @param textureName Name of the texture to use, in case the lighting model needs one (like for Normal Mapping)
+ * @return true if the lighting model was correctly applied, false otheriwse
+ */
+bool ShaderGenerator::setLightingModelToRenderState( Ogre::RTShader::RenderState* renderState, ShaderGeneratorLightingModel newModel, const std::string& textureName /*= ""*/ )
+{
+	// check system is ok
+	if ( !isValid() )
+	{
+		LOG_ERROR( "ShaderGenerator::setLightingModelToRenderState Error ShaderGenerator is not valid or not correctly initialized." );
+		return false;
+	}
+
+	// Now check render state pointer
+	if ( !renderState )
+	{
+		LOG_ERROR( "ShaderGenerator::setLightingModelToRenderState Error renderState received is NULL." );
+		return false;
+	}
+
+	// first, clear previous applied lighting models
+	clearLightingRenderStates();
+
+	// vars used in the switch
+	Ogre::RTShader::SubRenderState* newLightModel		= NULL;
+	Ogre::RTShader::NormalMapLighting* normalMapSubRS	= NULL;
+
+	// then, apply new lighting model
+	switch ( newModel )
+	{
+		case PerVertexLighting:
+			//Create a global subrender state for per pixel lighting. This will be applied to all materials in the scene.
+			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::FFPLighting::Type);
+			if ( !newLightModel )
+			{
+				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating PerVertexLighting sub render state. Per Vertex Lighting will not be applied." );
+				return false;
+			}
+			
+			// Add the subrender state, and we're done
+			renderState->addTemplateSubRenderState(newLightModel);    
+		break;
+
+		case PerPixelLighting:
+			//Create a global subrender state for per pixel lighting. This will be applied to all materials in the scene.
+			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::PerPixelLighting::Type);
+			if ( !newLightModel )
+			{
+				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating PerPixelLighting sub render state. Per Pixel Lighting will not be applied." );
+				return false;
+			}
+			
+			// Add the subrender state, all working.
+			renderState->addTemplateSubRenderState(newLightModel);    
+		break;
+
+		case NormalMapLightingTangentSpace:
+			//Create a global subrender state for normal mapping. This will be applied to all materials in the scene.
+			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::NormalMapLighting::Type);
+			if ( !newLightModel )
+			{
+				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating NormalMapLighting sub render state. Normal mapping Lighting will not be applied." );
+				return false;
+			}
+			
+			normalMapSubRS = static_cast<Ogre::RTShader::NormalMapLighting*>(newLightModel);			
+			normalMapSubRS->setNormalMapSpace(Ogre::RTShader::NormalMapLighting::NMS_TANGENT);
+			normalMapSubRS->setNormalMapTextureName(textureName);	
+
+			// Add the subrender state, all working.
+			renderState->addTemplateSubRenderState(normalMapSubRS);    
+		break;
+
+		case NormalMapLightingObjectSpace:
+			//Create a global subrender state for normal mapping. This will be applied to all materials in the scene.
+			newLightModel = m_shaderGenerator->createSubRenderState(Ogre::RTShader::NormalMapLighting::Type);
+			if ( !newLightModel )
+			{
+				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating NormalMapLighting sub render state. Normal mapping Lighting will not be applied." );
+				return false;
+			}
+			
+			normalMapSubRS = static_cast<Ogre::RTShader::NormalMapLighting*>(newLightModel);			
+			normalMapSubRS->setNormalMapSpace(Ogre::RTShader::NormalMapLighting::NMS_OBJECT);
+			normalMapSubRS->setNormalMapTextureName(textureName);	
+
+			// Add the subrender state, all working.
+			renderState->addTemplateSubRenderState(normalMapSubRS);    
+		break;
+	};
+
+	return true;
+}
+
 
 /**
  * Removes all the lighting models from the Render state. 
