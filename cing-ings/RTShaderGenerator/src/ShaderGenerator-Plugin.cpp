@@ -272,7 +272,9 @@ bool ShaderGenerator::setLightingModelToMaterial( ShaderGeneratorLightingModel n
 		renderState->reset();
 
 		// Set the lighting model to the render state
-		success = setLightingModelToRenderState(renderState, newModel, textureName);
+		Ogre::RTShader::SubRenderState* subRenderState = setLightingModelToRenderState(renderState, newModel, textureName);
+		if ( !subRenderState )
+			success = false;
 
 		// Invalidate the scheme in order to re-generate all shaders based technique related to this scheme.
 		m_shaderGenerator->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, materialName);
@@ -364,9 +366,9 @@ void ShaderGenerator::invalidateMaterial( const std::string& materialName )
  * @param renderState The Render state to apply the lighting model to
  * @param newModel New Lighting model to apply to the render state
  * @param textureName Name of the texture to use, in case the lighting model needs one (like for Normal Mapping)
- * @return true if the lighting model was correctly applied, false otheriwse
+ * @return the new subrenderstate added for this lighting model, or NULL if there was an error
  */
-bool ShaderGenerator::setLightingModelToRenderState( Ogre::RTShader::RenderState* renderState, ShaderGeneratorLightingModel newModel, const std::string& textureName /*= ""*/ )
+Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( Ogre::RTShader::RenderState* renderState, ShaderGeneratorLightingModel newModel, const std::string& textureName /*= ""*/ )
 {
 	// check system is ok
 	if ( !isValid() )
@@ -453,7 +455,7 @@ bool ShaderGenerator::setLightingModelToRenderState( Ogre::RTShader::RenderState
 		break;
 	};
 
-	return true;
+	return newLightModel;
 }
 
 

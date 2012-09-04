@@ -104,9 +104,12 @@ public:
 	// Material generation
 	void invalidateMaterial			( const std::string& materialName );
 
+	// Advanced direct access to shader generator. Useful to do things not wraped by this class
+	Ogre::RTShader::ShaderGenerator* getShaderGenerator() { return m_shaderGenerator; }
+
 private:
 	// private methods
-	bool setLightingModelToRenderState	( Ogre::RTShader::RenderState* renderState, ShaderGeneratorLightingModel newModel, const std::string& textureName = "" );
+	Ogre::RTShader::SubRenderState* setLightingModelToRenderState( Ogre::RTShader::RenderState* renderState, ShaderGeneratorLightingModel newModel, const std::string& textureName = "" );
 	void clearLightingRenderStates		();
 	void clearShadowRenderStates		();
 	void setupPSSMShadows				( Ogre::ShadowTechnique technique );
