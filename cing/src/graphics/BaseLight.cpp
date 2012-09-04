@@ -109,8 +109,9 @@ namespace Cing
 		// Attach billboard to light scene node
 		m_sceneNode->attachObject( m_lightFlareSet );
 
-		// Set light position
+		// Set light position and diffuse color
 		m_sceneNode->setPosition( x, y, z );
+		m_pLight->setDiffuseColour( Color(r, g, b).normalized() );
 
 		// The class is now initialized
 		m_bIsValid = true;
