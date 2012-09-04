@@ -94,6 +94,7 @@ namespace Cing
 		const Ogre::SceneNode*	getSceneNode	() const	{ return m_quadSceneNode;   }
 		Ogre::SceneNode*		getPivotSceneNode()			{ return m_pivotSceneNode;   }
 		const String&			getMaterialName	() const	{ return m_ogreMaterialName; }
+		const String&			getTextureName	() const	{ return m_ogreTextureName; }
 		bool					hasAlpha		() const;
 
 		// Texture coordinate control
