@@ -1748,6 +1748,13 @@ namespace Cing
 		if (type == INVERT)
 			cv::invert( m_cvImage, m_cvImage);
 
+		if (type == FLIP_X)
+			cv::flip( m_cvImage, m_cvImage, 0 );
+		else if (type == FLIP_Y)
+			cv::flip( m_cvImage, m_cvImage, 1 );
+		else if (type == FLIP_XY)
+			cv::flip( m_cvImage, m_cvImage, -1 );
+
 		// TODO
 		// Update texture when the next drawing call is made by the user
 		m_bUpdateTexture = true;
@@ -1778,12 +1785,20 @@ namespace Cing
 			IplImage tempImageHeader = (IplImage)m_cvImage;
 			m_imgThresholdFilter.apply( tempImageHeader, tempImageHeader);
 		}
-
 		if (type == INVERT)
 		{
 			cv::invert( m_cvImage, m_cvImage );
 
 		}
+
+		if (type == FLIP_X)
+			cv::flip( m_cvImage, m_cvImage, 0 );
+		else if (type == FLIP_Y)
+			cv::flip( m_cvImage, m_cvImage, 1 );
+		else if (type == FLIP_XY)
+			cv::flip( m_cvImage, m_cvImage, -1 );
+		
+
 		// TODO
 		// Update texture when the next drawing call is made by the user
 		m_bUpdateTexture = true;

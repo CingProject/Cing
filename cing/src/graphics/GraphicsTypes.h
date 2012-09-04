@@ -93,7 +93,10 @@ namespace Cing
 		//_OPAQUE,	///< set all the high bits in the image to opaque
 		THRESHOLD,	///< converts the image to black and white.
 		DILATE,		///< grow white/light areas
-		ERODE		///< shrink white/light areas
+		ERODE,		///< shrink white/light areas
+		FLIP_X,		///< flips the image horizontally (this flip is done by flipping the physical pixels, so it is slower than flipping the texture quad UV texture coordinates, or the vertex positions)
+		FLIP_Y,		///< flips the image vertically (this flip is done by flipping the physical pixels, so it is slower than flipping the texture quad UV texture coordinates, or the vertex positions)
+		FLIP_XY	///< flips the image horizontally and vertically (this flip is done by flipping the physical pixels, so it is slower than flipping the texture quad UV texture coordinates, or the vertex positions)
 	};
 
 	/// Ink types
