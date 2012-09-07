@@ -164,7 +164,7 @@ namespace Cing
 		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
 		
 		// Create the texture quad (to draw image)
-		m_quad.init( m_cvImage.cols, m_cvImage.rows, format, false, sm );
+		m_quad.init( m_cvImage.cols, m_cvImage.rows, format, DYNAMIC_WRITE_ONLY_DISCARDABLE, sm );
 
 		// Store the format
 		m_format			= format;
@@ -199,7 +199,7 @@ namespace Cing
 		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
 
 		// Create the texture quad (to draw image)
-		m_quad.init( m_cvImage.cols, m_cvImage.rows, m_format, true );
+		m_quad.init( m_cvImage.cols, m_cvImage.rows, m_format, RENDERTARGET );
 
 		// The class is now initialized
 		m_bIsValid			= true;
@@ -375,7 +375,7 @@ namespace Cing
 		}else{
 			// Create the texture quad (to draw image) or reset its width and height
 			if ( !isValid () )
-				m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format, false, sm  );
+				m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format, DYNAMIC_WRITE_ONLY_DISCARDABLE, sm  );
 			else if ( (int)m_image.getWidth() != (int)m_quad.getTextWidth() || (int)m_image.getHeight() != m_quad.getTextHeight() )
 				m_quad.reset( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
 		}
