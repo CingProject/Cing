@@ -99,10 +99,10 @@ namespace Cing
 	* @param[in] textureHeight Height of the texture to show on the quad
 	* @param[in] format  Format of the image. RGB for color images (red, green and blue), ARGB for color plus alpha channel for transparency
 	* GRAYSCALE for greyscale images, this is, black & white
-	* @param[in] renderTarget if true, this texture will be used as render target (to render a scene as view from a camera)
+	* @param[in] usage of the texture (allows to customize is usage depending on whether you plan to update the texture only, or also read its content, or even use it as a render target)
 	* @return true if the initialization was ok | false otherwise
 	*/
-	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget /*= false*/, Ogre::SceneManager* sm )
+	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, GraphicsType usage /*= DYNAMIC*/, Ogre::SceneManager* sm )
 	{
 		// Check if the class is already initialized
 		if ( isValid() )
@@ -128,7 +128,7 @@ namespace Cing
 		generateUniqueNames();
 
 		// Texture Usage
-		Ogre::TextureUsage usage = renderTarget? Ogre::TU_RENDERTARGET: Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE;
+		Ogre::TextureUsage textureUsage = (Ogre::TextureUsage)usage;
 
 		// Create the texture for the quad
 
@@ -142,10 +142,10 @@ namespace Cing
 				(Ogre::uint)m_textHeightP2,		// height
 				0,								// number of mipmaps
 				(Ogre::PixelFormat)format,		// pixel format
-				usage,							// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for textures updated very often (e.g. each frame)
+				textureUsage,					// usage as render target
 				0,
 				false,
-				0);	// FSAA value
+				0);								// FSAA value
 		}
 		else
 		{
@@ -156,8 +156,7 @@ namespace Cing
 				(Ogre::uint)m_textHeightP2,		// height
 				0,								// number of mipmaps
 				(Ogre::PixelFormat)format,		// pixel format
-				usage );						// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
-			// textures updated very often (e.g. each frame)
+				textureUsage );						// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for textures updated very often (e.g. each frame)
 		}
 
 		// Create a material for the quad

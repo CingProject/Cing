@@ -50,7 +50,7 @@ namespace Cing
 		~TexturedQuad();
 
 		// Init / Release 
-		bool  init				( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false, Ogre::SceneManager* sm = NULL );
+		bool  init				( int textureWidth, int textureHeight, GraphicsType format, GraphicsType usage = DYNAMIC, Ogre::SceneManager* sm = NULL );
 		void  end				();
 		bool  reset				( int textureWidth, int textureHeight, GraphicsType format );
 

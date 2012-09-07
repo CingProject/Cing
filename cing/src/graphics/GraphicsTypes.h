@@ -81,7 +81,15 @@ namespace Cing
 		CLOSE,
 	    // Coordinate systems
 		OPENGL3D,
-		PROCESSING
+		PROCESSING,
+
+		// Texture Usage Types. Any Ogre::TextureUsage should work http://www.ogre3d.org/docs/api/html/group__Resources.html#gaf140ec886884a864abc74a7556f8bf67
+		// this are just the most used ones
+		STATIC							= Ogre::TU_STATIC,							///< Fastest option, but altering the texture contents is very slow (use this if you don't plan to update the texture often)
+		DYNAMIC							= Ogre::TU_DYNAMIC,							///< Texture will be frequently updated, and both read/write can be done.
+		WRITE_ONLY						= Ogre::TU_WRITE_ONLY,						///< Use it if you plan on (not frequently) updating the texture without reading its content back
+		DYNAMIC_WRITE_ONLY_DISCARDABLE	= Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE,	///< Texture can be updated frequently, but no reading of its content can be done.
+		RENDERTARGET					= Ogre::TU_RENDERTARGET						///< The texture will be used as a render target (to render scenes on it)
 	};
 
 	/// Filter types
@@ -109,7 +117,7 @@ namespace Cing
 	enum RenderMode
 	{
 		DRAW_POINTS			= Ogre::PM_POINTS,
-		DRAW_WIREFRAME		 = Ogre::PM_WIREFRAME,
+		DRAW_WIREFRAME		= Ogre::PM_WIREFRAME,
 		DRAW_SOLID			= Ogre::PM_SOLID
 	};
 
