@@ -123,6 +123,8 @@ namespace Cing
 		void					enableLighting		( bool lighting );
 		void					enableCastShadows	( bool castShadows );
 
+		void					setSceneBlendType	( Ogre::SceneBlendType type );
+
 	protected:
 
 		// Private methods
@@ -168,6 +170,7 @@ namespace Cing
 		bool						m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene
 		bool						m_bIsValid;	            		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
+		Ogre::SceneBlendType		m_sbType;							///< Scene blend operation
 	};
 
 } // namespace Cing

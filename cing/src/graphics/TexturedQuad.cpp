@@ -187,6 +187,8 @@ namespace Cing
 		setColourOperationEx(LBX_BLEND_MANUAL, LBS_TEXTURE, LBS_CURRENT, 1,1, add);
 		*/
 
+		m_sbType = Ogre::SBT_REPLACE;
+
 		// Create the manual object (is used to define geometry on the fly)
 		if ( sm == NULL )
 			m_sm = GraphicsManager::getSingleton().getSceneManagerPtr();
@@ -260,6 +262,15 @@ namespace Cing
 		}
 
 	};
+
+	/**
+	* @brief Set blend operation
+	*/
+	void TexturedQuad::setSceneBlendType( Ogre::SceneBlendType type )
+	{
+		m_sbType = type;
+	};
+
 
 	/**
 	* @internal
@@ -985,6 +996,7 @@ namespace Cing
 	 */
 	void TexturedQuad::configureSceneBlending()
 	{
+
 		// If the image has alpha channel
 		if ( hasAlpha() || (m_alpha < 255) )
 		{
@@ -998,7 +1010,7 @@ namespace Cing
 		else
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_REPLACE );	
+			material->getTechnique(0)->getPass(0)->setSceneBlending( m_sbType );	
 			enableDepthWrite(true);
 			enableDepthCheck(true);
 		}
