@@ -816,6 +816,19 @@ namespace Cing
 			m_sceneNode->setVisible( visible );
 	}
 
+
+	/**
+	 * @brief Returns whether the object is visible or not
+	 *
+	 * @return true if it is visible, false otherwise
+	 */
+	bool Object3D::isVisible() const
+	{
+		if ( isValid() )
+			return m_entity->isVisible();
+		return false;
+	}
+
 	/**
 	 * @brief Sets the render queue in which this object will be rendered. This allows to control
 	 * which objects are rendered first ant which last.ç

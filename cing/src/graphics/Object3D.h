@@ -133,6 +133,7 @@ public:
 	void				setMaterial					( const std::string& materialName );
 
 	void				setVisible					( bool visible );
+	bool				isVisible					() const;
 
 	void				setRenderQueueGroup			( int queue );
 
