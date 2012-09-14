@@ -36,7 +36,7 @@ namespace Cing
  * @internal
  * @brief Represents a 3D plane. It can have an associated texture to draw it.
  */
-	class Plane: public Object3D
+class Plane: public Object3D
 {
 public:
 
@@ -45,8 +45,8 @@ public:
 	virtual ~Plane();
 
 	// Init / Release
-	void	init 			( float width, float height );
-	void	init 			( float size );
+	void	init 			( float width, float height, Ogre::SceneNode* parent = NULL );
+	void	init 			( float size, Ogre::SceneNode* parent = NULL );
 
 	// Query  Methods
 	bool	isValid		() { return m_bIsValid; }

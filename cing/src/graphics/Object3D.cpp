@@ -80,6 +80,7 @@ namespace Cing
 	*
 	* @param[in] meshName      Name of the mesh  (.mesh file) to be used by the object. If empty the object will have no mesh.
 	* @param[in] materialName  Name of the material (defines the visual aspect) of the object. If empty the object will have no material.
+	* @param[in] parent		   Parent scene node. If not passed a new node will be created
 	* @return true if the initialization was ok | false otherwise
 	*/
 	void Object3D::init( const std::string& meshName /*= ""*/, const std::string& materialName /*= ""*/, Ogre::SceneNode* parent /*= NULL*/ )
