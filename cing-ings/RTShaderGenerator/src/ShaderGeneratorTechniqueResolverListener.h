@@ -51,6 +51,7 @@ public:
 		const Ogre::String& schemeName, Ogre::Material* originalMaterial, unsigned short lodIndex, 
 		const Ogre::Renderable* rend)
 	{	
+		LOG_ENTER_FUNCTION; 
 		Ogre::Technique* generatedTech = NULL;
 
 		// Case this is the default shader generator scheme.
@@ -102,6 +103,7 @@ public:
 			}
 		}
 
+		LOG_EXIT_FUNCTION; 
 		return generatedTech;
 	}
 

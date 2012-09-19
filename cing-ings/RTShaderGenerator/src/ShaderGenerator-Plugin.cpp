@@ -74,11 +74,14 @@ ShaderGenerator::~ShaderGenerator()
  */
 bool ShaderGenerator::init()
 {
+	LOG_ENTER_FUNCTION; 
+
 	// Check the main Ogre Scene manager has not been created yet, we cannot init the system
 	if ( !ogreSceneManager && !m_sceneManager )
 	{
 		LOG_ERROR("ShaderGenerator Initialization Error: there is no main scene manager created, nor set for the Shader Generator.");
 		m_valid = false;
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}
 
@@ -87,6 +90,7 @@ bool ShaderGenerator::init()
 	{
 		LOG_ERROR("ShaderGenerator Initialization Error: there is no viewport set to the shader generator, nor a main viewport app created.");
 		m_valid = false;
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}
 
@@ -134,6 +138,7 @@ bool ShaderGenerator::init()
 		m_valid = false;
 	}
 
+	LOG_EXIT_FUNCTION; 
 	return m_valid;
 }
 
@@ -142,6 +147,8 @@ bool ShaderGenerator::init()
  */
 void ShaderGenerator::end()
 {
+	LOG_ENTER_FUNCTION; 
+
 	// If it's not valid, do nothing
 	if ( !m_valid )
 		return;
@@ -150,6 +157,7 @@ void ShaderGenerator::end()
 	m_materialMgrListener = NULL;
 
 	m_valid = false;
+	LOG_EXIT_FUNCTION; 
 }
 
 /**
@@ -158,15 +166,20 @@ void ShaderGenerator::end()
  */
 void ShaderGenerator::addSceneManager( Ogre::SceneManager* sceneManager )
 {
+	LOG_ENTER_FUNCTION; 
+
 	// check system is ok
 	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::addSceneManager Error ShaderGenerator is not valid or not correctly initialized." );
+		LOG_EXIT_FUNCTION; 
 		return;
 	}
 	
 	if ( m_shaderGenerator )
 		m_shaderGenerator->addSceneManager(sceneManager);
+
+	LOG_EXIT_FUNCTION; 
 }
 
 /**
@@ -175,15 +188,20 @@ void ShaderGenerator::addSceneManager( Ogre::SceneManager* sceneManager )
  */
 void ShaderGenerator::removeSceneManager( Ogre::SceneManager* sceneManager )
 {
+	LOG_ENTER_FUNCTION; 
+
 	// check system is ok
 	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::removeSceneManager Error ShaderGenerator is not valid or not correctly initialized." );
+		LOG_EXIT_FUNCTION; 
 		return;
 	}
 
 	if ( m_shaderGenerator )
 		m_shaderGenerator->removeSceneManager(sceneManager);
+
+LOG_EXIT_FUNCTION; 
 }
 
 /**
@@ -194,10 +212,13 @@ void ShaderGenerator::removeSceneManager( Ogre::SceneManager* sceneManager )
  */
 bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, const std::string& textureName /*= ""*/ )
 {
+	LOG_ENTER_FUNCTION; 
+
 	// check system is ok
 	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::setLightingModel Error ShaderGenerator is not valid or not correctly initialized." );
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}
 
@@ -206,6 +227,7 @@ bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, c
 	if ( !globalRenderState )
 	{
 		LOG_ERROR( "ShaderGenerator::setLightingModel Error getting global render state. New Lighting model will not be applied." );
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}	
 
@@ -214,6 +236,8 @@ bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, c
 
 	// Invalidate the scheme in order to re-generate all shaders based technique related to this scheme.
 	m_shaderGenerator->invalidateScheme(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
+
+	LOG_EXIT_FUNCTION; 
 
 	// all good
 	return true;
@@ -229,10 +253,13 @@ bool ShaderGenerator::setLightingModel( ShaderGeneratorLightingModel newModel, c
  */
 bool ShaderGenerator::setLightingModelToMaterial( ShaderGeneratorLightingModel newModel, const std::string& materialName, const std::string& textureName /*= ""*/, unsigned int pasIndex /*= 0*/ )
 {
+	LOG_ENTER_FUNCTION; 
+
 	// check system is ok
 	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::setLightingModel Error ShaderGenerator is not valid or not correctly initialized." );
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}
 
@@ -265,6 +292,7 @@ bool ShaderGenerator::setLightingModelToMaterial( ShaderGeneratorLightingModel n
 		if ( !renderState )
 		{
 			LOG_ERROR( "ShaderGenerator::setLightingModel Error getting material render state. New Lighting model will not be applied." );
+			LOG_EXIT_FUNCTION; 
 			return false;
 		}	
 
@@ -279,8 +307,11 @@ bool ShaderGenerator::setLightingModelToMaterial( ShaderGeneratorLightingModel n
 		// Invalidate the scheme in order to re-generate all shaders based technique related to this scheme.
 		m_shaderGenerator->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, materialName);
 
+		LOG_EXIT_FUNCTION; 
 		return success;
 	}
+
+	LOG_EXIT_FUNCTION; 
 
 	// all good
 	return success;
@@ -293,10 +324,13 @@ bool ShaderGenerator::setLightingModelToMaterial( ShaderGeneratorLightingModel n
  */
 bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
 {
+	LOG_ENTER_FUNCTION; 
+
 	// check system is ok
 	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::setShadowModel Error ShaderGenerator is not valid or not correctly initialized." );
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}
 
@@ -305,6 +339,7 @@ bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
 	if ( !globalRenderState )
 	{
 		LOG_ERROR( "ShaderGenerator::setShadowModel Error getting global render state. Per Pixel Lighting will not be applied." );
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}	
 
@@ -339,6 +374,8 @@ bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
 	// Invalidate the scheme in order to re-generate all shaders based technique related to this scheme.
 	m_shaderGenerator->invalidateScheme(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
 
+	LOG_EXIT_FUNCTION; 
+	
 	// all good
 	return true;
 }
@@ -349,6 +386,8 @@ bool ShaderGenerator::setShadowModel( ShaderGeneratorShadowModel newModel )
  */
 void ShaderGenerator::invalidateMaterial( const std::string& materialName )
 {
+	LOG_ENTER_FUNCTION; 
+
 	// check system is ok
 	if ( !isValid() )
 	{
@@ -357,6 +396,7 @@ void ShaderGenerator::invalidateMaterial( const std::string& materialName )
 	}
 
 	m_shaderGenerator->invalidateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, materialName);
+	LOG_EXIT_FUNCTION; 
 }
 
 
@@ -370,10 +410,13 @@ void ShaderGenerator::invalidateMaterial( const std::string& materialName )
  */
 Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( Ogre::RTShader::RenderState* renderState, ShaderGeneratorLightingModel newModel, const std::string& textureName /*= ""*/ )
 {
+	LOG_ENTER_FUNCTION; 
+
 	// check system is ok
 	if ( !isValid() )
 	{
 		LOG_ERROR( "ShaderGenerator::setLightingModelToRenderState Error ShaderGenerator is not valid or not correctly initialized." );
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}
 
@@ -381,6 +424,7 @@ Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( 
 	if ( !renderState )
 	{
 		LOG_ERROR( "ShaderGenerator::setLightingModelToRenderState Error renderState received is NULL." );
+		LOG_EXIT_FUNCTION; 
 		return false;
 	}
 
@@ -400,6 +444,7 @@ Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( 
 			if ( !newLightModel )
 			{
 				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating PerVertexLighting sub render state. Per Vertex Lighting will not be applied." );
+				LOG_EXIT_FUNCTION; 
 				return false;
 			}
 			
@@ -413,6 +458,7 @@ Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( 
 			if ( !newLightModel )
 			{
 				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating PerPixelLighting sub render state. Per Pixel Lighting will not be applied." );
+				LOG_EXIT_FUNCTION; 
 				return false;
 			}
 			
@@ -426,6 +472,7 @@ Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( 
 			if ( !newLightModel )
 			{
 				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating NormalMapLighting sub render state. Normal mapping Lighting will not be applied." );
+				LOG_EXIT_FUNCTION; 
 				return false;
 			}
 			
@@ -443,6 +490,7 @@ Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( 
 			if ( !newLightModel )
 			{
 				LOG_ERROR( "ShaderGenerator::setLightingModel Error creating NormalMapLighting sub render state. Normal mapping Lighting will not be applied." );
+				LOG_EXIT_FUNCTION; 
 				return false;
 			}
 			
@@ -455,6 +503,8 @@ Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( 
 		break;
 	};
 
+	LOG_EXIT_FUNCTION; 
+
 	return newLightModel;
 }
 
@@ -464,6 +514,8 @@ Ogre::RTShader::SubRenderState* ShaderGenerator::setLightingModelToRenderState( 
  */
 void ShaderGenerator::clearLightingRenderStates()
 {
+	LOG_ENTER_FUNCTION; 
+
 	// Grab the scheme render state.												
 	Ogre::RTShader::RenderState* schemRenderState = m_shaderGenerator->getRenderState(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
 
@@ -495,6 +547,8 @@ void ShaderGenerator::clearLightingRenderStates()
 			break;
 		}
 	}
+
+	LOG_EXIT_FUNCTION; 
 }
 
 /**
@@ -502,6 +556,8 @@ void ShaderGenerator::clearLightingRenderStates()
  */
 void ShaderGenerator::clearShadowRenderStates()
 {
+	LOG_ENTER_FUNCTION; 
+
 	// Grab the scheme render state.												
 	Ogre::RTShader::RenderState* schemRenderState = m_shaderGenerator->getRenderState(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
 
@@ -521,6 +577,8 @@ void ShaderGenerator::clearShadowRenderStates()
 			break;
 		}
 	}
+
+	LOG_EXIT_FUNCTION; 
 }
 
 /**
@@ -529,6 +587,8 @@ void ShaderGenerator::clearShadowRenderStates()
  */
 void ShaderGenerator::setupPSSMShadows( Ogre::ShadowTechnique technique )
 {
+	LOG_ENTER_FUNCTION; 
+
 	// Make sure the scene manager pointer is good
 	if ( !isValid() )
 	{
@@ -601,4 +661,6 @@ void ShaderGenerator::setupPSSMShadows( Ogre::ShadowTechnique technique )
 
 	Ogre::RTShader::RenderState* schemRenderState = m_shaderGenerator->getRenderState(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
 	schemRenderState->addTemplateSubRenderState(subRenderState);
+
+	LOG_EXIT_FUNCTION; 
 }
