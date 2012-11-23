@@ -53,7 +53,7 @@ public:
 	virtual ~SoundFMOD  ();
 
   // Actions
-	void	load		( const char* filename );
+	void	load		( const std::string& fileName );
 	void	play		( bool loop )           ;
 	void	pause		()                      ;
 	void	stop		()                      ;

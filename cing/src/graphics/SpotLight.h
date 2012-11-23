@@ -45,13 +45,13 @@ public:
 	~SpotLight();
 
 	// Init / Release / Update
-	bool  init( float r, float g, float b, float x, float y, float z, float nx, float ny, float nz, float angle, float concentration );
+	bool  init( float r, float g, float b, float x, float y, float z, float nx, float ny, float nz, float angleRad, float concentration );
 	void  end ();
 
 	// Setters
-	void  setRange			( float innerAngle, float outerAngle, float concentration = 1.0f );
-	void  setInnerAngle		( float innerAngle );
-	void  setOuterAngle		( float outerAngle );
+	void  setRange			( float innerAngleRad, float outerAngleRad, float concentration = 1.0f );
+	void  setInnerAngle		( float innerAngleRad );
+	void  setOuterAngle		( float outerAngleRad );
 	void  setConcentration	( float concentration );
 
 	// Query methods

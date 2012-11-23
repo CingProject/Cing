@@ -4,7 +4,7 @@
 //  It's very dependant on screen resolution
 //------------------------------------------------------
 
-uniform sampler tex: register(s0);
+uniform sampler2D tex: register(s0);
 
 static const float samples[10] =
 {
@@ -20,7 +20,8 @@ static const float samples[10] =
 0.08
 };
 
-float4 main(float2 texCoord: TEXCOORD0,
+float4 main(float4 Pos : POSITION,
+            float2 texCoord: TEXCOORD0,
             uniform float sampleDist,
             uniform float sampleStrength
            ) : COLOR
@@ -38,12 +39,12 @@ float4 main(float2 texCoord: TEXCOORD0,
 
    //Save the color to be used later
    float4 color = tex2D( tex, texCoord );
-
    //Average the pixels going along the vector
    float4 sum = color;
    for (int i = 0; i < 10; i++)
    {
-      sum += tex2D( tex, texCoord + dir * samples[i] * sampleDist );
+      float4 res=tex2D( tex, texCoord + dir * samples[i] * sampleDist );
+      sum += res;
    }
    sum /= 11;
 

@@ -1,5 +1,5 @@
 /* -------------------------------------------------------
-Copyright (c) 2009 Alberto G. Salguero (agsh@ugr.es)
+Copyright (c) 2012 Alberto G. Salguero (alberto.salguero at uca.es)
 
 Permission is hereby granted, free of charge, to any
 person obtaining a copy of this software and associated
@@ -52,6 +52,8 @@ namespace CCS
 
         virtual bool init()
         {
+			CameraMode::init();
+
             mCameraCS->setFixedYawAxis(true,mFixedAxis);
             mCameraCS->setAutoTrackingTarget(false);
 
@@ -114,6 +116,8 @@ namespace CCS
 
         virtual bool init()
         {
+			CameraMode::init();
+
             mCameraCS->setFixedYawAxis(true,mFixedAxis);
             mCameraCS->setAutoTrackingTarget(true);
 
@@ -133,21 +137,33 @@ namespace CCS
 	{
 	public:
 
+		/**
+		 * @param fixedStep true to try to avoid camera jittering (experimental)
+		 */
         ChaseCameraMode(CameraControlSystem* cam, const Ogre::Vector3 &relativePositionToCameraTarget
+			, Ogre::Real margin = 0.1f
+			, bool fixedStep = false, Ogre::Real delta = 0.001
 			, const Ogre::Vector3 &fixedAxis = Ogre::Vector3::UNIT_Y) 
             : CameraControlSystem::CameraModeWithTightness(cam)	
-			, CameraControlSystem::CollidableCamera(cam)
+			, CameraControlSystem::CollidableCamera(cam, margin)
             , mFixedAxis(fixedAxis)
 			, mRelativePositionToCameraTarget(relativePositionToCameraTarget)
-            
+            , mFixedStep(fixedStep)
+			, mDelta(delta)
         {
-            mTightness = 0.01f;
+            mTightness = 0.01;
+			mRemainingTime = 0;
         };
 
         virtual ~ChaseCameraMode(){};
 
         virtual bool init()
         {
+			CameraMode::init();
+
+			mDelta = 0;
+			mRemainingTime = 0;
+
             setFixedYawAxis(true, mFixedAxis);
             mCameraCS->setAutoTrackingTarget(true);
 
@@ -165,10 +181,37 @@ namespace CCS
 			{
 				Ogre::Vector3 cameraCurrentPosition = mCameraCS->getCameraPosition();
 				Ogre::Vector3 cameraFinalPositionIfNoTightness = mCameraCS->getCameraTargetPosition() 
-					+ mCameraCS->getCameraTargetOrientation() * mRelativePositionToCameraTarget;
+						+ mCameraCS->getCameraTargetOrientation() * mRelativePositionToCameraTarget;
 
-				Ogre::Vector3 diff = (cameraFinalPositionIfNoTightness - cameraCurrentPosition) * mTightness;
-				mCameraPosition += diff;
+				if(!mFixedStep)
+				{
+					Ogre::Vector3 diff = (cameraFinalPositionIfNoTightness - cameraCurrentPosition) * mTightness;
+					mCameraPosition += diff;
+					//! @todo mCameraPosition += diff * timeSinceLastFrame; this makes the camera mode time independent but it also make impossible to get a completely rigid link (tightness = 1)
+				}
+				else
+				{
+					mRemainingTime += timeSinceLastFrame;
+					int steps = (int)(mRemainingTime / mDelta);
+					Ogre::Real mFinalTime = steps * mDelta;
+					Ogre::Quaternion cameraCurrentOrientation = mCameraCS->getCameraOrientation();
+					Ogre::Real finalPercentage = mFinalTime / mRemainingTime;
+					Ogre::Vector3 cameraFinalPosition = cameraCurrentPosition + ((cameraFinalPositionIfNoTightness - cameraCurrentPosition) * finalPercentage);
+					Ogre::Quaternion cameraFinalOrientation = Ogre::Quaternion::Slerp(finalPercentage, cameraCurrentOrientation
+																						, mCameraCS->getCameraTargetOrientation()) ;
+
+					Ogre::Vector3 cameraIntermediatePosition = cameraCurrentPosition;
+					Ogre::Quaternion cameraIntermediateOrientation = cameraCurrentOrientation;
+					for(int i=0;i<steps;i++)
+					{
+						Ogre::Real percentage = ((i+1)/(Ogre::Real)steps);
+
+						Ogre::Vector3 intermediatePositionIfNoTightness = cameraCurrentPosition + ((cameraFinalPositionIfNoTightness - cameraCurrentPosition) * percentage);
+
+						Ogre::Vector3 diff = (intermediatePositionIfNoTightness - cameraCurrentPosition) * mTightness;
+						mCameraPosition += diff;
+					}
+				}
 
 				if(mCollisionsEnabled)
 				{
@@ -199,7 +242,7 @@ namespace CCS
             instantUpdate();
         }
 
-        inline virtual void setFixedYawAxis(bool useFixedAxis, const Ogre::Vector3 &fixedAxis = Ogre::Vector3::ZERO)
+        inline virtual void setFixedYawAxis(bool useFixedAxis, const Ogre::Vector3 &fixedAxis = Ogre::Vector3::UNIT_Y)
         {
             mFixedAxis = mFixedAxis;
             mCameraCS->setFixedYawAxis(true,mFixedAxis);
@@ -208,6 +251,10 @@ namespace CCS
     protected:
         Ogre::Vector3 mFixedAxis;
         Ogre::Vector3 mRelativePositionToCameraTarget;
+		
+		bool mFixedStep;
+		Ogre::Real mDelta;
+		Ogre::Real mRemainingTime;
 	};
 
     //--------------------------------------------------------------------------------------------------------------------
@@ -220,15 +267,15 @@ namespace CCS
 	public:
 
         ChaseFreeYawAxisCameraMode(CameraControlSystem* cam, const Ogre::Vector3 &relativePositionToCameraTarget
-            , Ogre::Quaternion rotation) 
-            : ChaseCameraMode(cam, relativePositionToCameraTarget)
+            , Ogre::Quaternion rotation, Ogre::Real collisionmargin = 0.1f) 
+            : ChaseCameraMode(cam, relativePositionToCameraTarget, collisionmargin)
         {
             mRotationOffset = rotation;
         }
 
         ChaseFreeYawAxisCameraMode(CameraControlSystem* cam, const Ogre::Vector3 &relativePositionToCameraTarget
-			, const Ogre::Radian roll, const Ogre::Radian yaw, const Ogre::Radian pitch) 
-            : ChaseCameraMode(cam, relativePositionToCameraTarget)
+			, const Ogre::Radian roll, const Ogre::Radian yaw, const Ogre::Radian pitch, Ogre::Real collisionmargin = 0.1f) 
+			: ChaseCameraMode(cam, relativePositionToCameraTarget, collisionmargin)
         {
             mRotationOffset = Ogre::Quaternion(roll,Ogre::Vector3::UNIT_Z) 
                             * Ogre::Quaternion(yaw,Ogre::Vector3::UNIT_Y)
@@ -239,6 +286,8 @@ namespace CCS
 
         virtual bool init()
         {
+			CameraMode::init();
+
             ChaseCameraMode::setFixedYawAxis(false);
             mCameraCS->setAutoTrackingTarget(false);
 
@@ -328,6 +377,8 @@ namespace CCS
 
         virtual bool init()
         {
+			CameraMode::init();
+
             mCameraCS->setFixedYawAxis(false);
             mCameraCS->setAutoTrackingTarget(false);
 
@@ -437,6 +488,8 @@ namespace CCS
 
         virtual bool init()
         {
+			CameraMode::init();
+
             mCameraCS->setFixedYawAxis(true,mFixedAxis);
             mCameraCS->setAutoTrackingTarget(true);
 
@@ -484,12 +537,15 @@ namespace CCS
 			, mFixedAxis(fixedAxis)
 			, mMargin(margin)
             , mInverse(inverse)
+			, mFocusPos(focusPos)
         { };
 
         virtual ~ThroughTargetCameraMode(){};
 
         virtual bool init()
         {
+			CameraMode::init();
+
             mCameraCS->setFixedYawAxis(true,mFixedAxis);
             mCameraCS->setAutoTrackingTarget(true);
 
@@ -635,6 +691,8 @@ namespace CCS
 
         virtual bool init()
         {
+			CameraMode::init();
+
             mCameraCS->setFixedYawAxis(true, mFixedAxis);
             mCameraCS->setAutoTrackingTarget(true);
 
@@ -716,6 +774,8 @@ namespace CCS
 
         virtual bool init()
         {
+			CameraMode::init();
+
             mCameraCS->setFixedYawAxis(false);
             mCameraCS->setAutoTrackingTarget(false);
             

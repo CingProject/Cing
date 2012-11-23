@@ -81,7 +81,15 @@ namespace Cing
 		CLOSE,
 	    // Coordinate systems
 		OPENGL3D,
-		PROCESSING
+		PROCESSING,
+
+		// Texture Usage Types. Any Ogre::TextureUsage should work http://www.ogre3d.org/docs/api/html/group__Resources.html#gaf140ec886884a864abc74a7556f8bf67
+		// this are just the most used ones
+		STATIC							= Ogre::TU_STATIC,							///< Fastest option, but altering the texture contents is very slow (use this if you don't plan to update the texture often)
+		DYNAMIC							= Ogre::TU_DYNAMIC,							///< Texture will be frequently updated, and both read/write can be done.
+		WRITE_ONLY						= Ogre::TU_WRITE_ONLY,						///< Use it if you plan on (not frequently) updating the texture without reading its content back
+		DYNAMIC_WRITE_ONLY_DISCARDABLE	= Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE,	///< Texture can be updated frequently, but no reading of its content can be done.
+		RENDERTARGET					= Ogre::TU_RENDERTARGET						///< The texture will be used as a render target (to render scenes on it)
 	};
 
 	/// Filter types
@@ -93,7 +101,10 @@ namespace Cing
 		//_OPAQUE,	///< set all the high bits in the image to opaque
 		THRESHOLD,	///< converts the image to black and white.
 		DILATE,		///< grow white/light areas
-		ERODE		///< shrink white/light areas
+		ERODE,		///< shrink white/light areas
+		FLIP_X,		///< flips the image horizontally (this flip is done by flipping the physical pixels, so it is slower than flipping the texture quad UV texture coordinates, or the vertex positions)
+		FLIP_Y,		///< flips the image vertically (this flip is done by flipping the physical pixels, so it is slower than flipping the texture quad UV texture coordinates, or the vertex positions)
+		FLIP_XY	///< flips the image horizontally and vertically (this flip is done by flipping the physical pixels, so it is slower than flipping the texture quad UV texture coordinates, or the vertex positions)
 	};
 
 	/// Ink types
@@ -106,7 +117,7 @@ namespace Cing
 	enum RenderMode
 	{
 		DRAW_POINTS			= Ogre::PM_POINTS,
-		DRAW_WIREFRAME		 = Ogre::PM_WIREFRAME,
+		DRAW_WIREFRAME		= Ogre::PM_WIREFRAME,
 		DRAW_SOLID			= Ogre::PM_SOLID
 	};
 
@@ -130,8 +141,11 @@ namespace Cing
 	// Shadow techniques
 	enum ShadowTechnique
 	{
+		// Basic fixed pipeline based techniques
 		STENCIL_ADDITIVE	= Ogre::SHADOWTYPE_STENCIL_ADDITIVE,
-		STENCIL_MODULATIVE	= Ogre::SHADOWTYPE_STENCIL_MODULATIVE
+		STENCIL_MODULATIVE	= Ogre::SHADOWTYPE_STENCIL_MODULATIVE,
+		TEXTURE_ADDITIVE	= Ogre::SHADOWTYPE_TEXTURE_ADDITIVE,
+		TEXTURE_MODULATIVE	= Ogre::SHADOWTYPE_TEXTURE_MODULATIVE
 	};
 
 	/// Lights

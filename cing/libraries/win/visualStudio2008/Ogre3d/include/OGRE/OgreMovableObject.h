@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2009 Torus Knot Software Ltd
+Copyright (c) 2000-2011 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -378,7 +378,7 @@ namespace Ogre {
             
         /** As setQueryFlags, except the flags passed as parameters are removed from the
         existing flags on this object. */
-        virtual void removeQueryFlags(unsigned long flags) { mQueryFlags &= ~flags; }
+        virtual void removeQueryFlags(uint32 flags) { mQueryFlags &= ~flags; }
         
         /// Returns the query flags relevant for this object
         virtual uint32 getQueryFlags(void) const { return mQueryFlags; }
@@ -613,7 +613,7 @@ namespace Ogre {
 			A type flag is like a query flag, except that it applies to all instances
 			of a certain type of object.
 		*/
-		unsigned long getTypeFlags(void) const { return mTypeFlag; }
+		uint32 getTypeFlags(void) const { return mTypeFlag; }
 
 	};
 	/** @} */

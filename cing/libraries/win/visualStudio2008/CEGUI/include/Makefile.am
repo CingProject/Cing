@@ -1,11 +1,18 @@
 SUBDIRS = . elements falagard ImageCodecModules RendererModules ScriptingModules WindowRendererSets XMLParserModules
 
 pkginclude_HEADERS = CEGUI.h \
+                 CEGUIAffector.h \
+                 CEGUIAnimation.h \
+                 CEGUIAnimationInstance.h \
+                 CEGUIAnimationManager.h \
+                 CEGUIAnimation_xmlHandler.h \
                  CEGUIBase.h \
+                 CEGUIBasicInterpolators.h \
                  CEGUIBasicRenderedStringParser.h \
                  CEGUIBiDiVisualMapping.h \
                  CEGUIBoundSlot.h \
                  CEGUICentredRenderedString.h \
+                 CEGUIChainedXMLHandler.h \
                  CEGUIColourRect.h \
                  CEGUIConfig.h \
                  CEGUIConfig_xmlHandler.h \
@@ -41,11 +48,14 @@ pkginclude_HEADERS = CEGUI.h \
                  CEGUIImagesetManager.h \
                  CEGUIImageset_xmlHandler.h \
                  CEGUIInputEvent.h \
+                 CEGUIInterpolator.h \
                  CEGUIIteratorBase.h \
                  CEGUIJustifiedRenderedString.h \
+                 CEGUIKeyFrame.h \
                  CEGUILeftAlignedRenderedString.h \
                  CEGUILogger.h \
                  CEGUIMemberFunctionSlot.h \
+				 CEGUIMinizipResourceProvider.h \
                  CEGUIMouseCursor.h \
                  CEGUINamedXMLResourceManager.h \
                  CEGUIPixmapFont.h \
@@ -64,6 +74,8 @@ pkginclude_HEADERS = CEGUI.h \
                  CEGUIRenderedStringWordWrapper.h \
                  CEGUIRenderer.h \
                  CEGUIRenderEffect.h \
+				 CEGUIRenderEffectFactory.h \
+				 CEGUIRenderEffectManager.h \
                  CEGUIRenderTarget.h \
                  CEGUIRenderingContext.h \
                  CEGUIRenderQueue.h \

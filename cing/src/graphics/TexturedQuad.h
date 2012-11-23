@@ -50,7 +50,7 @@ namespace Cing
 		~TexturedQuad();
 
 		// Init / Release 
-		bool  init				( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget = false, Ogre::SceneManager* sm = NULL );
+		bool  init				( int textureWidth, int textureHeight, GraphicsType format, GraphicsType usage = DYNAMIC, Ogre::SceneManager* sm = NULL );
 		void  end				();
 		bool  reset				( int textureWidth, int textureHeight, GraphicsType format );
 
@@ -60,6 +60,7 @@ namespace Cing
 		void	setScale		( float xScale, float yScale, float zScale );
 		void	setScale2d		( float xScale, float yScale );
 		void	setOrientation	( const Vector& axis, float angle );
+		void	setOrientation	( const Quaternion& orientation );
 		void	rotate			( const Vector& axis, float angle );
 		void  	setVisible      ( bool visible );
 		void  	setAdditiveMode ( bool value );
@@ -93,28 +94,36 @@ namespace Cing
 		const Ogre::SceneNode*	getSceneNode	() const	{ return m_quadSceneNode;   }
 		Ogre::SceneNode*		getPivotSceneNode()			{ return m_pivotSceneNode;   }
 		const String&			getMaterialName	() const	{ return m_ogreMaterialName; }
+		const String&			getTextureName	() const	{ return m_ogreTextureName; }
 		bool					hasAlpha		() const;
 
 		// Texture coordinate control
-		void			flipVertical	(bool flip = true);
-		void			flipHorizontal	(bool flip = true);
+		void					flipVertical	(bool flip = true);
+		void					flipHorizontal	(bool flip = true);
 
 		// Operators 
-		void			operator = ( const TexturedQuad& other );
+		void					operator = ( const TexturedQuad& other );
 
 		// Texture / material control
-		void			setTransparency		( float alpha );
-		void			forceRenderQueue	( unsigned int renderQueueId );
-		void			restoreRenderQueue	() { m_renderQueueForced = false; }
-		void			enableDepthWrite	( bool value );
-		void			enableDepthCheck	( bool value );
+		void					setTransparency		( float alpha );
+		void					forceRenderQueue	( unsigned int renderQueueId );
+		void					restoreRenderQueue	() { m_renderQueueForced = false; }
+		void					enableDepthWrite	( bool value );
+		void					enableDepthCheck	( bool value );
 
-		void			setMaterial			( const std::string& materialName );
+		void					setMaterial			( const std::string& materialName );
+		void					setTexture			( const std::string& fileName );
 
-		void			setSceneNode		( Ogre::SceneNode* node)   { m_quadSceneNode = node; };
-		void			setPivotSceneNode	( Ogre::SceneNode* node)   { m_pivotSceneNode = node; };
+		void					setSceneNode		( Ogre::SceneNode* node)   { m_quadSceneNode = node; };
+		void					setPivotSceneNode	( Ogre::SceneNode* node)   { m_pivotSceneNode = node; };
 
-		Ogre::SceneManager* getSceneManager	() { return m_sm; }
+		Ogre::SceneManager*		getSceneManager	() { return m_sm; }
+
+		// Lighting, Shadow and other material settings
+		void					enableLighting		( bool lighting );
+		void					enableCastShadows	( bool castShadows );
+
+		void					setSceneBlendType	( Ogre::SceneBlendType type );
 
 	protected:
 
@@ -161,6 +170,7 @@ namespace Cing
 		bool						m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene
 		bool						m_bIsValid;	            		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
+		Ogre::SceneBlendType		m_sbType;							///< Scene blend operation
 	};
 
 } // namespace Cing
