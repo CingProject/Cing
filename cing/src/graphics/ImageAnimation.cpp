@@ -69,7 +69,10 @@ namespace Cing
 			// Set the animation material
 			Ogre::MaterialPtr material = getTexturedQuad().getMaterial();
 			if ( !material.isNull() )
+			{
 				material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAnimatedTextureName( baseName, nFrames, durationSecs );
+				//material->getTechnique(0)->getPass(0)->setSceneBlendingOperation( Ogre::SBO_ADD );
+			}
 			else
 			{
 				LOG_ERROR( "ImageAnimation::load Could not load the animation. Null material found." );

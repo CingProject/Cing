@@ -85,7 +85,7 @@ public:
 	void				translate			( float x, float y, float z );
 
 	void				setOrientation		( const Quaternion& orientation );
-	void				setOrientation		( const Vector& axis, float angle );
+	void				setOrientation		( const Vector& axis, float angleDegrees );
 
 	void				rotate				( float angleRad );
 	void				rotateX				( float angleRad );
@@ -133,6 +133,7 @@ public:
 	void				setMaterial					( const std::string& materialName );
 
 	void				setVisible					( bool visible );
+	bool				isVisible					() const;
 
 	void				setRenderQueueGroup			( int queue );
 

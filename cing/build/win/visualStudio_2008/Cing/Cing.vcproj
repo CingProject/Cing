@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="_Cing"
 	ProjectGUID="{FE179849-DD52-473E-BE15-5A5E52BFFF1F}"
 	RootNamespace="Cing"
@@ -45,7 +45,7 @@
 				Optimization="0"
 				InlineFunctionExpansion="0"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_44;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_42;&quot;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include&quot;;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\;..\..\..\..\libraries\win\visualStudio2008\OpenAL\include"
+				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_48;&quot;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include&quot;;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\;..\..\..\..\libraries\win\visualStudio2008\OpenAL\include"
 				PreprocessorDefinitions="WIN32;__WIN32__;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				MinimalRebuild="false"
 				ExceptionHandling="2"
@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP /Zm124"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_44;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_42;&quot;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include&quot;;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\;..\..\..\..\libraries\win\visualStudio2008\OpenAL\include"
+				AdditionalIncludeDirectories="..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_48;&quot;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include&quot;;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\;..\..\..\..\libraries\win\visualStudio2008\OpenAL\include"
 				PreprocessorDefinitions="WIN32;__WIN32__;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL"
 				StringPooling="false"
 				MinimalRebuild="false"
@@ -174,11 +174,23 @@
 				Name="Scripts"
 				>
 				<File
-					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Basic_Cing.material"
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\CingMaterials.material"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Example.material"
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Examples-Advanced.material"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\Examples.material"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\cing_bin\data\materials\scripts\OffsetMapping.material"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\cing_bin\data\RTShaderLib\materials\RTShaderSystem.material"
 					>
 				</File>
 			</Filter>
@@ -671,6 +683,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\..\src\framework\CingPlugin.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\..\src\framework\FrameworkPrereqs.h"
 						>
 					</File>
@@ -736,6 +752,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\..\src\graphics\ImageResourceManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\graphics\RTTRectSaveManager.h"
 						>
 					</File>
 					<File
@@ -914,6 +934,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\..\src\graphics\ImageResourceManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\src\graphics\RTTRectSaveManager.cpp"
 						>
 					</File>
 					<File
@@ -1265,6 +1289,26 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="cing-ings"
+			>
+			<Filter
+				Name="RTShaderGenerator"
+				>
+				<File
+					RelativePath="..\..\..\..\..\cing-ings\RTShaderGenerator\src\ShaderGenerator-Plugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\cing-ings\RTShaderGenerator\src\ShaderGenerator-Plugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\cing-ings\RTShaderGenerator\src\ShaderGeneratorTechniqueResolverListener.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<File

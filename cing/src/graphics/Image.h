@@ -80,6 +80,7 @@ namespace Cing
 
 		// Transformations
 		void			setOrientation	( const Vector& axis, float angleRadians );
+		void			setOrientation	( const Quaternion& orientation );
 		void			rotate			( const Vector& axis, float angleRadians ); ///< Rotates around an axis specificed by the provided normalization vector, by an amount in radians provided by the angle specificed
 		void			setScale		( float xScale, float yScale, float zScale );
 

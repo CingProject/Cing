@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2009 Torus Knot Software Ltd
+Copyright (c) 2000-2011 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -372,6 +372,14 @@ namespace Ogre {
 		@param includeMipMaps Whether to embed mipmaps in the image
 		*/
 		virtual void convertToImage(Image& destImage, bool includeMipMaps = false);
+		
+		/** Retrieve a platform or API-specific piece of information from this texture.
+		 This method of retrieving information should only be used if you know what you're doing.
+		 @param name The name of the attribute to retrieve
+		 @param pData Pointer to memory matching the type of data you want to retrieve.
+		*/
+		virtual void getCustomAttribute(const String& name, void* pData) {}
+		
 
 
     protected:

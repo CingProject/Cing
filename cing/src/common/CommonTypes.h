@@ -42,13 +42,16 @@ namespace Cing
 	// Math
 	typedef Ogre::Vector2     		Point2;
 	typedef Ogre::Vector2     		Vector2;
+	typedef Vector2     			Vector2d;
 
 	typedef Ogre::Vector3     		Point;
 	typedef Ogre::Vector3     		Vector;
 	typedef Vector	     			Vector3;
+	typedef Vector3     			Vector3d;
 
 	typedef Ogre::Vector4     		Point4;
 	typedef Ogre::Vector4     		Vector4;
+	typedef Vector4     			Vector4d;
 
 	typedef Ogre::Quaternion		Quaternion;
 

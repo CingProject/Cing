@@ -1,5 +1,5 @@
 /* -------------------------------------------------------
-Copyright (c) 2009 Alberto G. Salguero (agsh@ugr.es)
+Copyright (c) 2012 Alberto G. Salguero (alberto.salguero at uca.es)
 
 Permission is hereby granted, free of charge, to any
 person obtaining a copy of this software and associated
@@ -69,7 +69,12 @@ namespace CCS
 			 *
 			 * @return true if no errors found
 			 */
-            virtual bool init(){ return true; };
+            virtual bool init()
+			{ 
+				mCameraPosition = mCameraCS->getCameraPosition(); 
+				mCameraOrientation = mCameraCS->getCameraOrientation();
+				return true; 
+			};
 
 			/**
 			 * @brief Called when the camera mode is deactivated
@@ -137,7 +142,7 @@ namespace CCS
 		/**
 		 * @brief Base class for collidable camera modes
 		 */
-        class CollidableCamera
+        class DllExport CollidableCamera
         {
         public:
 
@@ -145,10 +150,11 @@ namespace CCS
 			 * @brief Constructor
 			 * @param cam a reference to a valid CCS
 			 */
-            CollidableCamera(CameraControlSystem* cam) 				
+			CollidableCamera(CameraControlSystem* cam, Ogre::Real margin = 0.1f) 				
 				: mCameraCS2(cam)
 				, mCollisionsEnabled(false)
-			{};
+				, mMargin(margin)
+			{ };
 
 			/**
 			 * @brief Destructor
@@ -157,6 +163,15 @@ namespace CCS
 
             inline virtual void setCollisionsEnabled(bool value) { mCollisionsEnabled = value; }
             inline virtual bool getCollisionsEnabled() { return mCollisionsEnabled; }
+
+			/**
+			 * @brief Margin value for the collision delegates
+			 * 
+			 * @param margin the distance 
+			 */
+			inline void setMargin(Ogre::Real margin){ mMargin = margin; }
+
+			inline Ogre::Real getMargin(){ return mMargin; }
 
 			// A CollisionDelegate takes as params the position of the target and the camera, and returns the 
 			// the new camera position.
@@ -179,9 +194,19 @@ namespace CCS
 			 */
 			Ogre::Vector3 DefaultCollisionDetectionFunction(Ogre::Vector3 cameraTargetPosition, Ogre::Vector3 cameraPosition);
 
+			/**
+			* @brief Ignore the object in collision delegates that use Ogre's ray scene queries.
+			*
+			* @param object The object that shoud be ignored
+			*/
+			void addToIgnoreList(Ogre::MovableObject* object){ mIgnoreList.insert(object); };
+
 		protected:
 			CameraControlSystem* mCameraCS2;
 			bool mCollisionsEnabled;
+			Ogre::Real mMargin;
+
+			std::set<Ogre::MovableObject*> mIgnoreList;
 		};
 
 		/** 
@@ -291,18 +316,12 @@ namespace CCS
 		 *
 		 * @return the ogre::camera
 		 */
-		inline Ogre::Camera* getOgreCamera()
-		{
-            return mCamera;
-		}
+		inline Ogre::Camera* getOgreCamera(){ return mCamera; }
 
 		/**
 		 * @brief Set the ogre::camera associated to the CCS
 		 */
-		inline void setOgreCamera(Ogre::Camera* camera)
-		{
-            mCamera = camera;
-		}
+		inline void setOgreCamera(Ogre::Camera* camera){ mCamera = camera; }
 
 		/**
 		 * @brief Set the focus of the scene
@@ -373,6 +392,8 @@ namespace CCS
 		 */
         void setAutoTrackingTarget(bool autoTracking);
 
+		bool isAutoTrackingTarget();
+
 		/**
 		 * @brief Set the fixed yaw axis
 		 *
@@ -393,6 +414,27 @@ namespace CCS
 		inline Ogre::Real getTimeSinceLastFrameLastUpdate(){ return mTimeSinceLastFrameLastUpdate; };
 
 		inline Ogre::SceneManager* getSceneManager(){ return mSceneMgr; };
+
+		/**
+		 * @brief Ignore the object in collision delegates that use Ogre's ray scene queries FOR ALL THE REGISTERED CAMERA MODES.
+		 *
+		 * @param object The object that shoud be ignored
+		 */
+		void addToIgnoreList(Ogre::MovableObject* object);
+
+		/**
+		 * @brief Set camera position manually. Use it with care: the position of the camera will be overridden by any camera mode (if set).
+		 *
+		 * @param position The position of the camera node
+		 */
+		void _setCameraPosition(Ogre::Vector3& position);
+
+		/**
+		 * @brief Set camera orientation manually. Use it with care: the orientation of the camera will be overridden by any camera mode (if set).
+		 *
+		 * @param orientation The orientation of the camera node
+		 */
+		void _setCameraOrientation(Ogre::Quaternion& orientation);
 
 	protected:
 
