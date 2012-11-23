@@ -36,7 +36,7 @@ namespace Cing
  * @internal
  * @brief Represents a 3D Sphere. It can have an associated texture to draw it.
  */
-	class Sphere: public Object3D
+class Sphere: public Object3D
 {
 public:
 
@@ -45,7 +45,7 @@ public:
 	virtual ~Sphere();
 
 	// Init / Release
-	void	init 			( float diameter );
+	void	init 			( float diameter, Ogre::SceneNode* parent = NULL );
 
 	// Query  Methods
 	bool	isValid			() { return m_bIsValid; }

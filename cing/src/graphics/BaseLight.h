@@ -50,33 +50,38 @@ namespace Cing
 		virtual ~BaseLight();
 
 		// Init / Release / Update
-		bool  init              ( float r, float g, float b, float x, float y, float z );
-		void  end               ();
+		bool  	init              	( float r, float g, float b, float x, float y, float z );
+		void  	end               	();
+
+		// Global control
+		void	enable				( bool enable );
+		bool	isEnabled			() const;
 
 		// Set methods
-		void  setPosition       ( float x, float y, float z );
-		void  setPosition       ( float x, float y );
-		void  setPosition       ( const Vector& pos );
+		void  	setPosition       	( float x, float y, float z );
+		void  	setPosition       	( float x, float y );
+		void  	setPosition       	( const Vector& pos );
 
-		void  setDirection      ( float x, float y, float z );
-		void  setDirection      ( float x, float y );
-		void  setDirection      ( const Vector& dir );
+		void  	setDirection      	( float x, float y, float z );
+		void  	setDirection      	( float x, float y );
+		void  	setDirection      	( const Vector& dir );
 
-		void  setDiffuseColor   ( float r, float g, float b );
-		void  setDiffuseColor   ( const Color& color );
+		void  	setDiffuseColor   	( float r, float g, float b );
+		void  	setDiffuseColor   	( const Color& color );
 
-		void  setSpecularColor  ( float r, float g, float b );
-		void  setSpecularColor  ( const Color& color );
+		void  	setSpecularColor  	( float r, float g, float b );
+		void  	setSpecularColor  	( const Color& color );
 
-		void  setLightType      ( Light::LightTypes type );
+		void  	setLightType      	( Light::LightTypes type );
 
-		void  setAttenuation	( float range, float constant, float linear, float quadratic );
+		void  	setAttenuation		( float range, float constant, float linear, float quadratic );
+		void	setAttenuation		( float range );
 
 		// Shadows
-		void  castShadows		( bool cast );
+		void	castShadows			( bool cast );
 
 		// Debug methods
-		void	drawDebug		( bool draw = true);
+		void	drawDebug			( bool draw = true);
 
 		// Query methods
 		bool				isValid     () const { return m_bIsValid; }

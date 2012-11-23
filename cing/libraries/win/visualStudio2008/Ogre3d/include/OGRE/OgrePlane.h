@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2009 Torus Knot Software Ltd
+Copyright (c) 2000-2011 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -88,8 +88,8 @@ namespace Ogre {
         Side getSide (const Vector3& rkPoint) const;
 
         /**
-        returns the side where the aligneBox is. the flag BOTH_SIDE indicates an intersecting box.
-        one corner ON the plane is sufficient to consider the box and the plane intersecting.
+        Returns the side where the alignedBox is. The flag BOTH_SIDE indicates an intersecting box.
+        One corner ON the plane is sufficient to consider the box and the plane intersecting.
         */
         Side getSide (const AxisAlignedBox& rkBox) const;
 
@@ -151,7 +151,7 @@ namespace Ogre {
         }
         bool operator!=(const Plane& rhs) const
         {
-            return (rhs.d != d && rhs.normal != normal);
+            return (rhs.d != d || rhs.normal != normal);
         }
 
         _OgreExport friend std::ostream& operator<< (std::ostream& o, const Plane& p);

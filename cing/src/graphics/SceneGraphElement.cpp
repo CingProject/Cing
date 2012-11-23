@@ -64,4 +64,29 @@ namespace Cing
 		m_sceneNode->addChild( child.getSceneNode() );
 	}
 
+	/**
+	 * @brief Changes the current parent scene node (detaches from current and attaches to the new node)
+	 * @param parent New parent node of this element
+	 */
+	void SceneGraphElement::changeParentNode( Ogre::SceneNode* parent )
+	{
+		// Check the parent is valid
+		if ( !parent )
+		{
+			LOG_ERROR( "SceneGraphElement::changeParentNote. The received scene node is NULL, or the current object has not been initialized." );
+			return;
+		}
+
+		// Check we have a valid scene node
+		if ( !m_sceneNode )
+		{
+			LOG_ERROR( "SceneGraphElement::changeParentNote. This scene node elemnet has not been initialized" );
+			return;
+		}
+	
+		// Remove this node from our current parent
+		m_sceneNode->getParentSceneNode()->removeChild( m_sceneNode );
+		parent->addChild( m_sceneNode );
+	}
+
 } // namespace Cing

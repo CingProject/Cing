@@ -122,8 +122,14 @@ void Application::endApp()
 	if ( !isValid() )
 		return;
 
+	// End plugins that require it at this point
+	endPlugins( END_BEFORE_USER );
+
 	// End user application
 	end();
+
+	// End plugins that require it at this point
+	endPlugins( END_AFTER_USER );
 
 	// Release input manager
 	InputManager::getSingleton().end();
@@ -142,6 +148,9 @@ void Application::endApp()
 
 	// Release the log manager
 	LogManager::getSingleton().end();
+
+	// End plugins that require it at this point
+	endPlugins( END_AFTER_CORE );
 
 	// The class is not valid anymore
 	m_bIsValid = false;
@@ -167,14 +176,22 @@ void Application::drawApp()
 		// Update input manager
 		InputManager::getSingleton().update();
 
+		// Update plugins that require it at this point
+		updatePlugins( UPDATE_BEFORE_USER );
+
 		// Draw user app
 		if (m_loop)
 			draw();
 
+		// Update plugins that require it at this point
+		updatePlugins( UPDATE_AFTER_USER );
+
 		// Draw user app one time if the user calls redraw() function
 		if (m_needUpdate)
 		{
+			updatePlugins( UPDATE_BEFORE_USER );
 			draw();
+			updatePlugins( UPDATE_AFTER_USER );
 			m_needUpdate = false;
 		}
 
@@ -183,6 +200,9 @@ void Application::drawApp()
 
 		// Update rendering
 		GraphicsManager::getSingleton().draw();
+
+		// Update plugins that require it at this point
+		updatePlugins( UPDATE_AFTER_RENDER );
 
 		// Update sound()???
 
@@ -228,8 +248,23 @@ void Application::initSubSystems()
 	// any of the subsystems initialized below).
 	m_bIsValid = true;
 
-	// Init graphics manager
-	GraphicsManager::getSingleton().init();
+	// Load user resource locations
+	ResourceManager::getSingleton().loadUserResourceLocations();
+
+	// Init plugins that require it at this point
+	initPlugins( INIT_BEFORE_GRAPHICS );
+
+	// Create app window (and init graphics engine)
+	GraphicsManager::getSingleton().createWindow();
+
+	// Init plugins that require it at this point
+	initPlugins( INIT_BEFORE_RESOURCE_INIT );
+
+	// Init graphics manager's resources
+	GraphicsManager::getSingleton().initReSources();
+
+	// Init plugins that require it at this point
+	initPlugins( INIT_AFTER_GRAPHICS );
 
 	// Init input manager
 	InputManager::getSingleton().init();
@@ -240,6 +275,9 @@ void Application::initSubSystems()
 
 	// Init GUI Manager
 	GUIManagerCEGUI::getSingleton().init( GraphicsManager::getSingleton().getMainWindow().getOgreWindow(),&GraphicsManager::getSingleton().getSceneManager() );
+
+	// Init plugins that require it at this point
+	initPlugins( INIT_AFTER_SUBSYSTEMS );
 }
 
 /**
@@ -357,10 +395,10 @@ void Application::delay( unsigned int milliseconds)
 
 
 /**
-* @brief Forces the application to execute at a specific frame rate (if possible).
-*
-* @param forcedFrameRate new frame rate for the application execution
-*/
+ * @brief Forces the application to execute at a specific frame rate (if possible).
+ *
+ * @param forcedFrameRate new frame rate for the application execution
+ */
 void Application::frameRate( int forcedFrameRate )
 {
 	m_forcedFrameRate = forcedFrameRate;
@@ -369,5 +407,101 @@ void Application::frameRate( int forcedFrameRate )
 	m_timePerFrameMillis = 1000.0 / (double)m_forcedFrameRate;
 }
 
+/**
+ * @brief Forces the application to execute at a specific frame rate (if possible).
+ *
+ * @param forcedFrameRate new frame rate for the application execution
+ */
+void Application::registerPlugin( Plugin& plugin )
+{
+	m_plugins.push_back( &plugin );
+}
+
+/**
+ * Returns a plugin registered in the system with a specific name. If there are several, the first will be returned.
+ * @param pluginName name of the plugin to be returned.
+ * @return pointer to the plugin if found, NULL if not found
+ */
+Cing::Plugin* Application::getPlugin( const std::string& pluginName )
+{
+	// search for a plugin with the received name (and return the first found
+	for ( PluginList::iterator it = m_plugins.begin(); it != m_plugins.end(); ++it )
+	{
+		Plugin* plugin = *it;
+		if ( plugin && (plugin->getName() == pluginName) )
+		{
+			return plugin;
+		}
+	}
+
+	// not found
+	return NULL;
+}
+
+/**
+ * Calls the init methods for all the plugins whose init time matches the received parameter  time
+ *
+ * @param time The pluings with init time matching this parameter will have the init() method called.
+ */
+void Application::initPlugins( PluginInitTime time )
+{
+	for ( PluginList::iterator it = m_plugins.begin(); it != m_plugins.end(); ++it )
+	{
+		Plugin* plugin = *it;
+		if ( plugin )
+		{
+			if ( plugin->getPluginInitTime() == time )
+				plugin->init();
+		}
+		else
+		{
+			LOG_ERROR( "There is NULL Plugin registered in the Application." );
+		}
+	}
+}
+
+/**
+ * Calls the end methods for all the plugins whose end time matches the received parameter  time
+ *
+ * @param time The pluings with end time matching this parameter will have the end() method called.
+ */
+void Application::endPlugins( PluginEndTime time )
+{
+	for ( PluginList::iterator it = m_plugins.begin(); it != m_plugins.end(); ++it )
+	{
+		Plugin* plugin = *it;
+		if ( plugin )
+		{
+			if ( plugin->getPluginEndTime() == time )
+				plugin->end();
+		}
+		else
+		{
+			LOG_ERROR( "There is NULL Plugin registered in the Application." );
+		}
+	}
+}
+
+/**
+ * Calls the update methods for all the plugins whose update time matches the received parameter  time
+ *
+ * @param time The pluings with update time matching this parameter will have the update() method called.
+ */
+void Application::updatePlugins( PluginUpdateTime time )
+{
+	for ( PluginList::iterator it = m_plugins.begin(); it != m_plugins.end(); ++it )
+	{
+		Plugin* plugin = *it;
+		if ( plugin )
+		{
+			if ( plugin->getPluginUpdateTime() == time )
+				plugin->update();
+		}
+		else
+		{
+			LOG_ERROR( "There is NULL Plugin registered in the Application." );
+		}
+	}
+}
 
 } // namespace Cing

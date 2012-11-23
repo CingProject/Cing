@@ -64,10 +64,10 @@ namespace Cing
 	* @brief Tries to load the audio file from given path
 	* @param [in] filename Path to the file (relative to application)
 	*/
-	void SoundFMOD::load( const char* filename )
+	void SoundFMOD::load( const std::string& fileName )
 	{
 		// Check if the file exist
-		std::string completePath = ResourceManager::userDataPath + filename;
+		std::string completePath = ResourceManager::userDataPath + fileName;
 		if ( !fileExists( completePath ) )
 		{
 			end();
@@ -92,9 +92,9 @@ namespace Cing
 
 		// Create the sound
 		if ( createSound( completePath.c_str() ) )
-			LOG( "Sound %s successfully loaded", filename );
+			LOG( "Sound %s successfully loaded", fileName.c_str() );
 		else
-			LOG( "Error loading sound %s", filename );
+			LOG( "Error loading sound %s", fileName.c_str() );
 	}
 
 	/**

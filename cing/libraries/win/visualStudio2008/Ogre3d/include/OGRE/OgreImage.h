@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2009 Torus Knot Software Ltd
+Copyright (c) 2000-2011 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -430,8 +430,15 @@ namespace Ogre {
          * is only valid for cubemaps and volume textures. This uses the first (largest)
          * mipmap.
          */
-        ColourValue getColourAt(int x, int y, int z) const;
+        ColourValue getColourAt(size_t x, size_t y, size_t z) const;
         
+        /**
+         * Set colour value at a certain location in the image. The z coordinate
+         * is only valid for cubemaps and volume textures. This uses the first (largest)
+         * mipmap.
+         */
+        void setColourAt(ColourValue const &cv, size_t x, size_t y, size_t z);
+
         /**
          * Get a PixelBox encapsulating the image data of a mipmap
          */

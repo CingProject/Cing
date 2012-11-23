@@ -25,6 +25,7 @@
 
 #include "CommonUserAPI.h"
 #include "eString.h"
+#include "ResourceManager.h"
 
 #include <stdarg.h>
 #include <sstream>
@@ -130,6 +131,18 @@ void println( String &msg )
 void setLogLevel ( LogMessageLevel level )
 {
 	LogManager::getSingleton().setLogLevel( (LogManager::LogMessageLevel)level );
+}
+
+/**
+ * @brief Adds another resource location to be loaded (which may contain any asset: material scripts, shaders, textures, models...)
+ * 
+ * @param path Path to the folder to be added. It may be an absolute path, or relative to the executable
+ * @param recursive If true, all the folders contained within the specified path will be added recursively. If false, only 
+ * the specified folder will be added.
+ */
+void addResourceLocation( const std::string path, bool recursive /*= true*/ )
+{
+	ResourceManager::getSingleton().addResourceLocation( path, recursive );
 }
 
 

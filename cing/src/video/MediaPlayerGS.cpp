@@ -386,7 +386,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR_NTIMES( 1, "MediaPlayerGS not corretly initialized. No valid will be returned" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. No valid will be returned" );
 		}
 		else
 		{
@@ -423,7 +423,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized" );
 			return false;
 		}
 
@@ -442,7 +442,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized" );
 			return false;
 	}
 
@@ -462,7 +462,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized. Time cannot be obtained" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. Time cannot be obtained" );
 			return 0;
 		}
 
@@ -490,7 +490,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized. File will not play" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. File will not play" );
 			return;
 		}
 
@@ -525,7 +525,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized. File will not loop" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. File will not loop" );
 			return;
 		}
 
@@ -561,7 +561,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized. File will not stop (as it is not playing)" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. File will not stop (as it is not playing)" );
 			return;
 		}
 
@@ -585,7 +585,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized. File will not pause (as it is not playing)" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. File will not pause (as it is not playing)" );
 			return;
 		}
 
@@ -608,7 +608,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized. File will not jump" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. File will not jump" );
 			return;
 		}
 
@@ -679,7 +679,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized" );
 			return;
 		}
 		
@@ -707,7 +707,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized" );
 			return;
 		}
 		
@@ -736,7 +736,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized. File will not play" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. File will not play" );
 			return;
 		}
 
@@ -754,7 +754,7 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerGS not corretly initialized. File will not play" );
+			LOG_ERROR_NTIMES( 5, "MediaPlayerGS not corretly initialized. File will not play" );
 			return 0;
 		}
 
