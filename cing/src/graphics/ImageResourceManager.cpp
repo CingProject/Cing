@@ -108,16 +108,17 @@ bool ImageResourceManager::init()
 IplImage*	ImageResourceManager::getImage( int width, int height, int channels ) 
 {
 	// Check ok number of channels
-	if ( ( channels != 1) && ( channels != 3 ) )
+	if ( ( channels != 1) && ( channels != 3 ) && ( channels != 4 ) )
 	{
-		LOG_ERROR( "Requesting an image with a non supported number of channels. Supported 1 (Grayscale) or 3 (RGB)" );
+		LOG_ERROR( "Requesting an image with a non supported number of channels. Supported 1 (Grayscale), 3 (RGB) or 4 (RGBA)" );
 		return NULL;
 	}
 
 	// Search for the desired image into the image container	
 	int index = 0;
-	if ( channels == 1 )			index = 0;
-	else if ( channels == 3 ) index = 1;
+	if ( channels == 1 )		index = 0;
+	else if ( channels == 3 )	index = 1;
+	else if ( channels == 4 )	index = 2;
 
 	// Search the image
 	for ( size_t i = 0; i < m_imagePool[index].size(); ++i )
@@ -148,8 +149,9 @@ void ImageResourceManager::releaseImage( IplImage* image )
 {
 	// Search for the desired image into the image container	
 	int index = 0;
-	if ( image->nChannels == 1 )			index = 0;
-	else if ( image->nChannels == 3 ) index = 1;
+	if ( image->nChannels == 1 )		index = 0;
+	else if ( image->nChannels == 3 )	index = 1;
+	else if ( image->nChannels == 4 )	index = 2;
 	else return;
 
 	// Search the image
@@ -185,8 +187,14 @@ void ImageResourceManager::end()
 	for ( size_t i = 0; i < m_imagePool[1].size(); ++i )
 		cvReleaseImage( &m_imagePool[1][i].image );
 
+	// 4 channel images
+	for ( size_t i = 0; i < m_imagePool[2].size(); ++i )
+		cvReleaseImage( &m_imagePool[2][i].image );
+
+
 	m_imagePool[0].clear();
 	m_imagePool[1].clear();
+	m_imagePool[2].clear();
 		
 	// The class is not valid anymore
 	m_bIsValid = false;
