@@ -47,6 +47,8 @@ void	println( String &msg );
 // System log level control
 void	setLogLevel					( LogMessageLevel level );
 
+// Resources
+void addResourceLocation( const std::string path, bool recursive = true );
 
 } // namespace Cing
 

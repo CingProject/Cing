@@ -118,15 +118,14 @@ void CameraController::init( Camera3D& cameraToControl )
 	m_freeCam->setRotationFactor( 0.2f );
 	m_cameraCS->registerCameraMode("Free",m_freeCam);
 
+	// Set the initial camera mode (Free)
+	m_cameraCS->setCurrentCameraMode(m_freeCam);
+	m_cameraCS->setCameraTarget(GraphicsManager::getSingleton().getSceneManager().getRootSceneNode());
+
 	// Set the camera position
 	LOG( "Default Camera Controller forces OPENGL3D coordinate system" );
 	GraphicsManager::getSingleton().applyCoordinateSystemTransform(OPENGL3D);
 	m_cameraCS->getOgreCamera()->setPosition( Vector( 0, 0, 2000.0 ) );
-
-	// Set the initial camera mode (Free)
-	m_cameraCS->setCameraTarget(GraphicsManager::getSingleton().getSceneManager().getRootSceneNode());
-	m_cameraCS->setCurrentCameraMode(m_freeCam);
-
 
 	m_bIsValid = true;
 }

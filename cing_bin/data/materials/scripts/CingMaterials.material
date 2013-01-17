@@ -1,0 +1,249 @@
+//------------------------
+// Basic Materials
+//------------------------
+
+ 
+// Empty material, used as default material for new objects (unless otherwise specified)
+material EmptyMaterial
+{
+   technique
+   {
+      pass
+      {
+      }   
+   }
+}
+
+ 
+// Empty material with no culling, used as default material for new objects (unless otherwise specified)
+material EmptyMaterialNoCulling
+{
+   technique
+   {
+      pass
+      {
+			cull_hardware none
+      }   
+   }
+}
+
+// This material allow to render the vertex color
+material VertexColorMaterial
+{
+    technique
+    {
+        pass
+        {
+         	cull_hardware none
+        	scene_blend alpha_blend
+        	lighting off
+            ambient  vertexcolour
+            diffuse  vertexcolour
+            emissive vertexcolour
+        }
+    }
+}
+
+material Superhero
+{
+	transparency_casts_shadows on
+
+	technique
+	{
+		pass
+		{	
+			lighting on
+			cull_hardware none
+			scene_blend alpha_blend
+
+			depth_write off
+				
+			texture_unit
+			{
+				tex_address_mode clamp
+				texture superhero.png
+			}
+		}
+	}
+}
+
+// PSSM shadow caster mateiral: Use this to support transparent materials/textures casting shadows when using PSSM Shadow maps
+// Note: the material works better (for shadow casting), with alpha_rejection than with alpha_blend
+material ShadowCasterAlpha
+{
+   technique
+   {
+      shadow_caster_material "ShadowCasterAlpha/shadow_caster_alpha"
+      
+      pass
+      {
+         cull_hardware none
+         cull_software none
+
+         ambient 0.5 0.5 0.5 1
+         diffuse 0.6 0.6 0.6 1
+         
+         alpha_rejection greater_equal 192
+         
+         texture_unit
+         {
+			tex_address_mode clamp
+            texture c-letter.png
+         }
+      }
+   }
+}
+
+// Custom: Same as NormalMapping_MultiPass but with multiple light types (NormalMapping_MultiPass is only point)
+material RTSS/ShadowCasterAlpha_MultiLightType
+{
+	technique
+	{
+		shadow_caster_material "ShadowCasterAlpha/shadow_caster_alpha"
+				
+		// Base ambient pass
+		pass ambient
+		{
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 1 1 1
+			diffuse 0 0 0
+			specular 0 0 0 0
+			
+			//alpha_rejection greater_equal 192
+			//scene_blend alpha_blend
+			
+			// RT Shader system section.			
+ 			rtshader_system
+ 			{	
+ 				// Override dynamic light count with zero light count.
+ 				// Doing this will cause the RTSS to create 
+ 				// ambient lighting shaders.
+ 				// If not doing that the RTSS it will use the current scene light count
+ 				// which will result in full lighting calculation in this pass.
+				light_count 0 0 0
+			}
+		}	
+		
+		// Lighting pass.
+		pass lighting_d
+		{
+			// Comment the specular in order to use only diffuse based normal map technique.
+			specular 1.0 1.0 1.0 32
+			
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 0 0 0 
+			
+			// do this for each point light
+			// You MUST specify the light type when working with the RT Shader System in iterative lighting method. 
+			// otherwise an exception will be thrown.
+			iteration once_per_light directional
+
+			scene_blend add					
+			//alpha_rejection greater_equal 192
+		}	
+		
+		// Lighting pass.
+		pass lighting_p
+		{
+			// Comment the specular in order to use only diffuse based normal map technique.
+			specular 1.0 1.0 1.0 32
+			
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 0 0 0 
+			
+			// do this for each point light
+			// You MUST specify the light type when working with the RT Shader System in iterative lighting method. 
+			// otherwise an exception will be thrown.
+			iteration once_per_light point
+
+			//alpha_rejection greater_equal 192
+			scene_blend add					
+		}	
+			
+		// Lighting pass.
+		pass lighting_s
+		{
+			// Comment the specular in order to use only diffuse based normal map technique.
+			specular 1.0 1.0 1.0 32
+			
+			// base colours, not needed for rendering, but as information
+			// to lighting pass categorisation routine
+			ambient 0 0 0 
+			
+			
+			// do this for each point light
+			// You MUST specify the light type when working with the RT Shader System in iterative lighting method. 
+			// otherwise an exception will be thrown.
+			iteration once_per_light spot
+
+			//alpha_rejection greater_equal 192
+			scene_blend add					
+		}	
+		
+		// Decal pass
+		pass decal
+		{
+			 cull_hardware none
+			 cull_software none
+
+			 ambient 0.5 0.5 0.5 1
+			 diffuse 0.6 0.6 0.6 1
+			 
+			 lighting off
+			 
+			 alpha_rejection greater_equal 192
+		 
+			 texture_unit
+			 {
+				texture c-letter.png
+			 }
+		}						
+	}
+}
+
+material ShadowCasterAlpha/shadow_caster_alpha : PSSM/shadow_caster_alpha
+{
+   technique
+   {
+      pass
+      {
+         // See: http://www.ogre3d.org/forums/viewtopic.php?f=3&t=44817
+         fog_override true
+
+         texture_unit
+         {
+            // Pass the texture with alpha channel to the caster
+            texture c-letter.png
+         }
+      }
+   }
+}
+
+
+material PSSM/shadow_caster_alpha
+{
+   technique
+   {
+      // all this will do is write depth and depth² to red and green
+      pass
+      {
+         // Disable backface culling
+         cull_hardware none
+         cull_software none
+         
+         // Make sure that when including this material in another with 'shadow_caster_material' that it does not inherit alpha_rejection from it
+         alpha_rejection always_pass
+      
+         vertex_program_ref PSSM/shadow_caster_alpha_vs
+         {
+         }
+
+         fragment_program_ref PSSM/shadow_caster_alpha_ps
+         {
+         }
+      }
+   }
+}

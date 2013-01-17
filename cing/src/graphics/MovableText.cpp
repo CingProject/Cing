@@ -204,7 +204,7 @@ float MovableText::getTextBlockHeightPixels( const std::string& text, float text
 {
 	// TODO: Remove redundant code between here and calculateLineBreaks method
 	
-	float	lineLeading = equal( m_leading, -1 )? mCharHeight * 1.275f: m_leading;
+	float	lineLeading = equal( m_leading, -1.0f )? mCharHeight * 1.275f: m_leading;
 	float	spaceWidth	= mpFont->getGlyphAspectRatio(UNICODE_ZERO) * mCharHeight /** 2.0f */* mViewportAspectCoef;
 	float	lineLength	= 0;
 	bool	breakLineToWrapWord = false;
@@ -483,7 +483,7 @@ void MovableText::_setupGeometry()
 
 	// Line leading (distance in pixels between lines)
 	// Note: the 1.275f comes from Processing, to keep the same default line leading (if no leading is specified manually)
-	float lineLeading = equal( m_leading, -1 )? mCharHeight * 1.275f: m_leading;
+	float lineLeading = equal( m_leading, -1.0f )? mCharHeight * 1.275f: m_leading;
 
 	// Calculate vertical offset depending on the vertical alignment
 	float verticalOffset = 0;

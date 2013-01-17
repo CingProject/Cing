@@ -32,6 +32,7 @@ namespace Cing
 // Loads the xml file 
 bool XMLSettings::load( const std::string& pathToXML )
 {
+	m_fileName = pathToXML;
 	return m_xmlFile.load( pathToXML );
 }
 

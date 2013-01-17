@@ -55,11 +55,12 @@ Sphere::~Sphere()
  * @internal
  * @brief Creates a sphere with a specific radius
  * @param[in] diameter		Diameter of the sphere
+ * @param[in] parent		   Parent scene node. If not passed a new node will be created
  */
-void Sphere::init( float diameter )
+void Sphere::init( float diameter, Ogre::SceneNode* parent /*= NULL*/  )
 {
 	// Create the object 3d of a sphere
-	Object3D::init( DEFAULT_MESH, DEFAULT_MATERIAL );
+	Object3D::init( DEFAULT_MESH, DEFAULT_MATERIAL, parent );
 
 	// Scale correction
 	diameter *= OGRE_SCALE_CORRECTION;

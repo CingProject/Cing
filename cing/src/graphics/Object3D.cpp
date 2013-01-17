@@ -80,6 +80,7 @@ namespace Cing
 	*
 	* @param[in] meshName      Name of the mesh  (.mesh file) to be used by the object. If empty the object will have no mesh.
 	* @param[in] materialName  Name of the material (defines the visual aspect) of the object. If empty the object will have no material.
+	* @param[in] parent		   Parent scene node. If not passed a new node will be created
 	* @return true if the initialization was ok | false otherwise
 	*/
 	void Object3D::init( const std::string& meshName /*= ""*/, const std::string& materialName /*= ""*/, Ogre::SceneNode* parent /*= NULL*/ )
@@ -310,12 +311,12 @@ namespace Cing
 	* @param axis	Axis of rotation
 	* @param angle Angle of rotation in degrees around the specified axis
 	*/
-	void Object3D::setOrientation( const Vector& axis, float angle )
+	void Object3D::setOrientation( const Vector& axis, float angleDegrees )
 	{
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to set orientation in Object3D not correctly initialized" );
 
-		Quaternion q( Ogre::Radian( Ogre::Degree( angle ) ), axis );
+		Quaternion q( Ogre::Radian( Ogre::Degree( angleDegrees ) ), axis );
 		m_sceneNode->setOrientation( q );
 	}
 
@@ -814,6 +815,19 @@ namespace Cing
 	{
 		if ( isValid() )
 			m_sceneNode->setVisible( visible );
+	}
+
+
+	/**
+	 * @brief Returns whether the object is visible or not
+	 *
+	 * @return true if it is visible, false otherwise
+	 */
+	bool Object3D::isVisible() const
+	{
+		if ( isValid() )
+			return m_entity->isVisible();
+		return false;
 	}
 
 	/**

@@ -60,11 +60,11 @@ SpotLight::~SpotLight()
 * @param[in] nx x direction(horizontal axis) of the light in the scene
 * @param[in] ny y direction (vertical axis) of the light in the scene
 * @param[in] nz z direction (depth) of the light in the scene
-* @param[in] angle angle of the spotlight cone. It is possible tolater control inner and outer angle of the light.
-* @param[in] concentration fall off of the light
+* @param[in] angleRad angle in radians of the spotlight cone. It is possible tolater control inner and outer angle of the light.
+* @param[in] concentration fall off of the light (Range: 0.0-1.0). Less means slower falloff, higher means faster falloff.
 * @return true if the initialization was ok | false otherwise
 */
-bool SpotLight::init( float r, float g, float b, float x, float y, float z, float nx, float ny, float nz, float angle, float concentration )
+bool SpotLight::init( float r, float g, float b, float x, float y, float z, float nx, float ny, float nz, float angleRad, float concentration )
 {
 	// Check if the class is already initialized
 	if ( isValid() )
@@ -81,7 +81,7 @@ bool SpotLight::init( float r, float g, float b, float x, float y, float z, floa
 	setDiffuseColor( r, g, b );
 	Ogre::Light* light = getOgreLight();
 	if ( light )
-		light->setSpotlightRange( Ogre::Radian(angle), Ogre::Radian(angle), concentration );
+		light->setSpotlightRange( Ogre::Radian(angleRad), Ogre::Radian(angleRad), concentration );
 
 	// The class is now initialized
 	m_bIsValid = true;
@@ -109,12 +109,12 @@ void SpotLight::end()
 
 /**
  * @brief Sets the range of the lighet (inner and outer angles of the cone + the falloff between them)
- * @param	innerAngle 		Angle covered by the bright inner cone The inner cone applicable only to Direct3D, it'll always treat as zero in OpenGL. 
- * @param	outerAngle 		Angle covered by the outer cone 
+ * @param	innerAngleRad 		Angle covered by the bright inner cone The inner cone applicable only to Direct3D, it'll always treat as zero in OpenGL. 
+ * @param	outerAngleRad 		Angle covered by the outer cone 
  * @param	concentration	Fall off of the light.	The rate of falloff between the inner and outer cones. 
  *							1.0 means a linear falloff, less means slower falloff, higher means faster falloff. 
  */
-void  SpotLight::setRange( float innerAngle, float outerAngle, float concentration /*= 1.0f*/ )
+void  SpotLight::setRange( float innerAngleRad, float outerAngleRad, float concentration /*= 1.0f*/ )
 {
 	// Check if the class is already released
 	if ( !isValid() )
@@ -122,13 +122,18 @@ void  SpotLight::setRange( float innerAngle, float outerAngle, float concentrati
 		LOG_ERROR( "Cannot setRange. Init needs to be called first to initialize the light" );
 		return;
 	}
+
+	// Set new range
+	Ogre::Light* light = getOgreLight();
+	if ( light )
+		light->setSpotlightRange( Ogre::Radian(innerAngleRad), Ogre::Radian(outerAngleRad), concentration );
 }
 
 /**
  * @brief Sets the inner angle of the light cone
- * @param	innerAngle 		Angle covered by the bright inner cone The inner cone applicable only to Direct3D, it'll always treat as zero in OpenGL. 
+ * @param	innerAngleRad 		Angle covered by the bright inner cone The inner cone applicable only to Direct3D, it'll always treat as zero in OpenGL. 
  */
-void  SpotLight::setInnerAngle( float innerAngle )
+void  SpotLight::setInnerAngle( float innerAngleRad )
 {
 	// Check if the class is already released
 	if ( !isValid() )
@@ -137,13 +142,17 @@ void  SpotLight::setInnerAngle( float innerAngle )
 		return;
 	}
 
+	// Set new angle
+	Ogre::Light* light = getOgreLight();
+	if ( light )
+		light->setSpotlightInnerAngle( Ogre::Radian(innerAngleRad) );
 }
 
 /**
  * @brief Sets the outer angle of the light cone
- * @param	outerAngle 		Angle covered by the outer cone 
+ * @param	outerAngleRad 		Angle covered by the outer cone 
  */
-void  SpotLight::setOuterAngle( float outerAngle )
+void  SpotLight::setOuterAngle( float outerAngleRad )
 {
 	// Check if the class is already released
 	if ( !isValid() )
@@ -152,6 +161,10 @@ void  SpotLight::setOuterAngle( float outerAngle )
 		return;
 	}
 
+	// Set new angle
+	Ogre::Light* light = getOgreLight();
+	if ( light )
+		light->setSpotlightOuterAngle( Ogre::Radian(outerAngleRad) );
 }
 
 /**
@@ -168,6 +181,10 @@ void  SpotLight::setConcentration( float concentration )
 		return;
 	}
 
+	// Set new falloff or concentration
+	Ogre::Light* light = getOgreLight();
+	if ( light )
+		light->setSpotlightFalloff( concentration );
 }
 
 } // namespace Cing

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <_PropertySheetDisplayName>CingExample_VS2010PropertySheet_Release</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\cing\src\;..\..\cing\;..\..\cing\libraries\win\visualStudio2010\OpenCV\include;..\..\cing\libraries\win\visualStudio2010\LibVLC\include;..\..\cing\libraries\win\visualStudio2010;..\..\cing\libraries\win\visualStudio2010\GStreamer\include\gstreamer-0.10;..\..\cing\libraries\win\visualStudio2010\GStreamer\include\glib-2.0;..\..\cing\libraries\win\visualStudio2010\GStreamer\include\libxml2;..\..\cing\libraries\win\visualStudio2010\GStreamer\include;..\..\cing\libraries\win\visualStudio2010\Ogre3d\include\OGRE;..\..\cing\libraries\win\visualStudio2010\Ogre3d\include\OIS;..\..\cing\libraries\win\visualStudio2010\Ogre3d\boost_1_44;..\..\cing\libraries\win\visualStudio2010\Ogre-CameraControlSystem\include;..\..\cing\libraries\win\visualStudio2010\CEGUI\include;..\..\cing\libraries\win\visualStudio2010\Bullet\src;..\..\cing\libraries\win\visualStudio2010\OgreBullet\Collisions\include;..\..\cing\libraries\win\visualStudio2010\OpenAL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;TIXML_USE_STL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain.lib;libboost_thread-vc90-mt-1_44.lib;CameraControlSystem.lib;CEGUIBase.lib;CEGUIOgreRenderer.lib;OIS.lib;cv210.lib;cvaux210.lib;cxcore210.lib;highgui210.lib;ptypes.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;ConvexDecomposition.lib;videoInput.lib;fmodex_vc.lib;RtMidi.lib;winmm.lib;tinyxml_STL.lib;LibXML.lib;libvlc.dll.a;libvlccore.dll.a;gstreamer-0.10.lib;gthread-2.0.lib;glib-2.0.lib;gobject-2.0.lib;gstvideo-0.10.lib;gstapp-0.10.lib;gstbase-0.10.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\cing\libraries\win\visualStudio2010\BetaCairo\lib;..\..\cing\libraries\win\visualStudio2010\Bullet\lib;..\..\cing\libraries\win\visualStudio2010\cairo\lib;..\..\cing\libraries\win\visualStudio2010\Fmod\lib;..\..\cing\libraries\win\visualStudio2010\Ogre3d\lib;..\..\cing\libraries\win\visualStudio2010\Ogre3d\boost_1_44\lib;..\..\cing\libraries\win\visualStudio2010\Ogre-CameraControlSystem\lib;..\..\cing\libraries\win\visualStudio2010\CEGUI\lib;..\..\cing\libraries\win\visualStudio2010\OgreBullet\lib;..\..\cing\libraries\win\visualStudio2010\OpenCV\lib;..\..\cing\libraries\win\visualStudio2010\PortVideo\lib;..\..\cing\libraries\win\visualStudio2010\PTypes\lib;..\..\cing\libraries\win\visualStudio2010\RtMidi\lib;..\..\cing\libraries\win\visualStudio2010\VideoInput\lib;..\..\cing\libraries\win\visualStudio2010\OgreCollada\lib;..\..\cing\libraries\win\visualStudio2010\LibVLC\lib;..\..\cing\libraries\win\visualStudio2010\TinyXML\lib;..\..\cing\libraries\win\visualStudio2010\GStreamer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>atlthunk;libc.lib;libcmt.lib;libcd.lib;libcmtd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>NotSet</SubSystem>
+      <OptimizeReferences>false</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)cing\bin\win\visualStudio2008\$(Configuration)" "$(OutDir)" /i /d /y /s
+
+REM Check if it was ok
+if errorlevel 1 goto BuildEventFailed
+goto BuildEventOK
+
+:BuildEventFailed
+echo POSTBUILDSTEP for $(ProjectName) FAILED
+exit 1
+
+:BuildEventOK
+echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+</Project>

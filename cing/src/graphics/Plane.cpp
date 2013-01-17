@@ -58,11 +58,12 @@ Plane::~Plane()
  * @param[in] width		Width of the plane
  * @param[in] height	Height of the plane
  * @param[in] depth		Depth of the plane
+ * @param[in] parent		   Parent scene node. If not passed a new node will be created
  */
-void Plane::init( float width, float height )
+void Plane::init( float width, float height, Ogre::SceneNode* parent /*= NULL*/ )
 {
 	// Create the object 3d of a plane
-	Object3D::init( DEFAULT_MESH, DEFAULT_MATERIAL );
+	Object3D::init( DEFAULT_MESH, DEFAULT_MATERIAL, parent );
 
 	// Scale correction
 	width		*= OGRE_SCALE_CORRECTION;
@@ -90,10 +91,11 @@ void Plane::init( float width, float height )
  * @internal
  * @brief Creates a plane with the same size in the three axis
  * @param[in] size Defines the size of the cube (the same in the three axis: width, height, depth)
+ * @param[in] parent		   Parent scene node. If not passed a new node will be created
  */
-void Plane::init( float size )
+void Plane::init( float size, Ogre::SceneNode* parent /*= NULL*/ )
 {
-	return init( size, size );
+	return init( size, size, parent );
 }
 
 } // namespace Cing

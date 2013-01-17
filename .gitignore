@@ -10,3 +10,5 @@ cing/lib
 *.manifest
 *.suo
 *.ncb
+/CingExamples.opensdf
+/CingExamples.sdf

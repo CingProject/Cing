@@ -187,7 +187,8 @@ void scale		( float x, float y );
 void applyCoordinateSystemTransform( const GraphicsType& coordSystem );
 
 //Save frames
-void save( const String& name );
+void saveCurrentFrame( const String& name );
+
 //-----------------------------------------------------------------------------------
 // Typography
 //-----------------------------------------------------------------------------------
@@ -224,8 +225,8 @@ std::vector< std::string > splitInLines( const std::string& text, float textBoxW
 //-----------------------------------------------------------------------------------
 // Shadows
 //-----------------------------------------------------------------------------------
-void enableShadows( ShadowTechnique technique );
-
+void enableShadows	( ShadowTechnique technique );
+void setShadowColor	( const Color& color );
 
 //-----------------------------------------------------------------------------------
 // Coordinate System related

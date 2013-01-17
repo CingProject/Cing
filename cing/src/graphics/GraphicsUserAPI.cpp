@@ -972,14 +972,24 @@ void scale(	float x, float y)
 	GraphicsManager::getSingleton().m_transforms.top().scale( x, y, 1 );
 	GraphicsManager::getSingleton().m_shapesTransforms.top().scale( x, y, 1 );
 };
+
 /**
- * @brief
- *
- * @param mode
+ * @brief Saves the current frame been rendered into an image file
+ * @param name Path (relative to data folder or absolute) for the file to be created
  */
-void save( const String& name )
+void saveCurrentFrame( const String& name )
 {
-	GraphicsManager::getSingleton().save( name );
+	GraphicsManager::getSingleton().saveFrame( name );
+};
+
+/**
+ * @brief Saves an area/rectangle of the current frame been rendered into an image file
+ * @param name Path (relative to data folder or absolute) for the file to be created
+ * @param rect rectangle to be saved
+ */
+void saveCurrentFrame( const String& name, const Rect& rect )
+{
+	GraphicsManager::getSingleton().saveFrame( name );
 };
 
 //----------------------------------------------------------------------------------- 
@@ -1237,6 +1247,15 @@ void applyCoordinateSystemTransform( const GraphicsType& coordSystem )
 void enableShadows( ShadowTechnique technique )
 {
 	GraphicsManager::getSingleton().enableShadows( technique );
+}
+
+/**
+ * @brief Sets the shadow color used to modulate areas in shaodw (when shadows that modulate are enabled)
+ * @param[in] color color of the shadow. Range 0..255
+ */
+void setShadowColor( const Color& color )
+{
+	GraphicsManager::getSingleton().setShadowColor( color );
 }
 
 //-----------------------------------------------------------------------------------

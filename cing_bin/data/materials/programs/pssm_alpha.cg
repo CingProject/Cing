@@ -1,0 +1,43 @@
+// PSSM shadow caster with support for alpha textures (eg. trees)
+// Supports RTSS shadow receivers
+
+void shadow_caster_alpha_vs(
+   float4 position         : POSITION,
+   float2 uv         : TEXCOORD0, // get UV of material's texture
+
+   out float4 oPosition   : POSITION,
+   out float2 oDepth      : TEXCOORD0,
+   out float2 ouv   :TEXCOORD1, // translate UV to pixel shader
+
+   uniform float4x4 wvpMat)
+{
+   // this is the view space position
+   oPosition = mul(wvpMat, position);
+
+   // depth info for the fragment.
+   oDepth.x = oPosition.z;
+   oDepth.y = oPosition.w;
+
+   // clamp z to zero. seem to do the trick. :-/
+   //oPosition.z = max(oPosition.z, 0);
+
+   ouv = uv;
+}
+
+void shadow_caster_alpha_ps(
+   float2 depth      : TEXCOORD0,
+   float2 uv : TEXCOORD1,
+   uniform sampler2D    pDiffuseMap    : register(s0),
+
+   out float4 oColour   : COLOR,
+
+   uniform float4 pssmSplitPoints)
+{
+   if (tex2D(pDiffuseMap, uv).a < 0.5) // check for alpha value of material's texture and discard of pixel is transparent
+   {
+      discard;
+   }
+
+   float finalDepth = depth.x / depth.y;
+   oColour = float4(finalDepth, finalDepth, finalDepth, 1);
+}

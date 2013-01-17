@@ -71,6 +71,38 @@ unsigned long stringToUint32(const std::string& str) {
 	return number;
 }
 
+/// Converts a wstring to int
+int stringToInt(const std::wstring& str)
+{
+	int number;
+	std::wstringstream s(str);
+	s >> number;
+	return number;
+}
+
+float stringToFloat(const std::wstring& str)
+{
+	float number;
+	std::wstringstream s(str);
+	s >> number;
+	return number;
+}
+
+double stringToDouble(const std::wstring& str)
+{
+	double number;
+	std::wstringstream s(str);
+	s >> number;
+	return number;
+}
+
+unsigned long stringToUint32(const std::wstring& str) {
+	unsigned long number;
+	std::wstringstream s(str);
+	s >> number;
+	return number;
+}
+
 /**
  * @brief Splits a string into a series of tokens (delimited by a delimiter character).
  * @param str			The string to split or tokenize

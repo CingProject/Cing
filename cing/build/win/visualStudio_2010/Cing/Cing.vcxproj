@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>_Cing</ProjectName>
+    <ProjectGuid>{FE179849-DD52-473E-BE15-5A5E52BFFF1F}</ProjectGuid>
+    <RootNamespace>Cing</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\..\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\..\obj\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\obj\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP /Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_44;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_42;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\;..\..\..\..\libraries\win\visualStudio2008\OpenAL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__WIN32__;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Cing-Precompiled.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)_d.lib</OutputFile>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP /Zm124 %(AdditionalOptions)</AdditionalOptions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>..\..\..\..\;..\..\..\..\libraries\win\visualStudio2008\;..\..\..\..\src\;..\..\..\..\libraries\win\visualStudio2008\OgreBullet\Collisions\include;..\..\..\..\libraries\win\visualStudio2008\Bullet\src;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OGRE;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\include\OIS;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_44;..\..\..\..\libraries\win\visualStudio2008\Ogre3d\boost_1_42;..\..\..\..\libraries\win\visualStudio2008\Ogre-CameraControlSystem\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include;..\..\..\..\libraries\win\visualStudio2008\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\visualStudio2008\OpenCV\include;..\..\..\..\libraries\win\visualStudio2008\LibVLC\include;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\glib-2.0;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\libxml2;..\..\..\..\libraries\win\visualStudio2008\GStreamer\include\;..\..\..\..\libraries\win\visualStudio2008\OpenAL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__WIN32__;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>false</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Cing-Precompiled.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Basic_Cing.material" />
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Example.material" />
+    <None Include="..\..\..\..\src\input\BaseInputDevice.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\Cing-Precompiled.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/Zm118  %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/Zm124 %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\audio\AudioInputFMOD.cpp" />
+    <ClCompile Include="..\..\..\..\src\audio\AudioInputOpenAL.cpp" />
+    <ClCompile Include="..\..\..\..\src\audio\SoundFMOD.cpp" />
+    <ClCompile Include="..\..\..\..\src\audio\SoundManagerFMOD.cpp" />
+    <ClCompile Include="..\..\..\..\src\audio\SoundManagerOpenAL.cpp" />
+    <ClCompile Include="..\..\..\..\src\audio\SoundOpenAL.cpp" />
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsUserAPI.cpp" />
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsBox.cpp" />
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsObject.cpp" />
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsPlane.cpp" />
+    <ClCompile Include="..\..\..\..\src\physics\PhysicsSphere.cpp" />
+    <ClCompile Include="..\..\..\..\src\camerainput\BaseCameraInput.cpp" />
+    <ClCompile Include="..\..\..\..\src\camerainput\OCVCamera.cpp" />
+    <ClCompile Include="..\..\..\..\src\camerainput\PVCamera.cpp" />
+    <ClCompile Include="..\..\..\..\src\camerainput\VICamera.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\CommonUserAPI.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\eString.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\Exception.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\LogManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\PerlinNoise.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\ResourceManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\SystemUtils.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\WindowsEventLogger.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\XEventLog.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\XMLElement.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\XMLVisitor.cpp" />
+    <ClCompile Include="..\..\..\..\src\computervision\BackgroundSubtraction.cpp" />
+    <ClCompile Include="..\..\..\..\src\computervision\BlobFinder.cpp" />
+    <ClCompile Include="..\..\..\..\src\computervision\BlobTracker.cpp" />
+    <ClCompile Include="..\..\..\..\src\framework\AppFramework.cpp" />
+    <ClCompile Include="..\..\..\..\src\framework\Application.cpp" />
+    <ClCompile Include="..\..\..\..\src\framework\FrameworkUserAPI.cpp" />
+    <ClCompile Include="..\..\..\..\src\framework\UserAppGlobals.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Camera3D.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\CameraController.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Color.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\DebugOverlay.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\GraphicsManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\GraphicsUserAPI.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\ImageResourceManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\SceneGraphElement.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Shape.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\ShapeManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Style.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Transform.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Window.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\Box.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Object3D.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Plane.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Sphere.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Image.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level3</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\graphics\ImageAnimation.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\TexturedQuad.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\BaseLight.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\DirectionalLight.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\LightingUserAPI.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\PointLight.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\SpotLight.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\BaseImageFilter.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\ImageDifferenceFilter.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\ImageThresholdFilter.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\Font.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\FontManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\MovableText.cpp" />
+    <ClCompile Include="..\..\..\..\src\graphics\TextArea.cpp" />
+    <ClCompile Include="..\..\..\..\src\gui\GUIManagerCEGUI.cpp" />
+    <ClCompile Include="..\..\..\..\src\gui\GUIUserAPI.cpp" />
+    <ClCompile Include="..\..\..\..\src\gui\OutputDebugTextBoxCEGUI.cpp" />
+    <ClCompile Include="..\..\..\..\src\input\InputManager.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input\Keyboard.cpp" />
+    <ClCompile Include="..\..\..\..\src\input\Mouse.cpp" />
+    <ClCompile Include="..\..\..\..\src\midi\MidiIO.cpp" />
+    <ClCompile Include="..\..\..\..\src\video\BaseVideoRecorder.cpp" />
+    <ClCompile Include="..\..\..\..\src\video\GStreamerManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\video\MediaPlayerGS.cpp" />
+    <ClCompile Include="..\..\..\..\src\video\MediaPlayerOCV.cpp" />
+    <ClCompile Include="..\..\..\..\src\video\MediaPlayerVLC.cpp" />
+    <ClCompile Include="..\..\..\..\src\video\OCVVideoRecorder.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h" />
+    <ClInclude Include="..\..\..\..\src\audio\AudioInputFMOD.h" />
+    <ClInclude Include="..\..\..\..\src\audio\AudioInputOpenAL.h" />
+    <ClInclude Include="..\..\..\..\src\audio\AudioPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\audio\BaseAudioInput.h" />
+    <ClInclude Include="..\..\..\..\src\audio\BaseSound.h" />
+    <ClInclude Include="..\..\..\..\src\audio\SoundFMOD.h" />
+    <ClInclude Include="..\..\..\..\src\audio\SoundManagerFMOD.h" />
+    <ClInclude Include="..\..\..\..\src\audio\SoundManagerOpenAL.h" />
+    <ClInclude Include="..\..\..\..\src\audio\SoundOpenAL.h" />
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsManager.h" />
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsUserAPI.h" />
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsBox.h" />
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsObject.h" />
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsPlane.h" />
+    <ClInclude Include="..\..\..\..\src\physics\PhysicsSphere.h" />
+    <ClInclude Include="..\..\..\..\src\camerainput\BaseCameraInput.h" />
+    <ClInclude Include="..\..\..\..\src\camerainput\CameraInputPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\camerainput\OCVCamera.h" />
+    <ClInclude Include="..\..\..\..\src\camerainput\PVCamera.h" />
+    <ClInclude Include="..\..\..\..\src\camerainput\VICamera.h" />
+    <ClInclude Include="..\..\..\..\src\common\CommonConstants.h" />
+    <ClInclude Include="..\..\..\..\src\common\CommonPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\common\CommonTypes.h" />
+    <ClInclude Include="..\..\..\..\src\common\CommonUserAPI.h" />
+    <ClInclude Include="..\..\..\..\src\common\CommonUtilsIncludes.h" />
+    <ClInclude Include="..\..\..\..\src\common\eString.h" />
+    <ClInclude Include="..\..\..\..\src\common\Exception.h" />
+    <ClInclude Include="..\..\..\..\src\common\LogManager.h" />
+    <ClInclude Include="..\..\..\..\src\common\MathUtils.h" />
+    <ClInclude Include="..\..\..\..\src\common\PerlinNoise.h" />
+    <ClInclude Include="..\..\..\..\src\common\Release.h" />
+    <ClInclude Include="..\..\..\..\src\common\ResourceManager.h" />
+    <ClInclude Include="..\..\..\..\src\common\Singleton.h" />
+    <ClInclude Include="..\..\..\..\src\common\SystemUtils.h" />
+    <ClInclude Include="..\..\..\..\src\common\WindowsEventLogger.h" />
+    <ClInclude Include="..\..\..\..\src\common\XEventLog.h" />
+    <ClInclude Include="..\..\..\..\src\common\XMLElement.h" />
+    <ClInclude Include="..\..\..\..\src\common\XMLVisitor.h" />
+    <ClInclude Include="..\..\..\..\src\computervision\BackgroundSubtraction.h" />
+    <ClInclude Include="..\..\..\..\src\computervision\Blob.h" />
+    <ClInclude Include="..\..\..\..\src\computervision\BlobFinder.h" />
+    <ClInclude Include="..\..\..\..\src\computervision\BlobTracker.h" />
+    <ClInclude Include="..\..\..\..\src\computervision\ComputerVisionPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\framework\AppFramework.h" />
+    <ClInclude Include="..\..\..\..\src\framework\Application.h" />
+    <ClInclude Include="..\..\..\..\src\framework\AppMain.h" />
+    <ClInclude Include="..\..\..\..\src\framework\FrameworkPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\framework\FrameworkUserAPI.h" />
+    <ClInclude Include="..\..\..\..\src\framework\UserAppFunctionDeclaration.h" />
+    <ClInclude Include="..\..\..\..\src\framework\UserAppGlobals.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Camera3D.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\CameraController.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Color.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\DebugOverlay.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\DynamicLines.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\DynamicRenderable.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\GraphicsManager.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\GraphicsPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\GraphicsTypes.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\GraphicsUserAPI.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\ImageResourceManager.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\SceneGraphElement.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Shape.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\ShapeManager.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Style.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Transform.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Window.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Box.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Object3D.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Plane.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Sphere.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Image.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\ImageAnimation.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\TexturedQuad.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\BaseLight.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\DirectionalLight.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\LightingUserAPI.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\PointLight.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\SpotLight.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\BaseImageFilter.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\ImageDifferenceFilter.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\ImageThresholdFilter.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\Font.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\FontManager.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\FontProperties.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\MovableText.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\OgreFontHelper.h" />
+    <ClInclude Include="..\..\..\..\src\graphics\TextArea.h" />
+    <ClInclude Include="..\..\..\..\src\gui\GUIManagerCEGUI.h" />
+    <ClInclude Include="..\..\..\..\src\gui\GUIManagerQuickGUI.h" />
+    <ClInclude Include="..\..\..\..\src\gui\GUIPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\gui\GUIUserAPI.h" />
+    <ClInclude Include="..\..\..\..\src\gui\OutputDebugTextBoxCEGUI.h" />
+    <ClInclude Include="..\..\..\..\src\input\BaseInputDevice.h" />
+    <ClInclude Include="..\..\..\..\src\input\InputManager.h" />
+    <ClInclude Include="..\..\..\..\src\input\InputPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\input\InputTypes.h" />
+    <ClInclude Include="..\..\..\..\src\input\Keyboard.h" />
+    <ClInclude Include="..\..\..\..\src\input\Mouse.h" />
+    <ClInclude Include="..\..\..\..\src\midi\midiIO.h" />
+    <ClInclude Include="..\..\..\..\src\midi\MidiPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\video\BaseVideoRecorder.h" />
+    <ClInclude Include="..\..\..\..\src\video\GStreamerManager.h" />
+    <ClInclude Include="..\..\..\..\src\video\MediaPlayerGS.h" />
+    <ClInclude Include="..\..\..\..\src\video\MediaPlayerOCV.h" />
+    <ClInclude Include="..\..\..\..\src\video\MediaPlayerVLC.h" />
+    <ClInclude Include="..\..\..\..\src\video\OCVVideoRecorder.h" />
+    <ClInclude Include="..\..\..\..\src\video\VideoPrereqs.h" />
+    <ClInclude Include="..\..\..\..\src\Cing.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

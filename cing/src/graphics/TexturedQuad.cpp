@@ -99,10 +99,10 @@ namespace Cing
 	* @param[in] textureHeight Height of the texture to show on the quad
 	* @param[in] format  Format of the image. RGB for color images (red, green and blue), ARGB for color plus alpha channel for transparency
 	* GRAYSCALE for greyscale images, this is, black & white
-	* @param[in] renderTarget if true, this texture will be used as render target (to render a scene as view from a camera)
+	* @param[in] usage of the texture (allows to customize is usage depending on whether you plan to update the texture only, or also read its content, or even use it as a render target)
 	* @return true if the initialization was ok | false otherwise
 	*/
-	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, bool renderTarget /*= false*/, Ogre::SceneManager* sm )
+	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, GraphicsType usage /*= DYNAMIC*/, Ogre::SceneManager* sm )
 	{
 		// Check if the class is already initialized
 		if ( isValid() )
@@ -121,14 +121,14 @@ namespace Cing
 		m_textWidth     = (float)textureWidth;
 		m_textHeight    = (float)textureHeight;	
 		m_format		= format;
-		m_render2D  = false;
+		m_render2D		= false;
 		m_alpha			= 255;
 
 		// Generate unique names for texture, material and ogre manual object
 		generateUniqueNames();
 
 		// Texture Usage
-		Ogre::TextureUsage usage = renderTarget? Ogre::TU_RENDERTARGET: Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE;
+		Ogre::TextureUsage textureUsage = (Ogre::TextureUsage)usage;
 
 		// Create the texture for the quad
 
@@ -142,10 +142,10 @@ namespace Cing
 				(Ogre::uint)m_textHeightP2,		// height
 				0,								// number of mipmaps
 				(Ogre::PixelFormat)format,		// pixel format
-				usage,							// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for textures updated very often (e.g. each frame)
+				textureUsage,					// usage as render target
 				0,
 				false,
-				0);	// FSAA value
+				0);								// FSAA value
 		}
 		else
 		{
@@ -156,8 +156,7 @@ namespace Cing
 				(Ogre::uint)m_textHeightP2,		// height
 				0,								// number of mipmaps
 				(Ogre::PixelFormat)format,		// pixel format
-				usage );						// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
-			// textures updated very often (e.g. each frame)
+				textureUsage );						// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for textures updated very often (e.g. each frame)
 		}
 
 		// Create a material for the quad
@@ -169,7 +168,6 @@ namespace Cing
 
 		m_ogreMaterial->getTechnique(0)->getPass(0)->setCullingMode( Ogre::CULL_NONE );
 		//m_ogreMaterial->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
-		//m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( false );
 //		m_ogreMaterial->getTechnique(0)->getPass(0)->setAlphaRejectSettings( Ogre::CMPF_GREATER_EQUAL, 1 );
 
 
@@ -187,6 +185,8 @@ namespace Cing
 		->getTechnique(0)->getPass(0)->getTextureUnitState("MixTexture")->
 		setColourOperationEx(LBX_BLEND_MANUAL, LBS_TEXTURE, LBS_CURRENT, 1,1, add);
 		*/
+
+		m_sbType = Ogre::SBT_REPLACE;
 
 		// Create the manual object (is used to define geometry on the fly)
 		if ( sm == NULL )
@@ -238,6 +238,9 @@ namespace Cing
 		// The class is now initialized
 		m_bIsValid = true;
 
+		// No shadow casting in textured quads by default
+		enableCastShadows(false);
+
 		return true;
 	}
 	/**
@@ -258,6 +261,15 @@ namespace Cing
 		}
 
 	};
+
+	/**
+	* @brief Set blend operation
+	*/
+	void TexturedQuad::setSceneBlendType( Ogre::SceneBlendType type )
+	{
+		m_sbType = type;
+	};
+
 
 	/**
 	* @internal
@@ -368,7 +380,7 @@ namespace Cing
 	}
 
 	/**
-	* @brief Sets the rotation of the quad (in relation to its parents)
+	* @brief Sets the orientation of the quad (in relation to its parents)
 	*
 	* @param[in] axis	rotation axis
 	* @param[in] angle rotation angle (degrees)
@@ -377,6 +389,16 @@ namespace Cing
 	{
 		Quaternion q( Ogre::Radian( Ogre::Degree( angle ) ), axis );
 		m_quadSceneNode->setOrientation( q );
+	}
+
+	/**
+	* @brief Sets the orientation of the quad (in relation to its parents)
+	*
+	* @param[in] orientation quaternion containing the orientation information
+	*/
+	void TexturedQuad::setOrientation( const Quaternion& orientation )
+	{
+		m_quadSceneNode->setOrientation( orientation );
 	}
 
 	/**
@@ -973,6 +995,7 @@ namespace Cing
 	 */
 	void TexturedQuad::configureSceneBlending()
 	{
+
 		// If the image has alpha channel
 		if ( hasAlpha() || (m_alpha < 255) )
 		{
@@ -986,7 +1009,7 @@ namespace Cing
 		else
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_REPLACE );	
+			material->getTechnique(0)->getPass(0)->setSceneBlending( m_sbType );	
 			enableDepthWrite(true);
 			enableDepthCheck(true);
 		}
@@ -1106,8 +1129,8 @@ namespace Cing
 		m_render2D		= false;
 		m_alpha			= 255;
 	
-		m_ogreTexture->setWidth( (size_t)m_textWidth );
-		m_ogreTexture->setHeight( (size_t)m_textHeight );
+		m_ogreTexture->setWidth((size_t)m_textWidth);
+		m_ogreTexture->setHeight((size_t)m_textHeight);
 
 		// Update vertex data
 		m_quad->beginUpdate(0);
@@ -1153,6 +1176,68 @@ namespace Cing
 		// TODO: Log -> material does not exist
 		else
 			LOG_ERROR( "Trying to set a material (%s) that does not exist", materialName.c_str() );
+	}
+
+	/**
+	 * @brief This is a shortcut to set or change the main (or first) texture unit for the material used in the quad
+	 *
+	 * @param fileName Name of the image file to use (absolute or local to data folder)
+	 */
+	void TexturedQuad::setTexture( const std::string& fileName )
+	{
+		// Check if the class is already initialized
+		if ( !isValid() || m_ogreMaterial.isNull() )
+		{
+			LOG_ERROR( "TexturedQuad::setTexture Error: Texture quad is not valid or has not bee initialized yet" );
+			return;
+		}
+
+		// Change the texture name for the first texture unit state (checking all pointers are valid)
+		if ( m_ogreMaterial->getTechnique(0) && m_quad->getSection(0) && m_ogreMaterial->getTechnique(0)->getPass(0) && m_ogreMaterial->getTechnique(0)->getPass(0)->getTextureUnitState(0) )
+		{
+			Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName( m_quad->getSection(0)->getMaterialName() );
+			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( fileName );
+			if ( texture.isNull() == false )
+				mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->_setTexturePtr( texture );
+			else
+				LOG_ERROR( "TexturedQuad::setTexture. ERROR: Texture [%s] not found", fileName.c_str() );
+		}
+	}
+
+	/**
+	 * @brief Enables / disables this quad casting shadows
+	 *
+	 * @param castShadows true makes the material cast shadows, false disables it
+	 */
+	void TexturedQuad::enableCastShadows( bool castShadows )
+	{
+		// Check if the class is already initialized
+		if ( !isValid() || !m_quad )
+		{
+			LOG_ERROR( "TexturedQuad::enableCastShadows Error: Texture quad is not valid or has not bee initialized yet" );
+			return;
+		}
+
+		m_quad->setCastShadows( castShadows );
+	}
+
+	/**
+	 * @brief Enables / disables this material being affected by dynamic lighting in the scene
+	 *
+	 * @param lighting true makes the material be altered by dynamic lighting, false, the material is not affected by
+	 * global scene lighting or the lights in the scene
+	 */
+	void TexturedQuad::enableLighting( bool lighting )
+	{
+		// Check if the class is already initialized
+		if ( !isValid() || m_ogreMaterial.isNull() )
+		{
+			LOG_ERROR( "TexturedQuad::enableLighting Error: Texture quad is not valid or has not bee initialized yet" );
+			return;
+		}
+
+		if ( m_ogreMaterial->getTechnique(0) && m_ogreMaterial->getTechnique(0)->getPass(0) )
+			m_ogreMaterial->getTechnique(0)->getPass(0)->setLightingEnabled( lighting );
 	}
 
 } // namespace Cing

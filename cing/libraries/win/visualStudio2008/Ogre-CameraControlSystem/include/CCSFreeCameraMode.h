@@ -1,5 +1,5 @@
 /* -------------------------------------------------------
-Copyright (c) 2009 Alberto G. Salguero (agsh@ugr.es)
+Copyright (c) 2012 Alberto G. Salguero (alberto.salguero at uca.es)
 
 Permission is hereby granted, free of charge, to any
 person obtaining a copy of this software and associated
@@ -41,14 +41,39 @@ namespace CCS
 	{
 	public:
 
-        FreeCameraMode(CameraControlSystem* cam) 
+		enum SWITCHING_MODE { INITIAL_STATE = 0, CURRENT_STATE, LAST_STATE };
+
+		/**
+		 * @param margin Collision margin
+		 * @param switchingMode Determine the state of the camera when switching to this camera mode from another
+		 */
+        FreeCameraMode(CameraControlSystem* cam
+			, Ogre::Vector3 initialPosition = Ogre::Vector3::ZERO
+			, Ogre::Degree initialRotationX = Ogre::Degree(0)
+			, Ogre::Degree initialRotationY = Ogre::Degree(0)
+			, SWITCHING_MODE switchingMode = CURRENT_STATE
+			, Ogre::Real margin = 0.1f) 
             : CameraControlSystem::CameraMode(cam)
-            , CameraControlSystem::CollidableCamera(cam)
+            , CameraControlSystem::CollidableCamera(cam, margin)
 			, mFixedAxis(Ogre::Vector3::UNIT_Y)
             , mMoveFactor(1)
-            , mRotationFactor(0.13f)
-            , mMargin(0) 
-        { };
+            , mRotationFactor(0.13)
+			, mRotX(initialRotationX)
+			, mRotY(initialRotationY)
+			, mInitialPosition(initialPosition)
+			, mInitialRotationX(initialRotationX)
+			, mInitialRotationY(initialRotationY)
+			, mLastRotationX(initialRotationX)
+			, mLastRotationY(initialRotationY)
+			, mLastPosition(initialPosition)
+			, mSwitchingMode(switchingMode)
+
+        {
+			mCameraPosition = initialPosition;
+
+			this->collisionDelegate = newCollisionDelegate(this
+				, &CollidableCamera::DefaultCollisionDetectionFunction);
+		}
 
         virtual ~FreeCameraMode(){};
 
@@ -56,7 +81,7 @@ namespace CCS
 
         virtual void update(const Ogre::Real &timeSinceLastFrame);
 
-        virtual void instantUpdate(){};
+        virtual void instantUpdate();
 
         //// Overriden methods
 
@@ -66,11 +91,30 @@ namespace CCS
         // Specific methods
 
 		/**
+		 * @brief Set the position of the camera
+		 * 
+		 * @param position position of the camera
+		 */
+		inline virtual void setCameraPosition(Ogre::Vector3 position){ mCameraPosition = position; }
+
+		/**
+		 * @brief Set the orientation of the camera
+		 * 
+		 * @param orientation orientation of the camera
+		 */
+		inline virtual void setCameraOrientation(Ogre::Quaternion orientation) { mCameraOrientation = orientation; }
+
+		/**
 		 * @brief Set the moving speed factor
 		 * 
 		 * @param unitsPerSecond the units the camera will be translated per second
 		 */
         inline virtual void setMoveFactor(Ogre::Real unitsPerSecond){ mMoveFactor = unitsPerSecond; }
+
+		/**
+		 * @brief Get the moving speed factor
+		 */
+        inline virtual Ogre::Real getMoveFactor(){ return mMoveFactor; }
 
 		/**
 		 * @brief Set the rotating speed factor
@@ -135,14 +179,30 @@ namespace CCS
 		 */
         inline virtual void pitch(Ogre::Real val){ mRotY += Ogre::Degree(-val * mRotationFactor); }
 
-        /**
-		 * @brief Margin value for the collision delegates
+		/**
+		 * @brief Set the rotation value (right/left)
 		 * 
-		 * @param margin the distance 
+		 * @param val the amount of rotation (use negative values to look left)
 		 */
-        void setMargin(Ogre::Real margin){ mMargin = margin; }
+        inline virtual void setYaw(Ogre::Real val){ mRotX = Ogre::Degree(-val); }
 
-        Ogre::Real getMargin(){ return mMargin; }
+        /**
+		 * @brief Set the rotation value (up/down)
+		 * 
+		 * @param val the amount of rotation (use negative values to look up)
+		 */
+        inline virtual void setPitch(Ogre::Real val){ mRotY = Ogre::Degree(-val); }
+
+		void reset();
+
+		/**
+		 * @brief Set the switching mode
+		 * 
+		 * @param mode INITIAL_STATE for resetting the camera to its initial state; CURRENT_STATE for mantaining the current camera position and orientation; LAST_STATE for returning to the last known camera state when this camera mode was actived.
+		 */
+		void setSwitchingMode(SWITCHING_MODE mode){ mSwitchingMode = mode; }
+
+		SWITCHING_MODE getSwitchingMode(){ return mSwitchingMode; }
 
         /**
 		 * @brief Collision delegate that mantains the camera always above the ground. A margin can be stablished using the 'setMargin' method.
@@ -157,6 +217,8 @@ namespace CCS
     protected:
         
         Ogre::Vector3 getFirstRealHit(Ogre::Vector3 origin, Ogre::Vector3 direction);
+
+		Ogre::Vector2 getYawAndPitch(const Ogre::Vector3& direction);
 		
     protected:
 
@@ -166,11 +228,17 @@ namespace CCS
         Ogre::Real mLongitudinalDisplacement;
         Ogre::Real mLateralDisplacement;
         Ogre::Real mVerticalDisplacement;
-        Ogre::Vector3 mStartingPosition;
+        //Ogre::Vector3 mStartingPosition;
         Ogre::Radian mRotX;
 	    Ogre::Radian mRotY;
-        Ogre::Quaternion mStartingOrientation;
-        Ogre::Real mMargin;
+        //Ogre::Quaternion mStartingOrientation;
+		Ogre::Degree mInitialRotationX;
+		Ogre::Degree mInitialRotationY;
+		Ogre::Vector3 mInitialPosition;
+		Ogre::Degree mLastRotationX;
+		Ogre::Degree mLastRotationY;
+		Ogre::Vector3 mLastPosition;
+		SWITCHING_MODE mSwitchingMode;
 	};
 
 }

@@ -61,9 +61,12 @@
 	#define LOG_TRIVIAL(msg, ...)		
 	#define LOG(msg, ...)				
 	#define LOG_NORMAL LOG
+	#define LOG_WARNING LOG
 	#define LOG_ERROR(msg, ...)			
 	#define LOG_CRITICAL LOG_ERROR
 	#define LOG_ERROR_NTIMES(n, msg, ...)
+	#define LOG_ENTER_FUNCTION LOG_TRIVIAL( __FUNCTION__ " - enter" )
+	#define LOG_EXIT_FUNCTION  LOG_TRIVIAL( __FUNCTION__ " - exit" )
 #endif
 
 

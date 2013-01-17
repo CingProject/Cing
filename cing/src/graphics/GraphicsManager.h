@@ -67,12 +67,13 @@ namespace Cing
 		friend class SingletonStatic< GraphicsManager >;
 
 		// Destructor
-		virtual ~GraphicsManager														();
+ 		virtual ~GraphicsManager								();
 
-		// Init / Release / Draw
-		bool						init                      ();
-		void						end                       ();
-		void						draw                      ();
+		// Life cycle (in order of "appearance")
+		bool						createWindow				();
+		bool						initReSources				();
+		void						draw						();
+		void						end							();
 
 		// App window setup
 		void						setup						( int windowWidth, int windowHeight, GraphicMode mode = OPENGL );
@@ -148,7 +149,8 @@ namespace Cing
 		void						clearMatrixStack();
 
 		//Save frames
-		void						save( const String& name );
+		void						saveFrame( const String& name );
+        void                        saveFrame( const String& name, const Rect& box );
 
 		// Import Collada
 		//bool loadCollada( const String& fileName );
@@ -158,6 +160,7 @@ namespace Cing
 
 		// Shawods
 		void						enableShadows				( ShadowTechnique technique );
+		void						setShadowColor				( const Color& color );
 		void						setShadowFarDistance		( float distance ); 
 		bool						shadowsEnabled				() const { return m_shadowsEnabled; }
 		ShadowTechnique				getCurrentShadowTechnique	() const { return m_shadowTechnique; }
@@ -232,6 +235,8 @@ namespace Cing
 		//to allow screen capture and effects
 		Ogre::TexturePtr			m_RttTexture;
 		bool						m_saveFrame;
+        typedef std::pair< std::string, Rect> TNameRect;
+        std::vector<TNameRect>      m_rectSaveList;
 		String						m_frameName;
 
 		// Shadows related

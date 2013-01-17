@@ -31,11 +31,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "ShapeManager.h"
 #include "FontManager.h"
 #include "GraphicsUserApi.h"
+#include "RTTRectSaveManager.h"
 
 // Framework
 #include "framework/UserAppGlobals.h"
 #include "framework/Application.h"
-
 
 // Common includes
 #include "common/Exception.h"
@@ -55,12 +55,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreStringConverter.h"
 #include "OgreStringConverter.h"
 #include "OgreHardwarePixelBuffer.h"
-
-// TEMP
-#include "OgreTextAreaOverlayElement.h"
-
-// GUI
-//#include "gui/GUIManager.h"
 
 // Collada
 #if defined( _MSC_VER ) // TODO, need OgreCollada working on os x!
@@ -112,12 +106,10 @@ GraphicsManager::~GraphicsManager()
 }
 
 /**
-* @internal
-* @brief Initializes the class so it becomes valid.
-*
-* @return true if the initialization was ok | false otherwise
-*/
-bool GraphicsManager::init()
+ * @brief Inits the graphics driver (OpenGL or DirectX) and creates the application window
+ * @return true if the initialization was ok | false otherwise
+ */
+bool GraphicsManager::createWindow()
 {
 	// Check if the class is already initialized
 	if ( isValid() )
@@ -152,7 +144,10 @@ bool GraphicsManager::init()
 	windowParams["vsync"] = toString(m_vSync);
 	Ogre::RenderWindow* ogreWindow = ogreRoot.createRenderWindow(appName, width, height, m_fullscreen, &windowParams) ;
 	if ( !ogreWindow )
-		THROW_EXCEPTION( "Error creating application window" );
+	{
+		LOG_ERROR( "Error creating application window" );
+		return false;
+	}
 
 	// Create main window
 	m_mainWindow.init( ogreWindow );
@@ -167,22 +162,6 @@ bool GraphicsManager::init()
 	// Set the global pointer to the scene manager
 	ogreSceneManager	= m_pSceneManager;
 
-	// PreInit GUI Manager (QuickGUI requirements)
-	//GUIManager::getSingleton().preInit();
-
-	// Initialize graphics resources, parse scripts etc
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-
-	// Init ImageResourceManager
-	ImageResourceManager::getSingleton().init();
-
-	// Init ShapeManager
-	ShapeManager::getSingleton().init();
-
-	// Init the Font Manager
-	FontManager::getSingleton().init();
-
 	// Init the main camera
 	m_activeCamera.init( m_pSceneManager );
 
@@ -195,6 +174,31 @@ bool GraphicsManager::init()
 	// Background color
 	m_mainWindow.setBackgroundColor( Color( 200, 200, 200 ) );
 
+
+	return true;
+}
+
+/**
+* @brief Inits the application graphic related resources. 
+* @note createWindow() should be called before initReSources. After initReSources call is done, the GraphicsManager is
+* considered to be valid and correctly initialize if there were no errors.
+* @return true if the initialization was ok | false otherwise
+*/
+bool GraphicsManager::initReSources()
+{
+	// First check that we have a valid ogreSceneManager (which means that createWindow() has been called
+	if ( ogreSceneManager == NULL )
+	{
+		LOG_ERROR( "Error initializing GraphicsManager. The method createWindow() should be called before calling initReSources()" );
+		return false;
+	}
+
+	// Init ImageResourceManager
+	ImageResourceManager::getSingleton().init();
+
+	// Init ShapeManager
+	ShapeManager::getSingleton().init();
+
 	// Init the debug overlay
 	// TODO
 	//m_debugOverlay.init();
@@ -202,14 +206,19 @@ bool GraphicsManager::init()
 	// Not Use default camera controller (the user would need to activate it)
 	enableDefault3DCameraControl( false );
 
+	// Init all registered resource groups in Ogre
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+	// Init the Font Manager
+	FontManager::getSingleton().init();
+
 	// Init the cvFont
 	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
 
-	// Init GUI Manager
-	//GUIManager::getSingleton().init();
-
-	// Init 2dCanvas
+	// Init 2dCanvas (and make sure it does not cast shadows and does not receive dynamic lighting)
 	m_canvas.init(width, height, RGBA);
+	m_canvas.getTexturedQuad().enableCastShadows( false );
+	m_canvas.getTexturedQuad().enableLighting( false );
 
 	// Init style queue
 	m_styles.push_front( Style(Color(255,255,255), Color(0,0,0), 1) );
@@ -228,7 +237,7 @@ bool GraphicsManager::init()
 
 
 	// Init RTT texture and setup viewport
-	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_BYTE_RGBA, Ogre::TU_RENDERTARGET);
+	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTexSaveImage", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_BYTE_RGBA, Ogre::TU_RENDERTARGET);
 	Ogre::RenderTarget* rttTex	= m_RttTexture->getBuffer()->getRenderTarget();
 	rttTex->setAutoUpdated(false);
 	Ogre::Viewport* vp	= rttTex->addViewport( m_activeCamera.getOgreCamera() );
@@ -237,7 +246,7 @@ bool GraphicsManager::init()
 	// Set default coordinate system:
 	m_coordSystem = OPENGL3D;
 
-	// This is to adjust 2d and 3d coordinates like in Processing:
+	// This is to adjust 2d and 3d coordinates like in Processing (which is Cing's coordinate system by default)
 	applyCoordinateSystemTransform(PROCESSING);
 
 	// The class is now initialized
@@ -259,9 +268,6 @@ void GraphicsManager::end()
 	// Check if the class is already released
 	if ( !isValid() )
 		return;
-
-	// Release GUI Manager
-	//GUIManager::getSingleton().end();
 
 	// Release camera stuff
 	m_defaultCamController.end();
@@ -340,12 +346,31 @@ void GraphicsManager::draw()
 	m_mainWindow.update();
 
 	// Render the viewport to texture and save to disk if required
-	if ( m_saveFrame )
-	{
+    if ( m_saveFrame || !m_rectSaveList.empty() )
+    {
 		m_RttTexture->getBuffer()->getRenderTarget()->update();
-		m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(ResourceManager::userDataPath + m_frameName );
-		m_saveFrame = false;
-	}
+    
+        if ( m_saveFrame )
+	    {
+		    m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(ResourceManager::userDataPath + m_frameName );
+		    m_saveFrame = false;
+	    }
+
+        for ( std::vector<TNameRect>::const_iterator it = m_rectSaveList.begin(); it != m_rectSaveList.end(); ++it )
+        {
+            const Rect& rect = it->second;
+            Ogre::PixelFormat pf = m_RttTexture->getBuffer()->getRenderTarget()->suggestPixelFormat();
+            size_t w = m_RttTexture->getWidth();
+            size_t h = m_RttTexture->getHeight();
+            void* buffer = malloc( Ogre::PixelUtil::getMemorySize( w, h, 1, pf ) );
+            
+            Ogre::PixelBox* pbox = new Ogre::PixelBox( Ogre::Box( 0, 0, w-1, h-1 ), pf, buffer );
+            m_RttTexture->getBuffer()->getRenderTarget()->copyContentsToMemory( *pbox, Ogre::RenderTarget::FB_AUTO );
+            RTTRectSaveManager::getSingleton().storePicture( it->first, rect, pbox );
+        }
+        m_rectSaveList.clear();
+    }
+
 
 	// Update the Font Manager post render (will make fonts not in use any more invisible)
 	FontManager::getSingleton().postRender();
@@ -499,10 +524,20 @@ void GraphicsManager::clearMatrixStack()
  * @brief   Saves an image with the current frame on screen. The image is saved in the data folder
  * @param   name name of the image to be saved/exported
  */
-void GraphicsManager::save( const String& name )
+void GraphicsManager::saveFrame( const String& name )
 {
 	m_saveFrame = true;
 	m_frameName = name;
+};
+
+/**
+ * @brief   Saves an image with a rectangle taken from the current frame on screen. The image is saved in the data folder
+ * @param   name name of the image to be saved/exported
+ * @param   rect rectangle to be saved
+ */
+void GraphicsManager::saveFrame( const String& name, const Rect& rect )
+{
+    m_rectSaveList.push_back( TNameRect( name, rect ) );
 };
 
 /**
@@ -589,7 +624,7 @@ void GraphicsManager::setFillColor( const Color& color )
 	m_styles.front().m_fillColor = color;
 
 	// We are using the emissive color to fake the fill color with lighting activated
-	// TODO dejar esto bien
+	// TODO fix this
 	//m_pSceneManager->setAmbientLight( m_styles.front().m_fillColor );
 
 	m_fill = true;
@@ -835,6 +870,25 @@ void GraphicsManager::enableShadows( ShadowTechnique technique )
 	m_pSceneManager->setShadowTechnique( (Ogre::ShadowTechnique)technique );
 	m_shadowTechnique	= technique;
 	m_shadowsEnabled	= true;
+}
+
+
+/**
+ * @brief Sets the shadow color used to modulate areas in shaodw (when shadows that modulate are enabled)
+ * @param color color of the shadow. Range 0..255
+ */
+void GraphicsManager::setShadowColor( const Color& color )
+{
+	// Check application correctly initialized (could not be if the user didn't call size function)
+	Application::getSingleton().checkSubsystemsInit();
+
+	if ( !isValid() )
+	{
+		LOG_ERROR( "enableShadows error. setup() has not been called yet" );
+		return;
+	}
+
+	m_pSceneManager->setShadowColour( color.normalized() );
 }
 
 /**

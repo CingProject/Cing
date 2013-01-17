@@ -81,7 +81,7 @@ namespace Cing
 		if ( isValid() )
 			return true;
 
-		// Check application correctly initialized (could not be if the user didn't calle size function)
+		// Check application correctly initialized (could not be if the user didn't call size function)
 		Application::getSingleton().checkSubsystemsInit();
 
 		// Check scene manager
@@ -100,20 +100,17 @@ namespace Cing
 
 		// Set initial properties:
 		m_aspectRatio = static_cast< float >( width ) / static_cast< float >( height );
-		m_pOgreCamera->setAspectRatio( 1.33333f );
+		m_pOgreCamera->setAspectRatio( m_aspectRatio );
 		m_pOgreCamera->setFOVy(Ogre::Radian(degToRad(Camera3D::V_FOV_DEG)));
 		m_cameraSceneNode->setPosition( 0, 0, 2000 );
 		m_cameraSceneNode->lookAt( Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD );
 
-		/*
-		//TEST
-		set3DCameraProperties();
-		*/
-
 		// Set Frustum
-		m_pOgreCamera->setNearClipDistance( 100 );
-		m_pOgreCamera->setFarClipDistance( 4000 );
+		m_pOgreCamera->setNearClipDistance( 5 );
+		m_pOgreCamera->setFarClipDistance( 5000 );
 
+		// Shadow far distance (in case there are shadows)
+		m_pOgreSceneManager->setShadowFarDistance( m_pOgreCamera->getFarClipDistance() );
 
 		// The class is now initialized
 		m_bIsValid = true;

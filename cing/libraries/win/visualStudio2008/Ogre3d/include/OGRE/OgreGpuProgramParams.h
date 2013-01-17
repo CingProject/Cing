@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org
 
-Copyright (c) 2000-2009 Torus Knot Software Ltd
+Copyright (c) 2000-2011 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -849,6 +849,8 @@ namespace Ogre {
 			ACT_TEXTURE_WORLDVIEWPROJ_MATRIX_ARRAY,
 			/// The view/projection matrix of a given spotlight
 			ACT_SPOTLIGHT_VIEWPROJ_MATRIX,
+			/// Array of view/projection matrix of a given spotlight
+			ACT_SPOTLIGHT_VIEWPROJ_MATRIX_ARRAY,
 			/** The view/projection matrix of a given spotlight projection frustum, 
 			combined with the current world matrix
 			*/

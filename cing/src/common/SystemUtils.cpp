@@ -116,7 +116,7 @@ namespace Cing
 	}
 
 	/**
-	 * @brief Returns true if the received path is absolutel, false if it's relative
+	 * @brief Returns true if the received path is absolute, false if it's relative
 	 * @todo: This method might not be totally generic, potentially fix it using boost::filesystem or poco::filesystem
 	 * @param path Path to check
 	 * @return true if the received path is absolutel, false if it's relative
