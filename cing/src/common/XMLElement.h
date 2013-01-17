@@ -87,6 +87,8 @@ namespace Cing
 		void			setAttribute	( const std::string& name, const std::string& val );
 
 		void			setContent		( int val );
+		void			setContent		( float val );
+		void			setContent		( double val );
 		void			setContent		( const std::string& val );
 
 		/** Template form of the attribute query which will try to read the

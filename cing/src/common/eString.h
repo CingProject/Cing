@@ -49,12 +49,19 @@ namespace Cing
 	/// String utils
 	template< typename T>	inline String	toString( T input );
 	template<>				inline String	toString<bool>( bool input );
+	template<>				inline String	toString<std::wstring>( const std::wstring wstr );
 
 	String			intToString(int inputNumber);
+	
 	int				stringToInt(const std::string& str);
 	float			stringToFloat(const std::string& str);
 	double			stringToDouble(const std::string& str);
 	unsigned long	stringToUint32(const std::string& str);
+
+	int				stringToInt(const std::wstring& str);
+	float			stringToFloat(const std::wstring& str);
+	double			stringToDouble(const std::wstring& str);
+	unsigned long	stringToUint32(const std::wstring& str);
 
 	// Tokenize utils
 	void						split	(const std::string& str, char delim, std::vector<std::string>& tokens );
@@ -110,6 +117,13 @@ namespace Cing
 	String	toString<bool>( bool input )
 	{
 		return input == true? "true": "false";
+	}
+
+	template<>
+	String	toString<std::wstring>( const std::wstring wstr )
+	{
+		std::string strTemp(wstr.begin(), wstr.end());
+		return strTemp;
 	}
 
 } // namespace Cing

@@ -237,7 +237,7 @@ bool GraphicsManager::initReSources()
 
 
 	// Init RTT texture and setup viewport
-	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTex", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_BYTE_RGBA, Ogre::TU_RENDERTARGET);
+	m_RttTexture = Ogre::TextureManager::getSingleton().createManual("RttTexSaveImage", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, m_mainWindow.getWidth(), m_mainWindow.getHeight(), 0, Ogre::PF_BYTE_RGBA, Ogre::TU_RENDERTARGET);
 	Ogre::RenderTarget* rttTex	= m_RttTexture->getBuffer()->getRenderTarget();
 	rttTex->setAutoUpdated(false);
 	Ogre::Viewport* vp	= rttTex->addViewport( m_activeCamera.getOgreCamera() );
