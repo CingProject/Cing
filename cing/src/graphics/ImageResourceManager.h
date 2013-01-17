@@ -64,16 +64,16 @@ public:
 	friend class SingletonStatic< ImageResourceManager >;
 
 	// Destructor
-	virtual ~ImageResourceManager												();
+	virtual ~ImageResourceManager			();
 
 	// Init / Release
-	bool                      init                      ();
-	void                      end                       ();
+	bool                    init            ();
+	void                    end             ();
 
 	// Query methods
-	bool                      isValid                   () const { return m_bIsValid; }
-	IplImage*									getImage									(int width, int height, int channels) ;
-	void											releaseImage							( IplImage* image );
+	bool					isValid         () const { return m_bIsValid; }
+	IplImage*				getImage		(int width, int height, int channels) ;
+	void					releaseImage	( IplImage* image );
 
 private:
 
@@ -81,8 +81,8 @@ private:
 	ImageResourceManager();
 
 	// Attributes
-	std::vector< ImageResource >  m_imagePool[2];	///< First vector stores 1 channel images and second stores 3 channel images
-	bool													m_bIsValid;	    ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
+	std::vector< ImageResource >	m_imagePool[3];	///< First vector stores 1 channel images and second stores 3 channel images, and then of 4 channels
+	bool							m_bIsValid;	    ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
 	};
 
 } // namespace Cing

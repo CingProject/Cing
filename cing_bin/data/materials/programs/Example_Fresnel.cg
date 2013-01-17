@@ -69,9 +69,23 @@ void main_fp(
 	float4 refractionColour = tex2D(refractMap, final) + tintColour;
 
 	// Final colour
-	col = lerp(refractionColour, reflectionColour, fresnel);
-
-
+	col = lerp(refractionColour, reflectionColour, fresnel);	
+	float alpha = max( col.r, col.g );
+	alpha = max( alpha, col.b );
+	col.a = alpha * 1.1;
+	//if ( alpha > 0.3 )
+	//	alpha = 1.0;
+	//col.a = alpha;
+	
+	 
+	//if ( (col.r < 0.06) && (col.g < 0.06) && (col.b < 0.06) )
+	//if ( (col.r > 0.9) && (col.g > 0.9) && (col.b > 0.9) )
+	//if ( (col.r > 0.5) || (col.g > 0.5) || (col.b > 0.5) )
+	//{
+	//	col.a = 1.0;
+	//}
+	//else
+	//	col.a = 0.0;
 }
 
 

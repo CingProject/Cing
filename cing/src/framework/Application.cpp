@@ -169,6 +169,15 @@ void Application::drawApp()
 		elapsedMicros	= m_timer.getMicroseconds();
 		elapsedMillis	= m_timer.getMilliseconds();
 		elapsedSec		=  elapsedMicros / 1000000.0;
+
+		// security against negative elapsed (can come from thread related issues)
+		if ( elapsedMicros < 0 )
+			elapsedMicros = 1000;
+		if ( elapsedMillis < 0 )
+			elapsedMillis = 1;
+		if ( elapsedSec < 0 )
+			elapsedSec = 0.001;
+
 		secFromStart	= m_absTimer.getMicroseconds() / 1000000.0;
 		millisFromStart	= m_absTimer.getMilliseconds();
 		m_timer.reset();
