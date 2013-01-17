@@ -515,7 +515,37 @@ void XMLElement::setContent( int val )
 		LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
 		return;
 	}
-	m_rootElem->FirstChild()->SetValue( ( intToString( val ) ) );
+	m_rootElem->FirstChild()->SetValue( ( toString( val ) ) );
+}
+
+/**
+ * @brief Sets value for this element
+ * @param val   Value
+ */
+void XMLElement::setContent( float val )
+{
+	// Check state
+	if ( !m_rootElem )
+	{
+		LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+		return;
+	}
+	m_rootElem->FirstChild()->SetValue( ( toString( val ) ) );
+}
+
+/**
+ * @brief Sets value for this element
+ * @param val   Value
+ */
+void XMLElement::setContent( double val )
+{
+	// Check state
+	if ( !m_rootElem )
+	{
+		LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
+		return;
+	}
+	m_rootElem->FirstChild()->SetValue( ( toString( val ) ) );
 }
 
 /**
