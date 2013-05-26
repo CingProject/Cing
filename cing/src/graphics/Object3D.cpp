@@ -93,11 +93,15 @@ namespace Cing
 		Application::getSingleton().checkSubsystemsInit();
 
 		// Create a node in the scene for the object
-		Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
 		if ( parent )
+		{
 			m_sceneNode = parent->createChildSceneNode();
+		}
 		else
+		{
+			Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
 			m_sceneNode = sceneManager.getRootSceneNode()->createChildSceneNode();
+		}
 
 		// By default we disable scale inheritance, as it is only useful when you create
 		// a 3d object composed by many subobjects, but to create hierarchies with Scene Nodes, you usually don't want
@@ -136,7 +140,22 @@ namespace Cing
 			m_objectName = meshName + Ogre::StringConverter::toString( ++m_objectCounter );
 
 			// Create the entity and attach it to the scene node, and assign material
-			m_entity = sceneManager.createEntity( m_objectName, meshName );
+			if ( parent )
+			{
+				Ogre::SceneManager* sceneManager = parent->getCreator();
+				if ( sceneManager )
+					m_entity = sceneManager->createEntity( m_objectName, meshName );
+				else
+				{
+					LOG_ERROR( "Error: Object::init. SceneManager that created the parent SceneNode recieved is NULL. Cannot create Entity!" );
+					return;
+				}
+			}
+			else
+			{
+				Ogre::SceneManager& sceneManager = GraphicsManager::getSingleton().getSceneManager();
+				m_entity = sceneManager.createEntity( m_objectName, meshName );
+			}
 			m_sceneNode->attachObject( m_entity );
 
 			// Set the object's material
