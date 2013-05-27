@@ -106,8 +106,8 @@ namespace Cing
 		// By default we disable scale inheritance, as it is only useful when you create
 		// a 3d object composed by many subobjects, but to create hierarchies with Scene Nodes, you usually don't want
 		// the scale from the parent node to affect the child node
-		m_sceneNode->setInheritScale(false);
-		m_sceneNode->setInheritOrientation(false);
+		//m_sceneNode->setInheritScale(false);
+		//m_sceneNode->setInheritOrientation(false);
 			
 
 		// TODO: definir materiales básicos, y checkear hw capabilities según el que sea
@@ -186,8 +186,9 @@ namespace Cing
 		if ( sceneManager )
 		{
 			sceneManager->destroyEntity( m_entity );
-			m_entity = NULL;
 		}
+
+		m_entity = NULL;
 
 		// The class is not valid anymore
 		m_bIsValid = false;
@@ -818,7 +819,10 @@ namespace Cing
 		{
 			// Assign material
 			if ( materialName != "" )
+			{
 				m_entity->setMaterialName( materialName );  
+				m_materialName = materialName;
+			}
 		}
 		// TODO: Log -> material does not exist
 		else
@@ -893,6 +897,51 @@ namespace Cing
 	}
 
 	/**
+	 * Clones the Object3D into the received Object3D as parameter.
+	 * It will create a new entity (needs a new unique name), that has the same SceneNode as parent
+	 * and the same material.
+	 * @return material of the object
+	 */	
+	void Object3D::clone( Object3D& other, const std::string& newName, Ogre::SceneNode* parent /*= NULL*/ )
+	{
+		// Only clone valid Objects
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Object3D::clone. Error: Object to be cloned is not valid or has not been initialized. Only valid objects can be cloned" );
+			return;
+		}
+
+		// Safe end of other entity
+		other.end();
+
+		// Clone Ogre entity
+		other.m_entity = m_entity->clone( newName );
+		m_objectName = newName;
+
+		// Create scene node with same parent and attach new entity
+		if ( parent )
+			other.m_sceneNode = parent->createChildSceneNode();
+		else
+			other.m_sceneNode = m_sceneNode->getParentSceneNode()->createChildSceneNode();
+		
+		// By default we disable scale inheritance, as it is only useful when you create
+		// a 3d object composed by many subobjects, but to create hierarchies with Scene Nodes, you usually don't want
+		// the scale from the parent node to affect the child node
+		//other.m_sceneNode->setInheritScale(false);
+		//other.m_sceneNode->setInheritOrientation(false);
+
+		// Attach new entity to new scene node
+		other.m_sceneNode->attachObject( other.m_entity );
+
+		// Set same material and other properties
+		other.setMaterial( m_materialName );
+		other.m_type = m_type;
+		other.m_bIsValid = true;
+		other.setScale( getScale() );
+		other.setOrientation( getOrientation() );
+	}
+
+	/**
 	* @internal 
 	* @brief Shows the object's bounding box (or hides it)
 	*
@@ -924,6 +973,7 @@ namespace Cing
 
 			// Assign the material
 			m_entity->setMaterialName( newMaterialName );
+			m_materialName = newMaterialName;
 		}
 	}
 
