@@ -83,6 +83,7 @@ public:
 
 	void				translate			( float x, float y );
 	void				translate			( float x, float y, float z );
+	void				translate			( const Vector& pos ) { translate(pos.x, pos.y, pos.z); }
 
 	void				setOrientation		( const Quaternion& orientation );
 	void				setOrientation		( const Vector& axis, float angleDegrees );
