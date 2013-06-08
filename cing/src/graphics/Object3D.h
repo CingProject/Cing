@@ -99,6 +99,8 @@ public:
 	void              	setScale    		( float xScale, float yScale );
 	void              	setScale    		( float scale );
 	void              	setScale    		( const Vector& scale );
+	void              	scale    			( const Vector& scaleMult );
+	void              	scale    			( float scaleMult ) { Object3D::scale(Vector(scaleMult, scaleMult, scaleMult)); }
 
 	void				lookAt 				( Object3D& objectToTrack );
 

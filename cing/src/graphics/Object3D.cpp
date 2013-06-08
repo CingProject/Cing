@@ -479,6 +479,22 @@ namespace Cing
 		setScale( scale.x, scale.y, scale.z );
 	}
 
+
+	/**
+	 * @internal
+	 * @brief Scales the object by a factor (3 axis). This is multiplied to the current scale, so 1.0 would leave it as is, lower than
+	 * 1.0 would reduce its scale, and higher than 1.0 would increase it' scale
+	 * @param[in] scale vector containing the scale multiplier in the three axis of the object
+	 */
+	void Object3D::scale( const Vector& scaleMult )
+	{
+		if ( !isValid() )
+			THROW_EXCEPTION( "Error. Trying to set scale in Object3D not correctly initialized" );
+		
+		m_sceneNode->scale(scaleMult);
+	}
+
+
 	/**
 	* @internal
 	* @brief Makes this object to be constantly looking at the target object provided
