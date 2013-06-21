@@ -38,8 +38,9 @@ namespace Cing
 		Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
 		if ( m_sceneNode && sceneManager)
 		{
-			m_sceneNode->removeAndDestroyAllChildren();
-			m_sceneNode->detachAllObjects();
+			//m_sceneNode->removeAndDestroyAllChildren();
+			//m_sceneNode->detachAllObjects();
+			//m_sceneNode = NULL;
 		}
 	}
 
