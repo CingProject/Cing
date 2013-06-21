@@ -131,15 +131,15 @@ namespace Cing
 		float					m_volume;			///< Current audio volume (0..1)
 
 		// Buffer Stuff
-		pt::mutex				m_bufferMutex;		///< Mutex to ensure threading safe buffer copy (from gstreamer to our internal buffer)
-		unsigned char*			m_internalBuffer;	///< Internal buffer to store the buffer comming from gstreamer
-		int						m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)
-		String					m_outputGstVideoFormat;///< GStreamer output buffer video format
-		GraphicsType			m_pixelFormat;		///< Pixel format in which new image frames will be stored
-		Image					m_frameImg;			///< Image containing the buffer of the current video frame
-		Image					m_frameImgGray;		///< Image containing the buffer of the current video frame in gray scale in case gray format is requested (GStreamer 0.10.28 does not support gray yet)
-		bool					m_useGrayScale;		///< True if the requested output format is grayscale 
-		bool					m_newBufferReady;	///< True when there is a new buffer ready
+		boost::shared_ptr<pt::mutex>	m_bufferMutex;		///< Mutex to ensure threading safe buffer copy (from gstreamer to our internal buffer)
+		unsigned char*					m_internalBuffer;	///< Internal buffer to store the buffer comming from gstreamer
+		int								m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)
+		String							m_outputGstVideoFormat;///< GStreamer output buffer video format
+		GraphicsType					m_pixelFormat;		///< Pixel format in which new image frames will be stored
+		Image							m_frameImg;			///< Image containing the buffer of the current video frame
+		Image							m_frameImgGray;		///< Image containing the buffer of the current video frame in gray scale in case gray format is requested (GStreamer 0.10.28 does not support gray yet)
+		bool							m_useGrayScale;		///< True if the requested output format is grayscale 
+		bool							m_newBufferReady;	///< True when there is a new buffer ready
 
 		// Internal stuff
 		bool                  	m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
