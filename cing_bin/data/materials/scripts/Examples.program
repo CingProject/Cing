@@ -127,7 +127,7 @@ vertex_program Ogre/HardwareSkinningTwoWeights unified
 		param_named_auto lightPos[1] light_position 1
 		param_named_auto lightDiffuseColour[0] light_diffuse_colour 0
 		param_named_auto lightDiffuseColour[1] light_diffuse_colour 1
-		param_named_auto ambient ambient_light_colour
+		//param_named_auto ambient ambient_light_colour
    }
 }
 
@@ -147,7 +147,7 @@ vertex_program Ogre/HardwareSkinningFourWeights cg
 		param_named_auto lightPos[1] light_position 1
 		param_named_auto lightDiffuseColour[0] light_diffuse_colour 0
 		param_named_auto lightDiffuseColour[1] light_diffuse_colour 1
-		param_named_auto ambient ambient_light_colour
+		//param_named_auto ambient ambient_light_colour
    }
 
 }
