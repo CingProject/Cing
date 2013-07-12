@@ -43,9 +43,10 @@ public:
 	virtual ~SceneGraphElement();
 
 	// Scene Node related methods
-	void				addChild			( SceneGraphElement& child );	
-	void				changeParentNode	( Ogre::SceneNode* parent );
-	Ogre::SceneNode*	getSceneNode		() { return m_sceneNode; }
+	void					addChild			( SceneGraphElement& child );	
+	void					changeParentNode	( Ogre::SceneNode* parent );
+	Ogre::SceneNode*		getSceneNode		() { return m_sceneNode; }
+	const Ogre::SceneNode*	getSceneNode 		() const { return m_sceneNode; }
 
 protected:
 

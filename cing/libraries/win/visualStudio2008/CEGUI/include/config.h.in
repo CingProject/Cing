@@ -126,6 +126,9 @@
 /* Define to 1 if the system has the type `ptrdiff_t'. */
 #undef HAVE_PTRDIFF_T
 
+/* Define to 1 if you have the <Python.h> header file. */
+#undef HAVE_PYTHON_H
+
 /* Define to 1 if you have the `regcomp' function. */
 #undef HAVE_REGCOMP
 

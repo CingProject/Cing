@@ -89,6 +89,7 @@ public:
 
 	void				translate			( float x, float y );
 	void				translate			( float x, float y, float z );
+	void				translate			( const Vector& pos ) { translate(pos.x, pos.y, pos.z); }
 
 	void				setOrientation		( const Quaternion& orientation );
 	void				setOrientation		( const Vector& axis, float angleDegrees );
@@ -104,6 +105,8 @@ public:
 	void              	setScale    		( float xScale, float yScale );
 	void              	setScale    		( float scale );
 	void              	setScale    		( const Vector& scale );
+	void              	scale    			( const Vector& scaleMult );
+	void              	scale    			( float scaleMult ) { Object3D::scale(Vector(scaleMult, scaleMult, scaleMult)); }
 
 	void				lookAt 				( Object3D& objectToTrack );
 
@@ -148,6 +151,11 @@ public:
 
 	// Materials
 	Ogre::MaterialPtr	getMaterial				();
+	const std::string	getMaterialName			() const { return m_materialName; }
+
+	// Cloning
+	void				clone( Object3D& other, const std::string& newName, Ogre::SceneNode* parent = NULL );
+
 
 	// Debug methods
 	void				showBoundingBox			( bool show );
@@ -165,11 +173,12 @@ private:
 	static long				m_objectCounter;///< Used to generate unique names for the 3d objects
 
 	// Attributes
-	Ogre::Entity*    		m_entity;				///< Ogre entity that represents the model
+	Ogre::Entity*    		m_entity;		///< Ogre entity that represents the model
 	Ogre::MaterialPtr		m_materialCopy;	///< Entity's material copy (to allow this object to have a specific color)
-	std::string       		m_objectName;		///< Unique object name
-	Object3DType			m_type;					///< Type of 3d object
-	bool              		m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	std::string				m_materialName; ///< Name of the material currently in use in this Entity
+	std::string       		m_objectName;	///< Unique object name
+	Object3DType			m_type;			///< Type of 3d object
+	bool              		m_bIsValid;		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

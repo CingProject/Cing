@@ -600,23 +600,24 @@ void ShaderGenerator::setupPSSMShadows( Ogre::ShadowTechnique technique )
 
 	// Enable ligh types
 	int lightTypeEnabledCount = 0;
+	int textureCountPerLightType = 3;
 	if ( m_dirLightCastShadows )
 	{
-		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_DIRECTIONAL, 3);
+		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_DIRECTIONAL, textureCountPerLightType);
 		++lightTypeEnabledCount;
 	}
 	if ( m_pointLightCastShadows )
 	{
-		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_POINT, 3);
+		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_POINT, textureCountPerLightType);
 		++lightTypeEnabledCount;
 	}
 	if ( m_spotLightCastShadows )
 	{
-		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_SPOTLIGHT, 3);
+		m_sceneManager->setShadowTextureCountPerLightType(Ogre::Light::LT_SPOTLIGHT, textureCountPerLightType);
 		++lightTypeEnabledCount;
 	}
 
-	m_sceneManager->setShadowTextureSettings(m_sizePerShadowTexture, lightTypeEnabledCount*3, Ogre::PF_FLOAT32_R);
+	m_sceneManager->setShadowTextureSettings(m_sizePerShadowTexture, lightTypeEnabledCount*textureCountPerLightType, Ogre::PF_FLOAT32_R);
 	m_sceneManager->setShadowTextureSelfShadow(m_selfShadows);
 	//m_sceneManager->setShadowCasterRenderBackFaces(false);
 
