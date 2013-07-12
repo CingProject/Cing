@@ -134,15 +134,15 @@ void BlobFinder::update( const Image& inImage )
 	m_blobs.clear();
 	for( ; m_contour != 0; m_contour = m_contour->h_next )
 	{
-	// Get contour area
-	double area = fabs( cvContourArea( m_contour, CV_WHOLE_SEQ ) );
+		// Get contour area
+		double area = fabs( cvContourArea( m_contour, CV_WHOLE_SEQ ) );
 
-	// If it has a good size (between min and max)
-	if ( ( area > m_maxBlobArea ) || ( area < m_minBlobArea ) )
-	  continue;
+		// If it has a good size (between min and max)
+		if ( ( area > m_maxBlobArea ) || ( area < m_minBlobArea ) )
+		  continue;
 
-	// Store new Blob
-	m_blobs.push_back( Blob( area, m_contour ) );
+		// Store new Blob
+		m_blobs.push_back( Blob( area, m_contour ) );
 	}
 
 	// Release temp image
