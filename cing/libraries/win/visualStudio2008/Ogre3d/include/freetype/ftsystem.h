@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    FreeType low-level system interface definition (specification).      */
 /*                                                                         */
-/*  Copyright 1996-2001, 2002, 2005, 2010 by                               */
+/*  Copyright 1996-2001, 2002, 2005 by                                     */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -240,8 +240,7 @@ FT_BEGIN_HEADER
    *
    * @note:
    *   This function might be called to perform a seek or skip operation
-   *   with a `count' of~0.  A non-zero return value then indicates an
-   *   error.
+   *   with a `count' of~0.
    *
    */
   typedef unsigned long
@@ -302,7 +301,7 @@ FT_BEGIN_HEADER
    *     The stream's input function.
    *
    *   close ::
-   *     The stream's close function.
+   *     The stream;s close function.
    *
    *   memory ::
    *     The memory manager to use to preload frames.  This is set
