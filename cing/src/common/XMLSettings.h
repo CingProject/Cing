@@ -36,6 +36,8 @@ namespace Cing
 class XMLSettings
 {
 public:
+	XMLSettings(): m_valid(false) {}
+	~XMLSettings() { m_valid = false; }
 
 	// Load xml file
 	bool load( const std::string& pathToXML );
@@ -62,13 +64,15 @@ public:
 	Cing::XMLElement&	getRootNode(){ return m_xmlFile; };	
 	
 	// Getters
-	const std::string&	getFileName() const { return m_fileName; }
+	const std::string&	getFileName	() const { return m_fileName; }
+	bool				isValid		() const { return m_valid; }
 
 	// Save
 	bool				save( const std::string&  xmlFileName );
 protected:
 	Cing::XMLElement	m_xmlFile; ///< Root node of the xml file
 	std::string			m_fileName;///< Filename loaded in this xml (relative to app data folder)
+	bool				m_valid;
 
 };
 

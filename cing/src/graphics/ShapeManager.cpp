@@ -253,7 +253,7 @@ void ShapeManager::beginShape(GraphicsType operation)
 
 	// Check if the user select fill and/or stroke
 	newShape.m_isFill      = GraphicsManager::getSingleton().getFill();
-  newShape.m_isStroke    = GraphicsManager::getSingleton().getStroke();
+	newShape.m_isStroke    = GraphicsManager::getSingleton().getStroke();
 	newShape.m_isClose     = false;
 	newShape.m_StrokeColor = GraphicsManager::getSingleton().getStrokeColor();
 	newShape.m_FillColor   = GraphicsManager::getSingleton().getFillColor();
