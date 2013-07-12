@@ -147,7 +147,9 @@ void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* 
 void GUIManagerCEGUI::end()
 {
 	m_debugOutput.end();
-	CEGUI::System::destroy();
+
+	// NOTE: commented cause there is a crash when called (CEGUI-Ogre interaction issue?)
+	//CEGUI::System::destroy();
 	//CEGUI::OgreRenderer::destroySystem();
 	m_bIsValid = false;
 }
@@ -162,7 +164,7 @@ void GUIManagerCEGUI::addGUIELement( CEGUI::Window* guiElement )
 {
 	if ( !isValid() )
 	{
-		LOG_ERROR( "Trying to add a GUI element to a GUIManager that has not been initialized" );
+		LOG_ERROR( "Trying to	add a GUI element to a GUIManager that has not been initialized" );
 		return;
 	}
 
