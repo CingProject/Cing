@@ -54,20 +54,21 @@ public:
 	void                update          				();
 
 	// Query methods
-	bool                isValid         				() const  { return m_bIsValid;     } 
-	Ogre::SceneNode*	getSceneNode						()				{ return m_cameraSceneNode; }
-	const Ogre::Camera* getOgreCamera   				() const  { return m_pOgreCamera;  }
-	Ogre::Camera*       getOgreCamera   				()        { return m_pOgreCamera;  }
+	bool                isValid         				() const	{ return m_bIsValid;     } 
+	Ogre::SceneNode*	getSceneNode					()			{ return m_cameraSceneNode; }
+	const Ogre::Camera* getOgreCamera   				() const	{ return m_pOgreCamera;  }
+	Ogre::Camera*       getOgreCamera   				()			{ return m_pOgreCamera;  }
 	
 	// set methods
 	void                moveRelative    				( const Vector& move );
 	void				set3DCameraProperties			();
 
+	static const float        V_FOV_DEG;      ///< Camera's vertical FOV in degrees
+
 private:
 
 	// Constant attributes
 	static const std::string  DEFAULT_NAME;   ///< Default camera name when created (unless other specified)
-	static const float        V_FOV_DEG;      ///< Camera's vertical FOV in degrees
 
 	// Attributes
 	Ogre::Camera*				m_pOgreCamera;				///< Ogre camera

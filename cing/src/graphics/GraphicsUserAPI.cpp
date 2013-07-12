@@ -1346,6 +1346,57 @@ Vector screenToWorld( const Vector& screenCoordinate, float distanceToCamera )
 	return screenToWorld( Vector2(screenCoordinate.x, screenCoordinate.y), distanceToCamera );
 }
 
+
+/**
+ * @brief Returns the pointer to the Ogre::Entity that is where the screen coordinates passed point to. 
+ * Useful to do "mouse picking", to get the pointer to an entity given the screen coodinates-
+ * @param[in]	screenCoordinate The screen coordinate to transform to world coordinate
+ * @return		pointer to the Ogre::Entity found, or NULL if no Entity is at the received coordinates.
+ */
+Ogre::Entity* pickEntity( const Vector2& screenCoordinate )
+{
+	// Get current camera (TODO make this parameter)
+	Ogre::Camera* camera = GraphicsManager::getSingleton().getActiveCamera().getOgreCamera();
+	Ogre::Viewport* viewport = camera->getViewport();
+	if ( !camera || !viewport)
+	{
+		LOG_ERROR( "getCameraToViewportRay. Cannot get current Ogre Camera or Viewport, one fo them is NULL" );
+		return	NULL;
+	}
+
+	// Check boundaries
+	if ( (screenCoordinate.x  < 0) || (screenCoordinate.x  > width) ||
+		(screenCoordinate.y  < 0) || (screenCoordinate.y  > height) )
+	{
+		LOG_ERROR( "getCameraToViewportRay. Screen coordinates are out of the screen. Cannot project them to world coordinates." );
+		return NULL;
+
+	}
+
+	// Calculate normalized screen coordinate (0..1)
+	float scrx = screenCoordinate.x / viewport->getActualWidth(); 
+	float scry = screenCoordinate.y / viewport->getActualHeight();
+
+	// Cast the ray to world coordinates and create query to find objects that collide with Ray
+	Ogre::Ray	ray = camera->getCameraToViewportRay(scrx, scry);
+	Ogre::RaySceneQuery* query = ogreSceneManager->createRayQuery(ray);
+	query->setSortByDistance(true);
+
+	// Iterate through objects
+	Ogre::RaySceneQueryResult &result = query->execute();
+	Ogre::RaySceneQueryResult::iterator itr = result.begin( );
+
+	for ( itr = result.begin(); itr != result.end(); itr++ )
+	{
+		if (itr->movable && (itr->movable->getMovableType() == "Entity") && (itr->movable->isVisible()) )
+		{
+			return static_cast<Ogre::Entity*>(itr->movable);
+		}
+	}
+
+	return NULL;
+}
+
 //----------------------------------------------------------------------------------- 
 // Helpers
 //----------------------------------------------------------------------------------- 

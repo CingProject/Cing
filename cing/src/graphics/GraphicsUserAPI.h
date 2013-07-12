@@ -232,10 +232,12 @@ void setShadowColor	( const Color& color );
 // Coordinate System related
 //-----------------------------------------------------------------------------------
 
-Vector2		worldToScreen			( const Vector& worldCoordinate );
-Vector2		worldToScreenNormalized	( const Vector& worldCoordinate );
-Vector		screenToWorld			( const Vector2& screenCoordinate, float distanceToCamera );
-Vector		screenToWorld			( const Vector& screenCoordinate, float distanceToCamera );
+Vector2			worldToScreen			( const Vector& worldCoordinate );
+Vector2			worldToScreenNormalized	( const Vector& worldCoordinate );
+Vector			screenToWorld			( const Vector2& screenCoordinate, float distanceToCamera );
+Vector			screenToWorld			( const Vector& screenCoordinate, float distanceToCamera );
+Ogre::Entity*	pickEntity				( const Vector2& screenCoordinate );
+
 
 
 //----------------------------------------------------------------------------------- 

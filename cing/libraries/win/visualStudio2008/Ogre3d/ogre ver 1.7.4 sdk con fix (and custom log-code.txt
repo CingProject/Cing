@@ -1,0 +1,2 @@
+Fix: http://linode.ogre3d.org/forums/viewtopic.php?f=2&t=63644
+Removed exception that crashed and replaced with log. Seems to work fine.

@@ -113,6 +113,14 @@ namespace Cing
 		m_sceneNode->setPosition( x, y, z );
 		m_pLight->setDiffuseColour( Color(r, g, b).normalized() );
 
+		// Store initial colors
+		m_diffuseColor.r = r;
+		m_diffuseColor.g = g;
+		m_diffuseColor.b = b;
+		m_specularColor.r = 255; 
+		m_specularColor.g = 255; 
+		m_specularColor.b = 255; 
+
 		// The class is now initialized
 		m_bIsValid = true;
 
@@ -281,7 +289,8 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to set diffuse color in a Light not correctly initialized" );
 
-		setDiffuseColor( Color( r, g, b ) );
+		m_diffuseColor = Color( r, g, b );
+		setDiffuseColor( m_diffuseColor );
 	}
 
 
@@ -296,6 +305,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set diffuse color in a Light not correctly initialized" );
 
 		m_pLight->setDiffuseColour( color.normalized() );
+		m_diffuseColor = color;
 	}
 
 	/**
@@ -310,7 +320,8 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to set specular color in a Light not correctly initialized" );
 
-		setSpecularColor( Color( r, g, b ) );
+		m_specularColor = Color( r, g, b );
+		setSpecularColor( m_specularColor );
 	}
 
 
@@ -325,6 +336,7 @@ namespace Cing
 			THROW_EXCEPTION( "Error. Trying to set specular color in a Light not correctly initialized" );
 
 		m_pLight->setSpecularColour( color.normalized() );
+		m_specularColor = color;
 	}
 
 	/**

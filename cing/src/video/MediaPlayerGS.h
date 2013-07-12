@@ -35,6 +35,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 // Common
 #include "PTypes/include/pasync.h"
+#include "boost/smart_ptr/shared_ptr.hpp"
 
 namespace Cing
 {
@@ -58,16 +59,17 @@ namespace Cing
 		Image&  getImage();
 
 		// Query methods
-		bool    		isValid   () const { return m_bIsValid; }
-		bool    		isPlaying ();
-		bool			isPaused  		();
-		float   		duration  () const { return (float)m_videoDuration; }
-		float   		time      ();
-		unsigned int    getWidth  () const { return m_videoWidth; }
-		unsigned int    getHeight () const { return m_videoHeight; }
-		float   		fps		  		() const { return m_videoFps; }
-		float   		frameRate 		() const { return m_videoFps; }
-		unsigned int	numberOfFrames	() const { return m_nFrames; } 
+		bool    			isValid   		() const { return m_bIsValid; }
+		bool    			isPlaying 		();
+		bool				isPaused  		();
+		float   			duration  		() const { return (float)m_videoDuration; }
+		float   			time      		();
+		unsigned int    	getWidth  		() const { return m_videoWidth; }
+		unsigned int    	getHeight 		() const { return m_videoHeight; }
+		float   			fps		  		() const { return m_videoFps; }
+		float   			frameRate 		() const { return m_videoFps; }
+		unsigned int		numberOfFrames	() const { return m_nFrames; } 
+		const std::string&	getFilePath		() const { return m_fileName; }
 
 		// Media control
 		void    play    ();
@@ -131,15 +133,15 @@ namespace Cing
 		float					m_volume;			///< Current audio volume (0..1)
 
 		// Buffer Stuff
-		pt::mutex				m_bufferMutex;		///< Mutex to ensure threading safe buffer copy (from gstreamer to our internal buffer)
-		unsigned char*			m_internalBuffer;	///< Internal buffer to store the buffer comming from gstreamer
-		int						m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)
-		String					m_outputGstVideoFormat;///< GStreamer output buffer video format
-		GraphicsType			m_pixelFormat;		///< Pixel format in which new image frames will be stored
-		Image					m_frameImg;			///< Image containing the buffer of the current video frame
-		Image					m_frameImgGray;		///< Image containing the buffer of the current video frame in gray scale in case gray format is requested (GStreamer 0.10.28 does not support gray yet)
-		bool					m_useGrayScale;		///< True if the requested output format is grayscale 
-		bool					m_newBufferReady;	///< True when there is a new buffer ready
+		boost::shared_ptr<pt::mutex>	m_bufferMutex;		///< Mutex to ensure threading safe buffer copy (from gstreamer to our internal buffer)
+		unsigned char*					m_internalBuffer;	///< Internal buffer to store the buffer comming from gstreamer
+		int								m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)
+		String							m_outputGstVideoFormat;///< GStreamer output buffer video format
+		GraphicsType					m_pixelFormat;		///< Pixel format in which new image frames will be stored
+		Image							m_frameImg;			///< Image containing the buffer of the current video frame
+		Image							m_frameImgGray;		///< Image containing the buffer of the current video frame in gray scale in case gray format is requested (GStreamer 0.10.28 does not support gray yet)
+		bool							m_useGrayScale;		///< True if the requested output format is grayscale 
+		bool							m_newBufferReady;	///< True when there is a new buffer ready
 
 		// Internal stuff
 		bool                  	m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.

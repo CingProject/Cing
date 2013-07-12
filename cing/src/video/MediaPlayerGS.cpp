@@ -319,6 +319,9 @@ namespace Cing
 			float newSpeed = fps/m_videoFps;
 			speed( newSpeed );
 		}
+	
+		if ( !m_bufferMutex )
+			m_bufferMutex = boost::shared_ptr<pt::mutex>(new pt::mutex());
 
 
 		LOG_EXIT_FUNCTION;
@@ -355,6 +358,8 @@ namespace Cing
 		m_loopPending		= false;
 		m_paused			= false;
 		m_playing			= false;
+
+		m_bufferMutex.reset();
 
 		LOG_EXIT_FUNCTION;
 	}
@@ -814,14 +819,16 @@ namespace Cing
 
 		// Copy Gstreamer buffer into our internal temporary buffer
 		// We do this instead of keeping gstreamer buffer reference, as doing so, gstreamer crashes (or throws errors)
-		m_bufferMutex.lock();
+		if ( m_bufferMutex )
+			m_bufferMutex->lock();
 		memcpy( m_internalBuffer, (char*)GST_BUFFER_DATA(newBuffer), m_bufferSizeInBytes );
 
 		// We have the image -> the buffer is ready to be reused by GStreamer
 		gst_buffer_unref(newBuffer);
 
 		// operation done
-		m_bufferMutex.unlock();
+		if ( m_bufferMutex )
+			m_bufferMutex->unlock();
 
 		//LOG_EXIT_FUNCTION;
 	}
