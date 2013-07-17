@@ -63,9 +63,11 @@ public:
 
 	// TODO check n valid
 	TrackedBlob&	getTrackedBlobN      ( int n )  { return m_trackedBlobs[n]; }
+	const TrackedBlob&	getTrackedBlobN      ( int n ) const  { return m_trackedBlobs[n]; }
 
 	// Get / Set methods
-  virtual void  setMaxBlobs   ( int maxBlobs );
+	virtual void  setMaxBlobs   ( int maxBlobs );
+	int getTrackedBlobsCount() const { return m_trackedBlobs.size(); }
 
 	void setCallback(void (*callback)){ m_callback = callback; };
 

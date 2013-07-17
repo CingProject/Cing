@@ -90,9 +90,11 @@ namespace Cing
 		void	drawDebug			( bool draw = true);
 
 		// Query methods
-		bool				isValid     () const { return m_bIsValid; }
-		const Vector&		getPosition () const;
-		Ogre::Light*		getOgreLight()	{ return m_pLight; }
+		bool				isValid     	() const { return m_bIsValid; }
+		const Vector&		getPosition 	() const;
+		Ogre::Light*		getOgreLight	()	{ return m_pLight; }
+		const Color&		getDiffuseColor	() const { return m_diffuseColor; }
+		const Color&		getSpecularColor() const { return m_specularColor; }
 
 
 
@@ -105,6 +107,8 @@ namespace Cing
 		// Attributes
 		std::string					m_lightName;  		///< Name of this light
 		Ogre::Light*				m_pLight;     		///< Pointer to the light object
+		Color						m_diffuseColor;		///< Diffuse color of the light
+		Color						m_specularColor;	///< Specular color of the light
 
 		// Debugging purposes
 		Ogre::BillboardSet*			m_lightFlareSet;	///< Used to draw a billboard where the light is (to debug its position)

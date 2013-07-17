@@ -240,7 +240,17 @@ namespace Cing
 	{ 
 		bool image_loaded = false; 
 	
-		// Load the file stream
+		// Check if this texture has already been loaded
+		// TODO: INTERGRATE THIS TO OPTIMIZE
+		//Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( texturePath );
+		//if ( texture.isNull() == false )
+		//{
+		//	// Load texture into image pixels
+		//	texture->convertToImage( m_image );
+		//	return true;
+		//}
+
+		// Load the file stream (if the image has not previously been loaded)
 		std::ifstream ifs(texturePath.c_str(), std::ios::binary|std::ios::in); 
 		if (ifs.is_open()) 
 		{ 
@@ -257,7 +267,8 @@ namespace Cing
 				m_image.load(data_stream, tex_ext); 
 				
 				// Load the texture to make it available in the future just by using the texture name
-				//Ogre::TextureManager::getSingleton().loadImage(textureName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image, Ogre::TEX_TYPE_2D, 0, 1.0f); 
+				// TODO: INTERGRATE THIS TO OPTIMIZE
+				//Ogre::TextureManager::getSingleton().loadImage(texturePath, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image); 
 				image_loaded = true; 
 			} 
 			ifs.close(); 
