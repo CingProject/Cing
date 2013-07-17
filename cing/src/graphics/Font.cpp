@@ -26,11 +26,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "FontProperties.h"
 
 // OGRE
-#include "OgreOverlayManager.h"
-#include "OgreOverlayContainer.h"
+#include "Overlay/OgreOverlayManager.h"
+#include "Overlay/OgreOverlayContainer.h"
+#include "Overlay/OgreTextAreaOverlayElement.h"
+#include "Overlay/OgreFontManager.h"
 #include "OgreStringConverter.h"
-#include "OgreTextAreaOverlayElement.h"
-#include "OgreFontManager.h"
 
 namespace Cing
 {
@@ -98,11 +98,14 @@ namespace Cing
 		if (ttfName == "DefaultFont" )
 		{
 			// get the font manager
-			Ogre::FontManager &fontMgr = Ogre::FontManager::getSingleton();
+			//Ogre::FontManager &fontMgr = Ogre::FontManager::getSingleton();
+			Ogre::FontManager* fontMgr = Ogre::FontManager::getSingletonPtr();
+
 
 			// get font pointer and load it
-			m_font = fontMgr.getByName( ttfName, "General" );
-			m_font->load();
+			m_font = fontMgr->getByName( ttfName, "General" );
+			if ( !m_font.isNull() )
+				m_font->load();
 		}
 		// If it is not the defautl font -> create it
 		else
@@ -113,35 +116,39 @@ namespace Cing
 			// create a font resource
 			m_font = fontMgr.create( ttfName, "General" );
 
-			// set as truetype (TODO: support images)
-			m_font->setType( Ogre::FT_TRUETYPE );
-
-			// set the .ttf file name
-			m_font->setSource( ttfName );
-
-			// set the size
-			m_font->setTrueTypeSize( size );
-
-			// set the dpi
-			m_font->setTrueTypeResolution( resolution );
-
-			// Generate supported character range (if the user added a specific range, otherwise default 33-166 will be used)
-			// NOTE: Complete character set -> until 512, Details about UTF-8 codepoints here: http://www.utf8-chartable.de/
-			if ( m_codePointRangeList.empty() == false )
+			if ( !m_font.isNull() )
 			{
-				Ogre::Font::CodePointRangeList::iterator it;
-				for ( it = m_codePointRangeList.begin(); it != m_codePointRangeList.end(); ++it )
+
+				// set as truetype (TODO: support images)
+				m_font->setType( Ogre::FT_TRUETYPE );
+
+				// set the .ttf file name
+				m_font->setSource( ttfName );
+
+				// set the size
+				m_font->setTrueTypeSize( size );
+
+				// set the dpi
+				m_font->setTrueTypeResolution( resolution );
+
+				// Generate supported character range (if the user added a specific range, otherwise default 33-166 will be used)
+				// NOTE: Complete character set -> until 512, Details about UTF-8 codepoints here: http://www.utf8-chartable.de/
+				if ( m_codePointRangeList.empty() == false )
 				{
-					m_font->addCodePointRange( *it );
+					Ogre::Font::CodePointRangeList::iterator it;
+					for ( it = m_codePointRangeList.begin(); it != m_codePointRangeList.end(); ++it )
+					{
+						m_font->addCodePointRange( *it );
+					}
 				}
-			}
 				
-			// load the ttf (creates the texture with the font characters)
-			m_font->load();
+				// load the ttf (creates the texture with the font characters)
+				m_font->load();
+			}
 		}
 
 		// Set the class valid if the font was loded
-		m_bIsValid =  m_font->isLoaded();
+		m_bIsValid = !m_font.isNull() &&  m_font->isLoaded();
 
 		// Report
 		if ( m_bIsValid )

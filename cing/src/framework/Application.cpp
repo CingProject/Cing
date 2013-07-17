@@ -138,7 +138,7 @@ void Application::endApp()
 	//PhysicsManager::getSingleton().end();
 
 	// Release GUI Manager
-	GUIManagerCEGUI::getSingleton().end();
+	//GUIManagerCEGUI::getSingleton().end();
 
 	// Release graphics manager
 	GraphicsManager::getSingleton().end();
@@ -283,7 +283,7 @@ void Application::initSubSystems()
 	InputManager::getSingleton().getKeyboard().addListener( this );
 
 	// Init GUI Manager
-	GUIManagerCEGUI::getSingleton().init( GraphicsManager::getSingleton().getMainWindow().getOgreWindow(),&GraphicsManager::getSingleton().getSceneManager() );
+	//GUIManagerCEGUI::getSingleton().init( GraphicsManager::getSingleton().getMainWindow().getOgreWindow(),&GraphicsManager::getSingleton().getSceneManager() );
 
 	// Init plugins that require it at this point
 	initPlugins( INIT_AFTER_SUBSYSTEMS );

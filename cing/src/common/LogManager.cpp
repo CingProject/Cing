@@ -215,7 +215,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	// TODO: decide policy
 	if ( level >= m_debugOutputLogLevel )
     {
-		GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
+		//GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
     }
 
 	// If we are in windows and debug -> log to visual studio output

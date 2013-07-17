@@ -362,7 +362,7 @@ void enableDefault3DCameraControl( bool useDefault /*= true */ )
  */
 void enableMouseCameraControl( bool value  /*= true */)
 {
-	GraphicsManager::getSingleton().getDefaultCameraController().useMouse( value );
+	//GraphicsManager::getSingleton().getDefaultCameraController().useMouse( value );
 }
 
 /**
@@ -372,7 +372,7 @@ void enableMouseCameraControl( bool value  /*= true */)
  */
 void enableKeyboardCameraControl( bool value  /*= true */)
 {
-	GraphicsManager::getSingleton().getDefaultCameraController().useKeyboard( value );
+	//GraphicsManager::getSingleton().getDefaultCameraController().useKeyboard( value );
 }
 
 

@@ -47,8 +47,8 @@ namespace Cing
  */
 void ambientLight( float gray )
 {
-  // Check application correctly initialized (could not be if the user didn't calle size function)
-  Application::getSingleton().checkSubsystemsInit();
+	// Check application correctly initialized (could not be if the user didn't calle size function)
+	Application::getSingleton().checkSubsystemsInit();
 
 	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(gray , gray , gray).normalized() );
 }

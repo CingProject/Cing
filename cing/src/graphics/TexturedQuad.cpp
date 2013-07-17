@@ -247,6 +247,9 @@ namespace Cing
 		// No shadow casting in textured quads by default
 		enableCastShadows(false);
 
+		// No lighting by default (as this is usually used to render 2d images and not images in 3d scenes with lighting).
+		//enableLighting(false);
+
 		return true;
 	}
 	/**
@@ -1045,7 +1048,7 @@ namespace Cing
 		Ogre::Radian angle;
 		Quaternion q;
 		tranformation.extract3x3Matrix( rot );
-		rot.ToAxisAngle( axis, angle );
+		rot.ToAngleAxis( axis, angle );
 		q.FromAngleAxis( angle, axis );
 
 		// Apply current transformations to the pivot Node

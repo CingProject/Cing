@@ -55,6 +55,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreStringConverter.h"
 #include "OgreStringConverter.h"
 #include "OgreHardwarePixelBuffer.h"
+#include "Overlay/OgreOverlaySystem.h"
 
 // Collada
 #if defined( _MSC_VER ) // TODO, need OgreCollada working on os x!
@@ -175,6 +176,9 @@ bool GraphicsManager::createWindow()
 	m_mainWindow.setBackgroundColor( Color( 200, 200, 200 ) );
 
 
+	// By default full ambient light
+	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(255).normalized() );
+
 	return true;
 }
 
@@ -208,6 +212,10 @@ bool GraphicsManager::initReSources()
 
 	// Init all registered resource groups in Ogre
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+	// Init the new Ogre Overlay system (necessary to use fonts or overlays since Ogre 1.9)
+	m_overlaySystem = new Ogre::OverlaySystem();
+	ogreSceneManager->addRenderQueueListener(m_overlaySystem);
 
 	// Init the Font Manager
 	FontManager::getSingleton().init();
@@ -270,11 +278,14 @@ void GraphicsManager::end()
 		return;
 
 	// Release camera stuff
-	m_defaultCamController.end();
+	//m_defaultCamController.end();
 	m_activeCamera.end();
 
 	// Release canvas
 	m_canvas.end();
+
+	// Overlay system
+	delete m_overlaySystem;
 
 	// Release scene manager
 	Ogre::Root::getSingleton().destroySceneManager( m_pSceneManager );
@@ -310,7 +321,7 @@ void GraphicsManager::draw()
 	ShapeManager::getSingleton().update();
 
 	// Update default camera controller
-	m_defaultCamController.update();
+	//m_defaultCamController.update();
 
 	// Get Frame stats (and display fps if enabled)
 	const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
@@ -690,11 +701,11 @@ void GraphicsManager::enableDefault3DCameraControl( bool useDefault )
 	Application::getSingleton().checkSubsystemsInit();
 
 	// Enable controller
-	if ( useDefault )
-		m_defaultCamController.init( m_activeCamera );
-	// Enable controller
-	else
-		m_defaultCamController.end();
+	//if ( useDefault )
+	//	m_defaultCamController.init( m_activeCamera );
+	//// Enable controller
+	//else
+	//	m_defaultCamController.end();
 }
 
 /**

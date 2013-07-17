@@ -41,7 +41,7 @@ namespace Cing
  */
 void showDebugOutput( bool show /*= true*/ )
 {
-	GUIManagerCEGUI::getSingleton().getDebugOutput().setVisible( show );
+	//GUIManagerCEGUI::getSingleton().getDebugOutput().setVisible( show );
 }
 
 /**
@@ -49,7 +49,7 @@ void showDebugOutput( bool show /*= true*/ )
  */
 void clearDebugOutput()
 {
-	GUIManagerCEGUI::getSingleton().getDebugOutput().clear();
+	//GUIManagerCEGUI::getSingleton().getDebugOutput().clear();
 }
 
 } // namespace Cing

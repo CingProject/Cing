@@ -20,7 +20,7 @@
 
 // Ogre
 #include "Ogre.h"
-#include "OgreFontManager.h"
+#include "Overlay/OgreFontManager.h"
 
 // Graphics
 #include "graphics/GraphicsManager.h"

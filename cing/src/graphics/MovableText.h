@@ -25,8 +25,8 @@
 #include "common/CommonTypes.h"
 
 // Ogre
-#include "OgreFont.h"
-#include "OgreOverlayElement.h"
+#include "Overlay/OgreFont.h"
+#include "Overlay/OgreOverlayElement.h"
 #include "OgreMovableObject.h"
 
 

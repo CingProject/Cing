@@ -52,6 +52,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/eString.h"
 #include "common/MathUtils.h"
 
+namespace Ogre
+{
+	class OverlaySystem;
+}
+
 namespace Cing
 {
 	/**
@@ -91,7 +96,7 @@ namespace Cing
 		const Ogre::SceneManager&	getSceneManager           () const	{ return *m_pSceneManager; }
 		Ogre::SceneManager&			getSceneManager           ()		{ return *m_pSceneManager; }
 		Ogre::SceneManager*			getSceneManagerPtr			()       { return m_pSceneManager; }
-		CameraController&			getDefaultCameraController	()		 { return m_defaultCamController; }
+		//CameraController&			getDefaultCameraController	()		 { return m_defaultCamController; }
 
 		// Common capabilities checking
 		bool                      	hasVertexProgramsSupport	() const;
@@ -195,7 +200,7 @@ namespace Cing
 		Ogre::SceneManager*			m_pSceneManager;  ///< Main scene manager
 
 		// Camera controller
-		CameraController			m_defaultCamController;
+		//CameraController			m_defaultCamController;
 
 
 		Window						m_mainWindow;     ///< Main application window
@@ -213,7 +218,10 @@ namespace Cing
 		unsigned int				m_windowMonitorIndex;	/// Monitor index for the main window (allows to set windows in secondary monitors)
 
 		// Misc
+		Ogre::OverlaySystem*		m_overlaySystem;		///< Ogre Overlay system (since 1.9 version)
+		Ogre::FontManager*			m_fontManager;
 		DebugOverlay				m_debugOverlay;			///< Debug overlay used to show debug information
+
 		//MovableText				m_systemFont;			///< To print system info to screen
 
 		// Styling properties

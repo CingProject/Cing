@@ -116,7 +116,7 @@ void Transform::rotate(  float x, float y, float z )
 void Transform::rotateX( float angleRad )
 {
 	Matrix3 rotation(Matrix3::IDENTITY);
-	rotation.FromAxisAngle(Vector(1,0,0), Ogre::Radian(angleRad) );
+	rotation.FromAngleAxis(Vector(1,0,0), Ogre::Radian(angleRad) );
 	
 	// Apply transform
 	//m_4x4 = m_4x4 * rotation;
@@ -127,7 +127,7 @@ void Transform::rotateX( float angleRad )
 void Transform::rotateY( float angleRad )
 {
 	Matrix3 rotation(Matrix3::IDENTITY);
-	rotation.FromAxisAngle(Vector(0,1,0), Ogre::Radian(angleRad) );
+	rotation.FromAngleAxis(Vector(0,1,0), Ogre::Radian(angleRad) );
 	
 	// Apply transform
 	//m_4x4 = m_4x4 * rotation;
@@ -138,7 +138,7 @@ void Transform::rotateY( float angleRad )
 void Transform::rotateZ( float angleRad )
 {
 	Matrix3 rotation(Matrix3::IDENTITY);
-	rotation.FromAxisAngle(Vector(0,0,-1), Ogre::Radian(angleRad) );
+	rotation.FromAngleAxis(Vector(0,0,-1), Ogre::Radian(angleRad) );
 	
 	// Apply transform
 	//m_4x4 = m_4x4 * rotation;
