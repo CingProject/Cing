@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -94,6 +94,15 @@ namespace Ogre {
 			String doGet(const void* target) const;
 			void doSet(void* target, const String& val);
 		};
+
+		/// Command object for enabling backwards compatibility
+		class CmdBackwardsCompatibility : public ParamCommand
+		{
+		public:
+			String doGet(const void* target) const;
+			void doSet(void* target, const String& val);
+		};
+
     protected:
 
         static CmdEntryPoint msCmdEntryPoint;
@@ -103,6 +112,7 @@ namespace Ogre {
 		static CmdOptimisation msCmdOptimisation;
 		static CmdMicrocode msCmdMicrocode;
 		static CmdAssemblerCode msCmdAssemblerCode;
+        static CmdBackwardsCompatibility msCmdBackwardsCompatibility;
 
         /** Internal load implementation, must be implemented by subclasses.
         */
@@ -116,16 +126,19 @@ namespace Ogre {
         void buildConstantDefinitions() const;
 
         // Recursive utility method for buildParamNameMap
-        void processParamElement(D3DXHANDLE parent, String prefix, unsigned int index) const;
+        void processParamElement(LPD3DXCONSTANTTABLE pConstTable, D3DXHANDLE parent, String prefix, unsigned int index);
 		void populateDef(D3DXCONSTANT_DESC& d3dDesc, GpuConstantDefinition& def) const;
 
         String mTarget;
         String mEntryPoint;
         String mPreprocessorDefines;
         bool mColumnMajorMatrices;
+        bool mBackwardsCompatibility;
 
-        LPD3DXBUFFER mpMicroCode;
-        LPD3DXCONSTANTTABLE mpConstTable;
+        LPD3DXBUFFER mMicroCode;
+
+		GpuConstantDefinitionMap mParametersMap;
+		size_t mParametersMapSizeAsBuffer;
 
 	public:
 		LPD3DXBUFFER getMicroCode();
@@ -149,7 +162,12 @@ namespace Ogre {
 	protected:
 		OptimisationLevel mOptimisationLevel;
 
-    public:
+        /** Gets the microcode from the microcode cache. */
+		void getMicrocodeFromCache(void);
+        /** Compiles the microcode from the program source. */
+		void compileMicrocode(void);
+		void addMicrocodeToCache();
+	public:
         D3D9HLSLProgram(ResourceManager* creator, const String& name, ResourceHandle handle,
             const String& group, bool isManual, ManualResourceLoader* loader);
         ~D3D9HLSLProgram();
@@ -170,6 +188,10 @@ namespace Ogre {
         void setColumnMajorMatrices(bool columnMajor) { mColumnMajorMatrices = columnMajor; }
         /** Gets whether matrix packed in column-major order. */
         bool getColumnMajorMatrices(void) const { return mColumnMajorMatrices; }
+		/** Sets whether backwards compatibility mode should be enabled. */
+		void setBackwardsCompatibility(bool compat) { mBackwardsCompatibility = compat; }
+		/** Gets whether backwards compatibility mode should be enabled. */
+		bool getBackwardsCompatibility(void) const { return mBackwardsCompatibility; }
 		/** Sets the optimisation level to use.
 		@param opt Optimisation level
 		*/
@@ -184,7 +206,7 @@ namespace Ogre {
         GpuProgramParametersSharedPtr createParameters(void);
         /// Overridden from GpuProgram
         const String& getLanguage(void) const;
-    };
+	};
 }
 
 #endif

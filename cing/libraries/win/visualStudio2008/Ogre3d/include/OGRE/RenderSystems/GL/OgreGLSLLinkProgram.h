@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,9 @@ THE SOFTWARE.
 #include "OgreHardwareVertexBuffer.h"
 
 namespace Ogre {
-	/// structure used to keep track of named uniforms in the linked program object
+    namespace GLSL {
+
+    /// Structure used to keep track of named uniforms in the linked program object
 	struct GLUniformReference
 	{
 		/// GL location handle
@@ -54,7 +56,7 @@ namespace Ogre {
 	class _OgreGLExport GLSLLinkProgram
 	{
 	private:
-		/// container of uniform references that are active in the program object
+		/// Container of uniform references that are active in the program object
 		GLUniformReferenceList mGLUniformReferences;
 
 		/// Linked vertex program
@@ -64,22 +66,24 @@ namespace Ogre {
 		/// Linked fragment program
 		GLSLGpuProgram* mFragmentProgram;
 
-		/// flag to indicate that uniform references have already been built
+		/// Flag to indicate that uniform references have already been built
 		bool		mUniformRefsBuilt;
 		/// GL handle for the program object
 		GLhandleARB mGLHandle;
-		/// flag indicating that the program object has been successfully linked
+		/// Flag indicating that the program object has been successfully linked
 		GLint		mLinked;
-		/// flag indicating skeletal animation is being performed
+		/// Flag indicating that the program object has tried to link and failed
+		bool		mTriedToLinkAndFailed;
+		/// Flag indicating skeletal animation is being performed
 		bool mSkeletalAnimation;
 
-		/// build uniform references from active named uniforms
+		/// Build uniform references from active named uniforms
 		void buildGLUniformReferences(void);
-		/// extract attributes
+		/// Extract attributes
 		void extractAttributes(void);
 
 		typedef set<GLuint>::type AttributeSet;
-		// Custom attribute bindings
+		/// Custom attribute bindings
 		AttributeSet mValidAttributes;
 
 		/// Name / attribute list
@@ -93,11 +97,13 @@ namespace Ogre {
 
 		static CustomAttribute msCustomAttributes[];
 
-
-		
-
+		String getCombinedName();		
+		/// Compiles and links the the vertex and fragment programs
+		void compileAndLink();
+		/// Get the the binary data of a program from the microcode cache
+		void getMicrocodeFromCache();
 	public:
-		/// constructor should only be used by GLSLLinkProgramManager
+		/// Constructor should only be used by GLSLLinkProgramManager
 		GLSLLinkProgram(GLSLGpuProgram* vertexProgram, GLSLGpuProgram* geometryProgram, GLSLGpuProgram* fragmentProgram);
 		~GLSLLinkProgram(void);
 
@@ -105,15 +111,16 @@ namespace Ogre {
 
 		*/
 		void activate(void);
-		/** updates program object uniforms using data from GpuProgramParamters.
+
+		/** Updates program object uniforms using data from GpuProgramParameters.
 		normally called by GLSLGpuProgram::bindParameters() just before rendering occurs.
 		*/
 		void updateUniforms(GpuProgramParametersSharedPtr params, uint16 mask, GpuProgramType fromProgType);
-		/** updates program object uniforms using data from pass iteration GpuProgramParamters.
+		/** Updates program object uniforms using data from pass iteration GpuProgramParameters.
 		normally called by GLSLGpuProgram::bindMultiPassParameters() just before multi pass rendering occurs.
 		*/
 		void updatePassIterationUniforms(GpuProgramParametersSharedPtr params);
-		/// get the GL Handle for the program object
+		/// Get the GL Handle for the program object
 		GLhandleARB getGLHandle(void) const { return mGLHandle; }
         /** Sets whether the linked program includes the required instructions
         to perform skeletal animation. 
@@ -139,6 +146,7 @@ namespace Ogre {
 
 	};
 
+    }
 }
 
 #endif // __GLSLLinkProgram_H__

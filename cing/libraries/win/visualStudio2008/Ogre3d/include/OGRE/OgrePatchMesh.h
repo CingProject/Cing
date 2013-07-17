@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -55,7 +55,10 @@ namespace Ogre {
         /// Constructor
         PatchMesh(ResourceManager* creator, const String& name, ResourceHandle handle,
             const String& group);
-
+        /// Update the mesh with new control points positions.
+		void update(void* controlPointBuffer, size_t width, size_t height, 
+                    size_t uMaxSubdivisionLevel, size_t vMaxSubdivisionLevel, 
+                    PatchSurface::VisibleSide visibleSide);
         /// Define the patch, as defined in MeshManager::createBezierPatch
         void define(void* controlPointBuffer, 
             VertexDeclaration *declaration, size_t width, size_t height,
@@ -94,8 +97,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<PatchMesh*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)
@@ -115,8 +118,8 @@ namespace Ogre {
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
 			    // lock & copy other mutex pointer
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<PatchMesh*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)
@@ -141,8 +144,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<PatchMesh*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)

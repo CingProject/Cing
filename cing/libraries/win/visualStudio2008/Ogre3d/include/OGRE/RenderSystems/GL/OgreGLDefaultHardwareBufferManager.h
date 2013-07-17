@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ namespace Ogre {
     class _OgreGLExport GLDefaultHardwareVertexBuffer : public HardwareVertexBuffer 
     {
 	protected:
-		unsigned char* mpData;
+		unsigned char* mData;
         /// @copydoc HardwareBuffer::lock
         void* lockImpl(size_t offset, size_t length, LockOptions options);
         /// @copydoc HardwareBuffer::unlock
@@ -62,15 +62,15 @@ namespace Ogre {
         /** Override HardwareBuffer to turn off all shadowing. */
 		void unlock(void);
 
-        //void* getDataPtr(void) const { return (void*)mpData; }
-        void* getDataPtr(size_t offset) const { return (void*)(mpData + offset); }
+        //void* getDataPtr(void) const { return (void*)mData; }
+        void* getDataPtr(size_t offset) const { return (void*)(mData + offset); }
     };
 
 	/// Specialisation of HardwareIndexBuffer for emulation
     class _OgreGLExport GLDefaultHardwareIndexBuffer : public HardwareIndexBuffer
     {
 	protected:
-		unsigned char* mpData;
+		unsigned char* mData;
         /// @copydoc HardwareBuffer::lock
         void* lockImpl(size_t offset, size_t length, LockOptions options);
         /// @copydoc HardwareBuffer::unlock
@@ -88,7 +88,7 @@ namespace Ogre {
         /** Override HardwareBuffer to turn off all shadowing. */
         void unlock(void);
 
-        void* getDataPtr(size_t offset) const { return (void*)(mpData + offset); }
+        void* getDataPtr(size_t offset) const { return (void*)(mData + offset); }
     };
 
 	/** Specialisation of HardwareBufferManager to emulate hardware buffers.
@@ -107,13 +107,18 @@ namespace Ogre {
 		HardwareVertexBufferSharedPtr 
             createVertexBuffer(size_t vertexSize, size_t numVerts, 
 				HardwareBuffer::Usage usage, bool useShadowBuffer = false);
-		/// Create a hardware vertex buffer
+		/// Create a hardware index buffer
 		HardwareIndexBufferSharedPtr 
             createIndexBuffer(HardwareIndexBuffer::IndexType itype, size_t numIndexes, 
 				HardwareBuffer::Usage usage, bool useShadowBuffer = false);
 		/// Create a render to vertex buffer
 		RenderToVertexBufferSharedPtr createRenderToVertexBuffer();
-
+		/// Create a uniform buffer
+		HardwareUniformBufferSharedPtr 
+			createUniformBuffer(size_t sizeBytes, HardwareBuffer::Usage usage,bool useShadowBuffer, const String& name = "");
+		HardwareCounterBufferSharedPtr createCounterBuffer(size_t sizeBytes,
+                                                           HardwareBuffer::Usage usage = HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY_DISCARDABLE,
+                                                           bool useShadowBuffer = false, const String& name = "");
     };
 
 	/// GLDefaultHardwareBufferManagerBase as a Singleton

@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ namespace Ogre {
     public:
         GLFrameBufferObject(GLFBOManager *manager, uint fsaa);
         ~GLFrameBufferObject();
-        //void bindSurface(size_t attachment, RenderTarget *target);
+
         /** Bind a surface to a certain attachment point.
             attachment: 0..OGRE_MAX_MULTIPLE_RENDER_TARGETS-1
         */
@@ -56,6 +56,14 @@ namespace Ogre {
 		/** Swap buffers - only useful when using multisample buffers.
 		*/
 		void swapBuffers();
+
+		/** This function acts very similar to @see GLFBORenderTexture::attachDepthBuffer
+			The difference between D3D & OGL is that D3D setups the DepthBuffer before rendering,
+			while OGL setups the DepthBuffer per FBO. So the DepthBuffer (RenderBuffer) needs to
+			be attached for OGL.
+		*/
+		void attachDepthBuffer( DepthBuffer *depthBuffer );
+		void detachDepthBuffer();
 		
 		/// Get the GL id for the FBO
 		GLuint getGLFBOID() const { return mFB; }
@@ -66,6 +74,7 @@ namespace Ogre {
         size_t getWidth();
         size_t getHeight();
         PixelFormat getFormat();
+		GLsizei getFSAA();
         
         GLFBOManager *getManager() { return mManager; }
 		const GLSurfaceDesc &getSurface(size_t attachment) { return mColour[attachment]; }

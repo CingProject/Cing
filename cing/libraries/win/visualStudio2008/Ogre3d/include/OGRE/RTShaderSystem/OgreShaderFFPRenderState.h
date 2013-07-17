@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -48,7 +48,7 @@ enum FFPVertexShaderStage
 	FFP_VS_LIGHTING						= 300,
 	FFP_VS_TEXTURING					= 400,		
 	FFP_VS_FOG							= 500,	
-	FFP_VS_POST_PROCESS					= 2000,
+	FFP_VS_POST_PROCESS					= 2000
 };
 
 // Fixed Function fragment shader stages.
@@ -56,10 +56,11 @@ enum FFPFragmentShaderStage
 {
 	FFP_PS_PRE_PROCESS					= 0,	
 	FFP_PS_COLOUR_BEGIN					= 100,
+	FFP_PS_SAMPLING						= 150,
 	FFP_PS_TEXTURING					= 200,	
 	FFP_PS_COLOUR_END					= 300,
 	FFP_PS_FOG							= 400,
-	FFP_PS_POST_PROCESS					= 500,
+	FFP_PS_POST_PROCESS					= 500
 };
 
 // Fixed Function generic stages.
@@ -71,7 +72,7 @@ enum FFPShaderStage
 	FFP_LIGHTING						= 300,
 	FFP_TEXTURING						= 400,
 	FFP_FOG								= 500,
-	FFP_POST_PROCESS					= 600,
+	FFP_POST_PROCESS					= 600
 };
 
 // Fixed Function Library: Common functions
@@ -83,6 +84,7 @@ enum FFPShaderStage
 #define FFP_FUNC_SUBTRACT							"FFP_Subtract"
 #define FFP_FUNC_LERP								"FFP_Lerp"
 #define FFP_FUNC_DOTPRODUCT							"FFP_DotProduct"
+#define FFP_FUNC_NORMALIZE							"FFP_Normalize"
 
 // Fixed Function Library: Transform functions
 #define FFP_LIB_TRANSFORM							"FFPLib_Transform"

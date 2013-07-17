@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -41,18 +41,18 @@ namespace Ogre {
 		/// Unlock a box
 		void unlockImpl(void);
         
-		// Internal buffer; either on-card or in system memory, freed/allocated on demand
-		// depending on buffer usage
+		/** Internal buffer; either on-card or in system memory, freed/allocated on demand
+         depending on buffer usage */
 		PixelBox mBuffer;
-        GLenum mGLInternalFormat; // GL internal format
+        GLenum mGLInternalFormat; /// GL internal format
 		LockOptions mCurrentLockOptions;
 		
-		// Buffer allocation/freeage
+		/// Buffer allocation/freeage
 		void allocateBuffer();
 		void freeBuffer();
-		// Upload a box of pixels to this buffer on the card
+		/// Upload a box of pixels to this buffer on the card
 		virtual void upload(const PixelBox &data, const Image::Box &dest);
-		// Download a box of pixels from the card
+		/// Download a box of pixels from the card
 		virtual void download(const PixelBox &data);
 	public:
         /// Should be called by HardwareBufferManager
@@ -84,13 +84,13 @@ namespace Ogre {
 			GLint level, Usage usage, bool softwareMipmap, bool writeGamma, uint fsaa);
         ~GLTextureBuffer();
         
-        /// @copydoc HardwarePixelBuffer::bindToFramebuffer
+        /// @copydoc GLHardwarePixelBuffer::bindToFramebuffer
         virtual void bindToFramebuffer(GLenum attachment, size_t zoffset);
         /// @copydoc HardwarePixelBuffer::getRenderTarget
-        RenderTexture* getRenderTarget(size_t);
+        RenderTexture* getRenderTarget(size_t slice);
         /// Upload a box of pixels to this buffer on the card
 		virtual void upload(const PixelBox &data, const Image::Box &dest);
-		// Download a box of pixels from the card
+		/// Download a box of pixels from the card
 		virtual void download(const PixelBox &data);
   
         /// Hardware implementation of blitFromMemory
@@ -105,7 +105,7 @@ namespace Ogre {
         void copyFromFramebuffer(size_t zoffset);
         /// @copydoc HardwarePixelBuffer::blit
         void blit(const HardwarePixelBufferSharedPtr &src, const Image::Box &srcBox, const Image::Box &dstBox);
-        // Blitting implementation
+        /// Blitting implementation
         void blitFromTexture(GLTextureBuffer *src, const Image::Box &srcBox, const Image::Box &dstBox);
     protected:
         // In case this is a texture level
@@ -115,6 +115,7 @@ namespace Ogre {
 		GLint mFace;
 		GLint mLevel;
 		bool mSoftwareMipmap;		// Use GLU for mip mapping
+        bool mHwGamma;
         
         typedef vector<RenderTexture*>::type SliceTRT;
         SliceTRT mSliceTRT;
@@ -130,9 +131,9 @@ namespace Ogre {
         /// @copydoc GLHardwarePixelBuffer::bindToFramebuffer
         virtual void bindToFramebuffer(GLenum attachment, size_t zoffset);
     protected:
-        // In case this is a render buffer
+        /// In case this is a render buffer
         GLuint mRenderbufferID;
     };
-};
+}
 
 #endif

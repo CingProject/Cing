@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,14 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 #include "OgreString.h"
+#include "OgreHeaderPrefix.h"
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_NACL
+namespace pp
+{
+    class Instance;
+}
+#endif
 
 namespace Ogre {
 
@@ -77,9 +85,11 @@ namespace Ogre {
         @param maskDebug
             If we are printing to the console or not
         @param logName
-            the name of this log (so you can have several listeners for different logs, and identify them)
+            The name of this log (so you can have several listeners for different logs, and identify them)
+		@param skipThisMessage
+			If set to true by the messageLogged() implementation message will not be logged
         */
-        virtual void messageLogged( const String& message, LogMessageLevel lml, bool maskDebug, const String &logName ) = 0;
+        virtual void messageLogged( const String& message, LogMessageLevel lml, bool maskDebug, const String &logName, bool& skipThisMessage ) = 0;
     };
 
 
@@ -92,7 +102,7 @@ namespace Ogre {
 	class _OgreExport Log : public LogAlloc
     {
     protected:
-        std::ofstream	mfpLog;
+        std::ofstream	mLog;
         LoggingLevel	mLogLevel;
         bool			mDebugOut;
         bool			mSuppressFile;
@@ -101,12 +111,11 @@ namespace Ogre {
 
         typedef vector<LogListener*>::type mtLogListener;
         mtLogListener mListeners;
-
     public:
 
 		class Stream;
 
-		OGRE_AUTO_MUTEX // public to allow external locking
+		OGRE_AUTO_MUTEX; // public to allow external locking
         /**
         @remarks
             Usual constructor - called by LogManager.
@@ -133,7 +142,7 @@ namespace Ogre {
         */
         void logMessage( const String& message, LogMessageLevel lml = LML_NORMAL, bool maskDebug = false );
 
-		/** Get a stream object targetting this log. */
+		/** Get a stream object targeting this log. */
 		Stream stream(LogMessageLevel lml = LML_NORMAL, bool maskDebug = false);
 
         /**
@@ -157,7 +166,7 @@ namespace Ogre {
         /**
         @remarks
             Register a listener to this log
-        @param
+        @param listener
             A valid listener derived class
         */
         void addListener(LogListener* listener);
@@ -165,7 +174,7 @@ namespace Ogre {
         /**
         @remarks
             Unregister a listener from this log
-        @param
+        @param listener
             A valid listener derived class
         */
         void removeListener(LogListener* listener);
@@ -240,10 +249,18 @@ namespace Ogre {
 
 
 		};
+#if OGRE_PLATFORM == OGRE_PLATFORM_NACL
+    protected:
+        static pp::Instance* mInstance;
+    public:
+        static void setInstance(pp::Instance* instance) {mInstance = instance;};
+#endif
 
     };
 	/** @} */
 	/** @} */
 }
+
+#include "OgreHeaderSuffix.h"
 
 #endif

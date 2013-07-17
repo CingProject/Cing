@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,12 +35,12 @@ THE SOFTWARE.
 
 
 namespace Ogre {
-
+    namespace GLSL {
     /** GLSL low level compiled shader object - this class is used to get at the linked program object 
 		and provide an interface for GLRenderSystem calls.  GLSL does not provide access to the
 		low level code of the shader so this class is really just a dummy place holder.
 		GLSL uses a program object to represent the active vertex and fragment programs used
-		but Ogre materials maintain seperate instances of the active vertex and fragment programs
+		but Ogre materials maintain separate instances of the active vertex and fragment programs
 		which creates a small problem for GLSL integration.  The GLSLGpuProgram class provides the
 		interface between the GLSLLinkProgramManager , GLRenderSystem, and the active GLSLProgram
 		instances.
@@ -51,9 +51,9 @@ namespace Ogre {
 		/// GL Handle for the shader object
 		GLSLProgram* mGLSLProgram;
 
-		/// keep track of the number of vertex shaders created
+		/// Keep track of the number of vertex shaders created
 		static GLuint mVertexShaderCount;
-		/// keep track of the number of fragment shaders created
+		/// Keep track of the number of fragment shaders created
 		static GLuint mFragmentShaderCount;
 		/// keep track of the number of geometry shaders created
 		static GLuint mGeometryShaderCount;
@@ -73,10 +73,10 @@ namespace Ogre {
 		void bindProgramPassIterationParameters(GpuProgramParametersSharedPtr params);
 
 		/// Get the assigned GL program id
-		const GLuint getProgramID(void) const
+		GLuint getProgramID(void) const
 		{ return mProgramID; }
 
-		/// get the GLSLProgram for the shader object
+		/// Get the GLSLProgram for the shader object
 		GLSLProgram* getGLSLProgram(void) const { return mGLSLProgram; }
 
 		/// @copydoc GLGpuProgram::getAttributeIndex
@@ -97,7 +97,7 @@ namespace Ogre {
 
     };
 
-
+    }
 }
 
 

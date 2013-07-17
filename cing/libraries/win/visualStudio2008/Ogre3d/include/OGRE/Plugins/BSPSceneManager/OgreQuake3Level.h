@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ namespace Ogre {
     with extra effects and 'content flags' indicating special properties like
     water or lava.</p>
     I will try to support as much of this as I can in Ogre, but I won't duplicate
-    the structure or necesarily use the same terminology. Quake3 is designed for a very specific
+    the structure or necessarily use the same terminology. Quake3 is designed for a very specific
     purpose and code structure, whereas Ogre is designed to be more flexible,
     so for example I'm likely to separate game-related properties like surface flags
     from the generics of materials in my implementation.</p>

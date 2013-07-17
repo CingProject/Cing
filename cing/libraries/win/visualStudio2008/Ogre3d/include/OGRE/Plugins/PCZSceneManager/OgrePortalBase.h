@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ namespace Ogre
 		{
 			PORTAL_TYPE_QUAD,
 			PORTAL_TYPE_AABB,
-			PORTAL_TYPE_SPHERE,
+			PORTAL_TYPE_SPHERE
 		};
 
 		/** Constructor. */
@@ -107,7 +107,7 @@ namespace Ogre
 		void calcDirectionAndRadius() const;
 
 		/** get the type of portal */
-		const PORTAL_TYPE getType() const {return mType;}
+		PORTAL_TYPE getType() const {return mType;}
 		/** Retrieve the radius of the portal (calculates if necessary for quad portals) */
 		Real getRadius() const;
 

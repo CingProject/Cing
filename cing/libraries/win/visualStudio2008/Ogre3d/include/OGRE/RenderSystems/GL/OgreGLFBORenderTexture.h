@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -50,6 +50,11 @@ namespace Ogre {
 
 		/// Override needed to deal with multisample buffers
 		virtual void swapBuffers(bool waitForVSync = true);
+
+		/// Override so we can attach the depth buffer to the FBO
+		virtual bool attachDepthBuffer( DepthBuffer *depthBuffer );
+		virtual void detachDepthBuffer();
+		virtual void _detachDepthBuffer();
     protected:
         GLFrameBufferObject mFB;
     };
@@ -132,6 +137,7 @@ namespace Ogre {
             RBFormat(GLenum inFormat, size_t inWidth, size_t inHeight, uint fsaa):
                 format(inFormat), width(inWidth), height(inHeight), samples(fsaa)
             {}
+            RBFormat() {}
             GLenum format;
             size_t width;
             size_t height;
@@ -187,6 +193,7 @@ namespace Ogre {
         void detectFBOFormats();
         GLuint _tryFormat(GLenum depthFormat, GLenum stencilFormat);
         bool _tryPackedFormat(GLenum packedFormat);
+        void _createTempFramebuffer(GLuint fmt, GLuint &fb, GLuint &tid);
     };
     
 

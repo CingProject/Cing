@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "OgreHardwareBuffer.h"
 #include "OgreSharedPtr.h"
 #include "OgreColourValue.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 	class HardwareBufferManagerBase;
@@ -48,29 +49,40 @@ namespace Ogre {
     {
 	    protected:
 
-			HardwareBufferManagerBase* mMgr;
+		    HardwareBufferManagerBase* mMgr;
 		    size_t mNumVertices;
-            size_t mVertexSize;
+		    size_t mVertexSize;
+		    bool mIsInstanceData;
+			size_t mInstanceDataStepRate;			
+		    /// Checks if vertex instance data is supported by the render system
+		    virtual bool checkIfVertexInstanceDataIsSupported();
 
 	    public:
 		    /// Should be called by HardwareBufferManager
 		    HardwareVertexBuffer(HardwareBufferManagerBase* mgr, size_t vertexSize, size_t numVertices,
-                HardwareBuffer::Usage usage, bool useSystemMemory, bool useShadowBuffer);
-            ~HardwareVertexBuffer();
-			/// Return the manager of this buffer, if any
-			HardwareBufferManagerBase* getManager() const { return mMgr; }
-            /// Gets the size in bytes of a single vertex in this buffer
-            size_t getVertexSize(void) const { return mVertexSize; }
-            /// Get the number of vertices in this buffer
-            size_t getNumVertices(void) const { return mNumVertices; }
-
+		        HardwareBuffer::Usage usage, bool useSystemMemory, bool useShadowBuffer);
+		    ~HardwareVertexBuffer();
+		    /// Return the manager of this buffer, if any
+		    HardwareBufferManagerBase* getManager() const { return mMgr; }
+		    /// Gets the size in bytes of a single vertex in this buffer
+		    size_t getVertexSize(void) const { return mVertexSize; }
+		    /// Get the number of vertices in this buffer
+		    size_t getNumVertices(void) const { return mNumVertices; }
+		    /// Get if this vertex buffer is an "instance data" buffer (per instance)
+		    bool isInstanceData() const { return mIsInstanceData; }
+		    /// Set if this vertex buffer is an "instance data" buffer (per instance)
+		    void setIsInstanceData(const bool val);
+			/// Get the number of instances to draw using the same per-instance data before advancing in the buffer by one element.
+			size_t getInstanceDataStepRate() const;
+			/// Set the number of instances to draw using the same per-instance data before advancing in the buffer by one element.
+			void setInstanceDataStepRate(const size_t val);
 
 
 		    // NB subclasses should override lock, unlock, readData, writeData
 
     };
 
-    /** Shared pointer implementation used to share index buffers. */
+    /** Shared pointer implementation used to share vertex buffers. */
     class _OgreExport HardwareVertexBufferSharedPtr : public SharedPtr<HardwareVertexBuffer>
     {
     public:
@@ -79,6 +91,9 @@ namespace Ogre {
 
 
     };
+
+    /** Locking helper. */    
+    typedef HardwareBufferLockGuard<HardwareVertexBufferSharedPtr> HardwareVertexBufferLockGuard;
 
     /// Vertex element semantics, used to identify the meaning of vertex buffer contents
 	enum VertexElementSemantic {
@@ -99,12 +114,13 @@ namespace Ogre {
         /// Binormal (Y axis if normal is Z)
         VES_BINORMAL = 8,
         /// Tangent (X axis if normal is Z)
-        VES_TANGENT = 9
-
+        VES_TANGENT = 9,
+        /// The  number of VertexElementSemantic elements (note - the first value VES_POSITION is 1) 
+        VES_COUNT = 9
 	};
 
-    /// Vertex element type, used to identify the base types of the vertex contents
-    enum VertexElementType
+	/// Vertex element type, used to identify the base types of the vertex contents
+	enum VertexElementType
     {
         VET_FLOAT1 = 0,
         VET_FLOAT2 = 1,
@@ -120,7 +136,23 @@ namespace Ogre {
         /// D3D style compact colour
         VET_COLOUR_ARGB = 10,
         /// GL style compact colour
-        VET_COLOUR_ABGR = 11
+        VET_COLOUR_ABGR = 11,
+		VET_DOUBLE1 = 12,
+        VET_DOUBLE2 = 13,
+        VET_DOUBLE3 = 14,
+        VET_DOUBLE4 = 15,
+        VET_USHORT1 = 16,
+        VET_USHORT2 = 17,
+        VET_USHORT3 = 18,
+        VET_USHORT4 = 19,      
+        VET_INT1 = 20,
+        VET_INT2 = 21,
+        VET_INT3 = 22,
+        VET_INT4 = 23,
+        VET_UINT1 = 24,
+        VET_UINT2 = 25,
+        VET_UINT3 = 26,
+        VET_UINT4 = 27
     };
 
     /** This class declares the usage of a single vertex buffer as a component
@@ -317,11 +349,11 @@ namespace Ogre {
         virtual ~VertexDeclaration();
 
         /** Get the number of elements in the declaration. */
-        size_t getElementCount(void) { return mElementList.size(); }
+        size_t getElementCount(void) const { return mElementList.size(); }
         /** Gets read-only access to the list of vertex elements. */
         const VertexElementList& getElements(void) const;
         /** Get a single element. */
-        const VertexElement* getElement(unsigned short index);
+        const VertexElement* getElement(unsigned short index) const;
 
         /** Sorts the elements in this list to be compatible with the maximum
             number of rendering APIs / graphics cards.
@@ -354,9 +386,10 @@ namespace Ogre {
         @param skeletalAnimation Whether this vertex data is going to be
 			skeletally animated
 		@param vertexAnimation Whether this vertex data is going to be vertex animated
+		@param vertexAnimationNormals Whether vertex data animation is going to include normals animation
         */
         VertexDeclaration* getAutoOrganisedDeclaration(bool skeletalAnimation,
-			bool vertexAnimation);
+			bool vertexAnimation, bool vertexAnimationNormals) const;
 
         /** Gets the index of the highest source value referenced by this declaration. */
         unsigned short getMaxSource(void) const;
@@ -369,12 +402,12 @@ namespace Ogre {
             vertex declaration. <b>Please read the information in VertexDeclaration about
 	    the importance of ordering and structure for compatibility with older D3D drivers</b>.
 	    @param source The binding index of HardwareVertexBuffer which will provide the source for this element.
-			See VertexBufferBindingState for full information.
+			See VertexBufferBinding for full information.
         @param offset The offset in bytes where this element is located in the buffer
         @param theType The data format of the element (3 floats, a colour etc)
         @param semantic The meaning of the data (position, normal, diffuse colour etc)
         @param index Optional index for multi-input elements like texture coordinates
-		@returns A reference to the VertexElement added.
+		@return A reference to the VertexElement added.
         */
         virtual const VertexElement& addElement(unsigned short source, size_t offset, VertexElementType theType,
             VertexElementSemantic semantic, unsigned short index = 0);
@@ -384,12 +417,12 @@ namespace Ogre {
         vertex declaration. <b>Please read the information in VertexDeclaration about
         the importance of ordering and structure for compatibility with older D3D drivers</b>.
         @param source The binding index of HardwareVertexBuffer which will provide the source for this element.
-        See VertexBufferBindingState for full information.
+        See VertexBufferBinding for full information.
         @param offset The offset in bytes where this element is located in the buffer
         @param theType The data format of the element (3 floats, a colour etc)
         @param semantic The meaning of the data (position, normal, diffuse colour etc)
         @param index Optional index for multi-input elements like texture coordinates
-        @returns A reference to the VertexElement added.
+        @return A reference to the VertexElement added.
         */
         virtual const VertexElement& insertElement(unsigned short atPosition,
             unsigned short source, size_t offset, VertexElementType theType,
@@ -422,7 +455,7 @@ namespace Ogre {
         @remarks
             If the element is not found, this method returns null.
 		*/
-		virtual const VertexElement* findElementBySemantic(VertexElementSemantic sem, unsigned short index = 0);
+		virtual const VertexElement* findElementBySemantic(VertexElementSemantic sem, unsigned short index = 0) const;
 		/** Based on the current elements, gets the size of the vertex for a given buffer source.
 		@param source The buffer binding index for which to get the vertex size.
 		*/
@@ -432,16 +465,21 @@ namespace Ogre {
 			Note that the list of elements is returned by value therefore is separate from
 			the declaration as soon as this method returns.
 		*/
-		virtual VertexElementList findElementsBySource(unsigned short source);
+		virtual VertexElementList findElementsBySource(unsigned short source) const;
 
 		/** Gets the vertex size defined by this declaration for a given source. */
-        virtual size_t getVertexSize(unsigned short source);
+        virtual size_t getVertexSize(unsigned short source) const;
+		
+		/** Return the index of the next free texture coordinate set which may be added
+			to this declaration.
+		*/
+		virtual unsigned short getNextFreeTextureCoordinate() const;
 
         /** Clones this declaration. 
 		@param mgr Optional HardwareBufferManager to use for creating the clone
 			(if null, use the current default).
 		*/
-        virtual VertexDeclaration* clone(HardwareBufferManagerBase* mgr = 0);
+        virtual VertexDeclaration* clone(HardwareBufferManagerBase* mgr = 0) const;
 
         inline bool operator== (const VertexDeclaration& rhs) const
         {
@@ -548,6 +586,9 @@ namespace Ogre {
         */
         virtual void closeGaps(BindingIndexMap& bindingIndexMap);
 
+        /// Returns true if this binding has an element that contains instance data
+        virtual bool hasInstanceData() const;
+
 
 	};
 	/** @} */
@@ -556,5 +597,8 @@ namespace Ogre {
 
 
 }
+
+#include "OgreHeaderSuffix.h"
+
 #endif
 

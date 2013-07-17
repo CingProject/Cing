@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,7 @@ email                : pjcast@yahoo.com
 #include "OgreString.h"
 #include "OgreResourceGroupManager.h"
 #include "OgreExternalTextureSource.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre
 {
@@ -64,7 +65,7 @@ namespace Ogre
 		void setCurrentPlugIn( const String& sTexturePlugInType );
 
 		/** Returns currently selected plugin, may be null if none selected */
-		ExternalTextureSource* getCurrentPlugIn( void ) const { return mpCurrExternalTextureSource; }
+		ExternalTextureSource* getCurrentPlugIn( void ) const { return mCurrExternalTextureSource; }
 	
 		/** Calls the destroy method of all registered plugins... 
 		Only the owner plugin should perform the destroy action. */
@@ -111,8 +112,8 @@ namespace Ogre
         */
         static ExternalTextureSourceManager* getSingletonPtr(void);
 	protected:
-		//The current texture controller selected
-		ExternalTextureSource* mpCurrExternalTextureSource;
+		/// The current texture controller selected
+		ExternalTextureSource* mCurrExternalTextureSource;
 		
         // Collection of loaded texture System PlugIns, keyed by registered type
         typedef map< String, ExternalTextureSource*>::type TextureSystemList;
@@ -121,4 +122,7 @@ namespace Ogre
 	/** @} */
 	/** @} */
 } 
+
+#include "OgreHeaderSuffix.h"
+
 #endif

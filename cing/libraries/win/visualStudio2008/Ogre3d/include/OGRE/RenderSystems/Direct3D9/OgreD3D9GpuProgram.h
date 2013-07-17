@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -102,8 +102,10 @@ namespace Ogre {
         virtual GpuProgramParametersSharedPtr createParameters(void);
 	protected:    
 		bool mColumnMajorMatrices;
-		ID3DXBuffer* mpExternalMicrocode;
+		ID3DXBuffer* mExternalMicrocode;
 
+		void getMicrocodeFromCache( IDirect3DDevice9* d3d9Device );
+		void compileMicrocode( IDirect3DDevice9* d3d9Device );
     };
 
     /** Direct3D implementation of low-level vertex programs. */
@@ -177,8 +179,8 @@ namespace Ogre {
         D3D9GpuProgramPtr(const ResourcePtr& r) : SharedPtr<D3D9GpuProgram>()
         {
 			// lock & copy other mutex pointer
-			OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
             pRep = static_cast<D3D9GpuProgram*>(r.getPointer());
             pUseCount = r.useCountPointer();
             if (pUseCount)
@@ -194,8 +196,8 @@ namespace Ogre {
                 return *this;
             release();
 			// lock & copy other mutex pointer
-			OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+            OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
             pRep = static_cast<D3D9GpuProgram*>(r.getPointer());
             pUseCount = r.useCountPointer();
             if (pUseCount)

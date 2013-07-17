@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "OgreTerrainMaterialGenerator.h"
 #include "OgreTerrainLayerBlendMap.h"
 #include "OgreWorkQueue.h"
+#include "OgreTerrainLodManager.h"
 
 namespace Ogre
 {
@@ -262,6 +263,8 @@ namespace Ogre
 		public WorkQueue::RequestHandler, public WorkQueue::ResponseHandler, public TerrainAlloc
 	{
 	public:
+		friend class TerrainLodManager;
+
 		/** Constructor.
 		@param sm The SceneManager to use.
 		*/
@@ -271,6 +274,7 @@ namespace Ogre
 		static const uint32 TERRAIN_CHUNK_ID;
 		static const uint16 TERRAIN_CHUNK_VERSION;
 		static const uint16 TERRAIN_MAX_BATCH_SIZE;
+		static const uint64 TERRAIN_GENERATE_MATERIAL_INTERVAL_MS;
 
 		static const uint32 TERRAINLAYERDECLARATION_CHUNK_ID;
 		static const uint16 TERRAINLAYERDECLARATION_CHUNK_VERSION;
@@ -282,6 +286,8 @@ namespace Ogre
 		static const uint16 TERRAINLAYERINSTANCE_CHUNK_VERSION;
 		static const uint32 TERRAINDERIVEDDATA_CHUNK_ID;
 		static const uint16 TERRAINDERIVEDDATA_CHUNK_VERSION;
+		static const uint32 TERRAINGENERALINFO_CHUNK_ID;
+		static const uint16 TERRAINGENERALINFO_CHUNK_VERSION;
 
 		static const size_t LOD_MORPH_CUSTOM_PARAM;
 
@@ -567,7 +573,7 @@ namespace Ogre
 		{
 		public:
 			DefaultGpuBufferAllocator();
-			~DefaultGpuBufferAllocator();
+			virtual ~DefaultGpuBufferAllocator();
 			void allocateVertexBuffers(Terrain* forTerrain, size_t numVertices, HardwareVertexBufferSharedPtr& destPos, HardwareVertexBufferSharedPtr& destDelta);
 			void freeVertexBuffers(const HardwareVertexBufferSharedPtr& posbuf, const HardwareVertexBufferSharedPtr& deltabuf);
 			HardwareIndexBufferSharedPtr getSharedIndexBuffer(uint16 batchSize, 
@@ -636,7 +642,7 @@ namespace Ogre
 		@param inSpace The space that inPos is expressed as
 		@param inPos The incoming position
 		@param outSpace The space which outPos should be expressed as
-		@returns The output position 
+		@return The output position 
 		*/
 		Vector3 convertPosition(Space inSpace, const Vector3& inPos, Space outSpace) const;
 		/** Convert a direction from one space to another with respect to this terrain.
@@ -650,7 +656,7 @@ namespace Ogre
 		@param inSpace The space that inDir is expressed as
 		@param inDir The incoming direction
 		@param outSpace The space which outDir should be expressed as
-		@returns The output direction 
+		@return The output direction 
 		*/
 		Vector3 convertDirection(Space inSpace, const Vector3& inDir, Space outSpace) const;
 
@@ -696,7 +702,14 @@ namespace Ogre
 		@remarks
 			This is safe to do in a background thread as it creates no GPU resources.
 			It reads data from a native terrain data chunk. 
-		@returns true if the preparation was successful
+		@return true if the preparation was successful
+		*/
+		bool prepare(DataStreamPtr& stream);
+		/** Prepare terrain data from saved data.
+		@remarks
+			This is safe to do in a background thread as it creates no GPU resources.
+			It reads data from a native terrain data chunk. 
+		@return true if the preparation was successful
 		*/
 		bool prepare(StreamSerialiser& stream);
 
@@ -724,8 +737,10 @@ namespace Ogre
 		/** Load the terrain based on the data already populated via prepare methods. 
 		@remarks
 			This method must be called in the main render thread. 
+		@param lodLevel Load the specified LOD level
+		@param synchronous Load type
 		*/
-		void load();
+		void load(int lodLevel = 0, bool synchronous = true);
 
 		/** Return whether the terrain is loaded. 
 		@remarks
@@ -839,6 +854,10 @@ namespace Ogre
 		@note This point is relative to Terrain::getPosition
 		*/
 		void getPoint(long x, long y, float height, Vector3* outpos);
+		/** Get a transform which converts Vector4(xindex, yindex, height, 1) into 
+			an object-space position including scalings and alignment.
+		*/
+		void getPointTransform(Matrix4* outXform) const;
 		/** Translate a vector from world space to local terrain space based on the alignment options.
 		@param inVec The vector in basis space, where x/y represents the 
 		terrain plane and z represents the up vector
@@ -950,12 +969,21 @@ namespace Ogre
 		Alignment getAlignment() const;
 		/// Get the size of the terrain in vertices along one side
 		uint16 getSize() const;
+		/** Set the size of terrain in vertices along one side. 
+		@note The existing height data will be bilinear filtered to fill the new size
+		@param newSize the new size of the terrain
+		*/
+        void setSize(uint16 newSize);
 		/// Get the maximum size in vertices along one side of a batch 
 		uint16 getMaxBatchSize() const;
 		/// Get the minimum size in vertices along one side of a batch 
 		uint16 getMinBatchSize() const;
 		/// Get the size of the terrain in world units
 		Real getWorldSize() const;
+		/** Set the world size of terrain. 
+		@param newWorldSize the new world size of the terrain
+		*/
+        void setWorldSize(Real newWorldSize);
 
 		/** Get the number of layers in this terrain. */
 		uint8 getLayerCount() const { return static_cast<uint8>(mLayers.size()); }
@@ -1030,8 +1058,8 @@ namespace Ogre
 		const String& getLayerTextureName(uint8 layerIndex, uint8 samplerIndex) const;
 		/** Set the name of the texture bound to a given index within a given layer.
 		See the LayerDeclaration for a list of sampelrs within a layer.
-		@param index The layer index.
-		@param size The world size of the texture before repeating
+		@param layerIndex The layer index.
+    	@param samplerIndex The sampler index within a layer
 		@param textureName The name of the texture to use
 		*/
 		void setLayerTextureName(uint8 layerIndex, uint8 samplerIndex, const String& textureName);
@@ -1148,6 +1176,12 @@ namespace Ogre
 			Terrain geometry will be updated when this method returns.
 		*/
 		void updateGeometry();
+		/** Performs an update on the terrain geometry based on the dirty region.
+		@remarks
+			Terrain geometry will be updated when this method returns, and no
+			neighbours will be notified.
+		*/
+		void updateGeometryWithoutNotifyNeighbours();
 
 		// Used as a type mask for updateDerivedData
 		static const uint8 DERIVED_DATA_DELTAS;
@@ -1209,7 +1243,7 @@ namespace Ogre
 			in its recorded position, and the place it will end up in the LOD
 			in which it is removed. 
 		@param rect Rectangle describing the area in which heights have altered 
-		@returns A Rectangle describing the area which was updated (may be wider
+		@return A Rectangle describing the area which was updated (may be wider
 			than the input rectangle)
 		*/
 		Rect calculateHeightDeltas(const Rect& rect);
@@ -1226,7 +1260,7 @@ namespace Ogre
 		/** Calculate (or recalculate) the normals on the terrain
 		@param rect Rectangle describing the area of heights that were changed
 		@param outFinalRect Output rectangle describing the area updated
-		@returns Pointer to a PixelBox full of normals (caller responsible for deletion)
+		@return Pointer to a PixelBox full of normals (caller responsible for deletion)
 		*/
 		PixelBox* calculateNormals(const Rect& rect, Rect& outFinalRect);
 
@@ -1244,7 +1278,7 @@ namespace Ogre
 		@param extraTargetRect Rectangle describing a target area of the terrain that
 			needs to be calculated additionally (e.g. from a neighbour)
 		@param outFinalRect Output rectangle describing the area updated in the lightmap
-		@returns Pointer to a PixelBox full of lighting data (caller responsible for deletion)
+		@return Pointer to a PixelBox full of lighting data (caller responsible for deletion)
 		*/
 		PixelBox* calculateLightmap(const Rect& rect, const Rect& extraTargetRect, Rect& outFinalRect);
 
@@ -1253,7 +1287,7 @@ namespace Ogre
 		it safe to perform in a background thread. This call promotes those
 		calculations to the runtime values, and must be called in the main thread.
 		@param rect Rectangle describing the area to finalise 
-		@param normalsBox Pointer to a PixelBox full of normals
+		@param lightmapBox Pointer to a PixelBox full of normals
 		*/
 		void finaliseLightmap(const Rect& rect, PixelBox* lightmapBox);
 
@@ -1341,7 +1375,7 @@ namespace Ogre
 			may only upload it in the main render thread.
 		@param layerIndex The layer index, which should be 1 or higher (since 
 			the bottom layer has no blending).
-		@returns Pointer to the TerrainLayerBlendMap requested. The caller must
+		@return Pointer to the TerrainLayerBlendMap requested. The caller must
 			not delete this instance, use freeTemporaryResources if you want
 			to save the memory after completing your editing.
 		*/
@@ -1350,7 +1384,7 @@ namespace Ogre
 		/** Get the index of the blend texture that a given layer uses.
 		@param layerIndex The layer index, must be >= 1 and less than the number
 			of layers
-		@returns The index of the shared blend texture
+		@return The index of the shared blend texture
 		*/
 		uint8 getBlendTextureIndex(uint8 layerIndex) const;
 
@@ -1418,15 +1452,15 @@ namespace Ogre
 		@param index The blend texture index (note: not layer index; derive
 		the texture index from getLayerBlendTextureIndex)
 		*/
-		const TexturePtr& getLayerBlendTexture(uint8 index);
+		const TexturePtr& getLayerBlendTexture(uint8 index) const;
 
 		/** Get the texture index and colour channel of the blend information for 
 			a given layer. 
 		@param layerIndex The index of the layer (1 or higher, layer 0 has no blend data)
-		@returns A pair in which the first value is the texture index, and the 
+		@return A pair in which the first value is the texture index, and the 
 			second value is the colour channel (RGBA)
 		*/
-		std::pair<uint8,uint8> getLayerBlendTextureIndex(uint8 layerIndex);
+		std::pair<uint8,uint8> getLayerBlendTextureIndex(uint8 layerIndex) const;
 
 		/** Request internal implementation options for the terrain material to use, 
 			in this case vertex morphing information. 
@@ -1490,6 +1524,9 @@ namespace Ogre
 		*/
 		void _setCompositeMapRequired(bool compositeMap);
 
+		/// Whether we're using vertex compression or not
+		bool _getUseVertexCompression() const; 
+		
 		/// WorkQueue::RequestHandler override
 		bool canHandleRequest(const WorkQueue::Request* req, const WorkQueue* srcQ);
 		/// WorkQueue::RequestHandler override
@@ -1498,9 +1535,11 @@ namespace Ogre
 		bool canHandleResponse(const WorkQueue::Response* res, const WorkQueue* srcQ);
 		/// WorkQueue::ResponseHandler override
 		void handleResponse(const WorkQueue::Response* res, const WorkQueue* srcQ);
+		/// Handler for GenerateMaterial
+		void handleGenerateMaterialResponse(const WorkQueue::Response* res, const WorkQueue* srcQ);
 
 		static const uint16 WORKQUEUE_DERIVED_DATA_REQUEST;
-
+		static const uint16 WORKQUEUE_GENERATE_MATERIAL_REQUEST;
 
 		/// Utility method, get the first LOD Level at which this vertex is no longer included
 		uint16 getLODLevelWhenVertexEliminated(long x, long y);
@@ -1573,7 +1612,7 @@ namespace Ogre
 		/** Utility method to pick a neighbour based on a ray. 
 		@param ray The ray in world space
 		@param distanceLimit Limit beyond which we want to ignore neighbours (0 for infinite)
-		@returns The first neighbour along this ray, or null
+		@return The first neighbour along this ray, or null
 		*/
 		Terrain* raySelectNeighbour(const Ray& ray, Real distanceLimit = 0);
 
@@ -1601,6 +1640,19 @@ namespace Ogre
 		/// Utility method to read a layer instance list from a stream
 		static bool readLayerInstanceList(StreamSerialiser& ser, size_t numSamplers, Terrain::LayerInstanceList& targetlst);
 	protected:
+		/** Gets the data size at a given LOD level.
+		*/
+		uint getGeoDataSizeAtLod(uint16 lodLevel);
+        /** Get the real lod level
+         @para lodLevel LOD level which can be negative.
+         @note After mapping, [-mNumLodLevels, -1] equals to [0,mNumLodLevels-1]
+         So you can reference the lowest LOD with -1
+         */
+        inline int getPositiveLodLevel( int lodLevel )
+        {
+        	return (lodLevel>=0) ? lodLevel : mNumLodLevels+lodLevel;
+        }
+		void freeLodData();
 
 		void freeCPUResources();
 		void freeGPUResources();
@@ -1699,8 +1751,12 @@ namespace Ogre
 		Rect mDirtyGeometryRectForNeighbours;
 		Rect mDirtyLightmapFromNeighboursRect;
 		bool mDerivedDataUpdateInProgress;
-		uint8 mDerivedUpdatePendingMask; // if another update is requested while one is already running
+        /// If another update is requested while one is already running
+		uint8 mDerivedUpdatePendingMask;
 
+		bool mGenerateMaterialInProgress;
+		/// Don't release Height/DeltaData when preparing
+		mutable bool mPrepareInProgress;
 		/// A data holder for communicating with the background derived data update
 		struct DerivedDataRequest
 		{
@@ -1717,18 +1773,33 @@ namespace Ogre
 		struct DerivedDataResponse
 		{
 			Terrain* terrain;
-			// remaining types not yet processed
+			/// Remaining types not yet processed
 			uint8 remainingTypeMask;
-			// The area of deltas that was updated
+			/// The area of deltas that was updated
 			Rect deltaUpdateRect;
-			// the area of normals that was updated
+			/// The area of normals that was updated
 			Rect normalUpdateRect;
-			// the area of lightmap that was updated
+			/// The area of lightmap that was updated
 			Rect lightmapUpdateRect;
-			// all CPU-side data, independent of textures; to be blitted in main thread
+			/// All CPU-side data, independent of textures; to be blitted in main thread
 			PixelBox* normalMapBox;
 			PixelBox* lightMapBox;
 			_OgreTerrainExport friend std::ostream& operator<<(std::ostream& o, const DerivedDataResponse& r)
+			{ return o; }		
+		};
+
+		enum GenerateMaterialStage{
+			GEN_MATERIAL,
+			GEN_COMPOSITE_MAP_MATERIAL
+		};
+		/// A data holder for communicating with the background GetMaterial
+		struct GenerateMaterialRequest
+		{
+			Terrain* terrain;
+			unsigned long startTime;
+			GenerateMaterialStage stage;
+			bool synchronous;
+			_OgreTerrainExport friend std::ostream& operator<<(std::ostream& o, const GenerateMaterialRequest& r)
 			{ return o; }		
 		};
 
@@ -1765,7 +1836,7 @@ namespace Ogre
 		Rect mCompositeMapDirtyRect;
 		unsigned long mCompositeMapUpdateCountdown;
 		unsigned long mLastMillis;
-		/// true if the updates included lightmap changes (widen)
+		/// True if the updates included lightmap changes (widen)
 		bool mCompositeMapDirtyRectLightmapUpdate;
 		mutable MaterialPtr mCompositeMapMaterial;
 
@@ -1798,6 +1869,21 @@ namespace Ogre
 		size_t getPositionBufVertexSize() const;
 		size_t getDeltaBufVertexSize() const;
 
+		TerrainLodManager* mLodManager;
+
+	public:
+		/** Increase Terrain's LOD level by 1
+		  @param synchronous Run synchronously
+		  */
+		void increaseLodLevel(bool synchronous = false);
+		/** Removes highest LOD level loaded
+		  @remarks If there is LOD level load in progress it's load is canceled instead of removal of already loaded one.
+		  */
+		void decreaseLodLevel();
+
+		int getHighestLodPrepared() { return (mLodManager) ? mLodManager->getHighestLodPrepared() : -1; };
+		int getHighestLodLoaded() { return (mLodManager) ? mLodManager->getHighestLodLoaded() : -1; };
+		int getTargetLodLevel() { return (mLodManager) ? mLodManager->getTargetLodLevel() : -1; };
 	};
 
 
@@ -1832,6 +1918,7 @@ namespace Ogre
 		ColourValue mCompositeMapDiffuse;
 		Real mCompositeMapDistance;
 		String mResourceGroup;
+		bool mUseVertexCompressionWhenAvailable;
 
 	public:
 		TerrainGlobalOptions();
@@ -1997,6 +2084,20 @@ namespace Ogre
 		/** Get the default resource group to use to load / save terrains.
 		*/
 		const String& getDefaultResourceGroup() { return mResourceGroup; }
+		
+		/** Get whether to allow vertex compression to be used when the material
+			generator states that it supports it.
+		*/
+		bool getUseVertexCompressionWhenAvailable() const { return mUseVertexCompressionWhenAvailable; }
+
+		/** Set whether to allow vertex compression to be used when the material
+		 generator states that it supports it.
+		 @note You should only call this before creating any terrain instances. 
+		 The default is true, so if a material generator supports compressed vertices, 
+		 and so does the hardware (this basically means shader support), they will be used).
+		 However you can disable this in an emergency if required.
+		 */
+		void setUseVertexCompressionWhenAvailable(bool enable) { mUseVertexCompressionWhenAvailable = enable; }
 
 		/** Override standard Singleton retrieval.
 		@remarks

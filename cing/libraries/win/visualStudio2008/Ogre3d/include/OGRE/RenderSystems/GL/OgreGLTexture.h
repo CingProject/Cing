@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,7 @@ namespace Ogre {
 		/// @copydoc Texture::getBuffer
 		HardwarePixelBufferSharedPtr getBuffer(size_t face, size_t mipmap);
 
-        // Takes the OGRE texture type (1d/2d/3d/cube) and returns the appropriate GL one
+        /// Takes the OGRE texture type (1d/2d/3d/cube) and returns the appropriate GL one
         GLenum getGLTextureTarget(void) const;
 
         GLuint getGLID() const
@@ -72,7 +72,7 @@ namespace Ogre {
         void unprepareImpl(void);
         /// @copydoc Resource::loadImpl
         void loadImpl(void);
-        /// @copydoc Resource::freeInternalResourcesImpl
+        /// @copydoc Texture::freeInternalResourcesImpl
         void freeInternalResourcesImpl(void);
 
 		/** internal method, create GLHardwarePixelBuffers for every face and
@@ -94,7 +94,6 @@ namespace Ogre {
 
     private:
         GLuint mTextureID;
-        GLSupport& mGLSupport;
 		
 		/// Vector of pointers to subsurfaces
 		typedef vector<HardwarePixelBufferSharedPtr>::type SurfaceList;
@@ -118,8 +117,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<GLTexture*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)
@@ -142,8 +141,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<GLTexture*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)
@@ -168,8 +167,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<GLTexture*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)

@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "OgreVector3.h"
 #include "OgreIteratorWrappers.h"
 #include "OgreStringVector.h"
+#include "OgreAnimation.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 	/** \addtogroup Core
@@ -47,9 +49,9 @@ namespace Ogre {
     /**  */
     enum SkeletonAnimationBlendMode {
         /// Animations are applied by calculating a weighted average of all animations
-	    ANIMBLEND_AVERAGE,
+	    ANIMBLEND_AVERAGE = 0,
         /// Animations are applied by calculating a weighted cumulative total
-	    ANIMBLEND_CUMULATIVE
+	    ANIMBLEND_CUMULATIVE = 1
     };
 
 #define OGRE_MAX_NUM_BONES 256
@@ -82,7 +84,7 @@ namespace Ogre {
         Skeleton definitions are loaded from datafiles, namely the .skeleton file format. They
         are loaded on demand, especially when referenced by a Mesh.
     */
-    class _OgreExport Skeleton : public Resource
+    class _OgreExport Skeleton : public Resource, public AnimationContainer
     {
 		friend class SkeletonInstance;
 	protected:
@@ -220,7 +222,15 @@ namespace Ogre {
 			where this is coming from.
 		*/
         virtual Animation* getAnimation(const String& name, 
-			const LinkedSkeletonAnimationSource** linker = 0) const;
+			const LinkedSkeletonAnimationSource** linker) const;
+
+		/** Returns the named Animation object.
+		 @remarks
+			 Will pick up animations in linked skeletons 
+			 (@see addLinkedSkeletonAnimationSource). 
+		 @param name The name of the animation
+		 */
+		virtual Animation* getAnimation(const String& name) const;
 
 		/// Internal accessor for animations (returns null if animation does not exist)
 		virtual Animation* _getAnimationImpl(const String& name, 
@@ -228,7 +238,7 @@ namespace Ogre {
 
 
 		/** Returns whether this skeleton contains the named animation. */
-		virtual bool hasAnimation(const String& name);
+		virtual bool hasAnimation(const String& name) const;
 
         /** Removes an Animation from this skeleton. */
         virtual void removeAnimation(const String& name);
@@ -242,7 +252,6 @@ namespace Ogre {
             animations do not have to sum to 1.0, because some animations may affect only subsets
             of the skeleton. If the weights exceed 1.0 for the same area of the skeleton, the 
             movement will just be exaggerated.
-            @param 
         */
         virtual void setAnimationState(const AnimationStateSet& animSet);
 
@@ -358,7 +367,7 @@ namespace Ogre {
             'compatible' here means identically bones will have same hierarchy,
             but skeletons are not necessary to have same number of bones (if
             number bones of source skeleton's more than this skeleton, they will
-            copied as is, except that duplicate names are unallowed; and in the
+            copied as is, except that duplicate names are disallowed; and in the
             case of bones missing in source skeleton, nothing happen for those
             bones).
         @par
@@ -366,10 +375,10 @@ namespace Ogre {
             will adjust keyframes of the source skeleton to match this skeleton
             automatically.
         @par
-            It's useful for export skeleton animations seperately. i.e. export
+            It's useful for exporting skeleton animations separately. i.e. export
             mesh and 'master' skeleton at the same time, and then other animations
-            will export seperately (even if used completely difference binding
-            pose), finally, merge seperately exported animations into 'master'
+            will export separately (even if used completely difference binding
+            pose), finally, merge separately exported animations into 'master'
             skeleton.
         @param
             source Pointer to source skeleton. It'll keep unmodified.
@@ -448,7 +457,7 @@ namespace Ogre {
         */
         void unloadImpl(void);
 		/// @copydoc Resource::calculateSize
-		size_t calculateSize(void) const { return 0; } // TODO 
+		size_t calculateSize(void) const;
 
     };
 
@@ -469,8 +478,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<Skeleton*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)
@@ -489,8 +498,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<Skeleton*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)
@@ -525,6 +534,7 @@ namespace Ogre {
 
 }
 
+#include "OgreHeaderSuffix.h"
 
 #endif
 

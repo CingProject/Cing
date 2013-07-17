@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,11 @@ namespace Ogre {
 		virtual void getCustomAttribute( const String& name, void *pData );
 
 		bool requiresTextureFlipping() const { return true; }
+
+		/// Override so we can attach the depth buffer to the FBO
+		virtual bool attachDepthBuffer( DepthBuffer *depthBuffer );
+		virtual void detachDepthBuffer();
+		virtual void _detachDepthBuffer();
 	private:
 		virtual void bindSurfaceImpl(size_t attachment, RenderTexture *target);
 		virtual void unbindSurfaceImpl(size_t attachment); 
@@ -51,4 +56,4 @@ namespace Ogre {
 
 }
 
-#endif // __GLTEXTURE_H__
+#endif // __GLMULTIRENDERTARGET_H__

@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,8 @@ THE SOFTWARE.
 #include "OgreHighLevelGpuProgram.h"
 
 namespace Ogre {
-    /** Specialisation of HighLevelGpuProgram to provide support for OpenGL 
+    namespace GLSL {
+    /** Specialisation of HighLevelGpuProgram to provide support for OpenGL
         Shader Language (GLSL).
     @remarks
 		GLSL has no target assembler or entry point specification like DirectX 9 HLSL.
@@ -50,7 +51,7 @@ namespace Ogre {
 		GLSL supports multiple modular shader objects that can be attached to one program
 		object to form a single shader.  This is supported through the "attach" material script
 		command.  All the modules to be attached are listed on the same line as the attach command
-		seperated by white space.
+		separated by white space.
         
     */
     class _OgreGLExport GLSLProgram : public HighLevelGpuProgram
@@ -63,13 +64,20 @@ namespace Ogre {
             String doGet(const void* target) const;
             void doSet(void* target, const String& shaderNames);
         };
+        /// Command object for setting matrix packing in column-major order
+        class CmdColumnMajorMatrices : public ParamCommand
+        {
+        public:
+            String doGet(const void* target) const;
+            void doSet(void* target, const String& val);
+        };
 
         GLSLProgram(ResourceManager* creator, 
             const String& name, ResourceHandle handle,
             const String& group, bool isManual, ManualResourceLoader* loader);
 		~GLSLProgram();
 
-		const GLhandleARB getGLHandle() const { return mGLHandle; }
+		GLhandleARB getGLHandle() const { return mGLHandle; }
 		void attachToProgramObject( const GLhandleARB programObject );
 		void detachFromProgramObject( const GLhandleARB programObject );
 		String getAttachedShaderNames() const { return mAttachedShaderNames; }
@@ -89,7 +97,12 @@ namespace Ogre {
         /// Overridden from GpuProgram
         const String& getLanguage(void) const;
 
-		/** Returns the operation type that this geometry program expects to
+        /** Sets whether matrix packing in column-major order. */ 
+        void setColumnMajorMatrices(bool columnMajor) { mColumnMajorMatrices = columnMajor; }
+        /** Gets whether matrix packed in column-major order. */
+        bool getColumnMajorMatrices(void) const { return mColumnMajorMatrices; }
+
+        /** Returns the operation type that this geometry program expects to
 			receive as input
 		*/
 		virtual RenderOperation::OperationType getInputOperationType(void) const 
@@ -116,6 +129,9 @@ namespace Ogre {
 		*/
 		virtual void setMaxOutputVertices(int maxOutputVertices) 
 		{ mMaxOutputVertices = maxOutputVertices; }
+
+		/// compile source into shader object
+		bool compile( const bool checkErrors = true);
 
 		/// Command object for setting macro defines
 		class CmdPreprocessorDefines : public ParamCommand
@@ -148,6 +164,7 @@ namespace Ogre {
 	protected:
 		static CmdPreprocessorDefines msCmdPreprocessorDefines;
         static CmdAttach msCmdAttach;
+        static CmdColumnMajorMatrices msCmdColumnMajorMatrices;
 		static CmdInputOperationType msInputOperationTypeCmd;
 		static CmdOutputOperationType msOutputOperationTypeCmd;
 		static CmdMaxOutputVertices msMaxOutputVerticesCmd;
@@ -170,13 +187,11 @@ namespace Ogre {
         void populateParameterNames(GpuProgramParametersSharedPtr params);
         /// Populate the passed parameters with name->index map, must be overridden
         void buildConstantDefinitions() const;
-		/// compile source into shader object
-		bool compile( const bool checkErrors = true);
 
 	private:
 		/// GL handle for shader object
 		GLhandleARB mGLHandle;
-		/// flag indicating if shader object successfully compiled
+		/// Flag indicating if shader object successfully compiled
 		GLint mCompiled;
 		/// The input operation type for this (geometry) program
 		RenderOperation::OperationType mInputOperationType;
@@ -184,16 +199,19 @@ namespace Ogre {
 		RenderOperation::OperationType mOutputOperationType;
 		/// The maximum amount of vertices that this (geometry) program can output
 		int mMaxOutputVertices;
-		/// attached Shader names
+		/// Attached Shader names
 		String mAttachedShaderNames;
 		/// Preprocessor options
 		String mPreprocessorDefines;
-		/// container of attached programs
+		/// Container of attached programs
 		typedef vector< GLSLProgram* >::type GLSLProgramContainer;
 		typedef GLSLProgramContainer::iterator GLSLProgramContainerIterator;
 		GLSLProgramContainer mAttachedGLSLPrograms;
+        /// Matrix in column major pack format?
+        bool mColumnMajorMatrices;
 
     };
+    }
 }
 
 #endif // __GLSLProgram_H__

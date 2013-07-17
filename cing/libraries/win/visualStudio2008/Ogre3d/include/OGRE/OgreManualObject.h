@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "OgreMovableObject.h"
 #include "OgreRenderable.h"
 #include "OgreResourceGroupManager.h"
-
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre
 {
@@ -260,10 +260,16 @@ namespace Ogre
 		@note
 			32-bit indexes are not supported on all cards and will only be used
             when required, if an index is > 65535.
-		@param i1, i2, i3 3 vertex indices from 0 to 4294967295 defining a face. 
+		@param i1, i2, i3, i4 4 vertex indices from 0 to 4294967295 defining a quad. 
 		*/
 		virtual void quad(uint32 i1, uint32 i2, uint32 i3, uint32 i4);
 
+		/// Get the number of vertices in the section currently being defined (returns 0 if no section is in progress).
+		virtual size_t getCurrentVertexCount() const;
+
+		/// Get the number of indices in the section currently being defined (returns 0 if no section is in progress).
+		virtual size_t getCurrentIndexCount() const;
+		
 		/** Finish defining the object and compile the final renderable version. 
 		@note
 			Will return a pointer to the finished section or NULL if the section was discarded (i.e. has zero vertices/indices).
@@ -279,7 +285,7 @@ namespace Ogre
 		@param subIndex The index of the subsection to alter
 		@param name The name of the new material to use
 		*/
-		virtual void setMaterialName(size_t subindex, const String& name, const String & group = ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		virtual void setMaterialName(size_t subIndex, const String& name, const String & group = ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 		/** Convert this object to a Mesh. 
 		@remarks
@@ -456,6 +462,10 @@ namespace Ogre
 			void getWorldTransforms(Matrix4* xform) const;
 			HardwareVertexBufferSharedPtr getPositionBuffer(void) { return mPositionBuffer; }
 			HardwareVertexBufferSharedPtr getWBuffer(void) { return mWBuffer; }
+			/// Overridden from ShadowRenderable
+			virtual void rebindIndexBuffer(const HardwareIndexBufferSharedPtr& indexBuffer);
+
+			
 
 		};
 
@@ -556,6 +566,8 @@ namespace Ogre
 	/** @} */
 	/** @} */
 }
+
+#include "OgreHeaderSuffix.h"
 
 #endif
 

@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -176,11 +176,14 @@ namespace Ogre
 			const String& getName() const { return mName; }
 			/// Get the description of this profile
 			const String& getDescription() const { return mDesc; }
-			
-			/// Generate / resuse a material for the terrain
+			/// Compressed vertex format supported?
+			virtual bool isVertexCompressionSupported() const = 0;		
+			/// Generate / reuse a material for the terrain
 			virtual MaterialPtr generate(const Terrain* terrain) = 0;
-			/// Generate / resuse a material for the terrain
+			/// Generate / reuse a material for the terrain
 			virtual MaterialPtr generateForCompositeMap(const Terrain* terrain) = 0;
+			/// Whether to support a light map over the terrain in the shader, if it's present (default true)
+			virtual void setLightmapEnabled(bool enabled) = 0;
 			/// Get the number of layers supported
 			virtual uint8 getMaxLayers(const Terrain* terrain) const = 0;
 			/// Update the composite map for a terrain
@@ -263,6 +266,14 @@ namespace Ogre
 		{
 			return decl == mLayerDecl;
 		}
+		
+		/** Return whether this material generator supports using a compressed
+			vertex format. This is only possible when using shaders.
+		*/
+		virtual bool isVertexCompressionSupported() const
+		{
+			return getActiveProfile()->isVertexCompressionSupported();
+		}
 
 		/** Triggers the generator to request the options that it needs.
 		*/
@@ -292,6 +303,15 @@ namespace Ogre
 				return MaterialPtr();
 			else
 				return p->generateForCompositeMap(terrain);
+		}
+		/** Whether to support a light map over the terrain in the shader,
+		if it's present (default true). 
+		*/
+		virtual void setLightmapEnabled(bool enabled)
+		{
+			Profile* p = getActiveProfile();
+			if (p)
+				return p->setLightmapEnabled(enabled);
 		}
 		/** Get the maximum number of layers supported with the given terrain. 
 		@note When you change the options on the terrain, this value can change. 

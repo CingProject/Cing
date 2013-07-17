@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -115,7 +115,7 @@ namespace Ogre {
         /** Returns the index to the face group index list for this leaf node.
             The contents of this buffer is a list of indexes which point to the
             actual face groups held in a central buffer in the BspLevel class (in
-            actual fact for efficency the indexes themselves are also held in a single
+            actual fact for efficiency the indexes themselves are also held in a single
             buffer in BspLevel too). The reason for this indirection is that the buffer
             of indexes to face groups is organised in chunks relative to nodes, whilst the
             main buffer of face groups may not be.
@@ -147,16 +147,16 @@ namespace Ogre {
         struct Brush
         {
 			list<Plane>::type planes;
-            SceneQuery::WorldFragment fragment; // For query reporting
+            SceneQuery::WorldFragment fragment; /// For query reporting
         };
-		typedef vector<Brush*>::type NodeBrushList; // Main brush memory held on level
+		typedef vector<Brush*>::type NodeBrushList; /// Main brush memory held on level
 
         /** Get the list of solid Brushes for this node.
         @remarks Only applicable for leaf nodes. 
         */
         const NodeBrushList& getSolidBrushes(void) const;
     protected:
-        BspLevel* mOwner; // Back-reference to containing level
+        BspLevel* mOwner; /// Back-reference to containing level
         bool mIsLeaf;
 
         // Node-only members

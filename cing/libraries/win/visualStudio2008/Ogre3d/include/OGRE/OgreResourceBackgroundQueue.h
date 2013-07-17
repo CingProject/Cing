@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "OgreSingleton.h"
 #include "OgreResource.h"
 #include "OgreWorkQueue.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 	/** \addtogroup Core
@@ -175,7 +176,7 @@ namespace Ogre {
 		@param name The name of the resource group to initialise
 		@param listener Optional callback interface, take note of warnings in 
 			the header and only use if you understand them.
-		@returns Ticket identifying the request, use isProcessComplete() to 
+		@return Ticket identifying the request, use isProcessComplete() to 
 			determine if completed if not using listener
 		*/
 		virtual BackgroundProcessTicket initialiseResourceGroup(
@@ -186,7 +187,7 @@ namespace Ogre {
 		@see ResourceGroupManager::intialiseResourceGroup
 		@param listener Optional callback interface, take note of warnings in 
 			the header and only use if you understand them.
-		@returns Ticket identifying the request, use isProcessComplete() to 
+		@return Ticket identifying the request, use isProcessComplete() to 
 			determine if completed if not using listener
 		*/
 		virtual BackgroundProcessTicket initialiseAllResourceGroups( 
@@ -196,7 +197,7 @@ namespace Ogre {
 		@param name The name of the resource group to prepare
 		@param listener Optional callback interface, take note of warnings in 
 			the header and only use if you understand them.
-		@returns Ticket identifying the request, use isProcessComplete() to 
+		@return Ticket identifying the request, use isProcessComplete() to 
 			determine if completed if not using listener
 		*/
 		virtual BackgroundProcessTicket prepareResourceGroup(const String& name, 
@@ -207,7 +208,7 @@ namespace Ogre {
 		@param name The name of the resource group to load
 		@param listener Optional callback interface, take note of warnings in 
 			the header and only use if you understand them.
-		@returns Ticket identifying the request, use isProcessComplete() to 
+		@return Ticket identifying the request, use isProcessComplete() to 
 			determine if completed if not using listener
 		*/
 		virtual BackgroundProcessTicket loadResourceGroup(const String& name, 
@@ -237,7 +238,7 @@ namespace Ogre {
 		/** Unloads a resource group in the background.
 		@see ResourceGroupManager::unloadResourceGroup
 		@param name The name of the resource group to load
-		@returns Ticket identifying the request, use isProcessComplete() to 
+		@return Ticket identifying the request, use isProcessComplete() to 
 			determine if completed if not using listener
 		*/
 		virtual BackgroundProcessTicket unloadResourceGroup(const String& name, 
@@ -294,7 +295,7 @@ namespace Ogre {
 			parameter to allow you to register a callback instead, which is
 			arguably more efficient.
 		@param ticket The ticket which was returned when the process was queued
-		@returns true if process has completed (or if the ticket is 
+		@return true if process has completed (or if the ticket is 
 			unrecognised), false otherwise
 		@note Tickets are not stored once complete so do not accumulate over 
 			time.
@@ -354,6 +355,8 @@ namespace Ogre {
 	/** @} */
 
 }
+
+#include "OgreHeaderSuffix.h"
 
 #endif
 

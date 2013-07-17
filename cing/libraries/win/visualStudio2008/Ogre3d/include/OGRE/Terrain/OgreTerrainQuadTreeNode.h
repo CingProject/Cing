@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -88,7 +88,7 @@ namespace Ogre
 		/** Constructor.
 		@param terrain The ultimate parent terrain
 		@param parent Optional parent node (in which case xoff, yoff are 0 and size must be entire terrain)
-		@param xoff,off Offsets from the start of the terrain data in 2D
+		@param xoff, yoff Offsets from the start of the terrain data in 2D
 		@param size The size of the node in vertices at the highest LOD
 		@param lod The base LOD level
 		@param depth The depth that this node is at in the tree (or convenience)
@@ -121,8 +121,13 @@ namespace Ogre
 		void prepare(StreamSerialiser& stream);
 		/// Load node and children (perform GPU tasks, will be render thread)
 		void load();
+		/// Load node and children in a depth range (perform GPU tasks, will be render thread)
+		void load(uint16 depthStart, uint16 depthEnd);
+		void loadSelf();
 		/// Unload node and children (perform GPU tasks, will be render thread)
 		void unload();
+		/// Unload node and children in a depth range (perform GPU tasks, will be render thread)
+		void unload(uint16 depthStart, uint16 depthEnd);
 		/// Unprepare node and children (perform CPU tasks, may be background thread)
 		void unprepare();
 		/// Save node to a stream
@@ -235,7 +240,7 @@ namespace Ogre
 		/** Calculate appropriate LOD for this node and children
 		@param cam The camera to be used (this should already be the LOD camera)
 		@param cFactor The cFactor which incorporates the viewport size, max pixel error and lod bias
-		@returns true if this node or any of its children were selected for rendering
+		@return true if this node or any of its children were selected for rendering
 		*/
 		bool calculateCurrentLod(const Camera* cam, Real cFactor);
 
@@ -257,7 +262,8 @@ namespace Ogre
 		/// Buffer binding used for holding delta values
 		static unsigned short DELTA_BUFFER;
 
-
+		/// Returns the internal renderable object for this node
+		Renderable *_getRenderable();
 	protected:
 		Terrain* mTerrain;
 		TerrainQuadTreeNode* mParent;
@@ -266,17 +272,17 @@ namespace Ogre
 
 		uint16 mOffsetX, mOffsetY;
 		uint16 mBoundaryX, mBoundaryY;
-		/// the number of vertices at the original terrain resolution this node encompasses
+		/// The number of vertices at the original terrain resolution this node encompasses
 		uint16 mSize;
 		uint16 mBaseLod;
 		uint16 mDepth;
 		uint16 mQuadrant;
-		Vector3 mLocalCentre; // relative to terrain centre
-		AxisAlignedBox mAABB; //relative to mLocalCentre
-		Real mBoundingRadius; //relative to mLocalCentre
-		int mCurrentLod; // -1 = none (do not render)
+		Vector3 mLocalCentre; /// Relative to terrain centre
+		AxisAlignedBox mAABB; /// Relative to mLocalCentre
+		Real mBoundingRadius; /// Relative to mLocalCentre
+		int mCurrentLod; /// -1 = none (do not render)
 		unsigned short mMaterialLodIndex;
-		float mLodTransition; // 0-1 transition to lower LOD
+		float mLodTransition; /// 0-1 transition to lower LOD
 		/// The child with the largest height delta 
 		TerrainQuadTreeNode* mChildWithMaxHeightDelta;
 		bool mSelfOrChildRendered;
@@ -285,9 +291,9 @@ namespace Ogre
 		{
 			VertexData* cpuVertexData;
 			VertexData* gpuVertexData;
-			/// resolution of the data compared to the base terrain data (NOT number of vertices!)
+			/// Resolution of the data compared to the base terrain data (NOT number of vertices!)
 			uint16 resolution;
-			/// size of the data along one edge
+			/// Size of the data along one edge
 			uint16 size;
 			/// Number of quadtree levels (including this one) this data applies to
 			uint16 treeLevels;
@@ -331,7 +337,7 @@ namespace Ogre
 			TerrainQuadTreeNode* mParent;
 		public:
 			Movable(TerrainQuadTreeNode* parent);
-			~Movable();
+			virtual ~Movable();
 			
 	        // necessary overrides
 			const String& getMovableType(void) const;
@@ -356,7 +362,7 @@ namespace Ogre
 			TerrainQuadTreeNode* mParent;
 		public:
 			Rend(TerrainQuadTreeNode* parent);
-			~Rend();
+			virtual ~Rend();
 
 			const MaterialPtr& getMaterial(void) const;
 			Technique* getTechnique(void) const;
@@ -398,6 +404,8 @@ namespace Ogre
 		void destroyGpuIndexData();
 
 		void populateIndexData(uint16 batchSize, IndexData* destData);
+		void writePosVertex(bool compress, uint16 x, uint16 y, float height, const Vector3& pos, float uvScale, float** ppPos);
+		void writeDeltaVertex(bool compress, uint16 x, uint16 y, float delta, float deltaThresh, float** ppDelta);
 		
 		uint16 calcSkirtVertexIndex(uint16 mainIndex, bool isCol);
 

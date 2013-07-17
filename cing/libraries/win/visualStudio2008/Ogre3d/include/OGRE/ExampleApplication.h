@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 Also see acknowledgements in Readme.html
 
 You may use this sample code for anything you like, it is not covered by the
@@ -24,16 +24,14 @@ Description: Base class for all the OGRE examples
 #include "Ogre.h"
 #include "OgreConfigFile.h"
 #include "ExampleFrameListener.h"
+
 // Static plugins declaration section
 // Note that every entry in here adds an extra header / library dependency
 #ifdef OGRE_STATIC_LIB
 #  define OGRE_STATIC_GL
 #  if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #    define OGRE_STATIC_Direct3D9
-     // dx10 will only work on vista, so be careful about statically linking
-#    if OGRE_USE_D3D10
-#      define OGRE_STATIC_Direct3D10
-#    endif
+     // dx11 will only work on vista, so be careful about statically linking
 #    if OGRE_USE_D3D11
 #      define OGRE_STATIC_Direct3D11
 #    endif
@@ -47,7 +45,7 @@ Description: Base class for all the OGRE examples
 #  else
 #    define OGRE_STATIC_OctreeSceneManager
 #  endif
-#  if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#  if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
 #     undef OGRE_STATIC_CgProgramManager
 #     undef OGRE_STATIC_GL
 #     define OGRE_STATIC_GLES 1
@@ -58,7 +56,7 @@ Description: Base class for all the OGRE examples
 #  include "OgreStaticPluginLoader.h"
 #endif
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
 #   include "macUtils.h"
 #endif
 
@@ -126,13 +124,15 @@ public:
     {
         mFrameListener = 0;
         mRoot = 0;
+		mOverlaySystem=0;
+
 		// Provide a nice cross platform solution for locating the configuration files
 		// On windows files are searched for in the current working directory, on OS X however
 		// you must provide the full path, the helper function macBundlePath does this for us.
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 		mResourcePath = macBundlePath() + "/Contents/Resources/";
         mConfigPath = mResourcePath;
-#elif OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
         mResourcePath = macBundlePath() + "/";
         mConfigPath = mResourcePath;
 #else
@@ -150,6 +150,12 @@ public:
     {
         if (mFrameListener)
             delete mFrameListener;
+		if (mOverlaySystem)
+		{
+			if(mSceneMgr) mSceneMgr->removeRenderQueueListener(mOverlaySystem);
+            OGRE_DELETE mOverlaySystem;
+		}
+
         if (mRoot)
             OGRE_DELETE mRoot;
 
@@ -178,6 +184,7 @@ public:
 
 protected:
     Root *mRoot;
+	OverlaySystem* mOverlaySystem;
 #ifdef OGRE_STATIC_LIB
 	StaticPluginLoader mStaticPluginLoader;
 #endif
@@ -209,6 +216,7 @@ protected:
 		
         mRoot = OGRE_NEW Root(pluginsPath, 
             mConfigPath + "ogre.cfg", mResourcePath + "Ogre.log");
+		mOverlaySystem = OGRE_NEW OverlaySystem();
 #ifdef OGRE_STATIC_LIB
 		mStaticPluginLoader.load();
 #endif
@@ -252,10 +260,10 @@ protected:
 			mShaderGenerator = RTShader::ShaderGenerator::getSingletonPtr();
 
 			// Set the scene manager.
-			mShaderGenerator->setSceneManager(sceneMgr);
+			mShaderGenerator->addSceneManager(sceneMgr);
 
 			// Setup core libraries and shader cache path.
-			ResourceGroupManager::LocationList resLocationsList = ResourceGroupManager::getSingleton().getResourceLocationList(ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			ResourceGroupManager::LocationList resLocationsList = ResourceGroupManager::getSingleton().getResourceLocationList("Popular");
 			ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
 			ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
 			String shaderCoreLibsPath;
@@ -337,6 +345,9 @@ protected:
     {
         // Create the SceneManager, in this case a generic one
         mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
+
+		if(mOverlaySystem)
+			 mSceneMgr->addRenderQueueListener(mOverlaySystem);
     }
     virtual void createCamera(void)
     {
@@ -352,7 +363,7 @@ protected:
     }
     virtual void createFrameListener(void)
     {
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
         mFrameListener= new ExampleFrameListener(mWindow, mCamera, true, true, true);
 #else
         mFrameListener= new ExampleFrameListener(mWindow, mCamera);
@@ -400,7 +411,7 @@ protected:
             {
                 typeName = i->first;
                 archName = i->second;
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
                 // OS X does not set the working directory relative to the app,
                 // In order to make things portable on OS X we need to provide
                 // the loading with it's own bundle path location

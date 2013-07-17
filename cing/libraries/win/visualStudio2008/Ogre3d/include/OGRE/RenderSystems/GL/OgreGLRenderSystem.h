@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,11 +33,17 @@ THE SOFTWARE.
 #include "OgreRenderSystem.h"
 #include "OgreGLHardwareBufferManager.h"
 #include "OgreGLGpuProgramManager.h"
-#include "OgreGLSLProgramFactory.h"
 #include "OgreVector4.h"
 
+
 namespace Ogre {
-    /**
+
+
+    namespace GLSL {
+        class GLSLProgramFactory;
+    }
+
+	/**
       Implementation of GL as a rendering system.
      */
     class _OgreGLExport GLRenderSystem : public RenderSystem
@@ -67,8 +73,8 @@ namespace Ogre {
         /// Holds texture type settings for every stage
         GLenum mTextureTypes[OGRE_MAX_TEXTURE_LAYERS];
 
-		/// Number of fixed-function texture units
-		unsigned short mFixedFunctionTextureUnits;
+        /// Number of fixed-function texture units
+        unsigned short mFixedFunctionTextureUnits;
 
         void initConfigOptions(void);
         void initInputDevices(void);
@@ -86,7 +92,7 @@ namespace Ogre {
         /// Store last depth write state
         bool mDepthWrite;
 		/// Store last stencil mask state
-		uint32 mStencilMask;
+		uint32 mStencilWriteMask;
 		/// Store last colour write state
 		bool mColourWrite[4];
 
@@ -110,7 +116,7 @@ namespace Ogre {
 
         HardwareBufferManager* mHardwareBufferManager;
         GLGpuProgramManager* mGpuProgramManager;
-		GLSLProgramFactory* mGLSLProgramFactory;
+        GLSL::GLSLProgramFactory* mGLSLProgramFactory;
 
         unsigned short mCurrentLights;
 
@@ -135,11 +141,20 @@ namespace Ogre {
         */
         GLRTTManager *mRTTManager;
 
-		ushort mActiveTextureUnit;
+        ushort mActiveTextureUnit;
+
+        // local data members of _render that were moved here to improve performance
+        // (save allocations)
+        vector<GLuint>::type mRenderAttribsBound;
+        vector<GLuint>::type mRenderInstanceAttribsBound;
+
 
 	protected:
 		void setClipPlanesImpl(const PlaneList& clipPlanes);
 		bool activateGLTextureUnit(size_t unit);
+        void bindVertexElementToGpu( const VertexElement &elem, HardwareVertexBufferSharedPtr vertexBuffer,
+                const size_t vertexStart, 
+                vector<GLuint>::type &attribsBound, vector<GLuint>::type &instanceAttribsBound );
     public:
         // Default constructor / destructor
         GLRenderSystem();
@@ -171,11 +186,11 @@ namespace Ogre {
         /** See
           RenderSystem
          */
-				virtual RenderSystemCapabilities* createRenderSystemCapabilities() const;
+        virtual RenderSystemCapabilities* createRenderSystemCapabilities() const;
         /** See
           RenderSystem
          */
-				void initialiseFromRenderSystemCapabilities(RenderSystemCapabilities* caps, RenderTarget* primary);
+        void initialiseFromRenderSystemCapabilities(RenderSystemCapabilities* caps, RenderTarget* primary);
         /** See
           RenderSystem
          */
@@ -198,17 +213,23 @@ namespace Ogre {
          */
         void setLightingEnabled(bool enabled);
         
-		/// @copydoc RenderSystem::_createRenderWindow
-		RenderWindow* _createRenderWindow(const String &name, unsigned int width, unsigned int height, 
-			bool fullScreen, const NameValuePairList *miscParams = 0);
+        /// @copydoc RenderSystem::_createRenderWindow
+        RenderWindow* _createRenderWindow(const String &name, unsigned int width, unsigned int height, 
+                                          bool fullScreen, const NameValuePairList *miscParams = 0);
 
-		/// @copydoc RenderSystem::_createRenderWindows
-		bool _createRenderWindows(const RenderWindowDescriptionList& renderWindowDescriptions, 
-			RenderWindowList& createdWindows);
+        /// @copydoc RenderSystem::_createRenderWindows
+        bool _createRenderWindows(const RenderWindowDescriptionList& renderWindowDescriptions, 
+                                  RenderWindowList& createdWindows);
 
+        /// @copydoc RenderSystem::_createDepthBufferFor
+        DepthBuffer* _createDepthBufferFor( RenderTarget *renderTarget );
+
+        /// Mimics D3D9RenderSystem::_getDepthStencilFormatFor, if no FBO RTT manager, outputs GL_NONE
+        void _getDepthStencilFormatFor( GLenum internalColourFormat, GLenum *depthFormat,
+                                        GLenum *stencilFormat );
 		
-		/// @copydoc RenderSystem::createMultiRenderTarget
-		virtual MultiRenderTarget * createMultiRenderTarget(const String & name); 
+        /// @copydoc RenderSystem::createMultiRenderTarget
+        virtual MultiRenderTarget * createMultiRenderTarget(const String & name); 
 		
         /** See
           RenderSystem
@@ -409,8 +430,8 @@ namespace Ogre {
           RenderSystem.
          */
         void setStencilBufferParams(CompareFunction func = CMPF_ALWAYS_PASS, 
-            uint32 refValue = 0, uint32 mask = 0xFFFFFFFF, 
-            StencilOperation stencilFailOp = SOP_KEEP, 
+            uint32 refValue = 0, uint32 compareMask = 0xFFFFFFFF, uint32 writeMask = 0xFFFFFFFF,
+			StencilOperation stencilFailOp = SOP_KEEP, 
             StencilOperation depthFailOp = SOP_KEEP,
             StencilOperation passOp = SOP_KEEP, 
             bool twoSidedOperation = false);
@@ -418,6 +439,14 @@ namespace Ogre {
           RenderSystem
          */
         void _setTextureUnitFiltering(size_t unit, FilterType ftype, FilterOptions filter);
+		 /** See
+          RenderSystem
+         */
+		void _setTextureUnitCompareFunction(size_t unit, CompareFunction function);
+		 /** See
+          RenderSystem
+         */
+		void _setTextureUnitCompareEnabled(size_t unit, bool compare);
         /** See
           RenderSystem
          */
@@ -434,6 +463,7 @@ namespace Ogre {
           RenderSystem
          */
         void _render(const RenderOperation& op);
+
         /** See
           RenderSystem
          */
@@ -445,29 +475,29 @@ namespace Ogre {
         /** See
           RenderSystem
          */
-		void bindGpuProgramParameters(GpuProgramType gptype, 
-			GpuProgramParametersSharedPtr params, uint16 variabilityMask);
-		/** See
-		  RenderSystem
-		 */
-		void bindGpuProgramPassIterationParameters(GpuProgramType gptype);
+        void bindGpuProgramParameters(GpuProgramType gptype, 
+                                      GpuProgramParametersSharedPtr params, uint16 variabilityMask);
+        /** See
+            RenderSystem
+        */
+        void bindGpuProgramPassIterationParameters(GpuProgramType gptype);
         /** See
           RenderSystem
          */
         void setScissorTest(bool enabled, size_t left = 0, size_t top = 0, size_t right = 800, size_t bottom = 600) ;
         void clearFrameBuffer(unsigned int buffers, 
-            const ColourValue& colour = ColourValue::Black, 
-            Real depth = 1.0f, unsigned short stencil = 0);
+                              const ColourValue& colour = ColourValue::Black, 
+                              Real depth = 1.0f, unsigned short stencil = 0);
         HardwareOcclusionQuery* createHardwareOcclusionQuery(void);
         Real getHorizontalTexelOffset(void);
         Real getVerticalTexelOffset(void);
         Real getMinimumDepthInputValue(void);
         Real getMaximumDepthInputValue(void);
-		OGRE_MUTEX(mThreadInitMutex)
-		void registerThread();
-		void unregisterThread();
-		void preExtraThreadsStarted();
-		void postExtraThreadsStarted();
+        OGRE_MUTEX(mThreadInitMutex);
+        void registerThread();
+        void unregisterThread();
+        void preExtraThreadsStarted();
+        void postExtraThreadsStarted();
 
         // ----------------------------------
         // GLRenderSystem specific members
@@ -496,6 +526,18 @@ namespace Ogre {
 
 		/// @copydoc RenderSystem::getDisplayMonitorCount
 		unsigned int getDisplayMonitorCount() const;
+
+		/// @copydoc RenderSystem::hasAnisotropicMipMapFilter
+		virtual bool hasAnisotropicMipMapFilter() const { return false; }
+        
+		/// @copydoc RenderSystem::beginProfileEvent
+        virtual void beginProfileEvent( const String &eventName );
+
+		/// @copydoc RenderSystem::endProfileEvent
+        virtual void endProfileEvent( void );
+
+		/// @copydoc RenderSystem::markProfileEvent
+        virtual void markProfileEvent( const String &eventName );
     };
 }
 #endif

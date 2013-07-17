@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,9 @@ THE SOFTWARE.
 #ifndef __RenderQueue_H__
 #define __RenderQueue_H__
 
-#include "OgreHeaderPrefix.h"
 #include "OgrePrerequisites.h"
 #include "OgreIteratorWrappers.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 
@@ -92,10 +92,12 @@ namespace Ogre {
     class _OgreExport RenderQueue : public RenderQueueAlloc
     {
     public:
+
         typedef map< uint8, RenderQueueGroup* >::type RenderQueueGroupMap;
         /// Iterator over queue groups
         typedef MapIterator<RenderQueueGroupMap> QueueGroupIterator;
         typedef ConstMapIterator<RenderQueueGroupMap> ConstQueueGroupIterator;
+
 		/** Class to listen in on items being added to the render queue. 
 		@remarks
 			Use RenderQueue::setRenderableListener to get callbacks when an item
@@ -123,7 +125,7 @@ namespace Ogre {
 			@param pQueue Pointer to the render queue that this object is being
 				added to. You can for example call this back to duplicate the 
 				object with a different technique
-			@returns true to allow the Renderable to be added to the queue, 
+			@return true to allow the Renderable to be added to the queue, 
 				false if you want to prevent it being added
 			*/
 			virtual bool renderableQueued(Renderable* rend, uint8 groupID, 
@@ -190,10 +192,10 @@ namespace Ogre {
             current default (see setDefaultRenderablePriority).
         @note
             Called by implementation of MovableObject::_updateRenderQueue.
-        @param
-            pRend Pointer to the Renderable to be added to the queue
-		@param
-            groupID The group the renderable is to be added to. This
+        @param pRend
+            Pointer to the Renderable to be added to the queue
+		@param groupId
+            The group the renderable is to be added to. This
             can be used to schedule renderable objects in separate groups such that the SceneManager
             respects the divisions between the groupings and does not reorder them outside these
             boundaries. This can be handy for overlays where no matter what you want the overlay to 
@@ -305,4 +307,5 @@ namespace Ogre {
 }
 
 #include "OgreHeaderSuffix.h"
+
 #endif

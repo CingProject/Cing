@@ -4,7 +4,7 @@
  (Object-oriented Graphics Rendering Engine)
  For the latest info, see http://www.ogre3d.org/
  
- Copyright (c) 2000-2011 Torus Knot Software Ltd
+ Copyright (c) 2000-2013 Torus Knot Software Ltd
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -29,16 +29,23 @@
 #define __SdkTrays_H__
 
 #include "Ogre.h"
-#include "OgreFontManager.h"
-#include "OgreBorderPanelOverlayElement.h"
-#include "OgreTextAreaOverlayElement.h"
+#include "OgreOverlaySystem.h"
 #include <math.h>
+
+#include "OgreTimer.h"
+
+#include "InputContext.h"
 
 #if OGRE_COMPILER == OGRE_COMPILER_MSVC
 // TODO - remove this
 #   pragma warning (disable : 4244)
 #endif
 
+#if OGRE_UNICODE_SUPPORT
+	#define DISPLAY_STRING_TO_STRING(DS) (DS.asUTF8())
+#else
+	#define DISPLAY_STRING_TO_STRING(DS) (DS)
+#endif
 namespace OgreBites
 {
 	enum TrayLocation   // enumerator values for widget tray anchoring locations
@@ -171,7 +178,7 @@ namespace OgreBites
 		static Ogre::Real getCaptionWidth(const Ogre::DisplayString& caption, Ogre::TextAreaOverlayElement* area)
 		{
 			Ogre::Font* font = (Ogre::Font*)Ogre::FontManager::getSingleton().getByName(area->getFontName()).getPointer();
-			Ogre::String current = caption.asUTF8();
+			Ogre::String current = DISPLAY_STRING_TO_STRING(caption);
 			Ogre::Real lineWidth = 0;
 
 			for (unsigned int i = 0; i < current.length(); i++)
@@ -196,7 +203,7 @@ namespace OgreBites
 		static void fitCaptionToArea(const Ogre::DisplayString& caption, Ogre::TextAreaOverlayElement* area, Ogre::Real maxWidth)
 		{
 			Ogre::Font* f = (Ogre::Font*)Ogre::FontManager::getSingleton().getByName(area->getFontName()).getPointer();
-			Ogre::String s = caption.asUTF8();
+			Ogre::String s = DISPLAY_STRING_TO_STRING(caption);
 
 			int nl = s.find('\n');
 			if (nl != -1) s = s.substr(0, nl);
@@ -282,7 +289,7 @@ namespace OgreBites
 			mElement = Ogre::OverlayManager::getSingleton().createOverlayElementFromTemplate("SdkTrays/Button", "BorderPanel", name);
 			mBP = (Ogre::BorderPanelOverlayElement*)mElement;
 			mTextArea = (Ogre::TextAreaOverlayElement*)mBP->getChild(mBP->getName() + "/ButtonCaption");
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
             mTextArea->setCharHeight(mTextArea->getCharHeight() - 3);
 #endif
 			mTextArea->setTop(-(mTextArea->getCharHeight() / 2));
@@ -400,7 +407,7 @@ namespace OgreBites
 			mStartingLine = 0;
 			mPadding = 15;
 			mText = "";
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
             mTextArea->setCharHeight(mTextArea->getCharHeight() - 3);
             mCaptionTextArea->setCharHeight(mCaptionTextArea->getCharHeight() - 3);
 #endif
@@ -443,7 +450,7 @@ namespace OgreBites
 
 			Ogre::Font* font = (Ogre::Font*)Ogre::FontManager::getSingleton().getByName(mTextArea->getFontName()).getPointer();
             
-			Ogre::String current = text.asUTF8();
+			Ogre::String current = DISPLAY_STRING_TO_STRING(text);
 			bool firstWord = true;
 			unsigned int lastSpace = 0;
 			unsigned int lineBegin = 0;
@@ -678,7 +685,7 @@ namespace OgreBites
 			mSmallBox->setWidth(width - 10);
 			mSmallTextArea = (Ogre::TextAreaOverlayElement*)mSmallBox->getChild(name + "/MenuSmallBox/MenuSmallText");
 			mElement->setWidth(width);
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
             mTextArea->setCharHeight(mTextArea->getCharHeight() - 3);
             mSmallTextArea->setCharHeight(mSmallTextArea->getCharHeight() - 3);
 #endif
@@ -1107,7 +1114,7 @@ namespace OgreBites
 		{
 			mElement = Ogre::OverlayManager::getSingleton().createOverlayElementFromTemplate("SdkTrays/Label", "BorderPanel", name);
 			mTextArea = (Ogre::TextAreaOverlayElement*)((Ogre::OverlayContainer*)mElement)->getChild(getName() + "/LabelCaption");
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
             mTextArea->setCharHeight(mTextArea->getCharHeight() - 3);
 #endif
 			setCaption(caption);
@@ -1203,7 +1210,7 @@ namespace OgreBites
 			mValueTextArea = (Ogre::TextAreaOverlayElement*)valueBox->getChild(valueBox->getName() + "/SliderValueText");
 			mTrack = (Ogre::BorderPanelOverlayElement*)c->getChild(getName() + "/SliderTrack");
 			mHandle = (Ogre::PanelOverlayElement*)mTrack->getChild(mTrack->getName() + "/SliderHandle");
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
             mTextArea->setCharHeight(mTextArea->getCharHeight() - 3);
             mValueTextArea->setCharHeight(mValueTextArea->getCharHeight() - 3);
 #endif
@@ -1387,7 +1394,7 @@ namespace OgreBites
 			Ogre::OverlayContainer* c = (Ogre::OverlayContainer*)mElement;
 			mNamesArea = (Ogre::TextAreaOverlayElement*)c->getChild(getName() + "/ParamsPanelNames");
 			mValuesArea = (Ogre::TextAreaOverlayElement*)c->getChild(getName() + "/ParamsPanelValues");
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
             mNamesArea->setCharHeight(mNamesArea->getCharHeight() - 3);
             mValuesArea->setCharHeight(mValuesArea->getCharHeight() - 3);
 #endif
@@ -1420,15 +1427,15 @@ namespace OgreBites
 		{
 			for (unsigned int i = 0; i < mNames.size(); i++)
 			{
-				if (mNames[i] == paramName.asUTF8())
+				if (mNames[i] == DISPLAY_STRING_TO_STRING(paramName))
 				{
-					mValues[i] = paramValue.asUTF8();
+					mValues[i] = DISPLAY_STRING_TO_STRING(paramValue);
 					updateText();
 					return;
 				}
 			}
 
-			Ogre::String desc = "ParamsPanel \"" + getName() + "\" has no parameter \"" + paramName.asUTF8() + "\".";
+			Ogre::String desc = "ParamsPanel \"" + getName() + "\" has no parameter \"" + DISPLAY_STRING_TO_STRING(paramName) + "\".";
 			OGRE_EXCEPT(Ogre::Exception::ERR_ITEM_NOT_FOUND, desc, "ParamsPanel::setParamValue");
 		}
 
@@ -1441,7 +1448,7 @@ namespace OgreBites
 				OGRE_EXCEPT(Ogre::Exception::ERR_ITEM_NOT_FOUND, desc, "ParamsPanel::setParamValue");
 			}
 
-			mValues[index] = paramValue.asUTF8();
+			mValues[index] = DISPLAY_STRING_TO_STRING(paramValue);
 			updateText();
 		}
 
@@ -1449,10 +1456,10 @@ namespace OgreBites
 		{
 			for (unsigned int i = 0; i < mNames.size(); i++)
 			{
-				if (mNames[i] == paramName.asUTF8()) return mValues[i];
+				if (mNames[i] == DISPLAY_STRING_TO_STRING(paramName)) return mValues[i];
 			}
 			
-			Ogre::String desc = "ParamsPanel \"" + getName() + "\" has no parameter \"" + paramName.asUTF8() + "\".";
+			Ogre::String desc = "ParamsPanel \"" + getName() + "\" has no parameter \"" + DISPLAY_STRING_TO_STRING(paramName) + "\".";
 			OGRE_EXCEPT(Ogre::Exception::ERR_ITEM_NOT_FOUND, desc, "ParamsPanel::getParamValue");
 			return "";
 		}
@@ -1520,7 +1527,7 @@ namespace OgreBites
 			mX = mSquare->getChild(mSquare->getName() + "/CheckBoxX");
 			mX->hide();
 			mElement->setWidth(width);
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
             mTextArea->setCharHeight(mTextArea->getCharHeight() - 3);
 #endif
 			setCaption(caption);
@@ -1694,23 +1701,21 @@ namespace OgreBites
 		/*-----------------------------------------------------------------------------
 		| Creates backdrop, cursor, and trays.
 		-----------------------------------------------------------------------------*/
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-		SdkTrayManager(const Ogre::String& name, Ogre::RenderWindow* window, OIS::MultiTouch* mouse, SdkTrayListener* listener = 0) :
-#else
-		SdkTrayManager(const Ogre::String& name, Ogre::RenderWindow* window, OIS::Mouse* mouse, SdkTrayListener* listener = 0) :
-#endif
-		  mName(name), mWindow(window), mMouse(mouse), mWidgetDeathRow(), mListener(listener), mWidgetPadding(8),
+		SdkTrayManager(const Ogre::String& name, Ogre::RenderWindow* window, InputContext inputContext, SdkTrayListener* listener = 0) :
+		  mName(name), mWindow(window), mInputContext(inputContext), mWidgetDeathRow(), mListener(listener), mWidgetPadding(8),
                 mWidgetSpacing(2), mTrayPadding(0), mTrayDrag(false), mExpandedMenu(0), mDialog(0), mOk(0), mYes(0),
                 mNo(0), mCursorWasVisible(false), mFpsLabel(0), mStatsPanel(0), mLogo(0), mLoadBar(0),
 				mGroupInitProportion(0.0f), mGroupLoadProportion(0.0f), mLoadInc(0.0f)
 		{
+            mTimer = Ogre::Root::getSingleton().getTimer();
+            mLastStatUpdateTime = 0;
+
 			Ogre::OverlayManager& om = Ogre::OverlayManager::getSingleton();
 
 			Ogre::String nameBase = mName + "/";
 			std::replace(nameBase.begin(), nameBase.end(), ' ', '_');
 
 			// create overlay layers for everything
-
 			mBackdropLayer = om.create(nameBase + "BackdropLayer");
 			mTraysLayer = om.create(nameBase + "WidgetsLayer");
 			mPriorityLayer = om.create(nameBase + "PriorityLayer");
@@ -1721,7 +1726,6 @@ namespace OgreBites
 			mCursorLayer->setZOrder(400);
 
 			// make backdrop and cursor overlay containers
-
 			mCursor = (Ogre::OverlayContainer*)om.createOverlayElementFromTemplate("SdkTrays/Cursor", "Panel", nameBase + "Cursor");
 			mCursorLayer->add2D(mCursor);
 			mBackdrop = (Ogre::OverlayContainer*)om.createOverlayElement("Panel", nameBase + "Backdrop");
@@ -1753,7 +1757,6 @@ namespace OgreBites
 			mTrays[9] = (Ogre::OverlayContainer*)om.createOverlayElement("Panel", nameBase + "NullTray");
 			mTrayWidgetAlign[9] = Ogre::GHA_LEFT;
 			mTraysLayer->add2D(mTrays[9]);
-
 			adjustTrays();
 			
 			showTrays();
@@ -1802,12 +1805,12 @@ namespace OgreBites
 		}
 
 		/*-----------------------------------------------------------------------------
-		| Converts a 3D scene position to a 2D screen coordinate (in pixels).
+		| Converts a 3D scene position to a 2D screen position (in relative screen size, 0.0-1.0).
 		-----------------------------------------------------------------------------*/
 		static Ogre::Vector2 sceneToScreen(Ogre::Camera* cam, const Ogre::Vector3& pt)
 		{
 			Ogre::Vector3 result = cam->getProjectionMatrix() * cam->getViewMatrix() * pt;
-			return Ogre::Vector2((result.x + 1) / 2, -(result.y + 1) / 2);
+			return Ogre::Vector2((result.x + 1) / 2, (-result.y + 1) / 2);
 		}
 
 		// these methods get the underlying overlays and overlay elements
@@ -1897,18 +1900,14 @@ namespace OgreBites
 		-----------------------------------------------------------------------------*/
 		void refreshCursor()
 		{
-#if OGRE_NO_VIEWPORT_ORIENTATIONMODE == 0
+#if (OGRE_NO_VIEWPORT_ORIENTATIONMODE == 0) || (OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS)
             // TODO:
             // the position should be based on the orientation, for now simply return
             return;
 #endif
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-            std::vector<OIS::MultiTouchState> states = mMouse->getMultiTouchStates();
-            if(states.size() > 0)
-                mCursor->setPosition(states[0].X.abs, states[0].Y.abs);
-#else
-			mCursor->setPosition(mMouse->getMouseState().X.abs, mMouse->getMouseState().Y.abs);
-#endif
+            Ogre::Real x, y;
+            if(mInputContext.getCursorPosition(x, y))
+                mCursor->setPosition(x, y);
 		}
 
 		void showTrays()
@@ -2746,22 +2745,25 @@ namespace OgreBites
 			}
 			mWidgetDeathRow.clear();
 
-			Ogre::RenderTarget::FrameStats stats = mWindow->getStatistics();
 
-			if (areFrameStatsVisible())
+            unsigned long currentTime = mTimer->getMilliseconds();
+			if (areFrameStatsVisible() && currentTime - mLastStatUpdateTime > 250)
 			{
-				std::ostringstream oss;
-				Ogre::String s;
+                Ogre::RenderTarget::FrameStats stats = mWindow->getStatistics();
 
-				oss << "FPS: " << std::fixed << std::setprecision(1) << stats.lastFPS;
-				s = oss.str();
+                mLastStatUpdateTime = currentTime;
+
+				Ogre::String s("FPS: ");
+				s += Ogre::StringConverter::toString((int)stats.lastFPS);
+				
 				for (int i = s.length() - 5; i > 5; i -= 3) { s.insert(i, 1, ','); }
 				mFpsLabel->setCaption(s);
 
 				if (mStatsPanel->getOverlayElement()->isVisible())
 				{
 					Ogre::StringVector values;
-
+					std::ostringstream oss;
+					
 					oss.str("");
 					oss << std::fixed << std::setprecision(1) << stats.avgFPS;
 					Ogre::String str = oss.str();
@@ -2795,29 +2797,30 @@ namespace OgreBites
 			return true;
 		}
 
+        void windowUpdate()
+        {
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS && OGRE_PLATFORM != OGRE_PLATFORM_NACL
+            mWindow->update();
+#endif
+        }
+
 		void resourceGroupScriptingStarted(const Ogre::String& groupName, size_t scriptCount)
 		{
 			mLoadInc = mGroupInitProportion / scriptCount;
 			mLoadBar->setCaption("Parsing...");
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mWindow->update();
-#endif
+			windowUpdate();
 		}
 
 		void scriptParseStarted(const Ogre::String& scriptName, bool& skipThisScript)
 		{
 			mLoadBar->setComment(scriptName);
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mWindow->update();
-#endif
+			windowUpdate();
 		}
 
 		void scriptParseEnded(const Ogre::String& scriptName, bool skipped)
 		{
 			mLoadBar->setProgress(mLoadBar->getProgress() + mLoadInc);
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mWindow->update();
-#endif
+			windowUpdate();
 		}
 
 		void resourceGroupScriptingEnded(const Ogre::String& groupName) {}
@@ -2826,41 +2829,31 @@ namespace OgreBites
 		{
 			mLoadInc = mGroupLoadProportion / resourceCount;
 			mLoadBar->setCaption("Loading...");
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mWindow->update();
-#endif
+			windowUpdate();
 		}
 
 		void resourceLoadStarted(const Ogre::ResourcePtr& resource)
 		{
 			mLoadBar->setComment(resource->getName());
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mWindow->update();
-#endif
+			windowUpdate();
 		}
 
 		void resourceLoadEnded()
 		{
 			mLoadBar->setProgress(mLoadBar->getProgress() + mLoadInc);
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mWindow->update();
-#endif
+			windowUpdate();
 		}
 
 		void worldGeometryStageStarted(const Ogre::String& description)
 		{
 			mLoadBar->setComment(description);
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mWindow->update();
-#endif
+			windowUpdate();
 		}
 
 		void worldGeometryStageEnded()
 		{
 			mLoadBar->setProgress(mLoadBar->getProgress() + mLoadInc);
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mWindow->update();
-#endif
+			windowUpdate();
 		}
 
 		void resourceGroupLoadEnded(const Ogre::String& groupName) {}
@@ -2901,13 +2894,13 @@ namespace OgreBites
 		| Processes mouse button down events. Returns true if the event was
 		| consumed and should not be passed on to other handlers.
 		-----------------------------------------------------------------------------*/
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if (OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS) || (OGRE_PLATFORM == OGRE_PLATFORM_ANDROID)
 		bool injectMouseDown(const OIS::MultiTouchEvent& evt)
 #else
 		bool injectMouseDown(const OIS::MouseEvent& evt, OIS::MouseButtonID id)
 #endif
 		{
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
+#if (OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS) && (OGRE_PLATFORM != OGRE_PLATFORM_ANDROID)
 			// only process left button when stuff is visible
 			if (!mCursorLayer->isVisible() || id != OIS::MB_Left) return false;
 #else
@@ -2984,13 +2977,13 @@ namespace OgreBites
 		| Processes mouse button up events. Returns true if the event was
 		| consumed and should not be passed on to other handlers.
 		-----------------------------------------------------------------------------*/
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if (OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS) || (OGRE_PLATFORM == OGRE_PLATFORM_ANDROID)
 		bool injectMouseUp(const OIS::MultiTouchEvent& evt)
 #else
 		bool injectMouseUp(const OIS::MouseEvent& evt, OIS::MouseButtonID id)
 #endif
 		{
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
+#if (OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS) && (OGRE_PLATFORM != OGRE_PLATFORM_ANDROID)
 			// only process left button when stuff is visible
 			if (!mCursorLayer->isVisible() || id != OIS::MB_Left) return false;
 #else
@@ -3042,7 +3035,7 @@ namespace OgreBites
 		| Updates cursor position. Returns true if the event was
 		| consumed and should not be passed on to other handlers.
 		-----------------------------------------------------------------------------*/
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if (OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS) || (OGRE_PLATFORM == OGRE_PLATFORM_ANDROID)
 		bool injectMouseMove(const OIS::MultiTouchEvent& evt)
 #else
 		bool injectMouseMove(const OIS::MouseEvent& evt)
@@ -3119,11 +3112,7 @@ namespace OgreBites
 
 		Ogre::String mName;                   // name of this tray system
 		Ogre::RenderWindow* mWindow;          // render window
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-		OIS::MultiTouch* mMouse;              // multitouch device
-#else
-		OIS::Mouse* mMouse;                   // mouse device
-#endif
+		InputContext mInputContext;
 		Ogre::Overlay* mBackdropLayer;        // backdrop layer
 		Ogre::Overlay* mTraysLayer;           // widget layer
 		Ogre::Overlay* mPriorityLayer;        // top priority layer
@@ -3153,6 +3142,9 @@ namespace OgreBites
 		Ogre::Real mGroupLoadProportion;      // proportion of load job assigned to loading one resource group
 		Ogre::Real mLoadInc;                  // loading increment
 		Ogre::GuiHorizontalAlignment mTrayWidgetAlign[10];   // tray widget alignments
+        Ogre::Timer* mTimer;                  // Root::getSingleton().getTimer()
+        unsigned long mLastStatUpdateTime;    // The last time the stat text were updated
+
     };
 }
 

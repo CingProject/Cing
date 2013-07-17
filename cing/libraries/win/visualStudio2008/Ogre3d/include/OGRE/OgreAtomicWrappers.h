@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -62,19 +62,19 @@ namespace Ogre {
 
         T get (void) const
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             return mField;
         }
 
         void set (const T &v)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             mField = v;
         }
 
         bool cas (const T &old, const T &nu)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             if (mField != old) return false;
             mField = nu;
             return true;
@@ -82,25 +82,39 @@ namespace Ogre {
 
         T operator++ (void)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             return ++mField;
         }
 
         T operator++ (int)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             return mField++;
         }
 
         T operator-- (int)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             return mField--;
         }
 
+		T operator+=(const T &add)
+		{
+                    OGRE_LOCK_AUTO_MUTEX;
+			mField += add;
+			return mField;
+		}
+
+		T operator-=(const T &sub)
+		{
+                    OGRE_LOCK_AUTO_MUTEX;
+			mField -= sub;
+			return mField;
+		}
+
         protected:
 
-        OGRE_AUTO_MUTEX
+                OGRE_AUTO_MUTEX;
 
         volatile T mField;
 
@@ -110,8 +124,7 @@ namespace Ogre {
 
 }
 
-// These GCC instrinsics are not supported on ARM - masterfalcon
-#if OGRE_COMPILER == OGRE_COMPILER_GNUC && OGRE_COMP_VER >= 412 && OGRE_THREAD_SUPPORT && OGRE_CPU != OGRE_CPU_ARM
+#if (((OGRE_COMPILER == OGRE_COMPILER_GNUC) && (OGRE_COMP_VER >= 412)) || (OGRE_COMPILER == OGRE_COMPILER_CLANG)) && OGRE_THREAD_SUPPORT
 
 namespace Ogre {
 
@@ -159,26 +172,44 @@ namespace Ogre {
             
         T operator++ (void)
         {
-            __sync_add_and_fetch (&mField, 1);
+            return __sync_add_and_fetch (&mField, 1);
         }
             
         T operator-- (void)
         {
-            __sync_add_and_fetch (&mField, -1);
+            return __sync_add_and_fetch (&mField, -1);
         }
 
         T operator++ (int)
         {
-            __sync_fetch_and_add (&mField, 1);
+            return __sync_fetch_and_add (&mField, 1);
         }
             
         T operator-- (int)
         {
-            __sync_fetch_and_add (&mField, -1);
+            return __sync_fetch_and_add (&mField, -1);
         }
 
+		T operator+=(const T &add)
+		{
+			return __sync_add_and_fetch (&mField, add);
+		}
 
+		T operator-=(const T &sub)
+		{
+			return __sync_sub_and_fetch (&mField, sub);
+		}
+
+        // Need special alignment for atomic functions on ARM CPU's
+#if OGRE_CPU == OGRE_CPU_ARM
+#   if OGRE_COMPILER == OGRE_COMPILER_MSVC
+        __declspec(align(16)) volatile T mField;
+#   elif (OGRE_COMPILER == OGRE_COMPILER_GNUC) || (OGRE_COMPILER == OGRE_COMPILER_CLANG)
+        volatile T mField __attribute__((__aligned__(16)));
+#   endif
+#else
         volatile T mField;
+#endif
 
     };
 	/** @} */
@@ -256,7 +287,7 @@ namespace Ogre {
         T operator++ (void)
         {
             if (sizeof(T)==2) {
-                return InterlockedIncrement16((SHORT*)&mField);
+                return _InterlockedIncrement16((SHORT*)&mField);
             } else if (sizeof(T)==4) {
                 return InterlockedIncrement((LONG*)&mField);
             } else if (sizeof(T)==8) {
@@ -269,7 +300,7 @@ namespace Ogre {
         T operator-- (void)
         {
             if (sizeof(T)==2) {
-                return InterlockedDecrement16((SHORT*)&mField);
+                return _InterlockedDecrement16((SHORT*)&mField);
             } else if (sizeof(T)==4) {
                 return InterlockedDecrement((LONG*)&mField);
             } else if (sizeof(T)==8) {
@@ -282,7 +313,7 @@ namespace Ogre {
         T operator++ (int)
         {
             if (sizeof(T)==2) {
-                return InterlockedIncrement16((SHORT*)&mField)-1;
+                return _InterlockedIncrement16((SHORT*)&mField)-1;
             } else if (sizeof(T)==4) {
                 return InterlockedIncrement((LONG*)&mField)-1;
             } else if (sizeof(T)==8) {
@@ -295,7 +326,7 @@ namespace Ogre {
         T operator-- (int)
         {
             if (sizeof(T)==2) {
-                return InterlockedDecrement16((SHORT*)&mField)+1;
+                return _InterlockedDecrement16((SHORT*)&mField)+1;
             } else if (sizeof(T)==4) {
                 return InterlockedDecrement((LONG*)&mField)+1;
             } else if (sizeof(T)==8) {
@@ -304,6 +335,36 @@ namespace Ogre {
                 OGRE_EXCEPT(Exception::ERR_NOT_IMPLEMENTED,"Only 16, 32, and 64 bit scalars supported in win32.","AtomicScalar::operator--(postfix)");
             }
         }
+
+		T operator+=(const T &add)
+		{
+			//The function InterlockedExchangeAdd is not available for 64 and 16 bit version
+			//We will use the cas operation instead. 
+			T newVal;
+			do {
+				//Create a value of the current field plus the added value
+				newVal = mField + add;
+				//Replace the current field value with the new value. Ensure that the value 
+				//of the field hasn't changed in the mean time by comparing it to the new value
+				//minus the added value. 
+			} while (!cas(newVal - add, newVal)); //repeat until successful
+			return newVal;
+		}
+
+		T operator-=(const T &sub)
+		{
+			//The function InterlockedExchangeAdd is not available for 64 and 16 bit version
+			//We will use the cas operation instead. 
+			T newVal;
+			do {
+				//Create a value of the current field plus the added value
+				newVal = mField - sub;
+				//Replace the current field value with the new value. Ensure that the value 
+				//of the field hasn't changed in the mean time by comparing it to the new value
+				//minus the added value. 
+			} while (!cas(newVal + sub, newVal)); //repeat until successful
+			return newVal;
+		}
 
         volatile T mField;
 
@@ -340,7 +401,7 @@ namespace Ogre {
 
         void operator= (const AtomicScalar<T> &cousin)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             mField = cousin.mField;
         }
 
@@ -354,13 +415,13 @@ namespace Ogre {
 
         void set (const T &v)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             mField = v;
         }
 
         bool cas (const T &old, const T &nu)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             if (mField != old) return false;
             mField = nu;
             return true;
@@ -368,31 +429,45 @@ namespace Ogre {
 
         T operator++ (void)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             return ++mField;
         }
 
         T operator-- (void)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             return --mField;
         }
 
         T operator++ (int)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             return mField++;
         }
 
         T operator-- (int)
         {
-            OGRE_LOCK_AUTO_MUTEX
+            OGRE_LOCK_AUTO_MUTEX;
             return mField--;
         }
 
+		T operator+=(const T &add)
+		{
+                    OGRE_LOCK_AUTO_MUTEX;
+			mField += add;
+			return mField;
+		}
+
+		T operator-=(const T &sub)
+		{
+                    OGRE_LOCK_AUTO_MUTEX;
+			mField -= sub;
+			return mField;
+		}
+
         protected:
 
-        OGRE_AUTO_MUTEX
+                OGRE_AUTO_MUTEX;
 
         volatile T mField;
 

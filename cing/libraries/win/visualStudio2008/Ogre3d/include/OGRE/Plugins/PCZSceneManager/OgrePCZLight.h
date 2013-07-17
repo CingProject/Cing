@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -91,19 +91,20 @@ namespace Ogre
         */
         void updateZones(PCZone * defaultZone, unsigned long frameCount);
 
-		void removeZoneFromAffectedZonesList(PCZone * zone); // manually remove a zone from the affected list
+        /// Manually remove a zone from the affected list
+		void removeZoneFromAffectedZonesList(PCZone * zone);
 
-		// MovableObject notified when SceneNode changes
+		/// MovableObject notified when SceneNode changes
 		virtual void _notifyMoved(void);   
 
-		// clear update flag
+		/// Clear update flag
 		void clearNeedsUpdate(void)   { mNeedsUpdate = false; } 
 
-		// get status of need for update. this checks all affected zones
+		/// Get status of need for update. this checks all affected zones
 		bool getNeedsUpdate(void);   
 
     protected:
-        /** flag indicating if any of the zones in the affectedZonesList is 
+        /** Flag indicating if any of the zones in the affectedZonesList is 
         *   visible in the current frame
         */
         bool mAffectsVisibleZone;
@@ -112,7 +113,7 @@ namespace Ogre
         */
         ZoneList affectedZonesList;
 
-		// flag recording if light has moved, therefore affected list needs updating 
+		/// Flag recording if light has moved, therefore affected list needs updating
 		bool mNeedsUpdate;   
 	};
 

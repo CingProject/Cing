@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -112,7 +112,7 @@ namespace Ogre {
             object containing the definition of the parameters this program understands.
         */
         GpuProgramParametersSharedPtr createParameters(void);
-        /** @copydoc GpuProgram::getBindingDelegate */
+        /** @copydoc GpuProgram::_getBindingDelegate */
         GpuProgram* _getBindingDelegate(void) { return mAssemblerProgram.getPointer(); }
 
 		/** Get the full list of GpuConstantDefinition instances.
@@ -124,6 +124,7 @@ namespace Ogre {
 		/// Override GpuProgram::getNamedConstants to ensure built
 		const GpuNamedConstants& getNamedConstants() const { return getConstantDefinitions(); }
 
+		virtual size_t calculateSize(void) const;
 
 
 
@@ -147,8 +148,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<HighLevelGpuProgram*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)
@@ -167,8 +168,8 @@ namespace Ogre {
 			// lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
-                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+                OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME);
+                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME);
                 pRep = static_cast<HighLevelGpuProgram*>(r.getPointer());
                 pUseCount = r.useCountPointer();
                 if (pUseCount)

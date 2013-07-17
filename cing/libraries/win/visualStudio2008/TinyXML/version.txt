@@ -1,0 +1,1 @@
+2.6.2 from http://sourceforge.net/projects/tinyxml/

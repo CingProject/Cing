@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ namespace Ogre {
     class GLFBOManager;
     class GLHardwarePixelBuffer;
     class GLRenderBuffer;
+	class GLDepthBuffer;
 }
 
 #if OGRE_THREAD_SUPPORT == 1
@@ -67,9 +68,6 @@ namespace Ogre {
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #   include <GL/glew.h>
 #   include <OpenGL/glu.h>
-#elif OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-#   include <OpenGLES/ES1/gl.h>
-#   include <OpenGLES/ES1/glext.h>
 #endif
 
 #if OGRE_THREAD_SUPPORT == 1

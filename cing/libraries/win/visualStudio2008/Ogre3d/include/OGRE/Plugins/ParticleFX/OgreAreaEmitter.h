@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -96,13 +96,6 @@ namespace Ogre {
             points along it's direction (see setDirection)
         */
         void setSize(Real x, Real y, Real z);
-        /** Sets the size of the clear space inside the area from where NO particles are emitted.
-        @param x,y,z
-            Individual axis lengths describing the size of the clear space.
-            The clear space is aligned like the outer area.
-            (see setDirection and setSize)
-        */
-//        void setClearSpace(Real x, Real y, Real z);
 
         /** Sets the width (local x size) of the emitter. */
         void setWidth(Real width);
@@ -127,7 +120,7 @@ namespace Ogre {
         /// Internal method for generating the area axes
         void genAreaAxes(void);
         /** Internal for initializing some defaults and parameters
-        @returns True if custom parameters need initialising
+        @return True if custom parameters need initialising
         */
         bool initDefaults(const String& mType);
 

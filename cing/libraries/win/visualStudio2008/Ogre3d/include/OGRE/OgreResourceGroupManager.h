@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "OgreArchive.h"
 #include "OgreIteratorWrappers.h"
 #include <ctime>
+#include "OgreHeaderPrefix.h"
 
 // If X11/Xlib.h gets included before this header (for example it happens when
 // including wxWidgets and FLTK), Status is defined as an int which we don't
@@ -140,7 +141,6 @@ namespace Ogre {
         /** This event is fired when a stage of preparing linked world geometry 
             has been completed. The number of stages required will have been 
             included in the resourceCount passed in resourceGroupLoadStarted.
-        @param description Text description of what was just prepared
         */
         virtual void worldGeometryPrepareStageEnded(void) {}
         /** This event is fired when a resource group finished preparing. */
@@ -169,7 +169,6 @@ namespace Ogre {
         /** This event is fired when a stage of loading linked world geometry 
             has been completed. The number of stages required will have been 
             included in the resourceCount passed in resourceGroupLoadStarted.
-        @param description Text description of what was just loaded
         */
         virtual void worldGeometryStageEnded(void) = 0;
         /** This event is fired when a resource group finished loading. */
@@ -252,7 +251,7 @@ namespace Ogre {
     class _OgreExport ResourceGroupManager : public Singleton<ResourceGroupManager>, public ResourceAlloc
     {
     public:
-		OGRE_AUTO_MUTEX // public to allow external locking
+        OGRE_AUTO_MUTEX; // public to allow external locking
 		/// Default resource group name
 		static String DEFAULT_RESOURCE_GROUP_NAME;
         /// Internal resource group name (should be used by OGRE internal only)
@@ -314,9 +313,9 @@ namespace Ogre {
 				LOADED = 4
 			};
 			/// General mutex for dealing with group content
-			OGRE_AUTO_MUTEX
+                    OGRE_AUTO_MUTEX;
 			/// Status-specific mutex, separate from content-changing mutex
-			OGRE_MUTEX(statusMutex)
+                    OGRE_MUTEX(statusMutex);
 			/// Group name
 			String name;
 			/// Group status
@@ -398,6 +397,14 @@ namespace Ogre {
 		void fireResourcePrepareEnded(void);
 		/// Internal event firing method
 		void fireResourceGroupPrepareEnded(const String& groupName);
+		/** Internal modification time retrieval */
+		time_t resourceModifiedTime(ResourceGroup* group, const String& filename);
+
+        /** Find out if the named file exists in a group. Internal use only
+         @param group Pointer to the resource group
+         @param filename Fully qualified name of the file to test for
+         */
+        bool resourceExists(ResourceGroup* group, const String& filename);
 
 		/// Stored current group - optimisation for when bulk loading a group
 		ResourceGroup* mCurrentGroup;
@@ -625,7 +632,7 @@ namespace Ogre {
 			this allows duplicate names in alternate paths.
         */
         void addResourceLocation(const String& name, const String& locType, 
-            const String& resGroup = DEFAULT_RESOURCE_GROUP_NAME, bool recursive = false);
+            const String& resGroup = DEFAULT_RESOURCE_GROUP_NAME, bool recursive = false, bool readOnly = true);
         /** Removes a resource location from the search path. */ 
         void removeResourceLocation(const String& name, 
 			const String& resGroup = DEFAULT_RESOURCE_GROUP_NAME);
@@ -740,7 +747,7 @@ namespace Ogre {
 			group membership to be changed
 		@param resourceBeingLoaded Optional pointer to the resource being 
 			loaded, which you should supply if you want
-		@returns Shared pointer to data stream containing the data, will be
+		@return Shared pointer to data stream containing the data, will be
 			destroyed automatically when no longer referenced
 		*/
 		DataStreamPtr openResource(const String& resourceName, 
@@ -755,7 +762,7 @@ namespace Ogre {
 			does not need to be fully qualified.
 		@param groupName The resource group; this determines which locations
 			are searched.
-		@returns Shared pointer to a data stream list , will be
+		@return Shared pointer to a data stream list , will be
 			destroyed automatically when no longer referenced
 		*/
 		DataStreamListPtr openResources(const String& pattern, 
@@ -767,14 +774,14 @@ namespace Ogre {
         information using listFileInfo.
         @param groupName The name of the group
         @param dirs If true, directory names will be returned instead of file names
-        @returns A list of filenames matching the criteria, all are fully qualified
+        @return A list of filenames matching the criteria, all are fully qualified
         */
         StringVectorPtr listResourceNames(const String& groupName, bool dirs = false);
 
         /** List all files in a resource group with accompanying information.
         @param groupName The name of the group
         @param dirs If true, directory names will be returned instead of file names
-        @returns A list of structures detailing quite a lot of information about
+        @return A list of structures detailing quite a lot of information about
         all the files in the archive.
         */
         FileInfoListPtr listResourceFileInfo(const String& groupName, bool dirs = false);
@@ -788,7 +795,7 @@ namespace Ogre {
         @param pattern The pattern to search for; wildcards (*) are allowed
         @param dirs Set to true if you want the directories to be listed
             instead of files
-        @returns A list of filenames matching the criteria, all are fully qualified
+        @return A list of filenames matching the criteria, all are fully qualified
         */
         StringVectorPtr findResourceNames(const String& groupName, const String& pattern,
             bool dirs = false);
@@ -798,12 +805,6 @@ namespace Ogre {
         @param filename Fully qualified name of the file to test for
         */
         bool resourceExists(const String& group, const String& filename);
-
-        /** Find out if the named file exists in a group. 
-        @param group Pointer to the resource group
-        @param filename Fully qualified name of the file to test for
-        */
-        bool resourceExists(ResourceGroup* group, const String& filename);
 		
         /** Find out if the named file exists in any group. 
         @param filename Fully qualified name of the file to test for
@@ -813,7 +814,7 @@ namespace Ogre {
 		/** Find the group in which a resource exists.
 		@param filename Fully qualified name of the file the resource should be
 			found as
-		@returns Name of the resource group the resource was found in. An
+		@return Name of the resource group the resource was found in. An
 			exception is thrown if the group could not be determined.
 		*/
 		const String& findGroupContainingResource(const String& filename);
@@ -824,7 +825,7 @@ namespace Ogre {
         @param pattern The pattern to search for; wildcards (*) are allowed
         @param dirs Set to true if you want the directories to be listed
             instead of files
-        @returns A list of file information structures for all files matching 
+        @return A list of file information structures for all files matching 
         the criteria.
         */
         FileInfoListPtr findResourceFileInfo(const String& group, const String& pattern,
@@ -834,7 +835,7 @@ namespace Ogre {
 		time_t resourceModifiedTime(const String& group, const String& filename); 
         /** List all resource locations in a resource group.
         @param groupName The name of the group
-        @returns A list of resource locations matching the criteria
+        @return A list of resource locations matching the criteria
         */
         StringVectorPtr listResourceLocations(const String& groupName);
 
@@ -842,12 +843,9 @@ namespace Ogre {
             resource group.
         @param groupName The name of the group
         @param pattern The pattern to search for; wildcards (*) are allowed
-        @returns A list of resource locations matching the criteria
+        @return A list of resource locations matching the criteria
         */
         StringVectorPtr findResourceLocation(const String& groupName, const String& pattern);
-
-		/** Retrieve the modification time of a given file */
-		time_t resourceModifiedTime(ResourceGroup* group, const String& filename); 
 
 		/** Create a new resource file in a given group.
 		@remarks
@@ -1029,20 +1027,20 @@ namespace Ogre {
 		/** Get a list of the currently defined resource groups. 
 		@note This method intentionally returns a copy rather than a reference in
 			order to avoid any contention issues in multithreaded applications.
-		@returns A copy of list of currently defined groups.
+		@return A copy of list of currently defined groups.
 		*/
 		StringVector getResourceGroups(void);
 		/** Get the list of resource declarations for the specified group name. 
 		@note This method intentionally returns a copy rather than a reference in
 			order to avoid any contention issues in multithreaded applications.
 		@param groupName The name of the group
-		@returns A copy of list of currently defined resources.
+		@return A copy of list of currently defined resources.
 		*/
 		ResourceDeclarationList getResourceDeclarationList(const String& groupName);
 
 		/** Get the list of resource locations for the specified group name.
 		@param groupName The name of the group
-		@returns The list of resource locations associated with the given group.
+		@return The list of resource locations associated with the given group.
 		*/		
 		const LocationList& getResourceLocationList(const String& groupName);
 
@@ -1088,5 +1086,7 @@ namespace Ogre {
 	/** @} */
 	/** @} */
 }
+
+#include "OgreHeaderSuffix.h"
 
 #endif

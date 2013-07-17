@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -77,14 +77,13 @@ namespace Ogre
 		/** Constructor
 		@param parent The parent terrain
 		@param layerIndex The layer index (should be 1 or higher)
-		@param box The region of the blend map to address (in image space)
 		@param buf The buffer holding the data
 		*/
 		TerrainLayerBlendMap(Terrain* parent, uint8 layerIndex, HardwarePixelBuffer* buf);
-		~TerrainLayerBlendMap();
+		virtual ~TerrainLayerBlendMap();
 		/// Get the parent terrain
 		Terrain* getParent() const { return mParent; }
-		/// Get the index of the layer this is targetting
+		/// Get the index of the layer this is targeting
 		uint8 getLayerIndex() const { return mLayerIdx; }
 
 		/** Helper method - convert a point in world space to UV space based on the
@@ -119,7 +118,7 @@ namespace Ogre
 
 		/** Get a single value of blend information, in image space.
 		@param x,y Coordinates of the point of data to get, in image space (top down)
-		@returns The blend data
+		@return The blend data
 		*/
 		float getBlendValue(size_t x, size_t y);
 

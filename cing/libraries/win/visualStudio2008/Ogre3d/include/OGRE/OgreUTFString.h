@@ -29,6 +29,7 @@
 
 
 #include "OgrePrerequisites.h"
+#include "OgreHeaderPrefix.h"
 
 #if OGRE_UNICODE_SUPPORT 
 
@@ -37,14 +38,14 @@
 #include <string>
 #include <stdexcept>
 
-// Workaround for VC7:
-//      when build with /MD or /MDd, VC7 have both std::basic_string<unsigned short> and
+// Workaround for VC7/7.1/8.0/9.0 (2003 - 2008):
+//      when build with /MD or /MDd, VC have both std::basic_string<unsigned short> and
 // basic_string<__wchar_t> instantiated in msvcprt[d].lib/MSVCP71[D].dll, but the header
 // files tells compiler that only one of them is over there (based on /Zc:wchar_t compile
 // option). And since this file used both of them, causing compiler instantiating another
 // one in user object code, which lead to duplicate symbols with msvcprt.lib/MSVCP71[D].dll.
 //
-#if OGRE_COMPILER == OGRE_COMPILER_MSVC && (1300 <= OGRE_COMP_VER && OGRE_COMP_VER <= 1310)
+#if OGRE_COMPILER == OGRE_COMPILER_MSVC && (OGRE_COMP_VER >= 1300 && OGRE_COMP_VER < 1600)
 
 # if defined(_DLL_CPPLIB)
 
@@ -132,8 +133,6 @@ namespace Ogre {
 # else
 #   define OGRE_IS_NATIVE_WCHAR_T      0
 # endif
-#elif OGRE_PLATFORM == OGRE_PLATFORM_SYMBIAN
-#   define OGRE_IS_NATIVE_WCHAR_T      0
 #else   // OGRE_COMPILER != OGRE_COMPILER_MSVC
 
 // Assumed wchar_t is natively for other compilers
@@ -993,8 +992,8 @@ namespace Ogre {
 		void _load_buffer_WStr() const;
 		void _load_buffer_UTF32() const;
 
-		mutable BufferType m_bufferType; // identifies the data type held in m_buffer
-		mutable size_t m_bufferSize; // size of the CString buffer
+		mutable BufferType mBufferType; // identifies the data type held in mBuffer
+		mutable size_t mBufferSize; // size of the CString buffer
 
 		// multi-purpose buffer used everywhere we need a throw-away buffer
 		union {
@@ -1003,7 +1002,7 @@ namespace Ogre {
 			mutable std::wstring* mWStrBuffer;
 			mutable utf32string* mUTF32StrBuffer;
 		}
-		m_buffer;
+		mBuffer;
 	};
 
 	//! string addition operator \relates UTFString
@@ -1111,5 +1110,7 @@ namespace Ogre {
 } // namespace Ogre{
 
 #endif // OGRE_UNICODE_SUPPORT
+
+#include "OgreHeaderSuffix.h"
 
 #endif 

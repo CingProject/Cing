@@ -34,7 +34,6 @@ restrictions:
 #include <vector>
 #include <string>
 #include <map>
-#include <cstddef>
 #include "OISConfig.h"
 
 // Default is blank for most OS's
@@ -90,6 +89,7 @@ restrictions:
 #   define _OISExport __attribute__((visibility("default")))
 #else //Probably Linux
 #	define OIS_LINUX_PLATFORM
+#	include <unistd.h>
 #endif
 
 //Is Processor 32 or 64 bits...
@@ -101,9 +101,9 @@ restrictions:
 
 //-------------- Common Classes, Enums, and Typdef's -------------------------//
 #define OIS_VERSION_MAJOR 1
-#define OIS_VERSION_MINOR 3
+#define OIS_VERSION_MINOR 4
 #define OIS_VERSION_PATCH 0
-#define OIS_VERSION_NAME "1.3.0"
+#define OIS_VERSION_NAME "1.4.0"
 
 #define OIS_VERSION ((OIS_VERSION_MAJOR << 16) | (OIS_VERSION_MINOR << 8) | OIS_VERSION_PATCH)
 
@@ -116,10 +116,10 @@ namespace OIS
 	class Keyboard;
 	class Mouse;
 	class JoyStick;
-    class MultiTouch;
+	class MultiTouch;
 	class KeyListener;
 	class MouseListener;
-    class MultiTouchListener;
+	class MultiTouchListener;
 	class JoyStickListener;
 	class Interface;
 	class ForceFeedback;
@@ -136,7 +136,7 @@ namespace OIS
 	typedef std::map<Object*, FactoryCreator*> FactoryCreatedObject;
 
 	//! Each Input class has a General Type variable, a form of RTTI
-    enum Type
+	enum Type
 	{
 		OISUnknown       = 0,
 		OISKeyboard      = 1,
@@ -152,7 +152,7 @@ namespace OIS
 	//--------     Shared common components    ------------------------//
 
 	//! Base type for all device components (button, axis, etc)
-    enum ComponentType
+	enum ComponentType
 	{
 		OIS_Unknown = 0,
 		OIS_Button  = 1, //ie. Key, mouse button, joy button, etc

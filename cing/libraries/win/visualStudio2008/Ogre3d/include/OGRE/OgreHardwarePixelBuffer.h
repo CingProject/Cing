@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "OgreSharedPtr.h"
 #include "OgrePixelFormat.h"
 #include "OgreImage.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 
@@ -52,27 +53,24 @@ namespace Ogre {
     class _OgreExport HardwarePixelBuffer : public HardwareBuffer
     {
     protected: 
-        // Extents
+        /// Extents
         size_t mWidth, mHeight, mDepth;
-        // Pitches (offsets between rows and slices)
+        /// Pitches (offsets between rows and slices)
         size_t mRowPitch, mSlicePitch;
-        // Internal format
+        /// Internal format
         PixelFormat mFormat;
-        // Currently locked region (local coords)
+        /// Currently locked region (local coords)
         PixelBox mCurrentLock;
-		// The current locked box of this surface (entire surface coords)
+		/// The current locked box of this surface (entire surface coords)
 		Image::Box mLockedBox;
 
         
         /// Internal implementation of lock(), must be overridden in subclasses
         virtual PixelBox lockImpl(const Image::Box lockBox,  LockOptions options) = 0;
 
-        /// Internal implementation of lock(), do not OVERRIDE or CALL this
-        /// for HardwarePixelBuffer implementations, but override the previous method
+        /** Internal implementation of lock(), do not OVERRIDE or CALL this
+            for HardwarePixelBuffer implementations, but override the previous method */
         virtual void* lockImpl(size_t offset, size_t length, LockOptions options);
-
-        /// Internal implementation of unlock(), must be overridden in subclasses
-        // virtual void unlockImpl(void) = 0;
 
 		/** Notify TextureBuffer of destruction of render target.
 			Called by RenderTexture when destroyed.
@@ -94,7 +92,7 @@ namespace Ogre {
         /** Lock the buffer for (potentially) reading / writing.
 		    @param lockBox Region of the buffer to lock
 		    @param options Locking options
-		    @returns PixelBox containing the locked region, the pitches and
+		    @return PixelBox containing the locked region, the pitches and
 		    	the pixel format
 		*/
 		virtual const PixelBox& lock(const Image::Box& lockBox, LockOptions options);
@@ -103,7 +101,7 @@ namespace Ogre {
 
 		/** Get the current locked region. This is the same value as returned
 		    by lock(const Image::Box, LockOptions)
-		    @returns PixelBox containing the locked region
+		    @return PixelBox containing the locked region
 		*/        
         const PixelBox& getCurrentLock();
 		
@@ -115,7 +113,7 @@ namespace Ogre {
         
         /** Copies a box from another PixelBuffer to a region of the 
         	this PixelBuffer. 
-			@param dst		Source pixel buffer
+			@param src		Source pixel buffer
         	@param srcBox	Image::Box describing the source region in src
         	@param dstBox	Image::Box describing the destination region in this buffer
 			@remarks The source and destination regions dimensions don't have to match, in which
@@ -164,7 +162,7 @@ namespace Ogre {
 
 		/** Convience function that blits this entire buffer to a pixelbox.
 			The image is scaled as needed.
-			@param src		PixelBox containing the source pixels and format in memory
+			@param dst		PixelBox describing the destination pixels and format in memory
 			@note Only call this function when the buffer is unlocked. 
 		*/
 		void blitToMemory(const PixelBox &dst)
@@ -176,7 +174,7 @@ namespace Ogre {
             was acquired from must have TU_RENDERTARGET set, otherwise it is possible to
             render to it and this method will throw an ERR_RENDERSYSTEM exception.
             @param slice    Which slice
-            @returns A pointer to the render target. This pointer has the lifespan of this
+            @return A pointer to the render target. This pointer has the lifespan of this
             PixelBuffer.
         */
         virtual RenderTexture *getRenderTarget(size_t slice=0);
@@ -204,5 +202,8 @@ namespace Ogre {
 	/** @} */
 	/** @} */
 }
+
+#include "OgreHeaderSuffix.h"
+
 #endif
 

@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "OgreKeyFrame.h"
 #include "OgreAnimable.h"
 #include "OgrePose.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre 
 {
@@ -131,7 +132,7 @@ namespace Ogre
 			virtual ~Listener() {}
 
 			/** Get an interpolated keyframe for this track at the given time.
-			@returns true if the KeyFrame was populated, false if not.
+			@return true if the KeyFrame was populated, false if not.
 			*/
 			virtual bool getInterpolatedKeyFrame(const AnimationTrack* t, const TimeIndex& timeIndex, KeyFrame* kf) = 0;
 		};
@@ -167,7 +168,7 @@ namespace Ogre
             keyframe just after this time index. 
         @param firstKeyIndex Pointer to an unsigned short which, if supplied, will receive the 
             index of the 'from' keyframe in case the caller needs it.
-        @returns Parametric value indicating how far along the gap between the 2 keyframes the timeIndex
+        @return Parametric value indicating how far along the gap between the 2 keyframes the timeIndex
             value is, e.g. 0.0 for exactly at 1, 0.25 for a quarter etc. By definition the range of this 
             value is:  0.0 <= returnValue < 1.0 .
         */
@@ -229,6 +230,9 @@ namespace Ogre
         /** Internal method to build keyframe time index map to translate global lower
             bound index to local lower bound index. */
         virtual void _buildKeyFrameIndexMap(const vector<Real>::type& keyFrameTimes);
+		
+		/** Internal method to re-base the keyframes relative to a given keyframe. */
+		virtual void _applyBaseKeyFrame(const KeyFrame* base) {}
 
 		/** Set a listener for this track. */
 		virtual void setListener(Listener* l) { mListener = l; }
@@ -378,6 +382,8 @@ namespace Ogre
 		/** Clone this track (internal use only) */
 		NodeAnimationTrack* _clone(Animation* newParent) const;
 		
+		void _applyBaseKeyFrame(const KeyFrame* base);
+		
 	protected:
 		/// Specialised keyframe creation
 		KeyFrame* createKeyFrameImpl(Real time);
@@ -422,7 +428,7 @@ namespace Ogre
 		For animating in a vertex shader, morph animation is quite simple and 
 		just requires the 2 vertex buffers (one the original position buffer) 
 		of absolute position data, and an interpolation factor. Each track in 
-		a morph animation refrences a unique set of vertex data.
+		a morph animation references a unique set of vertex data.
 	@par
 		Pose animation is more complex. Like morph animation each track references
 		a single unique set of vertex data, but unlike morph animation, each 
@@ -491,6 +497,9 @@ namespace Ogre
 
 		/** Get the type of vertex animation we're performing. */
 		VertexAnimationType getAnimationType(void) const { return mAnimationType; }
+		
+		/** Whether the vertex animation (if present) includes normals */
+		bool getVertexAnimationIncludesNormals() const;
 
 		/** Creates a new morph KeyFrame and adds it to this animation at the given time index.
 		@remarks
@@ -505,11 +514,9 @@ namespace Ogre
 		*/
 		virtual VertexPoseKeyFrame* createVertexPoseKeyFrame(Real timePos);
 
-		/** This method in fact does nothing, since interpolation is not performed
-			inside the keyframes for this type of track. 
+		/** @copydoc AnimationTrack::getInterpolatedKeyFrame
 		*/
-        virtual void getInterpolatedKeyFrame(const TimeIndex& timeIndex, KeyFrame* kf) const
-        { (void)timeIndex; (void)kf; }
+        virtual void getInterpolatedKeyFrame(const TimeIndex& timeIndex, KeyFrame* kf) const;
 
 		/// @copydoc AnimationTrack::apply
 		virtual void apply(const TimeIndex& timeIndex, Real weight = 1.0, Real scale = 1.0f);
@@ -548,6 +555,8 @@ namespace Ogre
 
 		/** Clone this track (internal use only) */
 		VertexAnimationTrack* _clone(Animation* newParent) const;
+		
+		void _applyBaseKeyFrame(const KeyFrame* base);
 
 	protected:
 		/// Animation type
@@ -568,5 +577,7 @@ namespace Ogre
 	/** @} */
 	/** @} */
 }
+
+#include "OgreHeaderSuffix.h"
 
 #endif

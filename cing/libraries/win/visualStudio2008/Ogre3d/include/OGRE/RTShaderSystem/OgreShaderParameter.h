@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -164,8 +164,6 @@ public:
 		SPC_POSTOLIGHT_TANGENT_SPACE6,
 		SPC_POSTOLIGHT_TANGENT_SPACE7,
 
-
-
 		/// Light direction in object space index 0-7
 		SPC_LIGHTDIRECTION_OBJECT_SPACE0,
 		SPC_LIGHTDIRECTION_OBJECT_SPACE1,
@@ -239,11 +237,35 @@ public:
 		/// Light position in tangent space index 0-7
 		SPC_LIGHTPOSITION_TANGENT_SPACE,
 
-		/// Tangent vector
-		SPC_TANGENT,
+		/// Blending weights
+		SPC_BLEND_WEIGHTS,
 
-		/// Binormal vector
-		SPC_BINORMAL,
+		/// Blending indices
+		SPC_BLEND_INDICES,
+		
+		/// Tangent in object space
+		SPC_TANGENT_OBJECT_SPACE,
+
+		/// Tangent in world space
+		SPC_TANGENT_WORLD_SPACE,
+
+		/// Tangent in view space
+		SPC_TANGENT_VIEW_SPACE,
+
+		/// Tangent in tangent space
+		SPC_TANGENT_TANGENT_SPACE,
+
+		/// Binormal in object space
+		SPC_BINORMAL_OBJECT_SPACE,
+
+		/// Binormal in world space
+		SPC_BINORMAL_WORLD_SPACE,
+
+		/// Binormal in view space
+		SPC_BINORMAL_VIEW_SPACE,
+
+		/// Binormal in tangent space
+		SPC_BINORMAL_TANGENT_SPACE,
 
 		/// Diffuse color
 		SPC_COLOR_DIFFUSE,
@@ -289,43 +311,58 @@ public:
 	@param semantic The semantic of this parameter.
 	@param index The index of this parameter.
 	@param content The content of this parameter.
-	@param variability How this parameter varies (bitwise combination of GpuProgramVariability).
 	*/
 	Parameter(GpuConstantType type, const String& name, 
 		const Semantic& semantic, int index, 
-		const Content& content);
+		const Content& content, size_t size = 0);
 
 	/** Class destructor */
 	virtual ~Parameter() {};
 
 	/** Get the name of this parameter. */
-	const String&			getName							() const { return mName; }
+	const String& getName() const { return mName; }
 
 	/** Get the type of this parameter. */
-	GpuConstantType			getType							() const { return mType; }
+	GpuConstantType getType() const { return mType; }
 
 	/** Get the semantic of this parameter. */
-	const Semantic&			getSemantic						() const { return mSemantic; }
+	const Semantic& getSemantic() const { return mSemantic; }
 
 	/** Get the index of this parameter. */
-	int						getIndex						() const { return mIndex; }	
+	int getIndex() const { return mIndex; }	
 
 	/** Return the content of this parameter. */
-	Content					getContent							() const { return mContent; }
+	Content getContent() const { return mContent; }
 
 	/** Returns true if this instance is a ConstParameter otherwise false. */
-	virtual bool			isConstParameter					() const { return false; }
+	virtual bool isConstParameter() const { return false; }
 
 	/** Returns the string representation of this parameter. */
-	virtual String			toString							() const { return mName; }
+	virtual String toString() const { return mName; }
+	
+	/** Returns Whether this parameter is an array. */
+	bool isArray() const { return mSize > 0; }
+
+	/** Returns the number of elements in the parameter (for arrays). */
+	size_t getSize() const { return mSize; }
+	
+	/** Sets the number of elements in the parameter (for arrays). */
+	void setSize(size_t size) { mSize = size; }
 
 // Attributes.
 protected:
-	String									mName;					// Name of this parameter.
-	GpuConstantType							mType;					// Type of this parameter.
-	Semantic								mSemantic;				// Semantic of this parameter.
-	int										mIndex;					// Index of this parameter.
-	Content									mContent;				// The content of this parameter.
+	// Name of this parameter.
+	String mName;
+	// Type of this parameter.
+	GpuConstantType mType;
+	// Semantic of this parameter.
+	Semantic mSemantic;
+	// Index of this parameter.
+	int mIndex;
+	// The content of this parameter.
+	Content mContent;
+	// Number of elements in the parameter (for arrays)
+	size_t mSize;
 	
 };
 
@@ -347,56 +384,74 @@ public:
 	@param index The index of this parameter.
 	@param content The content of this parameter.
 	@param variability How this parameter varies (bitwise combination of GpuProgramVariability).
+	@param size number of elements in the parameter.	
 	*/
 	UniformParameter(GpuConstantType type, const String& name, 
 		const Semantic& semantic, int index, 
 		const Content& content,
-		uint16 variability);
+		uint16 variability, size_t size);
 
 	/** Class constructor.
 	@param autoType The auto type of this parameter.
 	@param fAutoConstantData The real data for this auto constant parameter.	
+	@param size number of elements in the parameter.	
 	*/
-	UniformParameter(GpuProgramParameters::AutoConstantType autoType, Real fAutoConstantData);
+	UniformParameter(GpuProgramParameters::AutoConstantType autoType, Real fAutoConstantData, size_t size);
+	
+	/** Class constructor.
+	@param autoType The auto type of this parameter.
+	@param fAutoConstantData The real data for this auto constant parameter.	
+	@param size number of elements in the parameter.
+	@param type The desired data type of this auto constant parameter.
+	*/
+	UniformParameter(GpuProgramParameters::AutoConstantType autoType, Real fAutoConstantData, size_t size, GpuConstantType type);
 
 	/** Class constructor.
 	@param autoType The auto type of this parameter.
 	@param nAutoConstantData The int data for this auto constant parameter.	
+	@param size number of elements in the parameter.	
 	*/
-	UniformParameter(GpuProgramParameters::AutoConstantType autoType, size_t nAutoConstantData);
+	UniformParameter(GpuProgramParameters::AutoConstantType autoType, size_t nAutoConstantData, size_t size);
+	
+	/** Class constructor.
+	@param autoType The auto type of this parameter.
+	@param nAutoConstantData The int data for this auto constant parameter.	
+	@param size number of elements in the parameter.
+	@param type The desired data type of this auto constant parameter.
+	*/
+	UniformParameter(GpuProgramParameters::AutoConstantType autoType, size_t nAutoConstantData, size_t size, GpuConstantType type);
 
 	
 	/** Get auto constant int data of this parameter, in case it is auto constant parameter. */
-	size_t					getAutoConstantIntData			() const { return mAutoConstantIntData; }	
+	size_t getAutoConstantIntData() const { return mAutoConstantIntData; }	
 
 	/** Get auto constant real data of this parameter, in case it is auto constant parameter. */
-	Real					getAutoConstantRealData			() const { return mAutoConstantRealData; }	
+	Real getAutoConstantRealData() const { return mAutoConstantRealData; }	
 
 	/** Return true if this parameter is a floating point type, false otherwise. */
-	bool					isFloat							() const;
+	bool isFloat() const;
 
 	/** Return true if this parameter is a texture sampler type, false otherwise. */
-	bool					isSampler						() const;
+	bool isSampler() const;
 
 	/** Return true if this parameter is an auto constant parameter, false otherwise. */
-	bool					isAutoConstantParameter				() const { return mIsAutoConstantReal || mIsAutoConstantInt; }
+	bool isAutoConstantParameter() const { return mIsAutoConstantReal || mIsAutoConstantInt; }
 
 	/** Return true if this parameter an auto constant with int data type, false otherwise. */
-	bool					isAutoConstantIntParameter			() const { return mIsAutoConstantInt; }
+	bool isAutoConstantIntParameter() const { return mIsAutoConstantInt; }
 
 	/** Return true if this parameter an auto constant with real data type, false otherwise. */
-	bool					isAutoConstantRealParameter			() const { return mIsAutoConstantReal; }
+	bool isAutoConstantRealParameter() const { return mIsAutoConstantReal; }
 
 	/** Return the auto constant type of this parameter. */
 	GpuProgramParameters::AutoConstantType getAutoConstantType	() const { return mAutoConstantType; }
 
 	/** Return the variability of this parameter. */
-	uint16					getVariability						() const { return mVariability; }
-
+	uint16 getVariability() const { return mVariability; }
 
 	/** Bind this parameter to the corresponding GPU parameter. */
-	void					bind								(GpuProgramParametersSharedPtr paramsPtr);
-	
+	void bind(GpuProgramParametersSharedPtr paramsPtr);
+
 public:
 
 	/** Update the GPU parameter with the given value. */	
@@ -462,19 +517,52 @@ public:
 		}
 	}
 
+	/** Update the GPU parameter with the given value. */	
+	void setGpuParameter(const float *val, size_t count, size_t multiple = 4)  
+	{ 
+		if (mParamsPtr != NULL)
+		{
+			mParamsPtr->_writeRawConstants(mPhysicalIndex, val, count * multiple);
+		}
+	}
+
+	/** Update the GPU parameter with the given value. */	
+	void setGpuParameter(const double *val, size_t count, size_t multiple = 4)  
+	{ 
+		if (mParamsPtr != NULL)
+		{
+			mParamsPtr->_writeRawConstants(mPhysicalIndex, val, count * multiple);
+		}
+	}
+
+	/** Update the GPU parameter with the given value. */	
+	void setGpuParameter(const int *val, size_t count, size_t multiple = 4)  
+	{ 
+		if (mParamsPtr != NULL)
+		{
+			mParamsPtr->_writeRawConstants(mPhysicalIndex, val, count * multiple);
+		}
+	}
+
 protected:
-	bool									mIsAutoConstantReal;	// Is it auto constant real based parameter.
-	bool									mIsAutoConstantInt;		// Is it auto constant int based parameter.
+	// Is it auto constant real based parameter.
+	bool mIsAutoConstantReal;
+	// Is it auto constant int based parameter.
+	bool mIsAutoConstantInt;
 	GpuProgramParameters::AutoConstantType	mAutoConstantType;		// The auto constant type of this parameter.
 	union
 	{
-		size_t	mAutoConstantIntData;								// Auto constant int data.
-		Real	mAutoConstantRealData;								// Auto constant real data.
+		// Auto constant int data.
+		size_t mAutoConstantIntData;
+		// Auto constant real data.
+		Real mAutoConstantRealData;
 	};		
-	uint16									mVariability;			// How this parameter varies (bitwise combination of GpuProgramVariability).
-	GpuProgramParameters*					mParamsPtr;				// The actual GPU parameters pointer.
-	size_t									mPhysicalIndex;			// The physical index of this parameter in the GPU program.
-
+	// How this parameter varies (bitwise combination of GpuProgramVariability).
+	uint16 mVariability;
+	// The actual GPU parameters pointer.
+	GpuProgramParameters* mParamsPtr;
+	// The physical index of this parameter in the GPU program.
+	size_t mPhysicalIndex;
 };
 
 typedef SharedPtr<UniformParameter>				UniformParameterPtr; 
@@ -501,17 +589,17 @@ public:
 	virtual				~ConstParameter		() {}
 
 	/** Returns the native value of this parameter. (for example a Vector3) */
-	const valueType&	getValue			() const { return mValue; }
+	const valueType& getValue() const { return mValue; }
 
 	/** 
 	@see Parameter::isConstParameter.
 	*/
-	virtual bool		isConstParameter	() const { return true; }
+	virtual bool isConstParameter() const { return true; }
 
 	/** 
 	@see Parameter::toString.
 	*/
-	virtual String		toString			() const = 0;
+	virtual String toString() const = 0;
 
 protected:
 	valueType mValue;
@@ -525,41 +613,44 @@ class _OgreRTSSExport ParameterFactory
 	// Interface.
 public:
 
-	static ParameterPtr	createInPosition		(int index);	
-	static ParameterPtr	createOutPosition		(int index);
+	static ParameterPtr createInPosition(int index);	
+	static ParameterPtr createOutPosition(int index);
 
-	static ParameterPtr	createInNormal			(int index);
-	static ParameterPtr	createOutNormal			(int index);
-	static ParameterPtr	createInBiNormal		(int index);
-	static ParameterPtr	createOutBiNormal		(int index);
-	static ParameterPtr	createInTangent			(int index);
-	static ParameterPtr	createOutTangent		(int index);
-	static ParameterPtr	createInColor			(int index);
-	static ParameterPtr	createOutColor			(int index);
+	static ParameterPtr createInNormal(int index);
+	static ParameterPtr createInWeights(int index);
+	static ParameterPtr createInIndices(int index);
+	static ParameterPtr createOutNormal(int index);
+	static ParameterPtr createInBiNormal(int index);
+	static ParameterPtr createOutBiNormal(int index);
+	static ParameterPtr createInTangent(int index);
+	static ParameterPtr createOutTangent(int index);
+	static ParameterPtr createInColor(int index);
+	static ParameterPtr createOutColor(int index);
 
-	static ParameterPtr	createInTexcoord		(GpuConstantType type, int index, Parameter::Content content);
-	static ParameterPtr	createOutTexcoord		(GpuConstantType type, int index, Parameter::Content content);
-	static ParameterPtr	createInTexcoord1		(int index, Parameter::Content content);
-	static ParameterPtr	createOutTexcoord1		(int index, Parameter::Content content);
-	static ParameterPtr	createInTexcoord2		(int index, Parameter::Content content);
-	static ParameterPtr	createOutTexcoord2		(int index, Parameter::Content content);
-	static ParameterPtr	createInTexcoord3		(int index, Parameter::Content content);
-	static ParameterPtr	createOutTexcoord3		(int index, Parameter::Content content);
-	static ParameterPtr	createInTexcoord4		(int index, Parameter::Content content);			
-	static ParameterPtr	createOutTexcoord4		(int index, Parameter::Content content);
+	static ParameterPtr createInTexcoord(GpuConstantType type, int index, Parameter::Content content);
+	static ParameterPtr createOutTexcoord(GpuConstantType type, int index, Parameter::Content content);
+	static ParameterPtr createInTexcoord1(int index, Parameter::Content content);
+	static ParameterPtr createOutTexcoord1(int index, Parameter::Content content);
+	static ParameterPtr createInTexcoord2(int index, Parameter::Content content);
+	static ParameterPtr createOutTexcoord2(int index, Parameter::Content content);
+	static ParameterPtr createInTexcoord3(int index, Parameter::Content content);
+	static ParameterPtr createOutTexcoord3(int index, Parameter::Content content);
+	static ParameterPtr createInTexcoord4(int index, Parameter::Content content);			
+	static ParameterPtr createOutTexcoord4(int index, Parameter::Content content);
 
-	static ParameterPtr	createConstParamVector2	(Vector2 val);
-	static ParameterPtr	createConstParamVector3	(Vector3 val);
-	static ParameterPtr	createConstParamVector4	(Vector4 val);
-	static ParameterPtr	createConstParamFloat	(float val);	
+	static ParameterPtr createConstParamVector2(Vector2 val);
+	static ParameterPtr createConstParamVector3(Vector3 val);
+	static ParameterPtr createConstParamVector4(Vector4 val);
+	static ParameterPtr createConstParamFloat(float val);	
 
-	static UniformParameterPtr	createSampler			(GpuConstantType type, int index);
-	static UniformParameterPtr	createSampler1D			(int index);
-	static UniformParameterPtr	createSampler2D			(int index);
-	static UniformParameterPtr	createSampler3D			(int index);
-	static UniformParameterPtr	createSamplerCUBE		(int index);	
+	static UniformParameterPtr createSampler(GpuConstantType type, int index);
+	static UniformParameterPtr createSampler1D(int index);
+	static UniformParameterPtr createSampler2D(int index);
+	static UniformParameterPtr createSampler2DArray(int index);
+	static UniformParameterPtr createSampler3D(int index);
+	static UniformParameterPtr createSamplerCUBE(int index);	
 
-	static UniformParameterPtr	createUniform			(GpuConstantType type, 	int index, uint16 variability, const String& suggestedName);
+	static UniformParameterPtr createUniform(GpuConstantType type, int index, uint16 variability, const String& suggestedName, size_t size);
 };
 
 

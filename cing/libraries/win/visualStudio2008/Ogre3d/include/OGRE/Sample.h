@@ -4,7 +4,7 @@
  (Object-oriented Graphics Rendering Engine)
  For the latest info, see http://www.ogre3d.org/
  
- Copyright (c) 2000-2011 Torus Knot Software Ltd
+ Copyright (c) 2000-2013 Torus Knot Software Ltd
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -29,92 +29,28 @@
 #define __Sample_H__
 
 #include "Ogre.h"
+#include "OgreOverlaySystem.h"
 #include <iostream>
 
-#include "OIS.h"
+#include "InputContext.h"
+#include "OgreFileSystemLayer.h"
 
 #ifdef USE_RTSHADER_SYSTEM
-#include "OgreRTShaderSystem.h"
+#	include "OgreRTShaderSystem.h"
+#endif //USE_RTSHADER_SYSTEM
 
-// Remove the comment below in order to make the RTSS use valid path for writing down the generated shaders.
-// If cache path is not set - all shaders are generated to system memory.
-//#define _RTSS_WRITE_SHADERS_TO_DISK
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
+#	include "macUtils.h"
 #endif
 
-
-
-#ifdef USE_RTSHADER_SYSTEM
-
-/** This class demonstrates basic usage of the RTShader system.
-It sub class the material manager listener class and when a target scheme callback
-is invoked with the shader generator scheme it tries to create an equivalent shader
-based technique based on the default technique of the given material.
-*/
-class ShaderGeneratorTechniqueResolverListener : public Ogre::MaterialManager::Listener
-{
-public:
-
-	ShaderGeneratorTechniqueResolverListener(Ogre::RTShader::ShaderGenerator* pShaderGenerator)
-	{
-		mShaderGenerator = pShaderGenerator;			
-	}
-
-	/** This is the hook point where shader based technique will be created.
-	It will be called whenever the material manager won't find appropriate technique
-	that satisfy the target scheme name. If the scheme name is out target RT Shader System
-	scheme name we will try to create shader generated technique for it. 
-	*/
-	virtual Ogre::Technique* handleSchemeNotFound(unsigned short schemeIndex, 
-		const Ogre::String& schemeName, Ogre::Material* originalMaterial, unsigned short lodIndex, 
-		const Ogre::Renderable* rend)
-	{	
-		Ogre::Technique* generatedTech = NULL;
-
-		// Case this is the default shader generator scheme.
-		if (schemeName == Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME)
-		{
-			bool techniqueCreated;
-
-			// Create shader generated technique for this material.
-			techniqueCreated = mShaderGenerator->createShaderBasedTechnique(
-				originalMaterial->getName(), 
-				Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
-				schemeName);	
-
-			// Case technique registration succeeded.
-			if (techniqueCreated)
-			{
-				// Force creating the shaders for the generated technique.
-				mShaderGenerator->validateMaterial(schemeName, originalMaterial->getName());
-				
-				// Grab the generated technique.
-				Ogre::Material::TechniqueIterator itTech = originalMaterial->getTechniqueIterator();
-
-				while (itTech.hasMoreElements())
-				{
-					Ogre::Technique* curTech = itTech.getNext();
-
-					if (curTech->getSchemeName() == schemeName)
-					{
-						generatedTech = curTech;
-						break;
-					}
-				}				
-			}
-		}
-
-		return generatedTech;
-	}
-
-protected:	
-	Ogre::RTShader::ShaderGenerator*	mShaderGenerator;			// The shader generator instance.		
-};
+#if OGRE_PLATFORM == OGRE_PLATFORM_NACL && !defined(USE_RTSHADER_SYSTEM)
+#   define USE_RTSHADER_SYSTEM
+#include "OgreShaderGenerator.h"
 #endif
+
 
 namespace OgreBites
 {
-	class FileSystemLayer;
-
 	/*=============================================================================
 	| Base class responsible for everything specific to one sample.
 	| Designed to be subclassed for each sample.
@@ -122,7 +58,6 @@ namespace OgreBites
 	class Sample : public Ogre::GeneralAllocatedObject
     {
     public:
-
 		/*=============================================================================
 		| Utility comparison structure for sorting samples using SampleSet.
 		=============================================================================*/
@@ -139,7 +74,11 @@ namespace OgreBites
 			}
 		};
 
+#ifdef USE_RTSHADER_SYSTEM
+		Sample() : mShaderGenerator(0)
+#else
 		Sample()
+#endif
         {
 			mRoot = Ogre::Root::getSingletonPtr();
 			mWindow = 0;
@@ -148,19 +87,7 @@ namespace OgreBites
 			mResourcesLoaded = false;
 			mContentSetup = false;
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-			mMouse = 0;
-			mAccelerometer = 0;
-#else
-			mKeyboard = 0;
-			mMouse = 0;
-#endif
 			mFSLayer = 0;
-
-#ifdef USE_RTSHADER_SYSTEM
-			mShaderGenerator	 = NULL;		
-			mMaterialMgrListener = NULL;
-#endif
         }
 
 		virtual ~Sample() {}
@@ -210,36 +137,18 @@ namespace OgreBites
 		/*-----------------------------------------------------------------------------
 		| Sets up a sample. Used by the SampleContext class. Do not call directly.
 		-----------------------------------------------------------------------------*/
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-		virtual void _setup(Ogre::RenderWindow* window, OIS::MultiTouch* mouse, FileSystemLayer* fsLayer)
-#else
-		virtual void _setup(Ogre::RenderWindow* window, OIS::Keyboard* keyboard, OIS::Mouse* mouse, FileSystemLayer* fsLayer)
-#endif
+		virtual void _setup(Ogre::RenderWindow* window, InputContext inputContext, Ogre::FileSystemLayer* fsLayer, Ogre::OverlaySystem* overlaySys)
 		{
 			// assign mRoot here in case Root was initialised after the Sample's constructor ran.
 			mRoot = Ogre::Root::getSingletonPtr();
+			mOverlaySystem = overlaySys;
 			mWindow = window;
-#if OGRE_PLATFORM != OGRE_PLATFORM_IPHONE
-			mKeyboard = keyboard;
-#endif
-			mMouse = mouse;
+			mInputContext = inputContext;
 			mFSLayer = fsLayer;
 
 			locateResources();
 			createSceneManager();
 			setupView();
-
-#ifdef USE_RTSHADER_SYSTEM
-			// Initialize shader generator.
-			// Must be before resource loading in order to allow parsing extended material attributes.
-			bool success = initializeRTShaderSystem(mSceneMgr);
-			if (!success) 
-			{
-				OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, 
-					"Shader Generator Initialization failed - Core shader libs path not found", 
-					"Sample::_setup");
-			}
-#endif
 
 			loadResources();
 			mResourcesLoaded = true;
@@ -255,16 +164,23 @@ namespace OgreBites
 		virtual void _shutdown()
 
 		{
-#ifdef USE_RTSHADER_SYSTEM
-			// Finalize the RT Shader System.
-			finalizeRTShaderSystem();
-#endif
-			if (mContentSetup) cleanupContent();
-			if (mSceneMgr) mSceneMgr->clearScene();
+			if (mContentSetup)
+                cleanupContent();
+			if (mSceneMgr)
+                mSceneMgr->clearScene();
 			mContentSetup = false;
-			if (mResourcesLoaded) unloadResources();
+
+			if (mResourcesLoaded)
+                unloadResources();
 			mResourcesLoaded = false;
-			if (mSceneMgr) mRoot->destroySceneManager(mSceneMgr);
+			if (mSceneMgr) 
+			{
+#ifdef USE_RTSHADER_SYSTEM
+				mShaderGenerator->removeSceneManager(mSceneMgr);
+#endif
+				mSceneMgr->removeRenderQueueListener(mOverlaySystem);
+				mRoot->destroySceneManager(mSceneMgr);				
+			}
 			mSceneMgr = 0;
 
 			mDone = true;
@@ -304,7 +220,7 @@ namespace OgreBites
 		virtual void windowFocusChange(Ogre::RenderWindow* rw) {}
 		virtual bool keyPressed(const OIS::KeyEvent& evt) { return true; }
 		virtual bool keyReleased(const OIS::KeyEvent& evt) { return true; }
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
+#if (OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS) || (OGRE_PLATFORM == OGRE_PLATFORM_ANDROID)
 		virtual bool touchMoved(const OIS::MultiTouchEvent& evt) { return true; }
 		virtual bool touchPressed(const OIS::MultiTouchEvent& evt) { return true; }
 		virtual bool touchReleased(const OIS::MultiTouchEvent& evt) { return true; }
@@ -335,6 +251,11 @@ namespace OgreBites
 		virtual void createSceneManager()
 		{
 			mSceneMgr = Ogre::Root::getSingleton().createSceneManager(Ogre::ST_GENERIC);
+#ifdef USE_RTSHADER_SYSTEM
+			mShaderGenerator->addSceneManager(mSceneMgr);
+#endif
+            if(mOverlaySystem)
+                mSceneMgr->addRenderQueueListener(mOverlaySystem);
 		}
 
 		/*-----------------------------------------------------------------------------
@@ -367,112 +288,23 @@ namespace OgreBites
 			}
 		}	
 
-
-#ifdef USE_RTSHADER_SYSTEM
-
-		/*-----------------------------------------------------------------------------
-		| Initialize the RT Shader system.	
-		-----------------------------------------------------------------------------*/
-		virtual bool initializeRTShaderSystem(Ogre::SceneManager* sceneMgr)
-		{			
-			if (Ogre::RTShader::ShaderGenerator::initialize())
-			{
-				mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-
-				mShaderGenerator->addSceneManager(sceneMgr);
-
-				// Setup core libraries and shader cache path.
-				Ogre::StringVector groupVector = Ogre::ResourceGroupManager::getSingleton().getResourceGroups();
-				Ogre::StringVector::iterator itGroup = groupVector.begin();
-				Ogre::StringVector::iterator itGroupEnd = groupVector.end();
-				Ogre::String shaderCoreLibsPath;
-				Ogre::String shaderCachePath;
-			
-				for (; itGroup != itGroupEnd; ++itGroup)
-				{
-					Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(*itGroup);
-					Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
-					Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
-					bool coreLibsFound = false;
-
-					// Try to find the location of the core shader lib functions and use it
-					// as shader cache path as well - this will reduce the number of generated files
-					// when running from different directories.
-					for (; it != itEnd; ++it)
-					{
-						if ((*it)->archive->getName().find("RTShaderLib") != Ogre::String::npos)
-						{
-							shaderCoreLibsPath = (*it)->archive->getName() + "/";
-							shaderCachePath = shaderCoreLibsPath;
-							coreLibsFound = true;
-							break;
-						}
-					}
-					// Core libs path found in the current group.
-					if (coreLibsFound) 
-						break; 
-				}
-
-				// Core shader libs not found -> shader generating will fail.
-				if (shaderCoreLibsPath.empty())			
-					return false;			
-								
-#ifdef _RTSS_WRITE_SHADERS_TO_DISK
-				// Set shader cache path.
-				mShaderGenerator->setShaderCachePath(shaderCachePath);		
-#endif
-				// Create and register the material manager listener.
-				mMaterialMgrListener = new ShaderGeneratorTechniqueResolverListener(mShaderGenerator);				
-				Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
-			}
-
-			return true;
-		}
-
-		/*-----------------------------------------------------------------------------
-		| Finalize the RT Shader system.	
-		-----------------------------------------------------------------------------*/
-		virtual void finalizeRTShaderSystem()
-		{
-			// Restore default scheme.
-			Ogre::MaterialManager::getSingleton().setActiveScheme(Ogre::MaterialManager::DEFAULT_SCHEME_NAME);
-
-			// Unregister the material manager listener.
-			if (mMaterialMgrListener != NULL)
-			{			
-				Ogre::MaterialManager::getSingleton().removeListener(mMaterialMgrListener);
-				delete mMaterialMgrListener;
-				mMaterialMgrListener = NULL;
-			}
-
-			// Finalize RTShader system.
-			if (mShaderGenerator != NULL)
-			{				
-				Ogre::RTShader::ShaderGenerator::finalize();
-				mShaderGenerator = NULL;
-			}
-		}
-#endif
-
 		Ogre::Root* mRoot;                // OGRE root object
+		Ogre::OverlaySystem* mOverlaySystem; // OverlaySystem
 		Ogre::RenderWindow* mWindow;      // context render window
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-		OIS::MultiTouch* mMouse;          // context multitouch device
-		OIS::JoyStick* mAccelerometer;    // context accelerometer device
-#else
-		OIS::Keyboard* mKeyboard;         // context keyboard device
-		OIS::Mouse* mMouse;               // context mouse device
-#endif
-		FileSystemLayer* mFSLayer; 		  // file system abstraction layer
+		InputContext mInputContext;
+		Ogre::FileSystemLayer* mFSLayer; 		  // file system abstraction layer
 		Ogre::SceneManager* mSceneMgr;    // scene manager for this sample
 		Ogre::NameValuePairList mInfo;    // custom sample info
 		bool mDone;                       // flag to mark the end of the sample
 		bool mResourcesLoaded;    // whether or not resources have been loaded
 		bool mContentSetup;       // whether or not scene was created
-
 #ifdef USE_RTSHADER_SYSTEM
 		Ogre::RTShader::ShaderGenerator*			mShaderGenerator;			// The Shader generator instance.
-		ShaderGeneratorTechniqueResolverListener*	mMaterialMgrListener;		// Shader generator material manager listener.	
+    public:
+		void setShaderGenerator(Ogre::RTShader::ShaderGenerator* shaderGenerator) 
+		{ 
+			mShaderGenerator = shaderGenerator;
+		};
 #endif
     };
 

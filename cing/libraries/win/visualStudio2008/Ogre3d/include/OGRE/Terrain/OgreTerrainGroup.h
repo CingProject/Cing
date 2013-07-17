@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "OgreTerrain.h"
 #include "OgreWorkQueue.h"
 #include "OgreIteratorWrappers.h"
+#include "OgreTerrainAutoUpdateLod.h"
 
 namespace Ogre
 {
@@ -117,10 +118,23 @@ namespace Ogre
 		*/
 		virtual Terrain::Alignment getAlignment() const { return mAlignment; }
 
-		/** Retrieve the world size of each terrain instance (cannot be modified after construction).
+		/** Retrieve the world size of each terrain instance 
 		*/
 		virtual Real getTerrainWorldSize() const { return mTerrainWorldSize; }
-
+		/** Set the world size of terrain. 
+		@note This will cause the terrains to change position due to their size change
+		@param newWorldSize the new world size of each terrain instance 
+		*/
+        virtual void setTerrainWorldSize(Real newWorldSize);
+		/** Retrieve the size of each terrain instance in number of vertices down one side
+		*/
+		virtual uint16 getTerrainSize() const { return mTerrainSize; }
+		/** Set the size of each terrain instance in number of vertices down one side. 
+		@note This will cause the height data in each nested terrain to be bilinear
+			filtered to fit the new data size.
+		@param newTerrainSize the new map size of each terrain instance 
+		*/
+        virtual void setTerrainSize(uint16 newTerrainSize);
 		/** Retrieve the SceneManager being used for this group.
 		*/
 		virtual SceneManager* getSceneManager() const { return mSceneManager; }
@@ -315,7 +329,7 @@ namespace Ogre
 			Terrain* instance;
 
 			TerrainSlot(long _x, long _y) : x(_x), y(_y), instance(0) {}
-			~TerrainSlot();
+			virtual ~TerrainSlot();
 			void freeInstance();
 		};
 		
@@ -323,7 +337,7 @@ namespace Ogre
 		@remarks
 			Definitions exist before the actual instances to allow background loading.
 		@param x, y The coordinates of the terrain slot relative to the centre slot (signed).
-		@returns The definition, or null if nothing is in this slot. While this return value is
+		@return The definition, or null if nothing is in this slot. While this return value is
 			not const, you should be careful about modifying it; it will have no effect unless you load
 			the terrain afterwards, and can cause a race condition if you modify it while a background
 			load is in progress.
@@ -332,7 +346,7 @@ namespace Ogre
 		
 		/** Get the terrain instance at a given slot, if loaded. 
 		@param x, y The coordinates of the terrain slot relative to the centre slot (signed).
-		@returns The terrain, or null if no terrain is loaded in this slot (call getTerrainDefinition if
+		@return The terrain, or null if no terrain is loaded in this slot (call getTerrainDefinition if
 			you want to access the definition before it is loaded).
 		*/
 		virtual Terrain* getTerrain(long x, long y) const;
@@ -487,6 +501,16 @@ namespace Ogre
 		static const uint32 CHUNK_ID;
 		static const uint16 CHUNK_VERSION;
 
+		/// Loads terrain's next LOD level.
+		void increaseLodLevel(long x, long y, bool synchronous = false);
+		/// Removes terrain's highest LOD level.
+		void decreaseLodLevel(long x, long y);
+
+		void setAutoUpdateLod(TerrainAutoUpdateLod* updater);
+		/// Automatically checks if terrain's LOD level needs to be updated.
+		void autoUpdateLod(long x, long y, bool synchronous, const Any &data);
+		void autoUpdateLodAll(bool synchronous, const Any &data);
+
 	protected:
 		SceneManager *mSceneManager;
 		Terrain::Alignment mAlignment;
@@ -499,6 +523,7 @@ namespace Ogre
 		String mFilenamePrefix;
 		String mFilenameExtension;
 		String mResourceGroup;
+		TerrainAutoUpdateLod *mAutoUpdateLod;
 		Terrain::DefaultGpuBufferAllocator mBufferAllocator;
 		
 		/// Get the position of a terrain instance
@@ -515,6 +540,7 @@ namespace Ogre
 		{
 			TerrainSlot* slot;
 			TerrainGroup* origin;
+			static uint loadingTaskNum;
 			_OgreTerrainExport friend std::ostream& operator<<(std::ostream& o, const LoadRequest& r)
 			{ return o; }		
 		};

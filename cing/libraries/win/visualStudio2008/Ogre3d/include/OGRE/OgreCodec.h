@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "OgreIteratorWrappers.h"
 #include "OgreStringVector.h"
 #include "OgreException.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 	/** \addtogroup Core
@@ -58,7 +59,7 @@ namespace Ogre {
         typedef map< String, Codec* >::type CodecList; 
         /** A map that contains all the registered codecs.
         */
-        static CodecList ms_mapCodecs;
+        static CodecList msMapCodecs;
 
     public:
         class _OgrePrivate CodecData : public CodecAlloc
@@ -81,32 +82,32 @@ namespace Ogre {
         */
         static void registerCodec( Codec *pCodec )
         {
-			CodecList::iterator i = ms_mapCodecs.find(pCodec->getType());
-			if (i != ms_mapCodecs.end())
+			CodecList::iterator i = msMapCodecs.find(pCodec->getType());
+			if (i != msMapCodecs.end())
 				OGRE_EXCEPT(Exception::ERR_DUPLICATE_ITEM, 
 					pCodec->getType() + " already has a registered codec. ", __FUNCTION__);
 
-            ms_mapCodecs[pCodec->getType()] = pCodec;
+            msMapCodecs[pCodec->getType()] = pCodec;
         }
 
 		/** Return whether a codec is registered already. 
 		*/
 		static bool isCodecRegistered( const String& codecType )
 		{
-			return ms_mapCodecs.find(codecType) != ms_mapCodecs.end();
+			return msMapCodecs.find(codecType) != msMapCodecs.end();
 		}
 
 		/** Unregisters a codec from the database.
         */
-        static void unRegisterCodec( Codec *pCodec )
+        static void unregisterCodec( Codec *pCodec )
         {
-            ms_mapCodecs.erase(pCodec->getType());
+            msMapCodecs.erase(pCodec->getType());
         }
 
         /** Gets the iterator for the registered codecs. */
         static CodecIterator getCodecIterator(void)
         {
-            return CodecIterator(ms_mapCodecs.begin(), ms_mapCodecs.end());
+            return CodecIterator(msMapCodecs.begin(), msMapCodecs.end());
         }
 
         /** Gets the file extension list for the registered codecs. */
@@ -126,7 +127,7 @@ namespace Ogre {
         /** Codes the data in the input stream and saves the result in the output
             stream.
         */
-        virtual DataStreamPtr code(MemoryDataStreamPtr& input, CodecDataPtr& pData) const = 0;
+        virtual DataStreamPtr encode(MemoryDataStreamPtr& input, CodecDataPtr& pData) const = 0;
         /** Codes the data in the input chunk and saves the result in the output
             filename provided. Provided for efficiency since coding to memory is
             progressive therefore memory required is unknown leading to reallocations.
@@ -134,14 +135,12 @@ namespace Ogre {
         @param outFileName The filename to write to
         @param pData Extra information to be passed to the codec (codec type specific)
         */
-        virtual void codeToFile(MemoryDataStreamPtr& input, const String& outFileName, CodecDataPtr& pData) const = 0;
+        virtual void encodeToFile(MemoryDataStreamPtr& input, const String& outFileName, CodecDataPtr& pData) const = 0;
 
         /// Result of a decoding; both a decoded data stream and CodecData metadata
         typedef std::pair<MemoryDataStreamPtr, CodecDataPtr> DecodeResult;
         /** Codes the data from the input chunk into the output chunk.
             @param input Stream containing the encoded data
-            @note
-                Has a variable number of arguments, which depend on the codec type.
         */
         virtual DecodeResult decode(DataStreamPtr& input) const = 0;
 
@@ -166,7 +165,7 @@ namespace Ogre {
 			Note that this may be more than needed - each codec may be looking for 
 			a different size magic number.
 		@param maxbytes The number of bytes passed
-		@returns A blank string if the magic number was unknown, or a file extension.
+		@return A blank string if the magic number was unknown, or a file extension.
 		*/
 		virtual String magicNumberToFileExt(const char *magicNumberPtr, size_t maxbytes) const = 0;
     };
@@ -174,5 +173,7 @@ namespace Ogre {
 	/** @} */
 
 } // namespace
+
+#include "OgreHeaderSuffix.h"
 
 #endif

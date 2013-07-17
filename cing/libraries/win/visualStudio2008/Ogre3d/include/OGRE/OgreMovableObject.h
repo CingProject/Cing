@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "OgreAnimable.h"
 #include "OgreAny.h"
 #include "OgreUserObjectBindings.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 
@@ -75,7 +76,7 @@ namespace Ogre {
             /** MovableObject has been moved */
             virtual void objectMoved(MovableObject*) {}
             /** Called when the movable object of the camera to be used for rendering.
-            @returns
+            @return
                 true if allows queue for rendering, false otherwise.
             */
             virtual bool objectRendering(const MovableObject*, const Camera*) { return true; }
@@ -97,7 +98,7 @@ namespace Ogre {
 			@note
 				This method will not be called for additive stencil shadows since the
 				light list cannot be varied per object with this technique.
-            @returns
+            @return
                 A pointer to a light list if you populated the light list yourself, or
                 NULL to fall back on the default finding process.
             */
@@ -121,6 +122,8 @@ namespace Ogre {
 		/// Upper distance to still render
 		Real mUpperDistance;
 		Real mSquaredUpperDistance;
+		// Minimum pixel size to still render
+		Real mMinPixelSize;
 		/// Hidden because of distance?
 		bool mBeyondFarDistance;	
 		/// User objects binding.
@@ -289,6 +292,7 @@ namespace Ogre {
         virtual bool isVisible(void) const;
 
 		/** Sets the distance at which the object is no longer rendered.
+		@note Camera::setUseRenderingDistance() needs to be called for this parameter to be used.
 		@param dist Distance beyond which the object will not be rendered 
 			(the default is 0, which means objects are always rendered).
 		*/
@@ -299,6 +303,21 @@ namespace Ogre {
 
 		/** Gets the distance at which batches are no longer rendered. */
 		virtual Real getRenderingDistance(void) const { return mUpperDistance; }		
+
+		/** Sets the minimum pixel size an object needs to be in both screen axes in order to be rendered
+		@note Camera::setUseMinPixelSize() needs to be called for this parameter to be used.
+		@param pixelSize Number of minimum pixels
+			(the default is 0, which means objects are always rendered).
+		*/
+		virtual void setRenderingMinPixelSize(Real pixelSize) { 
+			mMinPixelSize = pixelSize; 
+		}
+
+		/** Returns the minimum pixel size an object needs to be in both screen axes in order to be rendered
+		*/
+		virtual Real getRenderingMinPixelSize() const { 
+			return mMinPixelSize; 
+		}
 
 		/** @deprecated use UserObjectBindings::setUserAny via getUserObjectBindings() instead.
 			Sets any kind of user value on this object.
@@ -392,10 +411,10 @@ namespace Ogre {
 		static uint32 getDefaultQueryFlags() { return msDefaultQueryFlags; }
 
 		
-        /** Sets the visiblity flags for this object.
+        /** Sets the visibility flags for this object.
         @remarks
 			As well as a simple true/false value for visibility (as seen in setVisible), 
-			you can also set visiblity flags which when 'and'ed with the SceneManager's
+			you can also set visibility flags which when 'and'ed with the SceneManager's
 			visibility mask can also make an object invisible.
         */
         virtual void setVisibilityFlags(uint32 flags) { mVisibilityFlags = flags; }
@@ -446,7 +465,7 @@ namespace Ogre {
         @par
             This method can be useful when implementing Renderable::getLights in case
             the renderable is a part of the movable.
-        @returns The list of lights use to lighting this object.
+        @return The list of lights use to lighting this object.
         */
         virtual const LightList& queryLights(void) const;
 
@@ -613,11 +632,14 @@ namespace Ogre {
 			A type flag is like a query flag, except that it applies to all instances
 			of a certain type of object.
 		*/
-		uint32 getTypeFlags(void) const { return mTypeFlag; }
+		unsigned long getTypeFlags(void) const { return mTypeFlag; }
 
 	};
 	/** @} */
 	/** @} */
 
 }
+
+#include "OgreHeaderSuffix.h"
+
 #endif

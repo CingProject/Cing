@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define _String_H__
 
 #include "OgrePrerequisites.h"
+#include "OgreHeaderPrefix.h"
 
 // If we're using the GCC 3.1 C++ Std lib
 #if OGRE_COMPILER == OGRE_COMPILER_GNUC && OGRE_COMP_VER >= 310 && !defined(STLPORT)
@@ -79,7 +80,7 @@ namespace Ogre {
         /** Removes any whitespace characters, be it standard space or
             TABs and so on.
             @remarks
-                The user may specify wether they want to trim only the
+                The user may specify whether they want to trim only the
                 beginning or the end of the String ( the default action is
                 to trim both).
         */
@@ -92,8 +93,10 @@ namespace Ogre {
             @param
                 maxSplits The maximum number of splits to perform (0 for unlimited splits). If this
                 parameters is > 0, the splitting process will stop after this many splits, left to right.
+            @param
+                preserveDelims Flag to determine if delimiters should be saved as substrings
         */
-		static vector<String>::type split( const String& str, const String& delims = "\t\n ", unsigned int maxSplits = 0);
+		static vector<String>::type split( const String& str, const String& delims = "\t\n ", unsigned int maxSplits = 0, bool preserveDelims = false);
 
 		/** Returns a StringVector that contains all the substrings delimited
             by the characters in the passed <code>delims</code> argument, 
@@ -102,7 +105,7 @@ namespace Ogre {
             @param
                 delims A list of delimiter characters to split by
 			@param
-                delims A list of double delimeters characters to tokenise by
+                doubleDelims A list of double delimeters characters to tokenise by
             @param
                 maxSplits The maximum number of splits to perform (0 for unlimited splits). If this
                 parameters is > 0, the splitting process will stop after this many splits, left to right.
@@ -135,6 +138,19 @@ namespace Ogre {
         /** Method for standardising paths - use forward slashes only, end with slash.
         */
         static String standardisePath( const String &init);
+		/** Returns a normalized version of a file path
+		This method can be used to make file path strings which point to the same directory  
+		but have different texts to be normalized to the same text. The function:
+		- Transforms all backward slashes to forward slashes.
+		- Removes repeating slashes.
+		- Removes initial slashes from the beginning of the path.
+		- Removes ".\" and "..\" meta directories.
+		- Sets all characters to lowercase (if requested)
+		@param init The file path to normalize.
+		@param makeLowerCase If true, transforms all characters in the string to lowercase.
+		*/
+       static String normalizeFilePath(const String& init, bool makeLowerCase = true);
+
 
         /** Method for splitting a fully qualified filename into the base name
             and path.
@@ -172,7 +188,7 @@ namespace Ogre {
 		@param source Source string
 		@param replaceWhat Sub-string to find and replace
 		@param replaceWithWhat Sub-string to replace with (the new sub-string)
-		@returns An updated string with the sub-string replaced
+		@return An updated string with the sub-string replaced
 		*/
 		static const String replaceAll(const String& source, const String& replaceWhat, const String& replaceWithWhat);
 
@@ -187,6 +203,12 @@ namespace Ogre {
 #   else
 	typedef ::std::tr1::hash< _StringBase > _StringHash;
 #   endif
+#elif OGRE_COMPILER == OGRE_COMPILER_CLANG
+#   if defined(_LIBCPP_VERSION)
+	typedef ::std::hash< _StringBase > _StringHash;
+#   else
+	typedef ::std::tr1::hash< _StringBase > _StringHash;
+#   endif
 #elif OGRE_COMPILER == OGRE_COMPILER_MSVC && OGRE_COMP_VER >= 1600 && !defined(STLPORT) // VC++ 10.0
 	typedef ::std::tr1::hash< _StringBase > _StringHash;
 #elif !defined( _STLP_HASH_FUN_H )
@@ -198,5 +220,19 @@ namespace Ogre {
 	/** @} */
 
 } // namespace Ogre
+
+#include "OgreHeaderSuffix.h"
+
+#if _DEBUG && (OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_WINRT)
+#   pragma push_macro("NOMINMAX")
+#   define NOMINMAX
+#   include <windows.h>
+#   pragma pop_macro("NOMINMAX")
+#	define Ogre_OutputCString(str) ::OutputDebugStringA(str)
+#	define Ogre_OutputWString(str) ::OutputDebugStringW(str)
+#else
+#	define Ogre_OutputCString(str) std::cerr << str
+#	define Ogre_OutputWString(str) std::cerr << str
+#endif
 
 #endif // _String_H__

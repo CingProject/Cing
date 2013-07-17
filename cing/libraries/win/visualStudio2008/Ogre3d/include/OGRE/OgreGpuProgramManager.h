@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "OgreException.h"
 #include "OgreGpuProgram.h"
 #include "OgreSingleton.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 
@@ -50,10 +51,17 @@ namespace Ogre {
 		typedef set<String>::type SyntaxCodes;
 		typedef map<String, GpuSharedParametersPtr>::type SharedParametersMap;
 
+		typedef MemoryDataStreamPtr Microcode;
+		typedef map<String, Microcode>::type MicrocodeMap;
 
 	protected:
 
 		SharedParametersMap mSharedParametersMap;
+		MicrocodeMap mMicrocodeCache;
+		bool mSaveMicrocodesToCache;
+		bool mCacheDirty;			// When this is true the cache is 'dirty' and should be resaved to disk.
+			
+		static String addRenderSystemToName( const String &  name );
 
         /// Specialised create method with specific parameters
         virtual Resource* createImpl(const String& name, ResourceHandle handle, 
@@ -174,6 +182,53 @@ namespace Ogre {
 		*/
 		virtual const SharedParametersMap& getAvailableSharedParameters() const;
 
+        /** Get if the microcode of a shader should be saved to a cache
+        */
+		bool getSaveMicrocodesToCache();
+        /** Set if the microcode of a shader should be saved to a cache
+        */
+		void setSaveMicrocodesToCache( const bool val );
+
+		/** Returns true if the microcodecache changed during the run.
+		*/
+		bool isCacheDirty(void) const;
+
+		bool canGetCompiledShaderBuffer();
+        /** Check if a microcode is available for a program in the microcode cache.
+        @param name The name of the program.
+        */
+		virtual bool isMicrocodeAvailableInCache( const String & name ) const;
+        /** Returns a microcode for a program from the microcode cache.
+        @param name The name of the program.
+        */
+		virtual const Microcode & getMicrocodeFromCache( const String & name ) const;
+
+        /** Creates a microcode to be later added to the cache.
+		@param size The size of the microcode in bytes
+        */
+		virtual Microcode createMicrocode( const uint32 size ) const;
+
+        /** Adds a microcode for a program to the microcode cache.
+        @param name The name of the program.
+        */
+		virtual void addMicrocodeToCache( const String & name, const Microcode & microcode );
+
+		/** Removes a microcode for a program from the microcode cache.
+        @param name The name of the program.
+        */
+		virtual void removeMicrocodeFromCache( const String & name );
+
+        /** Saves the microcode cache to disk.
+        @param stream The destination stream
+        */
+		virtual void saveMicrocodeCache( DataStreamPtr stream ) const;
+        /** Loads the microcode cache from disk.
+        @param stream The source stream
+        */
+		virtual void loadMicrocodeCache( DataStreamPtr stream );
+		
+
+
         /** Override standard Singleton retrieval.
         @remarks
         Why do we do this? Well, it's because the Singleton
@@ -214,5 +269,7 @@ namespace Ogre {
 	/** @} */
 	/** @} */
 }
+
+#include "OgreHeaderSuffix.h"
 
 #endif

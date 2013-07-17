@@ -4,7 +4,7 @@ This source file is part of OGRE
 (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -269,26 +269,26 @@ namespace Ogre
 			}
 		};
 
-		// name of the zone (must be unique)
+		/// Name of the zone (must be unique)
 		String mName;
 		/// Zone type name
 		String mZoneTypeName;
-        // frame counter for visibility
+        /// Frame counter for visibility
         unsigned long mLastVisibleFrame;
-		// last camera which this zone was visible to
+		/// Last camera which this zone was visible to
 		PCZCamera * mLastVisibleFromCamera;
-		// flag determining whether or not this zone has sky in it.
+		/// Flag determining whether or not this zone has sky in it.
 		bool mHasSky;
-		//SceneNode which corresponds to the enclosure for this zone
+		/// SceneNode which corresponds to the enclosure for this zone
 		SceneNode * mEnclosureNode;
-		// list of SceneNodes contained in this particular PCZone
+		/// List of SceneNodes contained in this particular PCZone
         PCZSceneNodeList mHomeNodeList;
-		// list of SceneNodes visiting this particular PCZone
+		/// List of SceneNodes visiting this particular PCZone
         PCZSceneNodeList mVisitorNodeList;
-		// flag recording whether any portals in this zone have moved 
+		/// Flag recording whether any portals in this zone have moved
 		bool mPortalsUpdated;   
-		// user defined data pointer - NOT allocated or deallocated by the zone!  
-		// you must clean it up yourself!
+		/** User defined data pointer - NOT allocated or deallocated by the zone!
+            you must clean it up yourself! */
 		void * mUserData;
 
     };
@@ -300,7 +300,7 @@ namespace Ogre
 		ZoneData(PCZSceneNode *, PCZone * );
 		/** Standard destructor */
 		virtual ~ZoneData();
-		/** Update data if neccessary */
+		/** Update data if necessary */
 		virtual void update(void);
 	public:
 		PCZone *		mAssociatedZone;

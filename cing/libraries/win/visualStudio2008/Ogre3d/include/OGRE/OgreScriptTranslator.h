@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 #include "OgreScriptCompiler.h"
+#include "OgreHeaderPrefix.h"
 
 namespace Ogre{
 	/** \addtogroup Core
@@ -142,7 +143,11 @@ namespace Ogre{
 		void translateVertexProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
 		void translateGeometryProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
 		void translateFragmentProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
+		void translateTesselationHullProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
+		void translateTesselationDomainProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
+		void translateComputeProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
 		void translateShadowCasterVertexProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
+		void translateShadowCasterFragmentProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
 		void translateShadowReceiverVertexProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
 		void translateShadowReceiverFragmentProgramRef(ScriptCompiler *compiler, ObjectAbstractNode *node);
 	};
@@ -247,22 +252,6 @@ namespace Ogre{
 		CompositionPassTranslator();
 		void translate(ScriptCompiler *compiler, const AbstractNodePtr &node);
 	};
-	class _OgreExport CompositionPassClearTranslator : public ScriptTranslator
-	{
-	protected:
-		CompositionPass *mPass;
-	public:
-		CompositionPassClearTranslator();
-		void translate(ScriptCompiler *compiler, const AbstractNodePtr &node);
-	};
-	class _OgreExport CompositionPassStencilTranslator : public ScriptTranslator
-	{
-	protected:
-		CompositionPass *mPass;
-	public:
-		CompositionPassStencilTranslator();
-		void translate(ScriptCompiler *compiler, const AbstractNodePtr &node);
-	};
 
 	/**************************************************************************
 	 * BuiltinScriptTranslatorManager
@@ -285,8 +274,6 @@ namespace Ogre{
 		CompositionTechniqueTranslator mCompositionTechniqueTranslator;
 		CompositionTargetPassTranslator mCompositionTargetPassTranslator;
 		CompositionPassTranslator mCompositionPassTranslator;
-		CompositionPassClearTranslator mCompositionPassClearTranslator;
-		CompositionPassStencilTranslator mCompositionPassStencilTranslator;
 	public:
 		BuiltinScriptTranslatorManager();
 		/// Returns the number of translators being managed
@@ -298,6 +285,7 @@ namespace Ogre{
 	/** @} */
 }
 
+#include "OgreHeaderSuffix.h"
 
 #endif
 

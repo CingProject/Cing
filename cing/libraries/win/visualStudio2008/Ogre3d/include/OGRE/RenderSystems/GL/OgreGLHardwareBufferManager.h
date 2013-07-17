@@ -4,7 +4,7 @@ This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
 For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2011 Torus Knot Software Ltd
+Copyright (c) 2000-2013 Torus Knot Software Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ namespace Ogre {
     {
 	protected:
 		char* mScratchBufferPool;
-		OGRE_MUTEX(mScratchMutex)
+		OGRE_MUTEX(mScratchMutex);
 		size_t mMapBufferThreshold;
 
     public:
@@ -57,6 +57,11 @@ namespace Ogre {
             HardwareBuffer::Usage usage, bool useShadowBuffer = false);
         /// Create a render to vertex buffer
         RenderToVertexBufferSharedPtr createRenderToVertexBuffer();
+		/// Create a uniform buffer
+		HardwareUniformBufferSharedPtr createUniformBuffer(size_t sizeBytes, HardwareBuffer::Usage usage,bool useShadowBuffer, const String& name = "");
+		HardwareCounterBufferSharedPtr createCounterBuffer(size_t sizeBytes,
+                                                           HardwareBuffer::Usage usage = HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY_DISCARDABLE,
+                                                           bool useShadowBuffer = false, const String& name = "");
         /// Utility function to get the correct GL usage based on HBU's
         static GLenum getGLUsage(unsigned int usage);
 
@@ -77,7 +82,7 @@ namespace Ogre {
 
 		/** Threshold after which glMapBuffer is used and not glBufferSubData
 		*/
-		const size_t getGLMapBufferThreshold() const;
+		size_t getGLMapBufferThreshold() const;
 		void setGLMapBufferThreshold( const size_t value );
     };
 
@@ -125,7 +130,7 @@ namespace Ogre {
 
 		/** Threshold after which glMapBuffer is used and not glBufferSubData
 		*/
-		const size_t getGLMapBufferThreshold() const
+		size_t getGLMapBufferThreshold() const
 		{
 			return static_cast<GLHardwareBufferManagerBase*>(mImpl)->getGLMapBufferThreshold();
 		}
