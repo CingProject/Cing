@@ -21,6 +21,7 @@ void setup()
 	size(1024, 768);
 	background(0);
 	enableShadows( STENCIL_MODULATIVE );
+	applyCoordinateSystemTransform(OPENGL3D);
 
 	// Setup lighting
 	ambientLight(10);

@@ -12,6 +12,7 @@ Image colorImg, grayImg, blurryImg, thresholdImg;
 void setup()
 {
 	size( 640, 480 );
+	applyCoordinateSystemTransform(PROCESSING);
 
 	// Init camera
 	capture.init( 0, 320, 240, 25, RGB );
@@ -29,23 +30,23 @@ void draw()
 
 	// color
 	colorImg = capture.getImage();
-	colorImg.draw( 0, 0);
+	colorImg.draw(0, 0);
 
 	// grayscale
 	grayImg = capture.getImage();
 	grayImg.toGray();
-	grayImg.draw( 320, 0, 0 );
+	grayImg.draw( 320, 0 );
 
 	// blurry
 	blurryImg = capture.getImage();
 	blurryImg.filter( BLUR, 5 );
-	blurryImg.draw( 0, 240, 0 );
+	blurryImg.draw( 0, 240 );
 
 	// threshold
 	thresholdImg = capture.getImage();
 	thresholdImg.toGray();
 	thresholdImg.filter( THRESHOLD, 50 );
-	thresholdImg.draw( 320, 240, 0 );
+	thresholdImg.draw( 320, 240 );
 }
 
 void end()

@@ -10,7 +10,7 @@ Sound			sound;					// To play a sound
 Sphere			sphere;					// 3d sphere
 Plane			plane;					// 3d plane
 PointLight		light;					// point light
-Average			average( 10 );			// To average the levels of the sound
+AverageFloat			average( 10 );			// To average the levels of the sound
 
 void setup()
 {

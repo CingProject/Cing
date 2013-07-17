@@ -13,8 +13,8 @@ void setup()
 	size(1024, 768);
 
 	// Load the image from disk
-	myImage = loadImage("muybridge.jpg");
-	//myImage.load("muybridge.jpg");
+	//myImage = loadImage("muybridge.jpg");
+	myImage.load("muybridge.jpg");
 
 }
 
