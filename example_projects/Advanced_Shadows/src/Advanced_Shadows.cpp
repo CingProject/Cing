@@ -31,11 +31,11 @@ void setup()
 	light.drawDebug();
 
 	// Init 3d object's properties
-	box.init(50, 25, 75);
-	box.setPosition(width/2.0f, height/2.0f);
-	sphere1.init(30);
-	sphere2.init(60);
-	sphere3.init(100);
+	box.init(10, 4, 14);
+	box.setPosition(width/2.0f, 100);
+	sphere1.init(6);
+	sphere2.init(12);
+	sphere3.init(20);
 
 	// Now, we make the spheres children of the box's (scene node)
 	box.addChild( sphere1 );

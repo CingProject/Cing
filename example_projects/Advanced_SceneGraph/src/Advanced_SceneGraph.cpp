@@ -19,6 +19,7 @@ float		angle = 0.02;
 void setup()
 {
 	size(1024, 768);
+	applyCoordinateSystemTransform(OPENGL3D);
 	background(0);
 	setFrameRate(60);
 

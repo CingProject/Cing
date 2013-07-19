@@ -29,9 +29,6 @@
 	#include <OgreCamera.h>
 	#include <OgreCommon.h>
 
-
-	#include <gst/gst.h>
-
 	// any other header can be included, as usual
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	#define WIN32_LEAN_AND_MEAN

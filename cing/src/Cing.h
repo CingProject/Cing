@@ -129,7 +129,6 @@
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #include "video/MediaPlayerVLC.h"
-#include "video/MediaPlayerGS.h"
 #endif
 #include "video/MediaPlayerOCV.h"
 #include "video/OCVVideoRecorder.h"
@@ -171,7 +170,7 @@ typedef Color color;
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 //typedef MediaPlayerVLC MediaPlayer;
-typedef MediaPlayerGS MediaPlayer;
+typedef MediaPlayerOCV MediaPlayer;
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 typedef MediaPlayerOCV MediaPlayer;
 #endif
