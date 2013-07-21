@@ -15,5 +15,6 @@ cing/lib
 /Backup/
 /_UpgradeReport_Files/
 /ipch/
-/*.sdf
-/*.opensdf
+*.sdf
+*.opensdf
+

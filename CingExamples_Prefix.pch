@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'CingExamples' target in the 'CingExamples' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
