@@ -120,7 +120,7 @@ namespace Cing
 		m_capture.open( m_filePath );
 		if ( m_capture.isOpened() == false )
 		{
-			LOG_ERROR( "MediaPlayerOCV Could not load file %s", m_fileName );
+			LOG_ERROR( "MediaPlayerOCV Could not load file %s", m_fileName.c_str() );
 			return false;
 		}
 		
