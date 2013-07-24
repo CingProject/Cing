@@ -37,11 +37,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Shape.h"
 #include "Image.h"
 
-// OpenCv includes
-#include "OpenCV/cxtypes.h"
-#include "OpenCV/cxcore.h"
-#include "OpenCV/highgui.h"
-
 //TEMP
 #include "input/InputPrereqs.h"
 
@@ -137,7 +132,7 @@ namespace Cing
 		int							getEllipseMode				() const { return m_ellipseMode; }
 		void             			setEllipseMode				(  int	mode );
 
-		const CvFont&				getCvFont					() const { return  m_cvFont; }
+		//const CvFont&				getCvFont					() const { return  m_cvFont; }
 
 		// Debug methods
 		void						showFps						( bool show );
@@ -233,7 +228,7 @@ namespace Cing
 		bool						m_stroke;
 		bool						m_smooth;
 
-		CvFont						m_cvFont;					///< Font used to draw text on images
+		//CvFont						m_cvFont;					///< Font used to draw text on images
 
 		// To manage visibility of loaded images
 		// TODO optimize this

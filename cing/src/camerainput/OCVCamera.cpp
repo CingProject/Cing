@@ -39,9 +39,6 @@
 // Graphics
 #include "graphics/GraphicsManager.h"
 
-// OpenCv
-#include "OpenCV/cv.h"
-
 // Common
 #include "common/Exception.h"
 #include "common/Release.h"
@@ -58,22 +55,25 @@ namespace Cing
 	
 	void OCVCamera::OCVCaptureThread::execute()
 	{
-		m_ocvCamera.m_capture = cvCaptureFromCAM( m_ocvCamera.getDeviceId() );
-		if ( !m_ocvCamera.m_capture )
-			THROW_EXCEPTION( "No camera found, or no drivers installed" );
+		m_ocvCamera.m_capture.open( m_ocvCamera.getDeviceId() );
+		if ( m_ocvCamera.m_capture.isOpened() )
+		{
+			LOG_ERROR( "[OCVCamera] No camera found, or no drivers installed" );
+			return;
+		}
 		
 		// Set camera res
-		cvSetCaptureProperty( m_ocvCamera.m_capture, CV_CAP_PROP_FRAME_WIDTH, m_ocvCamera.getWidth() );
-		cvSetCaptureProperty( m_ocvCamera.m_capture, CV_CAP_PROP_FRAME_HEIGHT, m_ocvCamera.getHeight() );
-		cvSetCaptureProperty( m_ocvCamera.m_capture, CV_CAP_PROP_FPS, m_ocvCamera.getFPS() );
-		
+		m_ocvCamera.m_capture.set( CV_CAP_PROP_FRAME_WIDTH, m_ocvCamera.getWidth() );
+		m_ocvCamera.m_capture.set( CV_CAP_PROP_FRAME_HEIGHT, m_ocvCamera.getHeight() );
+		m_ocvCamera.m_capture.set( CV_CAP_PROP_FPS, m_ocvCamera.getFPS() );		
 		
 		while( !get_signaled() )
 		{
 			// Get New frmae
 			//if ( m_ocvCamera.m_capture.grab())
 			// Get camera frame from OpenCV -> Note: this is a blocking calle
-			m_cvCaptureImage = cvQueryFrame( m_ocvCamera.m_capture );
+			m_ocvCamera.m_capture.grab();
+			m_ocvCamera.m_capture.retrieve( *m_cvCaptureImage );
 			if ( m_cvCaptureImage )
 			{
 				//m_ocvCamera.m_capture.retrieve( m_ocvCamera.m_newFrame, 0 );
@@ -81,15 +81,15 @@ namespace Cing
 						
 				// Get number of channels in the image (looks like in the mac side it is aligned to 4 bytes
 				GraphicsType format;
-				if ( m_cvCaptureImage->nChannels == 1 )
+				if ( m_cvCaptureImage->channels() == 1 )
 					format = GRAYSCALE;
-				else if ( m_cvCaptureImage->nChannels == 3 )
+				else if ( m_cvCaptureImage->channels() == 3 )
 					format = RGB;
-				else if ( m_cvCaptureImage->nChannels == 4 )
+				else if ( m_cvCaptureImage->channels() == 4 )
 					format = BGRA;
 				
 				// we get the pixels by passing in out buffer which gets 
-				m_ocvCamera.setNewFrameData(  (unsigned char*)m_cvCaptureImage->imageData,  m_ocvCamera.getWidth( ),  m_ocvCamera.getHeight( ), format, m_cvCaptureImage->widthStep, true );
+				m_ocvCamera.setNewFrameData( m_cvCaptureImage->data,  m_ocvCamera.getWidth( ),  m_ocvCamera.getHeight( ), format, m_cvCaptureImage->step, true );
 				m_ocvCamera.setNewFrame( true );				
 
 				m_cvCaptureImage = NULL;
@@ -108,7 +108,7 @@ namespace Cing
 	
 	void OCVCamera::OCVCaptureThread::cleanup()
 	{
-		cvReleaseCapture(&m_ocvCamera.m_capture);
+		m_ocvCamera.m_capture.release();
 	}
 	
 	

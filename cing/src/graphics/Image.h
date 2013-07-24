@@ -37,9 +37,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "ImageThresholdFilter.h"
 #include "ImageDifferenceFilter.h"
 
-// Open CV
-#include "OpenCV/cv.h"
-#include "OpenCV/cxtypes.h"
+// OpenCV
+#include "opencv2/core/core.hpp"
 
 namespace Cing
 {
@@ -126,7 +125,6 @@ namespace Cing
 
 		// Query methods
 		bool				isValid			() const	{ return m_bIsValid; }
-		IplImage			getCVImage		() const	{ return (IplImage)m_cvImage; }
 		cv::Mat&			getCVMat		()			{ return m_cvImage; }
 		const cv::Mat&		getCVMat		() const	{ return m_cvImage; }
 		int					getWidth		() const;

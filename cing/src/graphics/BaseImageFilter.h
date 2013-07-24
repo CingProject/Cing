@@ -37,9 +37,11 @@
 // Graphics
 #include "graphics/GraphicsTypes.h"
 
-// OpenCV
-#include "OpenCV/cxtypes.h"
-
+// forward declarations
+namespace cv
+{
+	class Mat;
+}
 
 namespace Cing
 {
@@ -61,11 +63,11 @@ public:
   void          end             ();
 
   // Query methods
-  bool          isValid         () const  { return m_bIsValid;    } 
-  IplImage&     getOutputImage  () const { return *m_outputImage; }
+  bool          isValid         () const	{ return m_bIsValid;    } 
+  cv::Mat&     getOutputImage	() const	{ return *m_outputImage; }
 
 protected:
-  IplImage*   m_outputImage;      ///< The result of the filters application will be stored in this image
+  cv::Mat*	  m_outputImage;      ///< The result of the filters application will be stored in this image
   int         m_width, m_height;  ///< Resolution of the images that the filter will work with
   int         m_nChannels;        ///< Number of channels of the images that the filter will work with (RGB -> 3 channels, Grayscale -> 1 channel)
   bool        m_bIsValid;	        ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.

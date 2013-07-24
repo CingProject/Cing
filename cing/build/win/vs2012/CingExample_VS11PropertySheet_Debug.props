@@ -23,7 +23,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>OgreMain_d.lib;OgreOverlay_d.lib;OIS_d.lib;cv210_d.lib;cvaux210_d.lib;cxcore210_d.lib;highgui210_d.lib;ptypes_d.lib;tinyxml_STL_d.lib;videoInput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain_d.lib;OgreOverlay_d.lib;OIS_d.lib;ptypes_d.lib;tinyxml_STL_d.lib;videoInput.lib;opencv_core246d.lib;opencv_highgui246d.lib;opencv_imgproc246d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(CING_ROOT)libraries\win\vs2012\BetaCairo\lib;$(CING_ROOT)libraries\win\vs2012\Bullet\lib;$(CING_ROOT)libraries\win\vs2012\cairo\lib;$(CING_ROOT)libraries\win\vs2012\Fmod\lib;$(CING_ROOT)libraries\win\vs2012\Ogre3d\lib;$(CING_ROOT)libraries\win\vs2012\Ogre3d\boost\lib;$(CING_ROOT)libraries\win\vs2012\Ogre-CameraControlSystem\lib;$(CING_ROOT)libraries\win\vs2012\CEGUI\lib;$(CING_ROOT)libraries\win\vs2012\OgreBullet\lib;$(CING_ROOT)libraries\win\vs2012\OpenCV\lib;$(CING_ROOT)libraries\win\vs2012\PortVideo\lib;$(CING_ROOT)libraries\win\vs2012\PTypes\lib;$(CING_ROOT)libraries\win\vs2012\RtMidi\lib;$(CING_ROOT)libraries\win\vs2012\VideoInput\lib;$(CING_ROOT)libraries\win\vs2012\OgreCollada\lib;$(CING_ROOT)libraries\win\vs2012\LibVLC\lib;$(CING_ROOT)libraries\win\vs2012\TinyXML\lib;$(CING_ROOT)libraries\win\vs2012\GStreamer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>atlthunk;libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>

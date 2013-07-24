@@ -38,7 +38,7 @@
 #include "OgreTimer.h"
 
 // OpenCV
-#include "OpenCV/highgui.h"
+#include "opencv2/highgui/highgui.hpp"
 
 // Common
 #include "PTypes/include/pasync.h"

@@ -42,9 +42,6 @@
 // STL
 #include <string>
 
-// OpenCV
-#include "OpenCV/cxtypes.h"
-
 // PTypes
 #undef nil
 #include "PTypes/include/pasync.h"

@@ -31,8 +31,13 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-
 #include "GraphicsPrereqs.h"
+
+// forward declarations
+namespace cv
+{
+	class Mat;
+}
 
 namespace Cing
 {
@@ -49,7 +54,7 @@ public:
 	ImageThresholdFilter(): m_threshold( 50 ) {}
 
   // Apply the filter (the result is stored in m_outputImage of the base filter class)
-  void  apply        ( const _IplImage& inImage, _IplImage& output );
+  void  apply        ( const cv::Mat& inImage, cv::Mat& output );
 
   // Set image threshold value
   void  setThreshold ( int threshold ) { m_threshold = threshold; }

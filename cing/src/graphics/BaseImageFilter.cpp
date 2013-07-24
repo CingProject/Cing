@@ -31,7 +31,7 @@
 #include "BaseImageFilter.h"
 
 // OpenCv
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core.hpp"
 
 namespace Cing
 {
@@ -72,7 +72,7 @@ bool BaseImageFilter::init( int width, int height, GraphicsType format )
 
   // Create the output image
 	int nChannels = (int)Ogre::PixelUtil::getNumElemBytes( Ogre::PixelFormat( format ) ) ;
-  m_outputImage = cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, nChannels );
+  m_outputImage = new cv::Mat( height, width, CV_8U(nChannels) );
 
   // Store values
   m_width     = width;
@@ -96,7 +96,7 @@ void BaseImageFilter::end()
   if ( !isValid() )
     return;
 
-  cvReleaseImage( &m_outputImage );
+  delete m_outputImage;
 
 	// The class is not valid anymore
 	m_bIsValid = false;

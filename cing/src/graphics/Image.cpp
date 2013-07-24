@@ -45,10 +45,10 @@
 
 // Ogre
 #include "OgreDataStream.h"
+#include "OgreSceneManager.h"
 
 // OpenCV
-#include "OpenCV/cxcore.h"
-#include "OgreSceneManager.h"
+#include "opencv2/imgproc/imgproc.hpp"
 
 namespace Cing
 {
@@ -881,14 +881,14 @@ namespace Cing
 	*/
 	bool Image::operator==(const Image& other) const {
 
-		char *original_data = this->getCVImage().imageData; 
-		char *other_data = other.getCVImage().imageData;
+		unsigned char *original_data = m_cvImage.data; 
+		unsigned char *other_data = other.m_cvImage.data;
 
-		if(this->getCVImage().width != other.getCVImage().width || this->getCVImage().height != other.getCVImage().height || this->getCVImage().nChannels != other.getCVImage().nChannels)
+		if(this->m_cvImage.rows!= other.m_cvImage.rows || this->m_cvImage.cols != other.m_cvImage.cols || this->m_cvImage.channels() != other.m_cvImage.channels())
 			return false;
 		else
 		{
-			if( 0 == memcmp(original_data,other_data,other.getCVImage().imageSize) )
+			if( 0 == memcmp(original_data,other_data, other.m_cvImage.rows * other.m_cvImage.cols * other.m_cvImage.channels() ) )
 				return true;
 			else
 				return false;
@@ -995,21 +995,19 @@ namespace Cing
 		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
 		// as opencv does not support transparent drawing
 		cv::Mat* canvasImage = &m_cvImage;
-		IplImage* tempImage = NULL;
-		cv::Mat alphaCanvasImage;
+		cv::Mat* alphaCanvasImage = NULL;
 
 		// If there is transparency involved
 		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
-			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
 		
 			// Fill it with the current image content
-			alphaCanvasImage = tempImage; // This does not copy data, just points to it
-			m_cvImage.copyTo( alphaCanvasImage );
+			m_cvImage.copyTo( *alphaCanvasImage );
 
 			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = &alphaCanvasImage;
+			canvasImage = alphaCanvasImage;
 
 		}
 
@@ -1045,7 +1043,7 @@ namespace Cing
 		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
 			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
 			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
@@ -1057,7 +1055,7 @@ namespace Cing
 		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 		}
 
 		// Update texture when the next drawing call is made by the user															  
@@ -1086,21 +1084,19 @@ namespace Cing
 		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
 		// as opencv does not support transparent drawing
 		cv::Mat* canvasImage = &m_cvImage;
-		IplImage* tempImage = NULL;
-		cv::Mat alphaCanvasImage;
+		cv::Mat* alphaCanvasImage = NULL;
 
 		// If there is transparency involved
 		if ( color.a < 255 )
 		{
 			// Request a temporary image to draw the transparent shape
-			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
 		
 			// Fill it with the current image content
-			alphaCanvasImage = tempImage; // This does not copy data, just points to it
-			m_cvImage.copyTo( alphaCanvasImage );
+			m_cvImage.copyTo( *alphaCanvasImage );
 
 			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = &alphaCanvasImage;
+			canvasImage = alphaCanvasImage;
 
 		}
 
@@ -1131,7 +1127,7 @@ namespace Cing
 			cv::addWeighted( m_cvImage, (color.getHighRange()-color.a)/color.getHighRange(), *canvasImage, color.a/color.getHighRange(), 0, m_cvImage );
 
 			// Release temp image
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 		}
 
 		// Update texture when the next drawing call is made by the user
@@ -1169,21 +1165,19 @@ namespace Cing
 		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
 		// as opencv does not support transparent drawing
 		cv::Mat* canvasImage = &m_cvImage;
-		IplImage* tempImage = NULL;
-		cv::Mat alphaCanvasImage;
+		cv::Mat* alphaCanvasImage = NULL;
 
 		// If there is transparency involved
 		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
-			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
 		
 			// Fill it with the current image content
-			alphaCanvasImage = tempImage; // This does not copy data, just points to it
-			m_cvImage.copyTo( alphaCanvasImage );
+			m_cvImage.copyTo( *alphaCanvasImage );
 
 			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = &alphaCanvasImage;
+			canvasImage = alphaCanvasImage;
 
 		}
 
@@ -1244,7 +1238,7 @@ namespace Cing
 		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
 			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
 			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
@@ -1256,7 +1250,7 @@ namespace Cing
 		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 		}
 
 		// Update texture when the next drawing call is made by the user
@@ -1283,21 +1277,19 @@ namespace Cing
 		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
 		// as opencv does not support transparent drawing
 		cv::Mat* canvasImage = &m_cvImage;
-		IplImage* tempImage = NULL;
-		cv::Mat alphaCanvasImage;
+		cv::Mat* alphaCanvasImage = NULL;
 
 		// If there is transparency involved
 		if ( strokeColor.a < 255 )
 		{
 			// Request a temporary image to draw the transparent shape
-			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
 		
 			// Fill it with the current image content
-			alphaCanvasImage = tempImage; // This does not copy data, just points to it
-			m_cvImage.copyTo( alphaCanvasImage );
+			m_cvImage.copyTo( *alphaCanvasImage );
 
 			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = &alphaCanvasImage;
+			canvasImage = alphaCanvasImage;
 
 		}
 
@@ -1316,7 +1308,7 @@ namespace Cing
 			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
 
 			// Release temp image
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 		}
 		// Update texture when the next drawing call is made by the user
 		m_bUpdateTexture = true;
@@ -1349,21 +1341,19 @@ namespace Cing
 		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
 		// as opencv does not support transparent drawing
 		cv::Mat* canvasImage = &m_cvImage;
-		IplImage* tempImage = NULL;
-		cv::Mat alphaCanvasImage;
+		cv::Mat* alphaCanvasImage = NULL;
 
 		// If there is transparency involved
 		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
-			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
 		
 			// Fill it with the current image content
-			alphaCanvasImage = tempImage; // This does not copy data, just points to it
-			m_cvImage.copyTo( alphaCanvasImage );
+			m_cvImage.copyTo( *alphaCanvasImage );
 
 			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = &alphaCanvasImage;
+			canvasImage = alphaCanvasImage;
 		}
 
 		// Draw fill
@@ -1400,7 +1390,7 @@ namespace Cing
 		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
 			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
 			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
@@ -1412,7 +1402,7 @@ namespace Cing
 		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 		}
 
 		// Update texture when the next drawing call is made by the user															  
@@ -1447,21 +1437,19 @@ namespace Cing
 		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
 		// as opencv does not support transparent drawing
 		cv::Mat* canvasImage = &m_cvImage;
-		IplImage* tempImage = NULL;
-		cv::Mat alphaCanvasImage;
+		cv::Mat* alphaCanvasImage = NULL;
 
 		// If there is transparency involved
 		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
-			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
 		
 			// Fill it with the current image content
-			alphaCanvasImage = tempImage; // This does not copy data, just points to it
-			m_cvImage.copyTo( alphaCanvasImage );
+			m_cvImage.copyTo( *alphaCanvasImage );
 
 			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = &alphaCanvasImage;
+			canvasImage = alphaCanvasImage;
 		}
 
 		// Draw fill
@@ -1540,7 +1528,7 @@ namespace Cing
 		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
 			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
 			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
@@ -1552,7 +1540,7 @@ namespace Cing
 		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 		}
 
 		// Update texture when the next drawing call is made by the user
@@ -1596,21 +1584,19 @@ namespace Cing
 		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
 		// as opencv does not support transparent drawing
 		cv::Mat* canvasImage = &m_cvImage;
-		IplImage* tempImage = NULL;
-		cv::Mat alphaCanvasImage;
+		cv::Mat* alphaCanvasImage = NULL;
 
 		// If there is transparency involved
 		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
 		{
 			// Request a temporary image to draw the transparent shape
-			tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
 		
 			// Fill it with the current image content
-			alphaCanvasImage = tempImage; // This does not copy data, just points to it
-			m_cvImage.copyTo( alphaCanvasImage );
+			m_cvImage.copyTo( *alphaCanvasImage );
 
 			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = &alphaCanvasImage;
+			canvasImage = alphaCanvasImage;
 		}
 
 
@@ -1689,7 +1675,7 @@ namespace Cing
 		if ( graphManager.getFill() && (fillColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
 			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
 			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
@@ -1701,7 +1687,7 @@ namespace Cing
 		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
 		{
 			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( tempImage );
+			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 		}
 
 		// Update texture when the next drawing call is made by the user
@@ -1758,8 +1744,7 @@ namespace Cing
 		if (type == THRESHOLD)
 		{
 			m_imgThresholdFilter.setThreshold(param1);
-			IplImage tempImage = (IplImage)m_cvImage;
-			m_imgThresholdFilter.apply(  tempImage , tempImage);
+			m_imgThresholdFilter.apply(  m_cvImage, m_cvImage);
 		}
 
 		if (type == INVERT)
@@ -1799,8 +1784,7 @@ namespace Cing
 
 		if (type == THRESHOLD)
 		{
-			IplImage tempImageHeader = (IplImage)m_cvImage;
-			m_imgThresholdFilter.apply( tempImageHeader, tempImageHeader);
+			m_imgThresholdFilter.apply( m_cvImage, m_cvImage );
 		}
 		if (type == INVERT)
 		{
@@ -1839,17 +1823,16 @@ namespace Cing
 		if ( m_nChannels >=3 )
 			return;
 
-		// Image Store data temporarily
-		IplImage* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 3 );
+		// Image to store data temporarily
+		cv::Mat* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 3 );
 
 		// Convert image
-		cv::Mat temp(tempImage);
-		cv::cvtColor( m_cvImage, temp, CV_GRAY2RGB );
+		cv::cvtColor( m_cvImage, *tempImage, CV_GRAY2RGB );
 
 		// Re-init the image with the new format and se the color data
 		end();
-		init( tempImage->width, tempImage->height, RGB );
-		setData( (unsigned char*)tempImage->imageData, tempImage->width, tempImage->height, RGB );
+		init( tempImage->cols, tempImage->rows, RGB );
+		setData( (unsigned char*)tempImage->data, tempImage->cols, tempImage->rows, RGB );
 
 		// Check if the image was v flipped
 		if ( m_bVFlipped )
@@ -1881,16 +1864,15 @@ namespace Cing
 			return;
 
 		// Image Store data temporarily
-		IplImage* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 1 );
+		cv::Mat* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 1 );
 
 		// Convert image
-		cv::Mat temp(tempImage);
-		cv::cvtColor( m_cvImage, temp, CV_RGB2GRAY );
+		cv::cvtColor( m_cvImage, *tempImage, CV_RGB2GRAY );
 
 		// Re-init the image with the new format and se the grayscale data
 		end();
-		init( tempImage->width, tempImage->height, GRAYSCALE );
-		setData( (unsigned char*)tempImage->imageData, tempImage->width, tempImage->height, GRAYSCALE );
+		init( tempImage->cols, tempImage->rows, GRAYSCALE );
+		setData( (unsigned char*)tempImage->data, tempImage->cols, tempImage->rows, GRAYSCALE );
 
 		// Check if the image was v flipped
 		if ( m_bVFlipped )
@@ -1943,13 +1925,13 @@ namespace Cing
 
 	void Image::operator +=	( const Image& img ){
 
-		cv::add( m_cvImage, &img.getCVImage(), m_cvImage );
+		cv::add( m_cvImage, img.getCVMat(), m_cvImage );
 		setUpdateTexture(true);
 	}
 
 	void Image::operator -=	( const Image& img ){
 
-		cv::subtract( m_cvImage, &img.getCVImage(), m_cvImage );
+		cv::subtract( m_cvImage, img.getCVMat(), m_cvImage );
 		setUpdateTexture(true);
 	}
 
@@ -1972,7 +1954,7 @@ namespace Cing
 			THROW_EXCEPTION( "Images with different sizes" );
 
 		percentage = map( percentage, 0, 100, 0.0, 1.0 );
-		cv::addWeighted( m_cvImage, 1.0 - percentage, &other.getCVImage(), percentage, 0.0f, m_cvImage );
+		cv::addWeighted( m_cvImage, 1.0 - percentage, other.getCVMat(), percentage, 0.0f, m_cvImage );
 	}
 
 	void Image::operator = ( float scalar)

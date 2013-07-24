@@ -31,8 +31,13 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-
 #include "GraphicsPrereqs.h"
+
+// forward declarations
+namespace cv
+{
+	class Mat;
+}
 
 namespace Cing
 {
@@ -46,7 +51,7 @@ class ImageDifferenceFilter
 public:
 
   // Apply the filter (the result is stored in m_outputImage of the base filter class)
-  void apply( const _IplImage& inImage1, const _IplImage& inImage2, _IplImage& output );
+  void apply( const cv::Mat& inImage1, const cv::Mat& inImage2, cv::Mat& output );
 };
 
 

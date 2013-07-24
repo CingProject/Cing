@@ -31,9 +31,6 @@
 
 #include "PVCamera.h"
 
-// OpenCv
-#include "OpenCV/cv.h"
-
 // Common
 #include "common/Exception.h"
 #include "common/Release.h"

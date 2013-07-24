@@ -34,7 +34,7 @@
 #include "common/CommonUtilsIncludes.h"
 
 // Open CV
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core.hpp"
 
 namespace Cing
 {
@@ -81,8 +81,8 @@ bool ImageResourceManager::init()
 	for ( int xRes = minResX, yRes = minResY; (xRes <= maxResX) && (yRes <= maxResY) ;  xRes *= 2, yRes *= 2)
 	{
 		// For 1 and 3 channel images
-		m_imagePool[0].push_back( ImageResource( cvCreateImage( cvSize( xRes, yRes ), IPL_DEPTH_8U, 1 ) ) );
-		m_imagePool[1].push_back( ImageResource( cvCreateImage( cvSize( xRes, yRes ), IPL_DEPTH_8U, 3 ) ) );
+		m_imagePool[0].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_8U(1) ) ) );
+		m_imagePool[1].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_8U(3) ) ) );
 	}
 
 	// Create initial pool of images with standard sizes
@@ -92,15 +92,15 @@ bool ImageResourceManager::init()
 		for ( int yRes = minRes; yRes <= maxRes ; yRes *= 2)
 	{
 		// For 1 and 3 channel images
-		m_imagePool[0].push_back( ImageResource( cvCreateImage( cvSize( xRes, yRes ), IPL_DEPTH_8U, 1 ) ) );
-		m_imagePool[1].push_back( ImageResource( cvCreateImage( cvSize( xRes, yRes ), IPL_DEPTH_8U, 3 ) ) );
+		m_imagePool[0].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_8U(1) ) ) );
+		m_imagePool[1].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_8U(3) ) ) );
 	}
 
 	return true;
 }
 
 /**
- * @brief This method returns an IplImage with the requested size and number of channels 
+ * @brief This method returns a cv::Mat with the requested size and number of channels 
  *				Creates a new one if required (and store it in the pool).
  *
  * @note Important: The images returned have the purpose to be used as temporal working images
@@ -109,9 +109,9 @@ bool ImageResourceManager::init()
  * @param  width		Width of the requested image
  * @param  height		Height of the requested image
  * @param  channels Number of channels of the requested image. Supported 1 and 3
- * @return IplImage pointer to the image requested, or NULL if number of channels not supported
+ * @return cv::Mat pointer to the image requested, or NULL if number of channels not supported
  */
-IplImage*	ImageResourceManager::getImage( int width, int height, int channels ) 
+cv::Mat*	ImageResourceManager::getImage( int width, int height, int channels ) 
 {
 	// Check ok number of channels
 	if ( ( channels != 1) && ( channels != 3 ) && ( channels != 4 ) )
@@ -130,7 +130,7 @@ IplImage*	ImageResourceManager::getImage( int width, int height, int channels )
 	for ( size_t i = 0; i < m_imagePool[index].size(); ++i )
 	{
 		// If found and available -> return it
-		if ( (m_imagePool[index][i].image->width == width) &&  (m_imagePool[index][i].image->height == height) &&
+		if ( (m_imagePool[index][i].image->cols== width) &&  (m_imagePool[index][i].image->rows == height) &&
 					m_imagePool[index][i].available )
 		{
 			// mark is as used
@@ -140,7 +140,7 @@ IplImage*	ImageResourceManager::getImage( int width, int height, int channels )
 	}
 
 	// If not found -> create it and insert it in the pool
-	m_imagePool[index].push_back( ImageResource( cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, channels ) ) );
+	m_imagePool[index].push_back( ImageResource( new cv::Mat( height, width, CV_8U(channels) ) ) );
 	m_imagePool[index].back().available = false;
 	return m_imagePool[index].back().image;
 };
@@ -151,13 +151,13 @@ IplImage*	ImageResourceManager::getImage( int width, int height, int channels )
  *
  * @param image Image to release so another one can use it
  */
-void ImageResourceManager::releaseImage( IplImage* image )
+void ImageResourceManager::releaseImage( cv::Mat* image )
 {
 	// Search for the desired image into the image container	
 	int index = 0;
-	if ( image->nChannels == 1 )		index = 0;
-	else if ( image->nChannels == 3 )	index = 1;
-	else if ( image->nChannels == 4 )	index = 2;
+	if ( image->channels() == 1 )		index = 0;
+	else if ( image->channels() == 3 )	index = 1;
+	else if ( image->channels() == 4 )	index = 2;
 	else return;
 
 	// Search the image
@@ -187,15 +187,15 @@ void ImageResourceManager::end()
 
 	// 1 channel images
 	for ( size_t i = 0; i < m_imagePool[0].size(); ++i )
-		cvReleaseImage( &m_imagePool[0][i].image );
+		delete m_imagePool[0][i].image;
 
 	// 3 channel images
 	for ( size_t i = 0; i < m_imagePool[1].size(); ++i )
-		cvReleaseImage( &m_imagePool[1][i].image );
+		delete m_imagePool[1][i].image;
 
 	// 4 channel images
 	for ( size_t i = 0; i < m_imagePool[2].size(); ++i )
-		cvReleaseImage( &m_imagePool[2][i].image );
+		delete m_imagePool[2][i].image;
 
 
 	m_imagePool[0].clear();

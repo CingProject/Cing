@@ -7,9 +7,7 @@
 #include "BaseVideoRecorder.h"
 
 // OpenCV
-#include "OpenCV/cxtypes.h"
-#include "OpenCV/highgui.h"
-#include "OpenCV/highgui.hpp"
+#include "opencv2/highgui/highgui.hpp"
 
 namespace Cing
 {

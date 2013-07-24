@@ -33,26 +33,29 @@
 
 #include "GraphicsPrereqs.h"
 
-// OpenCv includes
-#include "OpenCV/cxtypes.h"
-
 // Common
 #include "common/Singleton.h"
+
+// forward declaration
+namespace cv
+{
+	class Mat;
+}
 
 namespace Cing
 {
 
 struct ImageResource
 {
-	ImageResource( IplImage* pImage ): image( pImage ), available( true ) {}
+	ImageResource( cv::Mat* pImage ): image( pImage ), available( true ) {}
 
-	IplImage* image;
+	cv::Mat*		image;
 	bool			available;
 };
 
 /**
  * @internal
- * Manager of IplImages to optimize performance when temporal images are required
+ * Manager of cv::Mat objects (images) to optimize performance when temporal images are required
  * It maintains a pool of images of difference sizes.
  *
  * @note Important: The images returned have the purpose to be used as temporal working images
@@ -78,8 +81,8 @@ public:
 
 	// Query methods
 	bool					isValid         () const { return m_bIsValid; }
-	IplImage*				getImage		(int width, int height, int channels) ;
-	void					releaseImage	( IplImage* image );
+	cv::Mat*				getImage		(int width, int height, int channels) ;
+	void					releaseImage	( cv::Mat* image );
 
 private:
 

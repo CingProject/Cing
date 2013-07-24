@@ -3,10 +3,6 @@
 
 #include "OCVVideoRecorder.h"
 
-// OpenCv
-#include "OpenCV/cv.h"
-#include "OpenCV/cxcore.h"
-
 // Common
 #include "common/Exception.h"
 #include "common/Release.h"

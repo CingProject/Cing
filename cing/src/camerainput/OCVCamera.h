@@ -32,16 +32,21 @@
 // STL
 #include <string>
 
-// OpenCV
-#include "OpenCV/cxtypes.h"
-#include "OpenCV/highgui.h"
-
 // Ogre
 #include "OgreTexture.h"
 
 // PTypes
 #undef nil
 #include "PTypes/include/pasync.h"
+
+// OpenCV
+#include "opencv2/highgui/highgui.hpp"
+
+// forward declarations
+namespace cv
+{
+	class Mat;
+}
 
 namespace Cing
 {
@@ -61,7 +66,7 @@ namespace Cing
 				void execute();
 				void cleanup();
 				
-				IplImage*       m_cvCaptureImage; ///< To store the camera image captured through openCv
+				cv::Mat*       m_cvCaptureImage; ///< To store the camera image captured through openCv
 				OCVCamera&      m_ocvCamera; 
 			};
 			
@@ -89,19 +94,13 @@ namespace Cing
 			static const std::string  MATERIAL_NAME;        ///< Name of the material where the camera images will be placed
 			static const std::string  TEXTURE_NAME;         ///< Name of the texture where the camera images will be placed
 			
-			// Attributes
-			// TODO: CLEAN UP obsolete stuff!
-			//cv::VideoCapture		m_capture;
-			//cv::Mat					m_newFrame;
-			
-			
-			CvCapture*        m_capture;        ///< OpenCV capture device  
-			IplImage*         m_cvResizedImage; ///< Image to store the resized capture image from the camera -> to place it into a texture (power of 2)
-			Ogre::Image*      m_ogreImage;      ///< Ogre image to place the captured texture -> to be able to draw it
-			Ogre::TexturePtr  m_ogreTexture;    ///< Ogre texture -> to render the captured image
-			OCVCaptureThread* m_captureThread;  ///< Thread to capture images from the camera
-			pt::mutex         m_mutex;
-			bool              m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+			cv::VideoCapture	m_capture;        ///< OpenCV capture device  
+			cv::Mat*			m_cvResizedImage; ///< Image to store the resized capture image from the camera -> to place it into a texture (power of 2)
+			Ogre::Image*		m_ogreImage;      ///< Ogre image to place the captured texture -> to be able to draw it
+			Ogre::TexturePtr	m_ogreTexture;    ///< Ogre texture -> to render the captured image
+			OCVCaptureThread*	m_captureThread;  ///< Thread to capture images from the camera
+			pt::mutex			m_mutex;
+			bool				m_bIsValid;	      ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 			
 		};
 	

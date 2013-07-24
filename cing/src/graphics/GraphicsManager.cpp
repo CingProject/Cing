@@ -221,7 +221,7 @@ bool GraphicsManager::initReSources()
 	FontManager::getSingleton().init();
 
 	// Init the cvFont
-	cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
+	//cvInitFont(&m_cvFont, CV_FONT_HERSHEY_SIMPLEX, 0.6, 0.6, 0, 2);
 
 	// Init 2dCanvas (and make sure it does not cast shadows and does not receive dynamic lighting)
 	m_canvas.init(width, height, RGBA);

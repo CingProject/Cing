@@ -36,9 +36,6 @@
 #include "Application.h"
 #include "UserAppGlobals.h"
 
-// OpenCV
-#include "OpenCV/cxcore.h"
-
 // Ogre
 #include "OgreException.h"
 
@@ -47,6 +44,8 @@
 #include "common/LogManager.h"
 #include "common/eString.h"
 
+// OpenCV
+#include "opencv2/core/core.hpp"
 
 namespace Cing
 {

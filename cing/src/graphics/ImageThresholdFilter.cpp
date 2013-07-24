@@ -34,8 +34,8 @@
 #include "common/Exception.h"
 
 // OpenCv
-#include "OpenCV/cxcore.h"
-#include "OpenCV/cv.h"
+#include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 
 namespace Cing
 {
@@ -48,14 +48,14 @@ namespace Cing
  * @param[in] inImage Image that will be thresholded (polarized)
  * @param[out] output	 Image where the result will be stored
  */
-void ImageThresholdFilter::apply( const IplImage& inImage, IplImage& output )
+void ImageThresholdFilter::apply( const cv::Mat& inImage, cv::Mat& output )
 {
   // Check both images have same size and it is the same than the filter size
-  if( (inImage.imageSize != output.imageSize) )
+	if( inImage.size() != output.size() )
     THROW_EXCEPTION( "Trying to apply ImageThresholdFilter to images with different size-> they must have the same size!" );
 
   // Calculate the between both images
-  cvThreshold( &inImage, &output, m_threshold, 255, CV_THRESH_BINARY );
+  cv::threshold( inImage, output, m_threshold, 255, cv::THRESH_BINARY );
 }
 
 } // namespace Cing

@@ -35,9 +35,6 @@
 #include "CameraInputPrereqs.h"
 #include "common/MathUtils.h"
 
-// OpenCV
-#include "OpenCV/cxtypes.h"
-
 // Graphics
 #include "graphics/Image.h"
 #include "graphics/GraphicsTypes.h"

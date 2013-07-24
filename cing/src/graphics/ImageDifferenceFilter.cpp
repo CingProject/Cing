@@ -34,7 +34,8 @@
 #include "common/Exception.h"
 
 // OpenCv
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 
 namespace Cing
 {
@@ -48,14 +49,14 @@ namespace Cing
  * @param[in] inImage2 Second image to calculate the difference
  * @param[out] output	 Image where the result will be stored
  */
-void ImageDifferenceFilter::apply( const IplImage& inImage1, const IplImage& inImage2, IplImage& output )
+void ImageDifferenceFilter::apply( const cv::Mat& inImage1, const cv::Mat& inImage2, cv::Mat& output )
 {
   // Check both images have same size and it is the same than the filter size
-  if( (inImage1.imageSize != inImage2.imageSize) )
+  if( inImage1.size()!= inImage2.size() )
     THROW_EXCEPTION( "Trying to apply ImageDifferenceFilter to images with different size-> they must have the same size!" );
 
   // Calculate the between both images
-  cvAbsDiff( &inImage1, &inImage2, &output );
+  cv::absdiff( inImage1, inImage2, output );
 }
 
 } // namespace Cing

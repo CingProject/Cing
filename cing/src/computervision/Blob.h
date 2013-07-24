@@ -35,11 +35,11 @@
 #include "ComputerVisionPrereqs.h"
 #include <vector>
 
-// Open CV
-#include "OpenCV/cv.h"
-
 // Common
 #include "common/CommonTypes.h"
+
+// OpenCV
+#include "opencv2/core/core.hpp"
 
 namespace Cing
 {

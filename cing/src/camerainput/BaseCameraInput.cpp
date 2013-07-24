@@ -29,9 +29,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/LogManager.h"
 
 // OpenCV
-#include "OpenCV/cxcore.h"
-#include "OpenCV/highgui.h"
-#include "OpenCV/cv.h"
+#include "opencv2/imgproc/imgproc.hpp"
 
 // Common
 #include "common/Exception.h"
@@ -177,7 +175,7 @@ void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, 
 		m_tempImage.setData( data, width, height, format, widthStep );
 
 		// Convert it and mark the image to update to texture next draw
-		cvCvtColor( &m_tempImage.getCVImage(), &m_currentCameraImage.getCVImage(), CV_BGR2GRAY );
+		cv::cvtColor( m_tempImage.getCVMat(), m_currentCameraImage.getCVMat(), CV_BGR2GRAY );
 		m_currentCameraImage.setUpdateTexture( true );
 	}
 	// Check if we have an image with 4 channels -> convert it to RGB or GRAY
