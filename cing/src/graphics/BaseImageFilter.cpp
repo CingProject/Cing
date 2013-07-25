@@ -72,7 +72,7 @@ bool BaseImageFilter::init( int width, int height, GraphicsType format )
 
   // Create the output image
 	int nChannels = (int)Ogre::PixelUtil::getNumElemBytes( Ogre::PixelFormat( format ) ) ;
-  m_outputImage = new cv::Mat( height, width, CV_8U(nChannels) );
+  m_outputImage = new cv::Mat( height, width, CV_MAKETYPE(CV_8U, nChannels) );
 
   // Store values
   m_width     = width;

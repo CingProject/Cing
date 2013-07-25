@@ -62,7 +62,7 @@ namespace Cing
 	{
 		LOG_TRIVIAL		= LogManager::LOG_TRIVIAL,	///< Trivial log level. It means that there is no problem, it is just informational
 		LOG_NORMAL		= LogManager::LOG_NORMAL,	///< Normal log level. It means that there is some problem, but the application can continue executing
-		LOG_CRITICAL	= LogManager::LOG_ERROR,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
+		LOG_CRITICAL	= LogManager::LOG_CRITICAL,	///< Critical log level. It means a failure that makes impossible the continuation of the execution (for a subsistem at least)
 		LOG_SILENT		= LogManager::LOG_SILENT	///< No message will be output
 	};
 

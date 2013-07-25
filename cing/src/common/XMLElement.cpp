@@ -417,7 +417,7 @@ String XMLElement::getStringAttribute( const String& name, const String& default
   // If it does not exist, return the default value
   if ( !result )
   {	
-	LOG_ERROR( "XMLElement::getStringAttribute: tag %s does not contain an attribute named %s, returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue );
+	LOG_ERROR( "XMLElement::getStringAttribute: tag %s does not contain an attribute named %s, returning default value %d", m_rootElem->Value(), name.c_str(), defaultValue.c_str() );
 	return defaultValue;
   }
   return result;

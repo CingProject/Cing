@@ -5,8 +5,8 @@
 #include "Cing-Precompiled.h"
 
 // Cing
-#include "graphics\GraphicsTypes.h"
-#include "graphics\Image.h"
+#include "graphics/GraphicsPrereqs.h"
+#include "graphics/Image.h"
 
 namespace Cing
 {

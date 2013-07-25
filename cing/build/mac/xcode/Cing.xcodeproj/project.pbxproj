@@ -195,6 +195,8 @@
 		A93261471237012800A0B30D /* PhysicsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004812072075009A8F12 /* PhysicsManager.cpp */; };
 		A93261481237012800A0B30D /* PhysicsBox.h in Headers */ = {isa = PBXBuildFile; fileRef = A94E004712072075009A8F12 /* PhysicsBox.h */; };
 		A93261491237012800A0B30D /* PhysicsBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94E004612072075009A8F12 /* PhysicsBox.cpp */; };
+		A93DB807179E12D400770B14 /* Cing-Precompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB805179E12D400770B14 /* Cing-Precompiled.cpp */; };
+		A93DB808179E12D400770B14 /* Cing-Precompiled.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB806179E12D400770B14 /* Cing-Precompiled.h */; };
 		A94E005912072075009A8F12 /* AudioInputFMOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A94EFFA612072075009A8F12 /* AudioInputFMOD.cpp */; };
 		A94E005A12072075009A8F12 /* AudioInputFMOD.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFA712072075009A8F12 /* AudioInputFMOD.h */; };
 		A94E005B12072075009A8F12 /* AudioPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A94EFFA812072075009A8F12 /* AudioPrereqs.h */; };
@@ -399,6 +401,8 @@
 		A91E9D701211D9D1002292DF /* BulletSoftBody.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletSoftBody.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/BulletSoftBody.framework; sourceTree = SOURCE_ROOT; };
 		A91E9D721211D9D1002292DF /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = ../../../libraries/mac/xcode/Bullet/Frameworks/LinearMath.framework; sourceTree = SOURCE_ROOT; };
 		A9325A071236FA5D00A0B30D /* libCing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCing.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A93DB805179E12D400770B14 /* Cing-Precompiled.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "Cing-Precompiled.cpp"; path = "../../../src/Cing-Precompiled.cpp"; sourceTree = "<group>"; };
+		A93DB806179E12D400770B14 /* Cing-Precompiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Cing-Precompiled.h"; path = "../../../src/Cing-Precompiled.h"; sourceTree = "<group>"; };
 		A94E000012072075009A8F12 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontManager.cpp; sourceTree = "<group>"; };
 		A94E000112072075009A8F12 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
 		A94E000212072075009A8F12 /* FontProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontProperties.h; sourceTree = "<group>"; };
@@ -667,6 +671,8 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A93DB805179E12D400770B14 /* Cing-Precompiled.cpp */,
+				A93DB806179E12D400770B14 /* Cing-Precompiled.h */,
 				A94EFFB912072075009A8F12 /* Cing.h */,
 				A94EFFA512072075009A8F12 /* audio */,
 				A94EFFAF12072075009A8F12 /* camerainput */,
@@ -1080,6 +1086,7 @@
 				A97B90261236E68F00FF585F /* RtMidi.h in Headers */,
 				43F990F4124E3C06009E5C1B /* SceneGraphElement.h in Headers */,
 				4368997112502A6800EB4F68 /* MediaPlayerOCV.h in Headers */,
+				A93DB808179E12D400770B14 /* Cing-Precompiled.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1230,6 +1237,7 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Cing" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -1330,6 +1338,7 @@
 				A97B90251236E68F00FF585F /* RtMidi.cpp in Sources */,
 				43F990F3124E3C06009E5C1B /* SceneGraphElement.cpp in Sources */,
 				4368997012502A6800EB4F68 /* MediaPlayerOCV.cpp in Sources */,
+				A93DB807179E12D400770B14 /* Cing-Precompiled.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1567,7 +1576,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -1587,7 +1596,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = i386;
 			};
 			name = Release;

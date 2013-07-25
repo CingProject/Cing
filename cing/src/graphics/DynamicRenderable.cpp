@@ -24,14 +24,14 @@ Code from: http://www.ogre3d.org/wiki/index.php/DynamicLineDrawing
 */
 
 #include "DynamicRenderable.h"
-#include "Ogre3d/include/OgreCamera.h"
-#include "Ogre3d/include/OgreHardwareBufferManager.h"
+#include "OgreCamera.h"
+#include "OgreHardwareBufferManager.h"
 
 // Framework
 #include "framework/Application.h"
 
 using namespace Ogre;
-namespace Graphics
+namespace Cing
 {
 DynamicRenderable::DynamicRenderable()
 {
@@ -47,7 +47,7 @@ void DynamicRenderable::initialize(RenderOperation::OperationType operationType,
 																	 bool useIndices)
 {
   // Check application correctly initialized (could not be if the user didn't calle size function)
-  Framework::Application::getSingleton().checkSubsystemsInit();
+    Cing::Application::getSingleton().checkSubsystemsInit();
 
 	// Initialize render operation
 	mRenderOp.operationType = operationType;

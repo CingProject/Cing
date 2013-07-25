@@ -24,14 +24,14 @@ Code from: http://www.ogre3d.org/wiki/index.php/DynamicLineDrawing
 */
 
 #include "DynamicLines.h"
-#include "Ogre3d/include/Ogre.h"
+#include "Ogre.h"
 
 #include <cassert>
 #include <cmath>
 
 using namespace Ogre;
 
-namespace Graphics
+namespace Cing
 {
 enum {
 	POSITION_BINDING,
