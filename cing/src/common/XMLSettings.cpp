@@ -23,7 +23,7 @@ Copyright (c) 2008-2009 Julio Obelleiro and Jorge Cano
 #include "Cing-Precompiled.h"
 
 #include "XMLSettings.h"
-#include "Cing.h"
+#include "framework/UserAppGlobals.h"
 #include <string>
 
 namespace Cing
