@@ -126,6 +126,9 @@
 //#include "audio/AudioInputFMOD.h"
 //#include "audio/SoundOpenAL.h"
 
+#include "audio/BaseAudioInput.h"
+#include "audio/BaseSound.h"
+
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #include "video/MediaPlayerVLC.h"
@@ -161,8 +164,10 @@ typedef	OCVCamera Capture;
 #endif
 
 // Sound and Mic
-typedef SoundFMOD Sound;
-typedef AudioInputFMOD	AudioInput;
+//typedef SoundFMOD Sound;
+//typedef AudioInputFMOD	AudioInput;
+typedef BaseSound Sound;
+typedef BaseAudioInput	AudioInput;
 
 // Graphics (Processing compatibility)
 typedef Color color;

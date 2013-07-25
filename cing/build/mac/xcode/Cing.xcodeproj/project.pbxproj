@@ -163,6 +163,9 @@
 		A93DB7E2179E029A00770B14 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93DB7E1179E029A00770B14 /* IOKit.framework */; };
 		A93DB80B179E12F400770B14 /* Cing-Precompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB809179E12F300770B14 /* Cing-Precompiled.cpp */; };
 		A93DB80C179E12F400770B14 /* Cing-Precompiled.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB80A179E12F400770B14 /* Cing-Precompiled.h */; };
+		A99F6C1717A0CE7700599195 /* AudioPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0817A0CE7700599195 /* AudioPrereqs.h */; };
+		A99F6C1817A0CE7700599195 /* BaseAudioInput.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0917A0CE7700599195 /* BaseAudioInput.h */; };
+		A99F6C1917A0CE7700599195 /* BaseSound.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0A17A0CE7700599195 /* BaseSound.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -328,6 +331,9 @@
 		A93DB7E1179E029A00770B14 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		A93DB809179E12F300770B14 /* Cing-Precompiled.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Cing-Precompiled.cpp"; sourceTree = "<group>"; };
 		A93DB80A179E12F400770B14 /* Cing-Precompiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Cing-Precompiled.h"; sourceTree = "<group>"; };
+		A99F6C0817A0CE7700599195 /* AudioPrereqs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPrereqs.h; sourceTree = "<group>"; };
+		A99F6C0917A0CE7700599195 /* BaseAudioInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseAudioInput.h; sourceTree = "<group>"; };
+		A99F6C0A17A0CE7700599195 /* BaseSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSound.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -407,6 +413,7 @@
 				A93DB65D179DFE8300770B14 /* Cing.h */,
 				A93DB80A179E12F400770B14 /* Cing-Precompiled.h */,
 				A93DB809179E12F300770B14 /* Cing-Precompiled.cpp */,
+				A99F6C0317A0CE7700599195 /* audio */,
 				A93DB651179DFE8300770B14 /* camerainput */,
 				A93DB65E179DFE8300770B14 /* common */,
 				A93DB680179DFE8300770B14 /* computervision */,
@@ -617,6 +624,16 @@
 			path = video;
 			sourceTree = "<group>";
 		};
+		A99F6C0317A0CE7700599195 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				A99F6C0817A0CE7700599195 /* AudioPrereqs.h */,
+				A99F6C0917A0CE7700599195 /* BaseAudioInput.h */,
+				A99F6C0A17A0CE7700599195 /* BaseSound.h */,
+			);
+			path = audio;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -711,6 +728,9 @@
 				A93DB7DC179DFE8300770B14 /* OCVVideoRecorder.h in Headers */,
 				A93DB7DD179DFE8300770B14 /* VideoPrereqs.h in Headers */,
 				A93DB80C179E12F400770B14 /* Cing-Precompiled.h in Headers */,
+				A99F6C1717A0CE7700599195 /* AudioPrereqs.h in Headers */,
+				A99F6C1817A0CE7700599195 /* BaseAudioInput.h in Headers */,
+				A99F6C1917A0CE7700599195 /* BaseSound.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
