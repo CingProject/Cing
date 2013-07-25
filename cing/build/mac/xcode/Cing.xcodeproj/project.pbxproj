@@ -958,7 +958,9 @@
 					"-lopencv_core",
 					"-lopencv_video",
 					"-lopencv_contrib",
+					"-lopencv_imgproc",
 					"-lopencv_ml",
+					"-lOgreOverlayStatic",
 				);
 				SDKROOT = macosx;
 			};
@@ -1026,7 +1028,9 @@
 					"-lopencv_core",
 					"-lopencv_video",
 					"-lopencv_contrib",
+					"-lopencv_imgproc",
 					"-lopencv_ml",
+					"-lOgreOverlayStatic",
 				);
 				SDKROOT = macosx;
 			};
