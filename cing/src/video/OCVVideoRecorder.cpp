@@ -2,11 +2,15 @@
 #include "Cing-Precompiled.h"
 
 #include "OCVVideoRecorder.h"
+#include "graphics/ImageResourceManager.h"
 
 // Common
 #include "common/Exception.h"
 #include "common/Release.h"
 #include "common/LogManager.h"
+
+// opencv 
+#include "opencv2/imgproc/imgproc.hpp"
 
 namespace Cing
 {
@@ -93,12 +97,6 @@ void OCVVideoRecorder::end()
 	m_bIsValid = false;
 }
 
-/**
-* @internal
-*/
-void OCVVideoRecorder::update()
-{
-}
 
 /**
 * @public
@@ -111,9 +109,14 @@ void OCVVideoRecorder::addFrame( Cing::Image& newFrame )
 	if (isOpen)
 	{
 		// HACK: Convert RGB2BGR then BGR2RGB
-		//cvtColor(newFrame.getCVMat(), newFrame.getCVMat(), CV_RGB2BGR);
-		(*m_cvVideoWriter) << newFrame.getCVMat();
-		//cvtColor(newFrame.getCVMat(), newFrame.getCVMat(), CV_BGR2RGB);
+		cv::Mat* cvTempImage =  ImageResourceManager::getSingleton().getImage( newFrame.getWidth(), newFrame.getHeight(), newFrame.getNChannels() ); 
+		if ( cvTempImage )
+			cv::cvtColor( newFrame.getCVMat(), *cvTempImage, CV_RGB2BGR );
+		
+		// Add frame to video
+		(*m_cvVideoWriter) << *cvTempImage;
+
+		ImageResourceManager::getSingleton().releaseImage( cvTempImage ); 
 	}
 	else
 		LOG_CRITICAL("OCVVideoRecorder::addFrame() - Warning: OCVVideoRecorder is closed");
@@ -126,8 +129,9 @@ void OCVVideoRecorder::addFrame( Cing::Image& newFrame )
 void OCVVideoRecorder::finish()
 {
 	// File is written to disk when calling the destructor
-	delete m_cvVideoWriter;
-	m_cvVideoWriter = NULL;
+	//delete m_cvVideoWriter;
+	//m_cvVideoWriter = NULL;
+	m_cvVideoWriter->release();
 
 	end();
 

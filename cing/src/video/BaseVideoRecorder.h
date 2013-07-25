@@ -26,7 +26,6 @@ namespace Cing
 		// Init / Release / Update (to be implemented in subclasses)
 		virtual bool		init            ( int width, int height, const std::string& fileName, float fps = 25);
 		virtual void		end             ();
-		virtual void		update          () = 0;
 
 		// Video writing control
 		virtual void		addFrame        ( Cing::Image& newFrame ) = 0;
