@@ -48,14 +48,6 @@
 		A93DB74E179DFE8300770B14 /* XMLSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB67D179DFE8300770B14 /* XMLSettings.h */; };
 		A93DB74F179DFE8300770B14 /* XMLVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB67E179DFE8300770B14 /* XMLVisitor.cpp */; };
 		A93DB750179DFE8300770B14 /* XMLVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB67F179DFE8300770B14 /* XMLVisitor.h */; };
-		A93DB751179DFE8300770B14 /* BackgroundSubtraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB681179DFE8300770B14 /* BackgroundSubtraction.cpp */; };
-		A93DB752179DFE8300770B14 /* BackgroundSubtraction.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB682179DFE8300770B14 /* BackgroundSubtraction.h */; };
-		A93DB753179DFE8300770B14 /* Blob.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB683179DFE8300770B14 /* Blob.h */; };
-		A93DB754179DFE8300770B14 /* BlobFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB684179DFE8300770B14 /* BlobFinder.cpp */; };
-		A93DB755179DFE8300770B14 /* BlobFinder.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB685179DFE8300770B14 /* BlobFinder.h */; };
-		A93DB756179DFE8300770B14 /* BlobTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB686179DFE8300770B14 /* BlobTracker.cpp */; };
-		A93DB757179DFE8300770B14 /* BlobTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB687179DFE8300770B14 /* BlobTracker.h */; };
-		A93DB758179DFE8300770B14 /* ComputerVisionPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB688179DFE8300770B14 /* ComputerVisionPrereqs.h */; };
 		A93DB759179DFE8300770B14 /* AppFramework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB68A179DFE8300770B14 /* AppFramework.cpp */; };
 		A93DB75A179DFE8300770B14 /* AppFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB68B179DFE8300770B14 /* AppFramework.h */; };
 		A93DB75B179DFE8300770B14 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB68C179DFE8300770B14 /* Application.cpp */; };
@@ -169,7 +161,21 @@
 		A99F6C2917A0E25100599195 /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2817A0E25100599195 /* Cg.framework */; };
 		A99F6C2C17A0E28A00599195 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2A17A0E28A00599195 /* CoreMedia.framework */; };
 		A99F6C2D17A0E28A00599195 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2B17A0E28A00599195 /* CoreVideo.framework */; };
+		A9D4186717A16C32002FD8D3 /* Cg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9D4186617A16C32002FD8D3 /* Cg.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A9D4186517A16C13002FD8D3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A9D4186717A16C32002FD8D3 /* Cg.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A93DB48A179DF2D200770B14 /* Cing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,14 +225,6 @@
 		A93DB67D179DFE8300770B14 /* XMLSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLSettings.h; sourceTree = "<group>"; };
 		A93DB67E179DFE8300770B14 /* XMLVisitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLVisitor.cpp; sourceTree = "<group>"; };
 		A93DB67F179DFE8300770B14 /* XMLVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLVisitor.h; sourceTree = "<group>"; };
-		A93DB681179DFE8300770B14 /* BackgroundSubtraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BackgroundSubtraction.cpp; sourceTree = "<group>"; };
-		A93DB682179DFE8300770B14 /* BackgroundSubtraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundSubtraction.h; sourceTree = "<group>"; };
-		A93DB683179DFE8300770B14 /* Blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blob.h; sourceTree = "<group>"; };
-		A93DB684179DFE8300770B14 /* BlobFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlobFinder.cpp; sourceTree = "<group>"; };
-		A93DB685179DFE8300770B14 /* BlobFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlobFinder.h; sourceTree = "<group>"; };
-		A93DB686179DFE8300770B14 /* BlobTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlobTracker.cpp; sourceTree = "<group>"; };
-		A93DB687179DFE8300770B14 /* BlobTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlobTracker.h; sourceTree = "<group>"; };
-		A93DB688179DFE8300770B14 /* ComputerVisionPrereqs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComputerVisionPrereqs.h; sourceTree = "<group>"; };
 		A93DB68A179DFE8300770B14 /* AppFramework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppFramework.cpp; sourceTree = "<group>"; };
 		A93DB68B179DFE8300770B14 /* AppFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFramework.h; sourceTree = "<group>"; };
 		A93DB68C179DFE8300770B14 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
@@ -340,6 +338,7 @@
 		A99F6C2817A0E25100599195 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = ../../../libraries/mac/xcode/Ogre3d/Frameworks/Cg.framework; sourceTree = "<group>"; };
 		A99F6C2A17A0E28A00599195 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A99F6C2B17A0E28A00599195 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		A9D4186617A16C32002FD8D3 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = ../../../libraries/mac/xcode/Ogre3d/Frameworks/Cg.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,6 +380,7 @@
 		A93DB48C179DF2D200770B14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9D4186617A16C32002FD8D3 /* Cg.framework */,
 				A99F6C2817A0E25100599195 /* Cg.framework */,
 				A93DB48F179DF2D200770B14 /* Other Frameworks */,
 			);
@@ -432,7 +432,6 @@
 				A99F6C0317A0CE7700599195 /* audio */,
 				A93DB651179DFE8300770B14 /* camerainput */,
 				A93DB65E179DFE8300770B14 /* common */,
-				A93DB680179DFE8300770B14 /* computervision */,
 				A93DB689179DFE8300770B14 /* framework */,
 				A93DB696179DFE8300770B14 /* graphics */,
 				A93DB6EB179DFE8300770B14 /* input */,
@@ -492,21 +491,6 @@
 				A93DB67F179DFE8300770B14 /* XMLVisitor.h */,
 			);
 			path = common;
-			sourceTree = "<group>";
-		};
-		A93DB680179DFE8300770B14 /* computervision */ = {
-			isa = PBXGroup;
-			children = (
-				A93DB681179DFE8300770B14 /* BackgroundSubtraction.cpp */,
-				A93DB682179DFE8300770B14 /* BackgroundSubtraction.h */,
-				A93DB683179DFE8300770B14 /* Blob.h */,
-				A93DB684179DFE8300770B14 /* BlobFinder.cpp */,
-				A93DB685179DFE8300770B14 /* BlobFinder.h */,
-				A93DB686179DFE8300770B14 /* BlobTracker.cpp */,
-				A93DB687179DFE8300770B14 /* BlobTracker.h */,
-				A93DB688179DFE8300770B14 /* ComputerVisionPrereqs.h */,
-			);
-			path = computervision;
 			sourceTree = "<group>";
 		};
 		A93DB689179DFE8300770B14 /* framework */ = {
@@ -679,11 +663,6 @@
 				A93DB74C179DFE8300770B14 /* XMLElement.h in Headers */,
 				A93DB74E179DFE8300770B14 /* XMLSettings.h in Headers */,
 				A93DB750179DFE8300770B14 /* XMLVisitor.h in Headers */,
-				A93DB752179DFE8300770B14 /* BackgroundSubtraction.h in Headers */,
-				A93DB753179DFE8300770B14 /* Blob.h in Headers */,
-				A93DB755179DFE8300770B14 /* BlobFinder.h in Headers */,
-				A93DB757179DFE8300770B14 /* BlobTracker.h in Headers */,
-				A93DB758179DFE8300770B14 /* ComputerVisionPrereqs.h in Headers */,
 				A93DB75A179DFE8300770B14 /* AppFramework.h in Headers */,
 				A93DB75C179DFE8300770B14 /* Application.h in Headers */,
 				A93DB75D179DFE8300770B14 /* AppMain.h in Headers */,
@@ -758,6 +737,7 @@
 				A93DB486179DF2D200770B14 /* Frameworks */,
 				A93DB487179DF2D200770B14 /* Headers */,
 				A93DB488179DF2D200770B14 /* Resources */,
+				A9D4186517A16C13002FD8D3 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -826,9 +806,6 @@
 				A93DB74B179DFE8300770B14 /* XMLElement.cpp in Sources */,
 				A93DB74D179DFE8300770B14 /* XMLSettings.cpp in Sources */,
 				A93DB74F179DFE8300770B14 /* XMLVisitor.cpp in Sources */,
-				A93DB751179DFE8300770B14 /* BackgroundSubtraction.cpp in Sources */,
-				A93DB754179DFE8300770B14 /* BlobFinder.cpp in Sources */,
-				A93DB756179DFE8300770B14 /* BlobTracker.cpp in Sources */,
 				A93DB759179DFE8300770B14 /* AppFramework.cpp in Sources */,
 				A93DB75B179DFE8300770B14 /* Application.cpp in Sources */,
 				A93DB760179DFE8300770B14 /* FrameworkUserAPI.cpp in Sources */,
