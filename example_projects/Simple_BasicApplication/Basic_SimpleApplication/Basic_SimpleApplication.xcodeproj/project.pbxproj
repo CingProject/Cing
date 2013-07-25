@@ -1,0 +1,308 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A9D4189917A1B208002FD8D3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D4189817A1B208002FD8D3 /* Cocoa.framework */; };
+		A9D418D717A1B2F0002FD8D3 /* Simple_BasicApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9D418D617A1B2F0002FD8D3 /* Simple_BasicApplication.cpp */; };
+		A9D418DA17A1B32D002FD8D3 /* Cing.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9D418D917A1B32D002FD8D3 /* Cing.framework */; };
+		A9D418DB17A1B33D002FD8D3 /* Cing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D418D917A1B32D002FD8D3 /* Cing.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A9D418D817A1B31A002FD8D3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A9D418DA17A1B32D002FD8D3 /* Cing.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A9D4189517A1B208002FD8D3 /* Basic_SimpleApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Basic_SimpleApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9D4189817A1B208002FD8D3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A9D4189B17A1B208002FD8D3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		A9D4189C17A1B208002FD8D3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A9D4189D17A1B208002FD8D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A9D418A017A1B208002FD8D3 /* Basic_SimpleApplication-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Basic_SimpleApplication-Info.plist"; sourceTree = "<group>"; };
+		A9D418D617A1B2F0002FD8D3 /* Simple_BasicApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simple_BasicApplication.cpp; sourceTree = "<group>"; };
+		A9D418D917A1B32D002FD8D3 /* Cing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cing.framework; path = ../../../cing/bin/mac/xcode/Release/Cing.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A9D4189217A1B208002FD8D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9D418DB17A1B33D002FD8D3 /* Cing.framework in Frameworks */,
+				A9D4189917A1B208002FD8D3 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A9D4188C17A1B208002FD8D3 = {
+			isa = PBXGroup;
+			children = (
+				A9D4189E17A1B208002FD8D3 /* Basic_SimpleApplication */,
+				A9D4189717A1B208002FD8D3 /* Frameworks */,
+				A9D4189617A1B208002FD8D3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A9D4189617A1B208002FD8D3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9D4189517A1B208002FD8D3 /* Basic_SimpleApplication.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9D4189717A1B208002FD8D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9D418D917A1B32D002FD8D3 /* Cing.framework */,
+				A9D4189817A1B208002FD8D3 /* Cocoa.framework */,
+				A9D4189A17A1B208002FD8D3 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9D4189A17A1B208002FD8D3 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9D4189B17A1B208002FD8D3 /* AppKit.framework */,
+				A9D4189C17A1B208002FD8D3 /* CoreData.framework */,
+				A9D4189D17A1B208002FD8D3 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		A9D4189E17A1B208002FD8D3 /* Basic_SimpleApplication */ = {
+			isa = PBXGroup;
+			children = (
+				A9D418D517A1B2F0002FD8D3 /* src */,
+				A9D4189F17A1B208002FD8D3 /* Supporting Files */,
+			);
+			path = Basic_SimpleApplication;
+			sourceTree = "<group>";
+		};
+		A9D4189F17A1B208002FD8D3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A9D418A017A1B208002FD8D3 /* Basic_SimpleApplication-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A9D418D517A1B2F0002FD8D3 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A9D418D617A1B2F0002FD8D3 /* Simple_BasicApplication.cpp */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A9D4189417A1B208002FD8D3 /* Basic_SimpleApplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9D418B217A1B208002FD8D3 /* Build configuration list for PBXNativeTarget "Basic_SimpleApplication" */;
+			buildPhases = (
+				A9D4189117A1B208002FD8D3 /* Sources */,
+				A9D4189217A1B208002FD8D3 /* Frameworks */,
+				A9D4189317A1B208002FD8D3 /* Resources */,
+				A9D418D817A1B31A002FD8D3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Basic_SimpleApplication;
+			productName = Basic_SimpleApplication;
+			productReference = A9D4189517A1B208002FD8D3 /* Basic_SimpleApplication.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A9D4188D17A1B208002FD8D3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Cing Project";
+			};
+			buildConfigurationList = A9D4189017A1B208002FD8D3 /* Build configuration list for PBXProject "Basic_SimpleApplication" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A9D4188C17A1B208002FD8D3;
+			productRefGroup = A9D4189617A1B208002FD8D3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A9D4189417A1B208002FD8D3 /* Basic_SimpleApplication */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A9D4189317A1B208002FD8D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A9D4189117A1B208002FD8D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9D418D717A1B2F0002FD8D3 /* Simple_BasicApplication.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A9D418B017A1B208002FD8D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					TIXML_USE_STL,
+					"DEBUG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers\"",
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers/OIS\"",
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Resources\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A9D418B117A1B208002FD8D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = TIXML_USE_STL;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers\"",
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers/OIS\"",
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Resources\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A9D418B317A1B208002FD8D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "Basic_SimpleApplication/Basic_SimpleApplication-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A9D418B417A1B208002FD8D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "Basic_SimpleApplication/Basic_SimpleApplication-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A9D4189017A1B208002FD8D3 /* Build configuration list for PBXProject "Basic_SimpleApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9D418B017A1B208002FD8D3 /* Debug */,
+				A9D418B117A1B208002FD8D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9D418B217A1B208002FD8D3 /* Build configuration list for PBXNativeTarget "Basic_SimpleApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9D418B317A1B208002FD8D3 /* Debug */,
+				A9D418B417A1B208002FD8D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A9D4188D17A1B208002FD8D3 /* Project object */;
+}

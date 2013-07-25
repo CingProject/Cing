@@ -580,7 +580,7 @@
 				A93DB487179DF2D200770B14 /* Headers */,
 				A93DB488179DF2D200770B14 /* Resources */,
 				A9D4186517A16C13002FD8D3 /* CopyFiles */,
-				A9D4188B17A19DE9002FD8D3 /* ShellScript */,
+				A9D4188B17A19DE9002FD8D3 /* Copy Headers, w/Subdirectory Structure */,
 			);
 			buildRules = (
 			);
@@ -630,18 +630,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		A9D4188B17A19DE9002FD8D3 /* ShellScript */ = {
+		A9D4188B17A19DE9002FD8D3 /* Copy Headers, w/Subdirectory Structure */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Copy Headers, w/Subdirectory Structure";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy all the header files into Headers while retaining the correct subdirectory structure\n\n# the relative path to cing src from this project location\n#echo ${SRCROOT}/../../../src/\ncd ${SRCROOT}/../../../src/\n\nfor H in `find ./ -name \"*.h\"`;  do\n    #echo ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\n    ditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone";
+			shellScript = "# Copy all the header files into Headers while retaining the correct subdirectory structure\n\n# the relative path to cing src from this project location\ncd ${SRCROOT}/../../../src/\nfor H in `find ./ -name \"*.h\"`;  do\n    #echo ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\n    ditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# boost\ncd ${SRCROOT}/../../../libraries/mac/xcode/boost/include/\nfor H in `find ./ -name \"*.*\"`;  do\n    ditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# Ogre3d\ncd ${SRCROOT}/../../../libraries/mac/xcode/Ogre3d/include/\nfor H in `find ./ -name \"*.*\"`;  do\n    ditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# OpenCV\ncd ${SRCROOT}/../../../libraries/mac/xcode/OpenCV/include/\nfor H in `find ./ -name \"*.*\"`;  do\n    ditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# PTypes\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/PTypes ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# TinyXML\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/TinyXML ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -767,7 +768,7 @@
 					"$(CING_LIBRARIES)",
 					"$(CING_HOME)/src",
 				);
-				INSTALL_PATH = "";
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(CING_LIBRARIES)/OpenCV/lib",
 					"$(CING_LIBRARIES)/PTypes/lib",
@@ -839,7 +840,7 @@
 					"$(CING_LIBRARIES)",
 					"$(CING_HOME)/src",
 				);
-				INSTALL_PATH = "";
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(CING_LIBRARIES)/OpenCV/lib",
 					"$(CING_LIBRARIES)/PTypes/lib",
