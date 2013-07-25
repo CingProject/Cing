@@ -66,7 +66,7 @@ public:
 	virtual void	end           ();
 
 	// Blob related methods
-	virtual void	update				( const Image& inImage );
+	virtual void	update				( const Image& inImage, bool sortBlobsBySize = true );
 
 	// Set methods
 	void			setMinBlobArea	( float minArea ) { m_minBlobArea = minArea; }
@@ -85,9 +85,6 @@ public:
 
 protected:
 
-	// Private methods
-	void          extractBlobsInformation();
-
 	// Attributes
 	Blobs				m_blobs;                ///< To store the found blobs
 	int					m_nBlobs;
@@ -96,10 +93,9 @@ protected:
 	unsigned int		m_maxBlobs;             ///< Max number of blos to look for
 
 	// OpenCV stuff
-	CvMemStorage*		m_findContoursStorage;  ///< To store contour data (by opencv)
-	CvSeq*				m_contour;              ///< To store opencv contours
+	std::vector<std::vector<cv::Point>>		m_contours;  ///< To store contour data (by opencv)
 
-	bool				m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+	bool									m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

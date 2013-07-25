@@ -165,7 +165,7 @@ namespace Cing
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
-		// Create the empty IplImage image
+		// Create the empty opencv Mat image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
 		
@@ -200,7 +200,7 @@ namespace Cing
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
-		// Create the empty IplImage image
+		// Create the empty opencv Mat image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
 		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
 
@@ -426,7 +426,7 @@ namespace Cing
 	*/
 	void Image::save( const std::string& name )
 	{
-		// TODO: Pass data from IplImage to m_image to save the data
+		// TODO: Pass data from opencv Mat to m_image to save the data
 		m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage.data, m_cvImage.cols, m_cvImage.rows, 1, (Ogre::PixelFormat)getFormat() );
 
 		// Store the desired path for the new image
@@ -468,7 +468,7 @@ namespace Cing
 		if ( sceneManager == NULL )
 			return;
 
-		//Release IplImage
+		//Release opencv Mat
 		m_cvImage.release();
 
 		// Release the quad

@@ -73,10 +73,10 @@ public:
 	void	setTechnique		( BgSubtractionTechnique technique ) { m_technique = technique; }
 
 	// Query  Methods
-	bool	isValid	() { return m_backgroundImage != NULL; }
+	bool	isValid	() { return m_backgroundImage.empty() == false; }
 
 	// Returns current background
-	_IplImage* getBackground() { return m_backgroundImage; }
+	cv::Mat getBackground() { return m_backgroundImage; }
 
 	// Constants
 	static const int DEFAULT_THRESHOLD; ///< Default threshold value to perform background subtraction
@@ -84,7 +84,7 @@ public:
 private:
 
 	// Attributes
-	_IplImage*	m_backgroundImage;	///< Background.	Image that will be compared with the image received in the compute method
+	cv::Mat						m_backgroundImage;	///< Background.	Image that will be compared with the image received in the compute method
 
 	// Filters used
 	ImageDifferenceFilter		m_differenceFilter;

@@ -50,11 +50,11 @@ namespace Cing
  */
 struct Blob
 {
-	typedef std::vector<Cing::Point> BlobContourPoints; ///< Contour points of a blob
+	typedef std::vector<cv::Point> BlobContourPoints; ///< Contour points of a blob
 
     // Constructors
-    Blob( double _area, CvSeq* _contour ) : area( _area ), contour( _contour ) {}
-		Blob(): area(0),contour( NULL ){}
+    Blob( double _area ) : area( _area ) {}
+		Blob(): area(0){}
 
     /// To compare two Blobs
     bool operator < ( const Blob& other ) const { return area < other.area; }
@@ -63,9 +63,9 @@ struct Blob
     double	            area;		///< Blob's area
     CvRect		        bbox;		///< Blob's bounding box
     Point				center;		///< Center of the Blob
-	BlobContourPoints	nodes;		///< Points of the Blob's contour
+	BlobContourPoints	contour;		///< Points of the Blob's contour
 
-	CvSeq*      contour;///< Internal stuff. OpenCv contour
+	//CvSeq*      contour;///< Internal stuff. OpenCv contour
 
 private:
     // This is done to avoid making contour attribute public
@@ -87,7 +87,7 @@ struct TrackedBlob
 	int			id;            // id of contour
 	float		energy;				 // oldest blobs is more energized than other 
 	bool		isActive;		   // is active?
-	Vector  velocity;      // velocity = position-last_position
+	Vector		velocity;      // velocity = position-last_position
 };
 
 } // namespace Cing
