@@ -48,6 +48,43 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #undef nil
 #include "PTypes/include/pasync.h"
 
+// temporary definitions for virtual methods, just to get things build
+
+void setup()
+{
+    // nothing
+}
+
+void keyPressed()
+{
+    // nothing
+}
+
+void mouseMoved()
+{
+    // nothing
+}
+
+void mouseReleased()
+{
+    // nothing
+}
+
+void mousePressed()
+{
+    // nothing
+}
+
+void end()
+{
+    // nothing
+}
+
+void draw()
+{
+    // nothing
+}
+
 namespace Cing
 {
 
