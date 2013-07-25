@@ -1,6 +1,6 @@
 # Package Information for pkg-config
 
-prefix=/Users/sroske/Projects/library/Cing/cing/libraries/mac/xcode4/OpenCV
+prefix=/Users/sroske/Projects/library/Cing-Dependencies/opencv-2.4.6.1/output
 exec_prefix=${prefix}
 libdir=
 includedir_old=${prefix}/include/opencv

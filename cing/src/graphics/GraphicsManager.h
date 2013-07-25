@@ -30,7 +30,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Camera3D.h"
 #include "DebugOverlay.h"
 #include "TextArea.h"
-#include "CameraController.h"
+//#include "CameraController.h"
 #include "OgreManualObject.h"
 #include "Transform.h"
 #include "Style.h"

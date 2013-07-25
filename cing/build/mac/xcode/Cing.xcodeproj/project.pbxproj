@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A927F75717A09BA10074BC68 /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A927F75617A09BA10074BC68 /* Cg.framework */; };
 		A93DB48E179DF2D200770B14 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93DB48D179DF2D200770B14 /* Cocoa.framework */; };
 		A93DB498179DF2D200770B14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A93DB496179DF2D200770B14 /* InfoPlist.strings */; };
 		A93DB724179DFE8300770B14 /* BaseCameraInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB652179DFE8300770B14 /* BaseCameraInput.cpp */; };
@@ -77,8 +76,6 @@
 		A93DB76A179DFE8300770B14 /* Box.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB69C179DFE8300770B14 /* Box.h */; };
 		A93DB76B179DFE8300770B14 /* Camera3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB69D179DFE8300770B14 /* Camera3D.cpp */; };
 		A93DB76C179DFE8300770B14 /* Camera3D.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB69E179DFE8300770B14 /* Camera3D.h */; };
-		A93DB76D179DFE8300770B14 /* CameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB69F179DFE8300770B14 /* CameraController.cpp */; };
-		A93DB76E179DFE8300770B14 /* CameraController.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB6A0179DFE8300770B14 /* CameraController.h */; };
 		A93DB76F179DFE8300770B14 /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6A1179DFE8300770B14 /* Color.cpp */; };
 		A93DB770179DFE8300770B14 /* Color.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB6A2179DFE8300770B14 /* Color.h */; };
 		A93DB771179DFE8300770B14 /* DebugOverlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6A3179DFE8300770B14 /* DebugOverlay.cpp */; };
@@ -166,10 +163,15 @@
 		A99F6C1717A0CE7700599195 /* AudioPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0817A0CE7700599195 /* AudioPrereqs.h */; };
 		A99F6C1817A0CE7700599195 /* BaseAudioInput.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0917A0CE7700599195 /* BaseAudioInput.h */; };
 		A99F6C1917A0CE7700599195 /* BaseSound.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0A17A0CE7700599195 /* BaseSound.h */; };
+		A99F6C2317A0E05300599195 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2217A0E05300599195 /* QTKit.framework */; };
+		A99F6C2617A0E1A200599195 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2417A0E1A200599195 /* Carbon.framework */; };
+		A99F6C2717A0E1A200599195 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2517A0E1A200599195 /* CoreGraphics.framework */; };
+		A99F6C2917A0E25100599195 /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2817A0E25100599195 /* Cg.framework */; };
+		A99F6C2C17A0E28A00599195 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2A17A0E28A00599195 /* CoreMedia.framework */; };
+		A99F6C2D17A0E28A00599195 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2B17A0E28A00599195 /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A927F75617A09BA10074BC68 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = ../../../libraries/mac/xcode4/Ogre3d/Frameworks/Cg.framework; sourceTree = "<group>"; };
 		A93DB48A179DF2D200770B14 /* Cing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93DB48D179DF2D200770B14 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		A93DB490179DF2D200770B14 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -245,8 +247,6 @@
 		A93DB69C179DFE8300770B14 /* Box.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box.h; sourceTree = "<group>"; };
 		A93DB69D179DFE8300770B14 /* Camera3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera3D.cpp; sourceTree = "<group>"; };
 		A93DB69E179DFE8300770B14 /* Camera3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera3D.h; sourceTree = "<group>"; };
-		A93DB69F179DFE8300770B14 /* CameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraController.cpp; sourceTree = "<group>"; };
-		A93DB6A0179DFE8300770B14 /* CameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraController.h; sourceTree = "<group>"; };
 		A93DB6A1179DFE8300770B14 /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
 		A93DB6A2179DFE8300770B14 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
 		A93DB6A3179DFE8300770B14 /* DebugOverlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugOverlay.cpp; sourceTree = "<group>"; };
@@ -334,6 +334,12 @@
 		A99F6C0817A0CE7700599195 /* AudioPrereqs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPrereqs.h; sourceTree = "<group>"; };
 		A99F6C0917A0CE7700599195 /* BaseAudioInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseAudioInput.h; sourceTree = "<group>"; };
 		A99F6C0A17A0CE7700599195 /* BaseSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSound.h; sourceTree = "<group>"; };
+		A99F6C2217A0E05300599195 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		A99F6C2417A0E1A200599195 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		A99F6C2517A0E1A200599195 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A99F6C2817A0E25100599195 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = ../../../libraries/mac/xcode/Ogre3d/Frameworks/Cg.framework; sourceTree = "<group>"; };
+		A99F6C2A17A0E28A00599195 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		A99F6C2B17A0E28A00599195 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,7 +347,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A927F75717A09BA10074BC68 /* Cg.framework in Frameworks */,
+				A99F6C2C17A0E28A00599195 /* CoreMedia.framework in Frameworks */,
+				A99F6C2D17A0E28A00599195 /* CoreVideo.framework in Frameworks */,
+				A99F6C2917A0E25100599195 /* Cg.framework in Frameworks */,
+				A99F6C2617A0E1A200599195 /* Carbon.framework in Frameworks */,
+				A99F6C2717A0E1A200599195 /* CoreGraphics.framework in Frameworks */,
+				A99F6C2317A0E05300599195 /* QTKit.framework in Frameworks */,
 				A93DB7E2179E029A00770B14 /* IOKit.framework in Frameworks */,
 				A93DB48E179DF2D200770B14 /* Cocoa.framework in Frameworks */,
 			);
@@ -370,9 +381,7 @@
 		A93DB48C179DF2D200770B14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A927F75617A09BA10074BC68 /* Cg.framework */,
-				A93DB7E1179E029A00770B14 /* IOKit.framework */,
-				A93DB48D179DF2D200770B14 /* Cocoa.framework */,
+				A99F6C2817A0E25100599195 /* Cg.framework */,
 				A93DB48F179DF2D200770B14 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -381,6 +390,13 @@
 		A93DB48F179DF2D200770B14 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A99F6C2A17A0E28A00599195 /* CoreMedia.framework */,
+				A99F6C2B17A0E28A00599195 /* CoreVideo.framework */,
+				A93DB48D179DF2D200770B14 /* Cocoa.framework */,
+				A93DB7E1179E029A00770B14 /* IOKit.framework */,
+				A99F6C2417A0E1A200599195 /* Carbon.framework */,
+				A99F6C2517A0E1A200599195 /* CoreGraphics.framework */,
+				A99F6C2217A0E05300599195 /* QTKit.framework */,
 				A93DB490179DF2D200770B14 /* AppKit.framework */,
 				A93DB491179DF2D200770B14 /* CoreData.framework */,
 				A93DB492179DF2D200770B14 /* Foundation.framework */,
@@ -523,8 +539,6 @@
 				A93DB69C179DFE8300770B14 /* Box.h */,
 				A93DB69D179DFE8300770B14 /* Camera3D.cpp */,
 				A93DB69E179DFE8300770B14 /* Camera3D.h */,
-				A93DB69F179DFE8300770B14 /* CameraController.cpp */,
-				A93DB6A0179DFE8300770B14 /* CameraController.h */,
 				A93DB6A1179DFE8300770B14 /* Color.cpp */,
 				A93DB6A2179DFE8300770B14 /* Color.h */,
 				A93DB6A3179DFE8300770B14 /* DebugOverlay.cpp */,
@@ -682,7 +696,6 @@
 				A93DB768179DFE8300770B14 /* BaseLight.h in Headers */,
 				A93DB76A179DFE8300770B14 /* Box.h in Headers */,
 				A93DB76C179DFE8300770B14 /* Camera3D.h in Headers */,
-				A93DB76E179DFE8300770B14 /* CameraController.h in Headers */,
 				A93DB770179DFE8300770B14 /* Color.h in Headers */,
 				A93DB772179DFE8300770B14 /* DebugOverlay.h in Headers */,
 				A93DB774179DFE8300770B14 /* DirectionalLight.h in Headers */,
@@ -824,7 +837,6 @@
 				A93DB767179DFE8300770B14 /* BaseLight.cpp in Sources */,
 				A93DB769179DFE8300770B14 /* Box.cpp in Sources */,
 				A93DB76B179DFE8300770B14 /* Camera3D.cpp in Sources */,
-				A93DB76D179DFE8300770B14 /* CameraController.cpp in Sources */,
 				A93DB76F179DFE8300770B14 /* Color.cpp in Sources */,
 				A93DB771179DFE8300770B14 /* DebugOverlay.cpp in Sources */,
 				A93DB773179DFE8300770B14 /* DirectionalLight.cpp in Sources */,
@@ -883,7 +895,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -919,7 +931,7 @@
 					"$(CING_LIBRARIES)",
 					"$(CING_HOME)/src",
 				);
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(CING_LIBRARIES)/OpenCV/lib",
 					"$(CING_LIBRARIES)/PTypes/lib",
@@ -956,7 +968,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -987,7 +999,7 @@
 					"$(CING_LIBRARIES)",
 					"$(CING_HOME)/src",
 				);
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(CING_LIBRARIES)/OpenCV/lib",
 					"$(CING_LIBRARIES)/PTypes/lib",
@@ -1030,8 +1042,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
 					"\"$(SRCROOT)/../../../libraries/mac/xcode4/Ogre3d/Frameworks\"",
+					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/Ogre3d/Frameworks\"",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1053,8 +1066,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
 					"\"$(SRCROOT)/../../../libraries/mac/xcode4/Ogre3d/Frameworks\"",
+					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/Ogre3d/Frameworks\"",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
