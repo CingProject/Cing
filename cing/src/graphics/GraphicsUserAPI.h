@@ -249,7 +249,8 @@ Ogre::Entity*	pickEntity				( const Vector2& screenCoordinate );
 //----------------------------------------------------------------------------------- 
 // Helpers
 //----------------------------------------------------------------------------------- 
-unsigned int numberOfChannels ( GraphicsType format );
+unsigned int	numberOfChannels	( GraphicsType format );
+GraphicsType	toCingFormat		( Ogre::PixelFormat ogreFormat );
 
 
 } // namespace Cing

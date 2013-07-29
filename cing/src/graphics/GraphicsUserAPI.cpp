@@ -1406,10 +1406,45 @@ Ogre::Entity* pickEntity( const Vector2& screenCoordinate )
 //----------------------------------------------------------------------------------- 
 // Helpers
 //----------------------------------------------------------------------------------- 
+
+// Returns the number of channels of a graphics type image format
 unsigned int numberOfChannels ( GraphicsType format )
 {
 	return Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 }
+
+// Returns the GraphicsType that correlates to an Ogre::PixelFormat
+GraphicsType toCingFormat( Ogre::PixelFormat ogreFormat )
+{
+	switch( ogreFormat )
+	{
+		case Ogre::PF_BYTE_RGB:
+			return RGB;
+		break;
+
+		case Ogre::PF_BYTE_RGBA:
+			return RGBA;
+		break;
+
+		case Ogre::PF_BYTE_BGR:
+			return BGR;
+		break;
+		
+		case Ogre::PF_BYTE_BGRA:
+			return BGRA;
+		break;
+		
+		case Ogre::PF_BYTE_L:
+			return GRAYSCALE;
+		break;
+
+		default: 
+			LOG_ERROR( "[ERROR] toGraphicType: Ogre format not supported: %d", ogreFormat );
+			return RGB;
+
+	};
+}
+
 
 
 } // namespace Cing
