@@ -25,7 +25,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Graphics includes
 #include "GraphicsManager.h"
 #include "Window.h"
-#include "ImageResourceManager.h"
 #include "TexturedQuad.h"
 #include "Image.h"
 #include "ShapeManager.h"
@@ -197,9 +196,6 @@ bool GraphicsManager::initReSources()
 		return false;
 	}
 
-	// Init ImageResourceManager
-	ImageResourceManager::getSingleton().init();
-
 	// Init ShapeManager
 	ShapeManager::getSingleton().init();
 
@@ -290,9 +286,6 @@ void GraphicsManager::end()
 	// Release scene manager
 	Ogre::Root::getSingleton().destroySceneManager( m_pSceneManager );
 	m_pSceneManager = NULL;
-
-	// Release image resource manager
-	ImageResourceManager::getSingleton().end();
 
 	// Release the Font Manager
 	FontManager::getSingleton().end();
