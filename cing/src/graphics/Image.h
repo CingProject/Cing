@@ -33,13 +33,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Ogre
 #include "OgreImage.h"
 
-// Image processing
-#include "ImageThresholdFilter.h"
-#include "ImageDifferenceFilter.h"
-
-// OpenCV
-#include "opencv2/core/core.hpp"
-
 namespace Cing
 {
 
@@ -54,7 +47,7 @@ namespace Cing
 
 		// Constructor / Destructor
 		Image				();
-		Image				( const Image& img, Ogre::SceneManager* sm = NULL );
+		Image				( const Image& img );
 		Image				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( const std::string& name, Ogre::SceneManager* sm = NULL );
@@ -63,8 +56,7 @@ namespace Cing
 		// Init / Release / Update / Save / Clone
 		void		init				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		void		initAsRenderTarget	( int width, int height );
-		void		init				( const Image& img, Ogre::SceneManager* sm = NULL );
-		//bool		load				( const std::string& path );
+		void		init				( const Image& img );
 		bool		load				( const std::string& path, Ogre::SceneManager* sm = NULL );
 		void		save				( const std::string& path );
 		void		end					();
@@ -110,8 +102,7 @@ namespace Cing
 		void  	fill    ( float r, float g, float b, float a ) { fill( Color(r, g, b, a) ); }
 
 		// Image processing
-		void	filter	( ImageProcessingFilters type );
-		void	filter	( ImageProcessingFilters type, int param1 );
+		void	filter	( ImageProcessingFilters type, float param );
 		void	toColor	();
 		void	toGray	();
 
@@ -125,8 +116,6 @@ namespace Cing
 
 		// Query methods
 		bool				isValid			() const	{ return m_bIsValid; }
-		cv::Mat&			getCVMat		()			{ return m_cvImage; }
-		const cv::Mat&		getCVMat		() const	{ return m_cvImage; }
 		int					getWidth		() const;
 		int					getHeight		() const;
 		GraphicsType		getFormat		() const;
@@ -154,9 +143,9 @@ namespace Cing
 		void	setUpdateTexture( bool updateTextureFlag = true );	
 		bool	getUpdateTexture() const;	
 
-		// Texture coordinate flip
+		// Pixel content flip
 		void	flipVertical		();
-		bool	isVFlipped			() const { return m_bVFlipped; }
+		void	flipHorizontal		();
 
 		// Render Queue control: The higher the value (0..105) the later/more on top the quad is rendered
 		void	forceRenderQueue	( unsigned int renderQueueId ) { m_quad.forceRenderQueue( renderQueueId ); }
@@ -165,19 +154,17 @@ namespace Cing
 		TexturedQuad	m_quad;						///< This is the quad (geometry) and texture necessary to be able to render the image
 	private:
 		// Private methods
-		bool	loadImageFromDisk	( const std::string& textureName, const std::string& texturePath );
+		bool	loadImageFromDisk	( const std::string& imagePath );
 
-		// Attributes
-		static ImageDifferenceFilter   m_imgDiffFilter;      ///< Filter to calculate the difference between two images
-		static ImageThresholdFilter    m_imgThresholdFilter; ///< Image to apply thresholding (posterizing) of an image
+		// Private types
+		typedef boost::shared_ptr<unsigned char> ImageDataPtr; ///< Shared storage for image data (pixels)
 
+		// Private attributes
 		std::string						m_path;				///< Path to the image file (relative to data folder)
-
-		cv::Mat 						m_cvImage;			///< Contains the image compatible with openCV
+		ImageDataPtr					m_data;				///< Actual image data (pixel content). Stored in a shared pointer to make image copy lighter (and other uses like inside STL containers).
 		Ogre::Image						m_image;			///< Contains the image data (loaded from file or dynamically created)
 		int								m_nChannels;		///< Number of channels of the image
 		bool							m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.			
-		bool							m_bVFlipped;		///< True if the image texture coordinates are flipped vertically 
 		bool							m_bUpdateTexture;	///< Indicates whether the texture will update to GPU or not.
 		bool							m_loadedFromFile;	///< True if the image was loaded from file
 		GraphicsType					m_format;			///< Format of the image

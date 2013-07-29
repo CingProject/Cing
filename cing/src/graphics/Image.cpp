@@ -29,8 +29,9 @@
 #include "Cing-Precompiled.h"
 
 #include "Image.h"
-#include "ImageResourceManager.h"
 #include "GraphicsManager.h"
+#include "BaseRenderer2D.h"
+#include "GraphicsUserAPI.h"
 
 // Common
 #include "common/Exception.h"
@@ -46,23 +47,15 @@
 // Ogre
 #include "OgreDataStream.h"
 #include "OgreSceneManager.h"
-
-// OpenCV
-#include "opencv2/imgproc/imgproc.hpp"
+#include "OgreImageCodec.h"
 
 namespace Cing
 {
-
-	// Static member init
-	ImageThresholdFilter	Image::m_imgThresholdFilter;
-	ImageDifferenceFilter	Image::m_imgDiffFilter;
-
 	/**
 	* @brief Constructor. This constructor does not load or creates any image.
 	*/
 	Image::Image():
 		m_bIsValid( false ),
-		m_bVFlipped( false ),
 		m_bUpdateTexture( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
@@ -74,14 +67,13 @@ namespace Cing
 	*
 	* @param
 	*/
-	Image::Image( const Image& img, Ogre::SceneManager* sm /*= NULL*/ ):
+	Image::Image( const Image& img):
 		m_bIsValid( false ),
-		m_bVFlipped( img.isVFlipped() ),
 		m_bUpdateTexture( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
 	{
-		init( img, sm );
+		init( img );
 	}
 
 	/**
@@ -94,7 +86,6 @@ namespace Cing
 	*/
 	Image::Image( int width, int height, GraphicsType format /*= RGB*/, Ogre::SceneManager* sm /*= NULL*/):
 		m_bIsValid( false ),
-		m_bVFlipped( false ),
 		m_bUpdateTexture( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
@@ -112,7 +103,6 @@ namespace Cing
 	*/
 	Image::Image( unsigned char* data, int width, int height, GraphicsType format /*= RGB*/, Ogre::SceneManager* sm /*= NULL*/ ):
 		m_bIsValid( false ),
-		m_bVFlipped( false ),
 		m_bUpdateTexture( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")	
@@ -129,7 +119,6 @@ namespace Cing
 	* @param name  Name of the file to be loaded. It must be placed in the data directory.
 	*/
 	Image::Image( const std::string& name, Ogre::SceneManager* sm ):
-		m_bVFlipped( false ),
 		m_bIsValid( false ),
 		m_loadedFromFile(false),
 		m_path( "NOT_LOADED_FROM_FILE")
@@ -165,12 +154,21 @@ namespace Cing
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
-		// Create the empty opencv Mat image
+		// Create the empty image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
-		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
+
+		// Create a pixel box to be able to define the format
+		// TODO: optimize this
+		size_t bufferSize = Ogre::PixelUtil::getMemorySize( width, height, 1, (Ogre::PixelFormat)format );
+		
+		// Create the memory buffer
+		m_data = ImageDataPtr( new unsigned char[bufferSize] );
+
+		// TODO: DEFINE NUMBER OF CHANNELS
+		m_image.loadDynamicImage( m_data.get(), width, height, (Ogre::PixelFormat)format );
 		
 		// Create the texture quad (to draw image)
-		m_quad.init( m_cvImage.cols, m_cvImage.rows, format, DYNAMIC_WRITE_ONLY_DISCARDABLE, sm );
+		m_quad.init( width, height, format, DYNAMIC_WRITE_ONLY_DISCARDABLE, sm );
 
 		// Store the format
 		m_format			= format;
@@ -202,10 +200,13 @@ namespace Cing
 
 		// Create the empty opencv Mat image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
-		m_cvImage.create( height, width, CV_MAKETYPE(CV_8U,m_nChannels) );
+		
+		// TODO: DEFINE NUMBER OF CHANNELS
+		m_image.resize( width, height);
+
 
 		// Create the texture quad (to draw image)
-		m_quad.init( m_cvImage.cols, m_cvImage.rows, m_format, RENDERTARGET );
+		m_quad.init( width, height, m_format, RENDERTARGET );
 
 		// The class is now initialized
 		m_bIsValid			= true;
@@ -219,9 +220,9 @@ namespace Cing
 	*
 	* @param img Image to be copied
 	*/
-	void Image::init( const Image& img, Ogre::SceneManager* sm /*= NULL*/ )
+	void Image::init( const Image& img)
 	{
-		// Check application correctly initialized (could not be if the user didn't calle size function)
+		// Check application correctly initialized (could not be if the user didn't call size() function)
 		Application::getSingleton().checkSubsystemsInit();
 
 		this->operator=( img );
@@ -233,16 +234,15 @@ namespace Cing
 
 	/**
 	 * @brief Loads an image file from disk and loads it into the texture manager so it is accessible just by the file name
-	 * @param textureName  Name to give to the texture in the texture manager once the file is loaded (could be the filename including ext).
-	 * @param texturePath  Full path to the texture file
+	 * @param imagePath  Full path to the texture file
 	 */
-	bool Image::loadImageFromDisk(const std::string& textureName, const std::string& texturePath) 
+	bool Image::loadImageFromDisk(const std::string& imagePath) 
 	{ 
 		bool image_loaded = false; 
 	
 		// Check if this texture has already been loaded
 		// TODO: INTERGRATE THIS TO OPTIMIZE
-		//Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( texturePath );
+		//Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( imagePath );
 		//if ( texture.isNull() == false )
 		//{
 		//	// Load texture into image pixels
@@ -251,24 +251,60 @@ namespace Cing
 		//}
 
 		// Load the file stream (if the image has not previously been loaded)
-		std::ifstream ifs(texturePath.c_str(), std::ios::binary|std::ios::in); 
+		std::ifstream ifs(imagePath.c_str(), std::ios::binary|std::ios::in); 
 		if (ifs.is_open()) 
 		{ 
 			// Make sure it has extension to know the file type
 			Ogre::String tex_ext; 
-			Ogre::String::size_type index_of_extension = texturePath.find_last_of('.'); 
+			Ogre::String::size_type index_of_extension = imagePath.find_last_of('.'); 
 			if (index_of_extension != Ogre::String::npos) 
 			{ 
 				// Create the ogre data stream from the file stream
-				tex_ext = texturePath.substr(index_of_extension+1); 
-				Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(texturePath, &ifs, false)); 
+				tex_ext = imagePath.substr(index_of_extension+1); 
+				Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(imagePath, &ifs, false)); 
 				
-				// Load the stream into the Ogre Image
-				m_image.load(data_stream, tex_ext); 
+				// Process image data from stream to store it in our shared pointer buffer
+				// NOTE: this code comes from Ogre::Image::load method but is used directly to be able to store the image data in our shared pointer
+                Ogre::Codec * pCodec = 0;
+
+				// derive from magic number
+                // read the first 32 bytes or file size, if less
+                size_t magicLen = std::min(data_stream->size(), (size_t)32);
+                char magicBuf[32];
+                data_stream->read(magicBuf, magicLen);
+                // return to start
+                data_stream->seek(0);
+                pCodec = Ogre::Codec::getCodec(magicBuf, magicLen);
+
+				if( !pCodec )
+				{
+					LOG_ERROR( "[error] Unable to load image [%s]", imagePath.c_str() );
+					return false;
+				}
+
+                Ogre::Codec::DecodeResult res = pCodec->decode(data_stream);
+
+                Ogre::ImageCodec::ImageData* pData = static_cast<Ogre::ImageCodec::ImageData*>(res.second.getPointer());
+
+                size_t imageWidth	= pData->width;
+                size_t imageHeight	= pData->height;
+                size_t bufferSize	= pData->size;
+                Ogre::PixelFormat imageFormat = pData->format;
+                			
+				// TODO: optimize this
+				// Create the local copy of the data (shared pointer memory). we do this to ensure we control the memory, no the ogre::image class, as in some cases it might be probelematic
+				m_data = ImageDataPtr( new unsigned char[bufferSize] );
+				std::memcpy( m_data.get(), res.first->getPtr(), bufferSize );
+
+                // Make sure stream deletes
+                res.first->setFreeOnClose(true);
+
+				// Init the Ogre::image (with our buffer)
+				m_image.loadDynamicImage( m_data.get(), imageWidth, imageHeight, imageFormat );
 				
 				// Load the texture to make it available in the future just by using the texture name
 				// TODO: INTERGRATE THIS TO OPTIMIZE
-				//Ogre::TextureManager::getSingleton().loadImage(texturePath, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image); 
+				//Ogre::TextureManager::getSingleton().loadImage(imagePath, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image); 
 				image_loaded = true; 
 			} 
 			ifs.close(); 
@@ -312,7 +348,7 @@ namespace Cing
 		// Load the image from disk
 		std::string basePath, fileName;
 		splitFilename( m_path, fileName, basePath );
-		bool loaded = loadImageFromDisk( fileName, m_path );
+		bool loaded = loadImageFromDisk( m_path );
 		if ( !loaded )
 		{
 			LOG_ERROR( "The image %s could not be loaded at %s", path.c_str(), m_path.c_str() );
@@ -332,55 +368,43 @@ namespace Cing
 		}
 
 		// Store image format (for images loaded from file, we force it to be RGB or RGBA)
-		if (m_image.getHasAlpha() )
-			m_format = RGBA;
-		else
-			m_format = RGB;
+		m_format = toCingFormat( m_image.getFormat() );
 
 		// Create the image
 		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
 		
-		// If the image has already been initialized -> release it first
-		if ( isValid () )
-			m_cvImage.release();
-
-		m_cvImage.create( m_image.getHeight(), m_image.getWidth(), CV_MAKETYPE(CV_8U,m_nChannels) );
-
-		// Create OpenCV header for the image data comming from the file (to copy it later to our opencv image)
-		cv::Mat imgData(m_cvImage.rows, m_cvImage.cols, CV_MAKETYPE(CV_8U,m_nChannels), m_image.getData(), m_image.getWidth() * m_nChannels);
-
 		// Check if we need to flip the channels red and green (for example png and jpgs are loaded as BGR by Ogre)
-		m_loadedFormat = (GraphicsType)m_image.getFormat();
-		if ( (m_loadedFormat == BGR) || (m_loadedFormat == BGRA) )
-		{
-			// No alpha channel
-			if ( m_nChannels == 3 )
-			{
-				cv::cvtColor( imgData, m_cvImage, CV_RGB2BGR );
-			}
-			// Now, we have an image with Alpha channel -> where is the alpha? (first or last byte)
-			// Alpha is last
-			else if (m_image.getFormat() == Ogre::PF_B8G8R8A8 )
-			{
-				cv::cvtColor( imgData, m_cvImage, CV_RGBA2BGRA );
-			}
-			// Alpha is first byte
-			else if (m_image.getFormat() == Ogre::PF_A8R8G8B8 )
-			{
-				// Flip Red and Blue channels leaving Apha and Green where they are
-				//int from_to[] = { 0,0,  1,3,  2,2,  3,1 };
-				int from_to[] = { 0,2,  1,1,  2,0,  3,3 };
-				cv::mixChannels( &imgData, 1, &m_cvImage, 1, from_to, 4 );
-			}
+		//m_loadedFormat = (GraphicsType)m_image.getFormat();
+		//if ( (m_loadedFormat == BGR) || (m_loadedFormat == BGRA) )
+		//{
+		//	// No alpha channel
+		//	if ( m_nChannels == 3 )
+		//	{
+		//		cv::cvtColor( imgData, m_cvImage, CV_RGB2BGR );
+		//	}
+		//	// Now, we have an image with Alpha channel -> where is the alpha? (first or last byte)
+		//	// Alpha is last
+		//	else if (m_image.getFormat() == Ogre::PF_B8G8R8A8 )
+		//	{
+		//		cv::cvtColor( imgData, m_cvImage, CV_RGBA2BGRA );
+		//	}
+		//	// Alpha is first byte
+		//	else if (m_image.getFormat() == Ogre::PF_A8R8G8B8 )
+		//	{
+		//		// Flip Red and Blue channels leaving Apha and Green where they are
+		//		//int from_to[] = { 0,0,  1,3,  2,2,  3,1 };
+		//		int from_to[] = { 0,2,  1,1,  2,0,  3,3 };
+		//		cv::mixChannels( &imgData, 1, &m_cvImage, 1, from_to, 4 );
+		//	}
 
-		}// Format not "under control" -> not touching byte order
-		else
-		{
-			LOG( "Image::load. Format not \"under control\". Not altering byte order, colors could be swapped" );
-			imgData.copyTo(m_cvImage);
-		}
+		//}// Format not "under control" -> not touching byte order
+		//else
+		//{
+		//	LOG( "Image::load. Format not \"under control\". Not altering byte order, colors could be swapped" );
+		//	imgData.copyTo(m_cvImage);
+		//}
 
-		imgData.release();
+		//imgData.release();
 
 		if ( sm ==NULL )
 		{
@@ -405,9 +429,6 @@ namespace Cing
 		m_bIsValid = true;
 		m_bUpdateTexture = false;
 
-		// Now we can release the image used by the image loader
-		m_image.freeMemory();
-
 		return true;
 		
 	}
@@ -426,9 +447,6 @@ namespace Cing
 	*/
 	void Image::save( const std::string& name )
 	{
-		// TODO: Pass data from opencv Mat to m_image to save the data
-		m_image.loadDynamicImage( (Ogre::uchar*)m_cvImage.data, m_cvImage.cols, m_cvImage.rows, 1, (Ogre::PixelFormat)getFormat() );
-
 		// Store the desired path for the new image
 		std::string savePath = name;
 
@@ -469,7 +487,7 @@ namespace Cing
 			return;
 
 		//Release opencv Mat
-		m_cvImage.release();
+		m_image.freeMemory();
 
 		// Release the quad
 		m_quad.end();
@@ -507,8 +525,9 @@ namespace Cing
 			format = m_format;
 
 		// Check dimensions
-		int channels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
-		if ( (width != m_cvImage.cols) || (height != m_cvImage.rows) || (channels != m_cvImage.channels()) )
+		int inChannels		= (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
+		int currentChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_image.getFormat() );
+		if ( (width != m_image.getWidth()) || (height != m_image.getHeight()) || (inChannels != currentChannels) )
 		{
 			LOG_ERROR( "Trying to set data with a wrong size of number of channels" );
 			return;
@@ -516,9 +535,13 @@ namespace Cing
 
 		// Set the data
 		if ( widthStep == -1 )
-			widthStep = width*channels;
-		cv::Mat imgData(height, width, CV_MAKETYPE(CV_8U,channels), (void*)imageData, widthStep);
-		imgData.copyTo(m_cvImage);
+			widthStep = width*inChannels;
+		
+		// NOTE: this cast is due to Ogre::Image.loadDynamicImage not receiving a const pointer when it should
+		unsigned char* data = const_cast<unsigned char*>(imageData);
+
+		// Load data into our image
+		m_image.loadDynamicImage( data, width, height, m_image.getFormat() );
 
 		// Make the image to be updated to texture in the next draw
 		m_bUpdateTexture = true;
@@ -530,7 +553,7 @@ namespace Cing
 	 */	
 	unsigned char* Image::getData() 
 	{ 
-		return isValid()? m_cvImage.data: NULL; 
+		return isValid()? m_image.getData(): NULL; 
 	}
 
 	/**
@@ -539,7 +562,7 @@ namespace Cing
 	 */	
 	const unsigned char* Image::getData() const
 	{ 
-		return isValid()? m_cvImage.data: NULL; 
+		return isValid()? m_image.getData(): NULL; 
 	}
 
 	/**
@@ -548,7 +571,7 @@ namespace Cing
 	*/
 	int Image::getWidth() const
 	{
-		return m_cvImage.data? (int)m_cvImage.cols: 0;
+		return m_image.getWidth();
 	}
 
 	/**
@@ -557,7 +580,7 @@ namespace Cing
 	*/
 	int Image::getHeight() const
 	{
-		return m_cvImage.data? (int)m_cvImage.rows: 0;
+		return m_image.getHeight();
 	}
 
 	/**
@@ -566,7 +589,7 @@ namespace Cing
 	*/
 	GraphicsType Image::getFormat() const
 	{
-		// Return the stored format (as the image was not loaded from file)
+		// Return the stored format
 		return m_format;
 	}
 
@@ -584,46 +607,11 @@ namespace Cing
 			THROW_EXCEPTION( "Trying to get a pixel from an invalid image" );
 
 		// Check boundaries
-		if ( x < 0 )				x = 0;
-		if ( x > m_cvImage.cols )	x = m_cvImage.cols - 1;
-		if ( y < 0 )				y = 0;
-		if ( y > m_cvImage.rows)	y = m_cvImage.rows -1 ;
+		x = constrain(x, 0, m_image.getWidth()-1);
+		y = constrain(y, 0, m_image.getHeight()-1);
 
 		// Read color
-		int			   channels = m_cvImage.channels();
-		unsigned char* pixelPtr = m_cvImage.data + m_cvImage.step * y;
-		unsigned char blue, red, green, alpha = 0;
-
-		switch( channels )
-		{
-		case 1:
-			blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
-			green = blue;
-			red   = blue;
-			alpha = 255;
-			break;
-		case 2:
-			THROW_EXCEPTION( "Invalid number of channels in image" );
-			break;
-		case 3:
-			blue  = ((int)pixelPtr[ x*channels + 0 ]);
-			green = ((int)pixelPtr[ x*channels + 1 ]);
-			red   = ((int)pixelPtr[ x*channels + 2 ]);
-			alpha = 255;
-			break;
-		case 4:
-			blue  = (abs)((int)pixelPtr[ x*channels + 0 ]);
-			green = (abs)((int)pixelPtr[ x*channels + 1 ]);
-			red   = (abs)((int)pixelPtr[ x*channels + 2 ]);
-			alpha = (abs)((int)pixelPtr[ x*channels + 3 ]);
-			break;
-		default:
-			THROW_EXCEPTION( "Invalid number of channels in image" )
-				break;
-		}
-
-		// Return read value
-		return Color( red, green, blue, alpha );
+		return m_image.getColourAt(x, y, 1);
 	}
 
 	/**
@@ -636,14 +624,23 @@ namespace Cing
 	}
 
 	/**
-	* @brief Flips the texture coordinates vertically
-	*/
+	 * @brief Flips the pixels vertically 
+	 * @note This is slower as it physically flips the image pixels. You can just call scale(1, -1) for example to flip vertically before drawing the image, instead
+	 * of flipping the pixel content. You can also call flip in the TexturedQuad, which wil just flip the texture coordinates of the quad used to draw the image.
+	 */
 	void Image::flipVertical()
 	{
-		m_bVFlipped = !m_bVFlipped;
+		m_image.flipAroundY();
+	}
 
-		// Flip quad's texture coordinates
-		m_quad.flipVertical( m_bVFlipped );
+	/**
+	 * @brief Flips the pixels horizontally
+	 * @note This is slower as it physically flips the image pixels. You can just call scale(-1, 1) for example to flip horizontally before drawing the image, instead
+	 * of flipping the pixel content. You can also call flip in the TexturedQuad, which wil just flip the texture coordinates of the quad used to draw the image.
+	 */
+	void Image::flipHorizontal()
+	{
+		m_image.flipAroundX();
 	}
 
 	/**
@@ -808,58 +805,22 @@ namespace Cing
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
 
+		// Get the scene manager of the other iamge's texture quad so that both images are in the same scene manager.
+		Ogre::SceneManager* sm = ( const_cast< Cing::Image* > ( &other ) )->getTexturedQuad().getSceneManager();
+
 		// Check if the image is initialized -> if not initialize with "other"'s format and size
-
-		Ogre::SceneManager* sm = NULL;
-
 		if ( !isValid() )
 		{
-			Ogre::SceneManager* sm = ( const_cast< Cing::Image* > ( &other ) )->getTexturedQuad().getSceneManager();
 			init( other.getWidth(), other.getHeight(), other.getFormat(), sm );
 		}
 
-		// Check if the size of the image differs
-		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) && sm != NULL )
+		// Check if the size of the image differs or the number of channels... just recreate it
+		// TODO: optimize this
+		if ( (other.getWidth() != getWidth()) || (other.getHeight() != getHeight()) || (other.getNChannels() != getNChannels()) )
 		{
 			LOG( "Image will be recreated as the size of both images differ" );
 			end();
-			init( other.getWidth(), other.getHeight(), other.getFormat(), sm );
-			
-			// Check if the image was v flipped
-			if ( m_bVFlipped )
-				m_quad.flipVertical();
-		}
-	
-		// Check if we have to convert from color to gray
-		if ( (other.getNChannels() == 3) && (getNChannels() == 1) )
-		{
-			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is color (3 channels) but we are grayscale (1 channel). Image will be converted to grayscale in order to be assigned" );
-
-			// Convert image
-			cv::cvtColor( other.getCVMat(), getCVMat(), CV_RGB2GRAY );
-		}
-		// Same but the received image has also alpha channel
-		else if ( (other.getNChannels() == 4) && (getNChannels() == 1) )
-		{
-			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is color + alpha (4 channels) but we are grayscale (1 channel). Image will be converted to grayscale in order to be assigned" );
-
-			// Convert image
-			cv::cvtColor( other.getCVMat(), getCVMat(), CV_RGBA2GRAY );
-		}
-		// Other direction: the received image is gray and we are color - convert it
-		else if ( (other.getNChannels() == 1) && (getNChannels() == 3) ) 
-		{
-			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is gray (1 channel) but we are color (3 channel). Image will be converted to color in order to be assigned" );
-
-			// Convert image
-			cv::cvtColor( other.getCVMat(), getCVMat(), CV_GRAY2RGB );
-		}
-		// Same but we have alpha
-		else if ( (other.getNChannels() == 1) && (getNChannels() == 4) ) {
-			LOG_ERROR_NTIMES( 6, "Performance Warning: Received image is gray (1 channel) but we are color + alpha (4 channel). Image will be converted to color in order to be assigned" );
-
-			// Convert image
-			cv::cvtColor( other.getCVMat(), getCVMat(), CV_GRAY2RGBA );
+			init( other.getWidth(), other.getHeight(), other.getFormat(), sm );			
 		}
 		// Looks like we have the same number of channels, just copy over
 		else
@@ -879,16 +840,17 @@ namespace Cing
 	*
 	* @param other Image to compare
 	*/
-	bool Image::operator==(const Image& other) const {
-
-		unsigned char *original_data = m_cvImage.data; 
-		unsigned char *other_data = other.m_cvImage.data;
-
-		if(this->m_cvImage.rows!= other.m_cvImage.rows || this->m_cvImage.cols != other.m_cvImage.cols || this->m_cvImage.channels() != other.m_cvImage.channels())
+	bool Image::operator==(const Image& other) const 
+	{
+		// First check format
+		if( getWidth() != other.getWidth() || getHeight() != other.getHeight() || getNChannels() != other.getNChannels() )
+		{
 			return false;
+		}
+		// if still equal compare at a pixel level
 		else
 		{
-			if( 0 == memcmp(original_data,other_data, other.m_cvImage.rows * other.m_cvImage.cols * other.m_cvImage.channels() ) )
+			if( 0 == memcmp( m_image.getData(), other.m_image.getData(), other.getWidth() * other.getHeight() * other.getNChannels() ) )
 				return true;
 			else
 				return false;
@@ -966,7 +928,7 @@ namespace Cing
 	*/
 	void Image::updateTexture()
 	{
-		m_quad.updateTexture( m_cvImage.data, m_cvImage.cols, m_cvImage.rows, getFormat());
+		m_quad.updateTexture( m_image.getData(), getWidth(), getHeight(), getFormat() );
 		m_bUpdateTexture = false;
 	}
 
@@ -982,156 +944,156 @@ namespace Cing
 	*/
 	void Image::triangle( int x1, int y1, int x2, int y2, int x3, int y3 )
 	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+	//	// Check the image is valid
+	//	if ( !isValid() )
+	//		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		// Get Stroke and Fill Color
-		GraphicsManager& graphManager	= GraphicsManager::getSingleton();
-		Color strokeColor				= graphManager.getStrokeColor();
-		Color fillColor					= graphManager.getFillColor();
-		int   strokeWeight				= graphManager.getStrokeWeight();
+	//	// Get Stroke and Fill Color
+	//	GraphicsManager& graphManager	= GraphicsManager::getSingleton();
+	//	Color strokeColor				= graphManager.getStrokeColor();
+	//	Color fillColor					= graphManager.getFillColor();
+	//	int   strokeWeight				= graphManager.getStrokeWeight();
 
-		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
-		// as opencv does not support transparent drawing
-		cv::Mat* canvasImage = &m_cvImage;
-		cv::Mat* alphaCanvasImage = NULL;
+	//	// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
+	//	// as opencv does not support transparent drawing
+	//	cv::Mat* canvasImage = &m_cvImage;
+	//	cv::Mat* alphaCanvasImage = NULL;
 
-		// If there is transparency involved
-		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
-		{
-			// Request a temporary image to draw the transparent shape
-			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
-		
-			// Fill it with the current image content
-			m_cvImage.copyTo( *alphaCanvasImage );
+	//	// If there is transparency involved
+	//	if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
+	//	{
+	//		// Request a temporary image to draw the transparent shape
+	//		alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+	//	
+	//		// Fill it with the current image content
+	//		m_cvImage.copyTo( *alphaCanvasImage );
 
-			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = alphaCanvasImage;
+	//		// The canvas will be the temp image to draw on it and later on blend it with the current cv image
+	//		canvasImage = alphaCanvasImage;
 
-		}
+	//	}
 
-		// Draw Fill
-		if (graphManager.getFill())
-		{
-			// Get Fill Color
-			Color color        = graphManager.getFillColor();
-			cv::Point pts[3] = { cv::Point(x1,y1), cv::Point(x2,y2), cv::Point(x3,y3)};
+	//	// Draw Fill
+	//	if (graphManager.getFill())
+	//	{
+	//		// Get Fill Color
+	//		Color color        = graphManager.getFillColor();
+	//		cv::Point pts[3] = { cv::Point(x1,y1), cv::Point(x2,y2), cv::Point(x3,y3)};
 
-			if (graphManager.getSmooth())
-				cv::fillConvexPoly( *canvasImage, (const cv::Point*)&pts, 3, cv::Scalar( color.r, color.g, color.b ), CV_AA, 0 );
-			else
-				cv::fillConvexPoly( *canvasImage, (const cv::Point*)&pts, 3, cv::Scalar( color.r, color.g, color.b ), 4, 0 );
-		}
+	//		if (graphManager.getSmooth())
+	//			cv::fillConvexPoly( *canvasImage, (const cv::Point*)&pts, 3, cv::Scalar( color.r, color.g, color.b ), CV_AA, 0 );
+	//		else
+	//			cv::fillConvexPoly( *canvasImage, (const cv::Point*)&pts, 3, cv::Scalar( color.r, color.g, color.b ), 4, 0 );
+	//	}
 
-		// Draw stroke
-		if (graphManager.getStroke())
-		{
-			if (graphManager.getSmooth())
-			{
-				cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
-				cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
-				cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
-			}else{																														 
-				cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
-				cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
-				cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
-			}																														 
-		}																															  	
+	//	// Draw stroke
+	//	if (graphManager.getStroke())
+	//	{
+	//		if (graphManager.getSmooth())
+	//		{
+	//			cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+	//			cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+	//			cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+	//		}else{																														 
+	//			cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+	//			cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+	//			cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+	//		}																														 
+	//	}																															  	
 
-		// If there is transparency involved -> blend the result and release the temp image used for transparency
-		if ( graphManager.getFill() && (fillColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	// If there is transparency involved -> blend the result and release the temp image used for transparency
+	//	if ( graphManager.getFill() && (fillColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
-			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
-			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
-			// This warning is to nofity it
-			if ( graphManager.getStroke() && (strokeColor.a < 255) )
-				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+	//		// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+	//		// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+	//		// This warning is to nofity it
+	//		if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//			LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
 
-		}
-		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
-		}
+	//	}
+	//	else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	}
 
-		// Update texture when the next drawing call is made by the user															  
-		m_bUpdateTexture = true;
+	//	// Update texture when the next drawing call is made by the user															  
+	//	m_bUpdateTexture = true;
 	}
 
-	/**
-	* @brief Draws a line inside an image
-	*
-	* @param x1 x, first point
-	* @param y1 y, first point
-	* @param x2 x, end point
-	* @param y2 y, end point
-	*/
+	///**
+	//* @brief Draws a line inside an image
+	//*
+	//* @param x1 x, first point
+	//* @param y1 y, first point
+	//* @param x2 x, end point
+	//* @param y2 y, end point
+	//*/
 	void Image::line( int x1, int y1, int x2, int y2 )
 	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+	//	// Check the image is valid
+	//	if ( !isValid() )
+	//		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		// Get Stroke and Fill Color
-		GraphicsManager& graphManager = GraphicsManager::getSingleton();
-		Color color        = graphManager.getStrokeColor();
-		int   strokeWeight = graphManager.getStrokeWeight();
+	//	// Get Stroke and Fill Color
+	//	GraphicsManager& graphManager = GraphicsManager::getSingleton();
+	//	Color color        = graphManager.getStrokeColor();
+	//	int   strokeWeight = graphManager.getStrokeWeight();
 
-		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
-		// as opencv does not support transparent drawing
-		cv::Mat* canvasImage = &m_cvImage;
-		cv::Mat* alphaCanvasImage = NULL;
+	//	// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
+	//	// as opencv does not support transparent drawing
+	//	cv::Mat* canvasImage = &m_cvImage;
+	//	cv::Mat* alphaCanvasImage = NULL;
 
-		// If there is transparency involved
-		if ( color.a < 255 )
-		{
-			// Request a temporary image to draw the transparent shape
-			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
-		
-			// Fill it with the current image content
-			m_cvImage.copyTo( *alphaCanvasImage );
+	//	// If there is transparency involved
+	//	if ( color.a < 255 )
+	//	{
+	//		// Request a temporary image to draw the transparent shape
+	//		alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+	//	
+	//		// Fill it with the current image content
+	//		m_cvImage.copyTo( *alphaCanvasImage );
 
-			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = alphaCanvasImage;
+	//		// The canvas will be the temp image to draw on it and later on blend it with the current cv image
+	//		canvasImage = alphaCanvasImage;
 
-		}
+	//	}
 
-		// Draw 
-		if (graphManager.getSmooth())
-		{
-			cv::line(	*canvasImage,
-						cv::Point(x1,y1),
-						cv::Point(x2,y2),
-						cv::Scalar( color.r, color.g, color.b ),
-						strokeWeight,	///< Thickness.
-						CV_AA,			///< Type of the ellipse boundary, see cvLine description.
-						0);				///< Number of fractional bits in the center coordinates and axes' values.
-		}else{
-			cv::line(	*canvasImage,
-						cv::Point(x1,y1),
-						cv::Point(x2,y2),
-						cv::Scalar( color.r, color.g, color.b ),
-						strokeWeight,	///< Thickness.
-						4,				///< Type of the ellipse boundary, see cvLine description.
-						0); 			///< Number of fractional bits in the center coordinates and axes' values.
-		}
+	//	// Draw 
+	//	if (graphManager.getSmooth())
+	//	{
+	//		cv::line(	*canvasImage,
+	//					cv::Point(x1,y1),
+	//					cv::Point(x2,y2),
+	//					cv::Scalar( color.r, color.g, color.b ),
+	//					strokeWeight,	///< Thickness.
+	//					CV_AA,			///< Type of the ellipse boundary, see cvLine description.
+	//					0);				///< Number of fractional bits in the center coordinates and axes' values.
+	//	}else{
+	//		cv::line(	*canvasImage,
+	//					cv::Point(x1,y1),
+	//					cv::Point(x2,y2),
+	//					cv::Scalar( color.r, color.g, color.b ),
+	//					strokeWeight,	///< Thickness.
+	//					4,				///< Type of the ellipse boundary, see cvLine description.
+	//					0); 			///< Number of fractional bits in the center coordinates and axes' values.
+	//	}
 
-		// If there is transparency involved -> blend the result
-		if ( color.a < 255 )
-		{
-			// Blend the result
-			cv::addWeighted( m_cvImage, (color.getHighRange()-color.a)/color.getHighRange(), *canvasImage, color.a/color.getHighRange(), 0, m_cvImage );
+	//	// If there is transparency involved -> blend the result
+	//	if ( color.a < 255 )
+	//	{
+	//		// Blend the result
+	//		cv::addWeighted( m_cvImage, (color.getHighRange()-color.a)/color.getHighRange(), *canvasImage, color.a/color.getHighRange(), 0, m_cvImage );
 
-			// Release temp image
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
-		}
+	//		// Release temp image
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	}
 
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+	//	// Update texture when the next drawing call is made by the user
+	//	m_bUpdateTexture = true;
 	}
 
 	/**
@@ -1147,115 +1109,116 @@ namespace Cing
 	*/
 	void Image::arc( int x, int y, int width, int height, float start, float end )
 	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+	//	// Check the image is valid
+	//	if ( !isValid() )
+	//		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		// Convert from Radians to degrees(to keep compatibility with processing)
-		// TODO: should keep the 360 flip only in Processing Mode?
-		start	= 360 - degrees(start);
-		end		= 360 - degrees(end);
+	//	// Convert from Radians to degrees(to keep compatibility with processing)
+	//	// TODO: should keep the 360 flip only in Processing Mode?
+	//	start	= 360 - degrees(start);
+	//	end		= 360 - degrees(end);
 
-		// Get Stroke and Fill Color
-		GraphicsManager& graphManager	= GraphicsManager::getSingleton();
-		Color strokeColor				= graphManager.getStrokeColor();
-		Color fillColor					= graphManager.getFillColor();
-		int   strokeWeight				= graphManager.getStrokeWeight();
+	//	// Get Stroke and Fill Color
+	//	GraphicsManager& graphManager	= GraphicsManager::getSingleton();
+	//	Color strokeColor				= graphManager.getStrokeColor();
+	//	Color fillColor					= graphManager.getFillColor();
+	//	int   strokeWeight				= graphManager.getStrokeWeight();
 
-		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
-		// as opencv does not support transparent drawing
-		cv::Mat* canvasImage = &m_cvImage;
-		cv::Mat* alphaCanvasImage = NULL;
+	//	// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
+	//	// as opencv does not support transparent drawing
+	//	cv::Mat* canvasImage = &m_cvImage;
+	//	cv::Mat* alphaCanvasImage = NULL;
 
-		// If there is transparency involved
-		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
-		{
-			// Request a temporary image to draw the transparent shape
-			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
-		
-			// Fill it with the current image content
-			m_cvImage.copyTo( *alphaCanvasImage );
+	//	// If there is transparency involved
+	//	if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
+	//	{
+	//		// Request a temporary image to draw the transparent shape
+	//		alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+	//	
+	//		// Fill it with the current image content
+	//		m_cvImage.copyTo( *alphaCanvasImage );
 
-			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = alphaCanvasImage;
+	//		// The canvas will be the temp image to draw on it and later on blend it with the current cv image
+	//		canvasImage = alphaCanvasImage;
 
-		}
+	//	}
 
-		if (graphManager.getFill())
-		{
-			if (graphManager.getSmooth())
-			{
-				cv::ellipse(	*canvasImage,					///-> Image.
-								cv::Point(x,y),					///-> Center of the ellipse.
-								cvSize(width/2,height/2),	///-> Length of the ellipse axes.
-								0,								///->	Rotation angle.
-								start,							///-> Starting angle of the elliptic arc.
-								end,							///-> Ending angle of the elliptic arc.
-								cv::Scalar(fillColor.r, fillColor.g, fillColor.b),///-> Ellipse color.
-								-1,
-								CV_AA);							///-> Thickness of the ellipse arc.
-			}else{
-				cv::ellipse(	*canvasImage,					///-> Image.
-								cv::Point(x,y),					///-> Center of the ellipse.
-								cvSize(width/2,height/2),	///-> Length of the ellipse axes.
-								0,								///->	Rotation angle.
-								start,							///-> Starting angle of the elliptic arc.
-								end,							///-> Ending angle of the elliptic arc.
-								cv::Scalar(fillColor.r, fillColor.g, fillColor.b),///-> Ellipse color.
-								-1,
-								4);								///-> Thickness of the ellipse arc.
-			}
-		}
+	//	if (graphManager.getFill())
+	//	{
+	//		if (graphManager.getSmooth())
+	//		{
+	//			cv::ellipse(	*canvasImage,					///-> Image.
+	//							cv::Point(x,y),					///-> Center of the ellipse.
+	//							cvSize(width/2,height/2),	///-> Length of the ellipse axes.
+	//							0,								///->	Rotation angle.
+	//							start,							///-> Starting angle of the elliptic arc.
+	//							end,							///-> Ending angle of the elliptic arc.
+	//							cv::Scalar(fillColor.r, fillColor.g, fillColor.b),///-> Ellipse color.
+	//							-1,
+	//							CV_AA);							///-> Thickness of the ellipse arc.
+	//		}else{
+	//			cv::ellipse(	*canvasImage,					///-> Image.
+	//							cv::Point(x,y),					///-> Center of the ellipse.
+	//							cvSize(width/2,height/2),	///-> Length of the ellipse axes.
+	//							0,								///->	Rotation angle.
+	//							start,							///-> Starting angle of the elliptic arc.
+	//							end,							///-> Ending angle of the elliptic arc.
+	//							cv::Scalar(fillColor.r, fillColor.g, fillColor.b),///-> Ellipse color.
+	//							-1,
+	//							4);								///-> Thickness of the ellipse arc.
+	//		}
+	//	}
 
-		if (graphManager.getStroke())
-		{			
-			if (graphManager.getSmooth())
-			{
-				cv::ellipse(	*canvasImage,					///-> Image.
-								cv::Point(x,y),					///-> Center of the ellipse.
-								cvSize(width/2,height/2),///-> Length of the ellipse axes.
-								0,								///->	Rotation angle.
-								start,							///-> Starting angle of the elliptic arc.
-								end,							///-> Ending angle of the elliptic arc.
-								cv::Scalar(strokeColor.r, strokeColor.g, strokeColor.b ),///-> Ellipse color.
-								strokeWeight,
-								CV_AA );								///-> Thickness of the ellipse arc.
-			}else{
-				cv::ellipse(	*canvasImage,					///-> Image.
-								cv::Point(x,y),					///-> Center of the ellipse.
-								cvSize(width/2,height/2),	///-> Length of the ellipse axes.
-								0,								///->	Rotation angle.
-								start,							///-> Starting angle of the elliptic arc.
-								end,							///-> Ending angle of the elliptic arc.
-								cv::Scalar(strokeColor.r, strokeColor.g, strokeColor.b ),///-> Ellipse color.
-								strokeWeight,
-								4 );							///-> Thickness of the ellipse arc.
+	//	if (graphManager.getStroke())
+	//	{			
+	//		if (graphManager.getSmooth())
+	//		{
+	//			cv::ellipse(	*canvasImage,					///-> Image.
+	//							cv::Point(x,y),					///-> Center of the ellipse.
+	//							cvSize(width/2,height/2),///-> Length of the ellipse axes.
+	//							0,								///->	Rotation angle.
+	//							start,							///-> Starting angle of the elliptic arc.
+	//							end,							///-> Ending angle of the elliptic arc.
+	//							cv::Scalar(strokeColor.r, strokeColor.g, strokeColor.b ),///-> Ellipse color.
+	//							strokeWeight,
+	//							CV_AA );								///-> Thickness of the ellipse arc.
+	//		}else{
+	//			cv::ellipse(	*canvasImage,					///-> Image.
+	//							cv::Point(x,y),					///-> Center of the ellipse.
+	//							cvSize(width/2,height/2),	///-> Length of the ellipse axes.
+	//							0,								///->	Rotation angle.
+	//							start,							///-> Starting angle of the elliptic arc.
+	//							end,							///-> Ending angle of the elliptic arc.
+	//							cv::Scalar(strokeColor.r, strokeColor.g, strokeColor.b ),///-> Ellipse color.
+	//							strokeWeight,
+	//							4 );							///-> Thickness of the ellipse arc.
 
-			}
-		}
+	//		}
+	//	}
 
-		// If there is transparency involved -> blend the result and release the temp image used for transparency
-		if ( graphManager.getFill() && (fillColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	// If there is transparency involved -> blend the result and release the temp image used for transparency
+	//	if ( graphManager.getFill() && (fillColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
-			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
-			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
-			// This warning is to nofity it
-			if ( graphManager.getStroke() && (strokeColor.a < 255) )
-				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+	//		// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+	//		// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+	//		// This warning is to nofity it
+	//		if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//			LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
 
-		}
-		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
-		}
+	//	}
+	//	else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	}
 
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+	//	// Update texture when t:he next drawing call is made by the user
+	//	m_bUpdateTexture = true;
 	}
+
 	/**
 	* @brief Draws a point ( one pixel )
 	*
@@ -1265,53 +1228,53 @@ namespace Cing
 	void Image::point( int x, int y )
 	{
 
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+	//	// Check the image is valid
+	//	if ( !isValid() )
+	//		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		// Get Stroke and Fill Color
-		GraphicsManager& graphManager	= GraphicsManager::getSingleton();
-		Color strokeColor				= graphManager.getStrokeColor();
-		int   strokeWeight				= graphManager.getStrokeWeight();
+	//	// Get Stroke and Fill Color
+	//	GraphicsManager& graphManager	= GraphicsManager::getSingleton();
+	//	Color strokeColor				= graphManager.getStrokeColor();
+	//	int   strokeWeight				= graphManager.getStrokeWeight();
 
-		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
-		// as opencv does not support transparent drawing
-		cv::Mat* canvasImage = &m_cvImage;
-		cv::Mat* alphaCanvasImage = NULL;
+	//	// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
+	//	// as opencv does not support transparent drawing
+	//	cv::Mat* canvasImage = &m_cvImage;
+	//	cv::Mat* alphaCanvasImage = NULL;
 
-		// If there is transparency involved
-		if ( strokeColor.a < 255 )
-		{
-			// Request a temporary image to draw the transparent shape
-			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
-		
-			// Fill it with the current image content
-			m_cvImage.copyTo( *alphaCanvasImage );
+	//	// If there is transparency involved
+	//	if ( strokeColor.a < 255 )
+	//	{
+	//		// Request a temporary image to draw the transparent shape
+	//		alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+	//	
+	//		// Fill it with the current image content
+	//		m_cvImage.copyTo( *alphaCanvasImage );
 
-			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = alphaCanvasImage;
+	//		// The canvas will be the temp image to draw on it and later on blend it with the current cv image
+	//		canvasImage = alphaCanvasImage;
 
-		}
+	//	}
 
-		// Draw a pixel
-		cv::rectangle(  *canvasImage,
-						cv::Point(x,y),
-						cv::Point(x,y),
-						cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ),
-						strokeWeight);		///-> Thickness.
+	//	// Draw a pixel
+	//	cv::rectangle(  *canvasImage,
+	//					cv::Point(x,y),
+	//					cv::Point(x,y),
+	//					cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ),
+	//					strokeWeight);		///-> Thickness.
 
 
-		// If there is transparency involved -> blend the result
-		if ( strokeColor.a < 255 )
-		{
-			// Blend the result
-			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
+	//	// If there is transparency involved -> blend the result
+	//	if ( strokeColor.a < 255 )
+	//	{
+	//		// Blend the result
+	//		cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
 
-			// Release temp image
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
-		}
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+	//		// Release temp image
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	}
+	//	// Update texture when the next drawing call is made by the user
+	//	m_bUpdateTexture = true;
 	}
 
 	/**
@@ -1328,85 +1291,85 @@ namespace Cing
 	*/
 	void Image::quad( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 )
 	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+	//	// Check the image is valid
+	//	if ( !isValid() )
+	//		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		// Get Stroke and Fill Color
-		GraphicsManager& graphManager	= GraphicsManager::getSingleton();
-		Color strokeColor				= graphManager.getStrokeColor();
-		Color fillColor					= graphManager.getFillColor();
-		int   strokeWeight				= graphManager.getStrokeWeight();
+	//	// Get Stroke and Fill Color
+	//	GraphicsManager& graphManager	= GraphicsManager::getSingleton();
+	//	Color strokeColor				= graphManager.getStrokeColor();
+	//	Color fillColor					= graphManager.getFillColor();
+	//	int   strokeWeight				= graphManager.getStrokeWeight();
 
-		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
-		// as opencv does not support transparent drawing
-		cv::Mat* canvasImage = &m_cvImage;
-		cv::Mat* alphaCanvasImage = NULL;
+	//	// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
+	//	// as opencv does not support transparent drawing
+	//	cv::Mat* canvasImage = &m_cvImage;
+	//	cv::Mat* alphaCanvasImage = NULL;
 
-		// If there is transparency involved
-		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
-		{
-			// Request a temporary image to draw the transparent shape
-			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
-		
-			// Fill it with the current image content
-			m_cvImage.copyTo( *alphaCanvasImage );
+	//	// If there is transparency involved
+	//	if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
+	//	{
+	//		// Request a temporary image to draw the transparent shape
+	//		alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+	//	
+	//		// Fill it with the current image content
+	//		m_cvImage.copyTo( *alphaCanvasImage );
 
-			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = alphaCanvasImage;
-		}
+	//		// The canvas will be the temp image to draw on it and later on blend it with the current cv image
+	//		canvasImage = alphaCanvasImage;
+	//	}
 
-		// Draw fill
-		if (graphManager.getFill())
-		{
-			cv::Point pts[4]= { cv::Point(x1,y1), cv::Point(x2,y2), cv::Point(x3,y3), cv::Point(x4,y4) };
+	//	// Draw fill
+	//	if (graphManager.getFill())
+	//	{
+	//		cv::Point pts[4]= { cv::Point(x1,y1), cv::Point(x2,y2), cv::Point(x3,y3), cv::Point(x4,y4) };
 
-			if (graphManager.getSmooth())
-				cv::fillConvexPoly( *canvasImage , (const cv::Point*)&pts, 4,	cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), CV_AA, 0 );
-			else
-				cv::fillConvexPoly( *canvasImage , (const cv::Point*)&pts, 4,	cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), 4, 0 );
-		}
+	//		if (graphManager.getSmooth())
+	//			cv::fillConvexPoly( *canvasImage , (const cv::Point*)&pts, 4,	cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), CV_AA, 0 );
+	//		else
+	//			cv::fillConvexPoly( *canvasImage , (const cv::Point*)&pts, 4,	cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), 4, 0 );
+	//	}
 
-		// Draw stroke
-		if (graphManager.getStroke())
-		{
-			if (graphManager.getSmooth())
-			{
-				cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
-				cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
-				cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x4,y4), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
-				cv::line( *canvasImage, cv::Point(x4,y4), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
-																																		 
-			}else{																														 
-																																		 
-				cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
-				cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
-				cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x4,y4), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
-				cv::line( *canvasImage, cv::Point(x4,y4), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
-			}																														 
-		}																															 
-			
-		// If there is transparency involved -> blend the result and release the temp image used for transparency
-		if ( graphManager.getFill() && (fillColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	// Draw stroke
+	//	if (graphManager.getStroke())
+	//	{
+	//		if (graphManager.getSmooth())
+	//		{
+	//			cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+	//			cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+	//			cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x4,y4), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+	//			cv::line( *canvasImage, cv::Point(x4,y4), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA, 0);
+	//																																	 
+	//		}else{																														 
+	//																																	 
+	//			cv::line( *canvasImage, cv::Point(x1,y1), cv::Point(x2,y2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+	//			cv::line( *canvasImage, cv::Point(x2,y2), cv::Point(x3,y3), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+	//			cv::line( *canvasImage, cv::Point(x3,y3), cv::Point(x4,y4), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+	//			cv::line( *canvasImage, cv::Point(x4,y4), cv::Point(x1,y1), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4, 0);  
+	//		}																														 
+	//	}																															 
+	//		
+	//	// If there is transparency involved -> blend the result and release the temp image used for transparency
+	//	if ( graphManager.getFill() && (fillColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
-			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
-			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
-			// This warning is to nofity it
-			if ( graphManager.getStroke() && (strokeColor.a < 255) )
-				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+	//		// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+	//		// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+	//		// This warning is to nofity it
+	//		if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//			LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
 
-		}
-		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
-		}
+	//	}
+	//	else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	}
 
-		// Update texture when the next drawing call is made by the user															  
-		m_bUpdateTexture = true;																									  
+	//	// Update texture when the next drawing call is made by the user															  
+	//	m_bUpdateTexture = true;																									  
 	}		
 
 
@@ -1420,131 +1383,131 @@ namespace Cing
 	*/
 	void Image::rect( int x, int y, int width, int height )
 	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+	//	// Check the image is valid
+	//	if ( !isValid() )
+	//		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		// Calcuate half sizes
-		float widthDIV2 = (float)width/2.0f;
-		float heightDIV2 = (float)height/2.0f;
+	//	// Calcuate half sizes
+	//	float widthDIV2 = (float)width/2.0f;
+	//	float heightDIV2 = (float)height/2.0f;
 
-		// Get Stroke and Fill Color
-		GraphicsManager& graphManager	= GraphicsManager::getSingleton();
-		Color strokeColor				= graphManager.getStrokeColor();
-		Color fillColor					= graphManager.getFillColor();
-		int   strokeWeight				= graphManager.getStrokeWeight();
+	//	// Get Stroke and Fill Color
+	//	GraphicsManager& graphManager	= GraphicsManager::getSingleton();
+	//	Color strokeColor				= graphManager.getStrokeColor();
+	//	Color fillColor					= graphManager.getFillColor();
+	//	int   strokeWeight				= graphManager.getStrokeWeight();
 
-		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
-		// as opencv does not support transparent drawing
-		cv::Mat* canvasImage = &m_cvImage;
-		cv::Mat* alphaCanvasImage = NULL;
+	//	// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
+	//	// as opencv does not support transparent drawing
+	//	cv::Mat* canvasImage = &m_cvImage;
+	//	cv::Mat* alphaCanvasImage = NULL;
 
-		// If there is transparency involved
-		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
-		{
-			// Request a temporary image to draw the transparent shape
-			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
-		
-			// Fill it with the current image content
-			m_cvImage.copyTo( *alphaCanvasImage );
+	//	// If there is transparency involved
+	//	if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
+	//	{
+	//		// Request a temporary image to draw the transparent shape
+	//		alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+	//	
+	//		// Fill it with the current image content
+	//		m_cvImage.copyTo( *alphaCanvasImage );
 
-			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = alphaCanvasImage;
-		}
+	//		// The canvas will be the temp image to draw on it and later on blend it with the current cv image
+	//		canvasImage = alphaCanvasImage;
+	//	}
 
-		// Draw fill
-		if (graphManager.getFill())
-		{
-			switch( graphManager.getRectMode() )
-			{
+	//	// Draw fill
+	//	if (graphManager.getFill())
+	//	{
+	//		switch( graphManager.getRectMode() )
+	//		{
 
-			case CORNER:
-				if (graphManager.getSmooth())
-					cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
-				else
-					cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
-				break;
+	//		case CORNER:
+	//			if (graphManager.getSmooth())
+	//				cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
+	//			else
+	//				cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
+	//			break;
 
-			case CORNERS:
-				if (graphManager.getSmooth())
-					cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
-				else
-					cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
-				break;
+	//		case CORNERS:
+	//			if (graphManager.getSmooth())
+	//				cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
+	//			else
+	//				cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
+	//			break;
 
-			case CENTER:
-				if (graphManager.getSmooth())
-					cv::rectangle( *canvasImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
-				else
-					cv::rectangle( *canvasImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
-				break;
+	//		case CENTER:
+	//			if (graphManager.getSmooth())
+	//				cv::rectangle( *canvasImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
+	//			else
+	//				cv::rectangle( *canvasImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
+	//			break;
 
-			case RADIUS:
-				if (graphManager.getSmooth())
-					cv::rectangle( *canvasImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
-				else
-					cv::rectangle( *canvasImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
-				break;
-			}
-		}
+	//		case RADIUS:
+	//			if (graphManager.getSmooth())
+	//				cv::rectangle( *canvasImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
+	//			else
+	//				cv::rectangle( *canvasImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
+	//			break;
+	//		}
+	//	}
 
-		// Draw Stroke
-		if (graphManager.getStroke())
-		{
-			switch( graphManager.getRectMode() )
-			{
+	//	// Draw Stroke
+	//	if (graphManager.getStroke())
+	//	{
+	//		switch( graphManager.getRectMode() )
+	//		{
 
-			case CORNER:
-				if (graphManager.getSmooth())
-					cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
-				else
-					cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
-				break;
+	//		case CORNER:
+	//			if (graphManager.getSmooth())
+	//				cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
+	//			else
+	//				cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(x+width,y+height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
+	//			break;
 
-			case CORNERS:
-				if (graphManager.getSmooth())
-					cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
-				else
-					cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
-				break;
+	//		case CORNERS:
+	//			if (graphManager.getSmooth())
+	//				cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
+	//			else
+	//				cv::rectangle( *canvasImage, cv::Point(x,y), cv::Point(width,height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
+	//			break;
 
-			case CENTER:
-				if (graphManager.getSmooth())
-					cv::rectangle( *canvasImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
-				else
-					cv::rectangle( *canvasImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
-				break;
+	//		case CENTER:
+	//			if (graphManager.getSmooth())
+	//				cv::rectangle( *canvasImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
+	//			else
+	//				cv::rectangle( *canvasImage, cv::Point(x-(int)widthDIV2,y-(int)heightDIV2), cv::Point(x+(int)widthDIV2,y+(int)heightDIV2), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
+	//			break;
 
-			case RADIUS:
-				if (graphManager.getSmooth())
-					cv::rectangle( *canvasImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
-				else
-					cv::rectangle( *canvasImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
-				break;
-			}
-		}
+	//		case RADIUS:
+	//			if (graphManager.getSmooth())
+	//				cv::rectangle( *canvasImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
+	//			else
+	//				cv::rectangle( *canvasImage, cv::Point(x-width,y-height), cv::Point(x+width,y+height), cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
+	//			break;
+	//		}
+	//	}
 
-		// If there is transparency involved -> blend the result and release the temp image used for transparency
-		if ( graphManager.getFill() && (fillColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	// If there is transparency involved -> blend the result and release the temp image used for transparency
+	//	if ( graphManager.getFill() && (fillColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
-			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
-			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
-			// This warning is to nofity it
-			if ( graphManager.getStroke() && (strokeColor.a < 255) )
-				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+	//		// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+	//		// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+	//		// This warning is to nofity it
+	//		if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//			LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
 
-		}
-		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
-		}
+	//	}
+	//	else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	}
 
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+	//	// Update texture when the next drawing call is made by the user
+	//	m_bUpdateTexture = true;
 	}
 
 	/**
@@ -1559,139 +1522,139 @@ namespace Cing
 	void Image::ellipse( int x1, int y1, int width, int height, float angleDegrees /*= 0*/ )
 	{
 
-		//TODO: Hay para cambiar de mod deg a rad?
+	//	//TODO: Hay para cambiar de mod deg a rad?
 
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
-	
-		// Check scale
-		if ( (width < 0) || (height < 0) )
-		{
-			LOG_ERROR( "Image::ellipse. widht and height should be positive" );
-			return;
-		}
-			
-		float widthDIV2 = (float)width/2.0f;
-		float heightDIV2 = (float)height/2.0f;
+	//	// Check the image is valid
+	//	if ( !isValid() )
+	//		THROW_EXCEPTION( "Trying to paint in an invalid image" );
+	//
+	//	// Check scale
+	//	if ( (width < 0) || (height < 0) )
+	//	{
+	//		LOG_ERROR( "Image::ellipse. widht and height should be positive" );
+	//		return;
+	//	}
+	//		
+	//	float widthDIV2 = (float)width/2.0f;
+	//	float heightDIV2 = (float)height/2.0f;
 
-		// Get Stroke and Fill Color
-		GraphicsManager& graphManager	= GraphicsManager::getSingleton();
-		Color strokeColor				= graphManager.getStrokeColor();
-		Color fillColor					= graphManager.getFillColor();
-		int   strokeWeight				= graphManager.getStrokeWeight();
+	//	// Get Stroke and Fill Color
+	//	GraphicsManager& graphManager	= GraphicsManager::getSingleton();
+	//	Color strokeColor				= graphManager.getStrokeColor();
+	//	Color fillColor					= graphManager.getFillColor();
+	//	int   strokeWeight				= graphManager.getStrokeWeight();
 
-		// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
-		// as opencv does not support transparent drawing
-		cv::Mat* canvasImage = &m_cvImage;
-		cv::Mat* alphaCanvasImage = NULL;
+	//	// Image where the drawing will be made (if we need transparency it will be another image and then will be blended)
+	//	// as opencv does not support transparent drawing
+	//	cv::Mat* canvasImage = &m_cvImage;
+	//	cv::Mat* alphaCanvasImage = NULL;
 
-		// If there is transparency involved
-		if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
-		{
-			// Request a temporary image to draw the transparent shape
-			alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
-		
-			// Fill it with the current image content
-			m_cvImage.copyTo( *alphaCanvasImage );
+	//	// If there is transparency involved
+	//	if ( (graphManager.getStroke() && (strokeColor.a < 255)) || ( graphManager.getFill() && (fillColor.a < 255) ) )
+	//	{
+	//		// Request a temporary image to draw the transparent shape
+	//		alphaCanvasImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), getNChannels() );
+	//	
+	//		// Fill it with the current image content
+	//		m_cvImage.copyTo( *alphaCanvasImage );
 
-			// The canvas will be the temp image to draw on it and later on blend it with the current cv image
-			canvasImage = alphaCanvasImage;
-		}
+	//		// The canvas will be the temp image to draw on it and later on blend it with the current cv image
+	//		canvasImage = alphaCanvasImage;
+	//	}
 
 
-		// Draw fill
-		if (graphManager.getFill())
-		{
-			switch( graphManager.getEllipseMode() )
-			{
-			case CORNER:
-				if (graphManager.getSmooth())
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(x1+width,y1+height), angleDegrees,	0, 360,	cv::Scalar( fillColor.r, fillColor.g, fillColor.b ),-1,CV_AA);
-				else
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(x1+width,y1+height), angleDegrees,	0, 360,	cv::Scalar( fillColor.r, fillColor.g, fillColor.b ),-1,4 );
-				break;
+	//	// Draw fill
+	//	if (graphManager.getFill())
+	//	{
+	//		switch( graphManager.getEllipseMode() )
+	//		{
+	//		case CORNER:
+	//			if (graphManager.getSmooth())
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(x1+width,y1+height), angleDegrees,	0, 360,	cv::Scalar( fillColor.r, fillColor.g, fillColor.b ),-1,CV_AA);
+	//			else
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(x1+width,y1+height), angleDegrees,	0, 360,	cv::Scalar( fillColor.r, fillColor.g, fillColor.b ),-1,4 );
+	//			break;
 
-			case CORNERS:
-				if (graphManager.getSmooth())
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(width,height), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
-				else
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(width,height), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
-				break;
+	//		case CORNERS:
+	//			if (graphManager.getSmooth())
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(width,height), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
+	//			else
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(width,height), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
+	//			break;
 
-			case CENTER:
-				if (graphManager.getSmooth())
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
-				else
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
-				break;
+	//		case CENTER:
+	//			if (graphManager.getSmooth())
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
+	//			else
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
+	//			break;
 
-			case RADIUS:
-				if (graphManager.getSmooth())
-					cv::ellipse( *canvasImage, cv::Point(x1-width,y1-height), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
-				else
-					cv::ellipse( *canvasImage, cv::Point(x1-width,y1-height), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
-				break;
-			}
-		}
+	//		case RADIUS:
+	//			if (graphManager.getSmooth())
+	//				cv::ellipse( *canvasImage, cv::Point(x1-width,y1-height), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, CV_AA);
+	//			else
+	//				cv::ellipse( *canvasImage, cv::Point(x1-width,y1-height), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( fillColor.r, fillColor.g, fillColor.b ), -1, 4);
+	//			break;
+	//		}
+	//	}
 
-		// Draw stroke
-		if (graphManager.getStroke())
-		{
-			switch( graphManager.getEllipseMode() )
-			{
+	//	// Draw stroke
+	//	if (graphManager.getStroke())
+	//	{
+	//		switch( graphManager.getEllipseMode() )
+	//		{
 
-			case CORNER:
-				if (graphManager.getSmooth())
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
-				else
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
-				break;
+	//		case CORNER:
+	//			if (graphManager.getSmooth())
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
+	//			else
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
+	//			break;
 
-			case CORNERS:
-				if (graphManager.getSmooth())
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(width,height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
-				else
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(width,height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
-				break;
+	//		case CORNERS:
+	//			if (graphManager.getSmooth())
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(width,height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
+	//			else
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize(width,height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
+	//			break;
 
-			case CENTER:
-				if (graphManager.getSmooth())
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
-				else
-					cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
-				break;
+	//		case CENTER:
+	//			if (graphManager.getSmooth())
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
+	//			else
+	//				cv::ellipse( *canvasImage, cv::Point(x1,y1), cvSize((int)widthDIV2,(int)heightDIV2), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
+	//			break;
 
-			case RADIUS:
-				if (graphManager.getSmooth())
-					cv::ellipse( *canvasImage, cv::Point(x1-width,y1-height), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
-				else
-					cv::ellipse( *canvasImage, cv::Point(x1-width,y1-height), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
-				break;
-			}
-		}
+	//		case RADIUS:
+	//			if (graphManager.getSmooth())
+	//				cv::ellipse( *canvasImage, cv::Point(x1-width,y1-height), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, CV_AA);
+	//			else
+	//				cv::ellipse( *canvasImage, cv::Point(x1-width,y1-height), cvSize(x1+width,y1+height), angleDegrees,	0, 360, cv::Scalar( strokeColor.r, strokeColor.g, strokeColor.b ), strokeWeight, 4);
+	//			break;
+	//		}
+	//	}
 
-		// If there is transparency involved -> blend the result and release the temp image used for transparency
-		if ( graphManager.getFill() && (fillColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	// If there is transparency involved -> blend the result and release the temp image used for transparency
+	//	if ( graphManager.getFill() && (fillColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (fillColor.getHighRange()-fillColor.a)/fillColor.getHighRange(), *canvasImage, fillColor.a/fillColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
 
-			// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
-			// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
-			// This warning is to nofity it
-			if ( graphManager.getStroke() && (strokeColor.a < 255) )
-				LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
+	//		// Note: Now theres is a limitation (opencv does not support transparency in the drawing API)
+	//		// So we limit it to only 1 kind (fill or stroke), as we fake it blending the whole drawing with the current image, which is slow.
+	//		// This warning is to nofity it
+	//		if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//			LOG_ERROR_NTIMES( 3, "Trying to draw with transparency in both fill and stroke is not supported. Only fill transparency will be applied" );
 
-		}
-		else if ( graphManager.getStroke() && (strokeColor.a < 255) )
-		{
-			cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
-			ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
-		}
+	//	}
+	//	else if ( graphManager.getStroke() && (strokeColor.a < 255) )
+	//	{
+	//		cv::addWeighted( m_cvImage, (strokeColor.getHighRange()-strokeColor.a)/strokeColor.getHighRange(), *canvasImage, strokeColor.a/strokeColor.getHighRange(), 0, m_cvImage );
+	//		ImageResourceManager::getSingleton().releaseImage( alphaCanvasImage );
+	//	}
 
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+	//	// Update texture when the next drawing call is made by the user
+	//	m_bUpdateTexture = true;
 
 	}
 
@@ -1704,20 +1667,20 @@ namespace Cing
 	*/
 	void Image::text( int x1, int y1,  const char* text )
 	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+	//	// Check the image is valid
+	//	if ( !isValid() )
+	//		THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		// Get Stroke and Fill Color
-		GraphicsManager& graphManager = GraphicsManager::getSingleton();
-		Color color			= graphManager.getStrokeColor();
-		int   strokeWeight	= graphManager.getStrokeWeight();
-		int	  fontScale		= 2;
+	//	// Get Stroke and Fill Color
+	//	GraphicsManager& graphManager = GraphicsManager::getSingleton();
+	//	Color color			= graphManager.getStrokeColor();
+	//	int   strokeWeight	= graphManager.getStrokeWeight();
+	//	int	  fontScale		= 2;
 
-		cv::putText(m_cvImage, text, cv::Point(x1,y1), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar( color.r, color.g, color.b, color.a ));
+	//	cv::putText(m_cvImage, text, cv::Point(x1,y1), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar( color.r, color.g, color.b, color.a ));
 
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+	//	// Update texture when the next drawing call is made by the user
+	//	m_bUpdateTexture = true;
 	}
 
 	/**
@@ -1726,81 +1689,15 @@ namespace Cing
 	* @param ImageProcessingFilters type
 	* @param int argument fot the filter that will be applied
 	*/
-	void Image::filter( ImageProcessingFilters type, int param1 )
+	void Image::filter( ImageProcessingFilters type, float param )
 	{
 		// Check the image is valid
 		if ( !isValid() )
 			THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		if (type == BLUR)
-			cv::blur(m_cvImage, m_cvImage, cv::Size(param1,param1) );
+		if ( render2DBackend )
+			render2DBackend->filter( *this, type, param );
 
-		if (type == ERODE)
-			cv::erode( m_cvImage, m_cvImage, cv::Mat(), cv::Point(-1, -1), param1 );
-
-		if (type == DILATE)
-			cv::dilate( m_cvImage, m_cvImage, cv::Mat(), cv::Point(-1, -1), param1 );
-			
-		if (type == THRESHOLD)
-		{
-			m_imgThresholdFilter.setThreshold(param1);
-			m_imgThresholdFilter.apply(  m_cvImage, m_cvImage);
-		}
-
-		if (type == INVERT)
-			cv::invert( m_cvImage, m_cvImage);
-
-		if (type == FLIP_X)
-			cv::flip( m_cvImage, m_cvImage, 0 );
-		else if (type == FLIP_Y)
-			cv::flip( m_cvImage, m_cvImage, 1 );
-		else if (type == FLIP_XY)
-			cv::flip( m_cvImage, m_cvImage, -1 );
-
-		// TODO
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
-	}
-
-	/**
-	* @brief Method to apply a variety of basic filters to this image.
-	*
-	* @param ImageProcessingFilters type
-	*/
-	void Image::filter( ImageProcessingFilters type )
-	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
-
-		if (type == BLUR)
-			cv::blur(m_cvImage, m_cvImage, cv::Size(3, 3));
-
-		if (type == ERODE)
-			cv::erode( m_cvImage, m_cvImage, cv::Mat() );
-
-		if (type == DILATE)
-			cv::erode( m_cvImage, m_cvImage, cv::Mat() );
-
-		if (type == THRESHOLD)
-		{
-			m_imgThresholdFilter.apply( m_cvImage, m_cvImage );
-		}
-		if (type == INVERT)
-		{
-			cv::invert( m_cvImage, m_cvImage );
-
-		}
-
-		if (type == FLIP_X)
-			cv::flip( m_cvImage, m_cvImage, 0 );
-		else if (type == FLIP_Y)
-			cv::flip( m_cvImage, m_cvImage, 1 );
-		else if (type == FLIP_XY)
-			cv::flip( m_cvImage, m_cvImage, -1 );
-		
-
-		// TODO
 		// Update texture when the next drawing call is made by the user
 		m_bUpdateTexture = true;
 	}
@@ -1812,37 +1709,37 @@ namespace Cing
 	*/
 	void Image::toColor()
 	{
-		// Check valid
-		if ( !isValid() )
-		{
-			LOG_ERROR( "Trying to convert to color an invalid image. Maybe it is not initialized" );
-			return;
-		}
+		//// Check valid
+		//if ( !isValid() )
+		//{
+		//	LOG_ERROR( "Trying to convert to color an invalid image. Maybe it is not initialized" );
+		//	return;
+		//}
 
-		// Check current format
-		if ( m_nChannels >=3 )
-			return;
+		//// Check current format
+		//if ( m_nChannels >=3 )
+		//	return;
 
-		// Image to store data temporarily
-		cv::Mat* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 3 );
+		//// Image to store data temporarily
+		//cv::Mat* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 3 );
 
-		// Convert image
-		cv::cvtColor( m_cvImage, *tempImage, CV_GRAY2RGB );
+		//// Convert image
+		//cv::cvtColor( m_cvImage, *tempImage, CV_GRAY2RGB );
 
-		// Re-init the image with the new format and se the color data
-		end();
-		init( tempImage->cols, tempImage->rows, RGB );
-		setData( (unsigned char*)tempImage->data, tempImage->cols, tempImage->rows, RGB );
+		//// Re-init the image with the new format and se the color data
+		//end();
+		//init( tempImage->cols, tempImage->rows, RGB );
+		//setData( (unsigned char*)tempImage->data, tempImage->cols, tempImage->rows, RGB );
 
-		// Check if the image was v flipped
-		if ( m_bVFlipped )
-			m_quad.flipVertical();
+		//// Check if the image was v flipped
+		//if ( m_bVFlipped )
+		//	m_quad.flipVertical();
 
-		// Release temp image
-		ImageResourceManager::getSingleton().releaseImage( tempImage );
+		//// Release temp image
+		//ImageResourceManager::getSingleton().releaseImage( tempImage );
 
-		// Now this image is valid
-		m_bIsValid = true;
+		//// Now this image is valid
+		//m_bIsValid = true;
 	}
 
 
@@ -1852,87 +1749,86 @@ namespace Cing
 	*/
 	void Image::toGray()
 	{
-		// Check valid
-		if ( !isValid() )
-		{
-			LOG_ERROR( "Trying to convert to gray an invalid image. Maybe it is not initialized" );
-			return;
-		}
+		//// Check valid
+		//if ( !isValid() )
+		//{
+		//	LOG_ERROR( "Trying to convert to gray an invalid image. Maybe it is not initialized" );
+		//	return;
+		//}
 
-		// Check current format, if it is already grayscale -> do nothing
-		if ( m_nChannels == 1 )
-			return;
+		//// Check current format, if it is already grayscale -> do nothing
+		//if ( m_nChannels == 1 )
+		//	return;
 
-		// Image Store data temporarily
-		cv::Mat* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 1 );
+		//// Image Store data temporarily
+		//cv::Mat* tempImage = ImageResourceManager::getSingleton().getImage( getWidth(), getHeight(), 1 );
 
-		// Convert image
-		cv::cvtColor( m_cvImage, *tempImage, CV_RGB2GRAY );
+		//// Convert image
+		//cv::cvtColor( m_cvImage, *tempImage, CV_RGB2GRAY );
 
-		// Re-init the image with the new format and se the grayscale data
-		end();
-		init( tempImage->cols, tempImage->rows, GRAYSCALE );
-		setData( (unsigned char*)tempImage->data, tempImage->cols, tempImage->rows, GRAYSCALE );
+		//// Re-init the image with the new format and se the grayscale data
+		//end();
+		//init( tempImage->cols, tempImage->rows, GRAYSCALE );
+		//setData( (unsigned char*)tempImage->data, tempImage->cols, tempImage->rows, GRAYSCALE );
 
-		// Check if the image was v flipped
-		if ( m_bVFlipped )
-			m_quad.flipVertical();
+		//// Check if the image was v flipped
+		//if ( m_bVFlipped )
+		//	m_quad.flipVertical();
 
-		// Release temp image
-		ImageResourceManager::getSingleton().releaseImage( tempImage );
+		//// Release temp image
+		//ImageResourceManager::getSingleton().releaseImage( tempImage );
 
-		// Now this image is valid
-		m_bIsValid = true;
+		//// Now this image is valid
+		//m_bIsValid = true;
 	}
 
-	void Image::operator +=	( float scalar ){
-
-
-		switch( m_cvImage.channels() )
-		{
-		case 1:
-			cv::add( m_cvImage, cv::Scalar(scalar), m_cvImage );
-			break;
-		case 3:
-			cv::add( m_cvImage, cv::Scalar(scalar,scalar,scalar), m_cvImage );
-			break;
-		case 4:
-			cv::add( m_cvImage, cv::Scalar(scalar,scalar,scalar,scalar), m_cvImage );
-			break;
-		default:
-			THROW_EXCEPTION( "Invalid number of channels in image" )
-				break;
-		}
+	void Image::operator +=	( float scalar )
+	{
+		//switch( m_cvImage.channels() )
+		//{
+		//case 1:
+		//	cv::add( m_cvImage, cv::Scalar(scalar), m_cvImage );
+		//	break;
+		//case 3:
+		//	cv::add( m_cvImage, cv::Scalar(scalar,scalar,scalar), m_cvImage );
+		//	break;
+		//case 4:
+		//	cv::add( m_cvImage, cv::Scalar(scalar,scalar,scalar,scalar), m_cvImage );
+		//	break;
+		//default:
+		//	THROW_EXCEPTION( "Invalid number of channels in image" )
+		//		break;
+		//}
 	}
 
 	void Image::operator -=	( float scalar ){
-		switch( m_cvImage.channels() )
-		{
-		case 1:
-			cv::subtract( m_cvImage, cv::Scalar(scalar), m_cvImage );
-			break;
-		case 3:
-			cv::subtract( m_cvImage, cv::Scalar(scalar,scalar,scalar), m_cvImage );
-			break;
-		case 4:
-			cv::subtract( m_cvImage, cv::Scalar(scalar,scalar,scalar,scalar), m_cvImage );
-			break;
-		default:
-			THROW_EXCEPTION( "Invalid number of channels in image" )
-				break;
-		}
+		//switch( m_cvImage.channels() )
+		//{
+		//case 1:
+		//	cv::subtract( m_cvImage, cv::Scalar(scalar), m_cvImage );
+		//	break;
+		//case 3:
+		//	cv::subtract( m_cvImage, cv::Scalar(scalar,scalar,scalar), m_cvImage );
+		//	break;
+		//case 4:
+		//	cv::subtract( m_cvImage, cv::Scalar(scalar,scalar,scalar,scalar), m_cvImage );
+		//	break;
+		//default:
+		//	THROW_EXCEPTION( "Invalid number of channels in image" )
+		//		break;
+		//}
 	}
 
 	void Image::operator +=	( const Image& img ){
 
-		cv::add( m_cvImage, img.getCVMat(), m_cvImage );
-		setUpdateTexture(true);
+		//cv::add( m_cvImage, img.getCVMat(), m_cvImage );
+		//setUpdateTexture(true);
 	}
 
 	void Image::operator -=	( const Image& img ){
 
-		cv::subtract( m_cvImage, img.getCVMat(), m_cvImage );
-		setUpdateTexture(true);
+		//cv::subtract( m_cvImage, img.getCVMat(), m_cvImage );
+		//setUpdateTexture(true);
 	}
 
 	/**
@@ -1943,44 +1839,44 @@ namespace Cing
 	*/
 	void Image::blend( const Image& other, float percentage )
 	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to blend an image without initialization" );
+		//// Check the image is valid
+		//if ( !isValid() )
+		//	THROW_EXCEPTION( "Trying to blend an image without initialization" );
 
-		if ( other.getFormat() != getFormat() )
-			THROW_EXCEPTION( "Images with different format" );
+		//if ( other.getFormat() != getFormat() )
+		//	THROW_EXCEPTION( "Images with different format" );
 
-		if ( other.getWidth() != getWidth() || other.getHeight() != getHeight())
-			THROW_EXCEPTION( "Images with different sizes" );
+		//if ( other.getWidth() != getWidth() || other.getHeight() != getHeight())
+		//	THROW_EXCEPTION( "Images with different sizes" );
 
-		percentage = map( percentage, 0, 100, 0.0, 1.0 );
-		cv::addWeighted( m_cvImage, 1.0 - percentage, other.getCVMat(), percentage, 0.0f, m_cvImage );
+		//percentage = map( percentage, 0, 100, 0.0, 1.0 );
+		//cv::addWeighted( m_cvImage, 1.0 - percentage, other.getCVMat(), percentage, 0.0f, m_cvImage );
 	}
 
 	void Image::operator = ( float scalar)
 	{
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+		//// Check the image is valid
+		//if ( !isValid() )
+		//	THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		switch( m_cvImage.channels() )
-		{
-		case 1:
-			m_cvImage = cv::Scalar(scalar);
-			break;
-		case 3:
-			m_cvImage = cv::Scalar(scalar,scalar,scalar);
-			break;
-		case 4:
-			m_cvImage = cv::Scalar(scalar,scalar,scalar,scalar);
-			break;
-		default:
-			THROW_EXCEPTION( "Invalid number of channels in image" )
-				break;
-		}
+		//switch( m_cvImage.channels() )
+		//{
+		//case 1:
+		//	m_cvImage = cv::Scalar(scalar);
+		//	break;
+		//case 3:
+		//	m_cvImage = cv::Scalar(scalar,scalar,scalar);
+		//	break;
+		//case 4:
+		//	m_cvImage = cv::Scalar(scalar,scalar,scalar,scalar);
+		//	break;
+		//default:
+		//	THROW_EXCEPTION( "Invalid number of channels in image" )
+		//		break;
+		//}
 
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+		//// Update texture when the next drawing call is made by the user
+		//m_bUpdateTexture = true;
 	}
 
 	/**
@@ -1991,29 +1887,29 @@ namespace Cing
 	void Image::fill( const Color& color )
 	{
 
-		// Check the image is valid
-		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to paint in an invalid image" );
+		//// Check the image is valid
+		//if ( !isValid() )
+		//	THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		// Set the entire image 
-		switch( m_cvImage.channels() )
-		{
-		case 1:
-			m_cvImage = cv::Scalar(color.r);
-			break;
-		case 3:
-			m_cvImage = cv::Scalar(color.r, color.g, color.b);
-			break;
-		case 4:
-			m_cvImage = cv::Scalar(color.r, color.g, color.b, color.a);
-			break;
-		default:
-			THROW_EXCEPTION( "Invalid number of channels in image" )
-				break;
-		}
+		//// Set the entire image 
+		//switch( m_cvImage.channels() )
+		//{
+		//case 1:
+		//	m_cvImage = cv::Scalar(color.r);
+		//	break;
+		//case 3:
+		//	m_cvImage = cv::Scalar(color.r, color.g, color.b);
+		//	break;
+		//case 4:
+		//	m_cvImage = cv::Scalar(color.r, color.g, color.b, color.a);
+		//	break;
+		//default:
+		//	THROW_EXCEPTION( "Invalid number of channels in image" )
+		//		break;
+		//}
 
-		// Update texture when the next drawing call is made by the user
-		m_bUpdateTexture = true;
+		//// Update texture when the next drawing call is made by the user
+		//m_bUpdateTexture = true;
 
 	}
 	/**
