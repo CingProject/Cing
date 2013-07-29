@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include "graphics/BaseRender2D.h"
+#include "graphics/BaseRenderer2D.h"
 #include "ImageDifferenceFilter.h"
 #include "ImageThresholdFilter.h"
 
@@ -38,17 +38,17 @@ namespace Cing
  * @brief Base class for (interface) for 2D renderers. Defines the functionality expected from any 2D renderer
  * Generally this class is mainly relevant for anybody developing new 2D rendering backends (say using Cairo graphics or Skia).
  */
-class Renderer2DOpenCV: public BaseRender2D
+class Renderer2DOpenCV: public BaseRenderer2D
 {
 public:
 
 	// Constructor / Destructor
-	Renderer2DOpenCV(): BaseRender2D() { m_isValid = true; };
+	Renderer2DOpenCV(): BaseRenderer2D() { m_isValid = true; };
 	virtual ~Renderer2DOpenCV()				{ end(); }
 
 	// Init / Release / Update
 	bool	init	()	override	{}
-	void    end     ()	override	{ BaseRender2D::end(); }
+	void    end     ()	override	{ BaseRenderer2D::end(); }
 	void	update  ()	override	{}
 
 	// Manipulation
