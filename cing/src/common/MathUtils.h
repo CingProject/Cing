@@ -529,6 +529,13 @@ inline float constrain( float value, float limit1, float limit2 )
 	}
 }
 
+// overload (not using templates as it tends to confuse users in terms of error messaging when parameters are ambiguous)
+inline unsigned int constrain( unsigned int value, unsigned int limit1, unsigned int limit2 )
+{
+	return (unsigned int)constrain((float) value, (float) limit1, (float) limit2);
+}
+
+
 /*
  * @brief Returns true if a number is within a defined range, false otherwise
  *
