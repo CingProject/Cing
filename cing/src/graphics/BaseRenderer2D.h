@@ -25,63 +25,49 @@
   THE SOFTWARE.
 */
 
+#pragma once
+
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-#include "UserAppGlobals.h"
-#include "input/InputManager.h"
-#include "common/eString.h"
-#include "graphics/Color.h"
-#include "graphics/Window.h"
+#include "GraphicsPrereqs.h"
+#include "common/LogManager.h"
 
 namespace Cing
 {
-	// Window
-	int 	 				width  = -1;
-	int 	 				height = -1;
-	String					appName = "Cing Demo";
-
-	// Data folder
-	String					dataFolder = "";
-#ifdef WIN32
-	String					cingDataFolder = "../../../cing_bin/data/";
-#elif __APPLE__
-	String					cingDataFolder = "../Resources/cing_bin/data/";
-#endif
-	
-	// Input
-	char					key;
-	KeyCode					keyCode;
-	int						mouseButton;
-	int						mouseX = 0;	
-	int						mouseY = 0;
-	Mouse&					mouse			= InputManager::m_mouse;
-	Keyboard&				keyboard		= InputManager::m_keyboard;
-
-	// Time
-	double					elapsedSec		= 1;
-	unsigned long			elapsedMillis	= 1;
-	unsigned long			elapsedMicros	= 1;
-	double					secFromStart	= 1;
-	unsigned long	 		millisFromStart	= 1;
-
-	// Frame count
-	unsigned long long  	frameCount      = 0;
-	float					frameRate       = 0.0f;   
-
-	// Ogre / Advanced
-	Ogre::SceneManager*		ogreSceneManager	= NULL;
-	Ogre::Camera*			ogreCamera			= NULL;
-	Window*					appWindow			= NULL;
 
 
-	// Pixel manipulation
-	std::vector < Color > pixels;
+#define LOG_UNDEFINED_METHOD LOG_ERROR( (std::string(__FUNCTION__) + std::string( " - ERROR: Implementation not provided by 2D Rendering Backend" )).c_str() )
 
-	// PerlinNoise global object
-	PerlinNoise _noise = PerlinNoise(6,0.43f,1.6f,0);
+/**
+ * @brief Base class for (interface) for 2D renderers. Defines the functionality expected from any 2D renderer
+ * Generally this class is mainly relevant for anybody developing new 2D rendering backends (say using Cairo graphics or Skia).
+ */
+class BaseRenderer2D
+{
+public:
 
-	// Rendering system
-	BaseRenderer2D*			render2DBackend = NULL;
+	// Constructor / Destructor
+	BaseRenderer2D(): m_isValid(false) {};
+	virtual ~BaseRenderer2D() { end(); }
+
+	// Init / Release / Update
+	virtual bool	init	();
+	virtual void    end     ()			{ m_isValid = false; }
+	virtual void	update  ();
+
+	// Manipulation
+
+	/// Filters an image based on the possibilities defined in ImageProcessingFilters
+	virtual void	filter ( Image& image, ImageProcessingFilters kind, float param = FLT_MAX ) { LOG_UNDEFINED_METHOD; }
+
+	// Query methods
+	bool			isValid	() const	{ return m_isValid; } 
+
+protected:
+
+	bool	m_isValid;	///< Indicates whether the class is valid or not. If not valid (for example because it has not been initialized), this class's functionality won't likely work
+};
 
 } // namespace Cing
+
