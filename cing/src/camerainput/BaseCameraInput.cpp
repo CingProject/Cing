@@ -162,7 +162,7 @@ void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, 
 		// Swap red and blue channels
 		if ( swapRB )
 		{
-			cvtColor(m_currentCameraImage.getCVMat(), m_currentCameraImage.getCVMat(), CV_RGB2BGR);
+			//cvtColor( toCVMat(m_currentCameraImage), toCVMat(m_currentCameraImage), CV_RGB2BGR );
 			m_currentCameraImage.setUpdateTexture(true);
 		}
 	}	
@@ -175,7 +175,7 @@ void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, 
 		m_tempImage.setData( data, width, height, format, widthStep );
 
 		// Convert it and mark the image to update to texture next draw
-		cv::cvtColor( m_tempImage.getCVMat(), m_currentCameraImage.getCVMat(), CV_BGR2GRAY );
+		//cv::cvtColor( toCVMat(m_tempImage), toCVMat(m_currentCameraImage), CV_BGR2GRAY );
 		m_currentCameraImage.setUpdateTexture( true );
 	}
 	// Check if we have an image with 4 channels -> convert it to RGB or GRAY
@@ -187,9 +187,9 @@ void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, 
 		if ( m_format == RGB )
 		{
 			int nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );	
-			cv::Mat imgData(height, width, CV_MAKETYPE(CV_8U,nChannels), data, widthStep);
+			cv::Mat imgData(height, width, CV_8UC(nChannels), data, widthStep);
 			
-			cvtColor(imgData, m_currentCameraImage.getCVMat(), CV_RGBA2RGB);
+			//cvtColor(imgData, toCVMat(m_currentCameraImage), CV_RGBA2RGB);
 			m_currentCameraImage.setUpdateTexture( true );
 		}
 		// Convert to GRAY (from RGB) -> not supported for now
