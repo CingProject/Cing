@@ -118,7 +118,7 @@ void MovableText::end()
 void MovableText::setFontName( const String &fontName )
 {
 	// Julio: from ogre
-	mpFont = Ogre::FontManager::getSingleton().getByName(fontName).staticCast<Ogre::Font>();
+	mpFont = Ogre::FontManager::getSingleton().getByName(fontName);
 	if ( mpFont.isNull() )
 	{
 		LOG_ERROR( "MovableText::setFontName: Could not find font %s", fontName.toChar() );

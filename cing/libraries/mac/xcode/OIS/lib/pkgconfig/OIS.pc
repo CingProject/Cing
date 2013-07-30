@@ -1,0 +1,11 @@
+prefix=/opt/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: OIS
+Description: Cross platform C++ Input Framework
+Version: 1.3
+Libs: -L${libdir} -lOIS
+Cflags: -I${includedir}/OIS -I${includedir}
+

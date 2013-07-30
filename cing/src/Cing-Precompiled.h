@@ -1,6 +1,8 @@
 // This define allow to disable including all the precompiled headers below
 #define USE_PRECOMPILED_HEADERS
 
+#define TIXML_USE_STL
+
 #ifdef USE_PRECOMPILED_HEADERS
 	#include <string>
 	#include <sstream>

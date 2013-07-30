@@ -166,7 +166,7 @@ namespace Cing
 		}
 
 		// Create a material for the quad
-		m_ogreMaterial = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME).staticCast<Ogre::Material>();
+		m_ogreMaterial = Ogre::MaterialManager::getSingleton().create( m_ogreMaterialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		
 		// Assign texture to material and set materia properties
 		Ogre::TextureUnitState* texUnit = m_ogreMaterial->getTechnique(0)->getPass(0)->createTextureUnitState( m_ogreTextureName );
@@ -260,12 +260,12 @@ namespace Cing
 
 		if ( value )
 		{
-			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_ADD);
 		}
 		else
 		{
-			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 		}
 
@@ -707,12 +707,12 @@ namespace Cing
 		// Has alpha channel?
 		if ( Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format ) == 4 )
 		{
-			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( m_ogreMaterialName ).staticCast<Ogre::Material>();
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( m_ogreMaterialName );
 			material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAlphaOperation( Ogre::LBX_MODULATE, Ogre::LBS_MANUAL, Ogre::LBS_TEXTURE, alphaNormalized );
 		}
 		else
 		{
-			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( m_ogreMaterialName ).staticCast<Ogre::Material>();
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( m_ogreMaterialName );
 			material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setAlphaOperation(Ogre::LBX_SOURCE1, Ogre::LBS_MANUAL, Ogre::LBS_CURRENT, alphaNormalized);
 		}
 	}
@@ -754,7 +754,7 @@ namespace Cing
 			return;
 		}
 
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( value );
 	}
 	
@@ -767,7 +767,7 @@ namespace Cing
 			return;
 		}
 
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( value );
 	}
 
@@ -954,7 +954,7 @@ namespace Cing
 		if ( !m_renderQueueForced )
 			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
 		
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
 
 		// The rest is the same as in 2d rendering
@@ -970,7 +970,7 @@ namespace Cing
 		// Properties to be rendered in 2d
 		if ( !m_renderQueueForced )
 			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		m_quad->setUseIdentityProjection(true);
 		m_quad->setUseIdentityView(true);
 		Ogre::AxisAlignedBox aabb;
@@ -990,7 +990,7 @@ namespace Cing
 		// Set properties for 3d rendering
 		if ( !m_renderQueueForced )
 			m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 		m_quad->setUseIdentityProjection( false );
 		m_quad->setUseIdentityView( false );
 
@@ -1008,7 +1008,7 @@ namespace Cing
 		// If the image has alpha channel
 		if ( hasAlpha() || (m_alpha < 255) )
 		{
-			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
 			enableDepthWrite(false);
@@ -1017,7 +1017,7 @@ namespace Cing
 		// This image has no alpha channel
 		else
 		{
-			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName).staticCast<Ogre::Material>();
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( m_sbType );	
 			enableDepthWrite(true);
 			enableDepthCheck(true);
@@ -1177,7 +1177,7 @@ namespace Cing
 	void TexturedQuad::setMaterial( const std::string& materialName )
 	{
 		// Check if the material exist
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName ).staticCast<Ogre::Material>();
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName );
 		if ( !material.isNull() )
 		{
 			m_quad->setMaterialName( 0, materialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME );
@@ -1204,8 +1204,8 @@ namespace Cing
 		// Change the texture name for the first texture unit state (checking all pointers are valid)
 		if ( m_ogreMaterial->getTechnique(0) && m_quad->getSection(0) && m_ogreMaterial->getTechnique(0)->getPass(0) && m_ogreMaterial->getTechnique(0)->getPass(0)->getTextureUnitState(0) )
 		{
-			Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName( m_quad->getSection(0)->getMaterialName() ).staticCast<Ogre::Material>();
-			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( fileName ).staticCast<Ogre::Texture>();
+			Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName( m_quad->getSection(0)->getMaterialName() );
+			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( fileName );
 			if ( texture.isNull() == false )
 				//mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->_setTexturePtr( texture );
                 mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName( fileName );

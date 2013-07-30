@@ -245,7 +245,7 @@ namespace Cing
 		
 		// Create a material using the texture
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create( MATERIAL_NAME, // name
-																				  Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME).staticCast<Ogre::Material>();
+																				  Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		
 		material->getTechnique(0)->getPass(0)->createTextureUnitState( TEXTURE_NAME );
 		material->getTechnique(0)->getPass(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);

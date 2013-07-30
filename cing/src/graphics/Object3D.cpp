@@ -836,7 +836,7 @@ namespace Cing
 	void Object3D::setMaterial( const std::string& materialName )
 	{
 		// Check if the material exist
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName ).staticCast<Ogre::Material>();
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName );
 		if ( !material.isNull() )
 		{
 			// Assign material
