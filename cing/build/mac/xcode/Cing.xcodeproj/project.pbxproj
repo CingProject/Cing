@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A933D4F617A6E1CA00C3E9F7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */; };
+		A933D4F817A6E21000C3E9F7 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A933D4F717A6E21000C3E9F7 /* AGL.framework */; };
 		A93DB48E179DF2D200770B14 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93DB48D179DF2D200770B14 /* Cocoa.framework */; };
 		A93DB498179DF2D200770B14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A93DB496179DF2D200770B14 /* InfoPlist.strings */; };
 		A93DB724179DFE8300770B14 /* BaseCameraInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB652179DFE8300770B14 /* BaseCameraInput.cpp */; };
@@ -99,6 +101,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		A933D4F717A6E21000C3E9F7 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
 		A93DB48A179DF2D200770B14 /* Cing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93DB48D179DF2D200770B14 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		A93DB490179DF2D200770B14 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -267,6 +271,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A933D4F817A6E21000C3E9F7 /* AGL.framework in Frameworks */,
+				A933D4F617A6E1CA00C3E9F7 /* OpenGL.framework in Frameworks */,
 				A99F6C2C17A0E28A00599195 /* CoreMedia.framework in Frameworks */,
 				A99F6C2D17A0E28A00599195 /* CoreVideo.framework in Frameworks */,
 				A99F6C2917A0E25100599195 /* Cg.framework in Frameworks */,
@@ -301,6 +307,8 @@
 		A93DB48C179DF2D200770B14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A933D4F717A6E21000C3E9F7 /* AGL.framework */,
+				A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */,
 				A9D4186617A16C32002FD8D3 /* Cg.framework */,
 				A99F6C2817A0E25100599195 /* Cg.framework */,
 				A93DB48F179DF2D200770B14 /* Other Frameworks */,
@@ -748,6 +756,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TIXML_USE_STL,
 					"DEBUG=1",
+					OGRE_STATIC_LIB,
+					OGRE_STATIC_ParticleFX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -790,6 +800,8 @@
 					"-lzlib",
 					"-lPlugin_CgProgramManagerStatic",
 					"-lRenderSystem_GLStatic",
+					"-lPlugin_ParticleFXStatic",
+					"-lOgreOverlayStatic",
 					"-lTinyXML",
 					"-lptypes",
 					"-lopencv_highgui",
@@ -798,7 +810,6 @@
 					"-lopencv_contrib",
 					"-lopencv_imgproc",
 					"-lopencv_ml",
-					"-lOgreOverlayStatic",
 					"-llibjasper",
 				);
 				SDKROOT = macosx;
@@ -821,7 +832,11 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = TIXML_USE_STL;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					TIXML_USE_STL,
+					OGRE_STATIC_LIB,
+					OGRE_STATIC_ParticleFX,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -862,6 +877,8 @@
 					"-lzlib",
 					"-lPlugin_CgProgramManagerStatic",
 					"-lRenderSystem_GLStatic",
+					"-lPlugin_ParticleFXStatic",
+					"-lOgreOverlayStatic",
 					"-lTinyXML",
 					"-lptypes",
 					"-lopencv_highgui",
@@ -870,7 +887,6 @@
 					"-lopencv_contrib",
 					"-lopencv_imgproc",
 					"-lopencv_ml",
-					"-lOgreOverlayStatic",
 					"-llibjasper",
 				);
 				SDKROOT = macosx;
