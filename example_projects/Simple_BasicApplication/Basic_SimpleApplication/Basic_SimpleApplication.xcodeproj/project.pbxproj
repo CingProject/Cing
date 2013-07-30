@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A965B7FE17A860A4009BCEBA /* Cing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A965B7FD17A860A4009BCEBA /* Cing.framework */; };
+		A965B7FF17A860E8009BCEBA /* Cing.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A965B7FD17A860A4009BCEBA /* Cing.framework */; };
 		A9D4189917A1B208002FD8D3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D4189817A1B208002FD8D3 /* Cocoa.framework */; };
 		A9D418D717A1B2F0002FD8D3 /* Simple_BasicApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9D418D617A1B2F0002FD8D3 /* Simple_BasicApplication.cpp */; };
-		A9D418DA17A1B32D002FD8D3 /* Cing.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9D418D917A1B32D002FD8D3 /* Cing.framework */; };
-		A9D418DB17A1B33D002FD8D3 /* Cing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D418D917A1B32D002FD8D3 /* Cing.framework */; };
 		A9D418E117A1EFC7002FD8D3 /* CingConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9D418DF17A1EFC7002FD8D3 /* CingConfig.xml */; };
 		A9D418E217A1EFC7002FD8D3 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9D418E017A1EFC7002FD8D3 /* ReadMe.txt */; };
 /* End PBXBuildFile section */
@@ -22,13 +22,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A9D418DA17A1B32D002FD8D3 /* Cing.framework in CopyFiles */,
+				A965B7FF17A860E8009BCEBA /* Cing.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A965B7FD17A860A4009BCEBA /* Cing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cing.framework; path = ../../../cing/bin/mac/xcode/Debug/Cing.framework; sourceTree = "<group>"; };
 		A9D4189517A1B208002FD8D3 /* Basic_SimpleApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Basic_SimpleApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D4189817A1B208002FD8D3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		A9D4189B17A1B208002FD8D3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -36,7 +37,6 @@
 		A9D4189D17A1B208002FD8D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A9D418A017A1B208002FD8D3 /* Basic_SimpleApplication-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Basic_SimpleApplication-Info.plist"; sourceTree = "<group>"; };
 		A9D418D617A1B2F0002FD8D3 /* Simple_BasicApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simple_BasicApplication.cpp; sourceTree = "<group>"; };
-		A9D418D917A1B32D002FD8D3 /* Cing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cing.framework; path = ../../../cing/bin/mac/xcode/Release/Cing.framework; sourceTree = "<group>"; };
 		A9D418DF17A1EFC7002FD8D3 /* CingConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CingConfig.xml; sourceTree = "<group>"; };
 		A9D418E017A1EFC7002FD8D3 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -46,7 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9D418DB17A1B33D002FD8D3 /* Cing.framework in Frameworks */,
+				A965B7FE17A860A4009BCEBA /* Cing.framework in Frameworks */,
 				A9D4189917A1B208002FD8D3 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,7 +75,7 @@
 		A9D4189717A1B208002FD8D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A9D418D917A1B32D002FD8D3 /* Cing.framework */,
+				A965B7FD17A860A4009BCEBA /* Cing.framework */,
 				A9D4189817A1B208002FD8D3 /* Cocoa.framework */,
 				A9D4189A17A1B208002FD8D3 /* Other Frameworks */,
 			);
@@ -219,8 +219,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TIXML_USE_STL,
 					"DEBUG=1",
-					OGRE_STATIC_LIB,
-					OGRE_STATIC_ParticleFX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -232,8 +230,13 @@
 					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers/OIS\"",
 					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Resources\"",
 				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cing/libraries/mac/xcode/boost/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lboost_thread",
+					"-lboost_system",
+				);
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -264,7 +267,12 @@
 					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers/OIS\"",
 					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Resources\"",
 				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cing/libraries/mac/xcode/boost/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-lboost_thread",
+					"-lboost_system",
+				);
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -275,7 +283,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release\"",
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -291,7 +299,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release\"",
+					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";

@@ -741,22 +741,21 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TIXML_USE_STL,
 					"DEBUG=1",
-					OGRE_STATIC_LIB,
 					OGRE_STATIC_ParticleFX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -813,6 +812,7 @@
 					"-llibjasper",
 				);
 				SDKROOT = macosx;
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -821,8 +821,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -830,11 +830,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TIXML_USE_STL,
-					OGRE_STATIC_LIB,
 					OGRE_STATIC_ParticleFX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -890,6 +889,7 @@
 					"-llibjasper",
 				);
 				SDKROOT = macosx;
+				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};
@@ -903,7 +903,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../libraries/mac/xcode4/Ogre3d/Frameworks\"",
 					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
 					"\"$(SRCROOT)/../../../libraries/mac/xcode/Ogre3d/Frameworks\"",
 				);
@@ -912,7 +911,6 @@
 				GCC_PREFIX_HEADER = "Cing/Cing-Prefix.pch";
 				INFOPLIST_FILE = "Cing/Cing-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TIXML_USE_STL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -927,7 +925,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../libraries/mac/xcode4/Ogre3d/Frameworks\"",
 					"$(CING_LIBRARIES)/Ogre3d/Frameworks",
 					"\"$(SRCROOT)/../../../libraries/mac/xcode/Ogre3d/Frameworks\"",
 				);
@@ -936,7 +933,6 @@
 				GCC_PREFIX_HEADER = "Cing/Cing-Prefix.pch";
 				INFOPLIST_FILE = "Cing/Cing-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TIXML_USE_STL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;

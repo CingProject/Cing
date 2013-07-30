@@ -6,12 +6,14 @@ CREATE_APPLICATION( "Cing Demo" );
  * It draws a line from the center of the screen to the mouse.
  * Press the mouse to clear the background.
  */
-
+ 
 void setup()
 {
 	// Set window size and smooth drawing
 	size(800, 800);
 	smooth();
+    
+    setLogLevel(LOG_TRIVIAL);
 }
 
 void draw()

@@ -103,7 +103,7 @@ namespace Cing
 
 
 			// get font pointer and load it
-			m_font = fontMgr->getByName( ttfName, "General" );
+			m_font = fontMgr->getByName( ttfName, "General" ).staticCast<Ogre::Font>();
 			if ( !m_font.isNull() )
 				m_font->load();
 		}
@@ -114,7 +114,7 @@ namespace Cing
 			Ogre::FontManager &fontMgr = Ogre::FontManager::getSingleton();
 
 			// create a font resource
-			m_font = fontMgr.create( ttfName, "General" );
+			m_font = fontMgr.create( ttfName, "General" ).staticCast<Ogre::Font>();
 
 			if ( !m_font.isNull() )
 			{
