@@ -7,29 +7,93 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A965B7FE17A860A4009BCEBA /* Cing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A965B7FD17A860A4009BCEBA /* Cing.framework */; };
-		A965B7FF17A860E8009BCEBA /* Cing.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A965B7FD17A860A4009BCEBA /* Cing.framework */; };
+		A9CC0D6517A88B1100B12ADD /* Cing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D6217A88B0300B12ADD /* Cing.framework */; };
+		A9CC0D6617A88B1500B12ADD /* Cing.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D6217A88B0300B12ADD /* Cing.framework */; };
+		A9CC0D6C17A88EFC00B12ADD /* Cg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D6B17A88EFC00B12ADD /* Cg.framework */; };
+		A9CC0D7B17A88F1100B12ADD /* Ogre.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D6D17A88F1100B12ADD /* Ogre.framework */; };
+		A9CC0D7C17A88F1100B12ADD /* OgreOverlay.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D6E17A88F1100B12ADD /* OgreOverlay.framework */; };
+		A9CC0D7D17A88F1100B12ADD /* OgrePaging.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D6F17A88F1100B12ADD /* OgrePaging.framework */; };
+		A9CC0D7E17A88F1100B12ADD /* OgreProperty.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7017A88F1100B12ADD /* OgreProperty.framework */; };
+		A9CC0D7F17A88F1100B12ADD /* OgreRTShaderSystem.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7117A88F1100B12ADD /* OgreRTShaderSystem.framework */; };
+		A9CC0D8017A88F1100B12ADD /* OgreTerrain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7217A88F1100B12ADD /* OgreTerrain.framework */; };
+		A9CC0D8117A88F1100B12ADD /* OgreVolume.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7317A88F1100B12ADD /* OgreVolume.framework */; };
+		A9CC0D8217A88F1100B12ADD /* Plugin_BSPSceneManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7417A88F1100B12ADD /* Plugin_BSPSceneManager.framework */; };
+		A9CC0D8317A88F1100B12ADD /* Plugin_CgProgramManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7517A88F1100B12ADD /* Plugin_CgProgramManager.framework */; };
+		A9CC0D8417A88F1100B12ADD /* Plugin_OctreeSceneManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7617A88F1100B12ADD /* Plugin_OctreeSceneManager.framework */; };
+		A9CC0D8517A88F1100B12ADD /* Plugin_OctreeZone.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7717A88F1100B12ADD /* Plugin_OctreeZone.framework */; };
+		A9CC0D8617A88F1100B12ADD /* Plugin_ParticleFX.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7817A88F1100B12ADD /* Plugin_ParticleFX.framework */; };
+		A9CC0D8717A88F1100B12ADD /* Plugin_PCZSceneManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7917A88F1100B12ADD /* Plugin_PCZSceneManager.framework */; };
+		A9CC0D8817A88F1100B12ADD /* RenderSystem_GL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D7A17A88F1100B12ADD /* RenderSystem_GL.framework */; };
+		A9CC0D8B17A8B34F00B12ADD /* plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = A9CC0D8A17A8B34F00B12ADD /* plugins.cfg */; };
 		A9D4189917A1B208002FD8D3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D4189817A1B208002FD8D3 /* Cocoa.framework */; };
 		A9D418D717A1B2F0002FD8D3 /* Simple_BasicApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9D418D617A1B2F0002FD8D3 /* Simple_BasicApplication.cpp */; };
 		A9D418E117A1EFC7002FD8D3 /* CingConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = A9D418DF17A1EFC7002FD8D3 /* CingConfig.xml */; };
 		A9D418E217A1EFC7002FD8D3 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9D418E017A1EFC7002FD8D3 /* ReadMe.txt */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A9CC0D6117A88B0300B12ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9CC0D5D17A88B0200B12ADD /* Cing.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A93DB48A179DF2D200770B14;
+			remoteInfo = Cing;
+		};
+		A9CC0D6317A88B0C00B12ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9CC0D5D17A88B0200B12ADD /* Cing.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A93DB489179DF2D200770B14;
+			remoteInfo = Cing;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		A9D418D817A1B31A002FD8D3 /* CopyFiles */ = {
+		A9CC0D4517A886C000B12ADD /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A965B7FF17A860E8009BCEBA /* Cing.framework in CopyFiles */,
+				A9CC0D7B17A88F1100B12ADD /* Ogre.framework in CopyFiles */,
+				A9CC0D7C17A88F1100B12ADD /* OgreOverlay.framework in CopyFiles */,
+				A9CC0D7D17A88F1100B12ADD /* OgrePaging.framework in CopyFiles */,
+				A9CC0D7E17A88F1100B12ADD /* OgreProperty.framework in CopyFiles */,
+				A9CC0D7F17A88F1100B12ADD /* OgreRTShaderSystem.framework in CopyFiles */,
+				A9CC0D8017A88F1100B12ADD /* OgreTerrain.framework in CopyFiles */,
+				A9CC0D8117A88F1100B12ADD /* OgreVolume.framework in CopyFiles */,
+				A9CC0D8217A88F1100B12ADD /* Plugin_BSPSceneManager.framework in CopyFiles */,
+				A9CC0D8317A88F1100B12ADD /* Plugin_CgProgramManager.framework in CopyFiles */,
+				A9CC0D8417A88F1100B12ADD /* Plugin_OctreeSceneManager.framework in CopyFiles */,
+				A9CC0D8517A88F1100B12ADD /* Plugin_OctreeZone.framework in CopyFiles */,
+				A9CC0D8617A88F1100B12ADD /* Plugin_ParticleFX.framework in CopyFiles */,
+				A9CC0D8717A88F1100B12ADD /* Plugin_PCZSceneManager.framework in CopyFiles */,
+				A9CC0D8817A88F1100B12ADD /* RenderSystem_GL.framework in CopyFiles */,
+				A9CC0D6C17A88EFC00B12ADD /* Cg.framework in CopyFiles */,
+				A9CC0D6617A88B1500B12ADD /* Cing.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A965B7FD17A860A4009BCEBA /* Cing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cing.framework; path = ../../../cing/bin/mac/xcode/Debug/Cing.framework; sourceTree = "<group>"; };
+		A9CC0D5D17A88B0200B12ADD /* Cing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cing.xcodeproj; path = ../../../cing/build/mac/xcode/Cing.xcodeproj; sourceTree = "<group>"; };
+		A9CC0D6B17A88EFC00B12ADD /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = ../../../cing/libraries/mac/xcode/OgreDependencies/Frameworks/Cg.framework; sourceTree = "<group>"; };
+		A9CC0D6D17A88F1100B12ADD /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Ogre.framework; sourceTree = "<group>"; };
+		A9CC0D6E17A88F1100B12ADD /* OgreOverlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreOverlay.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreOverlay.framework; sourceTree = "<group>"; };
+		A9CC0D6F17A88F1100B12ADD /* OgrePaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgrePaging.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgrePaging.framework; sourceTree = "<group>"; };
+		A9CC0D7017A88F1100B12ADD /* OgreProperty.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreProperty.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreProperty.framework; sourceTree = "<group>"; };
+		A9CC0D7117A88F1100B12ADD /* OgreRTShaderSystem.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreRTShaderSystem.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreRTShaderSystem.framework; sourceTree = "<group>"; };
+		A9CC0D7217A88F1100B12ADD /* OgreTerrain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreTerrain.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreTerrain.framework; sourceTree = "<group>"; };
+		A9CC0D7317A88F1100B12ADD /* OgreVolume.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreVolume.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreVolume.framework; sourceTree = "<group>"; };
+		A9CC0D7417A88F1100B12ADD /* Plugin_BSPSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_BSPSceneManager.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_BSPSceneManager.framework; sourceTree = "<group>"; };
+		A9CC0D7517A88F1100B12ADD /* Plugin_CgProgramManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_CgProgramManager.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_CgProgramManager.framework; sourceTree = "<group>"; };
+		A9CC0D7617A88F1100B12ADD /* Plugin_OctreeSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_OctreeSceneManager.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_OctreeSceneManager.framework; sourceTree = "<group>"; };
+		A9CC0D7717A88F1100B12ADD /* Plugin_OctreeZone.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_OctreeZone.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_OctreeZone.framework; sourceTree = "<group>"; };
+		A9CC0D7817A88F1100B12ADD /* Plugin_ParticleFX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_ParticleFX.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_ParticleFX.framework; sourceTree = "<group>"; };
+		A9CC0D7917A88F1100B12ADD /* Plugin_PCZSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_PCZSceneManager.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_PCZSceneManager.framework; sourceTree = "<group>"; };
+		A9CC0D7A17A88F1100B12ADD /* RenderSystem_GL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RenderSystem_GL.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/RenderSystem_GL.framework; sourceTree = "<group>"; };
+		A9CC0D8A17A8B34F00B12ADD /* plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plugins.cfg; sourceTree = "<group>"; };
 		A9D4189517A1B208002FD8D3 /* Basic_SimpleApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Basic_SimpleApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D4189817A1B208002FD8D3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		A9D4189B17A1B208002FD8D3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -46,7 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A965B7FE17A860A4009BCEBA /* Cing.framework in Frameworks */,
+				A9CC0D6517A88B1100B12ADD /* Cing.framework in Frameworks */,
 				A9D4189917A1B208002FD8D3 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,9 +118,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A9CC0D5E17A88B0200B12ADD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9CC0D6217A88B0300B12ADD /* Cing.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9CC0D8917A88FB100B12ADD /* Ogre */ = {
+			isa = PBXGroup;
+			children = (
+				A9CC0D6D17A88F1100B12ADD /* Ogre.framework */,
+				A9CC0D6E17A88F1100B12ADD /* OgreOverlay.framework */,
+				A9CC0D6F17A88F1100B12ADD /* OgrePaging.framework */,
+				A9CC0D7017A88F1100B12ADD /* OgreProperty.framework */,
+				A9CC0D7117A88F1100B12ADD /* OgreRTShaderSystem.framework */,
+				A9CC0D7217A88F1100B12ADD /* OgreTerrain.framework */,
+				A9CC0D7317A88F1100B12ADD /* OgreVolume.framework */,
+				A9CC0D7417A88F1100B12ADD /* Plugin_BSPSceneManager.framework */,
+				A9CC0D7517A88F1100B12ADD /* Plugin_CgProgramManager.framework */,
+				A9CC0D7617A88F1100B12ADD /* Plugin_OctreeSceneManager.framework */,
+				A9CC0D7717A88F1100B12ADD /* Plugin_OctreeZone.framework */,
+				A9CC0D7817A88F1100B12ADD /* Plugin_ParticleFX.framework */,
+				A9CC0D7917A88F1100B12ADD /* Plugin_PCZSceneManager.framework */,
+				A9CC0D7A17A88F1100B12ADD /* RenderSystem_GL.framework */,
+				A9CC0D6B17A88EFC00B12ADD /* Cg.framework */,
+			);
+			name = Ogre;
+			sourceTree = "<group>";
+		};
 		A9D4188C17A1B208002FD8D3 = {
 			isa = PBXGroup;
 			children = (
+				A9CC0D5D17A88B0200B12ADD /* Cing.xcodeproj */,
 				A9D418DE17A1EFC7002FD8D3 /* data */,
 				A9D4189E17A1B208002FD8D3 /* Basic_SimpleApplication */,
 				A9D4189717A1B208002FD8D3 /* Frameworks */,
@@ -75,7 +170,7 @@
 		A9D4189717A1B208002FD8D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A965B7FD17A860A4009BCEBA /* Cing.framework */,
+				A9CC0D8917A88FB100B12ADD /* Ogre */,
 				A9D4189817A1B208002FD8D3 /* Cocoa.framework */,
 				A9D4189A17A1B208002FD8D3 /* Other Frameworks */,
 			);
@@ -121,6 +216,7 @@
 		A9D418DE17A1EFC7002FD8D3 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				A9CC0D8A17A8B34F00B12ADD /* plugins.cfg */,
 				A9D418DF17A1EFC7002FD8D3 /* CingConfig.xml */,
 				A9D418E017A1EFC7002FD8D3 /* ReadMe.txt */,
 			);
@@ -138,11 +234,12 @@
 				A9D4189117A1B208002FD8D3 /* Sources */,
 				A9D4189217A1B208002FD8D3 /* Frameworks */,
 				A9D4189317A1B208002FD8D3 /* Resources */,
-				A9D418D817A1B31A002FD8D3 /* CopyFiles */,
+				A9CC0D4517A886C000B12ADD /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A9CC0D6417A88B0C00B12ADD /* PBXTargetDependency */,
 			);
 			name = Basic_SimpleApplication;
 			productName = Basic_SimpleApplication;
@@ -168,12 +265,28 @@
 			mainGroup = A9D4188C17A1B208002FD8D3;
 			productRefGroup = A9D4189617A1B208002FD8D3 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A9CC0D5E17A88B0200B12ADD /* Products */;
+					ProjectRef = A9CC0D5D17A88B0200B12ADD /* Cing.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A9D4189417A1B208002FD8D3 /* Basic_SimpleApplication */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A9CC0D6217A88B0300B12ADD /* Cing.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Cing.framework;
+			remoteRef = A9CC0D6117A88B0300B12ADD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A9D4189317A1B208002FD8D3 /* Resources */ = {
@@ -182,6 +295,7 @@
 			files = (
 				A9D418E117A1EFC7002FD8D3 /* CingConfig.xml in Resources */,
 				A9D418E217A1EFC7002FD8D3 /* ReadMe.txt in Resources */,
+				A9CC0D8B17A8B34F00B12ADD /* plugins.cfg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +311,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A9CC0D6417A88B0C00B12ADD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Cing;
+			targetProxy = A9CC0D6317A88B0C00B12ADD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A9D418B017A1B208002FD8D3 /* Debug */ = {
@@ -216,27 +338,21 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					TIXML_USE_STL,
-					"DEBUG=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers\"",
-					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers/OIS\"",
-					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Resources\"",
+					"$(BUILT_PRODUCTS_DIR)/Cing.framework/Headers",
+					"$(BUILT_PRODUCTS_DIR)/Cing.framework/Headers/OIS",
+					"$(BUILT_PRODUCTS_DIR)/Cing.framework/Resources",
 				);
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cing/libraries/mac/xcode/boost/lib";
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lboost_thread",
-					"-lboost_system",
-				);
+				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -257,22 +373,19 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = TIXML_USE_STL;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers\"",
-					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Headers/OIS\"",
-					"\"$(SRCROOT)/../../../cing/bin/mac/xcode/Release/Cing.framework/Resources\"",
+					"$(BUILT_PRODUCTS_DIR)/Cing.framework/Headers",
+					"$(BUILT_PRODUCTS_DIR)/Cing.framework/Headers/OIS",
+					"$(BUILT_PRODUCTS_DIR)/Cing.framework/Resources",
 				);
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cing/libraries/mac/xcode/boost/lib";
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = (
-					"-lboost_thread",
-					"-lboost_system",
-				);
+				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 			};
 			name = Release;

@@ -93,54 +93,9 @@
 		A9CC0D2917A876B100B12ADD /* Plugin_ParticleFX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1B17A876B100B12ADD /* Plugin_ParticleFX.framework */; };
 		A9CC0D2A17A876B100B12ADD /* Plugin_PCZSceneManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1C17A876B100B12ADD /* Plugin_PCZSceneManager.framework */; };
 		A9CC0D2B17A876B100B12ADD /* RenderSystem_GL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1D17A876B100B12ADD /* RenderSystem_GL.framework */; };
-		A9CC0D2D17A876C700B12ADD /* Ogre.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1017A876B100B12ADD /* Ogre.framework */; };
-		A9CC0D2E17A876C700B12ADD /* OgreOverlay.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1117A876B100B12ADD /* OgreOverlay.framework */; };
-		A9CC0D2F17A876C700B12ADD /* OgrePaging.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1217A876B100B12ADD /* OgrePaging.framework */; };
-		A9CC0D3017A876C700B12ADD /* OgreProperty.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1317A876B100B12ADD /* OgreProperty.framework */; };
-		A9CC0D3117A876C700B12ADD /* OgreRTShaderSystem.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1417A876B100B12ADD /* OgreRTShaderSystem.framework */; };
-		A9CC0D3217A876C700B12ADD /* OgreTerrain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1517A876B100B12ADD /* OgreTerrain.framework */; };
-		A9CC0D3317A876C700B12ADD /* OgreVolume.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1617A876B100B12ADD /* OgreVolume.framework */; };
-		A9CC0D3417A876C700B12ADD /* Plugin_BSPSceneManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1717A876B100B12ADD /* Plugin_BSPSceneManager.framework */; };
-		A9CC0D3517A876C700B12ADD /* Plugin_CgProgramManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1817A876B100B12ADD /* Plugin_CgProgramManager.framework */; };
-		A9CC0D3617A876C700B12ADD /* Plugin_OctreeSceneManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1917A876B100B12ADD /* Plugin_OctreeSceneManager.framework */; };
-		A9CC0D3717A876C700B12ADD /* Plugin_OctreeZone.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1A17A876B100B12ADD /* Plugin_OctreeZone.framework */; };
-		A9CC0D3817A876C700B12ADD /* Plugin_ParticleFX.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1B17A876B100B12ADD /* Plugin_ParticleFX.framework */; };
-		A9CC0D3917A876C700B12ADD /* Plugin_PCZSceneManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1C17A876B100B12ADD /* Plugin_PCZSceneManager.framework */; };
-		A9CC0D3A17A876C700B12ADD /* RenderSystem_GL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D1D17A876B100B12ADD /* RenderSystem_GL.framework */; };
-		A9CC0D3B17A876C700B12ADD /* Cg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9CC0D0E17A8769000B12ADD /* Cg.framework */; };
-		A9D4188517A1798B002FD8D3 /* Cing.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB65D179DFE8300770B14 /* Cing.h */; settings = {ATTRIBUTES = (); }; };
-		A9D4188617A1798B002FD8D3 /* Cing-Precompiled.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB80A179E12F400770B14 /* Cing-Precompiled.h */; settings = {ATTRIBUTES = (); }; };
-		A9D4188717A1798B002FD8D3 /* AudioPrereqs.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0817A0CE7700599195 /* AudioPrereqs.h */; };
-		A9D4188817A1798B002FD8D3 /* BaseAudioInput.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0917A0CE7700599195 /* BaseAudioInput.h */; };
-		A9D4188917A1798B002FD8D3 /* BaseSound.h in Headers */ = {isa = PBXBuildFile; fileRef = A99F6C0A17A0CE7700599195 /* BaseSound.h */; };
+		A9CC0D6817A88CFE00B12ADD /* Cing-Precompiled.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB80A179E12F400770B14 /* Cing-Precompiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9D4188517A1798B002FD8D3 /* Cing.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB65D179DFE8300770B14 /* Cing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		A9D4186517A16C13002FD8D3 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				A9CC0D2D17A876C700B12ADD /* Ogre.framework in CopyFiles */,
-				A9CC0D2E17A876C700B12ADD /* OgreOverlay.framework in CopyFiles */,
-				A9CC0D2F17A876C700B12ADD /* OgrePaging.framework in CopyFiles */,
-				A9CC0D3017A876C700B12ADD /* OgreProperty.framework in CopyFiles */,
-				A9CC0D3117A876C700B12ADD /* OgreRTShaderSystem.framework in CopyFiles */,
-				A9CC0D3217A876C700B12ADD /* OgreTerrain.framework in CopyFiles */,
-				A9CC0D3317A876C700B12ADD /* OgreVolume.framework in CopyFiles */,
-				A9CC0D3417A876C700B12ADD /* Plugin_BSPSceneManager.framework in CopyFiles */,
-				A9CC0D3517A876C700B12ADD /* Plugin_CgProgramManager.framework in CopyFiles */,
-				A9CC0D3617A876C700B12ADD /* Plugin_OctreeSceneManager.framework in CopyFiles */,
-				A9CC0D3717A876C700B12ADD /* Plugin_OctreeZone.framework in CopyFiles */,
-				A9CC0D3817A876C700B12ADD /* Plugin_ParticleFX.framework in CopyFiles */,
-				A9CC0D3917A876C700B12ADD /* Plugin_PCZSceneManager.framework in CopyFiles */,
-				A9CC0D3A17A876C700B12ADD /* RenderSystem_GL.framework in CopyFiles */,
-				A9CC0D3B17A876C700B12ADD /* Cg.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -658,11 +613,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9D4188717A1798B002FD8D3 /* AudioPrereqs.h in Headers */,
-				A9D4188817A1798B002FD8D3 /* BaseAudioInput.h in Headers */,
 				A9D4188517A1798B002FD8D3 /* Cing.h in Headers */,
-				A9D4188617A1798B002FD8D3 /* Cing-Precompiled.h in Headers */,
-				A9D4188917A1798B002FD8D3 /* BaseSound.h in Headers */,
+				A9CC0D6817A88CFE00B12ADD /* Cing-Precompiled.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,7 +629,7 @@
 				A93DB486179DF2D200770B14 /* Frameworks */,
 				A93DB487179DF2D200770B14 /* Headers */,
 				A93DB488179DF2D200770B14 /* Resources */,
-				A9D4186517A16C13002FD8D3 /* CopyFiles */,
+				A9CC0D6917A88D0800B12ADD /* Copy Framework Header Files */,
 			);
 			buildRules = (
 			);
@@ -725,6 +677,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A9CC0D6917A88D0800B12ADD /* Copy Framework Header Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Framework Header Files";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Copy all the header files into Headers while retaining the correct subdirectory structure\n\n# the relative path to cing src from this project location\ncd ${SRCROOT}/../../../src/\nfor H in `find ./ -name \"*.h\"`;  do\n#echo ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# Ogre3d\ncd ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/include/OGRE/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# OpenCV\ncd ${SRCROOT}/../../../libraries/mac/xcode/OpenCV/include/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# PTypes\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/PTypes ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# TinyXML\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/TinyXML ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# boost\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/boost/boost ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# OIS\ncd ${SRCROOT}/../../../libraries/mac/xcode/OIS/include/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A93DB485179DF2D200770B14 /* Sources */ = {

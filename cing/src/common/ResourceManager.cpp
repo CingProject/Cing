@@ -35,11 +35,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreRoot.h"
 #include "OgreConfigFile.h"
 
-#ifdef OGRE_STATIC_LIB
-#include "OgreGlPlugin.h"
-#include "Plugins/ParticleFX/OgreParticleFXPlugin.h"
-#endif
-
 // Framework
 #include "framework/UserAppGlobals.h"
 
@@ -159,20 +154,6 @@ namespace Cing
 				Ogre::ResourceGroupManager::getSingleton().addResourceLocation( libDataPath + archName, typeName, secName );
 			}
 		}
-        
-#ifdef OGRE_STATIC_LIB
-        
-        // manually register things that would be dynamically loaded normally
-        
-        // GL Renderer
-        Ogre::GLPlugin *gl = new Ogre::GLPlugin();
-        gl->install();
-        
-        // ParticleFX
-        Ogre::ParticleFXPlugin *particle = new Ogre::ParticleFXPlugin();
-        Ogre::Root::getSingleton().installPlugin(particle);
-        
-#endif
 
 		m_bIsValid = true;
 	}
