@@ -85,7 +85,7 @@ private:
 	float m_lowRange, m_hightRange; // Color values range. Default 0..255
 
 	// Static attributes
-	static GraphicsType	m_colorMode;
+	static GraphicsType			m_colorMode;
 	static float				m_rRange;
 	static float				m_gRange;
 	static float				m_bRange;
