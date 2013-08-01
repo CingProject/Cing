@@ -52,14 +52,23 @@ public:
 	virtual ~BaseRenderer2D() { end(); }
 
 	// Init / Release / Update
-	virtual bool	init	();
+	virtual bool	init	()			{ return true; }
 	virtual void    end     ()			{ m_isValid = false; }
-	virtual void	update  ();
+	virtual void	update  ()			{}
 
 	// Manipulation
 
 	/// Filters an image based on the possibilities defined in ImageProcessingFilters
-	virtual void	filter ( Image& image, ImageProcessingFilters kind, float param = FLT_MAX ) { LOG_UNDEFINED_METHOD; }
+	virtual void	filter	( Image& image, ImageProcessingFilters kind, float param = FLT_MAX )			{ LOG_UNDEFINED_METHOD; }
+	virtual void	triangle( Image& image, int x1, int y1, int x2, int y2, int x3, int y3 )				{ LOG_UNDEFINED_METHOD; }
+	virtual void  	line	( Image& image, int x1, int y1, int x2, int y2 )								{ LOG_UNDEFINED_METHOD; }
+	virtual void  	arc		( Image& image, int x, int y,  int width, int height, float start, float stop )	{ LOG_UNDEFINED_METHOD; }
+	virtual void  	point	( Image& image, int x, int y)													{ LOG_UNDEFINED_METHOD; }
+	virtual void  	quad	( Image& image, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 ){ LOG_UNDEFINED_METHOD; }
+	virtual void  	ellipse	( Image& image, int x, int y, int width, int height, float angleDegrees = 0 )	{ LOG_UNDEFINED_METHOD; }
+	virtual void  	rect	( Image& image, int x, int y, int width, int height )							{ LOG_UNDEFINED_METHOD; }
+	virtual void  	text	( Image& image, int x1, int y1, const std::string& text )						{ LOG_UNDEFINED_METHOD; }
+	virtual void  	fill    ( Image& image, const Color& color )											{ LOG_UNDEFINED_METHOD; }
 
 	// Query methods
 	bool			isValid	() const	{ return m_isValid; } 
