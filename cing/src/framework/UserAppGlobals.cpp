@@ -82,6 +82,6 @@ namespace Cing
 	PerlinNoise _noise = PerlinNoise(6,0.43f,1.6f,0);
 
 	// Rendering system
-	BaseRenderer2D*			render2DBackend = NULL;
+	BaseRenderer2D*			renderer2D = NULL;
 
 } // namespace Cing

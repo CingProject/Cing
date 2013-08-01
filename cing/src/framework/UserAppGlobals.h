@@ -93,7 +93,7 @@ extern Window*						appWindow;			///< App window
 extern std::vector < Color >		pixels;
 
 // 2D Renderer in use
-extern BaseRenderer2D*				render2DBackend;	///< 2D renderer that handles all the 2d rendering or image processing calls. Can be swapped using setRender2DBackend
+extern BaseRenderer2D*				renderer2D;			///< 2D renderer that handles all the 2d rendering or image processing calls. Can be swapped using setRender2DBackend
 
 // Other
 extern PerlinNoise _noise;
