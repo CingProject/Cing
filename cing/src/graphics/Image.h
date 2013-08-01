@@ -36,6 +36,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 namespace Cing
 {
 
+	typedef boost::shared_ptr<unsigned char> ImageDataPtr; ///< Shared storage for image data (pixels)
+
 	/**
 	* @internal
 	* @brief Stores an image which can be loaded from a file, or created dynamically.
@@ -47,16 +49,16 @@ namespace Cing
 
 		// Constructor / Destructor
 		Image				();
-		Image				( const Image& img );
+		Image				( Image& other );
 		Image				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( const std::string& name, Ogre::SceneManager* sm = NULL );
 		virtual ~Image		();
 
 		// Init / Release / Update / Save / Clone
-		void		init				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
+		void		init				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL, ImageDataPtr data = NULL );
 		void		initAsRenderTarget	( int width, int height );
-		void		init				( const Image& img );
+		void		init				( Image& other );
 		bool		load				( const std::string& path, Ogre::SceneManager* sm = NULL );
 		void		save				( const std::string& path );
 		void		end					();
@@ -67,7 +69,8 @@ namespace Cing
 		const unsigned char*	getData	() const;
 		unsigned char*			pixels	() { return getData(); }
 		const unsigned char*	pixels	() const { return getData(); }
-		Image*					clone	();
+		Image					clone	();
+		void					copyTo	( Image& other );
 
 		// Transformations
 		void			setOrientation	( const Vector& axis, float angleRadians );
@@ -87,14 +90,14 @@ namespace Cing
 		void	drawBackground( float xPos, float yPos, float width, float height );
 
 		// 2D Image drawing methods
-		void  	triangle( int x1, int y1, int x2, int y2, int x3, int y3 );
-		void  	line	( int x1, int y1, int x2, int y2 );
-		void  	arc		( int x, int y,  int width, int height, float start, float stop );
 		void  	point	( int x, int y);
-		void  	quad	( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
-		void  	ellipse	( int x, int y, int width, int height, float angleDegrees = 0 );
+		void  	line	( int x1, int y1, int x2, int y2 );
+		void  	triangle( int x1, int y1, int x2, int y2, int x3, int y3 );
 		void  	rect	( int x, int y, int width, int height );
-		void  	text	( int x1, int y1, const char* text );
+		void  	quad	( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 );
+		void  	arc		( int x, int y,  int width, int height, float start, float stop );
+		void  	ellipse	( int x, int y, int width, int height, float angleDegrees = 0 );
+		void  	text	( int x1, int y1, const std::string& text );
 		void  	fill    ( const Color& color );
 		void  	fill    ( float gray ) { fill( Color(gray, gray, gray) ); }
 		void  	fill    ( float gray, float alpha ) { fill( Color(gray, gray, gray, alpha) ); }
@@ -127,7 +130,7 @@ namespace Cing
 		const std::string&	getPath			() const { return m_path; }
 
 		// Operators and operations
-		void operator =	( const Image& other );
+		void operator =	( Image& other );
 		void operator = ( float scalar);
 		void operator -=( float scalar );
 		void operator +=( float scalar );
@@ -155,9 +158,6 @@ namespace Cing
 	private:
 		// Private methods
 		bool	loadImageFromDisk	( const std::string& imagePath );
-
-		// Private types
-		typedef boost::shared_ptr<unsigned char> ImageDataPtr; ///< Shared storage for image data (pixels)
 
 		// Private attributes
 		std::string						m_path;				///< Path to the image file (relative to data folder)
