@@ -47,14 +47,27 @@ public:
 	virtual ~Renderer2DOpenCV()				{ end(); }
 
 	// Init / Release / Update
-	bool	init	()	override	{}
+	bool	init	()	override	{ return true; }
 	void    end     ()	override	{ BaseRenderer2D::end(); }
 	void	update  ()	override	{}
 
 	// Manipulation
 
-	/// Filters an image based on the possibilities defined in ImageProcessingFilters
+	// Filters an image based on the possibilities defined in ImageProcessingFilters
 	void	filter ( Image& image, ImageProcessingFilters kind, float param = FLT_MAX ) override;
+
+	// 2D Drawing
+	void  	point	( Image& image, int x, int y)														override;
+	void  	line	( Image& image, int x1, int y1, int x2, int y2 )									override;
+	void	triangle( Image& image, int x1, int y1, int x2, int y2, int x3, int y3 )	override;
+	void  	rect	( Image& image, int x, int y, int width, int height )								override;
+	void  	quad	( Image& image, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4 )	override;
+	void  	arc		( Image& image, int x, int y,  int width, int height, float start, float stop )		override;
+	void  	ellipse	( Image& image, int x, int y, int width, int height, float angleDegrees = 0 )		override;
+	void  	fill    ( Image& image, const Color& color )												override;
+
+	// Text
+	void  	text	( Image& image, int x1, int y1, const std::string& text )							override;
 
 	// Query methods
 

@@ -28,8 +28,8 @@
 #pragma once
 
 // GS
-#include "Cbit-GStreamer/lib/include/gstreamer-0.10/gst/gst.h"
-#include "Cbit-GStreamer/lib/include/gstreamer-0.10/gst/app/gstappsink.h"
+#include "Gstreamer/lib/include/gstreamer-0.10/gst/gst.h"
+#include "Gstreamer/lib/include/gstreamer-0.10/gst/app/gstappsink.h"
 
 // Graphics
 #include "graphics/Image.h"

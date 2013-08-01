@@ -28,10 +28,10 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-#include "Cbit-GStreamer/src/GStreamerManager.h"
+#include "Gstreamer/src/GStreamerManager.h"
 
 // GStreamer
-#include "Cbit-GStreamer/lib/include/gstreamer-0.10/gst/gst.h"
+#include "Gstreamer/lib/include/gstreamer-0.10/gst/gst.h"
 
 // Common
 #include "common/CommonUtilsIncludes.h"

@@ -25,18 +25,53 @@
   THE SOFTWARE.
 */
 
+#pragma once
+	
+/// This file simplified the use of the OpenCV module, adding includes and the pragmas to link with the required openCV libraries
 
-#include "opencv2/core/core.hpp"
+// Includes
+#include "OpenCV/src/BackgroundSubtraction.h"
+#include "OpenCV/src/BlobTracker.h"
+#include "OpenCV/src/MediaPlayerOCV.h"
+#include "OpenCV/src/OpenCVUtils.h"
+#include "OpenCV/src/Renderer2DOpenCV.h"
 
-using namespace cv;
+// Linker 
+#if defined(WIN32)
+#ifdef _DEBUG
+		// Ligs
+		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_core246d.lib")
+		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_highgui246d.lib")
+		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_imgproc246d.lib")
+#else
+		#pragma comment(lib,"opencv_core246.lib")
+		#pragma comment(lib,"opencv_highgui246.lib")
+		#pragma comment(lib,"opencv_imgproc246.lib")
+#endif
+#endif 
+
+// DLLs for runtime
 
 namespace Cing
 {
+	// Global OpenCV variables
+	Renderer2DOpenCV	renderer2DOpenCV;
+
+
 	// Init / Release of anything the Opencv plugin needs
-	void		initOpenCV		();
-	void		releaseOpenCV	();
+	void initOpenCV	()
+	{
+#if defined(WIN32)
+		// This could be used if DLL loading is delayed
+		//SetDllDirectory( L"C:/Users/Julio/Desktop/Proyectos - Code/Cing/git/cing-ings/OpenCV/lib/bin/vs2012" );
+#endif
+	}
 
-	// Conversion from Cing::Image to opencv::Mat
-	cv::Mat		toCVMat		( const Image& image );
-
+	// Sets Renderer2DOpenCV as the default Cing 2D renderer (will be used from now on)
+	void enableOpenCVRenderer2D()
+	{
+		renderer2DOpenCV.init();
+		setRenderer2D( &renderer2DOpenCV );
+	}
 }
+

@@ -34,12 +34,16 @@
 namespace Cing
 {
 
-	void		initOpenCV		();
-	void		releaseOpenCV	();
-
-
 	/** 
-	 * 
+	 * Utility to conver a Cing::Image to a cv::MAt. 
+	 * The image buffer is not copied, only the cv::Mat header is created and it points to the Cing::image data, so it's a fast operation.
+	 * No need to release memory after using the cv::Mat
+	 *
+	 * @note After operating with the returned cv::Mat, if the image buffer is altered, setUpdateTexture(true) should be called
+	 * if you want to make sure that the texture associated with the Cing::Image is updated before the next draw/render call.
+	 *
+	 * @param image Image to create a cv::Mat with
+	 * @return cv::Mat wrapping the received Cing::Image. 
 	 */
 	cv::Mat toCVMat( const Image& image )
 	{
