@@ -9,6 +9,8 @@ CREATE_APPLICATION( "Cing" );
  *	- space bar: store current camera image as background
  */
 
+// OpenCV module includes
+#include "OpenCV/src/OpenCVIncludes.h"
 
 BackgroundSubtraction bgSubtraction; // Object to perform Background subtraction
 Capture				  camera;		 // Camera to capture video input

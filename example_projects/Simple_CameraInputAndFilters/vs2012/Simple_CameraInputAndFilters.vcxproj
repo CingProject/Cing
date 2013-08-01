@@ -67,8 +67,34 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(CING_INGS_ROOT)VLD\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>echo ------------------------------------------
+echo Copying Bin Cing files to output folder
+echo ------------------------------------------
+xcopy "$(CING_ROOT)bin\win\vs2012\$(Configuration)" "$(OutDir)" /i /d /y /s
+
+REM OpenCV
+echo ------------------------------------------
+echo Copying OpenCV Bin files
+echo ------------------------------------------
+xcopy "$(CING_INGS_ROOT)OpenCV\lib\bin\vs2012\opencv_core246d.dll" "$(OutDir)" /i /f /y /s
+xcopy "$(CING_INGS_ROOT)OpenCV\lib\bin\vs2012\opencv_highgui246d.dll" "$(OutDir)" /i /f /y /s
+xcopy "$(CING_INGS_ROOT)OpenCV\lib\bin\vs2012\opencv_imgproc246d.dll" "$(OutDir)" /i /f /y /s
+
+REM Check if it was ok
+if errorlevel 1 goto BuildEventFailed
+goto BuildEventOK
+
+:BuildEventFailed
+echo POSTBUILDSTEP for $(ProjectName) FAILED
+exit 1
+
+:BuildEventOK
+echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -99,6 +125,31 @@
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>echo ------------------------------------------
+echo Copying Bin Cing files to output folder
+echo ------------------------------------------
+xcopy "$(CING_ROOT)bin\win\vs2012\$(Configuration)" "$(OutDir)" /i /d /y /s
+
+REM OpenCV
+echo ------------------------------------------
+echo Copying OpenCV Bin files
+echo ------------------------------------------
+xcopy "$(CING_INGS_ROOT)OpenCV\lib\bin\vs2012\opencv_core246.dll" "$(OutDir)" /i /f /y /s
+xcopy "$(CING_INGS_ROOT)OpenCV\lib\bin\vs2012\opencv_highgui246.dll" "$(OutDir)" /i /f /y /s
+xcopy "$(CING_INGS_ROOT)OpenCV\lib\bin\vs2012\opencv_imgproc246.dll" "$(OutDir)" /i /f /y /s
+
+REM Check if it was ok
+if errorlevel 1 goto BuildEventFailed
+goto BuildEventOK
+
+:BuildEventFailed
+echo POSTBUILDSTEP for $(ProjectName) FAILED
+exit 1
+
+:BuildEventOK
+echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Simple_CameraInputAndFilters.cpp" />
