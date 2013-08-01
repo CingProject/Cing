@@ -22,17 +22,14 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-
 #include "BaseCameraInput.h"
 
 // Common
 #include "common/LogManager.h"
-
-// OpenCV
-#include "opencv2/imgproc/imgproc.hpp"
-
-// Common
 #include "common/Exception.h"
+
+// Graphics
+#include "graphics/GraphicsUserAPI.h"
 
 namespace Cing
 {
@@ -162,7 +159,11 @@ void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, 
 		// Swap red and blue channels
 		if ( swapRB )
 		{
-			//cvtColor( toCVMat(m_currentCameraImage), toCVMat(m_currentCameraImage), CV_RGB2BGR );
+			Ogre::PixelFormat srcFormat = toOgrePixelFormat( RGB );
+			Ogre::PixelFormat dstFormat = toOgrePixelFormat( BGR );
+
+			// Conver the pixels
+			Ogre::PixelUtil::bulkPixelConversion( data, srcFormat, m_currentCameraImage.getData(), dstFormat, width * height );
 			m_currentCameraImage.setUpdateTexture(true);
 		}
 	}	
@@ -174,22 +175,28 @@ void BaseCameraInput::setNewFrameData( unsigned char* data, unsigned int width, 
 		// Set data to temp image to make the conversion
 		m_tempImage.setData( data, width, height, format, widthStep );
 
-		// Convert it and mark the image to update to texture next draw
-		//cv::cvtColor( toCVMat(m_tempImage), toCVMat(m_currentCameraImage), CV_BGR2GRAY );
+		// Ogre source and target formats for the conversion
+		Ogre::PixelFormat srcFormat = toOgrePixelFormat( format );
+		Ogre::PixelFormat dstFormat = toOgrePixelFormat( m_format );
+
+		// Conver the pixels
+		Ogre::PixelUtil::bulkPixelConversion( data, srcFormat, m_currentCameraImage.getData(), dstFormat, width * height );
 		m_currentCameraImage.setUpdateTexture( true );
 	}
 	// Check if we have an image with 4 channels -> convert it to RGB or GRAY
 	else if ((width == m_currentCameraImage.getWidth() ) && 
-			 (height == m_currentCameraImage.getHeight()) && 
-			 (format == RGBA ) )
+			 (height == m_currentCameraImage.getHeight() ) && 
+			 ((m_format == RGBA) && (format == RGB)) )
 	{
 		// Convert to RGB (from RGBA)
 		if ( m_format == RGB )
 		{
-			int nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );	
-			cv::Mat imgData(height, width, CV_8UC(nChannels), data, widthStep);
-			
-			//cvtColor(imgData, toCVMat(m_currentCameraImage), CV_RGBA2RGB);
+			// Ogre source and target formats for the conversion
+			Ogre::PixelFormat srcFormat = toOgrePixelFormat( format );
+			Ogre::PixelFormat dstFormat = toOgrePixelFormat( m_format );
+
+			// Conver the pixels
+			Ogre::PixelUtil::bulkPixelConversion( data, srcFormat, m_currentCameraImage.getData(), dstFormat, width * height );
 			m_currentCameraImage.setUpdateTexture( true );
 		}
 		// Convert to GRAY (from RGB) -> not supported for now
