@@ -218,15 +218,6 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 		//GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
     }
 
-	// If we are in windows and debug -> log to visual studio output
-#if defined(WIN32)
-	if ( level >= m_debugOutputLogLevel )
-	{
-		OutputDebugString( msgFormated );	// In release, only critical messages
-		OutputDebugString( "\n" );
-	}
-
-
 	// all windows event logging will be executed directly
 	// Windows Event logger
 	int windows_log_level = 0;
@@ -249,8 +240,6 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 
 		wel->write(msgFormated, windows_log_level);
 	}
-
-#endif
 }
 
 } // namespace Cing
