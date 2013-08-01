@@ -93,6 +93,9 @@ namespace Cing
 {
 	// Store the window in global var
 	appWindow = &m_mainWindow;
+
+	// Set default 2D renderer (user will overrride with a correct one)
+	setRenderer2D( &m_baseRenderer2D );
 }
 
 /**

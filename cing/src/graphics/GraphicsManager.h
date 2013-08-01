@@ -36,6 +36,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Style.h"
 #include "Shape.h"
 #include "Image.h"
+#include "BaseRenderer2D.h"
 
 //TEMP
 #include "input/InputPrereqs.h"
@@ -251,6 +252,9 @@ namespace Cing
 		Ogre::Timer					m_fpsTimer;
 		AverageDouble				m_fpsAverage;
 		bool						m_bIsValid;			///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called
+
+		// 2D rendering
+		BaseRenderer2D				m_baseRenderer2D;	///< This render is empty, but it's set up as the default one so that if a user tries to draw without a 2D renderer in place, there is a proper warning
 	};
 
 } // namespace Cing

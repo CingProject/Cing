@@ -44,10 +44,17 @@
 namespace Cing
 {
 
+	// forward declarations
+	class BaseRenderer2D;
+
 /**
  * @brief Graphics related functions that user can call
  */
-
+	
+//-----------------------------------------------------------------------------------
+// Render System related
+//-----------------------------------------------------------------------------------
+void setRenderer2D( BaseRenderer2D* newRenderer2D );
 
 
 //-----------------------------------------------------------------------------------
@@ -249,8 +256,10 @@ Ogre::Entity*	pickEntity				( const Vector2& screenCoordinate );
 //----------------------------------------------------------------------------------- 
 // Helpers
 //----------------------------------------------------------------------------------- 
-unsigned int	numberOfChannels	( GraphicsType format );
-GraphicsType	toCingFormat		( Ogre::PixelFormat ogreFormat );
+unsigned int		numberOfChannels	( GraphicsType format );
+unsigned int		imageBufferSize		( unsigned int width, unsigned int height, GraphicsType format );
+GraphicsType		toCingPixelFormat	( Ogre::PixelFormat ogreFormat );
+Ogre::PixelFormat	toOgrePixelFormat	( GraphicsType cingformat );
 
 
 } // namespace Cing
