@@ -78,6 +78,7 @@ namespace Cing
 		// App window setup
 		void						setup						( int windowWidth, int windowHeight, GraphicMode mode = OPENGL );
 		void						fullscreen					()		{ m_fullscreen = true; }
+        void                        showConfigDialog            ()      { m_showConfigDialog = true; }
 		void						vSync						(bool value )		{ m_vSync = value; }
 		void						FSAA						( int fsaa )		{ m_fsaa = fsaa; }
 		void						windowBorder				( bool border )		{ m_windowBorder = border; }
@@ -205,6 +206,7 @@ namespace Cing
 		int                        	m_defaultWindowWidth;
 		int                        	m_defaultWindowHeight;
 		GraphicMode                	m_defaultGraphicMode;
+        bool                        m_showConfigDialog;      ///< If true, the render system settings will be setup through Ogre's config dialog
 		bool                       	m_setupCalled;			///< True when the setup method has been already called
 		bool                       	m_fullscreen;			///< If true, the applcation will run in full screen mode
 		bool                       	m_vSync;				///< If true, the applcation sync with dispay render (usually 60fps)
