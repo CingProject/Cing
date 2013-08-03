@@ -53,52 +53,6 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "Cing.h"
 
-void setup()
-{
-    // nothing
-    size(800, 800);
-	smooth();
-    
-    setLogLevel(LOG_TRIVIAL);
-}
-
-void keyPressed()
-{
-    // nothing
-}
-
-void mouseMoved()
-{
-    // nothing
-}
-
-void mouseReleased()
-{
-    // nothing
-}
-
-void mousePressed()
-{
-    // nothing
-}
-
-void end()
-{
-    // nothing
-}
-
-void draw()
-{
-    // nothing
-    // Associate the stroke grayscale value to the vertical position of the mouse
-	float value = map(mouseY, 0, height, 0, 255);
-	stroke(value);
-    
-	// Draw a line from the center of the window to the mouse
-	strokeWeight(2);
-	line(width/2, height/2, mouseX, mouseY);
-}
-
 namespace Cing
 {
 
@@ -146,7 +100,7 @@ bool Application::initApp()
 	LogManager::getSingleton().init();
 	
 	// Init user application
-	setup();
+    setup();
 
 	// Check subsystems init ok
 	checkSubsystemsInit();

@@ -43,6 +43,24 @@
 // Ogre
 #include "OgreTimer.h"
 
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+
+// http://stackoverflow.com/questions/274753/how-to-make-weak-linking-work-with-gcc
+// if we are on Apple (clang llvm) we need to define stubs for the global app methods as weak
+// they will be overridden in the Cing application. Also requires the following added to OTHER_LINKER_FLAGS:
+// -Wl,-flat_namespace,-undefined,dynamic_lookup
+
+extern void setup()             __attribute__((weak_import));
+extern void keyPressed()        __attribute__((weak_import));
+extern void mouseMoved()        __attribute__((weak_import));
+extern void mouseReleased()     __attribute__((weak_import));
+extern void mousePressed()      __attribute__((weak_import));
+extern void end()               __attribute__((weak_import));
+extern void draw()              __attribute__((weak_import));
+
+#endif
+
 namespace Cing
 {
 

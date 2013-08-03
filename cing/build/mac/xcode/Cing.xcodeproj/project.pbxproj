@@ -852,6 +852,7 @@
 					"-lFreeImage",
 					"-lfreetype",
 					"-lOIS",
+					"-Wl,-flat_namespace,-undefined,dynamic_lookup",
 				);
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
@@ -923,6 +924,7 @@
 					"-lFreeImage",
 					"-lfreetype",
 					"-lOIS",
+					"-Wl,-flat_namespace,-undefined,dynamic_lookup",
 				);
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";

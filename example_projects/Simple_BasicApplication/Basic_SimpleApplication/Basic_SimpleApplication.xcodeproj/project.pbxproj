@@ -100,7 +100,7 @@
 		A9D4189C17A1B208002FD8D3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A9D4189D17A1B208002FD8D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A9D418A017A1B208002FD8D3 /* Basic_SimpleApplication-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Basic_SimpleApplication-Info.plist"; sourceTree = "<group>"; };
-		A9D418D617A1B2F0002FD8D3 /* Simple_BasicApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simple_BasicApplication.cpp; sourceTree = "<group>"; };
+		A9D418D617A1B2F0002FD8D3 /* Simple_BasicApplication.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Simple_BasicApplication.cpp; sourceTree = "<group>"; };
 		A9D418DF17A1EFC7002FD8D3 /* CingConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CingConfig.xml; sourceTree = "<group>"; };
 		A9D418E017A1EFC7002FD8D3 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
