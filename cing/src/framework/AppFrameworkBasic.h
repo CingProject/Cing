@@ -25,8 +25,8 @@
   THE SOFTWARE.
 */
 
-#ifndef _AppFramework_H_
-#define _AppFramework_H_
+#ifndef _AppFrameworkBasic_H_
+#define _AppFrameworkBasic_H_
 
 // Precompiled headers
 #include "Cing-Precompiled.h"
@@ -37,7 +37,7 @@ namespace Cing
 {
 
 // General Framework functions
-void RunApplication( const char* _appName );
+void RunApplicationBasic( const char* _appName );
 
 } // namespace
 

@@ -32,7 +32,7 @@
 #include "windows.h"
 #endif
 
-#include "AppFramework.h"
+#include "AppFrameworkBasic.h"
 #include "Application.h"
 #include "UserAppGlobals.h"
 
@@ -59,7 +59,7 @@ namespace Cing
 	*      end:       At the end of the execution.
 	*      draw:      Called every frame. Here the application can draw and update its state.
 	*/
-	void RunApplication( const char* _appName )
+	void RunApplicationBasic( const char* _appName )
 	{
 
 		try
