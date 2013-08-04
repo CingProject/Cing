@@ -26,16 +26,16 @@
  */
 
 
-#ifndef _AppFrameworkCocoa_H_
-#define _AppFrameworkCocoa_H_
+#ifndef _AppFrameworkCocoaView_H_
+#define _AppFrameworkCocoaView_H_
 
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
 namespace Cing
 {
-
-void RunApplicationCocoa( const char* _appName );
+    
+    void RunApplicationCocoaView( const char* _appName, void *_view );
     
 }
 

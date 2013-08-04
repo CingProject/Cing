@@ -70,7 +70,7 @@ namespace Cing
  		virtual ~GraphicsManager								();
 
 		// Life cycle (in order of "appearance")
-		bool						createWindow				();
+		bool						createWindow				( void* view = NULL );
 		bool						initReSources				();
 		void						draw						();
 		void						end							();

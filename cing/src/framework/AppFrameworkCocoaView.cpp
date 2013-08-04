@@ -25,14 +25,14 @@
  THE SOFTWARE.
  */
 
-
-#import "AppFrameworkCocoa.h"
+#include "AppFrameworkCocoaView.h"
 
 #include "Application.h"
 #include "UserAppGlobals.h"
 
 // Ogre
 #include "OgreException.h"
+#include "RenderSystems/GL/OSX/OgreOSXCocoaView.h"
 
 // Common includes
 #include "common/Exception.h"
@@ -47,48 +47,52 @@
 
 namespace Cing
 {
-
-void RunApplicationCocoa(const char *_appName)
-{
-    NSString *cocoaAppName = [NSString stringWithUTF8String:_appName];
-    NSLog(@"RunApplicationCocoa for app: %@", cocoaAppName);
     
-    try
+    void RunApplicationCocoaView(const char *_appName, void *_view)
     {
-        // Store app name
-        Cing::appName = _appName;
-        
-        // Init application
-        Cing::Application::getSingleton().initApp();
-        
-        // Enter the application loop (will finish when the application should be closed)
-        Cing::Application::getSingleton().drawApp();
-        
-        // Release application
-        Cing::Application::getSingleton().endApp();
-        
-    }
-    catch( Ogre::Exception& e )
-    {
-        // TODO: pasar esto a formto propio
-        std::cerr << "An exception has occurred: " << e.getFullDescription();
-    }
-    catch( cv::Exception& e )
-    {
-        LOG_ERROR( "OpenCV Exception: %s", e.what() );
-    }
-    catch ( Cing::Exception& e )
-    {
-        std::cerr << "An exception has occurred: " << e.getErrorMessage();
-    }
-    catch(const std::exception& e)
-    {
-        LOG_ERROR( " Stl Exception: %s", e.what() );
-    }
-    catch (...)
-    {
-        LOG_ERROR( "Unidentified exception" );
-    }
-}
+        NSString *cocoaAppName = [NSString stringWithUTF8String:_appName];
+        OgreView *ogreView = (OgreView *)_view;
 
+        NSLog(@"RunApplicationCocoaView for app: %@, view: %@", cocoaAppName, ogreView);
+        
+        try
+        {
+            // Store app name
+            Cing::appName = _appName;
+            
+            Cing::Application::getSingleton().setOgreView( _view );
+            
+            // Init application
+            Cing::Application::getSingleton().initApp();
+            
+            // Enter the application loop (will finish when the application should be closed)
+            Cing::Application::getSingleton().drawApp();
+            
+            // Release application
+            Cing::Application::getSingleton().endApp();
+            
+        }
+        catch( Ogre::Exception& e )
+        {
+            // TODO: pasar esto a formto propio
+            std::cerr << "An exception has occurred: " << e.getFullDescription();
+        }
+        catch( cv::Exception& e )
+        {
+            LOG_ERROR( "OpenCV Exception: %s", e.what() );
+        }
+        catch ( Cing::Exception& e )
+        {
+            std::cerr << "An exception has occurred: " << e.getErrorMessage();
+        }
+        catch(const std::exception& e)
+        {
+            LOG_ERROR( " Stl Exception: %s", e.what() );
+        }
+        catch (...)
+        {
+            LOG_ERROR( "Unidentified exception" );
+        }
+    }
+    
 }

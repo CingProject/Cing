@@ -43,11 +43,10 @@
 // Ogre
 #include "OgreTimer.h"
 
-
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 
 // http://stackoverflow.com/questions/274753/how-to-make-weak-linking-work-with-gcc
-// if we are on Apple (clang llvm) we need to define stubs for the global app methods as weak
+// if we are on Apple (clang llvm) we need to define stubs for the global app methods as weak.
 // they will be overridden in the Cing application. Also requires the following added to OTHER_LINKER_FLAGS:
 // -Wl,-flat_namespace,-undefined,dynamic_lookup
 
@@ -114,7 +113,8 @@ public:
 	// Plugins for the application	
 	void			registerPlugin	( Plugin& plugin );
 	Cing::Plugin*	getPlugin		( const std::string& pluginName );
-
+    
+    void            setOgreView     ( void* view );
 
 private:
 	// private constructor to ensure singleton
@@ -138,6 +138,7 @@ private:
 
 	typedef std::list< Plugin* >	PluginList;
 	PluginList						m_plugins;				///< Plugins currently active in the application
+    void*                           m_ogreView;
 };
 
 } // namespace Cing

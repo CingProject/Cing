@@ -33,6 +33,7 @@
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #include "AppFrameworkCocoa.h"
+#include "AppFrameworkCocoaView.h"
 #else
 #include "AppFrameworkBasic.h"
 #endif
@@ -68,7 +69,10 @@ namespace Cing
             RunApplicationCocoa( appName );                                     \
             return 0;                                                           \
         };
-
+    
+    #define CREATE_COCOA_VIEW_APPLICATION( appName, ogreView )                \
+        RunApplicationCocoaView( appName, ogreView );
+    
 #else
 
     #define CREATE_APPLICATION( appName )                                     \

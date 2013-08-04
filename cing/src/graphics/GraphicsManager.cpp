@@ -57,6 +57,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreHardwarePixelBuffer.h"
 #include "Overlay/OgreOverlaySystem.h"
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include "RenderSystems/GL/OSX/OgreOSXCocoaView.h"
+#endif
+
 // Collada
 #if defined( _MSC_VER ) // TODO, need OgreCollada working on os x!
 	#include "OgreCollada/include/OgreCollada.h"
@@ -109,9 +113,10 @@ GraphicsManager::~GraphicsManager()
 
 /**
  * @brief Inits the graphics driver (OpenGL or DirectX) and creates the application window
+ * @param view   The view that should be used instead of creating a new window (an OgreView, currently only used in OS X)
  * @return true if the initialization was ok | false otherwise
  */
-bool GraphicsManager::createWindow()
+bool GraphicsManager::createWindow( void* view )
 {
 	// Check if the class is already initialized
 	if ( isValid() )
@@ -128,29 +133,38 @@ bool GraphicsManager::createWindow()
 
 	// Create the app window (First define parameters)
 	Ogre::NameValuePairList windowParams;
-	windowParams["title"] = appName;
-	windowParams["border"] = m_windowBorder? "fixed": "none";
-	windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
-	windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
-	//windowParams["left"] = "0";
-	//windowParams["top"] = "0";
-	windowParams["depthBuffer"] = "true";
-	windowParams["FSAA"] = toString(m_fsaa);
-	windowParams["displayFrequency"] = toString(60);
-	windowParams["vsync"] = toString(m_vSync);
-    windowParams["macAPI"] = "cocoa";
 
-    // NOTE: externalWindowHandle allows to pass an external window handle to embed the rendering window inside id.
-    // BUT! in OSX if passed empty... the window is not created (at least in Ogre 1.9RC1)
-    //windowParams["externalWindowHandle"] = toString(0);
-	
-    // Then create it!
-	Ogre::RenderWindow* ogreWindow = ogreRoot.createRenderWindow(appName, width, height, m_fullscreen, &windowParams) ;
-	if ( !ogreWindow )
-	{
-		LOG_ERROR( "Error creating application window" );
-		return false;
-	}
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+    if ( view != NULL )
+    {
+        OgreView *ogreView = (OgreView *)view;
+        windowParams["externalWindowHandle"] = Ogre::StringConverter::toString((size_t)ogreView);
+        windowParams["macAPI"] = "cocoa";
+    }
+#endif
+        
+        windowParams["title"] = appName;
+        windowParams["border"] = m_windowBorder? "fixed": "none";
+        windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
+        windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
+        //windowParams["left"] = "0";
+        //windowParams["top"] = "0";
+        windowParams["depthBuffer"] = "true";
+        windowParams["FSAA"] = toString(m_fsaa);
+        windowParams["displayFrequency"] = toString(60);
+        windowParams["vsync"] = toString(m_vSync);
+        
+        // NOTE: externalWindowHandle allows to pass an external window handle to embed the rendering window inside id.
+        // BUT! in OSX if passed empty... the window is not created (at least in Ogre 1.9RC1)
+        //windowParams["externalWindowHandle"] = toString(0);
+        
+        // Then create it!
+        Ogre::RenderWindow *ogreWindow = ogreRoot.createRenderWindow(appName, width, height, m_fullscreen, &windowParams) ;
+        if ( !ogreWindow )
+        {
+            LOG_ERROR( "Error creating application window" );
+            return false;
+        }
 
 	// Create main window
 	m_mainWindow.init( ogreWindow );

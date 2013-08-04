@@ -61,7 +61,7 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	Application::Application():
-m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 )
+m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ), m_ogreView(NULL)
 {
 }
 
@@ -268,8 +268,8 @@ void Application::initSubSystems()
 	// Init plugins that require it at this point
 	initPlugins( INIT_BEFORE_GRAPHICS );
 
-	// Create app window (and init graphics engine)
-	GraphicsManager::getSingleton().createWindow();
+	// Create app window (and init graphics engine)    
+	GraphicsManager::getSingleton().createWindow( m_ogreView );
 
 	// Init plugins that require it at this point
 	initPlugins( INIT_BEFORE_RESOURCE_INIT );
@@ -429,6 +429,16 @@ void Application::frameRate( int forcedFrameRate )
 void Application::registerPlugin( Plugin& plugin )
 {
 	m_plugins.push_back( &plugin );
+}
+
+/**
+ * @brief Assigns the Application OgreView, in initApp() this view will be used instead of creating a new Ogre Window if not NULL
+ *
+ * @param view the instance of OgreView we should use for Cing
+ */
+void Application::setOgreView( void* view )
+{
+    m_ogreView = view;
 }
 
 /**
