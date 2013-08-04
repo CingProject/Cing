@@ -45,32 +45,47 @@
 // mac specific
 #import <Foundation/Foundation.h>
 
-namespace Cing
+@interface CingCocoaViewApplication : NSObject
 {
-    
-    void RunApplicationCocoaView(const char *_appName, void *_view)
-    {
-        NSString *cocoaAppName = [NSString stringWithUTF8String:_appName];
-        OgreView *ogreView = (OgreView *)_view;
+    NSTimer *_timer;
+}
 
+@end
+
+@implementation CingCocoaViewApplication
+
+- (id)initWithName:(const char *)appName andView:(void *)view
+{
+    self = [super init];
+    if ( self != nil )
+    {
+        NSString *cocoaAppName = [NSString stringWithUTF8String:appName];
+        OgreView *ogreView = (OgreView *)view;
+        
         NSLog(@"RunApplicationCocoaView for app: %@, view: %@", cocoaAppName, ogreView);
         
         try
         {
             // Store app name
-            Cing::appName = _appName;
+            Cing::appName = appName;
             
-            Cing::Application::getSingleton().setOgreView( _view );
+            Cing::Application::getSingleton().setOgreView( view );
             
             // Init application
             Cing::Application::getSingleton().initApp();
             
-            // Enter the application loop (will finish when the application should be closed)
-            Cing::Application::getSingleton().drawApp();
+            // enter main loop for app
+            _timer = [[NSTimer scheduledTimerWithTimeInterval:0.02
+                                                       target:self
+                                                     selector:@selector(renderFrame)
+                                                     userInfo:NULL
+                                                      repeats:YES] retain];
             
-            // Release application
-            Cing::Application::getSingleton().endApp();
-            
+            // listen to the app termination notification
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(applicationWillTerminate)
+                                                         name:NSApplicationWillTerminateNotification
+                                                       object:nil];
         }
         catch( Ogre::Exception& e )
         {
@@ -94,5 +109,41 @@ namespace Cing
             LOG_ERROR( "Unidentified exception" );
         }
     }
+    return self;
+}
+
+- (void)dealloc
+{
+    [_timer invalidate];
+    [_timer release];
+    _timer = nil;
+    
+    [super dealloc];
+}
+
+- (void)renderFrame
+{
+    if ( !Cing::Application::getSingleton().shouldExit() )
+        Cing::Application::getSingleton().drawOneFrame();
+}
+
+- (void)applicationWillTerminate
+{
+    Cing::Application::getSingleton().endApp();
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+@end
+
+
+namespace Cing
+{
+    
+    void RunApplicationCocoaView(const char *_appName, void *_view)
+    {
+        [[[CingCocoaViewApplication alloc] initWithName:_appName andView:_view] autorelease];
+    }
     
 }
+

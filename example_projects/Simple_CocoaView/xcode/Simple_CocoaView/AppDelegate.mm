@@ -23,11 +23,13 @@
     // Insert code here to initialize your application
     
     NSLog(@"applicationDidFinishLaunching!");
+    
+    CREATE_COCOA_VIEW_APPLICATION( "Cing Demo", self.ogreView );
 }
 
-- (IBAction)loadCing:(id)sender
+- (IBAction)testButtonClicked:(id)sender
 {
-    CREATE_COCOA_VIEW_APPLICATION( "Cing Demo", self.ogreView );
+    NSLog(@"Test Button Clicked!");
 }
 
 @end

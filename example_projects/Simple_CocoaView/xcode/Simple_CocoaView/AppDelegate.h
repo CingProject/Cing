@@ -20,6 +20,6 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet OgreView *ogreView;
 
-- (IBAction)loadCing:(id)sender;
+- (IBAction)testButtonClicked:(id)sender;
 
 @end

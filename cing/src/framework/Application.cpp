@@ -168,89 +168,98 @@ void Application::endApp()
 void Application::drawApp()
 {
 	// Loop while window is open
-	while( (GraphicsManager::getSingleton().getMainWindow().isClosed() == false) && !m_finish )
+	while( !shouldExit() )
 	{
-		// Store elapsed from timers
-		elapsedMicros	= m_timer.getMicroseconds();
-		elapsedMillis	= m_timer.getMilliseconds();
-		elapsedSec		=  elapsedMicros / 1000000.0;
-
-		// security against negative elapsed (can come from thread related issues)
-		if ( elapsedMicros < 0 )
-			elapsedMicros = 1000;
-		if ( elapsedMillis < 0 )
-			elapsedMillis = 1;
-		if ( elapsedSec < 0 )
-			elapsedSec = 0.001;
-
-		secFromStart	= m_absTimer.getMicroseconds() / 1000000.0;
-		millisFromStart	= m_absTimer.getMilliseconds();
-		m_timer.reset();
-
-		// Update input manager
-		InputManager::getSingleton().update();
-
-		// Update plugins that require it at this point
-		updatePlugins( UPDATE_BEFORE_USER );
-
-		// Draw user app
-		if (m_loop)
-			draw();
-
-		// Update plugins that require it at this point
-		updatePlugins( UPDATE_AFTER_USER );
-
-		// Draw user app one time if the user calls redraw() function
-		if (m_needUpdate)
-		{
-			updatePlugins( UPDATE_BEFORE_USER );
-			draw();
-			updatePlugins( UPDATE_AFTER_USER );
-			m_needUpdate = false;
-		}
-
-		// Update physics
-		//PhysicsManager::getSingleton().update( elapsedMillis  );
-
-		// Update rendering
-		GraphicsManager::getSingleton().draw();
-
-		// Update plugins that require it at this point
-		updatePlugins( UPDATE_AFTER_RENDER );
-
-		// Update sound()???
-
-		// Update frameCount
-		m_frameCount++;
-		frameCount  = getFrameCount();
-
-		// Check if we need have a forced frame rate
-		if ( m_forcedFrameRate != 0 )
-		{
-
-			if ( millisFromStart < (m_timePerFrameMillis * frameCount) )
-			{
-				unsigned long millisToSleep = (unsigned long)((m_timePerFrameMillis * frameCount) - millisFromStart);
-				if ( millisToSleep > 0 )
-					pt::psleep( millisToSleep );
-			}
-
-			/*
-			m_accumulatedMicros = 0;
-			if ( elapsedMillis < ( m_timePerFrameMillis + m_accumulatedMicros ) )
-			{
-			unsigned long sleepMillis = (m_timePerFrameMillis + m_accumulatedMicros) - elapsedMillis;
-			//div_t result = div( sleepMicros, 1000 );
-			//unsigned long sleepMillis = result.quot;
-			//m_accumulatedMicros = 0; //result.rem;
-			if ( sleepMillis > 0 )
-			{
-			pt::psleep( sleepMillis );
-			}
-			}
-			*/
-		}
+        drawOneFrame();
 	}
+}
+    
+/**
+ * @internal
+ * @brief Draws the app for one frame, used by main loop (see drawApp())
+ */
+void Application::drawOneFrame()
+{
+    // Store elapsed from timers
+    elapsedMicros	= m_timer.getMicroseconds();
+    elapsedMillis	= m_timer.getMilliseconds();
+    elapsedSec		=  elapsedMicros / 1000000.0;
+    
+    // security against negative elapsed (can come from thread related issues)
+    if ( elapsedMicros < 0 )
+        elapsedMicros = 1000;
+    if ( elapsedMillis < 0 )
+        elapsedMillis = 1;
+    if ( elapsedSec < 0 )
+        elapsedSec = 0.001;
+    
+    secFromStart	= m_absTimer.getMicroseconds() / 1000000.0;
+    millisFromStart	= m_absTimer.getMilliseconds();
+    m_timer.reset();
+    
+    // Update input manager
+    InputManager::getSingleton().update();
+    
+    // Update plugins that require it at this point
+    updatePlugins( UPDATE_BEFORE_USER );
+    
+    // Draw user app
+    if (m_loop)
+        draw();
+    
+    // Update plugins that require it at this point
+    updatePlugins( UPDATE_AFTER_USER );
+    
+    // Draw user app one time if the user calls redraw() function
+    if (m_needUpdate)
+    {
+        updatePlugins( UPDATE_BEFORE_USER );
+        draw();
+        updatePlugins( UPDATE_AFTER_USER );
+        m_needUpdate = false;
+    }
+    
+    // Update physics
+    //PhysicsManager::getSingleton().update( elapsedMillis  );
+    
+    // Update rendering
+    GraphicsManager::getSingleton().draw();
+    
+    // Update plugins that require it at this point
+    updatePlugins( UPDATE_AFTER_RENDER );
+    
+    // Update sound()???
+    
+    // Update frameCount
+    m_frameCount++;
+    frameCount  = getFrameCount();
+    
+    // Check if we need have a forced frame rate
+    if ( m_forcedFrameRate != 0 )
+    {
+        
+        if ( millisFromStart < (m_timePerFrameMillis * frameCount) )
+        {
+            unsigned long millisToSleep = (unsigned long)((m_timePerFrameMillis * frameCount) - millisFromStart);
+            if ( millisToSleep > 0 )
+                pt::psleep( millisToSleep );
+        }
+        
+        /*
+         m_accumulatedMicros = 0;
+         if ( elapsedMillis < ( m_timePerFrameMillis + m_accumulatedMicros ) )
+         {
+         unsigned long sleepMillis = (m_timePerFrameMillis + m_accumulatedMicros) - elapsedMillis;
+         //div_t result = div( sleepMicros, 1000 );
+         //unsigned long sleepMillis = result.quot;
+         //m_accumulatedMicros = 0; //result.rem;
+         if ( sleepMillis > 0 )
+         {
+         pt::psleep( sleepMillis );
+         }
+         }
+         */
+    }
 }
 
 /**
@@ -394,6 +403,16 @@ bool Application::keyReleased( const OIS::KeyEvent& event )
 	//::keyReleased();
 
 	return true;
+}
+    
+/**
+ * @internal
+ * Determines if the application should stop the main loop, typically used by consumers of drawOneFrame()
+ *
+ */
+bool Application::shouldExit()
+{
+    return (GraphicsManager::getSingleton().getMainWindow().isClosed() == true || m_finish);
 }
 
 /**

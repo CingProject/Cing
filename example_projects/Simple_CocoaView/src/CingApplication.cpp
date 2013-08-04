@@ -11,8 +11,6 @@ void setup()
 	// Set window size and smooth drawing
 	size(800, 800);
 	smooth();
-    
-    setLogLevel(LOG_TRIVIAL);
 }
 
 void draw()

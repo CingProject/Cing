@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		609CA09517AC719E0050D757 /* AppFrameworkCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */; };
 		609CA09617AC719E0050D757 /* AppFrameworkCocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */; };
-		60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.cpp */; };
+		60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */; };
 		60CCA91517AEDB9500567C87 /* AppFrameworkCocoaView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60CCA91317AEDB9500567C87 /* AppFrameworkCocoaView.h */; };
 		A933D4F617A6E1CA00C3E9F7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */; };
 		A933D4F817A6E21000C3E9F7 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A933D4F717A6E21000C3E9F7 /* AGL.framework */; };
@@ -104,7 +104,7 @@
 /* Begin PBXFileReference section */
 		609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFrameworkCocoa.h; sourceTree = "<group>"; };
 		609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoa.cpp; sourceTree = "<group>"; };
-		60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoaView.cpp; sourceTree = "<group>"; };
+		60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoaView.mm; sourceTree = "<group>"; };
 		60CCA91317AEDB9500567C87 /* AppFrameworkCocoaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFrameworkCocoaView.h; sourceTree = "<group>"; };
 		A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A933D4F717A6E21000C3E9F7 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
@@ -459,7 +459,7 @@
 				609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */,
 				609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */,
 				60CCA91317AEDB9500567C87 /* AppFrameworkCocoaView.h */,
-				60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.cpp */,
+				60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */,
 				A93DB68C179DFE8300770B14 /* Application.cpp */,
 				A93DB68D179DFE8300770B14 /* Application.h */,
 				A93DB68E179DFE8300770B14 /* AppMain.h */,
@@ -775,7 +775,7 @@
 				A93DB7DB179DFE8300770B14 /* OCVVideoRecorder.cpp in Sources */,
 				A93DB80B179E12F400770B14 /* Cing-Precompiled.cpp in Sources */,
 				609CA09617AC719E0050D757 /* AppFrameworkCocoa.cpp in Sources */,
-				60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.cpp in Sources */,
+				60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

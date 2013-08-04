@@ -81,9 +81,10 @@ public:
 	virtual ~Application();
 
 	// Init / Release / Loop
-	bool  initApp   ();
-	void  endApp    ();
-	void  drawApp   ();
+	bool  initApp       ();
+	void  endApp        ();
+	void  drawApp       ();
+    void  drawOneFrame  ();
 
 	// Initialize application required subsystems
 	void  initSubSystems      ();
@@ -101,7 +102,8 @@ public:
 
 	// Control application flow
 	void exit  		() { m_finish = true; }
-	void delay 		( unsigned int milliseconds );
+    bool shouldExit ();
+ 	void delay 		( unsigned int milliseconds );
 	void loop  		() { m_loop = true;  };
 	void noLoop		() { m_loop = false; };
 	void redraw		() { m_needUpdate = true; };
