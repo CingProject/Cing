@@ -7,12 +7,12 @@ CREATE_APPLICATION( "Cing" );
  * It also uses the input volume of the mic to modify the intensity of a light in the scene
  */
 
-AudioInput	mic;		// To get the line in
-Sphere		sphere;
-Plane		plane;	
-PointLight	light;
+AudioInput		mic;		// To get the line in
+Sphere			sphere;
+Plane			plane;	
+PointLight		light;
 
-Average		average( 10 ); // This object allows you to easily calculate averages of incoming numbers
+AverageFloat	average( 10 ); // This object allows you to easily calculate averages of incoming numbers
 
 void setup()
 {
