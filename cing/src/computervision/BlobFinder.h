@@ -93,7 +93,7 @@ protected:
 	unsigned int		m_maxBlobs;             ///< Max number of blos to look for
 
 	// OpenCV stuff
-	std::vector<std::vector<cv::Point>>		m_contours;  ///< To store contour data (by opencv)
+	std::vector<std::vector<cv::Point> >		m_contours;  ///< To store contour data (by opencv)
 
 	bool									m_bIsValid;	///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
