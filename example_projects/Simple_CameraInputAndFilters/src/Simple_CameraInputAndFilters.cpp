@@ -9,8 +9,6 @@ CREATE_APPLICATION( "Cing" );
 // OpenCV module includes
 #include "OpenCV/src/OpenCVIncludes.h"
 
-#include "VLD/include/vld.h"
-
 Capture capture;
 Image colorImg, grayImg, blurryImg, thresholdImg;
 
