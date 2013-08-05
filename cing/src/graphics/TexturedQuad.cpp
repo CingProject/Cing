@@ -252,12 +252,14 @@ namespace Cing
 		if ( value )
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_ADD);
+			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_ADD );
+			setSceneBlendType( Ogre::SBT_ADD );
 		}
 		else
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+			setSceneBlendType( Ogre::SBT_REPLACE ); // this is replace in case the image has no alpha (configured in configureBlendingMode())
 		}
 
 	};
