@@ -57,7 +57,7 @@ namespace Cing
 	// TODO: Clean this up. resourcesPathInBundle is only mac side!
 #elif __APPLE__
 	std::string ResourceManager::resourcesFileName			= "resources.cfg";
-	std::string ResourceManager::userResourcesDirName		= "../../data/";
+	std::string ResourceManager::userResourcesDirName		= "Contents/Resources/";
 	std::string ResourceManager::userResourcesGroupName		= "UserData";
 	std::string ResourceManager::pluginsPath				= "plugins.cfg";
 	std::string ResourceManager::libDataPath				= "Contents/Resources/cing_bin/data/";
@@ -314,14 +314,13 @@ namespace Cing
 		std::string::size_type lastSlashPos = userExecPath.find_last_of("/");
 		userExecPath = userExecPath.substr(0, lastSlashPos);
 		userExecPath = userExecPath + "/";
-		//userDataPath = userExecPath + userResourcesDirName;
 		
 		resourcesPathInBundle	= String(bundlePath) + "/" + String(resourcesPath) + "/";
-		//userDataPath	= String(bundlePath) + "/" + String(resourcesPath) + "/data/";
-		userDataPath = String(bundlePath) + "/" + userResourcesDirName;
-		//libDataPath		= String(bundlePath) + "/" + String(resourcesPath) + "/cing_bin/data/";
+		userDataPath = String(bundlePath) + "/" + userResourcesDirName + "/" + userResourcesGroupName;
 		libDataPath = String(bundlePath) + "/../../../../cing_bin/data/";
-		
+        
+		cingDataFolder = String(bundlePath) + "/" + cingDataFolder;
+        
 		// Log some info
 		LOG( "Exec Path %s", exePath );
 		LOG( "Bundle Path %s", bundlePath );

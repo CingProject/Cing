@@ -46,7 +46,7 @@ namespace Cing
 #ifdef WIN32
 	String					cingDataFolder = "../../../cing_bin/data/";
 #elif __APPLE__
-	String					cingDataFolder = "../Resources/cing_bin/data/";
+	String					cingDataFolder = "Contents/Resources/cing_bin/data/";
 #endif
 	
 	// Input
