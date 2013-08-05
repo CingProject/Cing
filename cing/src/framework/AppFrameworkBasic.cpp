@@ -50,16 +50,19 @@
 namespace Cing
 {
 
+    // Forward declarations
+    class UserApplicationBase;
+    
 	/**
 	* @internal
-	* @brief Creates and runs an application.
+	* @brief Creates and runs a user application.
 	*
 	* This means that it creates the application and then calls its following methods
 	*      setup:     At the begining of the execution.
 	*      end:       At the end of the execution.
 	*      draw:      Called every frame. Here the application can draw and update its state.
 	*/
-	void RunApplicationBasic( const char* _appName )
+	void RunApplicationBasic( const char* _appName, UserApplicationBase* userApp /*= NULL*/ )
 	{
 
 		try
@@ -68,7 +71,7 @@ namespace Cing
 			appName = _appName;
 
 			// Init application
-			Application::getSingleton().initApp();
+			Application::getSingleton().initApp( userApp );
 
 			// Enter the application loop (will finish when the application should be closed)
 			Application::getSingleton().drawApp();

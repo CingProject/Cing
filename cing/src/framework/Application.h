@@ -63,8 +63,10 @@ extern void draw()              __attribute__((weak_import));
 namespace Cing
 {
 
-class Plugin;
-
+    // forward declarations
+    class Plugin;
+    class UserApplicationBase;
+    
 /**
  * @internal
  * Base class to create an application. Manages the render loop and the initialization and
@@ -81,7 +83,7 @@ public:
 	virtual ~Application();
 
 	// Init / Release / Loop
-	bool  initApp       ();
+	bool  initApp       ( UserApplicationBase* userApp = NULL);
 	void  endApp        ();
 	void  drawApp       ();
     void  drawOneFrame  ();
@@ -139,8 +141,10 @@ private:
 	bool					m_needUpdate;   		///< If true app will be call draw() user funtion one time
 
 	typedef std::list< Plugin* >	PluginList;
-	PluginList						m_plugins;				///< Plugins currently active in the application
+	PluginList						m_plugins;		///< Plugins currently active in the application
     void*                           m_ogreView;
+    
+    UserApplicationBase*            m_userApp;      ///< Pointer to the user application (this means user is not using Processing like functions, but app subclassing insted.
 };
 
 } // namespace Cing

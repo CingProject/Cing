@@ -35,9 +35,14 @@
 
 namespace Cing
 {
+    // forward declarations
+    class UserApplicationBase;
+    
 
-// General Framework functions
-void RunApplicationBasic( const char* _appName );
+    // General Framework functions
+    
+    // Run user application
+    void RunApplicationBasic( const char* _appName, UserApplicationBase* userApp = NULL );
 
 } // namespace
 

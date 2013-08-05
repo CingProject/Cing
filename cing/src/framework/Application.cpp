@@ -25,6 +25,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "Application.h"
 #include "UserAppFunctionDeclaration.h"
+#include "UserApplicationBase.h"
 #include "UserAppGlobals.h"
 #include "FrameworkUserAPI.h"
 
@@ -64,7 +65,7 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	Application::Application():
-m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ), m_ogreView(NULL)
+m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ), m_ogreView(NULL), m_userApp(NULL)
 {
 }
 
@@ -78,17 +79,22 @@ Application::~Application()
 
 
 /**
-* @internal
-* @brief Initializes the class so it becomes valid.
-*
-* @return true if the initialization was ok | false otherwise
-*/
-bool Application::initApp()
+ * @internal
+ * @brief Initializes the class so it becomes valid.
+ *
+ * @param userApp if received, this is the pointer to the user application. If not recive, the user is using global functions (processing style)
+ * for the application flow
+ * @return true if the initialization was ok | false otherwise
+ */
+bool Application::initApp( UserApplicationBase* userApp /*= NULL*/ )
 {
 	// Check if the class is already initialized
 	if ( isValid() )
 		return true;
 
+    // Store pointer to the user app
+    m_userApp = userApp;
+    
 	// Init random number generator seed
 	setRandomSeed( time(NULL) );
 
@@ -106,7 +112,10 @@ bool Application::initApp()
     enableOpenCVRenderer2D();
     
 	// Init user application
-    setup();
+    if ( m_userApp )
+        m_userApp->setup();
+    else
+        setup();
 
 	// Check subsystems init ok
 	checkSubsystemsInit();
@@ -137,7 +146,10 @@ void Application::endApp()
 	endPlugins( END_BEFORE_USER );
 
 	// End user application
-	end();
+    if ( m_userApp )
+        m_userApp->end();
+    else
+        end();
 
 	// End plugins that require it at this point
 	endPlugins( END_AFTER_USER );
@@ -211,7 +223,12 @@ void Application::drawOneFrame()
     
     // Draw user app
     if (m_loop)
-        draw();
+    {
+        if ( m_userApp )
+            m_userApp->draw();
+        else
+            draw();
+    }
     
     // Update plugins that require it at this point
     updatePlugins( UPDATE_AFTER_USER );
@@ -220,7 +237,10 @@ void Application::drawOneFrame()
     if (m_needUpdate)
     {
         updatePlugins( UPDATE_BEFORE_USER );
-        draw();
+        if ( m_userApp )
+            m_userApp->draw();
+        else
+            draw();
         updatePlugins( UPDATE_AFTER_USER );
         m_needUpdate = false;
     }
@@ -334,7 +354,10 @@ bool Application::mouseMoved( const OIS::MouseEvent& event )
 	mouseY = event.state.Y.abs;
 
 	// Call user mousepressed handler
-	::mouseMoved();
+    if ( m_userApp )
+        m_userApp->mouseMoved();
+    else
+        ::mouseMoved();
 
 	return true;
 }
@@ -351,7 +374,10 @@ bool Application::mousePressed( const OIS::MouseEvent& event, OIS::MouseButtonID
 	mouseButton = (int) id;
 
 	// Call user mousepressed handler
-	::mousePressed();
+    if ( m_userApp )
+        m_userApp->mousePressed();
+    else
+        ::mousePressed();
 
 	return true;
 }
@@ -369,7 +395,10 @@ bool Application::mouseReleased( const OIS::MouseEvent& event, OIS::MouseButtonI
 	mouseButton = (int) id;
 
 	// Call user mousepressed handler
-	::mouseReleased();
+    if ( m_userApp )
+        m_userApp->mouseReleased();
+    else
+        ::mouseReleased();
 
 	return true;
 }
@@ -387,7 +416,10 @@ bool Application::keyPressed( const OIS::KeyEvent& event )
 	keyCode	= event.key;
 
 	// Call user mousepressed handler
-	::keyPressed();
+    if ( m_userApp )
+        m_userApp->keyPressed();
+    else
+        ::keyPressed();
 
 	return true;
 }
