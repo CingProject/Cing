@@ -44,9 +44,9 @@
 		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_highgui246d.lib")
 		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_imgproc246d.lib")
 #else
-		#pragma comment(lib,"opencv_core246.lib")
-		#pragma comment(lib,"opencv_highgui246.lib")
-		#pragma comment(lib,"opencv_imgproc246.lib")
+		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_core246.lib")
+		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_highgui246.lib")
+		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_imgproc246.lib")
 #endif
 #endif 
 
