@@ -272,9 +272,6 @@
     <ClCompile Include="..\..\..\..\src\common\MemoryDumper.cpp">
       <Filter>Src\Common\Source Files\Memory</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\framework\AppFramework.cpp">
-      <Filter>Src\Framework\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\framework\Application.cpp">
       <Filter>Src\Framework\Source Files</Filter>
     </ClCompile>
@@ -570,9 +567,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\common\XEventLog.h">
       <Filter>Src\Common\Header Files\Log</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\framework\AppFramework.h">
-      <Filter>Src\Framework\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\framework\Application.h">
       <Filter>Src\Framework\Header Files</Filter>

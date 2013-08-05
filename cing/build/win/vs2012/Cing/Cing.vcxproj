@@ -165,7 +165,6 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\common\MemoryDumper.cpp" />
-    <ClCompile Include="..\..\..\..\src\framework\AppFramework.cpp" />
     <ClCompile Include="..\..\..\..\src\framework\Application.cpp" />
     <ClCompile Include="..\..\..\..\src\framework\FrameworkUserAPI.cpp" />
     <ClCompile Include="..\..\..\..\src\framework\UserAppGlobals.cpp" />
@@ -287,7 +286,6 @@
     <ClInclude Include="..\..\..\..\src\common\LogManager.h" />
     <ClInclude Include="..\..\..\..\src\common\WindowsEventLogger.h" />
     <ClInclude Include="..\..\..\..\src\common\XEventLog.h" />
-    <ClInclude Include="..\..\..\..\src\framework\AppFramework.h" />
     <ClInclude Include="..\..\..\..\src\framework\Application.h" />
     <ClInclude Include="..\..\..\..\src\framework\AppMain.h" />
     <ClInclude Include="..\..\..\..\src\framework\CingPlugin.h" />
