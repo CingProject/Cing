@@ -1,0 +1,11 @@
+prefix=$(SRCROOT)
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: OGRE-Overlay
+Description: Overlay component for OGRE
+Version: 1.9.0unstable
+Requires: OGRE = 1.9.0unstable
+Libs: -L${libdir} -lOgreOverlay
+Cflags: -I${includedir}/OGRE/Overlay -pthread

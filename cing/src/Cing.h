@@ -92,7 +92,6 @@
 
 // Framework 
 #include "framework/AppMain.h"
-#include "framework/AppFramework.h"
 #include "framework/UserAppGlobals.h"
 #include "framework/FrameworkUserAPI.h"
 
@@ -115,16 +114,18 @@
 #include "computervision/BackgroundSubtraction.h"
 
 // Physics
-#include "physics/PhysicsUserAPI.h"
-#include "physics/PhysicsBox.h"
-#include "physics/PhysicsPlane.h"
-#include "physics/PhysicsSphere.h"
-#include "physics/PhysicsObject.h"
+//#include "physics/PhysicsUserAPI.h"
+//#include "physics/PhysicsBox.h"
+//#include "physics/PhysicsPlane.h"
+//#include "physics/PhysicsSphere.h"
+//#include "physics/PhysicsObject.h"
 
 // Audio
-#include "audio/SoundFMOD.h"
-#include "audio/AudioInputFMOD.h"
-#include "audio/SoundOpenAL.h"
+//#include "audio/SoundFMOD.h"
+//#include "audio/AudioInputFMOD.h"
+//#include "audio/SoundOpenAL.h"
+#include "audio/BaseAudioInput.h"
+#include "audio/BaseSound.h"
 
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -135,10 +136,10 @@
 
 
 // GUI
-#include "gui/GUIUserAPI.h"
+//#include "gui/GUIUserAPI.h"
 
 // Midi
-#include "midi/MidiIO.h"
+//#include "midi/MidiIO.h"
 
 // OGRE -> this is included because some Ogre objects are exposed to user application
 // just in case an advanced user wants to use them...
@@ -161,8 +162,10 @@ typedef	OCVCamera Capture;
 #endif
 
 // Sound and Mic
-typedef SoundFMOD Sound;
-typedef AudioInputFMOD	AudioInput;
+//typedef SoundFMOD Sound;
+//typedef AudioInputFMOD	AudioInput;
+typedef BaseSound Sound;
+typedef BaseAudioInput	AudioInput;
 
 // Graphics (Processing compatibility)
 typedef Color color;

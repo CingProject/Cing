@@ -36,6 +36,15 @@
 namespace Cing
 {
 
+    /**
+     * @brief If called before setup(), a config dialog will be displayd to select the Render System settings (Ogre's dialog).
+     * If this function is not called, those settings are setup by code through other API calls, like fullscreen()
+     */
+    void showConfigDialog()
+    {
+        GraphicsManager::getSingleton().showConfigDialog();
+    }
+    
 /**
  * @brief Makes the application run in full screen mode
  */
@@ -53,7 +62,7 @@ void fullscreen(int width, int height, GraphicMode mode )
 
 		// Set up window and render system configuration
 		GraphicsManager::getSingleton().setup( width, height, mode );
-
+ 
 		// Init application subsystems (necessary for the user to load any graphic resource)
 		Application::getSingleton().initSubSystems();		
 	}

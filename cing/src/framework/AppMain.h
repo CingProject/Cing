@@ -31,7 +31,12 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include "AppFrameworkCocoa.h"
+#include "AppFrameworkCocoaView.h"
+#else
+#include "AppFrameworkBasic.h"
+#endif
 
 namespace Cing
 {
@@ -47,21 +52,33 @@ namespace Cing
  */
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 && !_CONSOLE
 
-  #include "Windows.h"
+    #include "Windows.h"
 
-  #define CREATE_APPLICATION( appName )                                     \
-          INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT)   \
-          {                                                                       \
-              RunApplication( appName  );                                         \
-              return 0;                                                           \
-          };
+    #define CREATE_APPLICATION( appName )                                     \
+        INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT)   \
+        {                                                                       \
+            RunApplicationBasic( appName  );                                    \
+            return 0;                                                           \
+        };
 
-#else
-
-#define CREATE_APPLICATION( appName )                                     \
+#elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+    
+    #define CREATE_APPLICATION( appName )                                     \
         int main()                                                              \
         {                                                                       \
-            RunApplication( appName  );                                         \
+            RunApplicationCocoa( appName );                                     \
+            return 0;                                                           \
+        };
+    
+    #define CREATE_COCOA_VIEW_APPLICATION( appName, ogreView )                \
+        RunApplicationCocoaView( appName, ogreView );
+    
+#else
+
+    #define CREATE_APPLICATION( appName )                                     \
+        int main()                                                              \
+        {                                                                       \
+            RunApplicationBasic( appName  );                                    \
             return 0;                                                           \
         };
 #endif

@@ -56,6 +56,16 @@ public:
 class MemoryDumper
 {
 public:
+    
+    /// Core dumps types
+    enum DUMP_TYPE {
+        CALL_STACK_DUMP,  ///< Dump with call stack data.
+        FULL_MEMORY_DUMP  ///< Dump with the process' full memory.
+    };
+    
+    // Callback in case of crash
+    typedef void (*CrashCallback)();
+
 	MemoryDumper(DUMP_TYPE type, CrashCallback callback = NULL) {}
 };
 

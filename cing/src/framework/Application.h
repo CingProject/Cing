@@ -43,6 +43,23 @@
 // Ogre
 #include "OgreTimer.h"
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+
+// http://stackoverflow.com/questions/274753/how-to-make-weak-linking-work-with-gcc
+// if we are on Apple (clang llvm) we need to define stubs for the global app methods as weak.
+// they will be overridden in the Cing application. Also requires the following added to OTHER_LINKER_FLAGS:
+// -Wl,-flat_namespace,-undefined,dynamic_lookup
+
+extern void setup()             __attribute__((weak_import));
+extern void keyPressed()        __attribute__((weak_import));
+extern void mouseMoved()        __attribute__((weak_import));
+extern void mouseReleased()     __attribute__((weak_import));
+extern void mousePressed()      __attribute__((weak_import));
+extern void end()               __attribute__((weak_import));
+extern void draw()              __attribute__((weak_import));
+
+#endif
+
 namespace Cing
 {
 
@@ -64,9 +81,10 @@ public:
 	virtual ~Application();
 
 	// Init / Release / Loop
-	bool  initApp   ();
-	void  endApp    ();
-	void  drawApp   ();
+	bool  initApp       ();
+	void  endApp        ();
+	void  drawApp       ();
+    void  drawOneFrame  ();
 
 	// Initialize application required subsystems
 	void  initSubSystems      ();
@@ -84,7 +102,8 @@ public:
 
 	// Control application flow
 	void exit  		() { m_finish = true; }
-	void delay 		( unsigned int milliseconds );
+    bool shouldExit ();
+ 	void delay 		( unsigned int milliseconds );
 	void loop  		() { m_loop = true;  };
 	void noLoop		() { m_loop = false; };
 	void redraw		() { m_needUpdate = true; };
@@ -96,7 +115,8 @@ public:
 	// Plugins for the application	
 	void			registerPlugin	( Plugin& plugin );
 	Cing::Plugin*	getPlugin		( const std::string& pluginName );
-
+    
+    void            setOgreView     ( void* view );
 
 private:
 	// private constructor to ensure singleton
@@ -120,6 +140,7 @@ private:
 
 	typedef std::list< Plugin* >	PluginList;
 	PluginList						m_plugins;				///< Plugins currently active in the application
+    void*                           m_ogreView;
 };
 
 } // namespace Cing

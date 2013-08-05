@@ -26,6 +26,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Application.h"
 #include "UserAppFunctionDeclaration.h"
 #include "UserAppGlobals.h"
+#include "FrameworkUserAPI.h"
 
 // Graphics
 #include "graphics/GraphicsManager.h"
@@ -48,6 +49,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #undef nil
 #include "PTypes/include/pasync.h"
 
+// temporary definitions for virtual methods, just to get things build
+
+#include "Cing.h"
+
 namespace Cing
 {
 
@@ -56,7 +61,7 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	Application::Application():
-m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 )
+m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ), m_ogreView(NULL)
 {
 }
 
@@ -95,7 +100,7 @@ bool Application::initApp()
 	LogManager::getSingleton().init();
 	
 	// Init user application
-	setup();
+    setup();
 
 	// Check subsystems init ok
 	checkSubsystemsInit();
@@ -163,89 +168,98 @@ void Application::endApp()
 void Application::drawApp()
 {
 	// Loop while window is open
-	while( (GraphicsManager::getSingleton().getMainWindow().isClosed() == false) && !m_finish )
+	while( !shouldExit() )
 	{
-		// Store elapsed from timers
-		elapsedMicros	= m_timer.getMicroseconds();
-		elapsedMillis	= m_timer.getMilliseconds();
-		elapsedSec		=  elapsedMicros / 1000000.0;
-
-		// security against negative elapsed (can come from thread related issues)
-		if ( elapsedMicros < 0 )
-			elapsedMicros = 1000;
-		if ( elapsedMillis < 0 )
-			elapsedMillis = 1;
-		if ( elapsedSec < 0 )
-			elapsedSec = 0.001;
-
-		secFromStart	= m_absTimer.getMicroseconds() / 1000000.0;
-		millisFromStart	= m_absTimer.getMilliseconds();
-		m_timer.reset();
-
-		// Update input manager
-		InputManager::getSingleton().update();
-
-		// Update plugins that require it at this point
-		updatePlugins( UPDATE_BEFORE_USER );
-
-		// Draw user app
-		if (m_loop)
-			draw();
-
-		// Update plugins that require it at this point
-		updatePlugins( UPDATE_AFTER_USER );
-
-		// Draw user app one time if the user calls redraw() function
-		if (m_needUpdate)
-		{
-			updatePlugins( UPDATE_BEFORE_USER );
-			draw();
-			updatePlugins( UPDATE_AFTER_USER );
-			m_needUpdate = false;
-		}
-
-		// Update physics
-		//PhysicsManager::getSingleton().update( elapsedMillis  );
-
-		// Update rendering
-		GraphicsManager::getSingleton().draw();
-
-		// Update plugins that require it at this point
-		updatePlugins( UPDATE_AFTER_RENDER );
-
-		// Update sound()???
-
-		// Update frameCount
-		m_frameCount++;
-		frameCount  = getFrameCount();
-
-		// Check if we need have a forced frame rate
-		if ( m_forcedFrameRate != 0 )
-		{
-
-			if ( millisFromStart < (m_timePerFrameMillis * frameCount) )
-			{
-				unsigned long millisToSleep = (unsigned long)((m_timePerFrameMillis * frameCount) - millisFromStart);
-				if ( millisToSleep > 0 )
-					pt::psleep( millisToSleep );
-			}
-
-			/*
-			m_accumulatedMicros = 0;
-			if ( elapsedMillis < ( m_timePerFrameMillis + m_accumulatedMicros ) )
-			{
-			unsigned long sleepMillis = (m_timePerFrameMillis + m_accumulatedMicros) - elapsedMillis;
-			//div_t result = div( sleepMicros, 1000 );
-			//unsigned long sleepMillis = result.quot;
-			//m_accumulatedMicros = 0; //result.rem;
-			if ( sleepMillis > 0 )
-			{
-			pt::psleep( sleepMillis );
-			}
-			}
-			*/
-		}
+        drawOneFrame();
 	}
+}
+    
+/**
+ * @internal
+ * @brief Draws the app for one frame, used by main loop (see drawApp())
+ */
+void Application::drawOneFrame()
+{
+    // Store elapsed from timers
+    elapsedMicros	= m_timer.getMicroseconds();
+    elapsedMillis	= m_timer.getMilliseconds();
+    elapsedSec		=  elapsedMicros / 1000000.0;
+    
+    // security against negative elapsed (can come from thread related issues)
+    if ( elapsedMicros < 0 )
+        elapsedMicros = 1000;
+    if ( elapsedMillis < 0 )
+        elapsedMillis = 1;
+    if ( elapsedSec < 0 )
+        elapsedSec = 0.001;
+    
+    secFromStart	= m_absTimer.getMicroseconds() / 1000000.0;
+    millisFromStart	= m_absTimer.getMilliseconds();
+    m_timer.reset();
+    
+    // Update input manager
+    InputManager::getSingleton().update();
+    
+    // Update plugins that require it at this point
+    updatePlugins( UPDATE_BEFORE_USER );
+    
+    // Draw user app
+    if (m_loop)
+        draw();
+    
+    // Update plugins that require it at this point
+    updatePlugins( UPDATE_AFTER_USER );
+    
+    // Draw user app one time if the user calls redraw() function
+    if (m_needUpdate)
+    {
+        updatePlugins( UPDATE_BEFORE_USER );
+        draw();
+        updatePlugins( UPDATE_AFTER_USER );
+        m_needUpdate = false;
+    }
+    
+    // Update physics
+    //PhysicsManager::getSingleton().update( elapsedMillis  );
+    
+    // Update rendering
+    GraphicsManager::getSingleton().draw();
+    
+    // Update plugins that require it at this point
+    updatePlugins( UPDATE_AFTER_RENDER );
+    
+    // Update sound()???
+    
+    // Update frameCount
+    m_frameCount++;
+    frameCount  = getFrameCount();
+    
+    // Check if we need have a forced frame rate
+    if ( m_forcedFrameRate != 0 )
+    {
+        
+        if ( millisFromStart < (m_timePerFrameMillis * frameCount) )
+        {
+            unsigned long millisToSleep = (unsigned long)((m_timePerFrameMillis * frameCount) - millisFromStart);
+            if ( millisToSleep > 0 )
+                pt::psleep( millisToSleep );
+        }
+        
+        /*
+         m_accumulatedMicros = 0;
+         if ( elapsedMillis < ( m_timePerFrameMillis + m_accumulatedMicros ) )
+         {
+         unsigned long sleepMillis = (m_timePerFrameMillis + m_accumulatedMicros) - elapsedMillis;
+         //div_t result = div( sleepMicros, 1000 );
+         //unsigned long sleepMillis = result.quot;
+         //m_accumulatedMicros = 0; //result.rem;
+         if ( sleepMillis > 0 )
+         {
+         pt::psleep( sleepMillis );
+         }
+         }
+         */
+    }
 }
 
 /**
@@ -263,8 +277,8 @@ void Application::initSubSystems()
 	// Init plugins that require it at this point
 	initPlugins( INIT_BEFORE_GRAPHICS );
 
-	// Create app window (and init graphics engine)
-	GraphicsManager::getSingleton().createWindow();
+	// Create app window (and init graphics engine)    
+	GraphicsManager::getSingleton().createWindow( m_ogreView );
 
 	// Init plugins that require it at this point
 	initPlugins( INIT_BEFORE_RESOURCE_INIT );
@@ -390,6 +404,16 @@ bool Application::keyReleased( const OIS::KeyEvent& event )
 
 	return true;
 }
+    
+/**
+ * @internal
+ * Determines if the application should stop the main loop, typically used by consumers of drawOneFrame()
+ *
+ */
+bool Application::shouldExit()
+{
+    return (GraphicsManager::getSingleton().getMainWindow().isClosed() == true || m_finish);
+}
 
 /**
 * @internal
@@ -424,6 +448,16 @@ void Application::frameRate( int forcedFrameRate )
 void Application::registerPlugin( Plugin& plugin )
 {
 	m_plugins.push_back( &plugin );
+}
+
+/**
+ * @brief Assigns the Application OgreView, in initApp() this view will be used instead of creating a new Ogre Window if not NULL
+ *
+ * @param view the instance of OgreView we should use for Cing
+ */
+void Application::setOgreView( void* view )
+{
+    m_ogreView = view;
 }
 
 /**

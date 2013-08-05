@@ -81,8 +81,8 @@ bool ImageResourceManager::init()
 	for ( int xRes = minResX, yRes = minResY; (xRes <= maxResX) && (yRes <= maxResY) ;  xRes *= 2, yRes *= 2)
 	{
 		// For 1 and 3 channel images
-		m_imagePool[0].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_8U(1) ) ) );
-		m_imagePool[1].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_8U(3) ) ) );
+		m_imagePool[0].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_MAKETYPE(CV_8U, 1) ) ) );
+		m_imagePool[1].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_MAKETYPE(CV_8U, 3) ) ) );
 	}
 
 	// Create initial pool of images with standard sizes
@@ -92,8 +92,8 @@ bool ImageResourceManager::init()
 		for ( int yRes = minRes; yRes <= maxRes ; yRes *= 2)
 	{
 		// For 1 and 3 channel images
-		m_imagePool[0].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_8U(1) ) ) );
-		m_imagePool[1].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_8U(3) ) ) );
+		m_imagePool[0].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_MAKETYPE(CV_8U, 1) ) ) );
+		m_imagePool[1].push_back( ImageResource( new cv::Mat( yRes, xRes, CV_MAKETYPE(CV_8U, 3) ) ) );
 	}
 
 	return true;
@@ -140,7 +140,7 @@ cv::Mat*	ImageResourceManager::getImage( int width, int height, int channels )
 	}
 
 	// If not found -> create it and insert it in the pool
-	m_imagePool[index].push_back( ImageResource( new cv::Mat( height, width, CV_8U(channels) ) ) );
+	m_imagePool[index].push_back( ImageResource( new cv::Mat( height, width, CV_MAKETYPE(CV_8U, channels) ) ) );
 	m_imagePool[index].back().available = false;
 	return m_imagePool[index].back().image;
 };

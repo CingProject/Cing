@@ -89,7 +89,7 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= true*/ )
 	m_logToFile		= logToFile;
 
 	// By default just lot error messages to debug output
-	m_debugOutputLogLevel = LOG_NORMAL;
+	m_debugOutputLogLevel = LOG_TRIVIAL;
 
 	// Get ogre log pointer (just in case)
 	m_ogreLog = Ogre::LogManager::getSingleton().getDefaultLog();

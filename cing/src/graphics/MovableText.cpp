@@ -32,7 +32,7 @@ long MovableText::count = 0;
 MovableText::MovableText() :
 	mpCam(NULL)
 	, mpWin(NULL)
-	, mpFont(NULL)
+	, mpFont(Ogre::FontPtr())
 	, mName(""), mCaption(""), mFontName(""), mCharHeight(Font::DEFAULT_FONT_SIZE), mColor(Color::White), mType("MovableText"),
 			mTimeUntilNextToggle(0), mSpaceWidth(0), mUpdateColors(true), mOnTop(false), mHorizontalAlignment(LEFT),
 			mVerticalAlignment(TOP), m_textAreaWidth(-1),

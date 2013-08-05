@@ -57,14 +57,20 @@
 
 // GNU
 #elif defined(LOG_ENABLED)
-	#define LOG(x, args...)			LogManager::getSingleton().logMessage( LogManager::LOG_NORMAL, x, ## args )
-	#define LOG_ERROR(x, args...)	LogManager::getSingleton().logMessage( LogManager::LOG_ERROR, x, ## args )
-	#define LOG_ERROR_NTIMES(n, x, args...)	static int count = 0; \
-										if ( ++count <= n )	  \
-										Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_ERROR, x, ## args )
+
+    #define LOG_TRIVIAL(msg, args...)			Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_TRIVIAL, msg, ## args )
+    #define LOG(msg, args...)					Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_NORMAL, msg, ## args )
+    #define LOG_NORMAL LOG
+    #define LOG_WARNING LOG
+    #define LOG_ERROR(msg, args...)				Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_CRITICAL, msg, ## args )
+    #define LOG_CRITICAL LOG_ERROR
+    #define LOG_ERROR_NTIMES(n, x, args...)	{ static int count = 0; if ( ++count <= n ) Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_CRITICAL, x, ## args ); }
+    #define LOG_ENTER_FUNCTION LOG_TRIVIAL( __FUNCTION__ " - enter" )
+    #define LOG_EXIT_FUNCTION  LOG_TRIVIAL( __FUNCTION__ " - exit" )
+
 // No LOG
 #else
-	#define LOG_TRIVIAL(msg, ...)		
+	#define LOG_TRIVIAL(msg, ...)
 	#define LOG(msg, ...)				
 	#define LOG_NORMAL LOG
 	#define LOG_WARNING LOG

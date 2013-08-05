@@ -57,6 +57,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreHardwarePixelBuffer.h"
 #include "Overlay/OgreOverlaySystem.h"
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include "RenderSystems/GL/OSX/OgreOSXCocoaView.h"
+#endif
+
 // Collada
 #if defined( _MSC_VER ) // TODO, need OgreCollada working on os x!
 	#include "OgreCollada/include/OgreCollada.h"
@@ -90,7 +94,8 @@ namespace Cing
 		m_windowBorder(true),
 		m_windowMonitorIndex(0),
 		m_saveFrame(false),
-		m_shadowsEnabled(false)
+		m_shadowsEnabled(false),
+        m_showConfigDialog(false)
 {
 	// Store the window in global var
 	appWindow = &m_mainWindow;
@@ -108,9 +113,10 @@ GraphicsManager::~GraphicsManager()
 
 /**
  * @brief Inits the graphics driver (OpenGL or DirectX) and creates the application window
+ * @param view   The view that should be used instead of creating a new window (an OgreView, currently only used in OS X)
  * @return true if the initialization was ok | false otherwise
  */
-bool GraphicsManager::createWindow()
+bool GraphicsManager::createWindow( void* view )
 {
 	// Check if the class is already initialized
 	if ( isValid() )
@@ -119,36 +125,46 @@ bool GraphicsManager::createWindow()
 	// Get reference to Ogre Root
 	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
 
-	// Show config dialog
-	//if ( /*!ogreRoot.restoreConfig() &&*/ !ogreRoot.showConfigDialog() )
-	//  return false;
-	//  //THROW_EXCEPTION( "User canceled the config dialog!" );
-
 	// Setup default values if user didn't call setup
 	setup( m_defaultWindowWidth, m_defaultWindowHeight );
 
 	// Init Ogre
-	ogreRoot.initialise(false, appName);
+    ogreRoot.initialise(false, appName);
 
-	// Create the app window
+	// Create the app window (First define parameters)
 	Ogre::NameValuePairList windowParams;
-	windowParams["title"] = appName;
-	windowParams["border"] = m_windowBorder? "fixed": "none";
-	windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
-	windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
-	//windowParams["left"] = "0";
-	//windowParams["top"] = "0";
-	windowParams["depthBuffer"] = "true";
-	windowParams["externalWindowHandle"] = "None";
-	windowParams["FSAA"] = toString(m_fsaa);
-	windowParams["displayFrequency"] = toString(60);
-	windowParams["vsync"] = toString(m_vSync);
-	Ogre::RenderWindow* ogreWindow = ogreRoot.createRenderWindow(appName, width, height, m_fullscreen, &windowParams) ;
-	if ( !ogreWindow )
-	{
-		LOG_ERROR( "Error creating application window" );
-		return false;
-	}
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+    if ( view != NULL )
+    {
+        OgreView *ogreView = (OgreView *)view;
+        windowParams["externalWindowHandle"] = Ogre::StringConverter::toString((size_t)ogreView);
+        windowParams["macAPI"] = "cocoa";
+    }
+#endif
+        
+        windowParams["title"] = appName;
+        windowParams["border"] = m_windowBorder? "fixed": "none";
+        windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
+        windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
+        //windowParams["left"] = "0";
+        //windowParams["top"] = "0";
+        windowParams["depthBuffer"] = "true";
+        windowParams["FSAA"] = toString(m_fsaa);
+        windowParams["displayFrequency"] = toString(60);
+        windowParams["vsync"] = toString(m_vSync);
+        
+        // NOTE: externalWindowHandle allows to pass an external window handle to embed the rendering window inside id.
+        // BUT! in OSX if passed empty... the window is not created (at least in Ogre 1.9RC1)
+        //windowParams["externalWindowHandle"] = toString(0);
+        
+        // Then create it!
+        Ogre::RenderWindow *ogreWindow = ogreRoot.createRenderWindow(appName, width, height, m_fullscreen, &windowParams) ;
+        if ( !ogreWindow )
+        {
+            LOG_ERROR( "Error creating application window" );
+            return false;
+        }
 
 	// Create main window
 	m_mainWindow.init( ogreWindow );
@@ -412,6 +428,15 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 	// Get ogre root to configure it
 	Ogre::Root& ogreRoot = Ogre::Root::getSingleton();
 
+    // Show config dialog?
+    if ( m_showConfigDialog && ogreRoot.showConfigDialog() )
+    {
+         m_setupCalled = true;
+        return;
+    }
+
+    // Config dialog was not shown or user hit cancel... setup it up here then...
+    
 	// Name of the chosen render system
 	std::string rendererName = "NO_NAME";
 	if ( mode == OPENGL )
@@ -436,10 +461,10 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 			break;
 		}
 	}
-
+    
 	// Set render system to ogre
 	ogreRoot.setRenderSystem( selectedRenderSystem );
-
+    
 	// Configure rest of the settings depending on the rendering system selected
 	if ( mode == OPENGL )
 	{
@@ -492,7 +517,6 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 		selectedRenderSystem->setConfigOption( "Floating-point mode","Consistent" );
 		selectedRenderSystem->setConfigOption( "FSAA", intToString(m_fsaa) );
 	}
- 
 
 	// Validate render system options
 	String optionsStatus = selectedRenderSystem->validateConfigOptions();
@@ -500,7 +524,6 @@ void GraphicsManager::setup( int windowWidth, int windowHeight, GraphicMode mode
 	{
 		LOG_ERROR( "Invalid Render System Options. Error: %s", optionsStatus.toChar() );
 	}
-
 
 	// Set up done
 	m_setupCalled = true;

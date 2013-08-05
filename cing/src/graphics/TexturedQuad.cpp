@@ -1207,7 +1207,8 @@ namespace Cing
 			Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName( m_quad->getSection(0)->getMaterialName() );
 			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( fileName );
 			if ( texture.isNull() == false )
-				mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->_setTexturePtr( texture );
+				//mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->_setTexturePtr( texture );
+                mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName( fileName );
 			else
 				LOG_ERROR( "TexturedQuad::setTexture. ERROR: Texture [%s] not found", fileName.c_str() );
 		}

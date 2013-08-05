@@ -39,6 +39,7 @@
 namespace Cing
 {
 // Application setup
+void showConfigDialog   ();
 void fullscreen 		( int width = -1, int height = -1, GraphicMode mode = OPENGL );
 void vSync				( bool value = true ); // Note: must be called before size or fullscreen
 void FSAA				( int fsaa );
