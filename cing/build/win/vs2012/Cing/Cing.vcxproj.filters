@@ -293,9 +293,6 @@
     <ClCompile Include="..\..\..\..\src\computervision\BlobTracker.cpp">
       <Filter>Src\ComputerVision\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\framework\AppFramework.cpp">
-      <Filter>Src\Framework\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\framework\Application.cpp">
       <Filter>Src\Framework\Source Files</Filter>
     </ClCompile>
@@ -446,6 +443,9 @@
     <ClCompile Include="..\..\..\..\..\cing-ings\Cbit-GStreamer\src\MediaPlayerGS.cpp">
       <Filter>cing-ings\GStreamer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\framework\AppFrameworkBasic.cpp">
+      <Filter>Src\Framework\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h">
@@ -588,9 +588,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\computervision\ComputerVisionPrereqs.h">
       <Filter>Src\ComputerVision\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\framework\AppFramework.h">
-      <Filter>Src\Framework\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\framework\Application.h">
       <Filter>Src\Framework\Header Files</Filter>
@@ -796,6 +793,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing-ings\Cbit-GStreamer\src\MediaPlayerGS.h">
       <Filter>cing-ings\GStreamer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\framework\AppFrameworkBasic.h">
+      <Filter>Src\Framework\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

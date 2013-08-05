@@ -124,6 +124,7 @@
     <ClCompile Include="..\..\..\..\src\audio\SoundManagerFMOD.cpp" />
     <ClCompile Include="..\..\..\..\src\audio\SoundManagerOpenAL.cpp" />
     <ClCompile Include="..\..\..\..\src\audio\SoundOpenAL.cpp" />
+    <ClCompile Include="..\..\..\..\src\framework\AppFrameworkBasic.cpp" />
     <ClCompile Include="..\..\..\..\src\physics\PhysicsManager.cpp" />
     <ClCompile Include="..\..\..\..\src\physics\PhysicsUserAPI.cpp" />
     <ClCompile Include="..\..\..\..\src\physics\PhysicsBox.cpp" />
@@ -155,7 +156,6 @@
     <ClCompile Include="..\..\..\..\src\computervision\BackgroundSubtraction.cpp" />
     <ClCompile Include="..\..\..\..\src\computervision\BlobFinder.cpp" />
     <ClCompile Include="..\..\..\..\src\computervision\BlobTracker.cpp" />
-    <ClCompile Include="..\..\..\..\src\framework\AppFramework.cpp" />
     <ClCompile Include="..\..\..\..\src\framework\Application.cpp" />
     <ClCompile Include="..\..\..\..\src\framework\FrameworkUserAPI.cpp" />
     <ClCompile Include="..\..\..\..\src\framework\UserAppGlobals.cpp" />
@@ -235,6 +235,7 @@
     <ClInclude Include="..\..\..\..\src\audio\SoundManagerFMOD.h" />
     <ClInclude Include="..\..\..\..\src\audio\SoundManagerOpenAL.h" />
     <ClInclude Include="..\..\..\..\src\audio\SoundOpenAL.h" />
+    <ClInclude Include="..\..\..\..\src\framework\AppFrameworkBasic.h" />
     <ClInclude Include="..\..\..\..\src\physics\PhysicsManager.h" />
     <ClInclude Include="..\..\..\..\src\physics\PhysicsPrereqs.h" />
     <ClInclude Include="..\..\..\..\src\physics\PhysicsUserAPI.h" />
@@ -272,7 +273,6 @@
     <ClInclude Include="..\..\..\..\src\computervision\BlobFinder.h" />
     <ClInclude Include="..\..\..\..\src\computervision\BlobTracker.h" />
     <ClInclude Include="..\..\..\..\src\computervision\ComputerVisionPrereqs.h" />
-    <ClInclude Include="..\..\..\..\src\framework\AppFramework.h" />
     <ClInclude Include="..\..\..\..\src\framework\Application.h" />
     <ClInclude Include="..\..\..\..\src\framework\AppMain.h" />
     <ClInclude Include="..\..\..\..\src\framework\CingPlugin.h" />
