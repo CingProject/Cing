@@ -37,15 +37,15 @@ class UserApplicationBase
 {
 public: 
     // Lifecycle
-    virtual void setup          ();
-    virtual void draw           ();
-    virtual void end            ();
+    virtual void setup          () {}
+    virtual void draw           () {}
+    virtual void end            () {}
     
     // Events
-    virtual void mousePressed   ();
-    virtual void mouseMoved     ();
-    virtual void mouseReleased  ();
-    virtual void keyPressed     ();
+    virtual void mousePressed   () {}
+    virtual void mouseMoved     () {}
+    virtual void mouseReleased  () {}
+    virtual void keyPressed     () {}
 };
 
 }

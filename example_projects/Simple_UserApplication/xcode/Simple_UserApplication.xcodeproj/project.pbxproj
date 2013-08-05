@@ -76,6 +76,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4CAA39C017B0587100233A58 /* Simple_UserApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Simple_UserApplication.h; sourceTree = "<group>"; };
 		60C8989717B04D6A0042BA54 /* Simple_UserApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple_UserApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60C8989A17B04D6A0042BA54 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		60C8989D17B04D6A0042BA54 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -186,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				60C898BC17B04DA60042BA54 /* Simple_UserApplication.cpp */,
+				4CAA39C017B0587100233A58 /* Simple_UserApplication.h */,
 			);
 			name = src;
 			path = ../../src;

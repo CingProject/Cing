@@ -34,8 +34,11 @@
 
 namespace Cing
 {
+    // forward declarations
+    class UserApplicationBase;
 
-void RunApplicationCocoa( const char* _appName );
+    // Runs a cocoa based application
+    void RunApplicationCocoa( const char* _appName, UserApplicationBase* userApp = NULL );
     
 }
 

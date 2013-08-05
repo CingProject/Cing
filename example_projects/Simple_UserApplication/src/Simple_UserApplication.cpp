@@ -1,28 +1,24 @@
 #include "Cing.h"
-CREATE_APPLICATION( "Cing Demo" );
+#include "Simple_UserApplication.h"
+
+CREATE_USER_APPLICATION( "Cing Demo", SimpleApp );
 
 /*
- * This example shows the basic about a Cing application
+ * This example shows the basics about a Cing application subclassing instead of using
+ * the Processing like function approach to control the application flow
  * It draws a line from the center of the screen to the mouse.
  * Press the mouse to clear the background.
  */
- 
-// OpenCV module includes
-#include "OpenCV/src/OpenCVIncludes.h"
 
-void setup()
+
+void SimpleApp::setup()
 {
 	// Set window size and smooth drawing
 	size(800, 800);
 	smooth();
-    
-    setLogLevel(LOG_TRIVIAL);
-
-	// Set OpenCV 2D renderer as the default
-	enableOpenCVRenderer2D();
 }
 
-void draw()
+void SimpleApp::draw()
 {
 	// Associate the stroke grayscale value to the vertical position of the mouse
 	float value = map(mouseY, 0, height, 0, 255);
@@ -33,24 +29,9 @@ void draw()
 	line(width/2, height/2, mouseX, mouseY);
 }
 
-void end()
-{
-}
 
-void mousePressed()
+void SimpleApp::mousePressed()
 {
 	// Clear the background when the mouse is pressed
 	background(192, 64, 0);
-}
-
-void mouseMoved()
-{
-}
-
-void mouseReleased()
-{
-}
-
-void keyPressed()
-{
 }
