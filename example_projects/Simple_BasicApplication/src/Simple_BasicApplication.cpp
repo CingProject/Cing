@@ -7,6 +7,9 @@ CREATE_APPLICATION( "Cing Demo" );
  * Press the mouse to clear the background.
  */
  
+// OpenCV module includes
+#include "OpenCV/src/OpenCVIncludes.h"
+
 void setup()
 {
 	// Set window size and smooth drawing
@@ -14,6 +17,9 @@ void setup()
 	smooth();
     
     setLogLevel(LOG_TRIVIAL);
+
+	// Set OpenCV 2D renderer as the default
+	enableOpenCVRenderer2D();
 }
 
 void draw()
