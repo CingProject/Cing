@@ -952,6 +952,40 @@ namespace Cing
 
 	void  Renderer2DOpenCV::fill( Image& image, const Color& color )
 	{
+
+		// Check if the renderer is valid
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Renderer2DOpenCV has not been correctly initialized. Did you call the init() method?" );
+			return;
+		}
+
+		// Check the image is valid
+		if ( !image.isValid() )
+		{
+			LOG_ERROR( "Trying to draw in an invalid image! It should be initialized before by loading an image from disk, or just calling its init method." );
+			return;
+		}
+
+		// Create a cv::Mat header around the image contents
+		cv::Mat imageMat = toCVMat( image );
+
+		// Set the entire image 
+		switch( imageMat.channels() )
+		{
+		case 1:
+			imageMat = cv::Scalar(color.r);
+			break;
+		case 3:
+			imageMat = cv::Scalar(color.r, color.g, color.b);
+			break;
+		case 4:
+			imageMat = cv::Scalar(color.r, color.g, color.b, color.a);
+			break;
+		default:
+			LOG_ERROR( "Renderer2DOpenCV::fill: Invalid number of channels in image" );
+			break;
+		}
 	}
 
 }

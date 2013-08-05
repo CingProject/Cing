@@ -1388,31 +1388,15 @@ namespace Cing
 	*/
 	void Image::fill( const Color& color )
 	{
+		// Check the image is valid
+		if ( !isValid() )
+			THROW_EXCEPTION( "Trying to paint in an invalid image" );
 
-		//// Check the image is valid
-		//if ( !isValid() )
-		//	THROW_EXCEPTION( "Trying to paint in an invalid image" );
+		if ( renderer2D )
+			renderer2D->fill( *this, color );
 
-		//// Set the entire image 
-		//switch( m_cvImage.channels() )
-		//{
-		//case 1:
-		//	m_cvImage = cv::Scalar(color.r);
-		//	break;
-		//case 3:
-		//	m_cvImage = cv::Scalar(color.r, color.g, color.b);
-		//	break;
-		//case 4:
-		//	m_cvImage = cv::Scalar(color.r, color.g, color.b, color.a);
-		//	break;
-		//default:
-		//	THROW_EXCEPTION( "Invalid number of channels in image" )
-		//		break;
-		//}
-
-		//// Update texture when the next drawing call is made by the user
-		//m_bUpdateTexture = true;
-
+		// Update texture when the next drawing call is made by the user
+		m_bUpdateTexture = true;
 	}
 	/**
 	 * @brief Copy from image
