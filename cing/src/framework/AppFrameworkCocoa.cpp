@@ -48,7 +48,7 @@
 namespace Cing
 {
 
-void RunApplicationCocoa(const char *_appName)
+void RunApplicationCocoa(const char *_appName, UserApplicationBase* userApp /*= NULL*/)
 {
     NSString *cocoaAppName = [NSString stringWithUTF8String:_appName];
     NSLog(@"RunApplicationCocoa for app: %@", cocoaAppName);
@@ -59,7 +59,7 @@ void RunApplicationCocoa(const char *_appName)
         Cing::appName = _appName;
         
         // Init application
-        Cing::Application::getSingleton().initApp();
+        Cing::Application::getSingleton().initApp( userApp );
         
         // Enter the application loop (will finish when the application should be closed)
         Cing::Application::getSingleton().drawApp();

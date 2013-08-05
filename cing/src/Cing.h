@@ -89,7 +89,8 @@
 	#include "cameraInput/VICamera.h"
 #endif
 
-// Framework 
+// Framework
+#include "framework/UserApplicationBase.h"
 #include "framework/AppMain.h"
 #include "framework/UserAppGlobals.h"
 #include "framework/FrameworkUserAPI.h"

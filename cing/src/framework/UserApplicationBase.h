@@ -25,22 +25,27 @@
  THE SOFTWARE.
  */
 
-
-#ifndef _AppFrameworkCocoa_H_
-#define _AppFrameworkCocoa_H_
-
-// Precompiled headers
-#include "Cing-Precompiled.h"
+#pragma once 
 
 namespace Cing
 {
-    // forward declarations
-    class UserApplicationBase;
 
-    // Runs a cocoa based application
-    void RunApplicationCocoa( const char* _appName, UserApplicationBase* userApp = NULL );
+/*
+ * This is the base application class the user can subclass to create their own applications.
+ */
+class UserApplicationBase
+{
+public: 
+    // Lifecycle
+    virtual void setup          () {}
+    virtual void draw           () {}
+    virtual void end            () {}
     
+    // Events
+    virtual void mousePressed   () {}
+    virtual void mouseMoved     () {}
+    virtual void mouseReleased  () {}
+    virtual void keyPressed     () {}
+};
+
 }
-
-#endif // _AppFramework_H_
-

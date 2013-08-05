@@ -60,6 +60,14 @@ namespace Cing
             RunApplicationBasic( appName  );                                    \
             return 0;                                                           \
         };
+    
+    #define CREATE_USER_APPLICATION( appName, UserAppClass )                \
+    INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT)   \
+    {                                                                       \
+        UserAppClass userAppClassInstance;                                  \
+        RunApplicationBasic( appName, &userAppClassInstance );              \
+        return 0;                                                           \
+    };
 
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     
@@ -69,6 +77,14 @@ namespace Cing
             RunApplicationCocoa( appName );                                     \
             return 0;                                                           \
         };
+    
+    #define CREATE_USER_APPLICATION( appName, UserAppClass )                \
+    int main()                                                              \
+    {                                                                       \
+        UserAppClass userAppClassInstance;                                  \
+        RunApplicationCocoa( appName, &userAppClassInstance );              \
+        return 0;                                                           \
+    };
     
     #define CREATE_COCOA_VIEW_APPLICATION( appName, ogreView )                \
         RunApplicationCocoaView( appName, ogreView );
