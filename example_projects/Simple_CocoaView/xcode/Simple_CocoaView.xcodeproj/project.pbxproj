@@ -13,9 +13,7 @@
 		601D422417AED4B9006B7282 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 601D422217AED4B9006B7282 /* Credits.rtf */; };
 		601D422717AED4B9006B7282 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 601D422617AED4B9006B7282 /* AppDelegate.mm */; };
 		601D422A17AED4B9006B7282 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 601D422817AED4B9006B7282 /* MainMenu.xib */; };
-		60CCA8EA17AED5A200567C87 /* CingConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = 60CCA8E517AED5A200567C87 /* CingConfig.xml */; };
 		60CCA8EB17AED5A200567C87 /* plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 60CCA8E617AED5A200567C87 /* plugins.cfg */; };
-		60CCA8EC17AED5A200567C87 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 60CCA8E717AED5A200567C87 /* ReadMe.txt */; };
 		60CCA8ED17AED5A200567C87 /* CingApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60CCA8E917AED5A200567C87 /* CingApplication.cpp */; };
 		60CCA8F017AED5C300567C87 /* Cing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CCA8E317AED59500567C87 /* Cing.framework */; };
 		60CCA8F217AED5CF00567C87 /* Cing.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 60CCA8E317AED59500567C87 /* Cing.framework */; };
@@ -34,6 +32,7 @@
 		60CCA90D17AED5E600567C87 /* Plugin_PCZSceneManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 60CCA8FF17AED5E500567C87 /* Plugin_PCZSceneManager.framework */; };
 		60CCA90E17AED5E600567C87 /* RenderSystem_GL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 60CCA90017AED5E500567C87 /* RenderSystem_GL.framework */; };
 		60CCA91017AED5F500567C87 /* Cg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 60CCA90F17AED5F500567C87 /* Cg.framework */; };
+		60F76B6D17B03BC800CC6D0D /* cing_bin in Resources */ = {isa = PBXBuildFile; fileRef = 60F76B6C17B03BC800CC6D0D /* cing_bin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,9 +95,7 @@
 		601D422617AED4B9006B7282 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		601D422917AED4B9006B7282 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		60CCA8DE17AED59500567C87 /* Cing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cing.xcodeproj; path = ../../../cing/build/mac/xcode/Cing.xcodeproj; sourceTree = "<group>"; };
-		60CCA8E517AED5A200567C87 /* CingConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CingConfig.xml; sourceTree = "<group>"; };
 		60CCA8E617AED5A200567C87 /* plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plugins.cfg; sourceTree = "<group>"; };
-		60CCA8E717AED5A200567C87 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		60CCA8E917AED5A200567C87 /* CingApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CingApplication.cpp; sourceTree = "<group>"; };
 		60CCA8F317AED5E500567C87 /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Ogre.framework; sourceTree = "<group>"; };
 		60CCA8F417AED5E500567C87 /* OgreOverlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreOverlay.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreOverlay.framework; sourceTree = "<group>"; };
@@ -115,6 +112,7 @@
 		60CCA8FF17AED5E500567C87 /* Plugin_PCZSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_PCZSceneManager.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_PCZSceneManager.framework; sourceTree = "<group>"; };
 		60CCA90017AED5E500567C87 /* RenderSystem_GL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RenderSystem_GL.framework; path = ../../../cing/libraries/mac/xcode/OgreSDK/lib/macosx/Release/RenderSystem_GL.framework; sourceTree = "<group>"; };
 		60CCA90F17AED5F500567C87 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = ../../../cing/libraries/mac/xcode/OgreDependencies/Frameworks/Cg.framework; sourceTree = "<group>"; };
+		60F76B6C17B03BC800CC6D0D /* cing_bin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cing_bin; path = ../../../cing_bin; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,9 +202,8 @@
 		60CCA8E417AED5A200567C87 /* data */ = {
 			isa = PBXGroup;
 			children = (
-				60CCA8E517AED5A200567C87 /* CingConfig.xml */,
+				60F76B6C17B03BC800CC6D0D /* cing_bin */,
 				60CCA8E617AED5A200567C87 /* plugins.cfg */,
-				60CCA8E717AED5A200567C87 /* ReadMe.txt */,
 			);
 			name = data;
 			path = ../../data;
@@ -315,9 +312,8 @@
 				601D421E17AED4B9006B7282 /* InfoPlist.strings in Resources */,
 				601D422417AED4B9006B7282 /* Credits.rtf in Resources */,
 				601D422A17AED4B9006B7282 /* MainMenu.xib in Resources */,
-				60CCA8EA17AED5A200567C87 /* CingConfig.xml in Resources */,
 				60CCA8EB17AED5A200567C87 /* plugins.cfg in Resources */,
-				60CCA8EC17AED5A200567C87 /* ReadMe.txt in Resources */,
+				60F76B6D17B03BC800CC6D0D /* cing_bin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

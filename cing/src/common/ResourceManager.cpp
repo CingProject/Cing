@@ -57,7 +57,7 @@ namespace Cing
 	// TODO: Clean this up. resourcesPathInBundle is only mac side!
 #elif __APPLE__
 	std::string ResourceManager::resourcesFileName			= "resources.cfg";
-	std::string ResourceManager::userResourcesDirName		= "../../data/";
+	std::string ResourceManager::userResourcesDirName		= "Contents/Resources/";
 	std::string ResourceManager::userResourcesGroupName		= "UserData";
 	std::string ResourceManager::pluginsPath				= "plugins.cfg";
 	std::string ResourceManager::libDataPath				= "Contents/Resources/cing_bin/data/";
@@ -99,12 +99,12 @@ namespace Cing
 		extractUserAppPath();
 
 		// Init Ogre Root
-		LOG( "Creating Ogre Root. Plugins path: %s", (resourcesPathInBundle + pluginsPath).c_str() );
+		LOG( "Creating Ogre Root. Plugins path: %s\n", (resourcesPathInBundle + pluginsPath).c_str() );
 		new Ogre::Root( resourcesPathInBundle + pluginsPath );
 
 		 // Store user data path in globals
 		dataFolder = userDataPath;
-		LOG("User Data Folder: %s", dataFolder.c_str() );
+		LOG("User Data Folder: %s\n", dataFolder.c_str() );
 
 		// Load Cing Config file
 		XMLElement xml;
@@ -120,7 +120,7 @@ namespace Cing
 			LOG_ERROR( "CingConfig.xml not found in data folder -> using default paths" );
 		
 		// Get Cing data path
-		LOG( "Cing Data Folder: %s", cingDataFolder.c_str());
+		LOG( "Cing Data Folder: %s\n", cingDataFolder.c_str());
 		if ( cingDataFolder != "" )
 		{
 			libDataPath = cingDataFolder;
@@ -131,7 +131,7 @@ namespace Cing
 		// Load resource paths from config file
 		Ogre::ConfigFile  cf;
 		std::string resourcesFileAbsPath = libDataPath + resourcesFileName ;
-		LOG( "Trying to load Ogre Resources file (resources.cfg) at: %s", resourcesFileAbsPath.c_str() ); 
+		LOG( "Trying to load Ogre Resources file (resources.cfg) at: %s\n", resourcesFileAbsPath.c_str() ); 
 		cf.load( resourcesFileAbsPath.c_str() );
 
 		// Go through all sections & settings in the file to add all library resource locations
@@ -318,18 +318,19 @@ namespace Cing
 		
 		resourcesPathInBundle	= String(bundlePath) + "/" + String(resourcesPath) + "/";
 		//userDataPath	= String(bundlePath) + "/" + String(resourcesPath) + "/data/";
-		userDataPath = String(bundlePath) + "/" + userResourcesDirName;
+		userDataPath = String(bundlePath) + "/" + userResourcesDirName + "/" + userResourcesGroupName;
 		//libDataPath		= String(bundlePath) + "/" + String(resourcesPath) + "/cing_bin/data/";
 		libDataPath = String(bundlePath) + "/../../../../cing_bin/data/";
+        
+        cingDataFolder = String(bundlePath) + "/" + cingDataFolder;
 		
 		// Log some info
-		LOG( "Exec Path %s", exePath );
-		LOG( "Bundle Path %s", bundlePath );
-		LOG( "Resources Path %s", resourcesPath );
-		LOG( "User Data Path %s", userDataPath.c_str() );
-		
-		const char* curentDir = getWorkingDir().c_str();
-		LOG( "Current Working Dir: %s", getWorkingDir().c_str() );
+		LOG( "Exec Path %s\n", exePath );
+		LOG( "Bundle Path %s\n", bundlePath );
+		LOG( "Resources Path %s\n", resourcesPath );
+		LOG( "User Data Path %s\n", userDataPath.c_str() );
+        LOG( "Cing Data Path %s\n", cingDataFolder.c_str() );
+		LOG( "Current Working Dir: %s\n", getWorkingDir().c_str() );
 		
 	}
 #endif
