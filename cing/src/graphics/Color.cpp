@@ -137,15 +137,15 @@ Color::Color( int gray, float alpha ):
  * @param blue	Blue color value
  * @param alpha Alpha value. Represents transparency. Max value means opaque, min value means transparent.
  */
-Color::Color(  Ogre::ColourValue color ): 
+Color::Color(  const Ogre::ColourValue& color ): 
 	m_lowRange( 0.0f ), 
 	m_hightRange( 255.0f )
 {
-	color.r = map( color.r, 0.0, 1.0, 0, 255);
-	color.g = map( color.g, 0.0, 1.0, 0, 255);
-	color.b = map( color.b, 0.0, 1.0, 0, 255);
+	float r = map( color.r, 0.0, 1.0, 0, m_hightRange);
+	float g = map( color.g, 0.0, 1.0, 0, m_hightRange);
+	float b = map( color.b, 0.0, 1.0, 0, m_hightRange);
 	
-	set( color.r, color.g, color.b, color.a );
+	set( r, g, b, a );
 }
 /**
  * @brief Sets the color values of this Color object.

@@ -70,15 +70,6 @@
     <Filter Include="Src\Common\Source Files\Memory">
       <UniqueIdentifier>{59a4586f-8930-46f1-b013-35ad023cd796}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\ComputerVision">
-      <UniqueIdentifier>{4ae1f901-bd30-46e2-9d30-3b9d196fa1c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\ComputerVision\Source Files">
-      <UniqueIdentifier>{f23c748a-323e-496e-b217-5f75cdf29e38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\ComputerVision\Header Files">
-      <UniqueIdentifier>{ed9c5a55-d0b2-404a-b738-dadeba05ab6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Framework">
       <UniqueIdentifier>{a946db81-9266-4885-a6d9-6d854af2f432}</UniqueIdentifier>
     </Filter>
@@ -103,9 +94,6 @@
     <Filter Include="Src\Graphics\Header Files\Lighting">
       <UniqueIdentifier>{816f5e82-439e-4a60-96e4-56079594ca88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Graphics\Header Files\ImageProcessing">
-      <UniqueIdentifier>{ae3e3976-560c-404f-9291-4ee2bba85961}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Graphics\Header Files\Typography">
       <UniqueIdentifier>{77a38f87-ae93-4a9a-88ed-8d84c1c281af}</UniqueIdentifier>
     </Filter>
@@ -120,9 +108,6 @@
     </Filter>
     <Filter Include="Src\Graphics\Source Files\Lighting">
       <UniqueIdentifier>{1d945ccd-3209-47df-aed8-5602052456e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Graphics\Source Files\ImageProcessing">
-      <UniqueIdentifier>{b02fb652-eb47-4c18-864a-75d58ca2957c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Graphics\Source Files\Typography">
       <UniqueIdentifier>{5ffa7a71-4cd7-4b55-864e-5141be2d4018}</UniqueIdentifier>
@@ -163,13 +148,19 @@
     <Filter Include="Src\Video\Header Files">
       <UniqueIdentifier>{bb51dcc6-37ec-4940-b6d8-1026a638f7cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cing-ings">
+    <Filter Include="Src\Graphics\Header Files\Render">
+      <UniqueIdentifier>{bb92122e-5727-45e1-8e68-bf3a2fae565c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cing_ings">
       <UniqueIdentifier>{d6bd9090-ff0e-4f38-a654-58c065b369a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cing-ings\RTShaderGenerator">
+    <Filter Include="cing_ings\RTShaderGenerator">
       <UniqueIdentifier>{68d07010-a3f2-4a31-82e4-6b990afcaf53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cing-ings\GStreamer">
+    <Filter Include="cing_ings\OpenCV">
+      <UniqueIdentifier>{c2c96adf-ec51-4d05-bef7-1f39f6349c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cing_ings\GStreamer">
       <UniqueIdentifier>{26c679fe-95ab-40b4-a6f4-17f60f843733}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -236,9 +227,6 @@
     <ClCompile Include="..\..\..\..\src\camerainput\BaseCameraInput.cpp">
       <Filter>Src\CameraInput\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\camerainput\OCVCamera.cpp">
-      <Filter>Src\CameraInput\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\camerainput\PVCamera.cpp">
       <Filter>Src\CameraInput\Source Files</Filter>
     </ClCompile>
@@ -284,14 +272,8 @@
     <ClCompile Include="..\..\..\..\src\common\MemoryDumper.cpp">
       <Filter>Src\Common\Source Files\Memory</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\computervision\BackgroundSubtraction.cpp">
-      <Filter>Src\ComputerVision\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\computervision\BlobFinder.cpp">
-      <Filter>Src\ComputerVision\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\computervision\BlobTracker.cpp">
-      <Filter>Src\ComputerVision\Source Files</Filter>
+    <ClCompile Include="..\..\..\..\src\framework\AppFramework.cpp">
+      <Filter>Src\Framework\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\framework\Application.cpp">
       <Filter>Src\Framework\Source Files</Filter>
@@ -318,9 +300,6 @@
       <Filter>Src\Graphics\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\graphics\GraphicsUserAPI.cpp">
-      <Filter>Src\Graphics\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\graphics\ImageResourceManager.cpp">
       <Filter>Src\Graphics\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\graphics\RTTRectSaveManager.cpp">
@@ -380,15 +359,6 @@
     <ClCompile Include="..\..\..\..\src\graphics\SpotLight.cpp">
       <Filter>Src\Graphics\Source Files\Lighting</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\graphics\BaseImageFilter.cpp">
-      <Filter>Src\Graphics\Source Files\ImageProcessing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\graphics\ImageDifferenceFilter.cpp">
-      <Filter>Src\Graphics\Source Files\ImageProcessing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\graphics\ImageThresholdFilter.cpp">
-      <Filter>Src\Graphics\Source Files\ImageProcessing</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\graphics\Font.cpp">
       <Filter>Src\Graphics\Source Files\Typography</Filter>
     </ClCompile>
@@ -425,23 +395,53 @@
     <ClCompile Include="..\..\..\..\src\video\BaseVideoRecorder.cpp">
       <Filter>Src\Video\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\video\MediaPlayerOCV.cpp">
-      <Filter>Src\Video\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\video\MediaPlayerVLC.cpp">
       <Filter>Src\Video\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\video\OCVVideoRecorder.cpp">
-      <Filter>Src\Video\Source Files</Filter>
+    <ClCompile Include="..\..\..\..\..\cing_ings\GStreamer\src\GStreamerManager.cpp">
+      <Filter>cing_ings\GStreamer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\cing-ings\RTShaderGenerator\src\ShaderGenerator-Plugin.cpp">
-      <Filter>cing-ings\RTShaderGenerator</Filter>
+    <ClCompile Include="..\..\..\..\..\cing_ings\GStreamer\src\MediaPlayerGS.cpp">
+      <Filter>cing_ings\GStreamer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\cing-ings\Cbit-GStreamer\src\GStreamerManager.cpp">
-      <Filter>cing-ings\GStreamer</Filter>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\BackgroundSubtraction.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\cing-ings\Cbit-GStreamer\src\MediaPlayerGS.cpp">
-      <Filter>cing-ings\GStreamer</Filter>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\BaseImageFilter.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\BlobFinder.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\BlobTracker.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\ImageDifferenceFilter.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\ImageResourceManager.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\ImageThresholdFilter.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\MediaPlayerOCV.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVCamera.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVVideoRecorder.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.cpp">
+      <Filter>cing_ings\RTShaderGenerator</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\framework\AppFrameworkBasic.cpp">
       <Filter>Src\Framework\Source Files</Filter>
@@ -503,9 +503,6 @@
       <Filter>Src\CameraInput\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\camerainput\CameraInputPrereqs.h">
-      <Filter>Src\CameraInput\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\camerainput\OCVCamera.h">
       <Filter>Src\CameraInput\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\camerainput\PVCamera.h">
@@ -574,20 +571,8 @@
     <ClInclude Include="..\..\..\..\src\common\XEventLog.h">
       <Filter>Src\Common\Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\computervision\BackgroundSubtraction.h">
-      <Filter>Src\ComputerVision\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\computervision\Blob.h">
-      <Filter>Src\ComputerVision\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\computervision\BlobFinder.h">
-      <Filter>Src\ComputerVision\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\computervision\BlobTracker.h">
-      <Filter>Src\ComputerVision\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\computervision\ComputerVisionPrereqs.h">
-      <Filter>Src\ComputerVision\Header Files</Filter>
+    <ClInclude Include="..\..\..\..\src\framework\AppFramework.h">
+      <Filter>Src\Framework\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\framework\Application.h">
       <Filter>Src\Framework\Header Files</Filter>
@@ -638,9 +623,6 @@
       <Filter>Src\Graphics\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\graphics\GraphicsUserAPI.h">
-      <Filter>Src\Graphics\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\graphics\ImageResourceManager.h">
       <Filter>Src\Graphics\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\graphics\RTTRectSaveManager.h">
@@ -699,15 +681,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\graphics\SpotLight.h">
       <Filter>Src\Graphics\Header Files\Lighting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\graphics\BaseImageFilter.h">
-      <Filter>Src\Graphics\Header Files\ImageProcessing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\graphics\ImageDifferenceFilter.h">
-      <Filter>Src\Graphics\Header Files\ImageProcessing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\graphics\ImageThresholdFilter.h">
-      <Filter>Src\Graphics\Header Files\ImageProcessing</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\graphics\Font.h">
       <Filter>Src\Graphics\Header Files\Typography</Filter>
@@ -769,30 +742,69 @@
     <ClInclude Include="..\..\..\..\src\video\BaseVideoRecorder.h">
       <Filter>Src\Video\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\video\MediaPlayerOCV.h">
-      <Filter>Src\Video\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\src\video\MediaPlayerVLC.h">
-      <Filter>Src\Video\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\video\OCVVideoRecorder.h">
       <Filter>Src\Video\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\video\VideoPrereqs.h">
       <Filter>Src\Video\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\cing-ings\RTShaderGenerator\src\ShaderGenerator-Plugin.h">
-      <Filter>cing-ings\RTShaderGenerator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\cing-ings\RTShaderGenerator\src\ShaderGeneratorTechniqueResolverListener.h">
-      <Filter>cing-ings\RTShaderGenerator</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\src\Cing.h" />
-    <ClInclude Include="..\..\..\..\..\cing-ings\Cbit-GStreamer\src\GStreamerManager.h">
-      <Filter>cing-ings\GStreamer</Filter>
+    <ClInclude Include="..\..\..\..\src\graphics\BaseRenderer2D.h">
+      <Filter>Src\Graphics\Header Files\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\cing-ings\Cbit-GStreamer\src\MediaPlayerGS.h">
-      <Filter>cing-ings\GStreamer</Filter>
+    <ClInclude Include="..\..\..\..\..\cing_ings\GStreamer\src\GStreamerManager.h">
+      <Filter>cing_ings\GStreamer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\GStreamer\src\MediaPlayerGS.h">
+      <Filter>cing_ings\GStreamer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\BackgroundSubtraction.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\BaseImageFilter.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\Blob.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\BlobFinder.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\BlobTracker.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\ImageDifferenceFilter.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\ImageResourceManager.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\ImageThresholdFilter.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\MediaPlayerOCV.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVCamera.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVVideoRecorder.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVIncludes.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.h">
+      <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.h">
+      <Filter>cing_ings\RTShaderGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGeneratorTechniqueResolverListener.h">
+      <Filter>cing_ings\RTShaderGenerator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\framework\AppFrameworkBasic.h">
       <Filter>Src\Framework\Header Files</Filter>

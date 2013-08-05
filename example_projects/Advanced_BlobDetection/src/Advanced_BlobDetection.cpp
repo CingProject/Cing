@@ -9,6 +9,9 @@ CREATE_APPLICATION( "Cing" );
  *	- space bar: store current camera image as background
  */
 
+// OpenCV module includes
+#include "OpenCV/src/OpenCVIncludes.h"
+
 BackgroundSubtraction	bgSubtraction;	// Object to perform Background subtraction
 BlobFinder				bfinder;		// Object to perform blob finding
 Capture					camera;			// Camera to capture video input
@@ -16,6 +19,9 @@ Image					img;			// Image to draw the result of the background subtraction
 
 void setup()
 {
+	// Set OpenCV 2D renderer as the default
+	enableOpenCVRenderer2D();
+
 	// Init camera and image
 	camera.init( 0, 320, 240, 30, RGB );
 	img.init( 320,  240, RGB );

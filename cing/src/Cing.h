@@ -84,7 +84,6 @@
 #include "graphics/Color.h"
 
 // CameraInput
-#include "cameraInput/OCVCamera.h"
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	#include "cameraInput/PVCamera.h"
 	#include "cameraInput/VICamera.h"
@@ -108,11 +107,6 @@
 #include "input/Mouse.h"
 #include "input/Keyboard.h"
 
-// Computer Vision
-#include "computervision/BlobFinder.h"
-#include "computervision/BlobTracker.h"
-#include "computervision/BackgroundSubtraction.h"
-
 // Physics
 //#include "physics/PhysicsUserAPI.h"
 //#include "physics/PhysicsBox.h"
@@ -131,8 +125,6 @@
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #include "video/MediaPlayerVLC.h"
 #endif
-#include "video/MediaPlayerOCV.h"
-#include "video/OCVVideoRecorder.h"
 
 
 // GUI
@@ -173,12 +165,8 @@ typedef Color color;
 // Video
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 //typedef MediaPlayerVLC MediaPlayer;
-typedef MediaPlayerOCV MediaPlayer;
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 typedef MediaPlayerOCV MediaPlayer;
 #endif
-
-// Video writing
-typedef OCVVideoRecorder VideoRecorder;
 
 #endif // _Vision_H_

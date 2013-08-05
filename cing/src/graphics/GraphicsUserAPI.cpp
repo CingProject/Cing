@@ -42,6 +42,19 @@
 namespace Cing
 {
 
+/**
+ * @brief Sets the 2D renderer that will be used from now on to make all the 2D drawing related calls
+ * If no Renderer2D is set, the 2D drawing capabilities will be disabled.
+ *
+ * @param newRenderer2D Renderer2D to use from now on. Shoud derive from BaseRenderer2D
+ */
+void setRenderer2D( BaseRenderer2D* newRenderer2D )
+{
+	// just set the pointer :)
+	// Note: the renderer2D is a global so that it can be used both internally and externally. It does not allocate memory, just points to the renderer.
+	renderer2D = newRenderer2D;
+}
+
 
 /**
  * @brief Set the background to a grayscale value, based on the current colorMode.
@@ -1406,10 +1419,82 @@ Ogre::Entity* pickEntity( const Vector2& screenCoordinate )
 //----------------------------------------------------------------------------------- 
 // Helpers
 //----------------------------------------------------------------------------------- 
+
+// Returns the number of channels of a graphics type image format
 unsigned int numberOfChannels ( GraphicsType format )
 {
 	return Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)format );
 }
+
+// Returns the size of an image buffer (in bytes) for the given resolution and format
+unsigned int imageBufferSize( unsigned int width, unsigned int height, GraphicsType format )
+{
+	return Ogre::PixelUtil::getMemorySize( width, height, 1, toOgrePixelFormat(format) );
+}
+
+
+// Returns the GraphicsType that correlates to an Ogre::PixelFormat
+GraphicsType toCingPixelFormat( Ogre::PixelFormat ogreFormat )
+{
+	switch( ogreFormat )
+	{
+		case Ogre::PF_BYTE_RGB:
+			return RGB;
+		break;
+
+		case Ogre::PF_BYTE_RGBA:
+			return RGBA;
+		break;
+
+		case Ogre::PF_BYTE_BGR:
+			return BGR;
+		break;
+		
+		case Ogre::PF_BYTE_BGRA:
+			return BGRA;
+		break;
+		
+		case Ogre::PF_BYTE_L:
+			return GRAYSCALE;
+		break;
+
+		default: 
+			LOG_ERROR( "[ERROR] toCingPixelFormat: Ogre format not supported: %d", ogreFormat );
+			return RGB;
+	};
+}
+
+// Returns the Ogre::PixelFormat that correlates to an GraphicsType format
+Ogre::PixelFormat toOgrePixelFormat( GraphicsType cingformat )
+{
+	switch( cingformat )
+	{
+		case RGB:
+			return Ogre::PF_BYTE_RGB;
+		break;
+
+		case RGBA:
+			return Ogre::PF_BYTE_RGBA;
+		break;
+
+		case BGR:
+			return Ogre::PF_BYTE_BGR;
+		break;
+		
+		case BGRA:
+			return Ogre::PF_BYTE_BGRA;
+		break;
+		
+		case GRAYSCALE:
+			return Ogre::PF_BYTE_L;
+		break;
+
+		default: 
+			LOG_ERROR( "[ERROR] toOgrePixelFormat: Cing Pixel format not supported: %d", cingformat );
+			return Ogre::PF_BYTE_RGB;
+	};
+}
+
 
 
 } // namespace Cing

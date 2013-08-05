@@ -51,6 +51,7 @@ namespace Cing
 // Forward declarations
 class Mouse;
 class Window;
+class BaseRenderer2D;
 
 
 // Window
@@ -90,6 +91,9 @@ extern Window*						appWindow;			///< App window
 
 // Pixel manipulation
 extern std::vector < Color >		pixels;
+
+// 2D Renderer in use
+extern BaseRenderer2D*				renderer2D;			///< 2D renderer that handles all the 2d rendering or image processing calls. Can be swapped using setRender2DBackend
 
 // Other
 extern PerlinNoise _noise;

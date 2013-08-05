@@ -75,11 +75,13 @@ namespace Cing
 	Window*					appWindow			= NULL;
 
 
-
 	// Pixel manipulation
 	std::vector < Color > pixels;
 
 	// PerlinNoise global object
 	PerlinNoise _noise = PerlinNoise(6,0.43f,1.6f,0);
+
+	// Rendering system
+	BaseRenderer2D*			renderer2D = NULL;
 
 } // namespace Cing

@@ -4,7 +4,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <CING_ROOT>..\..\..\cing\</CING_ROOT>
-    <CING-INGS_ROOT>..\..\..\cing-ings</CING-INGS_ROOT>
+    <CING_INGS_ROOT>..\..\..\cing_ings\</CING_INGS_ROOT>
   </PropertyGroup>
   <PropertyGroup>
     <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
@@ -19,7 +19,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(CING_ROOT);$(CING_ROOT)src\;$(CING_ROOT)libraries\win\vs2012\OpenCV\include;$(CING_ROOT)libraries\win\vs2012\LibVLC\include;$(CING_ROOT)libraries\win\vs2012;$(CING_ROOT)libraries\win\vs2012\GStreamer\include\gstreamer-0.10;$(CING_ROOT)libraries\win\vs2012\GStreamer\include\glib-2.0;$(CING_ROOT)libraries\win\vs2012\GStreamer\include\libxml2;$(CING_ROOT)libraries\win\vs2012\GStreamer\include;$(CING_ROOT)libraries\win\vs2012\Ogre3d\include\OGRE;$(CING_ROOT)libraries\win\vs2012\Ogre3d\include\OIS;$(CING_ROOT)libraries\win\vs2012\Ogre3d\boost;$(CING_ROOT)libraries\win\vs2012\Ogre-CameraControlSystem\include;$(CING_ROOT)libraries\win\vs2012\CEGUI\include;$(CING_ROOT)libraries\win\vs2012\Bullet\src;$(CING_ROOT)libraries\win\vs2012\OgreBullet\Collisions\include;$(CING_ROOT)libraries\win\vs2012\OpenAL\include;$(CING_ROOT)..\cing-ings\;$(CING-INGS_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CING_ROOT);$(CING_ROOT)src\;$(CING_ROOT)libraries\win\vs2012\LibVLC\include;$(CING_ROOT)libraries\win\vs2012;$(CING_ROOT)libraries\win\vs2012\Ogre3d\include\OGRE;$(CING_ROOT)libraries\win\vs2012\Ogre3d\include\OIS;$(CING_ROOT)libraries\win\vs2012\Ogre3d\boost;$(CING_ROOT)libraries\win\vs2012\Ogre-CameraControlSystem\include;$(CING_ROOT)libraries\win\vs2012\CEGUI\include;$(CING_ROOT)libraries\win\vs2012\Bullet\src;$(CING_ROOT)libraries\win\vs2012\OgreBullet\Collisions\include;$(CING_ROOT)libraries\win\vs2012\OpenAL\include;$(CING_INGS_ROOT);$(CING_INGS_ROOT)\OpenCV\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -27,8 +27,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OIS.lib;ptypes.lib;tinyxml_STL.lib;videoInput.lib;opencv_core246.lib;opencv_highgui246.lib;opencv_imgproc246.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(CING_ROOT)libraries\win\vs2012\BetaCairo\lib;$(CING_ROOT)libraries\win\vs2012\Bullet\lib;$(CING_ROOT)libraries\win\vs2012\cairo\lib;$(CING_ROOT)libraries\win\vs2012\Fmod\lib;$(CING_ROOT)libraries\win\vs2012\Ogre3d\lib;$(CING_ROOT)libraries\win\vs2012\Ogre3d\boost\lib;$(CING_ROOT)libraries\win\vs2012\Ogre-CameraControlSystem\lib;$(CING_ROOT)libraries\win\vs2012\CEGUI\lib;$(CING_ROOT)libraries\win\vs2012\OgreBullet\lib;$(CING_ROOT)libraries\win\vs2012\OpenCV\lib;$(CING_ROOT)libraries\win\vs2012\PortVideo\lib;$(CING_ROOT)libraries\win\vs2012\PTypes\lib;$(CING_ROOT)libraries\win\vs2012\RtMidi\lib;$(CING_ROOT)libraries\win\vs2012\VideoInput\lib;$(CING_ROOT)libraries\win\vs2012\OgreCollada\lib;$(CING_ROOT)libraries\win\vs2012\LibVLC\lib;$(CING_ROOT)libraries\win\vs2012\TinyXML\lib;$(CING_ROOT)libraries\win\vs2012\GStreamer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OIS.lib;ptypes.lib;tinyxml_STL.lib;videoInput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CING_ROOT)libraries\win\vs2012\Fmod\lib;$(CING_ROOT)libraries\win\vs2012\Ogre3d\lib;$(CING_ROOT)libraries\win\vs2012\Ogre3d\boost\lib;$(CING_ROOT)libraries\win\vs2012\Ogre-CameraControlSystem\lib;$(CING_ROOT)libraries\win\vs2012\CEGUI\lib;$(CING_ROOT)libraries\win\vs2012\PortVideo\lib;$(CING_ROOT)libraries\win\vs2012\PTypes\lib;$(CING_ROOT)libraries\win\vs2012\VideoInput\lib;$(CING_ROOT)libraries\win\vs2012\OgreCollada\lib;$(CING_ROOT)libraries\win\vs2012\LibVLC\lib;$(CING_ROOT)libraries\win\vs2012\TinyXML\lib;$(CING_INGS_ROOT);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>atlthunk;libc.lib;libcmt.lib;libcd.lib;libcmtd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>NotSet</SubSystem>
@@ -61,8 +61,8 @@ echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK
       <Value>$(CING_ROOT)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
-    <BuildMacro Include="CING-INGS_ROOT">
-      <Value>$(CING-INGS_ROOT)</Value>
+    <BuildMacro Include="CING_INGS_ROOT">
+      <Value>$(CING_INGS_ROOT)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

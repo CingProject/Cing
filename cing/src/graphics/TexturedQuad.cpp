@@ -108,7 +108,7 @@ namespace Cing
 	* @param[in] usage of the texture (allows to customize is usage depending on whether you plan to update the texture only, or also read its content, or even use it as a render target)
 	* @return true if the initialization was ok | false otherwise
 	*/
-	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, GraphicsType usage /*= DYNAMIC*/, Ogre::SceneManager* sm )
+	bool TexturedQuad::init( int textureWidth, int textureHeight, GraphicsType format, GraphicsType usage /*= DYNAMIC_WRITE_ONLY_DISCARDABLE*/, Ogre::SceneManager* sm )
 	{
 		// Check if the class is already initialized
 		if ( isValid() )
@@ -162,7 +162,7 @@ namespace Cing
 				(Ogre::uint)m_textHeightP2,		// height
 				0,								// number of mipmaps
 				(Ogre::PixelFormat)format,		// pixel format
-				textureUsage );						// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for textures updated very often (e.g. each frame)
+				textureUsage );					// usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for textures updated very often (e.g. each frame)
 		}
 
 		// Create a material for the quad
@@ -241,14 +241,14 @@ namespace Cing
 		m_2dWidth = (m_textWidth / (float)width) * 2.0f;
 		m_2dHeight = (m_textHeight / (float)height) * 2.0f;
 
-		// The class is now initialized
-		m_bIsValid = true;
-
 		// No shadow casting in textured quads by default
 		enableCastShadows(false);
 
 		// No lighting by default (as this is usually used to render 2d images and not images in 3d scenes with lighting).
 		//enableLighting(false);
+
+		// The class is now initialized
+		m_bIsValid = true;
 
 		return true;
 	}
@@ -303,8 +303,14 @@ namespace Cing
 			}
 
 			// Remove the nodes
+			m_quadSceneNode->removeAllChildren();
+			m_pivotSceneNode->removeAllChildren();
 			m_sm->getRootSceneNode()->removeChild( m_pivotSceneNode );
-
+			m_sm->destroySceneNode( m_pivotSceneNode );
+			m_pivotSceneNode = NULL;
+			m_sm->destroySceneNode( m_quadSceneNode );
+			m_quadSceneNode = NULL;
+			
 			// Destroy the manual object
 			m_sm->destroyManualObject( m_ogreManualObjectName );		
 
@@ -316,6 +322,9 @@ namespace Cing
 
 			// Unregister in graphics manager so that it is marked as invisible every frame
 			GraphicsManager::getSingleton().removeDrawableImage( this );
+
+			// Clear scene manager pointer
+			m_sm = NULL;
 		}
 
 		// The class is not valid anymore
@@ -681,7 +690,8 @@ namespace Cing
 		// Apply current transformations to the pivot node
 		applyTransformations2D(x, y, imgWidth, imgHeight);
 
-		m_quadSceneNode->setVisible( true );
+		if ( m_quadSceneNode )
+			m_quadSceneNode->setVisible( true );
 	}
 
 
@@ -740,9 +750,12 @@ namespace Cing
 			renderQueueId = (unsigned int)constrain((float)renderQueueId, (float)Ogre::RENDER_QUEUE_BACKGROUND, (float)Ogre::RENDER_QUEUE_MAX);
 		}
 
-		m_renderQueueForced = true;
-		m_forcedRenderQueue = renderQueueId;
-		m_quad->setRenderQueueGroup( (Ogre::RenderQueueGroupID)m_forcedRenderQueue );
+		if ( m_quad )
+		{
+			m_renderQueueForced = true;
+			m_forcedRenderQueue = renderQueueId;
+			m_quad->setRenderQueueGroup( (Ogre::RenderQueueGroupID)m_forcedRenderQueue );
+			}
 	}
 
 	void TexturedQuad::enableDepthWrite( bool value )
@@ -755,7 +768,8 @@ namespace Cing
 		}
 
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( value );
+		if ( !material.isNull() )
+			material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( value );
 	}
 	
 	void TexturedQuad::enableDepthCheck( bool value )
@@ -768,7 +782,8 @@ namespace Cing
 		}
 
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( value );
+		if ( !material.isNull() )
+			material->getTechnique(0)->getPass(0)->setDepthCheckEnabled( value );
 	}
 
 	/**
@@ -780,10 +795,14 @@ namespace Cing
 	{
 		// Check if the object is valid
 		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to upload data texture to a not initializad TextureQuad object" );
+		{
+			LOG_ERROR( "Trying to upload data texture to a not initializad TextureQuad object" );
+			return;
+		}
 
 		// Update texture
-		m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( img.getPixelBox( 0, 0 ) );
+		if ( !m_ogreTexture.isNull() )
+			m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( img.getPixelBox( 0, 0 ) );
 	}
 
 	/**
@@ -799,21 +818,30 @@ namespace Cing
 	{
 		// Check if the object is valid
 		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to upload data texture to a not initializad TextureQuad object" );
+		{
+			LOG_ERROR( "Trying to upload data texture to a not initializad TextureQuad object" );
+			return;
+		}
 
 		// Check resolution
 		if ( ( width > m_textWidth ) || ( height > m_textHeight ) )
-			THROW_EXCEPTION( "The resolution of the received data is bigger than the texture data size. Cannot update the texture" );
+		{
+			LOG_ERROR( "The resolution of the received data is bigger than the texture data size. Cannot update the texture" );
+			return;
+		}
 
 		//// Check format
 		//if ( m_format != format )
 		//	THROW_EXCEPTION( "Trying to update texture with different format" );
 
 		// Update texture
-		//m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
-		Ogre::PixelBox newData( width, height, 1, (Ogre::PixelFormat)format, textureData );
-		//Ogre::PixelBox dest( (size_t)m_textWidth, (size_t)m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
-		m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData );
+		if ( !m_ogreTexture.isNull() )
+		{
+			//m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( Ogre::PixelBox( width, height, 1, (Ogre::PixelFormat)format, textureData ) );
+			Ogre::PixelBox newData( width, height, 1, (Ogre::PixelFormat)format, textureData );
+			//Ogre::PixelBox dest( (size_t)m_textWidth, (size_t)m_textHeight, 1, (Ogre::PixelFormat)format, textureData );
+			m_ogreTexture->getBuffer( 0, 0 )->blitFromMemory( newData );
+		}
 	}
 
 	/**
@@ -951,11 +979,12 @@ namespace Cing
 	void TexturedQuad::setbackgroundRendering()
 	{
 		// Properties to be rendered as background (render queue and no depth write)
-		if ( !m_renderQueueForced )
+		if ( !m_renderQueueForced && m_quad )
 			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND + 1);
 		
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
+		if ( !material.isNull() )
+			material->getTechnique(0)->getPass(0)->setDepthWriteEnabled( false );
 
 		// The rest is the same as in 2d rendering
 		set2dRendering();
@@ -967,18 +996,21 @@ namespace Cing
 	*/
 	void TexturedQuad::set2dRendering()
 	{
-		// Properties to be rendered in 2d
-		if ( !m_renderQueueForced )
-			m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		m_quad->setUseIdentityProjection(true);
-		m_quad->setUseIdentityView(true);
-		Ogre::AxisAlignedBox aabb;
-		aabb.setInfinite();
-		m_quad->setBoundingBox(aabb);
+		if ( m_quad )
+		{
+			// Properties to be rendered in 2d
+			if ( !m_renderQueueForced )
+				m_quad->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY -1);
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+			m_quad->setUseIdentityProjection(true);
+			m_quad->setUseIdentityView(true);
+			Ogre::AxisAlignedBox aabb;
+			aabb.setInfinite();
+			m_quad->setBoundingBox(aabb);
 
-		// mark the object as 2d rendering
-		m_render2D = true;
+			// mark the object as 2d rendering
+			m_render2D = true;
+		}
 	}
 
 	/**
@@ -987,15 +1019,18 @@ namespace Cing
 	 */
 	void TexturedQuad::set3dRendering()
 	{
-		// Set properties for 3d rendering
-		if ( !m_renderQueueForced )
-			m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-		m_quad->setUseIdentityProjection( false );
-		m_quad->setUseIdentityView( false );
+		if ( m_quad )
+		{
+			// Set properties for 3d rendering
+			if ( !m_renderQueueForced )
+				m_quad->setRenderQueueGroup( Ogre::RENDER_QUEUE_MAIN );
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+			m_quad->setUseIdentityProjection( false );
+			m_quad->setUseIdentityView( false );
 
-		// mark the object as 3d rendering
-		m_render2D = false;
+			// mark the object as 3d rendering
+			m_render2D = false;
+		}
 	}
 
 	/**
@@ -1009,7 +1044,8 @@ namespace Cing
 		if ( hasAlpha() || (m_alpha < 255) )
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+			if ( !material.isNull() )
+				material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
 
 			enableDepthWrite(false);
 			enableDepthCheck(true);
@@ -1018,7 +1054,8 @@ namespace Cing
 		else
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-			material->getTechnique(0)->getPass(0)->setSceneBlending( m_sbType );	
+			if ( !material.isNull() )
+				material->getTechnique(0)->getPass(0)->setSceneBlending( m_sbType );	
 			enableDepthWrite(true);
 			enableDepthCheck(true);
 		}
@@ -1080,6 +1117,19 @@ namespace Cing
 	 */
 	void TexturedQuad::applyTransformations2D( float x, float y, float imgWidth, float imgHeight )
 	{
+		if ( !m_pivotSceneNode )
+		{
+			LOG_ERROR( "TexturedQuad::applyTransformations2D: cannot apply transoformations. This object seems not to be correctly initialized. m_pivotSceneNode IS NULL" );
+			return;
+		}
+
+		if ( !m_quadSceneNode )
+		{
+			LOG_ERROR( "TexturedQuad::applyTransformations2D: cannot apply transoformations. This object seems not to be correctly initialized. m_pivotSceneNode IS NULL" );
+			return;
+		}
+
+
 		// Get Current transformation
 		Transform&	currentTransformation = GraphicsManager::getSingleton().m_transforms.top();
 

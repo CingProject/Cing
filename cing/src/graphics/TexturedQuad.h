@@ -56,7 +56,7 @@ namespace Cing
 		~TexturedQuad();
 
 		// Init / Release 
-		bool  init				( int textureWidth, int textureHeight, GraphicsType format, GraphicsType usage = DYNAMIC, Ogre::SceneManager* sm = NULL );
+		bool  init				( int textureWidth, int textureHeight, GraphicsType format, GraphicsType usage = DYNAMIC_WRITE_ONLY_DISCARDABLE, Ogre::SceneManager* sm = NULL );
 		void  end				();
 		bool  reset				( int textureWidth, int textureHeight, GraphicsType format );
 
@@ -123,7 +123,8 @@ namespace Cing
 		void					setSceneNode		( Ogre::SceneNode* node)   { m_quadSceneNode = node; };
 		void					setPivotSceneNode	( Ogre::SceneNode* node)   { m_pivotSceneNode = node; };
 
-		Ogre::SceneManager*		getSceneManager	() { return m_sm; }
+		Ogre::SceneManager*			getSceneManager	()			{ return m_sm; }
+		const Ogre::SceneManager*	getSceneManager	() const	{ return m_sm; }
 
 		// Lighting, Shadow and other material settings
 		void					enableLighting		( bool lighting );

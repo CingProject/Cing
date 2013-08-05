@@ -59,21 +59,21 @@ public:
 	Color( int gray );
 	Color( int gray, float alpha );
 
-	Color( Ogre::ColourValue color );
+	Color( const Ogre::ColourValue& color );
 
 	// To set values or range
 	void	set	( float red, float green, float blue, float alpha = 255.0f );
 
 	// Getters
 	float	getHighRange() const { return m_hightRange; }
-	float	getLowRange() const { return m_lowRange; }
+	float	getLowRange	() const { return m_lowRange; }
 
 	// Color conversion
 	Color	normalized	() const;
-	void	normalize		();
+	void	normalize	();
 
 	// Color mode
-	static void							  colorMode	( GraphicsType mode, float range1, float range2, float range3, float range4 );
+	static void					colorMode	( GraphicsType mode, float range1, float range2, float range3, float range4 );
 	static const GraphicsType	getColorMode(){ return m_colorMode; };
 
 	// TODO
@@ -85,7 +85,7 @@ private:
 	float m_lowRange, m_hightRange; // Color values range. Default 0..255
 
 	// Static attributes
-	static GraphicsType	m_colorMode;
+	static GraphicsType			m_colorMode;
 	static float				m_rRange;
 	static float				m_gRange;
 	static float				m_bRange;
