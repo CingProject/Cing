@@ -67,49 +67,54 @@ namespace Cing
 			return;
 		}
 
-		int intParam = (int)param;
+		int intParam    = (int)param;
+        cv::Mat outMat  = toCVMat(image);
 		switch ( kind )
 		{
 			case BLUR:	
 				if ( param == FLT_MAX )
 					intParam = 3;
-				cv::blur(toCVMat(image), toCVMat(image), cv::Size(intParam, intParam) );
-			break;
+				cv::blur(outMat, outMat, cv::Size(intParam, intParam) );
+                break;
 
 			case ERODE:	
 				if ( param == FLT_MAX )
 					intParam = 1;
-				cv::erode( toCVMat(image), toCVMat(image), cv::Mat(), cv::Point(-1, -1), intParam );
-			break;
+				cv::erode( outMat, outMat, cv::Mat(), cv::Point(-1, -1), intParam );
+				break;
 
 			case DILATE:	
 				if ( param == FLT_MAX )
 					intParam = 1;
-				cv::dilate( toCVMat(image), toCVMat(image), cv::Mat(), cv::Point(-1, -1), intParam );
-			break;
+				cv::dilate( outMat, outMat, cv::Mat(), cv::Point(-1, -1), intParam );
+                break;
 
 			case THRESHOLD:	
 				if ( param != FLT_MAX )
 					m_imgThresholdFilter.setThreshold(intParam);
-				m_imgThresholdFilter.apply(  toCVMat(image), toCVMat(image) );
-			break;
+                
+				m_imgThresholdFilter.apply( outMat, outMat );
+                break;
 
-			case INVERT:	
+			case INVERT:
 				cv::invert( toCVMat(image), toCVMat(image) );
-			break;
+                break;
 
 			case FLIP_X:	
 				cv::flip( toCVMat(image), toCVMat(image), 0 );
-			break;
+                break;
 
 			case FLIP_Y:	
 				cv::flip( toCVMat(image), toCVMat(image), 1 );
-			break;	
+                break;
 
 			case FLIP_XY:	
 				cv::flip( toCVMat(image), toCVMat(image), -1 );
-			break;
-
+                break;
+            
+			case GRAY:
+                LOG_ERROR( "Renderer2DOpenCV::filter (GRAY) NOT IMPLEMENTED" );
+                break;
 		};
 	}
 
@@ -944,10 +949,10 @@ namespace Cing
 		// Get Stroke and Fill Color
 		GraphicsManager& graphManager = GraphicsManager::getSingleton();
 		Color color			= graphManager.getStrokeColor();
-		int   strokeWeight	= graphManager.getStrokeWeight();
 		int	  fontScale		= 2;
 
-		cv::putText(toCVMat(image), text, cv::Point(x1,y1), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar( color.r, color.g, color.b, color.a ));
+        cv::Mat outMat = toCVMat(image);
+		cv::putText(outMat, text, cv::Point(x1,y1), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar( color.r, color.g, color.b, color.a ));
 	}
 
 	void  Renderer2DOpenCV::fill( Image& image, const Color& color )

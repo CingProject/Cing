@@ -45,8 +45,8 @@ namespace Cing
  * @brief Constructor. Initializes class attributes.
  */
 BlobTracker::BlobTracker():
-	m_bIsValid            ( false ),
-	m_callback						( NULL)
+	m_bIsValid              ( false ),
+	m_callback              ( NULL)
 {
 	// Init TrackedBlobs
 	for (int i=0; i< (int) BlobFinder::DEFAULT_MAX_BLOBS;i++){
@@ -143,16 +143,16 @@ void BlobTracker::update( const Image& inImage )
 					m_trackedBlobs[j].blob.center = BlobFinder::m_blobs[i].center;
 					m_trackedBlobs[j].isActive = true;
 					if (m_trackedBlobs[j].energy < maxEnergy) m_trackedBlobs[j].energy +=1.0;
-					// TODO: revisar
-					if (m_callback != NULL)
-						m_callback;
+					// TODO: CALLBACK NOT IN USE
+					//if (m_callback != NULL)
+					//	m_callback();
 					//callBack(j);					
 					break;
 				};
 			};
 		};
 	};
-	m_callback;
+	//m_callback();
 };
 
 /**

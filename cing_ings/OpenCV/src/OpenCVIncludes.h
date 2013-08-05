@@ -29,12 +29,15 @@
 	
 /// This file simplified the use of the OpenCV module, adding includes and the pragmas to link with the required openCV libraries
 
-// Includes
+// OpenCV Includes
 #include "OpenCV/src/BackgroundSubtraction.h"
 #include "OpenCV/src/BlobTracker.h"
 #include "OpenCV/src/MediaPlayerOCV.h"
 #include "OpenCV/src/OpenCVUtils.h"
 #include "OpenCV/src/Renderer2DOpenCV.h"
+
+// Cing
+#include "graphics/GraphicsUserAPI.h"
 
 // Linker 
 #if defined(WIN32)

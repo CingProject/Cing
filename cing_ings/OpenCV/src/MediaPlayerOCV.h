@@ -41,6 +41,7 @@
 #include "opencv2/highgui/highgui.hpp"
 
 // Common
+#undef nil
 #include "PTypes/include/pasync.h"
 
 namespace Cing

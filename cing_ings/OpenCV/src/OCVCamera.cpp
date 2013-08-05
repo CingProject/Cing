@@ -80,11 +80,9 @@ namespace Cing
 				//m_ocvCamera.m_mutex.lock();
 						
 				// Get number of channels in the image (looks like in the mac side it is aligned to 4 bytes
-				GraphicsType format;
+				GraphicsType format = RGB;
 				if ( m_cvCaptureImage->channels() == 1 )
 					format = GRAYSCALE;
-				else if ( m_cvCaptureImage->channels() == 3 )
-					format = RGB;
 				else if ( m_cvCaptureImage->channels() == 4 )
 					format = BGRA;
 				

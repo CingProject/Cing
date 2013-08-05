@@ -189,7 +189,7 @@ namespace Cing
 		// Set the playhead
 		unsigned long millisPlayback = m_timer.getMilliseconds();
 		double currentFrame = ((double)millisPlayback/1000.0) * m_videoFps;
-		double ratio = currentFrame / (double)m_videoNFrames;
+		//double ratio = currentFrame / (double)m_videoNFrames;
 		
 		// Request frames until the playhed is where we want
 		// NOTE: This is done this way, as in mac / opencv video capture has bugs in CV_CAP_PROP_POS_MSEC, CV_CAP_PROP_POS_FRAMES and CV_CAP_PROP_POS_AVI_RATIO
@@ -484,7 +484,8 @@ namespace Cing
 			return;
 		
 		// Retrieve frame
-		m_capture.retrieve( toCVMat(m_frameImg), 0 );
+        cv::Mat outMat = toCVMat(m_frameImg);
+		m_capture.retrieve( outMat, 0 );
 		m_frameImg.updateTexture();
 		
 		// Clear new buffer flag

@@ -29,6 +29,8 @@
 #include "Cing-Precompiled.h"
 
 #include "graphics/Image.h"
+#include "common/LogManager.h"
+
 #include "OpenCVUtils.h"
 
 namespace Cing
@@ -69,6 +71,11 @@ namespace Cing
 			case GRAYSCALE:
 				formatCV = CV_8UC1;
 			break;
+                
+            default:
+                formatCV = CV_8UC3;
+                LOG_ERROR( "toCVMat() image format not recognized" );
+                break;
 		};
 
 		// Create a header for it and return it

@@ -108,7 +108,8 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 		m_differenceFilter.apply( m_backgroundImage, toCVMat(imgToAnalyze), *tempImage );
 
 		// Threshold the image
-		m_thresholdFilter.apply( *tempImage, toCVMat(output) );
+        cv::Mat outMat = toCVMat(output);
+		m_thresholdFilter.apply( *tempImage, outMat );
 	}
 	else if ( m_technique == BRIGHTNESS )
 	{
@@ -116,7 +117,8 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 		cv::subtract( toCVMat(imgToAnalyze), m_backgroundImage, *tempImage );
 
 		// Threshold the image
-		m_thresholdFilter.apply( *tempImage, toCVMat(output));
+        cv::Mat outMat = toCVMat(output);
+		m_thresholdFilter.apply( *tempImage, outMat );
 	}
 
 	// Mark the output image to be uploaded to the texture in case it is drawn
