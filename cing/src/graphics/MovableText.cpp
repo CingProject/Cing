@@ -344,15 +344,15 @@ void MovableText::setScale( float x, float y )
 //mPixelScaleY = 1.0f / vpHeight;
 
 
-	float ttfSize		= mpFont->getTrueTypeSize();
-	float ttfResolution = mpFont->getTrueTypeResolution();
-	float coef = ttfSize * ttfResolution / 72.0f;
+	//float ttfSize		= mpFont->getTrueTypeSize();
+	//float ttfResolution = mpFont->getTrueTypeResolution();
+	//float coef = ttfSize * ttfResolution / 72.0f;
 
 
 	// Adjust scale (to screen coordinates: -1..1)
 	// NOTE: Check this expression! looks too convoluted.
 	// When reviewing make sure text works well in both 3d and 2d and in Processing and Normal3D coordinate system
-	float scaleFactor = ((mCharHeight * 2.0f * mViewportAspectCoef) / (float)height) /  (mCharHeight/2.0f) / mViewportAspectCoef;
+	//float scaleFactor = ((mCharHeight * 2.0f * mViewportAspectCoef) / (float)height) /  (mCharHeight/2.0f) / mViewportAspectCoef;
 	float scaleFactorX = abs(x) / (float)width * 2.0 * 2.0f ;
 	float scaleFactorY = abs(y) / (float)height * 2.0f * 2.0f;
 
@@ -487,7 +487,6 @@ void MovableText::_setupGeometry()
 
 	// Calculate vertical offset depending on the vertical alignment
 	float verticalOffset = 0;
-	bool loaded = mpFont->isLoaded();
 	switch (mVerticalAlignment)
 	{
 	case BOTTOM:
@@ -535,7 +534,6 @@ void MovableText::_setupGeometry()
 	int nLines = 0;
 
 	// iterate through the caption to render the characters
-	bool first = true;
 	bool newLine = true;
 	float lineLength = 0;
 	iend = mCaption.end();

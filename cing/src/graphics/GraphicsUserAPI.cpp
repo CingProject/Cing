@@ -648,9 +648,9 @@ void ellipse( int x, int y, int width, int height)
 	Vector scale(0, 0, 0);
 	Quaternion orient;
 	scaleRotMatrix.decomposition( pos, scale, orient );	
-	float yaw	= orient.getYaw().valueRadians();
-	float pitch = orient.getPitch().valueRadians();
-	float roll	= orient.getRoll().valueRadians();
+	//float yaw	= orient.getYaw().valueRadians();
+	//float pitch = orient.getPitch().valueRadians();
+	//float roll	= orient.getRoll().valueRadians();
 
 	GraphicsManager::getSingleton().m_canvas.ellipse( (int)v1.x, (int)v1.y, (int)scale.x, (int)scale.y );
 
@@ -673,8 +673,8 @@ void arc( int x, int y,  int width, int height, float start, float stop )
 	Vector scale(0, 0, 0);
 	Quaternion orient;
 	scaleRotMatrix.decomposition( pos, scale, orient );	
-	float yaw	= orient.getYaw().valueRadians();
-	float pitch = orient.getPitch().valueRadians();
+	//float yaw	= orient.getYaw().valueRadians();
+	//float pitch = orient.getPitch().valueRadians();
 	float roll	= orient.getRoll().valueRadians();
 
 	// Note: widtha and height are swaped becuase the way opencv expects them (TODO: check)
@@ -774,7 +774,8 @@ void popStyle()
  */
 Image createImage(int width, int height, GraphicsType format)
 {
-	return Image( width,  height,  format);
+	Image img( width,  height,  format );
+    return img;
 };
 /**
  * @brief
@@ -1288,7 +1289,7 @@ void setShadowColor( const Color& color )
  */
 Vector2 worldToScreenNormalized( const Vector& worldCoordinate )
 {
-	Vector posToTransform = worldCoordinate;
+	//Vector posToTransform = worldCoordinate;
 	const Matrix4& viewMatrix = GraphicsManager::getSingleton().getActiveCamera().getOgreCamera()->getViewMatrix();
 	const Matrix4& projMatrix = GraphicsManager::getSingleton().getActiveCamera().getOgreCamera()->getProjectionMatrix();
 

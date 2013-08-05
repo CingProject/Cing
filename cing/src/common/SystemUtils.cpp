@@ -182,6 +182,7 @@ namespace Cing
 		 return memKb;
 #else
 		LOG_ERROR( "getCurrentMemoryUse() NOT IMPLEMENTED IN THIS SYSTEM OR COMPILER" );
+        return -1.0f;
 #endif
 	}
 

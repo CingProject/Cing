@@ -60,8 +60,8 @@ namespace Cing
 
 	// Time
 	double					elapsedSec		= 1;
-	unsigned long			elapsedMillis	= 1;
-	unsigned long			elapsedMicros	= 1;
+    long                    elapsedMillis	= 1;
+    long                    elapsedMicros	= 1;
 	double					secFromStart	= 1;
 	unsigned long	 		millisFromStart	= 1;
 

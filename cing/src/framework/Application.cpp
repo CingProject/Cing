@@ -45,6 +45,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/ResourceManager.h"
 #include "common/CommonUserAPI.h"
 
+// OpenCV module includes
+#include "OpenCV/src/OpenCVIncludes.h"
+
 // Extern
 #undef nil
 #include "PTypes/include/pasync.h"
@@ -99,6 +102,9 @@ bool Application::initApp()
 	// Note: If the log manager is initalized before the Resource Manager, Ogre.log file won't be created
 	LogManager::getSingleton().init();
 	
+    // TODO: this is a temporary 2d renderer (opencv) until Cing's core has the necessary features to not need it
+    enableOpenCVRenderer2D();
+    
 	// Init user application
     setup();
 

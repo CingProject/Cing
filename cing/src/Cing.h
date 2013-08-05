@@ -150,7 +150,7 @@ typedef XMLElement::XMLElementArray XMLElementArray;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 typedef	VICamera Capture;
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-typedef	OCVCamera Capture;
+//typedef	OCVCamera Capture;
 #endif
 
 // Sound and Mic
@@ -166,7 +166,7 @@ typedef Color color;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 //typedef MediaPlayerVLC MediaPlayer;
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-typedef MediaPlayerOCV MediaPlayer;
+//typedef MediaPlayerVLC MediaPlayer;
 #endif
 
 #endif // _Vision_H_

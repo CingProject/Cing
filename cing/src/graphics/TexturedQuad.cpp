@@ -139,7 +139,7 @@ namespace Cing
 		// Create the texture for the quad
 
 		// If it is a render target FSAA (anti-aliasing can be set)
-		if ( usage == Ogre::TU_RENDERTARGET )
+		if ( usage == (GraphicsType)Ogre::TU_RENDERTARGET )
 		{
 			m_ogreTexture = Ogre::TextureManager::getSingleton().createManual(m_ogreTextureName,
 				Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,

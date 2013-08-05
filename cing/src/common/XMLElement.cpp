@@ -219,7 +219,6 @@ XMLElement XMLElement::getChild( const std::string& path )
 	}
 
   // Find the requested element
-  bool found = false;
   TiXmlElement* child = NULL;
   std::string token;
   std::istringstream pathToTokenize( path );

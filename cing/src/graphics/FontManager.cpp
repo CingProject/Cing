@@ -235,9 +235,9 @@ namespace Cing
 			return 0.0f;
 		}
 
-		int vpWidth		= GraphicsManager::getSingleton().getMainWindow().getMainViewport()->getActualWidth();
-		int vpHeight	= GraphicsManager::getSingleton().getMainWindow().getMainViewport()->getActualHeight();
-		float viewportAspectCoef = (float)vpHeight/(float)vpWidth;
+		//int vpWidth		= GraphicsManager::getSingleton().getMainWindow().getMainViewport()->getActualWidth();
+		//int vpHeight	= GraphicsManager::getSingleton().getMainWindow().getMainViewport()->getActualHeight();
+		//float viewportAspectCoef = (float)vpHeight/(float)vpWidth;
 			
 		float textWidth = 0;
 		float fontSize = m_activeFont->getFontSize();
@@ -247,16 +247,16 @@ namespace Cing
 		{   
 			char c = text.at(i);
 			// If it's a space, use the zero character length
-			if (MovableText::IsSpace( text[i] ) )
+			if (MovableText::IsSpace( c ) )
 				//textWidth += m_activeFont->getOgreFont()->getGlyphAspectRatio(UNICODE_SPACE);
 				textWidth += m_activeFont->getOgreFont()->getGlyphAspectRatio(UNICODE_ZERO) / 2.0f; // the 2.0f is to compensate the * 2.0f that comes later (as it is not used to draw the spaces)
 			else
 				textWidth += m_activeFont->getOgreFont()->getGlyphAspectRatio(text.at(i));
 		}
 		
-		float ttfSize		= m_activeFont->getOgreFont()->getTrueTypeSize();
-		float ttfResolution = (float)m_activeFont->getOgreFont()->getTrueTypeResolution();
-		float textWidth2 = textWidth * ttfSize * ttfResolution / 72.0f;
+		//float ttfSize		= m_activeFont->getOgreFont()->getTrueTypeSize();
+		//float ttfResolution = (float)m_activeFont->getOgreFont()->getTrueTypeResolution();
+		//float textWidth2 = textWidth * ttfSize * ttfResolution / 72.0f;
 		textWidth *= fontSize * 2.0f /** viewportAspectCoef*/;
 		
 		return textWidth;

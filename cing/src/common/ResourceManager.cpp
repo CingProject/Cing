@@ -329,7 +329,7 @@ namespace Cing
 		LOG( "User Data Path %s", userDataPath.c_str() );
 		
 		const char* curentDir = getWorkingDir().c_str();
-		LOG( "Current Working Dir: %s", getWorkingDir().c_str() );
+		LOG( "Current Working Dir: %s", curentDir );
 		
 	}
 #endif

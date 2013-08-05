@@ -380,10 +380,10 @@ namespace Cing
 		if ( !isValid() )
 			THROW_EXCEPTION( "Error. Trying to set the light attenuation for a Light not correctly initialized" );
 		
-		float r = m_pLight->getAttenuationRange();
-		float c = m_pLight->getAttenuationConstant();
-		float l = m_pLight->getAttenuationLinear();
-		float q = m_pLight->getAttenuationQuadric();
+		//float r = m_pLight->getAttenuationRange();
+		//float c = m_pLight->getAttenuationConstant();
+		//float l = m_pLight->getAttenuationLinear();
+		//float q = m_pLight->getAttenuationQuadric();
 		m_pLight->setAttenuation(range, constant, linear, quadratic );
 	}
 

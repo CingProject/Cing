@@ -35,6 +35,8 @@
 #include <string>
 #include "common/Singleton.h"
 #include "graphics/Image.h"
+
+#undef nil
 #include "PTypes/include/pasync.h"
 
 namespace Cing

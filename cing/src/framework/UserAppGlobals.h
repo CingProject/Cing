@@ -75,8 +75,8 @@ extern	Keyboard&					keyboard;			///< System keyboard
 
 // Time
 extern double						elapsedSec;			///< Elapsed time in seconds from previous to current frame
-extern unsigned long				elapsedMillis;		///< Elapsed time in milliseconds from previous to current frame
-extern unsigned long				elapsedMicros;		///< Elapsed time in microseconds from previous to current frame
+extern long                         elapsedMillis;		///< Elapsed time in milliseconds from previous to current frame
+extern long                         elapsedMicros;		///< Elapsed time in microseconds from previous to current frame
 extern double						secFromStart;		///< Seconds elapsed since application started
 extern unsigned long				millisFromStart;	///< Milliseconds elapsed since application started
 

@@ -151,7 +151,7 @@ namespace Cing
 	* @param data	Pointer to data to populate the image (if NULL, new data is created). From now on, this Image object will own that memory, so it is not necessary to 
 	* delete it from the outside (and actually it should not be deleted). 
 	*/
-	void Image::init( int width, int height, GraphicsType format /*= RGB*/, Ogre::SceneManager* sm /*= NULL*/, ImageDataPtr data /*= NULL*/  )
+	void Image::init( int width, int height, GraphicsType format /*= RGB*/, Ogre::SceneManager* sm /*= NULL*/, ImageDataPtr data /*= ImageDataPtr(NULL)*/  )
 	{
 		// Check if the class is already initialized to free resources first
 		// TODO: check if values are really different... 

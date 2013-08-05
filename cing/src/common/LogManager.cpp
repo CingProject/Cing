@@ -32,7 +32,7 @@
 #include "eString.h"
 #include "WindowsEventLogger.h"
 
-
+#undef nil
 #include <PTypes/include/ptime.h>
 
 // GUI
@@ -158,7 +158,10 @@ void LogManager::setLogLevel( LogMessageLevel level )
 		case LOG_CRITICAL:
 			loggingLevel = Ogre::LL_LOW; 
 		break;
-
+            
+        default:
+            loggingLevel = Ogre::LL_LOW;
+            break;
 	}
 
 	// Set level to both Cing and Ogre logs
@@ -184,6 +187,11 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	vsprintf	(msgFormated, msg, args);
 	va_end		(args);
 	
+    // Message with correct end of line (cross platform)
+    std::ostringstream outputMsg;
+    outputMsg << msgFormated << std::endl;
+    
+    // Check if log valid/enabled
 	if ( !m_bIsValid || !m_enabled )
 	{
 		if ( level >= m_debugOutputLogLevel )
@@ -200,15 +208,14 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 		return;
 	}
      
-
 	// Log message normally
 	if ( m_log && (level >= m_debugOutputLogLevel) )
 	{
-		m_log->logMessage( msgFormated, (Ogre::LogMessageLevel)level );
+		m_log->logMessage( outputMsg.str(), (Ogre::LogMessageLevel)level );
 	}
 	// Log is not ready yet (probably we are initializing the app)
 	else if (level >= m_debugOutputLogLevel)
-		printf("%s\n", msgFormated);
+		std::cout << msgFormated;
 	
 
 	// Send it to the debug console
@@ -217,7 +224,8 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
     {
 		//GUIManagerCEGUI::getSingleton().getDebugOutput().println( msgFormated );
     }
-
+    
+#if defined(WIN32)
 	// all windows event logging will be executed directly
 	// Windows Event logger
 	int windows_log_level = 0;
@@ -240,6 +248,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 
 		wel->write(msgFormated, windows_log_level);
 	}
+    #endif
 }
 
 } // namespace Cing
