@@ -7,6 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C4FFC3E17B0118F00A35D13 /* BackgroundSubtraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC2417B0118F00A35D13 /* BackgroundSubtraction.cpp */; };
+		4C4FFC3F17B0118F00A35D13 /* BackgroundSubtraction.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC2517B0118F00A35D13 /* BackgroundSubtraction.h */; };
+		4C4FFC4017B0118F00A35D13 /* BaseImageFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC2617B0118F00A35D13 /* BaseImageFilter.cpp */; };
+		4C4FFC4117B0118F00A35D13 /* BaseImageFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC2717B0118F00A35D13 /* BaseImageFilter.h */; };
+		4C4FFC4217B0118F00A35D13 /* Blob.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC2817B0118F00A35D13 /* Blob.h */; };
+		4C4FFC4317B0118F00A35D13 /* BlobFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC2917B0118F00A35D13 /* BlobFinder.cpp */; };
+		4C4FFC4417B0118F00A35D13 /* BlobFinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC2A17B0118F00A35D13 /* BlobFinder.h */; };
+		4C4FFC4517B0118F00A35D13 /* BlobTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC2B17B0118F00A35D13 /* BlobTracker.cpp */; };
+		4C4FFC4617B0118F00A35D13 /* BlobTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC2C17B0118F00A35D13 /* BlobTracker.h */; };
+		4C4FFC4717B0118F00A35D13 /* ImageDifferenceFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC2D17B0118F00A35D13 /* ImageDifferenceFilter.cpp */; };
+		4C4FFC4817B0118F00A35D13 /* ImageDifferenceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC2E17B0118F00A35D13 /* ImageDifferenceFilter.h */; };
+		4C4FFC4917B0118F00A35D13 /* ImageResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC2F17B0118F00A35D13 /* ImageResourceManager.cpp */; };
+		4C4FFC4A17B0118F00A35D13 /* ImageResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3017B0118F00A35D13 /* ImageResourceManager.h */; };
+		4C4FFC4B17B0118F00A35D13 /* ImageThresholdFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3117B0118F00A35D13 /* ImageThresholdFilter.cpp */; };
+		4C4FFC4C17B0118F00A35D13 /* ImageThresholdFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3217B0118F00A35D13 /* ImageThresholdFilter.h */; };
+		4C4FFC4D17B0118F00A35D13 /* MediaPlayerOCV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3317B0118F00A35D13 /* MediaPlayerOCV.cpp */; };
+		4C4FFC4E17B0118F00A35D13 /* MediaPlayerOCV.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3417B0118F00A35D13 /* MediaPlayerOCV.h */; };
+		4C4FFC4F17B0118F00A35D13 /* OCVCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3517B0118F00A35D13 /* OCVCamera.cpp */; };
+		4C4FFC5017B0118F00A35D13 /* OCVCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3617B0118F00A35D13 /* OCVCamera.h */; };
+		4C4FFC5117B0118F00A35D13 /* OCVVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3717B0118F00A35D13 /* OCVVideoRecorder.cpp */; };
+		4C4FFC5217B0118F00A35D13 /* OCVVideoRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3817B0118F00A35D13 /* OCVVideoRecorder.h */; };
+		4C4FFC5317B0118F00A35D13 /* OpenCVIncludes.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3917B0118F00A35D13 /* OpenCVIncludes.h */; };
+		4C4FFC5417B0118F00A35D13 /* OpenCVUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3A17B0118F00A35D13 /* OpenCVUtils.cpp */; };
+		4C4FFC5517B0118F00A35D13 /* OpenCVUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3B17B0118F00A35D13 /* OpenCVUtils.h */; };
+		4C4FFC5617B0118F00A35D13 /* Renderer2DOpenCV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */; };
+		4C4FFC5717B0118F00A35D13 /* Renderer2DOpenCV.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */; };
 		609CA09517AC719E0050D757 /* AppFrameworkCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */; };
 		609CA09617AC719E0050D757 /* AppFrameworkCocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */; };
 		60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */; };
@@ -16,7 +42,6 @@
 		A93DB48E179DF2D200770B14 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93DB48D179DF2D200770B14 /* Cocoa.framework */; };
 		A93DB498179DF2D200770B14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A93DB496179DF2D200770B14 /* InfoPlist.strings */; };
 		A93DB724179DFE8300770B14 /* BaseCameraInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB652179DFE8300770B14 /* BaseCameraInput.cpp */; };
-		A93DB727179DFE8300770B14 /* OCVCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB655179DFE8300770B14 /* OCVCamera.cpp */; };
 		A93DB733179DFE8300770B14 /* CommonUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB662179DFE8300770B14 /* CommonUserAPI.cpp */; };
 		A93DB736179DFE8300770B14 /* eString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB665179DFE8300770B14 /* eString.cpp */; };
 		A93DB738179DFE8300770B14 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB667179DFE8300770B14 /* Exception.cpp */; };
@@ -34,7 +59,6 @@
 		A93DB75B179DFE8300770B14 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB68C179DFE8300770B14 /* Application.cpp */; };
 		A93DB760179DFE8300770B14 /* FrameworkUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB691179DFE8300770B14 /* FrameworkUserAPI.cpp */; };
 		A93DB763179DFE8300770B14 /* UserAppGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB694179DFE8300770B14 /* UserAppGlobals.cpp */; };
-		A93DB765179DFE8300770B14 /* BaseImageFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB697179DFE8300770B14 /* BaseImageFilter.cpp */; };
 		A93DB767179DFE8300770B14 /* BaseLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB699179DFE8300770B14 /* BaseLight.cpp */; };
 		A93DB769179DFE8300770B14 /* Box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB69B179DFE8300770B14 /* Box.cpp */; };
 		A93DB76B179DFE8300770B14 /* Camera3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB69D179DFE8300770B14 /* Camera3D.cpp */; };
@@ -49,9 +73,6 @@
 		A93DB784179DFE8300770B14 /* GraphicsUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6B6179DFE8300770B14 /* GraphicsUserAPI.cpp */; };
 		A93DB786179DFE8300770B14 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6B8179DFE8300770B14 /* Image.cpp */; };
 		A93DB788179DFE8300770B14 /* ImageAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6BA179DFE8300770B14 /* ImageAnimation.cpp */; };
-		A93DB78A179DFE8300770B14 /* ImageDifferenceFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6BC179DFE8300770B14 /* ImageDifferenceFilter.cpp */; };
-		A93DB78C179DFE8300770B14 /* ImageResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6BE179DFE8300770B14 /* ImageResourceManager.cpp */; };
-		A93DB78E179DFE8300770B14 /* ImageThresholdFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6C0179DFE8300770B14 /* ImageThresholdFilter.cpp */; };
 		A93DB790179DFE8300770B14 /* LightingUserAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6C2179DFE8300770B14 /* LightingUserAPI.cpp */; };
 		A93DB792179DFE8300770B14 /* MovableText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6C4179DFE8300770B14 /* MovableText.cpp */; };
 		A93DB794179DFE8300770B14 /* Object3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6C6179DFE8300770B14 /* Object3D.cpp */; };
@@ -73,8 +94,6 @@
 		A93DB7BE179DFE8300770B14 /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6F2179DFE8300770B14 /* Keyboard.cpp */; };
 		A93DB7C0179DFE8300770B14 /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB6F4179DFE8300770B14 /* Mouse.cpp */; };
 		A93DB7D5179DFE8300770B14 /* BaseVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB70C179DFE8300770B14 /* BaseVideoRecorder.cpp */; };
-		A93DB7D7179DFE8300770B14 /* MediaPlayerOCV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB70E179DFE8300770B14 /* MediaPlayerOCV.cpp */; };
-		A93DB7DB179DFE8300770B14 /* OCVVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB712179DFE8300770B14 /* OCVVideoRecorder.cpp */; };
 		A93DB7E2179E029A00770B14 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93DB7E1179E029A00770B14 /* IOKit.framework */; };
 		A93DB80B179E12F400770B14 /* Cing-Precompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A93DB809179E12F300770B14 /* Cing-Precompiled.cpp */; };
 		A99F6C2317A0E05300599195 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F6C2217A0E05300599195 /* QTKit.framework */; };
@@ -102,6 +121,32 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C4FFC2417B0118F00A35D13 /* BackgroundSubtraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BackgroundSubtraction.cpp; path = ../../../../cing_ings/OpenCV/src/BackgroundSubtraction.cpp; sourceTree = "<group>"; };
+		4C4FFC2517B0118F00A35D13 /* BackgroundSubtraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackgroundSubtraction.h; path = ../../../../cing_ings/OpenCV/src/BackgroundSubtraction.h; sourceTree = "<group>"; };
+		4C4FFC2617B0118F00A35D13 /* BaseImageFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseImageFilter.cpp; path = ../../../../cing_ings/OpenCV/src/BaseImageFilter.cpp; sourceTree = "<group>"; };
+		4C4FFC2717B0118F00A35D13 /* BaseImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseImageFilter.h; path = ../../../../cing_ings/OpenCV/src/BaseImageFilter.h; sourceTree = "<group>"; };
+		4C4FFC2817B0118F00A35D13 /* Blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Blob.h; path = ../../../../cing_ings/OpenCV/src/Blob.h; sourceTree = "<group>"; };
+		4C4FFC2917B0118F00A35D13 /* BlobFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BlobFinder.cpp; path = ../../../../cing_ings/OpenCV/src/BlobFinder.cpp; sourceTree = "<group>"; };
+		4C4FFC2A17B0118F00A35D13 /* BlobFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlobFinder.h; path = ../../../../cing_ings/OpenCV/src/BlobFinder.h; sourceTree = "<group>"; };
+		4C4FFC2B17B0118F00A35D13 /* BlobTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BlobTracker.cpp; path = ../../../../cing_ings/OpenCV/src/BlobTracker.cpp; sourceTree = "<group>"; };
+		4C4FFC2C17B0118F00A35D13 /* BlobTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlobTracker.h; path = ../../../../cing_ings/OpenCV/src/BlobTracker.h; sourceTree = "<group>"; };
+		4C4FFC2D17B0118F00A35D13 /* ImageDifferenceFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageDifferenceFilter.cpp; path = ../../../../cing_ings/OpenCV/src/ImageDifferenceFilter.cpp; sourceTree = "<group>"; };
+		4C4FFC2E17B0118F00A35D13 /* ImageDifferenceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDifferenceFilter.h; path = ../../../../cing_ings/OpenCV/src/ImageDifferenceFilter.h; sourceTree = "<group>"; };
+		4C4FFC2F17B0118F00A35D13 /* ImageResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageResourceManager.cpp; path = ../../../../cing_ings/OpenCV/src/ImageResourceManager.cpp; sourceTree = "<group>"; };
+		4C4FFC3017B0118F00A35D13 /* ImageResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageResourceManager.h; path = ../../../../cing_ings/OpenCV/src/ImageResourceManager.h; sourceTree = "<group>"; };
+		4C4FFC3117B0118F00A35D13 /* ImageThresholdFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageThresholdFilter.cpp; path = ../../../../cing_ings/OpenCV/src/ImageThresholdFilter.cpp; sourceTree = "<group>"; };
+		4C4FFC3217B0118F00A35D13 /* ImageThresholdFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageThresholdFilter.h; path = ../../../../cing_ings/OpenCV/src/ImageThresholdFilter.h; sourceTree = "<group>"; };
+		4C4FFC3317B0118F00A35D13 /* MediaPlayerOCV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MediaPlayerOCV.cpp; path = ../../../../cing_ings/OpenCV/src/MediaPlayerOCV.cpp; sourceTree = "<group>"; };
+		4C4FFC3417B0118F00A35D13 /* MediaPlayerOCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPlayerOCV.h; path = ../../../../cing_ings/OpenCV/src/MediaPlayerOCV.h; sourceTree = "<group>"; };
+		4C4FFC3517B0118F00A35D13 /* OCVCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OCVCamera.cpp; path = ../../../../cing_ings/OpenCV/src/OCVCamera.cpp; sourceTree = "<group>"; };
+		4C4FFC3617B0118F00A35D13 /* OCVCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OCVCamera.h; path = ../../../../cing_ings/OpenCV/src/OCVCamera.h; sourceTree = "<group>"; };
+		4C4FFC3717B0118F00A35D13 /* OCVVideoRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OCVVideoRecorder.cpp; path = ../../../../cing_ings/OpenCV/src/OCVVideoRecorder.cpp; sourceTree = "<group>"; };
+		4C4FFC3817B0118F00A35D13 /* OCVVideoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OCVVideoRecorder.h; path = ../../../../cing_ings/OpenCV/src/OCVVideoRecorder.h; sourceTree = "<group>"; };
+		4C4FFC3917B0118F00A35D13 /* OpenCVIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenCVIncludes.h; path = ../../../../cing_ings/OpenCV/src/OpenCVIncludes.h; sourceTree = "<group>"; };
+		4C4FFC3A17B0118F00A35D13 /* OpenCVUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenCVUtils.cpp; path = ../../../../cing_ings/OpenCV/src/OpenCVUtils.cpp; sourceTree = "<group>"; };
+		4C4FFC3B17B0118F00A35D13 /* OpenCVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenCVUtils.h; path = ../../../../cing_ings/OpenCV/src/OpenCVUtils.h; sourceTree = "<group>"; };
+		4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Renderer2DOpenCV.cpp; path = ../../../../cing_ings/OpenCV/src/Renderer2DOpenCV.cpp; sourceTree = "<group>"; };
+		4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Renderer2DOpenCV.h; path = ../../../../cing_ings/OpenCV/src/Renderer2DOpenCV.h; sourceTree = "<group>"; };
 		609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFrameworkCocoa.h; sourceTree = "<group>"; };
 		609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoa.cpp; sourceTree = "<group>"; };
 		60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoaView.mm; sourceTree = "<group>"; };
@@ -119,8 +164,6 @@
 		A93DB652179DFE8300770B14 /* BaseCameraInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseCameraInput.cpp; sourceTree = "<group>"; };
 		A93DB653179DFE8300770B14 /* BaseCameraInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCameraInput.h; sourceTree = "<group>"; };
 		A93DB654179DFE8300770B14 /* CameraInputPrereqs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraInputPrereqs.h; sourceTree = "<group>"; };
-		A93DB655179DFE8300770B14 /* OCVCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OCVCamera.cpp; sourceTree = "<group>"; };
-		A93DB656179DFE8300770B14 /* OCVCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCVCamera.h; sourceTree = "<group>"; };
 		A93DB65D179DFE8300770B14 /* Cing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cing.h; sourceTree = "<group>"; };
 		A93DB65F179DFE8300770B14 /* CommonConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonConstants.h; sourceTree = "<group>"; };
 		A93DB660179DFE8300770B14 /* CommonPrereqs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPrereqs.h; sourceTree = "<group>"; };
@@ -167,8 +210,6 @@
 		A93DB693179DFE8300770B14 /* UserAppFunctionDeclaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAppFunctionDeclaration.h; sourceTree = "<group>"; };
 		A93DB694179DFE8300770B14 /* UserAppGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserAppGlobals.cpp; sourceTree = "<group>"; };
 		A93DB695179DFE8300770B14 /* UserAppGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAppGlobals.h; sourceTree = "<group>"; };
-		A93DB697179DFE8300770B14 /* BaseImageFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseImageFilter.cpp; sourceTree = "<group>"; };
-		A93DB698179DFE8300770B14 /* BaseImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseImageFilter.h; sourceTree = "<group>"; };
 		A93DB699179DFE8300770B14 /* BaseLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseLight.cpp; sourceTree = "<group>"; };
 		A93DB69A179DFE8300770B14 /* BaseLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseLight.h; sourceTree = "<group>"; };
 		A93DB69B179DFE8300770B14 /* Box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box.cpp; sourceTree = "<group>"; };
@@ -200,12 +241,6 @@
 		A93DB6B9179DFE8300770B14 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
 		A93DB6BA179DFE8300770B14 /* ImageAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageAnimation.cpp; sourceTree = "<group>"; };
 		A93DB6BB179DFE8300770B14 /* ImageAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAnimation.h; sourceTree = "<group>"; };
-		A93DB6BC179DFE8300770B14 /* ImageDifferenceFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageDifferenceFilter.cpp; sourceTree = "<group>"; };
-		A93DB6BD179DFE8300770B14 /* ImageDifferenceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDifferenceFilter.h; sourceTree = "<group>"; };
-		A93DB6BE179DFE8300770B14 /* ImageResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageResourceManager.cpp; sourceTree = "<group>"; };
-		A93DB6BF179DFE8300770B14 /* ImageResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageResourceManager.h; sourceTree = "<group>"; };
-		A93DB6C0179DFE8300770B14 /* ImageThresholdFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageThresholdFilter.cpp; sourceTree = "<group>"; };
-		A93DB6C1179DFE8300770B14 /* ImageThresholdFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageThresholdFilter.h; sourceTree = "<group>"; };
 		A93DB6C2179DFE8300770B14 /* LightingUserAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LightingUserAPI.cpp; sourceTree = "<group>"; };
 		A93DB6C3179DFE8300770B14 /* LightingUserAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightingUserAPI.h; sourceTree = "<group>"; };
 		A93DB6C4179DFE8300770B14 /* MovableText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MovableText.cpp; sourceTree = "<group>"; };
@@ -251,10 +286,6 @@
 		A93DB6F5179DFE8300770B14 /* Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse.h; sourceTree = "<group>"; };
 		A93DB70C179DFE8300770B14 /* BaseVideoRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseVideoRecorder.cpp; sourceTree = "<group>"; };
 		A93DB70D179DFE8300770B14 /* BaseVideoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseVideoRecorder.h; sourceTree = "<group>"; };
-		A93DB70E179DFE8300770B14 /* MediaPlayerOCV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaPlayerOCV.cpp; sourceTree = "<group>"; };
-		A93DB70F179DFE8300770B14 /* MediaPlayerOCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerOCV.h; sourceTree = "<group>"; };
-		A93DB712179DFE8300770B14 /* OCVVideoRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OCVVideoRecorder.cpp; sourceTree = "<group>"; };
-		A93DB713179DFE8300770B14 /* OCVVideoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCVVideoRecorder.h; sourceTree = "<group>"; };
 		A93DB714179DFE8300770B14 /* VideoPrereqs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPrereqs.h; sourceTree = "<group>"; };
 		A93DB7E1179E029A00770B14 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		A93DB809179E12F300770B14 /* Cing-Precompiled.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Cing-Precompiled.cpp"; sourceTree = "<group>"; };
@@ -319,9 +350,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C4FFC2117B0114A00A35D13 /* CingBeats */ = {
+			isa = PBXGroup;
+			children = (
+				4C4FFC2217B0117000A35D13 /* OpenCV */,
+			);
+			name = CingBeats;
+			sourceTree = "<group>";
+		};
+		4C4FFC2217B0117000A35D13 /* OpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				4C4FFC2317B0117B00A35D13 /* src */,
+			);
+			name = OpenCV;
+			sourceTree = "<group>";
+		};
+		4C4FFC2317B0117B00A35D13 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4C4FFC2417B0118F00A35D13 /* BackgroundSubtraction.cpp */,
+				4C4FFC2517B0118F00A35D13 /* BackgroundSubtraction.h */,
+				4C4FFC2617B0118F00A35D13 /* BaseImageFilter.cpp */,
+				4C4FFC2717B0118F00A35D13 /* BaseImageFilter.h */,
+				4C4FFC2817B0118F00A35D13 /* Blob.h */,
+				4C4FFC2917B0118F00A35D13 /* BlobFinder.cpp */,
+				4C4FFC2A17B0118F00A35D13 /* BlobFinder.h */,
+				4C4FFC2B17B0118F00A35D13 /* BlobTracker.cpp */,
+				4C4FFC2C17B0118F00A35D13 /* BlobTracker.h */,
+				4C4FFC2D17B0118F00A35D13 /* ImageDifferenceFilter.cpp */,
+				4C4FFC2E17B0118F00A35D13 /* ImageDifferenceFilter.h */,
+				4C4FFC2F17B0118F00A35D13 /* ImageResourceManager.cpp */,
+				4C4FFC3017B0118F00A35D13 /* ImageResourceManager.h */,
+				4C4FFC3117B0118F00A35D13 /* ImageThresholdFilter.cpp */,
+				4C4FFC3217B0118F00A35D13 /* ImageThresholdFilter.h */,
+				4C4FFC3317B0118F00A35D13 /* MediaPlayerOCV.cpp */,
+				4C4FFC3417B0118F00A35D13 /* MediaPlayerOCV.h */,
+				4C4FFC3517B0118F00A35D13 /* OCVCamera.cpp */,
+				4C4FFC3617B0118F00A35D13 /* OCVCamera.h */,
+				4C4FFC3717B0118F00A35D13 /* OCVVideoRecorder.cpp */,
+				4C4FFC3817B0118F00A35D13 /* OCVVideoRecorder.h */,
+				4C4FFC3917B0118F00A35D13 /* OpenCVIncludes.h */,
+				4C4FFC3A17B0118F00A35D13 /* OpenCVUtils.cpp */,
+				4C4FFC3B17B0118F00A35D13 /* OpenCVUtils.h */,
+				4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */,
+				4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
 		A93DB480179DF2D200770B14 = {
 			isa = PBXGroup;
 			children = (
+				4C4FFC2117B0114A00A35D13 /* CingBeats */,
 				A93DB493179DF2D200770B14 /* Cing */,
 				A93DB48C179DF2D200770B14 /* Frameworks */,
 				A93DB48B179DF2D200770B14 /* Products */,
@@ -405,8 +486,6 @@
 				A93DB652179DFE8300770B14 /* BaseCameraInput.cpp */,
 				A93DB653179DFE8300770B14 /* BaseCameraInput.h */,
 				A93DB654179DFE8300770B14 /* CameraInputPrereqs.h */,
-				A93DB655179DFE8300770B14 /* OCVCamera.cpp */,
-				A93DB656179DFE8300770B14 /* OCVCamera.h */,
 			);
 			path = camerainput;
 			sourceTree = "<group>";
@@ -477,8 +556,6 @@
 		A93DB696179DFE8300770B14 /* graphics */ = {
 			isa = PBXGroup;
 			children = (
-				A93DB697179DFE8300770B14 /* BaseImageFilter.cpp */,
-				A93DB698179DFE8300770B14 /* BaseImageFilter.h */,
 				A93DB699179DFE8300770B14 /* BaseLight.cpp */,
 				A93DB69A179DFE8300770B14 /* BaseLight.h */,
 				A93DB69B179DFE8300770B14 /* Box.cpp */,
@@ -510,12 +587,6 @@
 				A93DB6B9179DFE8300770B14 /* Image.h */,
 				A93DB6BA179DFE8300770B14 /* ImageAnimation.cpp */,
 				A93DB6BB179DFE8300770B14 /* ImageAnimation.h */,
-				A93DB6BC179DFE8300770B14 /* ImageDifferenceFilter.cpp */,
-				A93DB6BD179DFE8300770B14 /* ImageDifferenceFilter.h */,
-				A93DB6BE179DFE8300770B14 /* ImageResourceManager.cpp */,
-				A93DB6BF179DFE8300770B14 /* ImageResourceManager.h */,
-				A93DB6C0179DFE8300770B14 /* ImageThresholdFilter.cpp */,
-				A93DB6C1179DFE8300770B14 /* ImageThresholdFilter.h */,
 				A93DB6C2179DFE8300770B14 /* LightingUserAPI.cpp */,
 				A93DB6C3179DFE8300770B14 /* LightingUserAPI.h */,
 				A93DB6C4179DFE8300770B14 /* MovableText.cpp */,
@@ -575,10 +646,6 @@
 			children = (
 				A93DB70C179DFE8300770B14 /* BaseVideoRecorder.cpp */,
 				A93DB70D179DFE8300770B14 /* BaseVideoRecorder.h */,
-				A93DB70E179DFE8300770B14 /* MediaPlayerOCV.cpp */,
-				A93DB70F179DFE8300770B14 /* MediaPlayerOCV.h */,
-				A93DB712179DFE8300770B14 /* OCVVideoRecorder.cpp */,
-				A93DB713179DFE8300770B14 /* OCVVideoRecorder.h */,
 				A93DB714179DFE8300770B14 /* VideoPrereqs.h */,
 			);
 			path = video;
@@ -629,6 +696,20 @@
 				A9CC0D6817A88CFE00B12ADD /* Cing-Precompiled.h in Headers */,
 				609CA09517AC719E0050D757 /* AppFrameworkCocoa.h in Headers */,
 				60CCA91517AEDB9500567C87 /* AppFrameworkCocoaView.h in Headers */,
+				4C4FFC3F17B0118F00A35D13 /* BackgroundSubtraction.h in Headers */,
+				4C4FFC4117B0118F00A35D13 /* BaseImageFilter.h in Headers */,
+				4C4FFC4217B0118F00A35D13 /* Blob.h in Headers */,
+				4C4FFC4417B0118F00A35D13 /* BlobFinder.h in Headers */,
+				4C4FFC4617B0118F00A35D13 /* BlobTracker.h in Headers */,
+				4C4FFC4817B0118F00A35D13 /* ImageDifferenceFilter.h in Headers */,
+				4C4FFC4A17B0118F00A35D13 /* ImageResourceManager.h in Headers */,
+				4C4FFC4C17B0118F00A35D13 /* ImageThresholdFilter.h in Headers */,
+				4C4FFC4E17B0118F00A35D13 /* MediaPlayerOCV.h in Headers */,
+				4C4FFC5017B0118F00A35D13 /* OCVCamera.h in Headers */,
+				4C4FFC5217B0118F00A35D13 /* OCVVideoRecorder.h in Headers */,
+				4C4FFC5317B0118F00A35D13 /* OpenCVIncludes.h in Headers */,
+				4C4FFC5517B0118F00A35D13 /* OpenCVUtils.h in Headers */,
+				4C4FFC5717B0118F00A35D13 /* Renderer2DOpenCV.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,7 +786,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy all the header files into Headers while retaining the correct subdirectory structure\n\n# the relative path to cing src from this project location\ncd ${SRCROOT}/../../../src/\nfor H in `find ./ -name \"*.h\"`;  do\n#echo ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# Ogre3d\ncd ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/include/OGRE/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# OpenCV\ncd ${SRCROOT}/../../../libraries/mac/xcode/OpenCV/include/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# PTypes\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/PTypes ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# TinyXML\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/TinyXML ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# boost\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/boost/boost ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# OIS\ncd ${SRCROOT}/../../../libraries/mac/xcode/OIS/include/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone";
+			shellScript = "# Copy all the header files into Headers while retaining the correct subdirectory structure\n\n# the relative path to cing src from this project location\ncd ${SRCROOT}/../../../src/\nfor H in `find ./ -name \"*.h\"`;  do\n#echo ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# Ogre3d\ncd ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/include/OGRE/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# OpenCV\ncd ${SRCROOT}/${CING_BEATS}/OpenCV/lib/include/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone\n\n# PTypes\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/PTypes ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# TinyXML\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/TinyXML ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# boost\ncp -r ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/boost/boost ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\n\n# OIS\ncd ${SRCROOT}/../../../libraries/mac/xcode/OIS/include/\nfor H in `find ./ -name \"*.*\"`;  do\nditto ${H} ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/${H}\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -715,7 +796,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93DB724179DFE8300770B14 /* BaseCameraInput.cpp in Sources */,
-				A93DB727179DFE8300770B14 /* OCVCamera.cpp in Sources */,
 				A93DB733179DFE8300770B14 /* CommonUserAPI.cpp in Sources */,
 				A93DB736179DFE8300770B14 /* eString.cpp in Sources */,
 				A93DB738179DFE8300770B14 /* Exception.cpp in Sources */,
@@ -733,7 +813,6 @@
 				A93DB75B179DFE8300770B14 /* Application.cpp in Sources */,
 				A93DB760179DFE8300770B14 /* FrameworkUserAPI.cpp in Sources */,
 				A93DB763179DFE8300770B14 /* UserAppGlobals.cpp in Sources */,
-				A93DB765179DFE8300770B14 /* BaseImageFilter.cpp in Sources */,
 				A93DB767179DFE8300770B14 /* BaseLight.cpp in Sources */,
 				A93DB769179DFE8300770B14 /* Box.cpp in Sources */,
 				A93DB76B179DFE8300770B14 /* Camera3D.cpp in Sources */,
@@ -748,9 +827,6 @@
 				A93DB784179DFE8300770B14 /* GraphicsUserAPI.cpp in Sources */,
 				A93DB786179DFE8300770B14 /* Image.cpp in Sources */,
 				A93DB788179DFE8300770B14 /* ImageAnimation.cpp in Sources */,
-				A93DB78A179DFE8300770B14 /* ImageDifferenceFilter.cpp in Sources */,
-				A93DB78C179DFE8300770B14 /* ImageResourceManager.cpp in Sources */,
-				A93DB78E179DFE8300770B14 /* ImageThresholdFilter.cpp in Sources */,
 				A93DB790179DFE8300770B14 /* LightingUserAPI.cpp in Sources */,
 				A93DB792179DFE8300770B14 /* MovableText.cpp in Sources */,
 				A93DB794179DFE8300770B14 /* Object3D.cpp in Sources */,
@@ -771,11 +847,21 @@
 				A93DB7BE179DFE8300770B14 /* Keyboard.cpp in Sources */,
 				A93DB7C0179DFE8300770B14 /* Mouse.cpp in Sources */,
 				A93DB7D5179DFE8300770B14 /* BaseVideoRecorder.cpp in Sources */,
-				A93DB7D7179DFE8300770B14 /* MediaPlayerOCV.cpp in Sources */,
-				A93DB7DB179DFE8300770B14 /* OCVVideoRecorder.cpp in Sources */,
 				A93DB80B179E12F400770B14 /* Cing-Precompiled.cpp in Sources */,
 				609CA09617AC719E0050D757 /* AppFrameworkCocoa.cpp in Sources */,
 				60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.mm in Sources */,
+				4C4FFC3E17B0118F00A35D13 /* BackgroundSubtraction.cpp in Sources */,
+				4C4FFC4017B0118F00A35D13 /* BaseImageFilter.cpp in Sources */,
+				4C4FFC4317B0118F00A35D13 /* BlobFinder.cpp in Sources */,
+				4C4FFC4517B0118F00A35D13 /* BlobTracker.cpp in Sources */,
+				4C4FFC4717B0118F00A35D13 /* ImageDifferenceFilter.cpp in Sources */,
+				4C4FFC4917B0118F00A35D13 /* ImageResourceManager.cpp in Sources */,
+				4C4FFC4B17B0118F00A35D13 /* ImageThresholdFilter.cpp in Sources */,
+				4C4FFC4D17B0118F00A35D13 /* MediaPlayerOCV.cpp in Sources */,
+				4C4FFC4F17B0118F00A35D13 /* OCVCamera.cpp in Sources */,
+				4C4FFC5117B0118F00A35D13 /* OCVVideoRecorder.cpp in Sources */,
+				4C4FFC5417B0118F00A35D13 /* OpenCVUtils.cpp in Sources */,
+				4C4FFC5617B0118F00A35D13 /* Renderer2DOpenCV.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,7 +903,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(CING_LIBRARIES)/OpenCV/include",
 					"$(CING_LIBRARIES)/PTypes/include",
 					"$(CING_LIBRARIES)/TinyXML/include",
 					"$(CING_LIBRARIES)",
@@ -830,16 +915,18 @@
 					"$(CING_LIBRARIES)/OgreSDK/include",
 					"$(CING_LIBRARIES)/OgreSDK/boost",
 					"$(CING_LIBRARIES)/OgreSDK",
+					"$(CING_BEATS)/OpenCV/lib/include",
+					"$(CING_BEATS)",
 				);
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"$(CING_LIBRARIES)/OpenCV/lib",
 					"$(CING_LIBRARIES)/PTypes/lib",
 					"$(CING_LIBRARIES)/TinyXML/lib",
-					"$(CING_LIBRARIES)/OpenCV/share/OpenCV/3rdparty/lib",
 					"$(CING_LIBRARIES)/OgreSDK/boost/lib",
 					"$(CING_LIBRARIES)/OgreDependencies/lib",
 					"$(CING_LIBRARIES)/OIS/lib",
+					"$(CING_BEATS)/OpenCV/lib/lib/xcode",
+					"$(CING_BEATS)/OpenCV/lib/lib/xcode/share/OpenCV/3rdparty/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -889,7 +976,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(CING_LIBRARIES)/OpenCV/include",
 					"$(CING_LIBRARIES)/PTypes/include",
 					"$(CING_LIBRARIES)/TinyXML/include",
 					"$(CING_LIBRARIES)",
@@ -902,16 +988,18 @@
 					"$(CING_LIBRARIES)/OgreSDK/include",
 					"$(CING_LIBRARIES)/OgreSDK/boost",
 					"$(CING_LIBRARIES)/OgreSDK",
+					"$(CING_BEATS)/OpenCV/lib/include",
+					"$(CING_BEATS)",
 				);
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"$(CING_LIBRARIES)/OpenCV/lib",
 					"$(CING_LIBRARIES)/PTypes/lib",
 					"$(CING_LIBRARIES)/TinyXML/lib",
-					"$(CING_LIBRARIES)/OpenCV/share/OpenCV/3rdparty/lib",
 					"$(CING_LIBRARIES)/OgreSDK/boost/lib",
 					"$(CING_LIBRARIES)/OgreDependencies/lib",
 					"$(CING_LIBRARIES)/OIS/lib",
+					"$(CING_BEATS)/OpenCV/lib/lib/xcode",
+					"$(CING_BEATS)/OpenCV/lib/lib/xcode/share/OpenCV/3rdparty/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -942,6 +1030,7 @@
 		A93DB4A0179DF2D200770B14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CING_BEATS = "$(CING_HOME)../cing_ings/";
 				CING_HOME = ../../../;
 				CING_LIBRARIES = "$(CING_HOME)libraries/mac/xcode/";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -964,6 +1053,7 @@
 		A93DB4A1179DF2D200770B14 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CING_BEATS = "$(CING_HOME)../cing_ings/";
 				CING_HOME = ../../../;
 				CING_LIBRARIES = "$(CING_HOME)libraries/mac/xcode/";
 				COMBINE_HIDPI_IMAGES = YES;
