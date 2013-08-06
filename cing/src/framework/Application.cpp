@@ -315,12 +315,16 @@ void Application::initSubSystems()
 	// Init plugins that require it at this point
 	initPlugins( INIT_AFTER_GRAPHICS );
 
-	// Init input manager
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
+	
+    // Init input manager
 	InputManager::getSingleton().init();
 
 	// Register the application as listener for mouse and keyboard
 	InputManager::getSingleton().getMouse().addListener( this );
 	InputManager::getSingleton().getKeyboard().addListener( this );
+    
+#endif
 
 	// Init GUI Manager
 	//GUIManagerCEGUI::getSingleton().init( GraphicsManager::getSingleton().getMainWindow().getOgreWindow(),&GraphicsManager::getSingleton().getSceneManager() );

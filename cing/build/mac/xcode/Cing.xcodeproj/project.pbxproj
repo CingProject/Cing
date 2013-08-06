@@ -34,6 +34,8 @@
 		4C4FFC5617B0118F00A35D13 /* Renderer2DOpenCV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */; };
 		4C4FFC5717B0118F00A35D13 /* Renderer2DOpenCV.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */; };
 		4C4FFC5C17B04D8100A35D13 /* UserApplicationBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC5A17B04D8100A35D13 /* UserApplicationBase.h */; };
+		6085E04A17B06E18005EBC34 /* CingInputView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6085E04817B06E18005EBC34 /* CingInputView.h */; };
+		6085E04B17B06E18005EBC34 /* CingInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6085E04917B06E18005EBC34 /* CingInputView.m */; };
 		609CA09517AC719E0050D757 /* AppFrameworkCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */; };
 		609CA09617AC719E0050D757 /* AppFrameworkCocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */; };
 		60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */; };
@@ -149,6 +151,8 @@
 		4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Renderer2DOpenCV.cpp; path = ../../../../cing_ings/OpenCV/src/Renderer2DOpenCV.cpp; sourceTree = "<group>"; };
 		4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Renderer2DOpenCV.h; path = ../../../../cing_ings/OpenCV/src/Renderer2DOpenCV.h; sourceTree = "<group>"; };
 		4C4FFC5A17B04D8100A35D13 /* UserApplicationBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserApplicationBase.h; sourceTree = "<group>"; };
+		6085E04817B06E18005EBC34 /* CingInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CingInputView.h; sourceTree = "<group>"; };
+		6085E04917B06E18005EBC34 /* CingInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CingInputView.m; sourceTree = "<group>"; };
 		609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFrameworkCocoa.h; sourceTree = "<group>"; };
 		609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoa.cpp; sourceTree = "<group>"; };
 		60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoaView.mm; sourceTree = "<group>"; };
@@ -640,6 +644,8 @@
 				A93DB6F3179DFE8300770B14 /* Keyboard.h */,
 				A93DB6F4179DFE8300770B14 /* Mouse.cpp */,
 				A93DB6F5179DFE8300770B14 /* Mouse.h */,
+				6085E04817B06E18005EBC34 /* CingInputView.h */,
+				6085E04917B06E18005EBC34 /* CingInputView.m */,
 			);
 			path = input;
 			sourceTree = "<group>";
@@ -714,6 +720,7 @@
 				4C4FFC5517B0118F00A35D13 /* OpenCVUtils.h in Headers */,
 				4C4FFC5717B0118F00A35D13 /* Renderer2DOpenCV.h in Headers */,
 				4C4FFC5C17B04D8100A35D13 /* UserApplicationBase.h in Headers */,
+				6085E04A17B06E18005EBC34 /* CingInputView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,6 +873,7 @@
 				4C4FFC5117B0118F00A35D13 /* OCVVideoRecorder.cpp in Sources */,
 				4C4FFC5417B0118F00A35D13 /* OpenCVUtils.cpp in Sources */,
 				4C4FFC5617B0118F00A35D13 /* Renderer2DOpenCV.cpp in Sources */,
+				6085E04B17B06E18005EBC34 /* CingInputView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

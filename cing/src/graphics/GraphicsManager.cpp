@@ -58,6 +58,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #include "RenderSystems/GL/OSX/OgreOSXCocoaView.h"
+#import "CingInputView.h"
 #endif
 
 // Collada
@@ -197,6 +198,22 @@ bool GraphicsManager::createWindow( void* view )
 	// By default full ambient light
 	GraphicsManager::getSingleton().getSceneManager().setAmbientLight( Color(255).normalized() );
 
+    
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+
+    NSWindow *window = nil;
+
+    // this only seems to work when we control the window creation?
+    ogreWindow->getCustomAttribute("WINDOW", &window);
+    
+    [window setAcceptsMouseMovedEvents:YES];
+    NSView *v = [window contentView];
+    CingInputView *iv = [[CingInputView alloc] initWithFrame:[v frame]];
+    [v addSubview:iv];
+    [iv release];
+    
+#endif
+    
 	return true;
 }
 
