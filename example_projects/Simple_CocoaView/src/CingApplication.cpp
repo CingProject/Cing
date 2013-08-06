@@ -5,12 +5,18 @@
  * It draws a line from the center of the screen to the mouse.
  * Press the mouse to clear the background.
  */
+
+// OpenCV module includes
+#include "OpenCV/src/OpenCVIncludes.h"
  
 void setup()
 {
 	// Set window size and smooth drawing
 	size(800, 800);
 	smooth();
+
+	// Set OpenCV 2D renderer as the default
+	enableOpenCVRenderer2D();
 }
 
 void draw()
