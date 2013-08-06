@@ -29,7 +29,6 @@
 #include "Cing-Precompiled.h"
 
 #include "UserAppGlobals.h"
-#include "input/InputManager.h"
 #include "common/eString.h"
 #include "graphics/Color.h"
 #include "graphics/Window.h"
@@ -55,8 +54,8 @@ namespace Cing
 	int						mouseButton;
 	int						mouseX = 0;	
 	int						mouseY = 0;
-	Mouse&					mouse			= InputManager::m_mouse;
-	Keyboard&				keyboard		= InputManager::m_keyboard;
+	//Mouse&					mouse			= InputManager::m_mouse;
+	//Keyboard&				keyboard		= InputManager::m_keyboard;
 
 	// Time
 	double					elapsedSec		= 1;

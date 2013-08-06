@@ -35,6 +35,7 @@
 #include "AppFrameworkBasic.h"
 #include "Application.h"
 #include "UserAppGlobals.h"
+#include "InputManagerOIS.h"
 
 // Ogre
 #include "OgreException.h"
@@ -70,8 +71,11 @@ namespace Cing
 			// Store app name
 			appName = _appName;
 
+            // Basic Application, using OIS based Input Manager
+            InputManagerOIS inputManager;
+            
 			// Init application
-			Application::getSingleton().initApp( userApp );
+			Application::getSingleton().initApp( &inputManager, userApp );
 
 			// Enter the application loop (will finish when the application should be closed)
 			Application::getSingleton().drawApp();

@@ -47,9 +47,9 @@ namespace Cing
 // Input
 
 	// Mouse buttons
-	const int LEFT		= OIS::MB_Left;
-	const int RIGHT		= OIS::MB_Right;
-	const int CENTER	= OIS::MB_Middle;
+	const int LEFT		= 0;
+	const int RIGHT		= 1;
+	const int CENTER	= 2;
 
 	// Drawing Modes
 	const int CORNER	= 0;

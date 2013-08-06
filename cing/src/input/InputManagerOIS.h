@@ -25,65 +25,45 @@
   THE SOFTWARE.
 */
 
-#ifndef _InputManager_H_
-#define _InputManager_H_
+#pragma once
 
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
+#include "InputManagerBase.h"
 #include "InputPrereqs.h"
-#include "Mouse.h"
-#include "Keyboard.h"
-
-// Common
-#include "common/Singleton.h"
 
 namespace Cing
 {
+    
+    // Forward declarations
+    class MouseOIS;
+    class KeyboardOIS;
 
 /**
  * @internal
  * 
  */
-class InputManager: public SingletonStatic< InputManager >
+class InputManagerOIS: public InputManagerBase
 {
 public:
 
-	// Required for singleton
-	friend class SingletonStatic< InputManager >;
-
-	// Destructor
-	virtual ~InputManager         ();
+    // Constructor/Destructor
+	InputManagerOIS               ();
+    virtual ~InputManagerOIS      ();
 
 	// Init / Release / Update
-	bool              init        ();
-	void              end         ();
-	void              update      ();
-
-	// Query methods
-	bool        isValid     () const	{ return m_bIsValid; }
-  Mouse&      getMouse    ()				{ return m_mouse;    } 
-  Keyboard&   getKeyboard ()				{ return m_keyboard; } 
-	
-
-	// Public input devices
-	static Mouse        m_mouse;            ///< System's mouse
-	static Keyboard     m_keyboard;         ///< System's keyboard
-
+    bool              init      ();
+	void              end       ();
+	void              update    ();
 
 private:
 
-	// private constructor to ensure singleton
-	InputManager                 ();
-
 	// Attributes
-  OIS::InputManager*  m_pOISInputManager; ///< Pointer to the OIS input manager
-	bool                m_bIsValid;	        ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
-
-
+    MouseOIS*           m_mouseOIS;
+    KeyboardOIS*        m_keyboardOIS;
+    ::OIS::InputManager*  m_pOISInputManager; ///< Pointer to the OIS input manager
 };
 
 
 } // namespace Cing
-
-#endif // _InputManager_H_

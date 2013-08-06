@@ -39,6 +39,8 @@
 #include "common/LogManager.h"
 #include "common/eString.h"
 
+#include "input/InputManagerOIS.h"
+
 // OpenCV
 #include "opencv2/core/core.hpp"
 
@@ -69,10 +71,15 @@
             // Store app name
             Cing::appName = appName;
             
+            
             Cing::Application::getSingleton().setOgreView( view );
             
+            // TODO: change to Cocoa input
+            // Basic Application, using OIS based Input Manager
+            Cing::InputManagerOIS inputManager;
+            
             // Init application
-            Cing::Application::getSingleton().initApp();
+            Cing::Application::getSingleton().initApp( &inputManager );
             
             // enter main loop for app
             _timer = [[NSTimer scheduledTimerWithTimeInterval:0.02

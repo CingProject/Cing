@@ -36,9 +36,8 @@
 // Common
 #include "common/Singleton.h"
 
-// OIS
-#include "OISMouse.h"
-#include "OISKeyboard.h"
+// Input
+#include "input/InputTypes.h"
 
 // Ogre
 #include "OgreTimer.h"
@@ -66,13 +65,14 @@ namespace Cing
     // forward declarations
     class Plugin;
     class UserApplicationBase;
+    class InputManagerBase;
     
 /**
  * @internal
  * Base class to create an application. Manages the render loop and the initialization and
  * release of the main application systems
  */
-class Application: public SingletonStatic< Application >, public OIS::KeyListener, public OIS::MouseListener
+class Application: public SingletonStatic< Application >, public KeyListener, public MouseListener
 {
 public:
 
@@ -83,7 +83,7 @@ public:
 	virtual ~Application();
 
 	// Init / Release / Loop
-	bool  initApp       ( UserApplicationBase* userApp = NULL);
+	bool  initApp       ( InputManagerBase* inputManager, UserApplicationBase* userApp = NULL);
 	void  endApp        ();
 	void  drawApp       ();
     void  drawOneFrame  ();
@@ -96,11 +96,11 @@ public:
 	bool  isValid() const { return m_bIsValid; }
 
 	// Event handlers
-	bool mouseMoved			( const OIS::MouseEvent& event );
-	bool mousePressed		( const OIS::MouseEvent& event, OIS::MouseButtonID id  );
-	bool mouseReleased		( const OIS::MouseEvent& event, OIS::MouseButtonID id  );
-	bool keyPressed			( const OIS::KeyEvent& event );
-	bool keyReleased		( const OIS::KeyEvent& event);
+	bool mouseMoved			( const MouseEvent& event );
+	bool mousePressed		( const MouseEvent& event, MouseButtonID id  );
+	bool mouseReleased		( const MouseEvent& event, MouseButtonID id  );
+	bool keyPressed			( const KeyEvent& event );
+	bool keyReleased		( const KeyEvent& event);
 
 	// Control application flow
 	void exit  		() { m_finish = true; }
@@ -140,11 +140,16 @@ private:
 	bool					m_loop;         		///< If true app will be call draw() user funtion continuosly
 	bool					m_needUpdate;   		///< If true app will be call draw() user funtion one time
 
+    // Plugi related
 	typedef std::list< Plugin* >	PluginList;
 	PluginList						m_plugins;		///< Plugins currently active in the application
     void*                           m_ogreView;
     
+    // User application
     UserApplicationBase*            m_userApp;      ///< Pointer to the user application (this means user is not using Processing like functions, but app subclassing insted.
+    
+    // Input related
+    InputManagerBase*               m_inputManager; ///< Input manager class in use (could be any implementatin like OIS or cocoa, this is just the interface).
 };
 
 } // namespace Cing

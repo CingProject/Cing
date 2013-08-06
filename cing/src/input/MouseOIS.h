@@ -31,7 +31,7 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-#include "BaseInputDevice.h"
+#include "MouseBase.h"
 #include "InputPrereqs.h"
 
 // OIS
@@ -44,13 +44,13 @@ namespace Cing
  * @internal
  * Manages mouse input
  */
-  class Mouse: public BaseInputDevice< OIS::MouseListener > , public OIS::MouseListener
+  class MouseOIS: public MouseBase, public OIS::MouseListener
 {
 public:
 
 	// Constructor / Destructor
-	        Mouse();
-	virtual ~Mouse();
+    MouseOIS();
+	virtual ~MouseOIS();
 
 	// Init / Release / Update
 	bool  init   ( OIS::InputManager *pOISInputManager );
@@ -58,7 +58,7 @@ public:
 	void  update ();
 
 	// Query methods
-	bool				isValid			() const	{ return m_bIsValid; }
+	bool		isValid			() const	{ return m_bIsValid; }
 	OIS::Mouse*	getOISMouse	()				{ return m_pOISMouse; }
 
   // TEMP

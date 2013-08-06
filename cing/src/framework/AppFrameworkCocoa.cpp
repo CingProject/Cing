@@ -39,6 +39,9 @@
 #include "common/LogManager.h"
 #include "common/eString.h"
 
+#include "input/InputManagerOIS.h"
+
+
 // OpenCV
 #include "opencv2/core/core.hpp"
 
@@ -58,8 +61,11 @@ void RunApplicationCocoa(const char *_appName, UserApplicationBase* userApp /*= 
         // Store app name
         Cing::appName = _appName;
         
+        // Basic Application, using OIS based Input Manager
+        Cing::InputManagerOIS inputManager;
+        
         // Init application
-        Cing::Application::getSingleton().initApp( userApp );
+        Cing::Application::getSingleton().initApp( &inputManager, userApp );
         
         // Enter the application loop (will finish when the application should be closed)
         Cing::Application::getSingleton().drawApp();

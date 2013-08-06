@@ -37,8 +37,73 @@
 namespace Cing
 {
 
-typedef OIS::KeyCode KeyCode;
-
+    // Keycode definition... for now
+    // TODO see how to make this talk with Cocoa and OIS
+    typedef unsigned int KeyCode;
+    
+    /******
+     Mouse
+     *******/
+ 	//! Button ID for mouse devices
+	enum MouseButtonID
+	{
+		MB_Left = 0, MB_Right, MB_Middle,
+		MB_Button3, MB_Button4,	MB_Button5, MB_Button6,	MB_Button7
+	};
+    
+    
+  	/** Specialised for mouse events */
+	class  MouseEvent
+	{
+	public:
+		MouseEvent( int xAbsPos, int yAbsPos ): x(xAbsPos), y(yAbsPos) {}
+		virtual ~MouseEvent() {}
+                
+        // Mouse absolute positions
+        int x, y;
+	};
+    
+	/**
+     * Base Mouse Listener class to receive mouse related events
+     */
+	class  MouseListener
+	{
+	public:
+		virtual ~MouseListener() {}
+		virtual bool mouseMoved( const MouseEvent &arg ) = 0;
+		virtual bool mousePressed( const MouseEvent &arg, MouseButtonID id ) = 0;
+		virtual bool mouseReleased( const MouseEvent &arg, MouseButtonID id ) = 0;
+	};
+    
+    /******
+     Keyboard
+     *******/
+    
+    /*
+     * Event that stores key event related information
+     */
+    class KeyEvent
+	{
+	public:
+		KeyEvent(KeyCode kc, unsigned int ch): key(kc), character(ch) {}
+		virtual ~KeyEvent() {}
+        
+		const       KeyCode key;
+		unsigned int character;
+	};
+    
+    /*
+     * Base Listener for keyboard related events
+     */
+    class KeyListener
+	{
+	public:
+		virtual ~KeyListener() {}
+		virtual bool keyPressed(const KeyEvent &arg) = 0;
+		virtual bool keyReleased(const KeyEvent &arg) = 0;
+	};
+    
+    
 ///// Mouse buttons -> Defined in CommonConstants.h File
 //enum MouseButton
 //{

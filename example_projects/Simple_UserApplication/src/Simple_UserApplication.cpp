@@ -35,3 +35,9 @@ void SimpleApp::mousePressed()
 	// Clear the background when the mouse is pressed
 	background(192, 64, 0);
 }
+
+void SimpleApp::keyPressed()
+{
+	// Clear the background when the mouse is pressed
+    std::cout << key;
+}

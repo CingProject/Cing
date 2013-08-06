@@ -89,6 +89,11 @@
 	#include "cameraInput/VICamera.h"
 #endif
 
+// Input
+#include "input/InputTypes.h"
+//#include "input/Mouse.h"
+//#include "input/Keyboard.h"
+
 // Framework
 #include "framework/UserApplicationBase.h"
 #include "framework/AppMain.h"
@@ -102,11 +107,6 @@
 #include "common/XMLElement.h"
 #include "common/XMLSettings.h"
 #include "common/MemoryDumper.h"
-
-// Input
-#include "input/InputTypes.h"
-#include "input/Mouse.h"
-#include "input/Keyboard.h"
 
 // Physics
 //#include "physics/PhysicsUserAPI.h"

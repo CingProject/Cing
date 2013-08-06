@@ -42,7 +42,6 @@
 /// Contains all communication with input devices
 namespace Cing
 {
-  class InputManager;
   class Mouse;
 } 
 

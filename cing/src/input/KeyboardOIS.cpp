@@ -28,7 +28,8 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-#include "Keyboard.h"
+#include "KeyboardOIS.h"
+#include "InputUtils.h"
 
 // Framework
 #include "framework/Application.h"
@@ -47,8 +48,7 @@ namespace Cing
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-Keyboard::Keyboard():
-  BaseInputDevice< OIS::KeyListener >(),
+KeyboardOIS::KeyboardOIS():
   m_pOISKeyboard( NULL ),
   m_bIsValid    ( false )
 {
@@ -58,7 +58,7 @@ Keyboard::Keyboard():
  * @internal
  * @brief Destructor. Class release.
  */
-Keyboard::~Keyboard()
+KeyboardOIS::~KeyboardOIS()
 {
   // Release resources
   end();
@@ -71,14 +71,14 @@ Keyboard::~Keyboard()
  * @param[in] pOISInputManager OIS Input manager. Allows to create and destroy the OIS Keyboard
  * @return true if the initialization was ok | false otherwise
  */
-bool Keyboard::init( OIS::InputManager* pOISInputManager )
+bool KeyboardOIS::init( OIS::InputManager* pOISInputManager )
 {
   // Check if the class is already initialized
   if ( isValid() )
     return true;
 
 	// Init base input device
-	BaseInputDevice< OIS::KeyListener >::init();
+	KeyboardBase::init();
 
   // If possible create a buffered keyboard
 	if ( pOISInputManager && ( pOISInputManager->getNumberOfDevices(OIS::OISKeyboard ) > 0 ) )
@@ -105,7 +105,7 @@ bool Keyboard::init( OIS::InputManager* pOISInputManager )
  * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
-void Keyboard::end()
+void KeyboardOIS::end()
 {
   // Check if the class is already released
   if ( !isValid() )
@@ -124,7 +124,7 @@ void Keyboard::end()
  * @internal
  * @brief Updates the class state
  */
-void Keyboard::update()
+void KeyboardOIS::update()
 {
 	if ( isValid() )
 		m_pOISKeyboard->capture();
@@ -138,7 +138,7 @@ void Keyboard::update()
  * @param key key to check
  * @return true if the received key is down
  */
-bool Keyboard::isKeyDown( OIS::KeyCode key ) const
+bool KeyboardOIS::isKeyDown( OIS::KeyCode key ) const
 {
 	if ( isValid() )
 		return m_pOISKeyboard->isKeyDown( key );
@@ -153,7 +153,7 @@ bool Keyboard::isKeyDown( OIS::KeyCode key ) const
  * @param key key to check
  * @return true if the received key is down
  */
-bool	Keyboard::isModifierDown( OIS::Keyboard::Modifier modifier ) const
+bool KeyboardOIS::isModifierDown( OIS::Keyboard::Modifier modifier ) const
 {
 	if ( isValid() )
 		return m_pOISKeyboard->isModifierDown( modifier );
@@ -167,14 +167,14 @@ bool	Keyboard::isModifierDown( OIS::Keyboard::Modifier modifier ) const
  *
  * @param[in] event Received event. Contains the information about the key state
  */
-bool Keyboard::keyPressed( const OIS::KeyEvent &event )
+bool KeyboardOIS::keyPressed( const OIS::KeyEvent &event )
 {
 	// TODO: install boost, tr1 c++ or create binders that support rederence parameters!
 	//std::for_each( m_listeners.begin(), m_listeners.end(), std::bind2nd( std::mem_fun( &OIS::KeyListener::keyPressed ), event ) );
 
 	// Tell registered listeners
 	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
-		it->second->keyPressed( event );
+		it->second->keyPressed( toCing(event) );
 
   return true;
 }
@@ -185,11 +185,11 @@ bool Keyboard::keyPressed( const OIS::KeyEvent &event )
  *
  * @param[in] event Received event. Contains the information about the key state
  */
-bool Keyboard::keyReleased( const OIS::KeyEvent &event )
+bool KeyboardOIS::keyReleased( const OIS::KeyEvent &event )
 {
 	// Tell registered listeners
 	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
-		it->second->keyReleased( event );
+		it->second->keyReleased( toCing(event) );
 
 	return true;
 }

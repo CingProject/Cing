@@ -37,7 +37,6 @@
 
 // Input
 #include "input/InputTypes.h"
-#include "input/Keyboard.h"
 
 #include "common/PerlinNoise.h"
 
@@ -70,8 +69,8 @@ extern	KeyCode						keyCode;			///< Key code being pressed (allow to detect also
 extern	int							mouseButton;		///< Mouse button being pressed (LEFT, CENTER, RIGHT)
 extern	int							mouseX;				///< X coordinate of the mouse (in screen coordinates)
 extern	int							mouseY;				///< Y coordinate of the mouse (in screen coordinates)
-extern	Mouse&						mouse;				///< System mouse
-extern	Keyboard&					keyboard;			///< System keyboard
+//extern	Mouse&						mouse;				///< System mouse
+//extern	Keyboard&					keyboard;			///< System keyboard
 
 // Time
 extern double						elapsedSec;			///< Elapsed time in seconds from previous to current frame

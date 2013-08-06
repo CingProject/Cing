@@ -36,7 +36,10 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "gui/GUIManagerCEGUI.h"
 
 // Input
-#include "input/InputManager.h"
+#include "input/InputManagerBase.h"
+#include "input/MouseBase.h"
+#include "input/KeyboardBase.h"
+
 
 // Physics
 //#include "physics/PhysicsManager.h"
@@ -65,7 +68,7 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	Application::Application():
-m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ), m_ogreView(NULL), m_userApp(NULL)
+m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ), m_ogreView(NULL), m_userApp(NULL), m_inputManager(NULL)
 {
 }
 
@@ -86,7 +89,7 @@ Application::~Application()
  * for the application flow
  * @return true if the initialization was ok | false otherwise
  */
-bool Application::initApp( UserApplicationBase* userApp /*= NULL*/ )
+bool Application::initApp( InputManagerBase* inputManager, UserApplicationBase* userApp /*= NULL*/ )
 {
 	// Check if the class is already initialized
 	if ( isValid() )
@@ -110,6 +113,9 @@ bool Application::initApp( UserApplicationBase* userApp /*= NULL*/ )
 	
     // TODO: this is a temporary 2d renderer (opencv) until Cing's core has the necessary features to not need it
     enableOpenCVRenderer2D();
+    
+    // Store pointer to input manager
+    m_inputManager = inputManager;
     
 	// Init user application
     if ( m_userApp )
@@ -155,8 +161,9 @@ void Application::endApp()
 	endPlugins( END_AFTER_USER );
 
 	// Release input manager
-	InputManager::getSingleton().end();
-
+    if ( m_inputManager )
+        m_inputManager->end();
+    
 	// Release physics manager
 	//PhysicsManager::getSingleton().end();
 
@@ -216,7 +223,8 @@ void Application::drawOneFrame()
     m_timer.reset();
     
     // Update input manager
-    InputManager::getSingleton().update();
+    if ( m_inputManager )
+        m_inputManager->update();
     
     // Update plugins that require it at this point
     updatePlugins( UPDATE_BEFORE_USER );
@@ -316,12 +324,15 @@ void Application::initSubSystems()
 	initPlugins( INIT_AFTER_GRAPHICS );
 
 	// Init input manager
-	InputManager::getSingleton().init();
+    if ( m_inputManager )
+    {
+        m_inputManager->init();
 
-	// Register the application as listener for mouse and keyboard
-	InputManager::getSingleton().getMouse().addListener( this );
-	InputManager::getSingleton().getKeyboard().addListener( this );
-
+        // Register the application as listener for mouse and keyboard
+        m_inputManager->getMouse().addListener( this );
+        m_inputManager->getKeyboard().addListener( this );
+    }
+    
 	// Init GUI Manager
 	//GUIManagerCEGUI::getSingleton().init( GraphicsManager::getSingleton().getMainWindow().getOgreWindow(),&GraphicsManager::getSingleton().getSceneManager() );
 
@@ -347,11 +358,11 @@ void Application::checkSubsystemsInit()
 *
 * @param event Contains the information about the mouse
 */
-bool Application::mouseMoved( const OIS::MouseEvent& event )
+bool Application::mouseMoved( const MouseEvent& event )
 {
 	// Update mouse pos global var
-	mouseX = event.state.X.abs;
-	mouseY = event.state.Y.abs;
+	mouseX = event.x;
+	mouseY = event.y;
 
 	// Call user mousepressed handler
     if ( m_userApp )
@@ -369,7 +380,7 @@ bool Application::mouseMoved( const OIS::MouseEvent& event )
 * @param event Contains the information about the mouse
 * @param id button that has been pressed
 */
-bool Application::mousePressed( const OIS::MouseEvent& event, OIS::MouseButtonID id  )
+bool Application::mousePressed( const MouseEvent& event, MouseButtonID id  )
 {
 	mouseButton = (int) id;
 
@@ -390,7 +401,7 @@ bool Application::mousePressed( const OIS::MouseEvent& event, OIS::MouseButtonID
 * @param event Contains the information about the mouse
 * @param id button that has been released
 */
-bool Application::mouseReleased( const OIS::MouseEvent& event, OIS::MouseButtonID id  )
+bool Application::mouseReleased( const MouseEvent& event, MouseButtonID id  )
 {
 	mouseButton = (int) id;
 
@@ -409,10 +420,10 @@ bool Application::mouseReleased( const OIS::MouseEvent& event, OIS::MouseButtonI
 *
 * @param event Contains the information about the event
 */
-bool Application::keyPressed( const OIS::KeyEvent& event )
+bool Application::keyPressed( const KeyEvent& event )
 {
 	// Set global variable key
-	key			= event.text;
+	key		= event.character;
 	keyCode	= event.key;
 
 	// Call user mousepressed handler
@@ -430,10 +441,10 @@ bool Application::keyPressed( const OIS::KeyEvent& event )
 *
 * @param event Contains the information about the event
 */
-bool Application::keyReleased( const OIS::KeyEvent& event )
+bool Application::keyReleased( const KeyEvent& event )
 {
 	// Set global variable key
-	key = event.text;
+	key = event.character;
 	keyCode	= event.key;
 
 	// Call user mousepressed handler

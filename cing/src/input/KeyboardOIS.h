@@ -32,7 +32,7 @@
 #include "Cing-Precompiled.h"
 
 #include "InputPrereqs.h"
-#include "BaseInputDevice.h"
+#include "KeyboardBase.h"
 
 // OIS
 #include "OISKeyboard.h"
@@ -44,37 +44,36 @@ namespace Cing
  * @internal
  * Manages keyboard input
  */
-class Keyboard: public BaseInputDevice< OIS::KeyListener >, public OIS::KeyListener
+class KeyboardOIS: public KeyboardBase, public OIS::KeyListener
 {
 public:
 
 	// Constructor / Destructor
-	 Keyboard();
-	virtual ~Keyboard();
+    KeyboardOIS();
+	virtual ~KeyboardOIS();
 
 	// Init / Release / Update
-	bool  init   ( OIS::InputManager* pOISInputManager );
-	void  end    ();
-	void  update ();
+	bool    init   ( OIS::InputManager* pOISInputManager );
+	void    end    ();
+	void    update ();
 
 	// Query methods
-	bool  isValid       ()  const { return m_bIsValid; }
-	bool	isKeyDown			( OIS::KeyCode key ) const;
-	bool	isModifierDown( OIS::Keyboard::Modifier modifier ) const;
+	bool    isValid         ()  const { return m_bIsValid; }
+	bool    isKeyDown       ( OIS::KeyCode key ) const;
+	bool	isModifierDown  ( OIS::Keyboard::Modifier modifier ) const;
 
   //bool  isKeyPressed  ( char c )  const;
 
 private:
 
-
-  // OIS KeyListener interface
-  virtual bool keyPressed( const OIS::KeyEvent &arg );
-  virtual bool keyReleased( const OIS::KeyEvent &arg );		
+    // OIS KeyListener interface
+    virtual bool keyPressed ( const OIS::KeyEvent &arg );
+    virtual bool keyReleased( const OIS::KeyEvent &arg );
 
 	// Attributes
-  OIS::InputManager*  m_pOISInputManager; ///< Pointer to the OIS input manager
-  OIS::Keyboard*      m_pOISKeyboard;     ///< OIS Keyboard
-	bool                m_bIsValid;	        ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+    OIS::InputManager*  m_pOISInputManager; ///< Pointer to the OIS input manager
+    OIS::Keyboard*      m_pOISKeyboard;     ///< OIS Keyboard
+    bool                m_bIsValid;	        ///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 
 };
 

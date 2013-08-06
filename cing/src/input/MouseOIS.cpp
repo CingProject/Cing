@@ -28,7 +28,7 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-#include "Mouse.h"
+#include "MouseOIS.h"
 
 // Framework
 #include "framework/Application.h"
@@ -37,9 +37,9 @@
 // Graphics
 #include "graphics/GraphicsManager.h"
 
-
 // Input
 #include "input/InputTypes.h"
+#include "input/InputUtils.h"
 
 // OIS
 #include "OISInputManager.h"
@@ -51,8 +51,7 @@ namespace Cing
  * @internal
  * @brief Constructor. Initializes class attributes.
  */
-Mouse::Mouse():
-  BaseInputDevice< OIS::MouseListener >(),
+MouseOIS::MouseOIS():
   m_pOISMouse( NULL ),
   m_bIsValid( false )
 {
@@ -62,7 +61,7 @@ Mouse::Mouse():
  * @internal
  * @brief Destructor. Class release.
  */
-Mouse::~Mouse()
+MouseOIS::~MouseOIS()
 {
   // Release resources
   end();
@@ -75,14 +74,14 @@ Mouse::~Mouse()
  * @param[in] pOISInputManager OIS Input manager. Allows to create and destroy the OIS Mouse
  * @return true if the initialization was ok | false otherwise
  */
-bool Mouse::init( OIS::InputManager* pOISInputManager )
+bool MouseOIS::init( OIS::InputManager* pOISInputManager )
 {
   // Check if the class is already initialized
   if ( isValid() )
     return true;
 
 	// Init base input device
-	BaseInputDevice< OIS::MouseListener >::init();
+    MouseBase::init();
 
   // Create the buffered mouse
   if ( pOISInputManager && ( pOISInputManager->getNumberOfDevices(OIS::OISMouse ) > 0 ) )
@@ -116,7 +115,7 @@ bool Mouse::init( OIS::InputManager* pOISInputManager )
  * @brief Releases the class resources.
  * After this method is called the class is not valid anymore.
  */
-void Mouse::end()
+void MouseOIS::end()
 {
   // Check if the class is already released
   if ( !isValid() )
@@ -135,7 +134,7 @@ void Mouse::end()
  * @internal
  * @brief Captures the mouse events occurred in the frame
  */
-void Mouse::update()
+void MouseOIS::update()
 {
   if ( !isValid() )
     return;
@@ -144,23 +143,23 @@ void Mouse::update()
 }
 
 // TEMP
-bool Mouse::isButtonPressed( int n ) const
+bool MouseOIS::isButtonPressed( int n ) const
 {
   const OIS::MouseState& mouseState = m_pOISMouse->getMouseState();
   return mouseState.buttonDown( OIS::MouseButtonID( n ) );
 }
 
-int Mouse::getXAxisRelative() const
+int MouseOIS::getXAxisRelative() const
 {
   const OIS::MouseState& mouseState = m_pOISMouse->getMouseState();
   return mouseState.X.rel;
 }
-int Mouse::getYAxisRelative() const
+int MouseOIS::getYAxisRelative() const
 {
   const OIS::MouseState& mouseState = m_pOISMouse->getMouseState();
   return mouseState.Y.rel;
 }
-int Mouse::getZAxisRelative() const
+int MouseOIS::getZAxisRelative() const
 {
   const OIS::MouseState& mouseState = m_pOISMouse->getMouseState();
   return mouseState.Z.rel;
@@ -175,11 +174,11 @@ int Mouse::getZAxisRelative() const
  *
  * @param[in] event Received event. Contains the information about the mouse state
  */
-bool Mouse::mouseMoved( const OIS::MouseEvent &event )
+bool MouseOIS::mouseMoved( const OIS::MouseEvent &event )
 {
 	// Tell registered listeners
 	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
-		it->second->mouseMoved( event );
+		it->second->mouseMoved( toCing(event) );
 
 
   return true;
@@ -194,11 +193,11 @@ bool Mouse::mouseMoved( const OIS::MouseEvent &event )
  * @param[in] event Received event. Contains the information about the mouse state
  * @param[in] id    Id of the mouse that has been pressed
  */
-bool Mouse::mousePressed ( const OIS::MouseEvent &event, OIS::MouseButtonID id )
+bool MouseOIS::mousePressed ( const OIS::MouseEvent &event, OIS::MouseButtonID id )
 {
 	// Tell registered listeners
 	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
-		it->second->mousePressed( event, id );
+		it->second->mousePressed( toCing(event), toCing(id) );
 
   return true;
 }
@@ -210,11 +209,11 @@ bool Mouse::mousePressed ( const OIS::MouseEvent &event, OIS::MouseButtonID id )
  * @param[in] event Received event. Contains the information about the mouse state
  * @param[in] id    Id of the mouse that has been released
  */
-bool Mouse::mouseReleased( const OIS::MouseEvent &event, OIS::MouseButtonID id )
+bool MouseOIS::mouseReleased( const OIS::MouseEvent &event, OIS::MouseButtonID id )
 {
 	// Tell registered listeners
 	for ( ListenersIt it = m_listeners.begin(); it != m_listeners.end(); ++it )
-		it->second->mouseReleased( event, id );
+		it->second->mouseReleased( toCing(event), toCing(id) );
 
   return true;
 }

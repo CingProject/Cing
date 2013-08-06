@@ -22,7 +22,9 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-#include "InputManager.h"
+#include "InputManagerOIS.h"
+#include "MouseOIS.h"
+#include "KeyboardOIS.h"
 
 // Graphics
 #include "graphics/GraphicsManager.h"
@@ -37,19 +39,13 @@
 #include <sstream>
 
 namespace Cing
-{
-	
-	// Static member definition
-	Mouse			InputManager::m_mouse;
-	Keyboard	InputManager::m_keyboard;
-	
+{	
 	/**
 	 * @internal
 	 * @brief Constructor. Initializes class attributes.
 	 */
-	InputManager::InputManager():
-	m_pOISInputManager( NULL ),
-	m_bIsValid        ( false )
+	InputManagerOIS::InputManagerOIS():
+        m_pOISInputManager   ( NULL )
 	{
 	}
 	
@@ -57,7 +53,7 @@ namespace Cing
 	 * @internal
 	 * @brief Destructor. Class release.
 	 */
-	InputManager::~InputManager()
+	InputManagerOIS::~InputManagerOIS()
 	{
 		// Release resources
 		end();
@@ -69,7 +65,7 @@ namespace Cing
 	 *
 	 * @return true if the initialization was ok | false otherwise
 	 */
-	bool InputManager::init()
+	bool InputManagerOIS::init()
 	{
 		// Check if the class is already initialized
 		if ( isValid() )
@@ -116,11 +112,15 @@ namespace Cing
 		m_pOISInputManager = OIS::InputManager::createInputSystem( paramList );
 		
 		// Init mouse and keyboard
-		m_mouse.init( m_pOISInputManager );
-		m_keyboard.init( m_pOISInputManager );
+        m_mouse     = new MouseOIS();
+        m_keyboard  = new KeyboardOIS();
+        m_mouseOIS  = static_cast<MouseOIS*>(m_mouse);
+        m_keyboardOIS = static_cast<KeyboardOIS*>(m_keyboard);
+		m_mouseOIS->init( m_pOISInputManager );
+		m_keyboardOIS->init( m_pOISInputManager );
 		
 		// The class is now initialized
-		m_bIsValid = true;
+		m_isValid = true;
 		
 		return true;
 	}
@@ -130,33 +130,41 @@ namespace Cing
 	 * @brief Releases the class resources. 
 	 * After this method is called the class is not valid anymore.
 	 */
-	void InputManager::end()
+	void InputManagerOIS::end()
 	{
 		// Check if the class is already released
 		if ( !isValid() )
 			return;
 		
 		// Release keyboad and mouse
-		m_mouse.end();
-		m_keyboard.end();
-		
+		if ( m_mouse )
+        {
+            delete m_mouse;
+            m_mouse = NULL;
+        }
+        
+        if ( m_keyboard )
+        {
+            delete m_keyboard;
+            m_keyboard = NULL;
+		}
 		// Release OIS input manager
 		m_pOISInputManager->destroyInputSystem( m_pOISInputManager );
 		m_pOISInputManager = NULL;
 		
 		
 		// The class is not valid anymore
-		m_bIsValid = false;
+		m_isValid = false;
 	}
 	
 	/**
 	 * @internal
 	 * @brief Updates the class state
 	 */
-	void InputManager::update()
+	void InputManagerOIS::update()
 	{
 		// Update input devices
-		m_mouse.update();
-		m_keyboard.update();
+		m_mouseOIS->update();
+		m_keyboardOIS->update();
 	}
 } // namespace Cing
