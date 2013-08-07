@@ -7,7 +7,7 @@
  */
 
 // OpenCV module includes
-#include "OpenCV/src/OpenCVIncludes.h"
+#include "OpenCV/src/OpenCV-CingBeat.h"
  
 void setup()
 {

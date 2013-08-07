@@ -30,12 +30,13 @@
 		4C4FFC5017B0118F00A35D13 /* OCVCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3617B0118F00A35D13 /* OCVCamera.h */; };
 		4C4FFC5117B0118F00A35D13 /* OCVVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3717B0118F00A35D13 /* OCVVideoRecorder.cpp */; };
 		4C4FFC5217B0118F00A35D13 /* OCVVideoRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3817B0118F00A35D13 /* OCVVideoRecorder.h */; };
-		4C4FFC5317B0118F00A35D13 /* OpenCVIncludes.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3917B0118F00A35D13 /* OpenCVIncludes.h */; };
 		4C4FFC5417B0118F00A35D13 /* OpenCVUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3A17B0118F00A35D13 /* OpenCVUtils.cpp */; };
 		4C4FFC5517B0118F00A35D13 /* OpenCVUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3B17B0118F00A35D13 /* OpenCVUtils.h */; };
 		4C4FFC5617B0118F00A35D13 /* Renderer2DOpenCV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */; };
 		4C4FFC5717B0118F00A35D13 /* Renderer2DOpenCV.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */; };
 		4C4FFC5C17B04D8100A35D13 /* UserApplicationBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC5A17B04D8100A35D13 /* UserApplicationBase.h */; };
+		4C5CA98A17B2C43700289AFB /* OpenCV-CingBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C5CA98817B2C43700289AFB /* OpenCV-CingBeat.cpp */; };
+		4C5CA98B17B2C43700289AFB /* OpenCV-CingBeat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5CA98917B2C43700289AFB /* OpenCV-CingBeat.h */; };
 		4CE45C9117B13C1100B3A1A7 /* InputManagerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9017B13C1100B3A1A7 /* InputManagerBase.h */; };
 		4CE45C9317B1442700B3A1A7 /* MouseBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9217B1442700B3A1A7 /* MouseBase.h */; };
 		4CE45C9517B1451400B3A1A7 /* KeyboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9417B1451300B3A1A7 /* KeyboardBase.h */; };
@@ -158,12 +159,13 @@
 		4C4FFC3617B0118F00A35D13 /* OCVCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OCVCamera.h; path = ../../../../cing_ings/OpenCV/src/OCVCamera.h; sourceTree = "<group>"; };
 		4C4FFC3717B0118F00A35D13 /* OCVVideoRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OCVVideoRecorder.cpp; path = ../../../../cing_ings/OpenCV/src/OCVVideoRecorder.cpp; sourceTree = "<group>"; };
 		4C4FFC3817B0118F00A35D13 /* OCVVideoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OCVVideoRecorder.h; path = ../../../../cing_ings/OpenCV/src/OCVVideoRecorder.h; sourceTree = "<group>"; };
-		4C4FFC3917B0118F00A35D13 /* OpenCVIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenCVIncludes.h; path = ../../../../cing_ings/OpenCV/src/OpenCVIncludes.h; sourceTree = "<group>"; };
 		4C4FFC3A17B0118F00A35D13 /* OpenCVUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenCVUtils.cpp; path = ../../../../cing_ings/OpenCV/src/OpenCVUtils.cpp; sourceTree = "<group>"; };
 		4C4FFC3B17B0118F00A35D13 /* OpenCVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenCVUtils.h; path = ../../../../cing_ings/OpenCV/src/OpenCVUtils.h; sourceTree = "<group>"; };
 		4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Renderer2DOpenCV.cpp; path = ../../../../cing_ings/OpenCV/src/Renderer2DOpenCV.cpp; sourceTree = "<group>"; };
 		4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Renderer2DOpenCV.h; path = ../../../../cing_ings/OpenCV/src/Renderer2DOpenCV.h; sourceTree = "<group>"; };
 		4C4FFC5A17B04D8100A35D13 /* UserApplicationBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserApplicationBase.h; sourceTree = "<group>"; };
+		4C5CA98817B2C43700289AFB /* OpenCV-CingBeat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "OpenCV-CingBeat.cpp"; path = "../../../../cing_ings/OpenCV/src/OpenCV-CingBeat.cpp"; sourceTree = "<group>"; };
+		4C5CA98917B2C43700289AFB /* OpenCV-CingBeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenCV-CingBeat.h"; path = "../../../../cing_ings/OpenCV/src/OpenCV-CingBeat.h"; sourceTree = "<group>"; };
 		4CE45C9017B13C1100B3A1A7 /* InputManagerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputManagerBase.h; sourceTree = "<group>"; };
 		4CE45C9217B1442700B3A1A7 /* MouseBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseBase.h; sourceTree = "<group>"; };
 		4CE45C9417B1451300B3A1A7 /* KeyboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardBase.h; sourceTree = "<group>"; };
@@ -397,6 +399,8 @@
 		4C4FFC2317B0117B00A35D13 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4C5CA98817B2C43700289AFB /* OpenCV-CingBeat.cpp */,
+				4C5CA98917B2C43700289AFB /* OpenCV-CingBeat.h */,
 				4C4FFC2417B0118F00A35D13 /* BackgroundSubtraction.cpp */,
 				4C4FFC2517B0118F00A35D13 /* BackgroundSubtraction.h */,
 				4C4FFC2617B0118F00A35D13 /* BaseImageFilter.cpp */,
@@ -418,7 +422,6 @@
 				4C4FFC3617B0118F00A35D13 /* OCVCamera.h */,
 				4C4FFC3717B0118F00A35D13 /* OCVVideoRecorder.cpp */,
 				4C4FFC3817B0118F00A35D13 /* OCVVideoRecorder.h */,
-				4C4FFC3917B0118F00A35D13 /* OpenCVIncludes.h */,
 				4C4FFC3A17B0118F00A35D13 /* OpenCVUtils.cpp */,
 				4C4FFC3B17B0118F00A35D13 /* OpenCVUtils.h */,
 				4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */,
@@ -765,7 +768,6 @@
 				4C4FFC4E17B0118F00A35D13 /* MediaPlayerOCV.h in Headers */,
 				4C4FFC5017B0118F00A35D13 /* OCVCamera.h in Headers */,
 				4C4FFC5217B0118F00A35D13 /* OCVVideoRecorder.h in Headers */,
-				4C4FFC5317B0118F00A35D13 /* OpenCVIncludes.h in Headers */,
 				4C4FFC5517B0118F00A35D13 /* OpenCVUtils.h in Headers */,
 				4C4FFC5717B0118F00A35D13 /* Renderer2DOpenCV.h in Headers */,
 				4C4FFC5C17B04D8100A35D13 /* UserApplicationBase.h in Headers */,
@@ -777,6 +779,7 @@
 				602386CB17B1A7B20064265D /* InputManagerCocoa.h in Headers */,
 				602386CF17B1A7D10064265D /* MouseCocoa.h in Headers */,
 				602386D317B1A7DA0064265D /* KeyboardCocoa.h in Headers */,
+				4C5CA98B17B2C43700289AFB /* OpenCV-CingBeat.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -934,6 +937,7 @@
 				602386CA17B1A7B20064265D /* InputManagerCocoa.cpp in Sources */,
 				602386CE17B1A7D10064265D /* MouseCocoa.cpp in Sources */,
 				602386D217B1A7DA0064265D /* KeyboardCocoa.cpp in Sources */,
+				4C5CA98A17B2C43700289AFB /* OpenCV-CingBeat.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
