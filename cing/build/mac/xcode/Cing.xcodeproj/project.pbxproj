@@ -39,6 +39,14 @@
 		4CE45C9117B13C1100B3A1A7 /* InputManagerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9017B13C1100B3A1A7 /* InputManagerBase.h */; };
 		4CE45C9317B1442700B3A1A7 /* MouseBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9217B1442700B3A1A7 /* MouseBase.h */; };
 		4CE45C9517B1451400B3A1A7 /* KeyboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9417B1451300B3A1A7 /* KeyboardBase.h */; };
+		602386C617B1A5D10064265D /* CingCocoaInputView.h in Headers */ = {isa = PBXBuildFile; fileRef = 602386C417B1A5D10064265D /* CingCocoaInputView.h */; };
+		602386C717B1A5D10064265D /* CingCocoaInputView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 602386C517B1A5D10064265D /* CingCocoaInputView.mm */; };
+		602386CA17B1A7B20064265D /* InputManagerCocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 602386C817B1A7B20064265D /* InputManagerCocoa.cpp */; };
+		602386CB17B1A7B20064265D /* InputManagerCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 602386C917B1A7B20064265D /* InputManagerCocoa.h */; };
+		602386CE17B1A7D10064265D /* MouseCocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 602386CC17B1A7D10064265D /* MouseCocoa.cpp */; };
+		602386CF17B1A7D10064265D /* MouseCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 602386CD17B1A7D10064265D /* MouseCocoa.h */; };
+		602386D217B1A7DA0064265D /* KeyboardCocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 602386D017B1A7DA0064265D /* KeyboardCocoa.cpp */; };
+		602386D317B1A7DA0064265D /* KeyboardCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 602386D117B1A7DA0064265D /* KeyboardCocoa.h */; };
 		609CA09517AC719E0050D757 /* AppFrameworkCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */; };
 		609CA09617AC719E0050D757 /* AppFrameworkCocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */; };
 		60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */; };
@@ -159,6 +167,14 @@
 		4CE45C9017B13C1100B3A1A7 /* InputManagerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputManagerBase.h; sourceTree = "<group>"; };
 		4CE45C9217B1442700B3A1A7 /* MouseBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseBase.h; sourceTree = "<group>"; };
 		4CE45C9417B1451300B3A1A7 /* KeyboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardBase.h; sourceTree = "<group>"; };
+		602386C417B1A5D10064265D /* CingCocoaInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CingCocoaInputView.h; sourceTree = "<group>"; };
+		602386C517B1A5D10064265D /* CingCocoaInputView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CingCocoaInputView.mm; sourceTree = "<group>"; };
+		602386C817B1A7B20064265D /* InputManagerCocoa.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InputManagerCocoa.cpp; sourceTree = "<group>"; };
+		602386C917B1A7B20064265D /* InputManagerCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputManagerCocoa.h; sourceTree = "<group>"; };
+		602386CC17B1A7D10064265D /* MouseCocoa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MouseCocoa.cpp; sourceTree = "<group>"; };
+		602386CD17B1A7D10064265D /* MouseCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseCocoa.h; sourceTree = "<group>"; };
+		602386D017B1A7DA0064265D /* KeyboardCocoa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardCocoa.cpp; sourceTree = "<group>"; };
+		602386D117B1A7DA0064265D /* KeyboardCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardCocoa.h; sourceTree = "<group>"; };
 		609CA09317AC719E0050D757 /* AppFrameworkCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFrameworkCocoa.h; sourceTree = "<group>"; };
 		609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoa.cpp; sourceTree = "<group>"; };
 		60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoaView.mm; sourceTree = "<group>"; };
@@ -411,6 +427,34 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		602386C217B1A5880064265D /* OIS */ = {
+			isa = PBXGroup;
+			children = (
+				A93DB6EE179DFE8300770B14 /* InputManagerOIS.cpp */,
+				A93DB6EF179DFE8300770B14 /* InputManagerOIS.h */,
+				A93DB6F2179DFE8300770B14 /* KeyboardOIS.cpp */,
+				A93DB6F3179DFE8300770B14 /* KeyboardOIS.h */,
+				A93DB6F4179DFE8300770B14 /* MouseOIS.cpp */,
+				A93DB6F5179DFE8300770B14 /* MouseOIS.h */,
+			);
+			name = OIS;
+			sourceTree = "<group>";
+		};
+		602386C317B1A5980064265D /* Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				602386C417B1A5D10064265D /* CingCocoaInputView.h */,
+				602386C517B1A5D10064265D /* CingCocoaInputView.mm */,
+				602386C917B1A7B20064265D /* InputManagerCocoa.h */,
+				602386C817B1A7B20064265D /* InputManagerCocoa.cpp */,
+				602386CD17B1A7D10064265D /* MouseCocoa.h */,
+				602386CC17B1A7D10064265D /* MouseCocoa.cpp */,
+				602386D117B1A7DA0064265D /* KeyboardCocoa.h */,
+				602386D017B1A7DA0064265D /* KeyboardCocoa.cpp */,
+			);
+			name = Cocoa;
+			sourceTree = "<group>";
+		};
 		A93DB480179DF2D200770B14 = {
 			isa = PBXGroup;
 			children = (
@@ -640,19 +684,15 @@
 		A93DB6EB179DFE8300770B14 /* input */ = {
 			isa = PBXGroup;
 			children = (
+				602386C317B1A5980064265D /* Cocoa */,
+				602386C217B1A5880064265D /* OIS */,
 				A93DB6EC179DFE8300770B14 /* BaseInputDevice.h */,
 				A93DB6ED179DFE8300770B14 /* BaseInputDevice.inl */,
 				4CE45C9017B13C1100B3A1A7 /* InputManagerBase.h */,
-				A93DB6EE179DFE8300770B14 /* InputManagerOIS.cpp */,
-				A93DB6EF179DFE8300770B14 /* InputManagerOIS.h */,
 				A93DB6F0179DFE8300770B14 /* InputPrereqs.h */,
 				A93DB6F1179DFE8300770B14 /* InputTypes.h */,
 				4CE45C9217B1442700B3A1A7 /* MouseBase.h */,
 				4CE45C9417B1451300B3A1A7 /* KeyboardBase.h */,
-				A93DB6F2179DFE8300770B14 /* KeyboardOIS.cpp */,
-				A93DB6F3179DFE8300770B14 /* KeyboardOIS.h */,
-				A93DB6F4179DFE8300770B14 /* MouseOIS.cpp */,
-				A93DB6F5179DFE8300770B14 /* MouseOIS.h */,
 				4C051C9417B18CB700BA532E /* InputUtils.cpp */,
 				4C051C9217B18B2000BA532E /* InputUtils.h */,
 			);
@@ -733,6 +773,10 @@
 				4CE45C9317B1442700B3A1A7 /* MouseBase.h in Headers */,
 				4CE45C9517B1451400B3A1A7 /* KeyboardBase.h in Headers */,
 				4C051C9317B18B2000BA532E /* InputUtils.h in Headers */,
+				602386C617B1A5D10064265D /* CingCocoaInputView.h in Headers */,
+				602386CB17B1A7B20064265D /* InputManagerCocoa.h in Headers */,
+				602386CF17B1A7D10064265D /* MouseCocoa.h in Headers */,
+				602386D317B1A7DA0064265D /* KeyboardCocoa.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,6 +930,10 @@
 				4C4FFC5417B0118F00A35D13 /* OpenCVUtils.cpp in Sources */,
 				4C4FFC5617B0118F00A35D13 /* Renderer2DOpenCV.cpp in Sources */,
 				4C051C9517B18CB700BA532E /* InputUtils.cpp in Sources */,
+				602386C717B1A5D10064265D /* CingCocoaInputView.mm in Sources */,
+				602386CA17B1A7B20064265D /* InputManagerCocoa.cpp in Sources */,
+				602386CE17B1A7D10064265D /* MouseCocoa.cpp in Sources */,
+				602386D217B1A7DA0064265D /* KeyboardCocoa.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

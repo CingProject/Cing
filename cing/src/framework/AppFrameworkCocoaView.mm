@@ -39,7 +39,7 @@
 #include "common/LogManager.h"
 #include "common/eString.h"
 
-#include "input/InputManagerOIS.h"
+#include "input/InputManagerCocoa.h"
 
 // OpenCV
 #include "opencv2/core/core.hpp"
@@ -50,6 +50,7 @@
 @interface CingCocoaViewApplication : NSObject
 {
     NSTimer *_timer;
+    Cing::InputManagerCocoa *_inputManager;
 }
 
 @end
@@ -70,29 +71,14 @@
         {
             // Store app name
             Cing::appName = appName;
-            
-            
+
             Cing::Application::getSingleton().setOgreView( view );
             
-            // TODO: change to Cocoa input
-            // Basic Application, using OIS based Input Manager
-            Cing::InputManagerOIS inputManager;
-            
+            _inputManager = new Cing::InputManagerCocoa();
+            _inputManager->setParentView( ogreView );
+
             // Init application
-            Cing::Application::getSingleton().initApp( &inputManager );
-            
-            // enter main loop for app
-            _timer = [[NSTimer scheduledTimerWithTimeInterval:0.02
-                                                       target:self
-                                                     selector:@selector(renderFrame)
-                                                     userInfo:NULL
-                                                      repeats:YES] retain];
-            
-            // listen to the app termination notification
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(applicationWillTerminate)
-                                                         name:NSApplicationWillTerminateNotification
-                                                       object:nil];
+            Cing::Application::getSingleton().initApp( _inputManager );
         }
         catch( Ogre::Exception& e )
         {
@@ -115,6 +101,19 @@
         {
             LOG_ERROR( "Unidentified exception" );
         }
+        
+        // enter main loop for app
+        _timer = [[NSTimer scheduledTimerWithTimeInterval:0.02
+                                                   target:self
+                                                 selector:@selector(renderFrame)
+                                                 userInfo:NULL
+                                                  repeats:YES] retain];
+        
+        // listen to the app termination notification
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationWillTerminate)
+                                                     name:NSApplicationWillTerminateNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -124,6 +123,9 @@
     [_timer invalidate];
     [_timer release];
     _timer = nil;
+    
+    delete _inputManager;
+    _inputManager = NULL;
     
     [super dealloc];
 }
