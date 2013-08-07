@@ -87,7 +87,7 @@
 {
     unsigned int character = 0;
     
-    if ( [[theEvent characters] length] == 0 )
+    if ( [[theEvent characters] length] == 1 )
         character = [[theEvent characters] characterAtIndex:0];
     
     return Cing::KeyEvent( theEvent.keyCode, character );
