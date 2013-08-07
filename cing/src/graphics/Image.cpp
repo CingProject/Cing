@@ -642,8 +642,8 @@ namespace Cing
 			THROW_EXCEPTION( "Trying to get a pixel from an invalid image" );
 
 		// Check boundaries
-		x = constrain(x, 0, m_image.getWidth()-1);
-		y = constrain(y, 0, m_image.getHeight()-1);
+		x = constrain(x, 0, (int)m_image.getWidth()-1);
+		y = constrain(y, 0, (int)m_image.getHeight()-1);
 
 		// Read color
 		return m_image.getColourAt(x, y, 1);

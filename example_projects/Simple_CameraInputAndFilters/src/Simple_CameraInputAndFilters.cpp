@@ -7,7 +7,7 @@ CREATE_APPLICATION( "Cing" );
  */
 
 // OpenCV module includes
-#include "OpenCV/src/OpenCVIncludes.h"
+#include "OpenCV/src/OpenCV-CingBeat.h"
 
 Capture capture;
 Image colorImg, grayImg, blurryImg, thresholdImg;

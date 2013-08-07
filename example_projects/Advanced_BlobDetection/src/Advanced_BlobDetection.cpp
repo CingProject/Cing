@@ -10,7 +10,7 @@ CREATE_APPLICATION( "Cing" );
  */
 
 // OpenCV module includes
-#include "OpenCV/src/OpenCVIncludes.h"
+#include "OpenCV/src/OpenCV-CingBeat.h"
 
 BackgroundSubtraction	bgSubtraction;	// Object to perform Background subtraction
 BlobFinder				bfinder;		// Object to perform blob finding

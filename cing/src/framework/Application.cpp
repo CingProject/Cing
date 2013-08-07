@@ -50,7 +50,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/CommonUserAPI.h"
 
 // OpenCV module includes
-#include "OpenCV/src/OpenCVIncludes.h"
+#include "OpenCV/src/OpenCV-CingBeat.h"
 
 // Extern
 #undef nil

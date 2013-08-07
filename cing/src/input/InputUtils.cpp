@@ -25,6 +25,9 @@
  THE SOFTWARE.
  */
 
+// Precompiled headers
+#include "Cing-Precompiled.h"
+
 #include "InputUtils.h"
 
 namespace Cing

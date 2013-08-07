@@ -618,7 +618,7 @@ namespace Cing
 		}
 
 		// Clamp time position
-		whereInSecs = constrain( whereInSecs, 0, duration() );
+		whereInSecs = constrain( whereInSecs, 0.0f, duration() );
 
 		// Clean bus to avoid accumulation of messages
 		flushBusMsg();
@@ -660,7 +660,7 @@ namespace Cing
 		LOG_ENTER_FUNCTION;
 	
 		// Clamp time position
-		frameNumber = constrain( frameNumber, 0, numberOfFrames()-1 );
+		frameNumber = constrain( frameNumber, 0.0, numberOfFrames()-1 );
 
 		// Calculate time in seconds for this frame
 		double whereInSecs = (double)frameNumber / fps();

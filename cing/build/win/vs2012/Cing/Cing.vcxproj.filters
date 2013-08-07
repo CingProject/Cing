@@ -377,15 +377,6 @@
     <ClCompile Include="..\..\..\..\src\gui\OutputDebugTextBoxCEGUI.cpp">
       <Filter>Src\GUI\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input\InputManager.cpp">
-      <Filter>Src\Input\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input\Keyboard.cpp">
-      <Filter>Src\Input\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input\Mouse.cpp">
-      <Filter>Src\Input\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\midi\MidiIO.cpp">
       <Filter>Src\Midi\Source Files</Filter>
     </ClCompile>
@@ -442,6 +433,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\framework\AppFrameworkBasic.cpp">
       <Filter>Src\Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input\InputManagerOIS.cpp">
+      <Filter>Src\Input\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input\InputUtils.cpp">
+      <Filter>Src\Input\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input\KeyboardOIS.cpp">
+      <Filter>Src\Input\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input\MouseOIS.cpp">
+      <Filter>Src\Input\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.cpp">
+      <Filter>cing_ings\OpenCV</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -712,19 +718,10 @@
     <ClInclude Include="..\..\..\..\src\input\BaseInputDevice.h">
       <Filter>Src\Input\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\input\InputManager.h">
-      <Filter>Src\Input\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\src\input\InputPrereqs.h">
       <Filter>Src\Input\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\input\InputTypes.h">
-      <Filter>Src\Input\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\input\Keyboard.h">
-      <Filter>Src\Input\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\input\Mouse.h">
       <Filter>Src\Input\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\midi\midiIO.h">
@@ -785,9 +782,6 @@
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVVideoRecorder.h">
       <Filter>cing_ings\OpenCV</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVIncludes.h">
-      <Filter>cing_ings\OpenCV</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.h">
       <Filter>cing_ings\OpenCV</Filter>
     </ClInclude>
@@ -802,6 +796,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\framework\AppFrameworkBasic.h">
       <Filter>Src\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\InputManagerBase.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\InputManagerOIS.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\InputUtils.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\KeyboardBase.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\KeyboardOIS.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\MouseBase.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\input\MouseOIS.h">
+      <Filter>Src\Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.h">
+      <Filter>cing_ings\OpenCV</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

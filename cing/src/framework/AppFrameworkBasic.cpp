@@ -35,7 +35,7 @@
 #include "AppFrameworkBasic.h"
 #include "Application.h"
 #include "UserAppGlobals.h"
-#include "InputManagerOIS.h"
+#include "input/InputManagerOIS.h"
 
 // Ogre
 #include "OgreException.h"

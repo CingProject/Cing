@@ -43,9 +43,9 @@
 #include "OISKeyboard.h"
 
 // Input
-#include "input/Mouse.h"
-#include "input/Keyboard.h"
-#include "input/InputManager.h"
+//#include "input/Mouse.h"
+//#include "input/Keyboard.h"
+//#include "input/InputManager.h"
 
 // Ogre Camera System
 #include <CCSCameraControlSystem.h>
@@ -208,8 +208,8 @@ void CameraController::mouseControl()
 		CCS::FreeCameraMode* freeCameraMode = (CCS::FreeCameraMode*)m_cameraCS->getCameraMode("Free");
 		if ( freeCameraMode )
 		{
-			freeCameraMode->yaw( (float)mouse.getXAxisRelative() );
-			freeCameraMode->pitch( (float)mouse.getYAxisRelative() );
+			//freeCameraMode->yaw( (float)mouse.getXAxisRelative() );
+			//freeCameraMode->pitch( (float)mouse.getYAxisRelative() );
 		}
 	}
 }
@@ -220,62 +220,62 @@ void CameraController::mouseControl()
  */
 void CameraController::keyboardControl()
 {
-	// Free camera mode
-	if(m_cameraCS->getCameraModeName(m_cameraCS->getCurrentCameraMode()) == "Free")
-	{
-		CCS::FreeCameraMode* freeCameraMode = (CCS::FreeCameraMode*)m_cameraCS->getCameraMode("Free");
-		if ( !freeCameraMode )
-			return;
+	//// Free camera mode
+	//if(m_cameraCS->getCameraModeName(m_cameraCS->getCurrentCameraMode()) == "Free")
+	//{
+	//	CCS::FreeCameraMode* freeCameraMode = (CCS::FreeCameraMode*)m_cameraCS->getCameraMode("Free");
+	//	if ( !freeCameraMode )
+	//		return;
 
-		if(keyboard.isKeyDown(OIS::KC_A))
-			freeCameraMode->goLeft();
+	//	if(keyboard.isKeyDown(OIS::KC_A))
+	//		freeCameraMode->goLeft();
 
-		if(keyboard.isKeyDown(OIS::KC_D))
-			freeCameraMode->goRight();
+	//	if(keyboard.isKeyDown(OIS::KC_D))
+	//		freeCameraMode->goRight();
 
-		if(keyboard.isKeyDown(OIS::KC_UP) || keyboard.isKeyDown(OIS::KC_W) )
-			freeCameraMode->goForward();
+	//	if(keyboard.isKeyDown(OIS::KC_UP) || keyboard.isKeyDown(OIS::KC_W) )
+	//		freeCameraMode->goForward();
 
-		if(keyboard.isKeyDown(OIS::KC_DOWN) || keyboard.isKeyDown(OIS::KC_S) )
-			freeCameraMode->goBackward();
+	//	if(keyboard.isKeyDown(OIS::KC_DOWN) || keyboard.isKeyDown(OIS::KC_S) )
+	//		freeCameraMode->goBackward();
 
-		if(keyboard.isKeyDown(OIS::KC_PGUP))
-			freeCameraMode->goUp();
+	//	if(keyboard.isKeyDown(OIS::KC_PGUP))
+	//		freeCameraMode->goUp();
 
-		if(keyboard.isKeyDown(OIS::KC_PGDOWN))
-			freeCameraMode->goDown();
+	//	if(keyboard.isKeyDown(OIS::KC_PGDOWN))
+	//		freeCameraMode->goDown();
 
-		if(keyboard.isKeyDown(OIS::KC_RIGHT))
-			freeCameraMode->yaw(-1);
+	//	if(keyboard.isKeyDown(OIS::KC_RIGHT))
+	//		freeCameraMode->yaw(-1);
 
-		if(keyboard.isKeyDown(OIS::KC_LEFT))
-			freeCameraMode->yaw(1);	
-	}
-	// Orbital camera mode
-	else if(m_cameraCS->getCameraModeName(m_cameraCS->getCurrentCameraMode()) == "Orbital")
-	{
-		CCS::OrbitalCameraMode* orbitalCameraMode = (CCS::OrbitalCameraMode*)m_cameraCS->getCameraMode("Orbital");
-		if ( !orbitalCameraMode )
-			return;
+	//	if(keyboard.isKeyDown(OIS::KC_LEFT))
+	//		freeCameraMode->yaw(1);	
+	//}
+	//// Orbital camera mode
+	//else if(m_cameraCS->getCameraModeName(m_cameraCS->getCurrentCameraMode()) == "Orbital")
+	//{
+	//	CCS::OrbitalCameraMode* orbitalCameraMode = (CCS::OrbitalCameraMode*)m_cameraCS->getCameraMode("Orbital");
+	//	if ( !orbitalCameraMode )
+	//		return;
 
-		if(keyboard.isKeyDown(OIS::KC_A))
-			orbitalCameraMode->yaw(1);
+	//	if(keyboard.isKeyDown(OIS::KC_A))
+	//		orbitalCameraMode->yaw(1);
 
-		if(keyboard.isKeyDown(OIS::KC_D))
-			orbitalCameraMode->yaw(-1);
+	//	if(keyboard.isKeyDown(OIS::KC_D))
+	//		orbitalCameraMode->yaw(-1);
 
-		if(keyboard.isKeyDown(OIS::KC_W))
-			orbitalCameraMode->pitch(1);
+	//	if(keyboard.isKeyDown(OIS::KC_W))
+	//		orbitalCameraMode->pitch(1);
 
-		if(keyboard.isKeyDown(OIS::KC_S))
-			orbitalCameraMode->pitch(-1);
+	//	if(keyboard.isKeyDown(OIS::KC_S))
+	//		orbitalCameraMode->pitch(-1);
 
-		if(keyboard.isKeyDown(OIS::KC_PGUP))
-			orbitalCameraMode->zoom(-1);
+	//	if(keyboard.isKeyDown(OIS::KC_PGUP))
+	//		orbitalCameraMode->zoom(-1);
 
-		if(keyboard.isKeyDown(OIS::KC_PGDOWN))
-			orbitalCameraMode->zoom(1);	
-	}
+	//	if(keyboard.isKeyDown(OIS::KC_PGDOWN))
+	//		orbitalCameraMode->zoom(1);	
+	//}
 		
 }
 

@@ -122,6 +122,7 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\MediaPlayerOCV.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVCamera.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVVideoRecorder.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.cpp" />
@@ -138,6 +139,10 @@
     <ClCompile Include="..\..\..\..\src\audio\SoundManagerOpenAL.cpp" />
     <ClCompile Include="..\..\..\..\src\audio\SoundOpenAL.cpp" />
     <ClCompile Include="..\..\..\..\src\framework\AppFrameworkBasic.cpp" />
+    <ClCompile Include="..\..\..\..\src\input\InputManagerOIS.cpp" />
+    <ClCompile Include="..\..\..\..\src\input\InputUtils.cpp" />
+    <ClCompile Include="..\..\..\..\src\input\KeyboardOIS.cpp" />
+    <ClCompile Include="..\..\..\..\src\input\MouseOIS.cpp" />
     <ClCompile Include="..\..\..\..\src\physics\PhysicsManager.cpp" />
     <ClCompile Include="..\..\..\..\src\physics\PhysicsUserAPI.cpp" />
     <ClCompile Include="..\..\..\..\src\physics\PhysicsBox.cpp" />
@@ -212,14 +217,6 @@
     <ClCompile Include="..\..\..\..\src\gui\GUIManagerCEGUI.cpp" />
     <ClCompile Include="..\..\..\..\src\gui\GUIUserAPI.cpp" />
     <ClCompile Include="..\..\..\..\src\gui\OutputDebugTextBoxCEGUI.cpp" />
-    <ClCompile Include="..\..\..\..\src\input\InputManager.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input\Keyboard.cpp" />
-    <ClCompile Include="..\..\..\..\src\input\Mouse.cpp" />
     <ClCompile Include="..\..\..\..\src\midi\MidiIO.cpp" />
     <ClCompile Include="..\..\..\..\src\video\BaseVideoRecorder.cpp" />
     <ClCompile Include="..\..\..\..\src\video\MediaPlayerVLC.cpp" />
@@ -238,7 +235,7 @@
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\MediaPlayerOCV.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVCamera.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OCVVideoRecorder.h" />
-    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVIncludes.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.h" />
@@ -255,6 +252,13 @@
     <ClInclude Include="..\..\..\..\src\audio\SoundOpenAL.h" />
     <ClInclude Include="..\..\..\..\src\framework\AppFrameworkBasic.h" />
     <ClInclude Include="..\..\..\..\src\graphics\BaseRenderer2D.h" />
+    <ClInclude Include="..\..\..\..\src\input\InputManagerBase.h" />
+    <ClInclude Include="..\..\..\..\src\input\InputManagerOIS.h" />
+    <ClInclude Include="..\..\..\..\src\input\InputUtils.h" />
+    <ClInclude Include="..\..\..\..\src\input\KeyboardBase.h" />
+    <ClInclude Include="..\..\..\..\src\input\KeyboardOIS.h" />
+    <ClInclude Include="..\..\..\..\src\input\MouseBase.h" />
+    <ClInclude Include="..\..\..\..\src\input\MouseOIS.h" />
     <ClInclude Include="..\..\..\..\src\physics\PhysicsManager.h" />
     <ClInclude Include="..\..\..\..\src\physics\PhysicsPrereqs.h" />
     <ClInclude Include="..\..\..\..\src\physics\PhysicsUserAPI.h" />
@@ -334,11 +338,8 @@
     <ClInclude Include="..\..\..\..\src\gui\GUIUserAPI.h" />
     <ClInclude Include="..\..\..\..\src\gui\OutputDebugTextBoxCEGUI.h" />
     <ClInclude Include="..\..\..\..\src\input\BaseInputDevice.h" />
-    <ClInclude Include="..\..\..\..\src\input\InputManager.h" />
     <ClInclude Include="..\..\..\..\src\input\InputPrereqs.h" />
     <ClInclude Include="..\..\..\..\src\input\InputTypes.h" />
-    <ClInclude Include="..\..\..\..\src\input\Keyboard.h" />
-    <ClInclude Include="..\..\..\..\src\input\Mouse.h" />
     <ClInclude Include="..\..\..\..\src\midi\midiIO.h" />
     <ClInclude Include="..\..\..\..\src\midi\MidiPrereqs.h" />
     <ClInclude Include="..\..\..\..\src\video\BaseVideoRecorder.h" />
