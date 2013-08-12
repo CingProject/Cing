@@ -32,10 +32,15 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
+
+
 namespace Cing
 {
     
-    void RunApplicationCocoaView( const char* _appName, void *_view );
+    class UserApplicationBase;
+    
+    // Runs an application that will be rendered in a Cocoa view. Can be user app class based or function-processing style
+    void RunApplicationCocoaView( const char* _appName, void *_view, UserApplicationBase* _userApp = NULL );
     
 }
 

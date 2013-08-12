@@ -57,7 +57,7 @@
 
 @implementation CingCocoaViewApplication
 
-- (id)initWithName:(const char *)appName andView:(void *)view
+- (id)initWithName:(const char *)appName andView:(void *)view andUserApp:(Cing::UserApplicationBase *)userApp
 {
     self = [super init];
     if ( self != nil )
@@ -78,7 +78,7 @@
             _inputManager->setParentView( ogreView );
 
             // Init application
-            Cing::Application::getSingleton().initApp( _inputManager );
+            Cing::Application::getSingleton().initApp( _inputManager, (Cing::UserApplicationBase *)userApp );
         }
         catch( Ogre::Exception& e )
         {
@@ -149,9 +149,9 @@
 namespace Cing
 {
     
-    void RunApplicationCocoaView(const char *_appName, void *_view)
+    void RunApplicationCocoaView(const char *_appName, void *_view, UserApplicationBase *_userApp /*= NULL*/ )
     {
-        [[[CingCocoaViewApplication alloc] initWithName:_appName andView:_view] autorelease];
+        [[[CingCocoaViewApplication alloc] initWithName:_appName andView:_view andUserApp:(UserApplicationBase *)_userApp] autorelease];
     }
     
 }

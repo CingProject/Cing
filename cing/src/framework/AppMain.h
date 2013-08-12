@@ -86,8 +86,12 @@ namespace Cing
         return 0;                                                           \
     };
     
-    #define CREATE_COCOA_VIEW_APPLICATION( appName, ogreView )                \
+    #define CREATE_COCOA_VIEW_APPLICATION( appName, ogreView )              \
         RunApplicationCocoaView( appName, ogreView );
+    
+    #define CREATE_COCOA_VIEW_USER_APPLICATION( appName, ogreView, userAppClassInstance )     \
+        RunApplicationCocoaView( appName, ogreView, userAppClassInstance );
+    
     
 #else
 
