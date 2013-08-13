@@ -168,6 +168,8 @@ typedef Color color;
 //typedef MediaPlayerVLC MediaPlayer;
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 //typedef MediaPlayerVLC MediaPlayer;
+#include "OpenCV/src/MediaPlayerOCV.h"
+typedef MediaPlayerOCV MediaPlayer;
 #endif
 
 #endif // _Vision_H_
