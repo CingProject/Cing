@@ -847,9 +847,14 @@ void GraphicsManager::setBackgroundColor( const Color& color )
 */
 void GraphicsManager::applyCoordinateSystemTransform( const GraphicsType& coordSystem )
 {
+   	// Check application correctly initialized (could not be if the user didn't call size function)
+	Application::getSingleton().checkSubsystemsInit();
+    
+    // Check if it's actually the same coordinate system we already had
 	if ( coordSystem == m_coordSystem)
 		return;
 
+    // Set camera and scene manager setting accordingly
 	m_coordSystem = coordSystem;
 	switch(m_coordSystem)
 	{
