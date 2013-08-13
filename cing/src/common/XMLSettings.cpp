@@ -413,6 +413,24 @@ Cing::Vector XMLSettings::getAttribute( const std::string& tagName, const Cing::
     return Cing::Vector( x, y, z );
 }
 
+
+/**	// 
+ * @brief Returns list of XML tags with the same path (for cases where there are several and you don't know the number) 
+ *
+ * @code 
+ *		XMLElementArray children;
+ *		xmlSettings.getChildren( children, "tag" );
+ * @endcode
+ *
+ * @param[out] children	All the xml children found that match the path will be stored here.
+ * @param[in]	path	Path (xml tags with / as separator) of the children we want to find.
+ */
+void XMLSettings::getChildren( XMLElement::XMLElementArray& children, const std::string& path /*= "NO_PATH"*/ )
+{
+	m_xmlFile.getChildren( children, path );
+}
+
+
 /**
  * @brief Save to file
  * @param xmlFileName		File name
