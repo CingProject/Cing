@@ -483,11 +483,29 @@ namespace Cing
 		if ( !isValid() || !m_newBufferReady)
 			return;
 		
-		// Retrieve frame
+		// Retrieve frame (different paths windows/mac)
+        // TODO: review why they differ
+#ifdef WIN32
         cv::Mat outMat = toCVMat(m_frameImg);
-		m_capture.retrieve( outMat, 0 );
-		m_frameImg.updateTexture();
-		
+		bool result = m_capture.retrieve( outMat );
+        if ( result )
+        {
+            m_frameImg.updateTexture();
+        }
+#elif __APPLE__
+        cv::Mat outMat = toCVMat(m_frameImg);
+        cv::Mat videoFrame;
+        
+        // NOTE: for some reason, the capture stores the image in a new mat that is RGBA format instead of RGB, so we are copying to
+        // a temp image to fix this for now (less optimized but...)
+		bool result = m_capture.retrieve( videoFrame );
+        if ( result )
+        {
+            videoFrame.copyTo(outMat);
+            m_frameImg.updateTexture();
+        }
+#endif
+        
 		// Clear new buffer flag
 		m_newBufferReady	= false;
 	}
