@@ -64,6 +64,7 @@ namespace Cing
 	std::string ResourceManager::userDataPath				= "";
 	std::string ResourceManager::userExecPath				= "";
 	std::string resourcesPathInBundle						= "";
+    char        bundlePath[2048];
 #endif
 	
 	/**
@@ -103,9 +104,16 @@ namespace Cing
 		new Ogre::Root( resourcesPathInBundle + pluginsPath );
 
 		 // Store user data path in globals
-		dataFolder = userDataPath;
-		LOG("User Data Folder: %s", dataFolder.c_str() );
+#ifdef WIN32
+		dataFolder = userDataPath + "/";
+#elif __APPLE__
+        dataFolder = String(bundlePath) + "/" + userResourcesDirName + "/";
+#endif
+        
+        LOG("User Data Folder: %s", dataFolder.c_str() );
 
+        
+        
 		// Load Cing Config file
 		XMLElement xml;
 		xml.load( "CingConfig.xml" );
@@ -268,7 +276,6 @@ namespace Cing
 	 */
 	void ResourceManager::extractUserAppPathMAC()
 	{
-		char bundlePath[2048];
 		char exePath[2048];
 		char resourcesPath[2048];
 
