@@ -55,23 +55,24 @@ namespace Cing
 
 		// Constructor / Destructor
 		MediaPlayerOCV();
-		MediaPlayerOCV( const char* filename, float fps = -1 );
+		MediaPlayerOCV( const std::string& filename, float fps = -1 );
 		~MediaPlayerOCV();
 
 		// Init / Release / Update
 		bool    init    ();
-		bool    load    ( const char* fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
+		bool    load    ( const std::string& fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
 		void    end     ();
 		void    update  ();
 		Image&  getImage();
 
 		// Query methods
-		bool    isValid   () const { return m_bIsValid; }
-		bool    isPlaying ();
-		float   duration  () const { return (float)m_videoDuration; }
-		float   time      ();
-		int     getWidth  () const { return m_videoWidth; }
-		int     getHeight () const { return m_videoHeight; }
+		bool    isValid     () const { return m_bIsValid; }
+		bool    isPlaying   ();
+		float   duration    () const { return (float)m_videoDuration; }
+		float   time        ();
+		int     getWidth    () const { return m_videoWidth; }
+		int     getHeight   () const { return m_videoHeight; }
+        float   fps         () const { return m_videoFps; }
 
 		// Media control
 		void    play    ();

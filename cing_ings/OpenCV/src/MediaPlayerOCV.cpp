@@ -63,7 +63,7 @@ namespace Cing
 	 * @param filename	Name of the movie to load (it can be a local path relative to the data folder, or a network path)
 	 * @param fps		Desired Frames per Second for the playback. -1 means to use the fps of the movie file.
 	 */
-	MediaPlayerOCV::MediaPlayerOCV( const char* filename, float fps /*= -1*/ ):
+	MediaPlayerOCV::MediaPlayerOCV( const std::string& filename, float fps /*= -1*/ ):
 	m_bufferSizeInBytes(0),
 	m_videoWidth	( 0 ),
 	m_videoHeight	( 0 ),
@@ -107,7 +107,7 @@ namespace Cing
 	 * @param fps			Desired Frames per Second for the playback. -1 means to use the fps of the movie file.
 	 * @return true if the video was succesfully loaded
 	 */
-	bool MediaPlayerOCV::load( const char* fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
+	bool MediaPlayerOCV::load( const std::string& fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
 	{
 		// Build path to file
 		bool result = buildPathToFile( fileName );
