@@ -90,9 +90,16 @@ namespace Cing
 		if ( !pOgreSceneManager )
 			THROW_EXCEPTION( "Internal Error: NULL Scene Manager received" );
 
+		// Viewport dimmensions
+		int viewportWidth	= width;
+		int viewportHeight	= height; 
+
 		// Check viewport
-		if ( !viewport )
-			THROW_EXCEPTION( "Internal Error: NULL Viewport received" );
+		if ( viewport )
+		{
+			viewportWidth = viewport->getActualWidth();
+			viewportHeight= viewport->getActualHeight();
+		}
 
 		// Store scene manager pointer
 		m_pOgreSceneManager = pOgreSceneManager;
@@ -105,7 +112,7 @@ namespace Cing
 		m_cameraSceneNode->attachObject( m_pOgreCamera );
 
 		// Set initial properties:
-		m_aspectRatio = static_cast< float >( viewport->getWidth() ) / static_cast< float >( viewport->getHeight() );
+		m_aspectRatio = (float)viewportWidth / (float)viewportHeight;
 		m_pOgreCamera->setAspectRatio( m_aspectRatio );
 		m_pOgreCamera->setFOVy(Ogre::Radian(degToRad(Camera3D::V_FOV_DEG)));
 		m_cameraSceneNode->setPosition( 0, 0, 2000 );
@@ -132,13 +139,13 @@ namespace Cing
 		case PROCESSING:
 			{
 				// Calculate new camera position 
-				float cameraDistance    =  (viewport->getHeight() / 2.0f ) / tanf( (m_pOgreCamera->getFOVy().valueRadians()) / 2.0f );
+				float cameraDistance    =  (viewportHeight / 2.0f ) / tanf( (m_pOgreCamera->getFOVy().valueRadians()) / 2.0f );
 
-				Ogre::Vector3 camPos = Ogre::Vector3( viewport->getWidth()/2.0f, viewport->getHeight()/2.0f, cameraDistance );
+				Ogre::Vector3 camPos = Ogre::Vector3( viewportWidth/2.0f, viewportHeight/2.0f, cameraDistance );
 				// Set the camera position
 
 				m_cameraSceneNode->setPosition( camPos );
-				m_cameraSceneNode->lookAt( Ogre::Vector3(viewport->getWidth()/2.0f, viewport->getHeight()/2.0f, 0.0f), Ogre::Node::TS_WORLD );
+				m_cameraSceneNode->lookAt( Ogre::Vector3(viewportWidth/2.0f, viewportHeight/2.0f, 0.0f), Ogre::Node::TS_WORLD );
 
 				// Apply symmetry to y-world axis
 				m_pOgreSceneManager->getRootSceneNode()->setScale(1,-1,1);

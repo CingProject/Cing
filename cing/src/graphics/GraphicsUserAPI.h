@@ -239,6 +239,10 @@ Vector			screenToWorld			( const Vector& screenCoordinate, float distanceToCamer
 Ogre::Entity*	pickEntity				( const Vector2& screenCoordinate );
 
 
+//----------------------------------------------------------------------------------- 
+// Window and Viewport Related
+//----------------------------------------------------------------------------------- 
+void setActiveViewport( Ogre::Viewport* viewport );
 
 //----------------------------------------------------------------------------------- 
 // Helpers
