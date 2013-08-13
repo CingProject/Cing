@@ -56,9 +56,10 @@ namespace Cing
 	*/
 	void RunApplication( const char* _appName )
 	{
-
+#ifndef _DEBUG
 		try
 		{
+#endif
 			// Store app name
 			appName = _appName;
 
@@ -70,7 +71,7 @@ namespace Cing
 
 			// Release application
 			Application::getSingleton().endApp();
-
+#ifndef _DEBUG
 		}
 		catch( Ogre::Exception& e )
 		{
@@ -111,7 +112,7 @@ namespace Cing
 		{
 			LOG_ERROR( "Unidentified exception" );
 		}
-
+#endif
 	}
 
 
