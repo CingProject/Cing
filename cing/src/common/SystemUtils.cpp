@@ -98,7 +98,8 @@ namespace Cing
 		if( (_access( folderPath.c_str() , 0 )) != -1 )
 			return true;
 #else
-		LOG_ERROR( "folderExists NOT IMPLEMENTED IN THIS SYSTEM OR COMPILER" );
+		if( (access( folderPath.c_str() , 0 )) != -1 )
+			return true;
 #endif
 		
 		return false;
