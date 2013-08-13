@@ -163,7 +163,7 @@ bool GraphicsManager::createWindow()
 	ogreSceneManager	= m_pSceneManager;
 
 	// Init the main camera
-	m_activeCamera.init( m_pSceneManager );
+	m_activeCamera.init( m_mainWindow.getViewport(), m_pSceneManager );
 
 	// Set the global pointer to the camera
 	ogreCamera	= m_activeCamera.getOgreCamera();

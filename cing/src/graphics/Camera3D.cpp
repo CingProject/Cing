@@ -71,11 +71,13 @@ namespace Cing
 	* @internal
 	* @brief Initializes the class so it becomes valid.
 	*
-	* @param[in] pOgreSceneManager Ogre Scene Manager. It allows the creation of the ogre camera
-	* @param[in] cameraName        Optional parameter to specify a name for the camera
+	* @param viewport				viewport in which this camera will render (used to set the right aspect ratio)
+	* @param[in] pOgreSceneManager	Ogre Scene Manager. It allows the creation of the ogre camera
+	* @param[in] cameraName			Optional parameter to specify a name for the camera
+	* @param coordinateSystem		Coordinate system to setup in this camera (PROCESSING OR OPENGL3D)
 	* @return true if the initialization was ok | false otherwise
 	*/
-	bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& cameraName /*= DEFAULT_NAME*/ )
+	bool Camera3D::init( Ogre::Viewport* viewport, Ogre::SceneManager* pOgreSceneManager, const std::string& cameraName /*= DEFAULT_NAME*/, Cing::GraphicsType coordinateSystem /*= PROCESSING*/ )
 	{
 		// Check if the class is already initialized
 		if ( isValid() )
@@ -86,7 +88,11 @@ namespace Cing
 
 		// Check scene manager
 		if ( !pOgreSceneManager )
-			THROW_EXCEPTION( "Internal Error: NULL Scene Manager" );
+			THROW_EXCEPTION( "Internal Error: NULL Scene Manager received" );
+
+		// Check viewport
+		if ( !viewport )
+			THROW_EXCEPTION( "Internal Error: NULL Viewport received" );
 
 		// Store scene manager pointer
 		m_pOgreSceneManager = pOgreSceneManager;
@@ -99,7 +105,7 @@ namespace Cing
 		m_cameraSceneNode->attachObject( m_pOgreCamera );
 
 		// Set initial properties:
-		m_aspectRatio = static_cast< float >( width ) / static_cast< float >( height );
+		m_aspectRatio = static_cast< float >( viewport->getWidth() ) / static_cast< float >( viewport->getHeight() );
 		m_pOgreCamera->setAspectRatio( m_aspectRatio );
 		m_pOgreCamera->setFOVy(Ogre::Radian(degToRad(Camera3D::V_FOV_DEG)));
 		m_cameraSceneNode->setPosition( 0, 0, 2000 );
@@ -111,6 +117,36 @@ namespace Cing
 
 		// Shadow far distance (in case there are shadows)
 		m_pOgreSceneManager->setShadowFarDistance( m_pOgreCamera->getFarClipDistance() );
+
+		// Override with specific coordinate system 
+		switch(coordinateSystem)
+		{
+		case OPENGL3D:
+			{
+				// Reset camera position (and orientation?)
+				m_cameraSceneNode->setPosition( Ogre::Vector3( 0, 0, 2000.0 ) );
+				// Reset applied symmetry to y-world axis
+				m_pOgreSceneManager->getRootSceneNode()->setScale(1,1,1);
+			}
+			break;
+		case PROCESSING:
+			{
+				// Calculate new camera position 
+				float cameraDistance    =  (viewport->getHeight() / 2.0f ) / tanf( (m_pOgreCamera->getFOVy().valueRadians()) / 2.0f );
+
+				Ogre::Vector3 camPos = Ogre::Vector3( viewport->getWidth()/2.0f, viewport->getHeight()/2.0f, cameraDistance );
+				// Set the camera position
+
+				m_cameraSceneNode->setPosition( camPos );
+				m_cameraSceneNode->lookAt( Ogre::Vector3(viewport->getWidth()/2.0f, viewport->getHeight()/2.0f, 0.0f), Ogre::Node::TS_WORLD );
+
+				// Apply symmetry to y-world axis
+				m_pOgreSceneManager->getRootSceneNode()->setScale(1,-1,1);
+			}	
+			break;
+		default:
+			break;
+		};
 
 		// The class is now initialized
 		m_bIsValid = true;
