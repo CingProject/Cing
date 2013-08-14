@@ -92,6 +92,19 @@ T max( T value1, T value2 )
 	return (value1 > value2)? value1: value2;
 }
 
+/*
+ * @brief Returns the given value clamped to the range [minVal..maxVal]
+ * @return the value clamped to a given range
+ */
+template < typename T >
+T clamp( T value, T minVal, T maxVal )
+{
+	T result = (value >= minVal) ? value : minVal;
+	result = (result <= maxVal) ? result : maxVal;
+
+	return result;
+}
+
 /**
  * @brief Returns the absolute value of the received number
  * @param[in] value Number to get the absolute value

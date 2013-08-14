@@ -761,6 +761,27 @@ namespace Cing
 	}
 
 	/**
+	* @internal
+	* @brief Draws the image in 2d -> screen coordinates
+	*
+	* @param xPos x coordinate where the image should be drawn
+	* @param yPos y coordinate where the image should be drawn
+	* @param width		Width of the image that will be rendered <b>in screen coordinates</b>
+	* @param height	Height of the image that will be rendered <b>in screen coordinates</b>
+	*/
+	void Image::drawUV( float x, float y, float width, float height, float minU, float minV, float maxU, float maxV )
+	{
+		// check if texture needs to be updated
+		if (m_bUpdateTexture)
+		{
+			updateTexture();
+			m_bUpdateTexture = false;
+		}
+
+		m_quad.drawUV2d( x, y, width, height, minU, minV, maxU, maxV );
+	}
+
+	/**
 	* @brief Draws the image in 2d -> screen coordinates, but specifying the four corners
 	* order: top-left, top-right, bottom-right, bottom-left (anti-cloclwise)
 	*/

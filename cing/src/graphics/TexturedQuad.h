@@ -76,6 +76,7 @@ namespace Cing
 		void	draw2d			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
 		void	drawBackground	( float x, float y );
 		void	drawBackground	( float x, float y , float imgWidth, float imgHeight );
+		void	drawUV2d		( float x, float y, float width, float height, float minU, float minV, float maxU, float maxV );
 
 		// Texture update
 		void	updateTexture	( const Ogre::Image& img );
