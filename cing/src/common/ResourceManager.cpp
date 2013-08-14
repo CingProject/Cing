@@ -212,8 +212,13 @@ namespace Cing
 		std::string absPath = path;
 		// if the path is not absolute, build it
 		if ( isPathAbsolute( absPath ) == false )
-			absPath = userExecPath + path;
-
+        {
+#ifdef WIN32
+            absPath = userExecPath + path;
+#elif __APPLE__	
+            absPath = dataFolder + path;
+#endif
+        }
 		// Add the resource and initialise it
 		//static int idCounter = 0;
 		//std::string newResourceGroupName = userResourcesGroupName + toString(idCounter++);
