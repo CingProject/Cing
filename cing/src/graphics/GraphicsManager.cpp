@@ -142,6 +142,7 @@ bool GraphicsManager::createWindow( void* view )
         OgreView *ogreView = (OgreView *)view;
         windowParams["externalWindowHandle"] = Ogre::StringConverter::toString((size_t)ogreView);
         windowParams["macAPI"] = "cocoa";
+        windowParams["macAPICocoaUseNSView"] = "cocoa";
     }
 #endif
         
