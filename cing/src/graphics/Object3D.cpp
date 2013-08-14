@@ -164,8 +164,9 @@ namespace Cing
 			}
 			m_sceneNode->attachObject( m_entity );
 
-			// Set the object's material
-			setMaterial( materialName );
+			// Set the object's material (if one was passed)
+            if ( materialName.empty() == false )
+                setMaterial( materialName );
 		}
 
 
