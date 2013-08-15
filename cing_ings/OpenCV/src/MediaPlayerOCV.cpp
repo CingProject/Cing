@@ -175,8 +175,14 @@ namespace Cing
 	
 	/**
 	 * Updates media playback state
+     *
+     * @param updateTexture If this is false (default), the player is updated but the new frame is not updated
+     * in m_frameImg (nor in its texture) until the next call to getImage. With updateTexture set to true, the image and textures are updated if
+     * there is a new frame regardless of teh getImage() call. The latter might be slower if you won't need or use the image or texture, but if for example
+     * you are using the player just as a texture for an object that use it but don't need to draw the video on screen, you can pass updateTexture to true so that the
+     * texture is always up to date.
 	 */
-	void MediaPlayerOCV::update()
+	void MediaPlayerOCV::update( bool updateTexture /*= false*/ )
 	{
 		// Check if we have to loop
 		if ( m_loopPending )
@@ -184,24 +190,33 @@ namespace Cing
 			jump(0);
 			m_loopPending = false;
 		}
+       
+        m_newBufferReady = false;
 		
 		
 		// Set the playhead
 		unsigned long millisPlayback = m_timer.getMilliseconds();
 		double currentFrame = ((double)millisPlayback/1000.0) * m_videoFps;
-		//double ratio = currentFrame / (double)m_videoNFrames;
-		
-		// Request frames until the playhed is where we want
-		// NOTE: This is done this way, as in mac / opencv video capture has bugs in CV_CAP_PROP_POS_MSEC, CV_CAP_PROP_POS_FRAMES and CV_CAP_PROP_POS_AVI_RATIO
-		// So it is not possible to control the playhead
-		m_newBufferReady = false;
-		while( m_currentFrame < currentFrame )
-		{
-			m_capture.grab();
-			m_newBufferReady = true;
-			m_currentFrame++;
-		}
-		
+        
+        double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
+        if ( currentFrame > currentActualFrame )
+        {
+            m_capture.set(CV_CAP_PROP_POS_FRAMES, currentFrame);
+        
+            // And grab new frame (it will be updated in the next call to getImage()
+            m_newBufferReady = m_capture.grab();
+        }
+        
+        // If we got a new frame
+        if ( m_newBufferReady )
+        {
+            m_currentFrame = currentFrame;
+        
+            // Update image and texture if necessary
+            copyBufferIntoImage(updateTexture);
+        }
+
+        
 		// Check loop
 		if ( m_currentFrame >= m_videoNFrames )
 		{
@@ -234,12 +249,10 @@ namespace Cing
 			return m_frameImg;
 		}
 		
-		// Update, just in case there are pending operations
-		update();
-		
+        // NOTE: now the copy is done in ::update
 		// Check if we have a new buffer to copy
-		if ( m_newBufferReady )
-			copyBufferIntoImage();
+		//if ( m_newBufferReady )
+		//	copyBufferIntoImage();
 		
 		return m_frameImg;
 	}
@@ -295,6 +308,7 @@ namespace Cing
 		
 		// Timer that will control the playback
 		m_timer.reset();
+        m_capture.set( CV_CAP_PROP_POS_MSEC, 0 );
 	}
 	
 	/**
@@ -314,7 +328,8 @@ namespace Cing
 		m_playing = true;
 		
 		// Timer that will control the playback
-		m_timer.reset();	
+		m_timer.reset();
+        m_capture.set( CV_CAP_PROP_POS_MSEC, 0 );
 	}
 	
 	/**
@@ -476,8 +491,9 @@ namespace Cing
 	
 	/**
 	 * Copies the last buffer that came from the stream into the Image (drawable)
-	 */
-	void MediaPlayerOCV::copyBufferIntoImage()
+	 * @param updateTexture if false, only the ram buffer of m_frameImg is udpate, if true, it's GPU texture is updated as well.
+     */
+	void MediaPlayerOCV::copyBufferIntoImage( bool updateTexture /*= false*/)
 	{
 		// Check if video is ok
 		if ( !isValid() || !m_newBufferReady)
@@ -490,7 +506,8 @@ namespace Cing
 		bool result = m_capture.retrieve( outMat );
         if ( result )
         {
-            m_frameImg.updateTexture();
+            if ( updateTexture )
+                m_frameImg.updateTexture();
         }
 #elif __APPLE__
         cv::Mat outMat = toCVMat(m_frameImg);
@@ -502,7 +519,10 @@ namespace Cing
         if ( result )
         {
             videoFrame.copyTo(outMat);
-            m_frameImg.updateTexture();
+            if ( updateTexture )
+                m_frameImg.updateTexture();
+            else
+                m_frameImg.setUpdateTexture();
         }
 #endif
         

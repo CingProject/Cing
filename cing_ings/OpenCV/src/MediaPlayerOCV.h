@@ -62,7 +62,7 @@ namespace Cing
 		bool    init    ();
 		bool    load    ( const std::string& fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
 		void    end     ();
-		void    update  ();
+		void    update  ( bool updateTexture = false );
 		Image&  getImage();
 
 		// Query methods
@@ -92,7 +92,7 @@ namespace Cing
 	private:
 		// Internal methods
 		bool			buildPathToFile			( const String& path );
-		void			copyBufferIntoImage		();
+		void			copyBufferIntoImage		( bool updateTexture = false );
 
 		// Open CV stuff
 		cv::VideoCapture		m_capture;			///< OpenCV capture to read movie file
