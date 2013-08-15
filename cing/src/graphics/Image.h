@@ -124,6 +124,7 @@ namespace Cing
 		GraphicsType		getFormat		() const;
 		int					getNChannels	() const	{ return m_nChannels; }
 		Color				getPixel		( int x, int y ) const;
+        void                getPixel        ( int x, int y, Color& outColor ) const;
 		Ogre::TexturePtr 	getOgreTexture	() { return m_quad.getOgreTexture(); }
 		TexturedQuad&		getTexturedQuad	() { return m_quad; }
 		const TexturedQuad&	getTexturedQuad	() const { return m_quad; }
