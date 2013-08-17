@@ -105,6 +105,17 @@ T clamp( T value, T minVal, T maxVal )
 	return result;
 }
 
+/*
+ * @brief Rounds a number into the closest integer
+ * @return the rounded number
+ */
+template < typename T >
+T round( T value )
+{
+	return floor( value + (T)0.5 );
+}
+
+
 /**
  * @brief Returns the absolute value of the received number
  * @param[in] value Number to get the absolute value
