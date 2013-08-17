@@ -59,17 +59,18 @@ namespace Cing
 		Image&  getImage();
 
 		// Query methods
-		bool    			isValid   		() const { return m_bIsValid; }
-		bool    			isPlaying 		();
-		bool				isPaused  		();
-		float   			duration  		() const { return (float)m_videoDuration; }
-		float   			time      		();
-		unsigned int    	getWidth  		() const { return m_videoWidth; }
-		unsigned int    	getHeight 		() const { return m_videoHeight; }
-		float   			fps		  		() const { return m_videoFps; }
-		float   			frameRate 		() const { return m_videoFps; }
-		unsigned int		numberOfFrames	() const { return m_nFrames; } 
-		const std::string&	getFilePath		() const { return m_fileName; }
+		bool    			isValid   			() const { return m_bIsValid; }
+		bool    			isPlaying 			();
+		bool				isPaused  			();
+		float   			duration  			() const { return (float)m_videoDuration; }
+		float   			time      			();
+		unsigned int		currentFrameNumber	() { return (unsigned int)floor(time() * m_videoFps); }
+		unsigned int    	getWidth  			() const { return m_videoWidth; }
+		unsigned int    	getHeight 			() const { return m_videoHeight; }
+		float   			fps		  			() const { return m_videoFps; }
+		float   			frameRate 			() const { return m_videoFps; }
+		unsigned int		numberOfFrames		() const { return m_nFrames; } 
+		const std::string&	getFilePath			() const { return m_fileName; }
 
 		// Media control
 		void    play    ();

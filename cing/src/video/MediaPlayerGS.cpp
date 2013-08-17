@@ -111,7 +111,6 @@ namespace Cing
 			break;
 
 		case GST_MESSAGE_ERROR:
-			player->stop();
 
 			// Get error info
 			GError*	error;
@@ -126,7 +125,7 @@ namespace Cing
 			g_free(debugInfo);
 
 			// Stop the media player
-			player->stop();
+			//player->stop();
 
 			break;
 
@@ -300,7 +299,7 @@ namespace Cing
 		m_videoDuration = duration / 1000000000.0;
 
 		// Also store the number of frames
-		m_nFrames  =  m_videoFps * m_videoDuration;
+		m_nFrames  =  round(m_videoFps * m_videoDuration);
 
 		LOG( "MediaPlayer: File correctly loaded: %s", m_fileName.c_str() );
 
@@ -502,17 +501,15 @@ namespace Cing
 		// Clean bus to avoid accumulation of messages
 		flushBusMsg();
 
-		// If the end of the file was reached, reset the playhead to the beginning
-		if ( m_endOfFileReached )
-		{
+		// If we were not in pause, reset the playhead to the beginning
+		if ( !m_paused )
 			jump(0);
-			m_endOfFileReached	= false;
-		}
 
 		// no loop mode
-		m_loop = false;
-		m_paused			= false;
-		m_playing			= true;
+		m_loop		= false;
+		m_paused	= false;
+		m_playing	= true;
+		m_endOfFileReached	= false;
 		
 		// Play Stream
 		setPipelineState(GST_STATE_PLAYING);
@@ -537,18 +534,15 @@ namespace Cing
 		// Clean bus to avoid accumulation of messages
 		flushBusMsg();
 
-		// If the end of the file was reached, reset the playhead to the beginning
-		if ( m_endOfFileReached )
-		{
+		// If we were not in pause, reset the playhead to the beginning
+		if ( !m_paused )
 			jump(0);
-			m_endOfFileReached	= false;
-		}
-
 
 		// loop mode
-		m_loop = true;  
-		m_paused		= false;
-		m_playing		= true;
+		m_loop				= true;  
+		m_paused			= false;
+		m_playing			= true;
+		m_endOfFileReached	= false;
 
 		// Play Stream
 		setPipelineState(GST_STATE_PLAYING);
@@ -571,11 +565,11 @@ namespace Cing
 		}
 
 		// Reset playhead and pause
-		jump(0);
 		setPipelineState(GST_STATE_PAUSED);
 		
 		m_paused	= false;
 		m_playing	= false;
+		m_loop		= false;
 
 		LOG_EXIT_FUNCTION;
 	}
@@ -617,6 +611,16 @@ namespace Cing
 			return;
 		}
 
+		// If we are already at that frame, don't jump
+		// NOTE: this is cause otherwise Gstreamer throws this error: "(qtdemux10): This file contains no playable streams."
+		unsigned int frameToJump = round(whereInSecs * m_videoFps);
+		unsigned int currentFrame = currentFrameNumber();
+		if ( currentFrame = frameToJump )
+		{
+			LOG_TRIVIAL( "MediaPlayerGS::jump. Not jumping, already at time/frame [%f/%d]", whereInSecs, currentFrame );
+			return;
+		}
+
 		// Clamp time position
 		whereInSecs = constrain( whereInSecs, 0, duration() );
 
@@ -624,7 +628,7 @@ namespace Cing
 		flushBusMsg();
 
 		// If we have a new buffer available, clear the flag, we don't want it anymore after the seek
-			m_newBufferReady	= false;
+		m_newBufferReady	= false;
 
 		// Perform the seek
 		GstSeekFlags	flags		= (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE);
@@ -659,6 +663,15 @@ namespace Cing
 	{
 		LOG_ENTER_FUNCTION;
 	
+		// If we are already at that frame, don't jump
+		// NOTE: this is cause otherwise Gstreamer throws this error: "(qtdemux10): This file contains no playable streams."
+		unsigned int currentFrame = currentFrameNumber();
+		if ( currentFrame = frameNumber )
+		{
+			LOG_TRIVIAL( "MediaPlayerGS::jumpToFrame. Not jumping, already at frame %d", frameNumber );
+			return;
+		}
+
 		// Clamp time position
 		frameNumber = constrain( frameNumber, 0, numberOfFrames()-1 );
 
