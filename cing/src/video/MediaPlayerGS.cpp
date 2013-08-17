@@ -613,9 +613,9 @@ namespace Cing
 
 		// If we are already at that frame, don't jump
 		// NOTE: this is cause otherwise Gstreamer throws this error: "(qtdemux10): This file contains no playable streams."
-		unsigned int frameToJump = round(whereInSecs * m_videoFps);
+		unsigned int frameToJump = floor(whereInSecs * m_videoFps);
 		unsigned int currentFrame = currentFrameNumber();
-		if ( currentFrame = frameToJump )
+		if ( currentFrame == frameToJump )
 		{
 			LOG_TRIVIAL( "MediaPlayerGS::jump. Not jumping, already at time/frame [%f/%d]", whereInSecs, currentFrame );
 			return;
