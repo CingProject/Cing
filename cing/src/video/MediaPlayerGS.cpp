@@ -666,7 +666,7 @@ namespace Cing
 		// If we are already at that frame, don't jump
 		// NOTE: this is cause otherwise Gstreamer throws this error: "(qtdemux10): This file contains no playable streams."
 		unsigned int currentFrame = currentFrameNumber();
-		if ( currentFrame = frameNumber )
+		if ( currentFrame == frameNumber )
 		{
 			LOG_TRIVIAL( "MediaPlayerGS::jumpToFrame. Not jumping, already at frame %d", frameNumber );
 			return;
