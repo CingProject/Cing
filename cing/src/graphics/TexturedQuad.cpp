@@ -1043,8 +1043,8 @@ namespace Cing
 	void TexturedQuad::configureSceneBlending()
 	{
 
-		// If the image has alpha channel
-		if ( hasAlpha() || (m_alpha < 255) )
+		// If the image has alpha channel (and blending is not additive)
+		if ( (hasAlpha() || (m_alpha < 255)) && !(m_sbType == Ogre::SBT_ADD) )
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
@@ -1052,7 +1052,16 @@ namespace Cing
 			enableDepthWrite(false);
 			enableDepthCheck(true);
 		}
-		// This image has no alpha channel
+		// Additive blending, but alpha is set to lower than 255 (some transparency(
+		else if ( (m_sbType == Ogre::SBT_ADD) && (m_alpha < 255) )
+		{
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBF_SOURCE_ALPHA, Ogre::SBF_ONE );
+
+			enableDepthWrite(false);
+			enableDepthCheck(true);
+		}
+		// This image has no alpha channel or blending is additive
 		else
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
