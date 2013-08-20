@@ -137,6 +137,7 @@ namespace Cing
 		boost::shared_ptr<pt::mutex>	m_bufferMutex;		///< Mutex to ensure threading safe buffer copy (from gstreamer to our internal buffer)
 		unsigned char*					m_internalBuffer;	///< Internal buffer to store the buffer comming from gstreamer
 		int								m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)
+		int								m_widthStep;		///< Size in bytes of each row of pixels in the video (It is usually width*channelCount, but it might be different
 		String							m_outputGstVideoFormat;///< GStreamer output buffer video format
 		GraphicsType					m_pixelFormat;		///< Pixel format in which new image frames will be stored
 		Image							m_frameImg;			///< Image containing the buffer of the current video frame

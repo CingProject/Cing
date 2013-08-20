@@ -146,6 +146,7 @@ namespace Cing
 		m_appBin		( NULL ),
 		m_internalBuffer( NULL ),
 		m_bufferSizeInBytes(0),
+		m_widthStep(0),
 		m_videoWidth	( 0 ),
 		m_videoHeight	( 0 ),
 		m_videoFps		( 0 ),
@@ -175,6 +176,7 @@ namespace Cing
 		m_appBin		( NULL ),
 		m_internalBuffer( NULL ),
 		m_bufferSizeInBytes(0),
+		m_widthStep(0),
 		m_videoWidth	( 0 ),
 		m_videoHeight	( 0 ),
 		m_videoFps		( 0 ),
@@ -278,7 +280,7 @@ namespace Cing
 
 		// Init the frame container to the video size
 		m_frameImg.init( m_videoWidth, m_videoHeight, m_pixelFormat );
-		m_bufferSizeInBytes = m_videoWidth * m_videoHeight * m_frameImg.getNChannels();
+		//m_bufferSizeInBytes = m_videoWidth * m_videoHeight * m_frameImg.getNChannels();
 		m_internalBuffer	= new unsigned char[m_bufferSizeInBytes];
 
 		// Init grayscale image if it was requested
@@ -1049,11 +1051,13 @@ namespace Cing
 
 		// Get Buffer size for each component
 		unsigned int nChannels = numberOfChannels( m_pixelFormat );
-		int stride = 0;
 		for ( unsigned int i = 0; i < nChannels; ++i )
 		{
-			stride = gst_video_format_get_row_stride( currentVideoFormat, i, m_videoWidth );
+			m_widthStep = gst_video_format_get_row_stride( currentVideoFormat, i, m_videoWidth );
 		}
+
+		// Get the buffer size
+		m_bufferSizeInBytes = gst_video_format_get_size( currentVideoFormat, m_videoWidth, m_videoHeight );
 
 		// Get current fps
 		gint  fps_n, fps_d;
@@ -1088,7 +1092,7 @@ namespace Cing
 			return;
 
 		// Set image data (and upload it to the texture)
-		m_frameImg.setData( m_internalBuffer, m_videoWidth, m_videoHeight, m_frameImg.getFormat() );
+		m_frameImg.setData( m_internalBuffer, m_videoWidth, m_videoHeight, m_frameImg.getFormat(), m_widthStep );
 		m_frameImg.updateTexture();
 
 		// Clear new buffer flag
