@@ -111,7 +111,7 @@ namespace Cing
 
 	private:
 		// Internal methods
-		bool			buildPathToFile			( const String& path );
+		bool			buildPathToFile			( const std::string& path );
 		void			copyBufferIntoImage		( bool updateTexture = false ); // from update in single thread mode
         
         // Threaded version

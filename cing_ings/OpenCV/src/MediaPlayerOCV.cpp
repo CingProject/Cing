@@ -79,7 +79,6 @@ namespace Cing
             
             // And grab new frame (it will be updated in the next call to getImage()
             {
-                //boost::mutex::scoped_lock lock(m_player.m_mutex);
                 cv::Mat m_cvCaptureImage;
                 newFrame = m_player.m_capture.read( m_cvCaptureImage );
                 
@@ -96,7 +95,7 @@ namespace Cing
                     m_player.setNewFrame( currentActualFrame, m_localMat );
                     
                     // relax the thread
-                    //pt::psleep(20);
+                    relax(20);
                 }
             }
 		}
@@ -183,6 +182,10 @@ namespace Cing
 	 */
 	bool MediaPlayerOCV::load( const std::string& fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
 	{
+        // If this is re-load: release resources first
+        if ( isValid() )
+            end();
+        
 		// Build path to file
 		bool result = buildPathToFile( fileName );
 		if ( !result )
@@ -250,11 +253,27 @@ namespace Cing
 			return;
 		
         // Release thread
-        if ( m_multithreaded )
-			Release( m_captureThread );
+        if ( m_multithreaded && m_captureThread )
+        {
+            // Signal the thread and wait for it to be done
+            m_captureThread->signal();
+            Ogre::Timer timerLimit;
+            timerLimit.reset();
+            while( (m_captureThread->get_finished() == false) && (timerLimit.getMilliseconds() < 250) )
+                ;
+			if ( m_captureThread->get_finished() )
+            {
+                delete m_captureThread;
+            }
+            else
+                LOG_CRITICAL( "MediaPlayerOCV: capture thread timer expired, and the thread did not finish. Something is wrong, there will be a memory leak" );
+            m_captureThread = NULL;
+        }
         
 		// Clear resources
 		m_capture.release();
+        
+        m_frameImg.end();
         
 		// Clear flags
 		m_bIsValid			= false;
@@ -609,14 +628,18 @@ namespace Cing
 	 * Builds an absolute path to the file that will be loaded into the player
 	 * @return true if there was no problem
 	 */
-	bool MediaPlayerOCV::buildPathToFile( const String& path )
+	bool MediaPlayerOCV::buildPathToFile( const std::string& path )
 	{
 		// Store incomming path as the filename (if it's a local file, the use would have passed the file path
 		// relative to the data folder)
-		m_fileName = path;
+		 m_fileName = path;
+        
+        if ( isPathAbsolute(path) )
+            m_filePath = path;
+        else
+            m_filePath = dataFolder + path;
 		
-		m_filePath = dataFolder + path;
-		if ( !fileExists( m_filePath ) )
+        if ( !fileExists( m_filePath ) )
 		{
 			LOG_ERROR( "MediaPlayer: File %s not found in data folder.", path.c_str() );
 			return false;
