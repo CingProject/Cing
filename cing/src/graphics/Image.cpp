@@ -41,7 +41,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreDataStream.h"
 
 // OpenCV
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 #include "OgreSceneManager.h"
 
 namespace Cing
@@ -1958,13 +1959,13 @@ namespace Cing
 
 	void Image::operator +=	( const Image& img ){
 
-		cv::add( m_cvImage, &img.getCVImage(), m_cvImage );
+		cv::add( m_cvImage, img.getCVMat(), m_cvImage );
 		setUpdateTexture(true);
 	}
 
 	void Image::operator -=	( const Image& img ){
 
-		cv::subtract( m_cvImage, &img.getCVImage(), m_cvImage );
+		cv::subtract( m_cvImage, img.getCVMat(), m_cvImage );
 		setUpdateTexture(true);
 	}
 
@@ -1987,7 +1988,7 @@ namespace Cing
 			THROW_EXCEPTION( "Images with different sizes" );
 
 		percentage = map( percentage, 0, 100, 0.0, 1.0 );
-		cv::addWeighted( m_cvImage, 1.0 - percentage, &other.getCVImage(), percentage, 0.0f, m_cvImage );
+		cv::addWeighted( m_cvImage, 1.0 - percentage, other.getCVMat(), percentage, 0.0f, m_cvImage );
 	}
 
 	void Image::operator = ( float scalar)

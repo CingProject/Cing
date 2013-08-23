@@ -38,8 +38,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "ImageDifferenceFilter.h"
 
 // Open CV
-#include "OpenCV/cv.h"
-#include "OpenCV/cxtypes.h"
+#include "opencv2/core/core.hpp"
 
 namespace Cing
 {

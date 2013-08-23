@@ -38,9 +38,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Image.h"
 
 // OpenCv includes
-#include "OpenCV/cxtypes.h"
-#include "OpenCV/cxcore.h"
-#include "OpenCV/highgui.h"
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
 
 //TEMP
 #include "input/InputPrereqs.h"

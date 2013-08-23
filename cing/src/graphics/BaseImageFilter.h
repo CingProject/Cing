@@ -32,7 +32,7 @@
 #include "graphics/GraphicsTypes.h"
 
 // OpenCV
-#include "OpenCV/cxtypes.h"
+#include "opencv2/core/core.hpp"
 
 
 namespace Cing

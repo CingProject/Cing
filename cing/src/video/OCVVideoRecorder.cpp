@@ -4,8 +4,7 @@
 #include "OCVVideoRecorder.h"
 
 // OpenCv
-#include "OpenCV/cv.h"
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core.hpp"
 
 // Common
 #include "common/Exception.h"

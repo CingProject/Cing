@@ -31,7 +31,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "UserAppGlobals.h"
 
 // OpenCV
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core.hpp"
 
 // Ogre
 #include "OgreException.h"
