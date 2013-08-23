@@ -202,7 +202,7 @@ namespace Cing
 			LOG_ERROR( "MediaPlayerOCV Could not load file %s", m_fileName.c_str() );
 			return false;
 		}
-		
+        
 		m_videoWidth    = m_capture.get( CV_CAP_PROP_FRAME_WIDTH );
 		m_videoHeight   = m_capture.get( CV_CAP_PROP_FRAME_HEIGHT );
 		m_videoFps		= m_capture.get( CV_CAP_PROP_FPS );
@@ -223,7 +223,7 @@ namespace Cing
 			m_capture.set( CV_CAP_PROP_FPS, fps );
 			m_videoFps = m_capture.get( CV_CAP_PROP_FPS );
 		}
-		
+        
         // Create capture thread
         if ( m_multithreaded )
         {
@@ -661,10 +661,14 @@ namespace Cing
 		// Retrieve frame (different paths windows/mac)
         // TODO: review why they differ
 #ifdef WIN32
+        cv::Mat videoFrame;
         cv::Mat outMat = toCVMat(m_frameImg);
-		bool result = m_capture.retrieve( outMat );
+		bool result = m_capture.retrieve( videoFrame );
         if ( result )
         {
+            // Convert from BGR to RGB
+            cv::cvtColor(videoFrame, outMat, CV_BGR2RGB);
+            
             if ( updateTexture )
                 m_frameImg.updateTexture();
         }
@@ -677,7 +681,9 @@ namespace Cing
 		bool result = m_capture.retrieve( videoFrame );
         if ( result )
         {
-            videoFrame.copyTo(outMat);
+            // Convert from BGR to RGB
+            cv::cvtColor(videoFrame, outMat, CV_BGR2RGB);
+            
             if ( updateTexture )
                 m_frameImg.updateTexture();
             else
