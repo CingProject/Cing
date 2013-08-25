@@ -2,7 +2,7 @@
 <VisualStudioPropertySheet
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="CingExample_VS90PropertySheet_Debug"
+	Name="CingQT_VS90PropertySheet"
 	OutputDirectory="$(ProjectDir)$(ConfigurationName)"
 	IntermediateDirectory="obj\$(ConfigurationName)"
 	>
