@@ -37,6 +37,10 @@
 		4C4FFC5C17B04D8100A35D13 /* UserApplicationBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC5A17B04D8100A35D13 /* UserApplicationBase.h */; };
 		4C5CA98A17B2C43700289AFB /* OpenCV-CingBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C5CA98817B2C43700289AFB /* OpenCV-CingBeat.cpp */; };
 		4C5CA98B17B2C43700289AFB /* OpenCV-CingBeat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5CA98917B2C43700289AFB /* OpenCV-CingBeat.h */; };
+		4C6208B617C7C03400122AFD /* AVFVideoWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6208B417C7C03400122AFD /* AVFVideoWrapper.h */; };
+		4C6208B717C7C03400122AFD /* AVFVideoWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6208B517C7C03400122AFD /* AVFVideoWrapper.m */; };
+		4CAAB47E17C808B200B7061E /* MediaPlayerAVF.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAAB47C17C808B200B7061E /* MediaPlayerAVF.h */; };
+		4CAAB47F17C808B200B7061E /* MediaPlayerAVF.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAB47D17C808B200B7061E /* MediaPlayerAVF.mm */; };
 		4CE45C9117B13C1100B3A1A7 /* InputManagerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9017B13C1100B3A1A7 /* InputManagerBase.h */; };
 		4CE45C9317B1442700B3A1A7 /* MouseBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9217B1442700B3A1A7 /* MouseBase.h */; };
 		4CE45C9517B1451400B3A1A7 /* KeyboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE45C9417B1451300B3A1A7 /* KeyboardBase.h */; };
@@ -166,6 +170,10 @@
 		4C4FFC5A17B04D8100A35D13 /* UserApplicationBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserApplicationBase.h; sourceTree = "<group>"; };
 		4C5CA98817B2C43700289AFB /* OpenCV-CingBeat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "OpenCV-CingBeat.cpp"; path = "../../../../cing_ings/OpenCV/src/OpenCV-CingBeat.cpp"; sourceTree = "<group>"; };
 		4C5CA98917B2C43700289AFB /* OpenCV-CingBeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenCV-CingBeat.h"; path = "../../../../cing_ings/OpenCV/src/OpenCV-CingBeat.h"; sourceTree = "<group>"; };
+		4C6208B417C7C03400122AFD /* AVFVideoWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFVideoWrapper.h; path = ../../../../cing_ings/MediaPlayerAVF/src/AVFVideoWrapper.h; sourceTree = "<group>"; };
+		4C6208B517C7C03400122AFD /* AVFVideoWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVFVideoWrapper.m; path = ../../../../cing_ings/MediaPlayerAVF/src/AVFVideoWrapper.m; sourceTree = "<group>"; };
+		4CAAB47C17C808B200B7061E /* MediaPlayerAVF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPlayerAVF.h; path = ../../../../cing_ings/MediaPlayerAVF/src/MediaPlayerAVF.h; sourceTree = "<group>"; };
+		4CAAB47D17C808B200B7061E /* MediaPlayerAVF.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MediaPlayerAVF.mm; path = ../../../../cing_ings/MediaPlayerAVF/src/MediaPlayerAVF.mm; sourceTree = "<group>"; };
 		4CE45C9017B13C1100B3A1A7 /* InputManagerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputManagerBase.h; sourceTree = "<group>"; };
 		4CE45C9217B1442700B3A1A7 /* MouseBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseBase.h; sourceTree = "<group>"; };
 		4CE45C9417B1451300B3A1A7 /* KeyboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardBase.h; sourceTree = "<group>"; };
@@ -383,6 +391,7 @@
 		4C4FFC2117B0114A00A35D13 /* CingBeats */ = {
 			isa = PBXGroup;
 			children = (
+				4C6208AE17C7BCD900122AFD /* MediaPlayerAVF */,
 				4C4FFC2217B0117000A35D13 /* OpenCV */,
 			);
 			name = CingBeats;
@@ -426,6 +435,25 @@
 				4C4FFC3B17B0118F00A35D13 /* OpenCVUtils.h */,
 				4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */,
 				4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		4C6208AE17C7BCD900122AFD /* MediaPlayerAVF */ = {
+			isa = PBXGroup;
+			children = (
+				4C6208AF17C7BCE200122AFD /* src */,
+			);
+			name = MediaPlayerAVF;
+			sourceTree = "<group>";
+		};
+		4C6208AF17C7BCE200122AFD /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4CAAB47C17C808B200B7061E /* MediaPlayerAVF.h */,
+				4CAAB47D17C808B200B7061E /* MediaPlayerAVF.mm */,
+				4C6208B417C7C03400122AFD /* AVFVideoWrapper.h */,
+				4C6208B517C7C03400122AFD /* AVFVideoWrapper.m */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -780,6 +808,8 @@
 				602386CF17B1A7D10064265D /* MouseCocoa.h in Headers */,
 				602386D317B1A7DA0064265D /* KeyboardCocoa.h in Headers */,
 				4C5CA98B17B2C43700289AFB /* OpenCV-CingBeat.h in Headers */,
+				4C6208B617C7C03400122AFD /* AVFVideoWrapper.h in Headers */,
+				4CAAB47E17C808B200B7061E /* MediaPlayerAVF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,7 +886,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy all the header files into Headers while retaining the correct subdirectory structure\n\n# the relative path to cing src from this project location\ncd ${SRCROOT}/../../../src/\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"\n\n# Ogre3d\ncd ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/include/OGRE/\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"\n\n# OpenCV library\ncd ${SRCROOT}/${CING_BEATS}/OpenCV/lib/include/\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"\n\n# OpenCV Cing Beat\ncd ${SRCROOT}/${CING_BEATS}/OpenCV/src/\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/OpenCV\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/src\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/OpenCV/src\"\n\n# copy all cing beats headers (mainly for OpenCV right now)\n#cd ${SRCROOT}/${CING_BEATS}\n#rsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"\n\n# PTypes\ncd ${SRCROOT}/../../../libraries/mac/xcode/PTypes\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/PTypes\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/PTypes\"\n\n# TinyXML\ncd ${SRCROOT}/../../../libraries/mac/xcode/TinyXML\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/TinyXML\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/TinyXML\"\n\n# boost\ncd ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/boost/boost\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/boost\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/boost\"\n\n# OIS\ncd ${SRCROOT}/../../../libraries/mac/xcode/OIS/include/OIS\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/OIS\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/OIS\"\n";
+			shellScript = "# Copy all the header files into Headers while retaining the correct subdirectory structure\n\n# the relative path to cing src from this project location\ncd ${SRCROOT}/../../../src/\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"\n\n# Ogre3d\ncd ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/include/OGRE/\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"\n\n# OpenCV library\ncd ${SRCROOT}/${CING_BEATS}/OpenCV/lib/include/\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"\n\n# OpenCV Cing Beat\ncd ${SRCROOT}/${CING_BEATS}/OpenCV/src/\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/OpenCV\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/src\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/OpenCV/src\"\n\n# MediaPlayerAVF Cing Beat\ncd ${SRCROOT}/${CING_BEATS}/MediaPlayerAVF/src/\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/MediaPlayerAVF\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/MediaPlayerAVF/src\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/MediaPlayerAVF/src\"\n\n# copy all cing beats headers (mainly for OpenCV right now)\n#cd ${SRCROOT}/${CING_BEATS}\n#rsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"\n\n# PTypes\ncd ${SRCROOT}/../../../libraries/mac/xcode/PTypes\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/PTypes\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/PTypes\"\n\n# TinyXML\ncd ${SRCROOT}/../../../libraries/mac/xcode/TinyXML\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/TinyXML\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/TinyXML\"\n\n# boost\ncd ${SRCROOT}/../../../libraries/mac/xcode/OgreSDK/boost/boost\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/boost\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/boost\"\n\n# OIS\ncd ${SRCROOT}/../../../libraries/mac/xcode/OIS/include/OIS\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/OIS\nrsync -az \".\" \"${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/OIS\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -938,6 +968,8 @@
 				602386CE17B1A7D10064265D /* MouseCocoa.cpp in Sources */,
 				602386D217B1A7DA0064265D /* KeyboardCocoa.cpp in Sources */,
 				4C5CA98A17B2C43700289AFB /* OpenCV-CingBeat.cpp in Sources */,
+				4C6208B717C7C03400122AFD /* AVFVideoWrapper.m in Sources */,
+				4CAAB47F17C808B200B7061E /* MediaPlayerAVF.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

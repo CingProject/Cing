@@ -61,6 +61,10 @@
 	#pragma warning (disable : 4748 ) 
 #endif
 
+#ifndef TIXML_USE_STL
+#define TIXML_USE_STL
+#endif
+
 #include <cstdio>
 #include <cstring>
 #include <stdlib.h>
@@ -99,6 +103,11 @@
 #include "framework/AppMain.h"
 #include "framework/UserAppGlobals.h"
 #include "framework/FrameworkUserAPI.h"
+
+#ifdef __APPLE__
+#include "framework/AppFrameworkCocoa.h"
+#include "framework/AppFrameworkCocoaView.h"
+#endif
 
 // Common
 #include "common/CommonUserAPI.h"

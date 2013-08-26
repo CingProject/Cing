@@ -39,6 +39,13 @@
 #include "graphics/FontProperties.h"
 #include "graphics/FontManager.h"
 
+#include "OgreCamera.h"
+#include "OgreSceneQuery.h"
+#include "OgreRay.h"
+#include "OgreSceneManager.h"
+#include "OgreEntity.h"
+
+
 namespace Cing
 {
 
