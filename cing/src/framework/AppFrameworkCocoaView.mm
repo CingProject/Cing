@@ -95,8 +95,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
             Cing::Application::getSingleton().setOgreView( view );
             
-            _inputManager = new Cing::InputManagerCocoa();
-            _inputManager->setParentView( ogreView );
+            //_inputManager = new Cing::InputManagerCocoa();
+            //_inputManager->setParentView( ogreView );
+            _inputManager = NULL;
 
             // Init application
             Cing::Application::getSingleton().initApp( _inputManager, (Cing::UserApplicationBase *)userApp );
@@ -129,7 +130,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         // Using Timer
         if ( useDisplayLink == false )
         {
-            _timer = [[NSTimer scheduledTimerWithTimeInterval:1.0f/14.0f
+            _timer = [[NSTimer scheduledTimerWithTimeInterval:1.0f/8.0f
                                                        target:self
                                                      selector:@selector(renderFrame)
                                                      userInfo:NULL
