@@ -302,7 +302,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                 uint8_t *pixelBuffer = (uint8_t*)CVPixelBufferGetBaseAddress(newFrame);
                 if ( pixelBuffer ) {
                     
-                    NSLog( @" New Fram!!" );
+                    //NSLog( @" New Frame!!" );
                     
                     // Get buffer low level data
                     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(newFrame);
