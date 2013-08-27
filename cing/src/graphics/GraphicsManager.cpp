@@ -135,8 +135,8 @@ bool GraphicsManager::createWindow()
 	windowParams["border"] = m_windowBorder? "fixed": "none";
 	windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
 	windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
-	//windowParams["left"] = "0";
-	//windowParams["top"] = "0";
+	windowParams["left"] = "0";
+	windowParams["top"] = "0";
 	windowParams["depthBuffer"] = "true";
 	windowParams["externalWindowHandle"] = "None";
 	windowParams["FSAA"] = toString(m_fsaa);
