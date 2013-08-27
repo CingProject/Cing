@@ -56,6 +56,14 @@
 		609CA09617AC719E0050D757 /* AppFrameworkCocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */; };
 		60CCA91417AEDB9500567C87 /* AppFrameworkCocoaView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */; };
 		60CCA91517AEDB9500567C87 /* AppFrameworkCocoaView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60CCA91317AEDB9500567C87 /* AppFrameworkCocoaView.h */; };
+		60E5C57D17CD441900F2FB42 /* Plugin_CgProgramManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E5C57C17CD441900F2FB42 /* Plugin_CgProgramManager.framework */; };
+		60E5C58217CD458500F2FB42 /* Plugin_ParticleFX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E5C58117CD458500F2FB42 /* Plugin_ParticleFX.framework */; };
+		60E5C5A617CD563400F2FB42 /* libbz2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E5C5A017CD563400F2FB42 /* libbz2.1.0.dylib */; };
+		60E5C5A717CD563400F2FB42 /* libfreeimage.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E5C5A117CD563400F2FB42 /* libfreeimage.3.dylib */; };
+		60E5C5A817CD563400F2FB42 /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E5C5A217CD563400F2FB42 /* libfreetype.6.dylib */; };
+		60E5C5A917CD563400F2FB42 /* libpng15.15.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E5C5A317CD563400F2FB42 /* libpng15.15.dylib */; };
+		60E5C5AA17CD563400F2FB42 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E5C5A417CD563400F2FB42 /* libz.1.dylib */; };
+		60E5C5AB17CD563400F2FB42 /* libzzip-0.13.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E5C5A517CD563400F2FB42 /* libzzip-0.13.dylib */; };
 		A933D4F617A6E1CA00C3E9F7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */; };
 		A933D4F817A6E21000C3E9F7 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A933D4F717A6E21000C3E9F7 /* AGL.framework */; };
 		A93DB48E179DF2D200770B14 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93DB48D179DF2D200770B14 /* Cocoa.framework */; };
@@ -123,17 +131,6 @@
 		A9CC0D0F17A8769000B12ADD /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D0E17A8769000B12ADD /* Cg.framework */; };
 		A9CC0D1E17A876B100B12ADD /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1017A876B100B12ADD /* Ogre.framework */; };
 		A9CC0D1F17A876B100B12ADD /* OgreOverlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1117A876B100B12ADD /* OgreOverlay.framework */; };
-		A9CC0D2017A876B100B12ADD /* OgrePaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1217A876B100B12ADD /* OgrePaging.framework */; };
-		A9CC0D2117A876B100B12ADD /* OgreProperty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1317A876B100B12ADD /* OgreProperty.framework */; };
-		A9CC0D2217A876B100B12ADD /* OgreRTShaderSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1417A876B100B12ADD /* OgreRTShaderSystem.framework */; };
-		A9CC0D2317A876B100B12ADD /* OgreTerrain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1517A876B100B12ADD /* OgreTerrain.framework */; };
-		A9CC0D2417A876B100B12ADD /* OgreVolume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1617A876B100B12ADD /* OgreVolume.framework */; };
-		A9CC0D2517A876B100B12ADD /* Plugin_BSPSceneManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1717A876B100B12ADD /* Plugin_BSPSceneManager.framework */; };
-		A9CC0D2617A876B100B12ADD /* Plugin_CgProgramManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1817A876B100B12ADD /* Plugin_CgProgramManager.framework */; };
-		A9CC0D2717A876B100B12ADD /* Plugin_OctreeSceneManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1917A876B100B12ADD /* Plugin_OctreeSceneManager.framework */; };
-		A9CC0D2817A876B100B12ADD /* Plugin_OctreeZone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1A17A876B100B12ADD /* Plugin_OctreeZone.framework */; };
-		A9CC0D2917A876B100B12ADD /* Plugin_ParticleFX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1B17A876B100B12ADD /* Plugin_ParticleFX.framework */; };
-		A9CC0D2A17A876B100B12ADD /* Plugin_PCZSceneManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1C17A876B100B12ADD /* Plugin_PCZSceneManager.framework */; };
 		A9CC0D2B17A876B100B12ADD /* RenderSystem_GL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC0D1D17A876B100B12ADD /* RenderSystem_GL.framework */; };
 		A9CC0D6817A88CFE00B12ADD /* Cing-Precompiled.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB80A179E12F400770B14 /* Cing-Precompiled.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9D4188517A1798B002FD8D3 /* Cing.h in Headers */ = {isa = PBXBuildFile; fileRef = A93DB65D179DFE8300770B14 /* Cing.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -189,6 +186,14 @@
 		609CA09417AC719E0050D757 /* AppFrameworkCocoa.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoa.cpp; sourceTree = "<group>"; };
 		60CCA91217AEDB9500567C87 /* AppFrameworkCocoaView.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AppFrameworkCocoaView.mm; sourceTree = "<group>"; };
 		60CCA91317AEDB9500567C87 /* AppFrameworkCocoaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFrameworkCocoaView.h; sourceTree = "<group>"; };
+		60E5C57C17CD441900F2FB42 /* Plugin_CgProgramManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_CgProgramManager.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_CgProgramManager.framework; sourceTree = "<group>"; };
+		60E5C58117CD458500F2FB42 /* Plugin_ParticleFX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_ParticleFX.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_ParticleFX.framework; sourceTree = "<group>"; };
+		60E5C5A017CD563400F2FB42 /* libbz2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.1.0.dylib; path = ../../../libraries/mac/xcode/OgreDependencies/lib/libbz2.1.0.dylib; sourceTree = "<group>"; };
+		60E5C5A117CD563400F2FB42 /* libfreeimage.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreeimage.3.dylib; path = ../../../libraries/mac/xcode/OgreDependencies/lib/libfreeimage.3.dylib; sourceTree = "<group>"; };
+		60E5C5A217CD563400F2FB42 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../../../libraries/mac/xcode/OgreDependencies/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
+		60E5C5A317CD563400F2FB42 /* libpng15.15.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng15.15.dylib; path = ../../../libraries/mac/xcode/OgreDependencies/lib/libpng15.15.dylib; sourceTree = "<group>"; };
+		60E5C5A417CD563400F2FB42 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../libraries/mac/xcode/OgreDependencies/lib/libz.1.dylib; sourceTree = "<group>"; };
+		60E5C5A517CD563400F2FB42 /* libzzip-0.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libzzip-0.13.dylib"; path = "../../../libraries/mac/xcode/OgreDependencies/lib/libzzip-0.13.dylib"; sourceTree = "<group>"; };
 		A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A933D4F717A6E21000C3E9F7 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
 		A93DB48A179DF2D200770B14 /* Cing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,17 +344,6 @@
 		A9CC0D0E17A8769000B12ADD /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = ../../../libraries/mac/xcode/OgreDependencies/Frameworks/Cg.framework; sourceTree = "<group>"; };
 		A9CC0D1017A876B100B12ADD /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Ogre.framework; sourceTree = "<group>"; };
 		A9CC0D1117A876B100B12ADD /* OgreOverlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreOverlay.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreOverlay.framework; sourceTree = "<group>"; };
-		A9CC0D1217A876B100B12ADD /* OgrePaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgrePaging.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgrePaging.framework; sourceTree = "<group>"; };
-		A9CC0D1317A876B100B12ADD /* OgreProperty.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreProperty.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreProperty.framework; sourceTree = "<group>"; };
-		A9CC0D1417A876B100B12ADD /* OgreRTShaderSystem.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreRTShaderSystem.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreRTShaderSystem.framework; sourceTree = "<group>"; };
-		A9CC0D1517A876B100B12ADD /* OgreTerrain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreTerrain.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreTerrain.framework; sourceTree = "<group>"; };
-		A9CC0D1617A876B100B12ADD /* OgreVolume.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreVolume.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/OgreVolume.framework; sourceTree = "<group>"; };
-		A9CC0D1717A876B100B12ADD /* Plugin_BSPSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_BSPSceneManager.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_BSPSceneManager.framework; sourceTree = "<group>"; };
-		A9CC0D1817A876B100B12ADD /* Plugin_CgProgramManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_CgProgramManager.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_CgProgramManager.framework; sourceTree = "<group>"; };
-		A9CC0D1917A876B100B12ADD /* Plugin_OctreeSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_OctreeSceneManager.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_OctreeSceneManager.framework; sourceTree = "<group>"; };
-		A9CC0D1A17A876B100B12ADD /* Plugin_OctreeZone.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_OctreeZone.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_OctreeZone.framework; sourceTree = "<group>"; };
-		A9CC0D1B17A876B100B12ADD /* Plugin_ParticleFX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_ParticleFX.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_ParticleFX.framework; sourceTree = "<group>"; };
-		A9CC0D1C17A876B100B12ADD /* Plugin_PCZSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Plugin_PCZSceneManager.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/Plugin_PCZSceneManager.framework; sourceTree = "<group>"; };
 		A9CC0D1D17A876B100B12ADD /* RenderSystem_GL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RenderSystem_GL.framework; path = ../../../libraries/mac/xcode/OgreSDK/lib/macosx/Release/RenderSystem_GL.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -358,19 +352,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60E5C5A617CD563400F2FB42 /* libbz2.1.0.dylib in Frameworks */,
+				60E5C5A717CD563400F2FB42 /* libfreeimage.3.dylib in Frameworks */,
+				60E5C5A817CD563400F2FB42 /* libfreetype.6.dylib in Frameworks */,
+				60E5C5A917CD563400F2FB42 /* libpng15.15.dylib in Frameworks */,
+				60E5C5AA17CD563400F2FB42 /* libz.1.dylib in Frameworks */,
+				60E5C5AB17CD563400F2FB42 /* libzzip-0.13.dylib in Frameworks */,
 				A9CC0D1E17A876B100B12ADD /* Ogre.framework in Frameworks */,
 				A9CC0D1F17A876B100B12ADD /* OgreOverlay.framework in Frameworks */,
-				A9CC0D2017A876B100B12ADD /* OgrePaging.framework in Frameworks */,
-				A9CC0D2117A876B100B12ADD /* OgreProperty.framework in Frameworks */,
-				A9CC0D2217A876B100B12ADD /* OgreRTShaderSystem.framework in Frameworks */,
-				A9CC0D2317A876B100B12ADD /* OgreTerrain.framework in Frameworks */,
-				A9CC0D2417A876B100B12ADD /* OgreVolume.framework in Frameworks */,
-				A9CC0D2517A876B100B12ADD /* Plugin_BSPSceneManager.framework in Frameworks */,
-				A9CC0D2617A876B100B12ADD /* Plugin_CgProgramManager.framework in Frameworks */,
-				A9CC0D2717A876B100B12ADD /* Plugin_OctreeSceneManager.framework in Frameworks */,
-				A9CC0D2817A876B100B12ADD /* Plugin_OctreeZone.framework in Frameworks */,
-				A9CC0D2917A876B100B12ADD /* Plugin_ParticleFX.framework in Frameworks */,
-				A9CC0D2A17A876B100B12ADD /* Plugin_PCZSceneManager.framework in Frameworks */,
 				A9CC0D2B17A876B100B12ADD /* RenderSystem_GL.framework in Frameworks */,
 				A9CC0D0F17A8769000B12ADD /* Cg.framework in Frameworks */,
 				A933D4F817A6E21000C3E9F7 /* AGL.framework in Frameworks */,
@@ -382,6 +371,8 @@
 				A99F6C2317A0E05300599195 /* QTKit.framework in Frameworks */,
 				A93DB7E2179E029A00770B14 /* IOKit.framework in Frameworks */,
 				A93DB48E179DF2D200770B14 /* Cocoa.framework in Frameworks */,
+				60E5C57D17CD441900F2FB42 /* Plugin_CgProgramManager.framework in Frameworks */,
+				60E5C58217CD458500F2FB42 /* Plugin_ParticleFX.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,22 +744,19 @@
 		A9CC0D2C17A876B600B12ADD /* Ogre */ = {
 			isa = PBXGroup;
 			children = (
+				60E5C5A017CD563400F2FB42 /* libbz2.1.0.dylib */,
+				60E5C5A117CD563400F2FB42 /* libfreeimage.3.dylib */,
+				60E5C5A217CD563400F2FB42 /* libfreetype.6.dylib */,
+				60E5C5A317CD563400F2FB42 /* libpng15.15.dylib */,
+				60E5C5A417CD563400F2FB42 /* libz.1.dylib */,
+				60E5C5A517CD563400F2FB42 /* libzzip-0.13.dylib */,
 				A933D4F717A6E21000C3E9F7 /* AGL.framework */,
 				A933D4F517A6E1CA00C3E9F7 /* OpenGL.framework */,
 				A9CC0D1017A876B100B12ADD /* Ogre.framework */,
 				A9CC0D1117A876B100B12ADD /* OgreOverlay.framework */,
-				A9CC0D1217A876B100B12ADD /* OgrePaging.framework */,
-				A9CC0D1317A876B100B12ADD /* OgreProperty.framework */,
-				A9CC0D1417A876B100B12ADD /* OgreRTShaderSystem.framework */,
-				A9CC0D1517A876B100B12ADD /* OgreTerrain.framework */,
-				A9CC0D1617A876B100B12ADD /* OgreVolume.framework */,
-				A9CC0D1717A876B100B12ADD /* Plugin_BSPSceneManager.framework */,
-				A9CC0D1817A876B100B12ADD /* Plugin_CgProgramManager.framework */,
-				A9CC0D1917A876B100B12ADD /* Plugin_OctreeSceneManager.framework */,
-				A9CC0D1A17A876B100B12ADD /* Plugin_OctreeZone.framework */,
-				A9CC0D1B17A876B100B12ADD /* Plugin_ParticleFX.framework */,
-				A9CC0D1C17A876B100B12ADD /* Plugin_PCZSceneManager.framework */,
+				60E5C57C17CD441900F2FB42 /* Plugin_CgProgramManager.framework */,
 				A9CC0D1D17A876B100B12ADD /* RenderSystem_GL.framework */,
+				60E5C58117CD458500F2FB42 /* Plugin_ParticleFX.framework */,
 				A9CC0D0E17A8769000B12ADD /* Cg.framework */,
 			);
 			name = Ogre;
@@ -1153,6 +1141,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Cing/Cing-Prefix.pch";
 				INFOPLIST_FILE = "Cing/Cing-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/OgreDependencies/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -1176,6 +1168,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Cing/Cing-Prefix.pch";
 				INFOPLIST_FILE = "Cing/Cing-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../libraries/mac/xcode/OgreDependencies/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
