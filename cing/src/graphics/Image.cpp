@@ -819,7 +819,10 @@ namespace Cing
 	{
 		// Check the other image is valid
 		if ( !other.isValid() )
-			THROW_EXCEPTION( "Trying to copy an invalid image" );
+		{
+			LOG_ERROR( "Trying to copy an invalid image - NO COPY WILL HAPPEN" );
+			return;
+		}
 
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
