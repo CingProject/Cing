@@ -296,7 +296,13 @@ namespace Cing
 			}
 
 			// Remove the nodes
+			m_quadSceneNode->removeAllChildren();
+			m_pivotSceneNode->removeAllChildren();
 			m_sm->getRootSceneNode()->removeChild( m_pivotSceneNode );
+			m_sm->destroySceneNode( m_pivotSceneNode );
+			m_pivotSceneNode = NULL;
+			m_sm->destroySceneNode( m_quadSceneNode );
+			m_quadSceneNode = NULL;
 
 			// Destroy the manual object
 			m_sm->destroyManualObject( m_ogreManualObjectName );		
