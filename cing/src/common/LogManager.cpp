@@ -196,7 +196,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	{
 		if ( level >= m_debugOutputLogLevel )
 		{
-			std::cout << "Cing Log not enabled yet. Log: " << msgFormated; 
+			std::cout << "Cing Log not enabled yet. Log: " << msgFormated << std::endl; 
 
 			// If on windows also output to the debug console
 #if defined(WIN32)
@@ -212,11 +212,11 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	if ( m_log && (level >= m_debugOutputLogLevel) )
 	{
 		m_log->logMessage( outputMsg.str(), (Ogre::LogMessageLevel)level );
+		
 	}
 	// Log is not ready yet (probably we are initializing the app)
 	else if (level >= m_debugOutputLogLevel)
 		std::cout << msgFormated;
-	
 
 	// Send it to the debug console
 	// TODO: decide policy

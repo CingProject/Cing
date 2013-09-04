@@ -76,6 +76,21 @@ namespace Cing
 	void keyPressed()		{};												\
 	void mouseMoved()		{};
 
+	#define CREATE_USER_CONSOLE_APPLICATION( appName, UserAppClass )		\
+	int main()																\
+	{                                                                       \
+		UserAppClass userAppClassInstance;                                  \
+		RunApplicationBasic( appName, &userAppClassInstance );              \
+		return 0;                                                           \
+	};																		\
+	void setup()			{};												\
+	void draw()				{};												\
+	void end()				{};												\
+	void mousePressed()		{};												\
+	void mouseReleased()	{};												\
+	void keyPressed()		{};												\
+	void mouseMoved()		{};
+
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     
     #define CREATE_APPLICATION( appName )                                     \
