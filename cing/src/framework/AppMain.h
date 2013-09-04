@@ -67,7 +67,14 @@ namespace Cing
         UserAppClass userAppClassInstance;                                  \
         RunApplicationBasic( appName, &userAppClassInstance );              \
         return 0;                                                           \
-    };
+    };																		\
+	void setup()			{};												\
+	void draw()				{};												\
+	void end()				{};												\
+	void mousePressed()		{};												\
+	void mouseReleased()	{};												\
+	void keyPressed()		{};												\
+	void mouseMoved()		{};
 
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     
