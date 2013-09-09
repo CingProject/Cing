@@ -1,7 +1,6 @@
 // This define allow to disable including all the precompiled headers below
 #define USE_PRECOMPILED_HEADERS
 
-
 #ifndef TIXML_USE_STL
 #define TIXML_USE_STL
 #endif
@@ -9,6 +8,13 @@
 #ifndef __APPLE__
 
 #ifdef USE_PRECOMPILED_HEADERS
+
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		#define WIN32_LEAN_AND_MEAN
+		#include <WinSock2.h>
+		#include "windows.h"
+	#endif
+
 	#include <string>
 	#include <sstream>
 	#include <iostream>
@@ -36,11 +42,6 @@
 	#include <OgreCamera.h>
 	#include <OgreCommon.h>
 
-	// any other header can be included, as usual
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	#define WIN32_LEAN_AND_MEAN
-		#include "windows.h"
-	#endif
 #endif
 
 #endif
