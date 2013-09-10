@@ -284,13 +284,14 @@ namespace Cing
 	/**
 	 * Updates media playback state
      *
+     * @param forceFrame If this is passed, the current frame for the video will be set accordingly
      * @param updateTexture If this is false (default), the player is updated but the new frame is not updated
      * in m_frameImg (nor in its texture) until the next call to getImage. With updateTexture set to true, the image and textures are updated if
      * there is a new frame regardless of teh getImage() call. The latter might be slower if you won't need or use the image or texture, but if for example
      * you are using the player just as a texture for an object that use it but don't need to draw the video on screen, you can pass updateTexture to true so that the
      * texture is always up to date.
 	 */
-	void MediaPlayerOCV::update( bool updateTexture /*= false*/ )
+	void MediaPlayerOCV::update( unsigned int forceFrame /*= -1*/, bool updateTexture /*= false*/ )
 	{
 		// Check if we have to loop
 		if ( m_loopPending )
@@ -304,17 +305,26 @@ namespace Cing
 		{
             m_newBufferReady = false;
             
-			unsigned long millisPlayback = m_timer.getMilliseconds();
-			double currentFrame = ((double)millisPlayback/1000.0) * m_videoFps;
+			double currentFrame = 0;
+			if ( forceFrame != -1 )
+			{
+				currentFrame = forceFrame;
+			}
+			else
+			{
+				unsigned long millisPlayback = m_timer.getMilliseconds();
+				currentFrame = ((double)millisPlayback/1000.0) * m_videoFps;
+			}
         
-        	double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
-        	if ( currentFrame > currentActualFrame )
-        	{
+        	//double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
+        	//if ( currentFrame > currentActualFrame )
+        	//{
            		m_capture.set(CV_CAP_PROP_POS_FRAMES, currentFrame);
-        
+        		double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
+
             	// And grab new frame (it will be updated in the next call to getImage()
             	m_newBufferReady = m_capture.grab();
-        	}
+        	//}
         
         	// If we got a new frame
         	if ( m_newBufferReady )

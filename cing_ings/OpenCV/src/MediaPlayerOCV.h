@@ -79,20 +79,21 @@ namespace Cing
 		bool    init    ();
 		bool    load    ( const std::string& fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
 		void    end     ();
-		void    update  ( bool updateTexture = false );
+		void    update  ( unsigned int forceFrame = -1, bool updateTexture = false );
 		Image&  getImage();
 
         // General player settings
         void    setMultithreaded ( bool threaded ) { m_multithreaded = threaded; } // NOTE: it has to be called before load.
         
 		// Query methods
-		bool    isValid     () const { return m_bIsValid; }
-		bool    isPlaying   ();
-		float   duration    () const { return (float)m_videoDuration; }
-		float   time        ();
-		int     getWidth    () const { return m_videoWidth; }
-		int     getHeight   () const { return m_videoHeight; }
-        float   fps         () const { return m_videoFps; }
+		bool			isValid     () const { return m_bIsValid; }
+		bool			isPlaying   ();
+		float			duration    () const { return (float)m_videoDuration; }
+		float			time        ();
+		int				getWidth    () const { return m_videoWidth; }
+		int				getHeight   () const { return m_videoHeight; }
+        float			fps         () const { return m_videoFps; }
+		unsigned int	frameCount	() const { return m_videoNFrames; }
 
 		// Media control
 		void    play    ();
