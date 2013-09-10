@@ -89,7 +89,7 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= true*/ )
 	m_logToFile		= logToFile;
 
 	// By default just lot error messages to debug output
-	m_debugOutputLogLevel = LOG_TRIVIAL;
+	m_debugOutputLogLevel = LOG_NORMAL;
 
 	// Get ogre log pointer (just in case)
 	m_ogreLog = Ogre::LogManager::getSingleton().getDefaultLog();
@@ -212,7 +212,11 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	if ( m_log && (level >= m_debugOutputLogLevel) )
 	{
 		m_log->logMessage( outputMsg.str(), (Ogre::LogMessageLevel)level );
-		
+
+#if defined(WIN32)
+			OutputDebugString( msgFormated );	// In release, only critical messages
+			OutputDebugString( "\n" );
+#endif
 	}
 	// Log is not ready yet (probably we are initializing the app)
 	else if (level >= m_debugOutputLogLevel)
