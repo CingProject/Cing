@@ -122,6 +122,7 @@ void MovableText::setFontName( const String &fontName )
 	if ( mpFont.isNull() )
 	{
 		LOG_ERROR( "MovableText::setFontName: Could not find font %s", fontName.toChar() );
+		return;
 	}
 	mpFont->load();
 	mpMaterial = mpFont->getMaterial();
@@ -645,8 +646,10 @@ void MovableText::_setupGeometry()
 
 void MovableText::_updateColors( void )
 {
-	assert(!mpFont.isNull());
-	assert(!mpMaterial.isNull());
+	if ( mpFont.isNull()  || mpMaterial.isNull() )
+	{
+		return;
+	}
 
 	// Convert to system-specific
 	Ogre::RGBA color;
