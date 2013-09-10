@@ -657,8 +657,8 @@ namespace Cing
 			THROW_EXCEPTION( "Trying to get a pixel from an invalid image" );
         
 		// Check boundaries
-        float imgWidth  = getWidth();
-        float imgHeight = getHeight();
+        int imgWidth  = getWidth();
+        int imgHeight = getHeight();
 		if ( x < 0 )				x = 0;
 		if ( x >= imgWidth )        x = imgWidth - 1;
 		if ( y < 0 )				y = 0;
@@ -671,7 +671,7 @@ namespace Cing
 		switch( m_nChannels )
 		{
             case 1:
-                outColor.b  = (abs)((int)pixelPtr[ x*m_nChannels + 0 ]);
+                outColor.b  = (float)((int)pixelPtr[ x*m_nChannels + 0 ]);
                 outColor.g  = outColor.b;
                 outColor.r  = outColor.b;
                 outColor.a  = 255;
@@ -680,16 +680,16 @@ namespace Cing
                 THROW_EXCEPTION( "Invalid number of channels in image" );
                 break;
             case 3:
-                outColor.b  = ((int)pixelPtr[ x*m_nChannels + 0 ]);
-                outColor.g = ((int)pixelPtr[ x*m_nChannels + 1 ]);
-                outColor.r   = ((int)pixelPtr[ x*m_nChannels + 2 ]);
-                outColor.a = 255;
+                outColor.b  = (float)((int)pixelPtr[ x*m_nChannels + 0 ]);
+                outColor.g	= (float)((int)pixelPtr[ x*m_nChannels + 1 ]);
+                outColor.r  = (float)((int)pixelPtr[ x*m_nChannels + 2 ]);
+                outColor.a	= 255;
                 break;
             case 4:
-                outColor.b  = (abs)((int)pixelPtr[ x*m_nChannels + 0 ]);
-                outColor.g = (abs)((int)pixelPtr[ x*m_nChannels + 1 ]);
-                outColor.r   = (abs)((int)pixelPtr[ x*m_nChannels + 2 ]);
-                outColor.a = (abs)((int)pixelPtr[ x*m_nChannels + 3 ]);
+                outColor.b  = (float)((int)pixelPtr[ x*m_nChannels + 0 ]);
+                outColor.g	= (float)((int)pixelPtr[ x*m_nChannels + 1 ]);
+                outColor.r  = (float)((int)pixelPtr[ x*m_nChannels + 2 ]);
+                outColor.a	= (float)((int)pixelPtr[ x*m_nChannels + 3 ]);
                 break;
             default:
                 THROW_EXCEPTION( "Invalid number of channels in image" )
