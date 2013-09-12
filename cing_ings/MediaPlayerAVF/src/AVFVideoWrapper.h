@@ -36,6 +36,7 @@ typedef enum _AVFPixelFormat {
     CGSize                  videoSize;
     CMTime                  videoDuration;
     float                   videoFps;
+    unsigned int            videoFrameCount;
     AVFPixelFormat          _format;
     unsigned int            _channelCount;
     
@@ -71,6 +72,7 @@ typedef enum _AVFPixelFormat {
 - (CMTime)          duration;
 - (float)           time;
 - (float)           fps;
+- (unsigned int)    frameCount;
 - (unsigned int)    widthStep;
 
 // Callbacks (internal)
