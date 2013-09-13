@@ -329,9 +329,6 @@ namespace Cing
 	 **/
 	void MediaPlayerAVF::pause()
 	{
-		LOG_ERROR( "Method not supported in this media player" );
-		return;
-		
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -340,6 +337,7 @@ namespace Cing
 		}
         
 		m_playing = false;
+        [m_player pause];
 	}
 	
 	/**
@@ -348,9 +346,6 @@ namespace Cing
 	 **/
 	void MediaPlayerAVF::jump( float whereInSecs )
 	{
-		/*LOG_ERROR( "Method not supported in this media player" );
-		return;
-		
 		// Check if video is ok
 		if ( !isValid() )
 		{
@@ -358,13 +353,7 @@ namespace Cing
 			return;
 		}
 		
-		// If we have a new buffer available, clear the flag, we don't want it anymore after the seek
-		if ( m_newBufferReady )
-			m_newBufferReady	= false;
-		
-        m_capture.set( CV_CAP_PROP_POS_MSEC, whereInSecs * 1000 );
-         */
-		
+		[m_player setCurrentTime:whereInSecs];
 	}
 	
 	/**
