@@ -201,9 +201,14 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     [self.player play];
 }
 
+- (void) pause {
+    [self.player pause];
+}
+
 - (void) stop {
     [self.player pause];
 }
+
 
 - (void) setPixelFormat:(AVFPixelFormat)format {
     _format = format;
@@ -226,6 +231,14 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     // Store the rate (just in case it didn't readh
     videoFps = self.player.rate * videoFps;
 }
+
+- (void) setCurrentTime :(float)timeSecs {
+    
+    CMTime videoTime = CMTimeMake(timeSecs, 1);
+    [self.player seekToTime:videoTime];
+}
+
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == AVPlayerItemStatusContext) {
@@ -292,8 +305,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 
     // Get the current time
     CMTime currentTime = [[self videoOutput] itemTimeForHostTime:CACurrentMediaTime()];
-    
-   // NSLog(@"Current Time")
+        
     // Ger Frames
     if ([[self videoOutput] hasNewPixelBufferForItemTime:currentTime] == YES) {
         CVPixelBufferRef newFrame = [[self videoOutput] copyPixelBufferForItemTime:currentTime itemTimeForDisplay:NULL];

@@ -57,11 +57,13 @@ typedef enum _AVFPixelFormat {
 - (void) loadFile:(NSString *)filename;
 - (void) play;
 - (void) stop;
+- (void) pause;
 - (void) update;
 
 // Ser player settings
 - (void) setPixelFormat :(AVFPixelFormat)format;
 - (void) setFps         :(float)desiredFps;
+- (void) setCurrentTime :(float)timeSecs;
 
 // Query
 - (bool)            newFrameReady;
