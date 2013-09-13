@@ -130,7 +130,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         // Using Timer
         if ( useDisplayLink == false )
         {
-            _timer = [[NSTimer scheduledTimerWithTimeInterval:1.0f/8.0f
+            _timer = [[NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f
                                                        target:self
                                                      selector:@selector(renderFrame)
                                                      userInfo:NULL
