@@ -111,6 +111,9 @@ public:
 	void redraw		() { m_needUpdate = true; };
 	void frameRate( int forcedFrameRate );
 
+	bool getUseOgreMessagePump() { return m_useOgreMessagePump; };
+	void setUseOgreMessagePump( bool value ) { m_useOgreMessagePump = value; };
+
 	// Get methods
 	unsigned long long getFrameCount() { return m_frameCount; };
 
@@ -139,6 +142,8 @@ private:
 	bool					m_bIsValid;				///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
 	bool					m_loop;         		///< If true app will be call draw() user funtion continuosly
 	bool					m_needUpdate;   		///< If true app will be call draw() user funtion one time
+
+	bool					m_useOgreMessagePump;
 
     // Plugi related
 	typedef std::list< Plugin* >	PluginList;
