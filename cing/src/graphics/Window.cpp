@@ -29,6 +29,7 @@
 #include "Cing-Precompiled.h"
 
 #include "Window.h"
+#include "framework/Application.h"
 #include "Camera3D.h"
 
 // Ogre includes
@@ -130,7 +131,8 @@ void Window::update()
 	// Pump windows messages
 	// This is block only on mac: more info: http://www.ogre3d.org/forums/viewtopic.php?f=5&t=48491&start=100
 //#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	Ogre::WindowEventUtilities::messagePump();
+	if ( Application::getSingleton().getUseOgreMessagePump() )
+		Ogre::WindowEventUtilities::messagePump();
 //#endif
 
 	// Get window statistics	
