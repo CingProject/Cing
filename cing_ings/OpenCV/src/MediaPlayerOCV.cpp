@@ -320,7 +320,7 @@ namespace Cing
         	//if ( currentFrame > currentActualFrame )
         	//{
            		m_capture.set(CV_CAP_PROP_POS_FRAMES, currentFrame);
-        		double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
+        		//double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
 
             	// And grab new frame (it will be updated in the next call to getImage()
             	m_newBufferReady = m_capture.grab();

@@ -46,6 +46,8 @@ public:
     int             getWidth    () const { return m_videoWidth; }
     int             getHeight   () const { return m_videoHeight; }
     float           fps         () const { return m_videoFps; }
+    unsigned int    frameCount  () const { return m_videoNFrames; }
+    
     
     // Media control
     void            play    ();

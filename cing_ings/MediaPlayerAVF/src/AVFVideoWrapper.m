@@ -193,6 +193,10 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     return videoFps;
 }
 
+- (unsigned int) frameCount {
+    return videoFrameCount;
+}
+
 - (void) play {
     [self.player play];
 }
@@ -256,7 +260,8 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                     videoSize       = [videoTrack naturalSize];
                     videoDuration   = [[videoTrack asset] duration];
                     videoFps        = [videoTrack nominalFrameRate];
-                 
+                    videoFrameCount = videoFps * CMTimeGetSeconds(videoDuration);
+            
                     BOOL playable = _asset.playable;
                     if ( !playable )
                         NSLog(@"AVFPlayer warnign: track is not playable");
