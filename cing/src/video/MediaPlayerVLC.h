@@ -73,6 +73,7 @@ namespace Cing
 		bool    isPlaying ();
 		float   duration  () const { return m_videoDuration / 1000.0f; }
 		float   time      ();
+		float	fps		  ();
 		int     getWidth  () const { return m_videoWidth; }
 		int     getHeight () const { return m_videoHeight; }
 

@@ -58,7 +58,7 @@ namespace Cing
 		bool    init    ();
 		bool    load    ( const std::string& fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
 		void    end     ();
-		void    update  ();
+		void    update  ( unsigned int forceFrame = -1, bool updateTexture = false );
 		Image&  getImage();
 
 		// Query methods
@@ -71,7 +71,7 @@ namespace Cing
 		unsigned int    	getHeight 		() const { return m_videoHeight; }
 		float   			fps		  		() const { return m_videoFps; }
 		float   			frameRate 		() const { return m_videoFps; }
-		unsigned int		numberOfFrames	() const { return m_nFrames; } 
+		unsigned int		frameCount		() const { return m_nFrames; } 
 		const std::string&	getFilePath		() const { return m_fileName; }
 
 		// Media control
