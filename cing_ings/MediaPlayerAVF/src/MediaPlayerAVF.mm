@@ -257,7 +257,6 @@ namespace Cing
 		// Check if video is ok
 		if ( !isValid() )
 		{
-			LOG_ERROR( "MediaPlayerAVF not corretly initialized. Time cannot be obtained" );
 			return 0;
 		}
         
