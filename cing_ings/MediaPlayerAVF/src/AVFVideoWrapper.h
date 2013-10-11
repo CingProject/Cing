@@ -29,7 +29,7 @@ typedef enum _AVFPixelFormat {
     
     bool                    _newFrameReady;
     uint8_t                 *_frameBuffer;
-
+    
     
     CVPixelBufferRef        _pixelBuffer;
     
@@ -40,10 +40,12 @@ typedef enum _AVFPixelFormat {
     AVFPixelFormat          _format;
     unsigned int            _channelCount;
     
+    CMTime                  seekTime;
+    BOOL                    _useSeekTime; // If this is true the current frame will come from the time set in the sekk call and not from regular playback time.
+    BOOL                    loading;
+    BOOL                    ready;
     
-    BOOL loading;
-    BOOL ready;
-    BOOL deallocWhenReady;
+    BOOL                    deallocWhenReady;
 }
 
 @property (nonatomic, strong)   AVPlayer                *player;
@@ -63,7 +65,11 @@ typedef enum _AVFPixelFormat {
 // Ser player settings
 - (void) setPixelFormat :(AVFPixelFormat)format;
 - (void) setFps         :(float)desiredFps;
+- (void) setRate:(float)rate;
 - (void) setCurrentTime :(float)timeSecs;
+- (void) setCurrentFrame: (unsigned int)frameNumber;
+- (void) nextFrame;
+
 
 // Query
 - (bool)            newFrameReady;

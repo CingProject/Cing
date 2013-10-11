@@ -29,9 +29,6 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 @synthesize player = _player;
 @synthesize asset = _asset;
 @synthesize playerItem = _playerItem;
-//@synthesize playerItem;
-//@synthesize videoOutput = _videoOutput;
-//playerItemOutput,
 @synthesize videoOutput = _videoOutput;
 @synthesize ready; //playerLayer, layerRenderer;
 
@@ -59,6 +56,8 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
             [self setupPlaybackWithAsset:asset];
         });
     }];
+    
+    _useSeekTime = NO;
 }
 
 - (void)setupPlaybackWithAsset:(AVAsset *)asset
@@ -120,6 +119,8 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     //self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkFired:)];
     //self.displayLink.paused = YES;
     //[self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    
+    _useSeekTime = NO;
 }
 
 
@@ -199,6 +200,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 
 - (void) play {
     [self.player play];
+    _useSeekTime = NO;
 }
 
 - (void) pause {
@@ -232,12 +234,50 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     videoFps = self.player.rate * videoFps;
 }
 
-- (void) setCurrentTime :(float)timeSecs {
-    
-    CMTime videoTime = CMTimeMake(timeSecs, 1);
-    [self.player seekToTime:videoTime];
+- (void) setRate:(float)rate {
+    [_player setRate:rate];
 }
 
+- (void) setCurrentTime :(float)timeSecs {
+    
+    seekTime = CMTimeMake(timeSecs, 1);
+    [self.player seekToTime:seekTime];
+    _useSeekTime = YES;
+}
+
+- (void) setCurrentFrame: (unsigned int)frameNumber {
+    
+    _useSeekTime = YES;
+    
+    // See where in seconds this frame number falls
+    double timeSecs = ((double)frameNumber / (double)videoFrameCount) * CMTimeGetSeconds(videoDuration);
+    
+    // Calculate the seek time (scale in microseconds, as the CMTime only uses int numbers to represent time/scale)
+    seekTime = CMTimeMake(timeSecs * 1000000000, 1000000000);
+    
+    // Perform the seek
+    [_player seekToTime:seekTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];   
+}
+- (void) nextFrame {
+    
+    _useSeekTime = YES;
+    
+    // Get current time
+    CMTime currentTime = [_playerItem currentTime];
+    
+    // Calculate one frame's time
+    float secs = 1.0 / videoFps;
+    CMTime oneFrame = CMTimeMake( secs * 1000000, 1000000 );
+
+    // Add both to know next frame's time
+    CMTimeShow(oneFrame);
+    CMTime added = CMTimeAdd(currentTime, oneFrame);
+    
+    // Perform seek (it's asyncrhonous, so we shold confirm we have a frame ready before knowing for sure we can use it).
+    seekTime = added;
+    [_player seekToTime:added toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -251,6 +291,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                     break;
                 case AVPlayerItemStatusReadyToPlay:
                     NSLog( @"-- player Item: AVPlayerItemStatusReadyToPlay" );
+                                      
                     break;
                 case AVPlayerItemStatusFailed:
                     NSLog( @"-- AVPlayerItemStatusFailed" );
@@ -274,12 +315,13 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                     videoDuration   = [[videoTrack asset] duration];
                     videoFps        = [videoTrack nominalFrameRate];
                     videoFrameCount = videoFps * CMTimeGetSeconds(videoDuration);
-            
+                    
                     BOOL playable = _asset.playable;
                     if ( !playable )
                         NSLog(@"AVFPlayer warnign: track is not playable");
                     
                     ready = YES;
+                    
                     break;
                 case AVPlayerItemStatusFailed:
                     NSLog( @"-- AVPlayerItemStatusFailed" );
@@ -298,78 +340,23 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 
 - (void) playerItemDidReachEnd:(NSNotification *) notification {
     [self.player seekToTime:kCMTimeZero];
-    [self.player play];
+    [self play];
 }
 
 - (void) update {
 
     // Get the current time
-    CMTime currentTime = [[self videoOutput] itemTimeForHostTime:CACurrentMediaTime()];
-        
-    // Ger Frames
-    if ([[self videoOutput] hasNewPixelBufferForItemTime:currentTime] == YES) {
-        CVPixelBufferRef newFrame = [[self videoOutput] copyPixelBufferForItemTime:currentTime itemTimeForDisplay:NULL];
-        
-        if ( newFrame ) {
-                  
-            // Get buffer info
-            CVReturn lock = CVPixelBufferLockBaseAddress(newFrame, kCVPixelBufferLock_ReadOnly);
-            if ( lock == kCVReturnSuccess ) {
-                
-                uint8_t *pixelBuffer = (uint8_t*)CVPixelBufferGetBaseAddress(newFrame);
-                if ( pixelBuffer ) {
-                    
-                    //NSLog( @" New Frame!!" );
-                    
-                    // Get buffer low level data
-                    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(newFrame);
-                                        
-                    _widthStep = bytesPerRow;
-                    size_t w = CVPixelBufferGetWidth(newFrame);
-                    size_t h = CVPixelBufferGetHeight(newFrame);
-                    
-                    //size_t totalSize = CVPixelBufferGetDataSize((CVPixelBufferRef)newFrame);
-                    
-                    // adn the pixel formar
-                    //OSType pixelFormat = CVPixelBufferGetPixelFormatType (newFrame);
-                    
-                    int depth = _channelCount;
-                    int extraBytesPaddingPerRow = bytesPerRow - w*depth;
-                    int expectedBytesPerRow = w*depth;
-                    
-                    // TODO: optimize:
-                    // If it is the first frame, init the internal buffer
-                    size_t bufferSize = expectedBytesPerRow * h * sizeof(char);
-                    if ( _frameBuffer == nil ) {
-                        _frameBuffer = (uint8_t*)malloc(bufferSize);
-                    }
-                    
-                    // Now copy the data
-                    if ( bytesPerRow == expectedBytesPerRow )
-                    {
-                        memcpy(_frameBuffer, pixelBuffer, bytesPerRow * h);
-                    }
-                    // There is padding in this buffer, copy per row considering padding
-                    else
-                    {
-                        // Copy buffer data considering that AVF adds padding per row to make it divisible by 16
-                        for(int i = 0; i < h; ++i)
-                        {
-                            void* src = (uint8_t *) pixelBuffer + i * ((w * depth) + extraBytesPaddingPerRow);
-                            void *dst = (uint8_t *) _frameBuffer + i * (w * depth);
-                            memcpy(dst, src, w * depth);
-                        }
-                    }
-                    
-                    _newFrameReady = true;
-                }
-                CVPixelBufferUnlockBaseAddress(newFrame, kCVPixelBufferLock_ReadOnly);
-                CVPixelBufferRelease(newFrame);
-            }
-            
-        }
-
-    }
+    CMTime currentTime;
+    
+    if ( _useSeekTime )
+        currentTime = seekTime;
+    else
+        currentTime = [[self videoOutput] itemTimeForHostTime:CACurrentMediaTime()];
+    
+    // Get Frames
+    //if ([[self videoOutput] hasNewPixelBufferForItemTime:currentTime] == YES) {
+        [self copyNewPixelBuffer:currentTime];
+    //}
 }
 
 - (bool) newFrameReady {
@@ -387,16 +374,83 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     return _frameBuffer;
 }
 
+- (void) copyNewPixelBuffer:(CMTime)currentTime {
+    
+    CVPixelBufferRef newFrame = [[self videoOutput] copyPixelBufferForItemTime:currentTime itemTimeForDisplay:NULL];
+    
+    if ( newFrame ) {
+        
+        //NSLog(@"------New Frame received for time: ");
+        //CMTimeShow(currentTime);
+        
+        // Get buffer info
+        CVReturn lock = CVPixelBufferLockBaseAddress(newFrame, kCVPixelBufferLock_ReadOnly);
+        if ( lock == kCVReturnSuccess ) {
+            
+            uint8_t *pixelBuffer = (uint8_t*)CVPixelBufferGetBaseAddress(newFrame);
+            if ( pixelBuffer ) {
+                
+                //NSLog( @" New Frame!!" );
+                
+                // Get buffer low level data
+                size_t bytesPerRow = CVPixelBufferGetBytesPerRow(newFrame);
+                
+                _widthStep = bytesPerRow;
+                size_t w = CVPixelBufferGetWidth(newFrame);
+                size_t h = CVPixelBufferGetHeight(newFrame);
+                
+                //size_t totalSize = CVPixelBufferGetDataSize((CVPixelBufferRef)newFrame);
+                
+                // adn the pixel formar
+                //OSType pixelFormat = CVPixelBufferGetPixelFormatType (newFrame);
+                
+                int depth = _channelCount;
+                int extraBytesPaddingPerRow = bytesPerRow - w*depth;
+                int expectedBytesPerRow = w*depth;
+                
+                // TODO: optimize:
+                // If it is the first frame, init the internal buffer
+                size_t bufferSize = expectedBytesPerRow * h * sizeof(char);
+                if ( _frameBuffer == nil ) {
+                    _frameBuffer = (uint8_t*)malloc(bufferSize);
+                }
+                
+                // Now copy the data
+                if ( bytesPerRow == expectedBytesPerRow )
+                {
+                    memcpy(_frameBuffer, pixelBuffer, bytesPerRow * h);
+                }
+                // There is padding in this buffer, copy per row considering padding
+                else
+                {
+                    // Copy buffer data considering that AVF adds padding per row to make it divisible by 16
+                    for(int i = 0; i < h; ++i)
+                    {
+                        void* src = (uint8_t *) pixelBuffer + i * ((w * depth) + extraBytesPaddingPerRow);
+                        void *dst = (uint8_t *) _frameBuffer + i * (w * depth);
+                        memcpy(dst, src, w * depth);
+                    }
+                }
+                
+                _newFrameReady = true;
+            }
+            CVPixelBufferUnlockBaseAddress(newFrame, kCVPixelBufferLock_ReadOnly);
+            CVPixelBufferRelease(newFrame);
+        }
+        
+    }
+}
+
 
 /*
 - (void)addTimeObserverToPlayer
 {
-    
+ 
      //Adds a time observer to the player to periodically refresh the time label to reflect current time.
  
     if (_timeObserver)
         return;
-    
+ 
     _timeObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1, 10) queue:dispatch_get_main_queue() usingBlock:
                      ^(CMTime time) {
                          NSLog( @"--- addTimeObserverToPlayer called" );

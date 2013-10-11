@@ -47,6 +47,7 @@ public:
     int             getHeight   () const { return m_videoHeight; }
     float           fps         () const { return m_videoFps; }
     unsigned int    frameCount  () const { return m_videoNFrames; }
+    bool            hasNewFrame () const { return m_newBufferReady; }
     
     
     // Media control
@@ -57,6 +58,8 @@ public:
     void            setLoop ( bool loop ) { m_loop = loop; }
     void            noLoop  () { setLoop( false  ); }
     void            jump    ( float whereInSecs );
+    void            jumpToFrame ( unsigned int frameNumber );
+    void            nextFrame   ();
     void            speed   ( float rate );
     
 private:

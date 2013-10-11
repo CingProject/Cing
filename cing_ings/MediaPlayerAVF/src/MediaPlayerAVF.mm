@@ -136,6 +136,7 @@ namespace Cing
 	{
         // Check if the player is ready
         bool ready = [m_player ready];
+        m_newBufferReady = false;
         
         if ( !ready )
             return;
@@ -186,6 +187,8 @@ namespace Cing
                         m_frameImg.updateTexture();
                     else
                         m_frameImg.setUpdateTexture();
+                
+                    m_newBufferReady = true;
                 }
                 
             }
@@ -247,7 +250,7 @@ namespace Cing
 	{
 		return m_playing;
 	}
-	
+
 	
 	/**
 	 * Returns the location of the play head in seconds (that is, the time it has played)
@@ -354,7 +357,38 @@ namespace Cing
 		
 		[m_player setCurrentTime:whereInSecs];
 	}
+    
+    /**
+	 * Jumps to a specific location within a movie (specified in frame number)
+	 * @param frameNumber Where to jump in the movie (in frame number, being 0 the first frame)
+	 **/
+	void MediaPlayerAVF::jumpToFrame( unsigned int frameNumber )
+	{
+		// Check if video is ok
+		if ( !isValid() )
+		{
+			LOG_ERROR( "MediaPlayerAVF not corretly initialized. File will not jump" );
+			return;
+		}
+		
+		[m_player setCurrentFrame:frameNumber];
+	}
 	
+    /**
+	 * Jumps to the next frame of the video
+	 **/
+	void MediaPlayerAVF::nextFrame()
+	{
+		// Check if video is ok
+		if ( !isValid() )
+		{
+			LOG_ERROR( "MediaPlayerAVF not corretly initialized. File will not jump" );
+			return;
+		}
+		
+		[m_player nextFrame];
+	}
+
 	/**
 	 * Sets the relative playback speed of the movie (
 	 * Examples: 1.0 = normal speed, 2.0 = 2x speed, 0.5 = half speed
@@ -368,6 +402,8 @@ namespace Cing
 			LOG_ERROR( "MediaPlayerAVF not corretly initialized" );
 			return;
 		}
+        
+        [m_player setRate:rate];
         
 	}
     
