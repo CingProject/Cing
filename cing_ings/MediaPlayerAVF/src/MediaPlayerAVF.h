@@ -47,6 +47,7 @@ public:
     int             getHeight   () const { return m_videoHeight; }
     float           fps         () const { return m_videoFps; }
     unsigned int    frameCount  () const { return m_videoNFrames; }
+    unsigned int    currentFrameNumber();
     bool            hasNewFrame () const { return m_newBufferReady; }
     
     

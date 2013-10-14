@@ -194,6 +194,11 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     return videoFps;
 }
 
+// Returns the frame number of the last pixel buffer that was copied to the current Image
+- (unsigned int)  currentFrameNumber {
+    return currentFrameNumber;
+}
+
 - (unsigned int) frameCount {
     return videoFrameCount;
 }
@@ -432,7 +437,9 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                     }
                 }
                 
+                // New frame flag and store the number of frame that was just copied
                 _newFrameReady = true;
+                currentFrameNumber = round((CMTimeGetSeconds(currentTime) / CMTimeGetSeconds(videoDuration)) * (double)videoFrameCount);
             }
             CVPixelBufferUnlockBaseAddress(newFrame, kCVPixelBufferLock_ReadOnly);
             CVPixelBufferRelease(newFrame);

@@ -37,6 +37,7 @@ typedef enum _AVFPixelFormat {
     CMTime                  videoDuration;
     float                   videoFps;
     unsigned int            videoFrameCount;
+    unsigned int            currentFrameNumber; // Frame number for the last pixe buffer that was copied/decoded from the movie file
     AVFPixelFormat          _format;
     unsigned int            _channelCount;
     
@@ -80,6 +81,7 @@ typedef enum _AVFPixelFormat {
 - (CMTime)          duration;
 - (float)           time;
 - (float)           fps;
+- (unsigned int)    currentFrameNumber;
 - (unsigned int)    frameCount;
 - (unsigned int)    widthStep;
 

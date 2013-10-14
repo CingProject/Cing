@@ -268,6 +268,20 @@ namespace Cing
 	}
 	
 	/**
+	 * Returns the location of the play head in seconds (that is, the time it has played)
+	 **/
+	unsigned int MediaPlayerAVF::currentFrameNumber()
+	{
+		// Check if video is ok
+		if ( !isValid() )
+		{
+			return 0;
+		}
+        
+        return [m_player currentFrameNumber];
+    }
+    
+	/**
 	 * Plays the media with no loop
 	 **/
 	void MediaPlayerAVF::play()
