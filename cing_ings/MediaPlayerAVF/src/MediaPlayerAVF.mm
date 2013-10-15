@@ -136,7 +136,6 @@ namespace Cing
 	{
         // Check if the player is ready
         bool ready = [m_player ready];
-        m_newBufferReady = false;
         
         if ( !ready )
             return;
@@ -231,6 +230,9 @@ namespace Cing
 	 */
 	Image& MediaPlayerAVF::getImage()
 	{
+        // Mark this frame as retrieved
+        m_newBufferReady = false;
+        
 		// Check if video is ok
 		if ( !isValid() )
 		{
