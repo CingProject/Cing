@@ -73,6 +73,7 @@ namespace Cing
 		float   			frameRate 		() const { return m_videoFps; }
 		unsigned int		frameCount		() const { return m_nFrames; } 
 		const std::string&	getFilePath		() const { return m_fileName; }
+		bool				hasNewFrame () const { return true; }
 
 		// Media control
 		void    play    ();
