@@ -35,6 +35,8 @@
 		4C4FFC5617B0118F00A35D13 /* Renderer2DOpenCV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */; };
 		4C4FFC5717B0118F00A35D13 /* Renderer2DOpenCV.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */; };
 		4C4FFC5C17B04D8100A35D13 /* UserApplicationBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC5A17B04D8100A35D13 /* UserApplicationBase.h */; };
+		4C5520C1180C92140023D0BB /* AVFVideoReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5520BF180C92130023D0BB /* AVFVideoReader.h */; };
+		4C5520C2180C92140023D0BB /* AVFVideoReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C5520C0180C92130023D0BB /* AVFVideoReader.mm */; };
 		4C5CA98A17B2C43700289AFB /* OpenCV-CingBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C5CA98817B2C43700289AFB /* OpenCV-CingBeat.cpp */; };
 		4C5CA98B17B2C43700289AFB /* OpenCV-CingBeat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5CA98917B2C43700289AFB /* OpenCV-CingBeat.h */; };
 		4C6208B617C7C03400122AFD /* AVFVideoWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6208B417C7C03400122AFD /* AVFVideoWrapper.h */; };
@@ -165,6 +167,8 @@
 		4C4FFC3C17B0118F00A35D13 /* Renderer2DOpenCV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Renderer2DOpenCV.cpp; path = ../../../../cing_ings/OpenCV/src/Renderer2DOpenCV.cpp; sourceTree = "<group>"; };
 		4C4FFC3D17B0118F00A35D13 /* Renderer2DOpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Renderer2DOpenCV.h; path = ../../../../cing_ings/OpenCV/src/Renderer2DOpenCV.h; sourceTree = "<group>"; };
 		4C4FFC5A17B04D8100A35D13 /* UserApplicationBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserApplicationBase.h; sourceTree = "<group>"; };
+		4C5520BF180C92130023D0BB /* AVFVideoReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFVideoReader.h; path = ../../../../cing_ings/MediaPlayerAVF/src/AVFVideoReader.h; sourceTree = "<group>"; };
+		4C5520C0180C92130023D0BB /* AVFVideoReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AVFVideoReader.mm; path = ../../../../cing_ings/MediaPlayerAVF/src/AVFVideoReader.mm; sourceTree = "<group>"; };
 		4C5CA98817B2C43700289AFB /* OpenCV-CingBeat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "OpenCV-CingBeat.cpp"; path = "../../../../cing_ings/OpenCV/src/OpenCV-CingBeat.cpp"; sourceTree = "<group>"; };
 		4C5CA98917B2C43700289AFB /* OpenCV-CingBeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenCV-CingBeat.h"; path = "../../../../cing_ings/OpenCV/src/OpenCV-CingBeat.h"; sourceTree = "<group>"; };
 		4C6208B417C7C03400122AFD /* AVFVideoWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFVideoWrapper.h; path = ../../../../cing_ings/MediaPlayerAVF/src/AVFVideoWrapper.h; sourceTree = "<group>"; };
@@ -445,6 +449,8 @@
 				4CAAB47D17C808B200B7061E /* MediaPlayerAVF.mm */,
 				4C6208B417C7C03400122AFD /* AVFVideoWrapper.h */,
 				4C6208B517C7C03400122AFD /* AVFVideoWrapper.m */,
+				4C5520BF180C92130023D0BB /* AVFVideoReader.h */,
+				4C5520C0180C92130023D0BB /* AVFVideoReader.mm */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -798,6 +804,7 @@
 				4C5CA98B17B2C43700289AFB /* OpenCV-CingBeat.h in Headers */,
 				4C6208B617C7C03400122AFD /* AVFVideoWrapper.h in Headers */,
 				4CAAB47E17C808B200B7061E /* MediaPlayerAVF.h in Headers */,
+				4C5520C1180C92140023D0BB /* AVFVideoReader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,6 +965,7 @@
 				4C5CA98A17B2C43700289AFB /* OpenCV-CingBeat.cpp in Sources */,
 				4C6208B717C7C03400122AFD /* AVFVideoWrapper.m in Sources */,
 				4CAAB47F17C808B200B7061E /* MediaPlayerAVF.mm in Sources */,
+				4C5520C2180C92140023D0BB /* AVFVideoReader.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
