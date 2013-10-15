@@ -263,8 +263,9 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     // Calculate the seek time (scale in microseconds, as the CMTime only uses int numbers to represent time/scale)
     seekTime = CMTimeMake((timeSecs + (timePerFrame*0.5)) * 1000000000, 1000000000);
     
-    CMTime currentTime = [_playerItem currentTime];
-    unsigned int currentFrame = round((CMTimeGetSeconds(currentTime) /  CMTimeGetSeconds(videoDuration)) * (double)videoFrameCount);
+    // LOG INFO
+    //CMTime currentTime = [_playerItem currentTime];
+    //unsigned int currentFrame = round((CMTimeGetSeconds(currentTime) /  CMTimeGetSeconds(videoDuration)) * (double)videoFrameCount);
     //NSLog( @"--Requested jump from time %f, to time %f, from frame: %d, to frame: %d", CMTimeGetSeconds(currentTime), CMTimeGetSeconds(seekTime), currentFrame, frameNumber);
     
     // Perform the seek
