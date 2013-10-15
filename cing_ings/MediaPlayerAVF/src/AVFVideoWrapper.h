@@ -47,6 +47,11 @@ typedef enum _AVFPixelFormat {
     BOOL                    ready;
     
     BOOL                    deallocWhenReady;
+    
+    // NOTE: storing the address of the last received buffer, to avoid repeating buffers (this is done as hasNewPixelBufferForItemTime:currentTime is not behaving as expected
+    // and often does not return
+    unsigned int            _lastFrameBufferAddress;
+    
 }
 
 @property (nonatomic, strong)   AVPlayer                *player;

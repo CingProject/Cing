@@ -36,6 +36,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     if (self = [super init]) {
         
         _format = AVF_RGB;
+        _lastFrameBufferAddress = 0;
     }
     return self;
 }
@@ -254,11 +255,17 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     
     _useSeekTime = YES;
     
+    double timePerFrame = 1.0 / videoFps;
+    
     // See where in seconds this frame number falls
     double timeSecs = ((double)frameNumber / (double)videoFrameCount) * CMTimeGetSeconds(videoDuration);
     
     // Calculate the seek time (scale in microseconds, as the CMTime only uses int numbers to represent time/scale)
-    seekTime = CMTimeMake(timeSecs * 1000000000, 1000000000);
+    seekTime = CMTimeMake((timeSecs + (timePerFrame*0.5)) * 1000000000, 1000000000);
+    
+    CMTime currentTime = [_playerItem currentTime];
+    unsigned int currentFrame = round((CMTimeGetSeconds(currentTime) /  CMTimeGetSeconds(videoDuration)) * (double)videoFrameCount);
+    //NSLog( @"--Requested jump from time %f, to time %f, from frame: %d, to frame: %d", CMTimeGetSeconds(currentTime), CMTimeGetSeconds(seekTime), currentFrame, frameNumber);
     
     // Perform the seek
     [_player seekToTime:seekTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];   
@@ -383,9 +390,12 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     
     CVPixelBufferRef newFrame = [[self videoOutput] copyPixelBufferForItemTime:currentTime itemTimeForDisplay:NULL];
     
-    if ( newFrame ) {
+    unsigned int newFrameAddress = (unsigned int) newFrame;
+    
+    
+    if ( newFrame && (_lastFrameBufferAddress != newFrameAddress) ) {
         
-        //NSLog(@"------New Frame received for time: ");
+        //NSLog(@"------New Frame received for time: %f, for address: %d", CMTimeGetSeconds(currentTime), newFrame);
         //CMTimeShow(currentTime);
         
         // Get buffer info
@@ -395,7 +405,6 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
             uint8_t *pixelBuffer = (uint8_t*)CVPixelBufferGetBaseAddress(newFrame);
             if ( pixelBuffer ) {
                 
-                //NSLog( @" New Frame!!" );
                 
                 // Get buffer low level data
                 size_t bytesPerRow = CVPixelBufferGetBytesPerRow(newFrame);
@@ -440,6 +449,9 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                 // New frame flag and store the number of frame that was just copied
                 _newFrameReady = true;
                 currentFrameNumber = round((CMTimeGetSeconds(currentTime) / CMTimeGetSeconds(videoDuration)) * (double)videoFrameCount);
+                
+                // Store the address of the buffer to avoid retrieving the same buffer in the future.
+                _lastFrameBufferAddress = newFrameAddress;
             }
             CVPixelBufferUnlockBaseAddress(newFrame, kCVPixelBufferLock_ReadOnly);
             CVPixelBufferRelease(newFrame);
@@ -462,7 +474,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                      ^(CMTime time) {
                          NSLog( @"--- addTimeObserverToPlayer called" );
                          
-                         
+ 
                          CMTime currentTime = [[self videoOutput] itemTimeForHostTime:CACurrentMediaTime()];
                          
                          NSLog( @"CURRENT TIME = %f", CMTimeGetSeconds(currentTime));
