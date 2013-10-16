@@ -15,11 +15,13 @@
 @synthesize frameCount  = _frameCount;
 
 
-- (void) loadFile:(NSString *)filename {
+- (Boolean) loadFile:(NSString *)filename {
+    
+    _frameBuffer = nil;
     
     // File loading
     NSURL *fileURL = [NSURL fileURLWithPath:[filename stringByStandardizingPath]];
-    NSLog(@"Trying to load %@", filename);
+    //NSLog(@"Trying to load %@", filename);
     
     // Init the asset to have access to the file
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
@@ -27,7 +29,10 @@
     // Create the asset reader
     NSError *error;
     _assetReader = [[AVAssetReader alloc] initWithAsset:asset error:&error];
-    // TODO: ERROR CHECKING
+    if ( !_assetReader ) {
+        NSLog( @"Error reading file %@", filename );
+        return false;
+    }
     
     // Get video track
     NSArray* video_tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
@@ -51,9 +56,10 @@
     // Start reading
     if ( [_assetReader startReading] == YES ) {
         NSLog(@"Reading video asset");
+        return true;
     }
     
-    _frameBuffer = nil;
+    return false;
 }
 
 - (Cing::Image &)getNextFrame {

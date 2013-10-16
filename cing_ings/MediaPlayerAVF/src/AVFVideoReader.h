@@ -30,8 +30,8 @@
 }
 
 // Load and frame retrieval 
-- (void) loadFile:(NSString *)  filename;
-- (Cing::Image &)               getNextFrame;
+- (Boolean) loadFile:(NSString *)   filename;
+- (Cing::Image &)                   getNextFrame;
 
 // Query
 @property (assign) float        fps;
