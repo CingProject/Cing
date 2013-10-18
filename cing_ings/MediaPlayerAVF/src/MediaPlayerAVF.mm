@@ -91,6 +91,14 @@ namespace Cing
         // Loa the file
         [m_player loadFile:[NSString stringWithUTF8String:m_filePath.c_str()]];        
         [pool release];
+
+        // Store file info
+        m_videoWidth    = [m_player size].width;
+        m_videoHeight   = [m_player size].height;
+        m_videoFps		= [m_player fps];
+        m_videoDuration = CMTimeGetSeconds([m_player duration]);
+        m_videoNFrames	= m_videoFps * m_videoDuration;
+
         
         m_playing = false;
         m_desiredFps = fps;
@@ -143,11 +151,6 @@ namespace Cing
         // Finally file loaded? (load is asynchronous)
         if ( ready && !isValid() )
         {
-            m_videoWidth    = [m_player size].width;
-            m_videoHeight   = [m_player size].height;
-            m_videoFps		= [m_player fps];
-            m_videoDuration = CMTimeGetSeconds([m_player duration]);
-            m_videoNFrames	= m_videoFps * m_videoDuration;
             m_currentFrame	= 0;
             m_playing		= false;
             

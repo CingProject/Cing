@@ -50,6 +50,15 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     // Init the asset to have access to the file
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
 
+    // Extract movie file information
+    NSArray* video_tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    AVAssetTrack *videoTrack = [video_tracks objectAtIndex:0];
+    
+    videoSize       = [videoTrack naturalSize];
+    videoDuration   = [asset duration];
+    videoFps        = [videoTrack nominalFrameRate];
+    videoFrameCount = videoFps * CMTimeGetSeconds(videoDuration);
+    
     // Load it when it is playable and the tracks are ready (to be able to acces frames)
     NSArray *requestedKeys = [NSArray arrayWithObjects:kTracksKey, kPlayableKey, nil];
     [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
@@ -116,10 +125,6 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
         [_player addObserver:self forKeyPath:@"status" options:0 context:AVPlayerItemStatusContext];
         
     }
-    
-    //self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkFired:)];
-    //self.displayLink.paused = YES;
-    //[self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     
     _useSeekTime = NO;
 }
@@ -322,13 +327,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                 case AVPlayerItemStatusReadyToPlay:
                     NSLog( @"-- AVPlayerItemStatusReadyToPlay" );
                     
-                    NSArray *tracks = [[_player currentItem] tracks] ;
-                    AVAssetTrack *videoTrack = [[tracks objectAtIndex:0] assetTrack];
-                    videoSize       = [videoTrack naturalSize];
-                    videoDuration   = [[videoTrack asset] duration];
-                    videoFps        = [videoTrack nominalFrameRate];
-                    videoFrameCount = videoFps * CMTimeGetSeconds(videoDuration);
-                    
+                    // Make sure it is playable
                     BOOL playable = _asset.playable;
                     if ( !playable )
                         NSLog(@"AVFPlayer warnign: track is not playable");

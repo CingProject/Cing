@@ -13,6 +13,9 @@
 @synthesize fps         = _fps;
 @synthesize duration    = _duration;
 @synthesize frameCount  = _frameCount;
+@synthesize width       = _width;
+@synthesize height      = _height;
+
 
 
 - (Boolean) loadFile:(NSString *)filename {
@@ -46,6 +49,9 @@
     _fps = [video_track nominalFrameRate];
     _duration = CMTimeGetSeconds([asset duration]);
     _frameCount = _duration * _fps;
+    _width  = [video_track naturalSize].width;
+    _height = [video_track naturalSize].height;
+    
     //NSLog(@"video track %f %f %f", [video_track naturalSize].width, [video_track naturalSize].height, [video_track nominalFrameRate]);
 
     

@@ -27,6 +27,8 @@
     float                       _fps;
     float                       _duration;
     unsigned int                _frameCount;
+    unsigned int                _width;
+    unsigned int                _height;
 }
 
 // Load and frame retrieval 
@@ -37,6 +39,9 @@
 @property (assign) float        fps;
 @property (assign) float        duration;
 @property (assign) unsigned int frameCount;
+@property (assign) unsigned int width;
+@property (assign) unsigned int height;
+
 
 
 
