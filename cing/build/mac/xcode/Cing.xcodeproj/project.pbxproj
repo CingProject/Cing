@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4C051C9317B18B2000BA532E /* InputUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C051C9217B18B2000BA532E /* InputUtils.h */; };
 		4C051C9517B18CB700BA532E /* InputUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C051C9417B18CB700BA532E /* InputUtils.cpp */; };
+		4C14EA3B181854EA007BF0CF /* AVFVideoWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14EA39181854EA007BF0CF /* AVFVideoWriter.h */; };
+		4C14EA3C181854EA007BF0CF /* AVFVideoWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14EA3A181854EA007BF0CF /* AVFVideoWriter.m */; };
 		4C4FFC3E17B0118F00A35D13 /* BackgroundSubtraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC2417B0118F00A35D13 /* BackgroundSubtraction.cpp */; };
 		4C4FFC3F17B0118F00A35D13 /* BackgroundSubtraction.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4FFC2517B0118F00A35D13 /* BackgroundSubtraction.h */; };
 		4C4FFC4017B0118F00A35D13 /* BaseImageFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4FFC2617B0118F00A35D13 /* BaseImageFilter.cpp */; };
@@ -141,6 +143,8 @@
 /* Begin PBXFileReference section */
 		4C051C9217B18B2000BA532E /* InputUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputUtils.h; sourceTree = "<group>"; };
 		4C051C9417B18CB700BA532E /* InputUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputUtils.cpp; sourceTree = "<group>"; };
+		4C14EA39181854EA007BF0CF /* AVFVideoWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFVideoWriter.h; path = ../../../../cing_ings/MediaPlayerAVF/src/AVFVideoWriter.h; sourceTree = "<group>"; };
+		4C14EA3A181854EA007BF0CF /* AVFVideoWriter.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = AVFVideoWriter.m; path = ../../../../cing_ings/MediaPlayerAVF/src/AVFVideoWriter.m; sourceTree = "<group>"; };
 		4C4FFC2417B0118F00A35D13 /* BackgroundSubtraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BackgroundSubtraction.cpp; path = ../../../../cing_ings/OpenCV/src/BackgroundSubtraction.cpp; sourceTree = "<group>"; };
 		4C4FFC2517B0118F00A35D13 /* BackgroundSubtraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackgroundSubtraction.h; path = ../../../../cing_ings/OpenCV/src/BackgroundSubtraction.h; sourceTree = "<group>"; };
 		4C4FFC2617B0118F00A35D13 /* BaseImageFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseImageFilter.cpp; path = ../../../../cing_ings/OpenCV/src/BaseImageFilter.cpp; sourceTree = "<group>"; };
@@ -451,6 +455,8 @@
 				4C6208B517C7C03400122AFD /* AVFVideoWrapper.m */,
 				4C5520BF180C92130023D0BB /* AVFVideoReader.h */,
 				4C5520C0180C92130023D0BB /* AVFVideoReader.mm */,
+				4C14EA39181854EA007BF0CF /* AVFVideoWriter.h */,
+				4C14EA3A181854EA007BF0CF /* AVFVideoWriter.m */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -805,6 +811,7 @@
 				4C6208B617C7C03400122AFD /* AVFVideoWrapper.h in Headers */,
 				4CAAB47E17C808B200B7061E /* MediaPlayerAVF.h in Headers */,
 				4C5520C1180C92140023D0BB /* AVFVideoReader.h in Headers */,
+				4C14EA3B181854EA007BF0CF /* AVFVideoWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,6 +973,7 @@
 				4C6208B717C7C03400122AFD /* AVFVideoWrapper.m in Sources */,
 				4CAAB47F17C808B200B7061E /* MediaPlayerAVF.mm in Sources */,
 				4C5520C2180C92140023D0BB /* AVFVideoReader.mm in Sources */,
+				4C14EA3C181854EA007BF0CF /* AVFVideoWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
