@@ -106,7 +106,7 @@
                 size_t bufferSize = expectedBytesPerRow * h * sizeof(char);
                 if ( _frameBuffer == nil ) {
                     _frameBuffer = (uint8_t*)malloc(bufferSize);
-                    _frameImg.init( w, h, Cing::RGBA );
+                    _frameImg.init( w, h, Cing::BGRA );
                 }
                 
                 // Now copy the data
@@ -127,7 +127,7 @@
                 }
                 
                 // Copy the new frame
-                _frameImg.setData( _frameBuffer, w, h, Cing::RGBA, _widthStep );
+                _frameImg.setData( _frameBuffer, w, h, Cing::BGRA, _widthStep );
                 static int m_preloadedFrameCount = 0;
                 m_preloadedFrameCount++;
                 //_frameImg.save( "/Users/julioobelleiro/Desktop/Julio/Empresa/space150/clients/coke/Test/FRAME-" + Cing::toString(m_preloadedFrameCount) + ".jpg");
