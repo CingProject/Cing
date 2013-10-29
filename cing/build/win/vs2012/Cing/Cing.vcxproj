@@ -57,7 +57,7 @@
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\..\;..\..\..\..\src\;..\..\..\..\libraries\win\vs2012\;..\..\..\..\libraries\win\vs2012\OgreBullet\Collisions\include;..\..\..\..\libraries\win\vs2012\Bullet\src;..\..\..\..\libraries\win\vs2012\Ogre3d\include;..\..\..\..\libraries\win\vs2012\Ogre3d\include\OGRE;..\..\..\..\libraries\win\vs2012\Ogre3d\include\OIS;..\..\..\..\libraries\win\vs2012\Ogre3d\boost;..\..\..\..\libraries\win\vs2012\Ogre-CameraControlSystem\include;..\..\..\..\libraries\win\vs2012\CEGUI\include;..\..\..\..\libraries\win\vs2012\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\vs2012\OpenCV\include;..\..\..\..\libraries\win\vs2012\LibVLC\include;..\..\..\..\libraries\win\vs2012\GStreamer\include\;..\..\..\..\libraries\win\vs2012\OpenAL\include;..\..\..\..\..\cing_ings;..\..\..\..\..\cing_ings\GStreamer\lib\include\gstreamer-0.10;..\..\..\..\..\cing_ings\GStreamer\lib\include\glib-2.0;..\..\..\..\..\cing_ings\GStreamer\lib\include\libxml2;..\..\..\..\..\cing_ings\GStreamer\lib\include\;..\..\..\..\..\cing_ings\OpenCV\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\;..\..\..\..\src\;..\..\..\..\libraries\win\vs2012\;..\..\..\..\libraries\win\vs2012\OgreBullet\Collisions\include;..\..\..\..\libraries\win\vs2012\Bullet\src;..\..\..\..\libraries\win\vs2012\Ogre3d\include;..\..\..\..\libraries\win\vs2012\Ogre3d\include\OGRE;..\..\..\..\libraries\win\vs2012\Ogre3d\include\OIS;..\..\..\..\libraries\win\vs2012\Ogre3d\boost;..\..\..\..\libraries\win\vs2012\Ogre-CameraControlSystem\include;..\..\..\..\libraries\win\vs2012\CEGUI\include;..\..\..\..\libraries\win\vs2012\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\vs2012\OpenCV\include;..\..\..\..\libraries\win\vs2012\LibVLC\include;..\..\..\..\libraries\win\vs2012\GStreamer\include\;..\..\..\..\libraries\win\vs2012\OpenAL\include;..\..\..\..\..\cing_ings;..\..\..\..\..\cing_ings\GStreamer\lib\include\gstreamer-0.10;..\..\..\..\..\cing_ings\GStreamer\lib\include\glib-2.0;..\..\..\..\..\cing_ings\GStreamer\lib\include\libxml2;..\..\..\..\..\cing_ings\GStreamer\lib\include\;..\..\..\..\..\cing_ings\OpenCV\lib\include;..\..\..\..\..\cing_ings\cURLNetworkClient\lib\libcurl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__WIN32__;_DEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
@@ -85,7 +85,7 @@
     <ClCompile>
       <AdditionalOptions>/MP /Zm250 %(AdditionalOptions)</AdditionalOptions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\..\..\;..\..\..\..\src\;..\..\..\..\libraries\win\vs2012\;..\..\..\..\libraries\win\vs2012\OgreBullet\Collisions\include;..\..\..\..\libraries\win\vs2012\Bullet\src;..\..\..\..\libraries\win\vs2012\Ogre3d\include;..\..\..\..\libraries\win\vs2012\Ogre3d\include\OGRE;..\..\..\..\libraries\win\vs2012\Ogre3d\include\OIS;..\..\..\..\libraries\win\vs2012\Ogre3d\boost;..\..\..\..\libraries\win\vs2012\Ogre-CameraControlSystem\include;..\..\..\..\libraries\win\vs2012\CEGUI\include;..\..\..\..\libraries\win\vs2012\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\vs2012\OpenCV\include;..\..\..\..\libraries\win\vs2012\LibVLC\include;..\..\..\..\libraries\win\vs2012\GStreamer\include\;..\..\..\..\libraries\win\vs2012\OpenAL\include;..\..\..\..\..\cing_ings;..\..\..\..\..\cing_ings\GStreamer\lib\include\gstreamer-0.10;..\..\..\..\..\cing_ings\GStreamer\lib\include\glib-2.0;..\..\..\..\..\cing_ings\GStreamer\lib\include\libxml2;..\..\..\..\..\cing_ings\GStreamer\lib\include\;..\..\..\..\..\cing_ings\OpenCV\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\;..\..\..\..\src\;..\..\..\..\libraries\win\vs2012\;..\..\..\..\libraries\win\vs2012\OgreBullet\Collisions\include;..\..\..\..\libraries\win\vs2012\Bullet\src;..\..\..\..\libraries\win\vs2012\Ogre3d\include;..\..\..\..\libraries\win\vs2012\Ogre3d\include\OGRE;..\..\..\..\libraries\win\vs2012\Ogre3d\include\OIS;..\..\..\..\libraries\win\vs2012\Ogre3d\boost;..\..\..\..\libraries\win\vs2012\Ogre-CameraControlSystem\include;..\..\..\..\libraries\win\vs2012\CEGUI\include;..\..\..\..\libraries\win\vs2012\CEGUI\include\RendererModules\Ogre;..\..\..\..\libraries\win\vs2012\OpenCV\include;..\..\..\..\libraries\win\vs2012\LibVLC\include;..\..\..\..\libraries\win\vs2012\GStreamer\include\;..\..\..\..\libraries\win\vs2012\OpenAL\include;..\..\..\..\..\cing_ings;..\..\..\..\..\cing_ings\GStreamer\lib\include\gstreamer-0.10;..\..\..\..\..\cing_ings\GStreamer\lib\include\glib-2.0;..\..\..\..\..\cing_ings\GStreamer\lib\include\libxml2;..\..\..\..\..\cing_ings\GStreamer\lib\include\;..\..\..\..\..\cing_ings\OpenCV\lib\include;..\..\..\..\..\cing_ings\cURLNetworkClient\lib\libcurl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__WIN32__;NDEBUG;_WINDOWS;OIS_DYNAMIC_LIB;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -110,6 +110,7 @@
     <None Include="..\..\..\..\src\input\BaseInputDevice.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\GStreamer\src\GStreamerManager.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\GStreamer\src\MediaPlayerGS.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\BackgroundSubtraction.cpp" />
@@ -222,6 +223,7 @@
     <ClCompile Include="..\..\..\..\src\video\MediaPlayerVLC.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\GStreamer\src\GStreamerManager.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\GStreamer\src\MediaPlayerGS.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\BackgroundSubtraction.h" />
