@@ -62,7 +62,7 @@ namespace Cing
 				res = curl_easy_getinfo( curl, CURLINFO_CONTENT_TYPE, &ct );
 				if ( (CURLE_OK == res) && ct )
 				{
-					LOG("response success: %d", ct);
+					LOG_TRIVIAL("response success: %s", ct);
 				}
 				else
 				{
