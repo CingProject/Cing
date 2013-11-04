@@ -11,8 +11,6 @@
 // Common
 #include "common/CommonUtilsIncludes.h"
 
-#include "AVFVideoWrapper.h"
-
 namespace Cing
 {
 	
@@ -63,7 +61,7 @@ namespace Cing
 	 * @param fps			Desired Frames per Second for the playback. -1 means to use the fps of the movie file.
 	 * @return true if the video was succesfully loaded
 	 */
-	bool MediaPlayerAVF::load( const std::string& fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
+	bool MediaPlayerAVF::load( const std::string& fileName, GraphicsType requestedVideoFormat /*= BGRA*/, float fps /*= -1*/  )
 	{
         // If this is re-load: release resources first
         if ( isValid() )
@@ -84,12 +82,10 @@ namespace Cing
         m_player = [[AVFVideoWrapper alloc] init];
         
         // Set desired format
-        AVFPixelFormat avfFormat = AVF_RGB;
-        [m_player setPixelFormat:avfFormat];
-        m_pixelFormat	= RGB;
+        m_pixelFormat	= requestedVideoFormat;
         
         // Loa the file
-        [m_player loadFile:[NSString stringWithUTF8String:m_filePath.c_str()]];        
+        [m_player loadFile:[NSString stringWithUTF8String:m_filePath.c_str()] pixelFormat:toAVFPixelFormat(m_pixelFormat)];
         [pool release];
 
         // Store file info
@@ -158,6 +154,9 @@ namespace Cing
             // Init the frame container to the video size
             m_frameImg.init( m_videoWidth, m_videoHeight, m_pixelFormat );
             m_bufferSizeInBytes = m_videoWidth * m_videoHeight * m_frameImg.getNChannels();
+            
+            // Disable lighting for this texture
+            m_frameImg.getTexturedQuad().enableLighting(false);
             
             // Check if the requested fps is different than the actual video fps -> if so, change it
             
@@ -450,5 +449,36 @@ namespace Cing
 		
 		return true;
 	}
+    
+    /**
+	 * Returns the equivalent AVFoundation pixel format (internal format defined in: AVFVideoWrapper) from a given Cing Pixel format
+	 * @return the equivalent AVFPixelFormat (defaults to AVF_BGRA)
+	 */
+    AVFPixelFormat MediaPlayerAVF::toAVFPixelFormat( GraphicsType cingPixelFormat )
+    {
+     
+        switch (cingPixelFormat)
+        {
+            case RGB:
+                return AVF_RGB;
+                break;
+                
+            case RGBA:
+                return AVF_RGBA;
+                break;
+                
+            case BGR:
+                return AVF_BGR;
+                break;
+                
+            case BGRA:
+                return AVF_BGRA;
+                break;
+                
+            default:
+                return AVF_BGRA;
+        }
+    }
+
     
 }

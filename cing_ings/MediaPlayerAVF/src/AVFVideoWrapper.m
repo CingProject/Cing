@@ -35,13 +35,13 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 - (AVFVideoWrapper *)init {
     if (self = [super init]) {
         
-        _format = AVF_RGB;
+        _format = AVF_BGRA;
         _lastFrameBufferAddress = 0;
     }
     return self;
 }
 
-- (void) loadFile:(NSString *)filename {
+- (void) loadFile:(NSString *)filename pixelFormat:(AVFPixelFormat)pixelFormat {
    
     // File loading
     NSURL *fileURL = [NSURL fileURLWithPath:[filename stringByStandardizingPath]];
@@ -58,6 +58,9 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     videoDuration   = [asset duration];
     videoFps        = [videoTrack nominalFrameRate];
     videoFrameCount = videoFps * CMTimeGetSeconds(videoDuration);
+    
+    // Set the requested pixel format
+    [self setPixelFormat:pixelFormat];
     
     // Load it when it is playable and the tracks are ready (to be able to acces frames)
     NSArray *requestedKeys = [NSArray arrayWithObjects:kTracksKey, kPlayableKey, nil];
@@ -117,8 +120,6 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
         self.player = [AVPlayer playerWithPlayerItem:_playerItem];
         self.player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
         [self.player play];
-        
-        NSLog(@" Self: %p, %p, %p, %p", self, self.player, _playerItem, _videoOutput );
         
         // Callbacks
         [_playerItem addObserver:self forKeyPath:@"status" options:0 context:AVPlayerItemStatusContext];
@@ -327,12 +328,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                 case AVPlayerItemStatusReadyToPlay:
                     NSLog( @"-- AVPlayerItemStatusReadyToPlay" );
                     
-                    // Make sure it is playable
-                    BOOL playable = _asset.playable;
-                    if ( !playable )
-                        NSLog(@"AVFPlayer warnign: track is not playable");
-                    
-                    ready = YES;
+                        ready = YES;
                     
                     break;
                 case AVPlayerItemStatusFailed:

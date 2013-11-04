@@ -64,6 +64,12 @@
         NSLog(@"Reading video asset");
         return true;
     }
+    // Couldn't start reading, review error
+    else {
+        NSError* error = [_assetReader error];
+        NSLog(@"AVFVideoReader couldn't read requested file.  Error: [%@]", error);
+        return false;
+    }
     
     return false;
 }
@@ -107,6 +113,8 @@
                 if ( _frameBuffer == nil ) {
                     _frameBuffer = (uint8_t*)malloc(bufferSize);
                     _frameImg.init( w, h, Cing::BGRA );
+                    _frameImg.getTexturedQuad().enableLighting(false);
+
                 }
                 
                 // Now copy the data

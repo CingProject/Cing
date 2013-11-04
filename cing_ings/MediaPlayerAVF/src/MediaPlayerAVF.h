@@ -17,7 +17,7 @@
 // Ogre
 #include "OgreTimer.h"
 
-@class AVFVideoWrapper;
+#include "AVFVideoWrapper.h"
 
 namespace Cing
 {
@@ -33,7 +33,8 @@ public:
     
     // Lifecycle
     bool            init    ();
-    bool            load    ( const std::string& fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
+    //NOTE: AVFoundation player seems to only work (return frames) when format is set to BGRA)
+    bool            load    ( const std::string& fileName, GraphicsType requestedVideoFormat = BGRA, float fps = -1 );
     void            end     ();
     void            update  ( bool updateTexture = false );
     Image&          getImage();
@@ -66,11 +67,11 @@ public:
 private:
     // Private methods
     bool            buildPathToFile( const std::string& filePath );
-    
+    AVFPixelFormat  toAVFPixelFormat( GraphicsType cingPixelFormat );
     
     // AVFoundation attributes
     AVFVideoWrapper*       m_player;            ///< This is the AVF player wrapper (access to AVF)
-
+    
     
     // Media info
     std::string				m_fileName;			///< Name of the loaded video
