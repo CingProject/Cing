@@ -267,7 +267,6 @@ namespace Cing
 			return 0;
 		}
         
-        //float currentTime = m_capture.get( CV_CAP_PROP_POS_MSEC ) / 1000.0;
         return [m_player time];
 	}
 	
