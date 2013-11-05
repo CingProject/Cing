@@ -194,6 +194,9 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 }
 
 - (float) time {
+    if ( _useSeekTime )
+        return CMTimeGetSeconds(seekTime);
+    
     return CMTimeGetSeconds([self.player currentTime]);
 }
 
