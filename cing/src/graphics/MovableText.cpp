@@ -121,7 +121,7 @@ void MovableText::setFontName( const String &fontName )
 	mpFont = Ogre::FontManager::getSingleton().getByName(fontName);
 	if ( mpFont.isNull() )
 	{
-		LOG_ERROR( "MovableText::setFontName: Could not find font %s", fontName.toChar() );
+		LOG_ERROR_NTIMES( 10, "MovableText::setFontName: Could not find font %s", fontName.toChar() );
 		return;
 	}
 	mpFont->load();
