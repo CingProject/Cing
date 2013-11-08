@@ -340,14 +340,14 @@ void GraphicsManager::draw()
 	const Ogre::RenderTarget::FrameStats& frameStats = m_mainWindow.getFrameStats();
 	frameRate = frameStats.avgFPS;
 
+    // Calculate fps (on mac frame stats work very inconsistent)
+    double fps = 1000.0f / ((double)m_fpsTimer.getMicroseconds() / 1000.0);
+    m_fpsAverage.addValue( fps );
+    m_fpsTimer.reset();
+    
 	// Show fps
 	if ( m_showFps )
 	{
-		// Calculate fps (on mac frame stats work very inconsistent)
-		double fps = 1000.0f / ((double)m_fpsTimer.getMicroseconds() / 1000.0);
-		m_fpsAverage.addValue( fps );
-		m_fpsTimer.reset();
-		
 		std::ostringstream oss;
 		//oss << "FPS: " << frameStats.lastFPS;
 		oss << "FPS: " << m_fpsAverage.getValue();

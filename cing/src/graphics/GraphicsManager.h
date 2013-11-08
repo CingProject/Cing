@@ -138,6 +138,8 @@ namespace Cing
 
 		// Debug methods
 		void						showFps						( bool show );
+        double                      getFps                      () { return m_fpsAverage.getValue(); }
+    
 
 		// Camera control
 		void						enableDefault3DCameraControl( bool value );
