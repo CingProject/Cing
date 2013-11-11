@@ -117,7 +117,9 @@ namespace Cing
 			return;
 		
     
-		// TODO: Clear resources
+		// Clear resources
+        [m_player release];
+        m_player = nil;
         
         m_frameImg.end();
         

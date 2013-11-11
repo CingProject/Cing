@@ -156,6 +156,8 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     else {
         [self stop];
         
+        
+        
         // SK: Releasing the CARenderer is slow for some reason
         //     It will freeze the main thread for a few dozen mS.
         //     If you're swapping in and out videos a lot, the loadFile:
@@ -178,6 +180,12 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
             free(_frameBuffer);
             _frameBuffer = nil;
         }
+        
+        // Release callbacks
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+        [_playerItem removeObserver:self forKeyPath:@"status"];
+        [_player removeObserver:self forKeyPath:@"status"];
+        
         [super dealloc];
     }
 }

@@ -17,6 +17,22 @@
 @synthesize height      = _height;
 
 
+- (void) dealloc {
+    free(_frameBuffer);
+    _frameBuffer = nil;
+    
+    [_asset release];
+    _asset = nil;
+    
+    [_assetReader release];
+    _assetReader = nil;
+    
+    [_assetReaderOutput release];
+    _assetReaderOutput = nil;
+    
+    [super dealloc];
+}
+
 
 - (Boolean) loadFile:(NSString *)filename {
     
@@ -27,18 +43,18 @@
     //NSLog(@"Trying to load %@", filename);
     
     // Init the asset to have access to the file
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
+    _asset = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
     
     // Create the asset reader
     NSError *error;
-    _assetReader = [[AVAssetReader alloc] initWithAsset:asset error:&error];
+    _assetReader = [[AVAssetReader alloc] initWithAsset:_asset error:&error];
     if ( !_assetReader ) {
         NSLog( @"Error reading file %@", filename );
         return false;
     }
     
     // Get video track
-    NSArray* video_tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    NSArray* video_tracks = [_asset tracksWithMediaType:AVMediaTypeVideo];
     AVAssetTrack* video_track = [video_tracks objectAtIndex:0];
     
     // Set desired video format
@@ -47,7 +63,7 @@
     
     // Extract video properties
     _fps = [video_track nominalFrameRate];
-    _duration = CMTimeGetSeconds([asset duration]);
+    _duration = CMTimeGetSeconds([_asset duration]);
     _frameCount = _duration * _fps;
     _width  = [video_track naturalSize].width;
     _height = [video_track naturalSize].height;
@@ -58,6 +74,11 @@
     //Construct the actual track output and add it to the asset reader:
     _assetReaderOutput = [[AVAssetReaderTrackOutput alloc] initWithTrack:video_track outputSettings:dictionary];
     [_assetReader addOutput:_assetReaderOutput];
+    
+    // Release unnecesary objects to keep
+    [dictionary release];
+    dictionary = nil;
+    
     
     // Start reading
     if ( [_assetReader startReading] == YES ) {
