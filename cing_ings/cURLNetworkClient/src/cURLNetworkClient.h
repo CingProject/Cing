@@ -18,8 +18,13 @@ public:
 	void setup();
 	void end();
 
-	std::string fetchJSON(std::string URL);
+	std::string& fetchJSON(std::string URL);
 
+	std::string& getLastResult() { return _lastResult; };
+
+private:
+
+	std::string _lastResult;
 };
 
 };
