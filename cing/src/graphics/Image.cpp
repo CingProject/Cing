@@ -548,6 +548,12 @@ namespace Cing
 			return;
 		}
         
+        if ( !imageData )
+        {
+        	LOG_ERROR( "Trying to set data to with a NULL pointer passed as data pointer." );
+			return;
+		}
+        
 		// if the width/height are not specified, assume the are the same as this image
 		if ( width == -1 )
 			width = getWidth();
@@ -566,10 +572,6 @@ namespace Cing
 			LOG_ERROR( "Trying to set data with a wrong size of number of channels" );
 			return;
 		}
-        
-		// Set the data
-		if ( widthStep == -1 )
-			widthStep = width*inChannels;
 		
 		// Copy the image to our data
 		// NOTE: this cast is due to Ogre::Image.loadDynamicImage not receiving a const pointer when it should
