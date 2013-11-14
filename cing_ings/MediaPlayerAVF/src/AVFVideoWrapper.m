@@ -461,10 +461,11 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                 _lastFrameBufferAddress = newFrameAddress;
             }
             CVPixelBufferUnlockBaseAddress(newFrame, kCVPixelBufferLock_ReadOnly);
-            CVPixelBufferRelease(newFrame);
         }
         
     }
+    
+    CVBufferRelease(newFrame);
 }
 
 

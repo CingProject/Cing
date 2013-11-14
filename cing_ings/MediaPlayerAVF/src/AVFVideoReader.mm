@@ -30,6 +30,8 @@
     [_assetReaderOutput release];
     _assetReaderOutput = nil;
     
+    _frameImg.end();
+    
     [super dealloc];
 }
 
@@ -159,11 +161,11 @@
                 _frameImg.setData( _frameBuffer, w, h, Cing::BGRA, _widthStep );
                 static int m_preloadedFrameCount = 0;
                 m_preloadedFrameCount++;
-                //_frameImg.save( "/Users/julioobelleiro/Desktop/Julio/Empresa/space150/clients/coke/Test/FRAME-" + Cing::toString(m_preloadedFrameCount) + ".jpg");
             }
             CVPixelBufferUnlockBaseAddress(newFrame, kCVPixelBufferLock_ReadOnly);
-            CVPixelBufferRelease(newFrame);
+            //CVPixelBufferRelease(newFrame); // released with CFRelease(buffer);
         }
+        CFRelease(buffer);
     }
     
     return _frameImg;
