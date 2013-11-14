@@ -67,7 +67,7 @@ void MovableText::init( Ogre::SceneNode* parentNode /*= NULL*/ /*const String &c
 		offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
 		// Texcoords
 		decl->addElement(POS_TEX_BINDING, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 0);
-		offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
+		//offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
 		// Colours - store these in a separate buffer because they change less often
 		decl->addElement(COLOUR_BINDING, 0, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE);
 
@@ -773,7 +773,6 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 		{
 			// Get current character
 			Ogre::Font::CodePoint character = OGRE_DEREF_DISPLAYSTRING_ITERATOR(i);
-			charLength = 0.0f;
 			itemsInLine++;
 
 			// New line?
