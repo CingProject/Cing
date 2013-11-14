@@ -12,7 +12,8 @@
 @implementation AVFVideoWriter
 
 - (void)dealloc {
-    [_videoWriter release];
+    
+    [self finishVideo];
     [super dealloc];
 }
 
@@ -83,6 +84,15 @@
 
 -(void)finishVideo {
     [_videoWriter finishWriting];
+
+    if ( _pixelAdaptor ) {
+        [_pixelAdaptor release];
+        _pixelAdaptor = nil;
+    }
+    if ( _videoWriter ) {
+        [_videoWriter release];
+        _videoWriter = nil;
+    }
 }
 
 // Adds a frame to the video
