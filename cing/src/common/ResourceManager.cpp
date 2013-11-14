@@ -318,6 +318,7 @@ namespace Cing
 		CFRelease( exeURL);
 		CFRelease( cfStringRef);
 		CFRelease( cfExePathRef);
+        CFRelease( resourcesURL );
 		CFRelease( cfResourcesPathRef);
 
 		
