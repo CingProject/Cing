@@ -33,7 +33,7 @@ namespace Cing
 		curl_global_init(CURL_GLOBAL_ALL);
 	}
 
-	std::string cURLNetworkClient::fetchJSON(std::string URL)
+	std::string& cURLNetworkClient::fetchJSON(std::string URL)
 	{   
 		std::ostringstream oss;
 
@@ -73,7 +73,9 @@ namespace Cing
 			curl_easy_cleanup( curl );
 		}
 
-		return oss.str();
+		_lastResult = oss.str();
+
+		return _lastResult;
 	}
 
 	void cURLNetworkClient::end()
