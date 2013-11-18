@@ -41,7 +41,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     return self;
 }
 
-- (void) loadFile:(NSString *)filename pixelFormat:(AVFPixelFormat)pixelFormat {
+- (Boolean) loadFile:(NSString *)filename pixelFormat:(AVFPixelFormat)pixelFormat {
    
     // File loading
     NSURL *fileURL = [NSURL fileURLWithPath:[filename stringByStandardizingPath]];
@@ -52,6 +52,10 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
 
     // Extract movie file information
     NSArray* video_tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    if ( [video_tracks count] == 0 ) {
+        [asset release];
+        return false;
+    }
     AVAssetTrack *videoTrack = [video_tracks objectAtIndex:0];
     
     videoSize       = [videoTrack naturalSize];
@@ -71,6 +75,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     }];
     
     _useSeekTime = NO;
+    return true;
 }
 
 - (void)setupPlaybackWithAsset:(AVAsset *)asset

@@ -62,7 +62,7 @@ typedef enum _AVFPixelFormat {
 
 
 // File control
-- (void) loadFile:(NSString *)filename pixelFormat:(AVFPixelFormat)pixelFormat;
+- (Boolean) loadFile:(NSString *)filename pixelFormat:(AVFPixelFormat)pixelFormat;
 - (void) play;
 - (void) stop;
 - (void) pause;
