@@ -85,8 +85,14 @@ namespace Cing
         m_pixelFormat	= requestedVideoFormat;
         
         // Loa the file
-        [m_player loadFile:[NSString stringWithUTF8String:m_filePath.c_str()] pixelFormat:toAVFPixelFormat(m_pixelFormat)];
+        result = [m_player loadFile:[NSString stringWithUTF8String:m_filePath.c_str()] pixelFormat:toAVFPixelFormat(m_pixelFormat)];
         [pool release];
+        
+        if ( !result )
+        {
+            end();
+			return false;
+        }
 
         // Store file info
         m_videoWidth    = [m_player size].width;
