@@ -42,6 +42,31 @@ namespace Cing
 		curl_slist_append( headers, "Content-Type: application/json" );
 		curl_slist_append( headers, "charsets: utf-8" );
 
+		fetchRequest( headers, &URL, &oss );
+
+		_lastResult = oss.str();
+
+		return _lastResult;
+	}
+
+	std::string& cURLNetworkClient::fetchXML(std::string URL)
+	{   
+		std::ostringstream oss;
+
+		struct curl_slist *headers = NULL; // init to NULL is important 
+		curl_slist_append( headers, "Accept: application/xml" );  
+		curl_slist_append( headers, "Content-Type: application/xml" );
+		curl_slist_append( headers, "charsets: utf-8" );
+
+		fetchRequest( headers, &URL, &oss );
+
+		_lastResult = oss.str();
+
+		return _lastResult;
+	}
+
+	void cURLNetworkClient::fetchRequest( curl_slist *headers, std::string* URL, std::ostringstream *oss )
+	{
 		CURLcode res(CURLE_FAILED_INIT);
 
 		CURL *curl;
@@ -49,12 +74,12 @@ namespace Cing
 		if (curl) 
 		{
 			curl_easy_setopt( curl, CURLOPT_HTTPHEADER, headers );
-			curl_easy_setopt( curl, CURLOPT_URL, URL.c_str() );
+			curl_easy_setopt( curl, CURLOPT_URL, URL->c_str() );
 			curl_easy_setopt( curl, CURLOPT_HTTPGET, 1 );
 			curl_easy_setopt( curl, CURLOPT_HTTPHEADER, headers );
-			curl_easy_setopt( curl, CURLOPT_FILE, &oss );
+			curl_easy_setopt( curl, CURLOPT_FILE, oss );
 			curl_easy_setopt( curl, CURLOPT_WRITEFUNCTION, &responseCallback );
-			
+
 			res = curl_easy_perform( curl );
 			if  (CURLE_OK == res ) 
 			{ 
@@ -72,10 +97,6 @@ namespace Cing
 
 			curl_easy_cleanup( curl );
 		}
-
-		_lastResult = oss.str();
-
-		return _lastResult;
 	}
 
 	void cURLNetworkClient::end()

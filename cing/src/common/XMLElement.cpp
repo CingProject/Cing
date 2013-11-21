@@ -91,6 +91,44 @@ namespace Cing
         // Release resources
         end();
     }
+
+	/**
+     * @internal
+     * @brief Loads xml data in the form of a string
+     * @param xmlData  xml data to be parsed and loaded
+     * @return true of the data was correctly loaded, false otherwise
+     */
+    bool XMLElement::parse( const std::string& xmlData )
+    {
+        // Check if load has already been called
+        if ( isValid() )
+            end();
+        
+        // Load the xml data
+        m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument() );
+        m_xmlDoc->Parse( xmlData.c_str(), 0, TIXML_ENCODING_UTF8 );
+        
+        // Error loading file?
+        if ( m_xmlDoc->Error() )
+        {
+            LOG_ERROR( "Error loading %s: %s", xmlData.c_str(), m_xmlDoc->ErrorDesc() );
+            return false;
+        }
+        
+        // Get root element
+        m_rootElem = m_xmlDoc->RootElement();
+        if ( !m_rootElem )
+        {
+            LOG_ERROR( "Error loading %s, There is no root element", xmlData.c_str() );
+            return false;
+        }
+        
+        
+        LOG( "XMLElement: xml data successfuly loaded" );
+        
+        m_bIsValid = true;
+        return true;
+    }
     
     /**
      * @internal

@@ -29,6 +29,13 @@
 
 namespace Cing
 {
+
+	// parses the xml data
+	bool XMLSettings::parse( const std::string& xmlData )
+	{
+		m_valid		= m_xmlFile.parse( xmlData );
+		return m_valid;
+	}
     
     // Loads the xml file
     bool XMLSettings::load( const std::string& pathToXML )

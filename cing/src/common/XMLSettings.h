@@ -39,8 +39,9 @@ public:
 	~XMLSettings() { m_valid = false; }
 
 	// Load xml file
-	bool load( const std::string& pathToXML );
-    void init( const std::string& topLevelName );
+	bool load	( const std::string& pathToXML );
+	bool parse	( const std::string& xmlData );
+    void init	( const std::string& topLevelName );
 
 	// Getters to retrieve the content of an xml tag (what is inside the opening and closing tag: example <bookstore>Content</bookstore>
     std::string 		get		( const std::string& name, const std::string& defValue );

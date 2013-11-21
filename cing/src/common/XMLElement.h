@@ -61,6 +61,7 @@ namespace Cing
 
 		// Init / Release / Update
 		bool	load 	( const std::string& xmlFileName );
+		bool	parse	( const std::string& xmlData );
         void    init    ( const std::string& topLevelName );
         void	end		();
 
