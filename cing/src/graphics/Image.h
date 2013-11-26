@@ -49,7 +49,7 @@ namespace Cing
 
 		// Constructor / Destructor
 		Image				();
-		Image				( Image& other );
+		Image				( const Image& other );
 		Image				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( const std::string& name, Ogre::SceneManager* sm = NULL );
@@ -131,7 +131,7 @@ namespace Cing
 		const std::string&	getPath			() const { return m_path; }
 
 		// Operators and operations
-		void operator =	( Image& other );
+		void operator =	( const Image& other );
 		void operator = ( float scalar);
 		void operator -=( float scalar );
 		void operator +=( float scalar );

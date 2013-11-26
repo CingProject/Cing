@@ -69,7 +69,7 @@ namespace Cing
      *
      * @param
      */
-	Image::Image( Image& other ):
+	Image::Image( const Image& other ):
     m_bIsValid( false ),
     m_bUpdateTexture( false ),
     m_loadedFromFile(false),
@@ -883,7 +883,7 @@ namespace Cing
      *
      * @param other Image to copy
      */
-	void Image::operator=( Image& other )
+	void Image::operator=( const Image& other )
 	{
 		// Check the other image is valid
 		if ( !other.isValid() )
