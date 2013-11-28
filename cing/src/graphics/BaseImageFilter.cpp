@@ -25,7 +25,7 @@
 #include "BaseImageFilter.h"
 
 // OpenCv
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core_c.h"
 
 namespace Cing
 {
@@ -66,7 +66,7 @@ bool BaseImageFilter::init( int width, int height, GraphicsType format )
 
   // Create the output image
 	int nChannels = (int)Ogre::PixelUtil::getNumElemBytes( Ogre::PixelFormat( format ) ) ;
-  m_outputImage = cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, nChannels );
+	m_outputImage = cvCreateImage( cvSize( width, height ), IPL_DEPTH_8U, nChannels );
 
   // Store values
   m_width     = width;

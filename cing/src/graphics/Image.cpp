@@ -41,7 +41,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreDataStream.h"
 
 // OpenCV
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 #include "OgreSceneManager.h"
 
 namespace Cing
@@ -761,6 +762,27 @@ namespace Cing
 	}
 
 	/**
+	* @internal
+	* @brief Draws the image in 2d -> screen coordinates
+	*
+	* @param xPos x coordinate where the image should be drawn
+	* @param yPos y coordinate where the image should be drawn
+	* @param width		Width of the image that will be rendered <b>in screen coordinates</b>
+	* @param height	Height of the image that will be rendered <b>in screen coordinates</b>
+	*/
+	void Image::drawUV( float x, float y, float width, float height, float minU, float minV, float maxU, float maxV )
+	{
+		// check if texture needs to be updated
+		if (m_bUpdateTexture)
+		{
+			updateTexture();
+			m_bUpdateTexture = false;
+		}
+
+		m_quad.drawUV2d( x, y, width, height, minU, minV, maxU, maxV );
+	}
+
+	/**
 	* @brief Draws the image in 2d -> screen coordinates, but specifying the four corners
 	* order: top-left, top-right, bottom-right, bottom-left (anti-cloclwise)
 	*/
@@ -797,7 +819,10 @@ namespace Cing
 	{
 		// Check the other image is valid
 		if ( !other.isValid() )
-			THROW_EXCEPTION( "Trying to copy an invalid image" );
+		{
+			LOG_ERROR( "Trying to copy an invalid image - NO COPY WILL HAPPEN" );
+			return;
+		}
 
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
@@ -1937,13 +1962,13 @@ namespace Cing
 
 	void Image::operator +=	( const Image& img ){
 
-		cv::add( m_cvImage, &img.getCVImage(), m_cvImage );
+		cv::add( m_cvImage, img.getCVMat(), m_cvImage );
 		setUpdateTexture(true);
 	}
 
 	void Image::operator -=	( const Image& img ){
 
-		cv::subtract( m_cvImage, &img.getCVImage(), m_cvImage );
+		cv::subtract( m_cvImage, img.getCVMat(), m_cvImage );
 		setUpdateTexture(true);
 	}
 
@@ -1966,7 +1991,7 @@ namespace Cing
 			THROW_EXCEPTION( "Images with different sizes" );
 
 		percentage = map( percentage, 0, 100, 0.0, 1.0 );
-		cv::addWeighted( m_cvImage, 1.0 - percentage, &other.getCVImage(), percentage, 0.0f, m_cvImage );
+		cv::addWeighted( m_cvImage, 1.0 - percentage, other.getCVMat(), percentage, 0.0f, m_cvImage );
 	}
 
 	void Image::operator = ( float scalar)

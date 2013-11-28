@@ -33,8 +33,8 @@
 #include <string>
 
 // OpenCV
-#include "OpenCV/cxtypes.h"
-#include "OpenCV/highgui.h"
+#include "opencv2/core/core.hpp"
+
 
 // Ogre
 #include "OgreTexture.h"

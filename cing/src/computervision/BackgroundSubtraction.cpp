@@ -32,7 +32,8 @@
 #include "graphics/ImageResourceManager.h"
 
 // OpenCv
-#include "OpenCV/cxcore.h"
+#include "opencv2/core/core.hpp"
+#include "opencv2/core/core_c.h"
 
 namespace Cing
 {

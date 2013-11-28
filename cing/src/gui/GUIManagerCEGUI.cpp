@@ -78,6 +78,10 @@ GUIManagerCEGUI::~GUIManagerCEGUI()
  */
 void GUIManagerCEGUI::init( Ogre::RenderWindow* ogreWindow, Ogre::SceneManager* ogreSceneManager )
 {
+	// Check if the class is already initialized
+	if ( m_bIsValid )
+		return;
+
 	// Init CEGUI for version 0.7
 	m_CEGUIRenderer = &CEGUI::OgreRenderer::bootstrapSystem( *GraphicsManager::getSingleton().getMainWindow().getOgreWindow() );
 	m_CEGUISystem	= CEGUI::System::getSingletonPtr();

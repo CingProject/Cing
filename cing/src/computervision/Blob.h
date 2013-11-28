@@ -30,7 +30,7 @@
 #include <vector>
 
 // Open CV
-#include "OpenCV/cv.h"
+#include "opencv2/core/core.hpp"
 
 // Common
 #include "common/CommonTypes.h"

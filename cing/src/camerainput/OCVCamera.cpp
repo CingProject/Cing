@@ -40,7 +40,7 @@
 #include "graphics/GraphicsManager.h"
 
 // OpenCv
-#include "OpenCV/cv.h"
+#include "opencv2/core/core.hpp"
 
 // Common
 #include "common/Exception.h"

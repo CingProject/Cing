@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="CingExample_VS90PropertySheet_Debug"
+	OutputDirectory="$(ProjectDir)$(ConfigurationName)"
+	IntermediateDirectory="obj\$(ConfigurationName)"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		Optimization="0"
+		AdditionalIncludeDirectories="&quot;$(CING_ROOT)&quot;;&quot;$(CING_ROOT)src\&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\OpenCV\include&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\LibVLC\include&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\GStreamer\include\gstreamer-0.10&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\GStreamer\include\glib-2.0&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\GStreamer\include\libxml2&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\GStreamer\include&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Ogre3d\include\OGRE&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Ogre3d\include\OIS&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Ogre3d\boost_1_48&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Ogre-CameraControlSystem\include&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\CEGUI\include&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Bullet\src&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\OgreBullet\Collisions\include&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\OpenAL\include&quot;;&quot;$(CING_ROOT)..\cing-ings\&quot;"
+		PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+		RuntimeLibrary="3"
+		WarningLevel="3"
+		DebugInformationFormat="3"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="OgreMain_d.lib CameraControlSystem_d.lib OIS_d.lib ptypes_d.lib fmodex_vc.lib winmm.lib CEGUIBase_d.lib CEGUIOgreRenderer_d.lib LibXML_d.lib tinyxml_STL_d.lib gstreamer-0.10.lib gthread-2.0.lib glib-2.0.lib gobject-2.0.lib gstvideo-0.10.lib gstapp-0.10.lib gstbase-0.10.lib videoInput.lib opencv_core246d.lib opencv_highgui246d.lib opencv_imgproc246d.lib"
+		AdditionalLibraryDirectories="&quot;$(CING_ROOT)libraries\win\visualStudio2008\BetaCairo\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Bullet\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\cairo\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Fmod\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Ogre3d\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Ogre3d\boost_1_48\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\Ogre-CameraControlSystem\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\CEGUI\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\OgreBullet\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\OpenCV\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\PortVideo\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\PTypes\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\RtMidi\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\VideoInput\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\OgreCollada\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\LibVLC\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\TinyXML\lib&quot;;&quot;$(CING_ROOT)libraries\win\visualStudio2008\GStreamer\lib&quot;"
+		IgnoreDefaultLibraryNames="atlthunk;libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib;"
+		GenerateDebugInformation="true"
+	/>
+	<Tool
+		Name="VCPostBuildEventTool"
+		CommandLine="echo ------------------------------------------&#x0D;&#x0A;echo Copying Bin Cing files to output folder&#x0D;&#x0A;echo ------------------------------------------&#x0D;&#x0A;xcopy &quot;$(CING_ROOT)bin\win\visualStudio2008\$(ConfigurationName)&quot; &quot;$(OutDir)&quot; /i /d /y /s&#x0D;&#x0A;&#x0D;&#x0A;REM Check if it was ok&#x0D;&#x0A;if errorlevel 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) FAILED&#x0D;&#x0A;exit 1&#x0D;&#x0A;&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK&#x0D;&#x0A;"
+	/>
+	<UserMacro
+		Name="CING_ROOT"
+		Value="..\cing\cing\"
+		PerformEnvironmentSet="true"
+	/>
+</VisualStudioPropertySheet>

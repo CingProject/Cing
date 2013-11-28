@@ -108,6 +108,26 @@ void size( int width, int height, GraphicMode mode )
 	Application::getSingleton().initSubSystems();
 }
 
+/**
+* @brief Configures the application window size and render system used
+* @note It should be called first to any other graphics related function
+* @param windowWidth	width of the application's window
+* @param windowHeight	height of the application's window
+* @param windowX		x coordinate position (top-left) of the window
+* @param windowY		y coordinate position (top-left) of the window
+* @param mode			specifies the render driver to use. Default OPENGL
+*/
+void size( int width, int height, int windowX, int windowY, GraphicMode mode /*= OPENGL*/ )
+{
+	// Set the window position (will be use when the window is created)
+	GraphicsManager::getSingleton().windowPosition(windowX, windowY);
+
+	// Set up window and render system configuration
+	GraphicsManager::getSingleton().setup( width, height, mode );
+
+	// Init application subsystems (necessary for the user to load any graphic resource)
+	Application::getSingleton().initSubSystems();
+}
 
 /**
  * @internal

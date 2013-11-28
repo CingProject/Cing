@@ -38,8 +38,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "ImageDifferenceFilter.h"
 
 // Open CV
-#include "OpenCV/cv.h"
-#include "OpenCV/cxtypes.h"
+#include "opencv2/core/core.hpp"
 
 namespace Cing
 {
@@ -92,6 +91,8 @@ namespace Cing
 		void	draw	( float xPos, float yPos );
 		void	draw	( float xPos, float yPos, float width, float height );
 		void	draw	( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
+
+		void	drawUV	( float x, float y, float width, float height, float minU, float minV, float maxU, float maxV );
 
 		void	drawBackground( float xPos, float yPos, float width, float height );
 

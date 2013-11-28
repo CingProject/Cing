@@ -28,7 +28,7 @@
 #include "GraphicsPrereqs.h"
 
 // OpenCv includes
-#include "OpenCV/cxtypes.h"
+#include "opencv2/core/core.hpp"
 
 // Common
 #include "common/Singleton.h"

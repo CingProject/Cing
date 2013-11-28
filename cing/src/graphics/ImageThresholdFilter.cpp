@@ -28,8 +28,9 @@
 #include "common/Exception.h"
 
 // OpenCv
-#include "OpenCV/cxcore.h"
-#include "OpenCV/cv.h"
+#include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+
 
 namespace Cing
 {
@@ -49,7 +50,9 @@ void ImageThresholdFilter::apply( const IplImage& inImage, IplImage& output )
     THROW_EXCEPTION( "Trying to apply ImageThresholdFilter to images with different size-> they must have the same size!" );
 
   // Calculate the between both images
-  cvThreshold( &inImage, &output, m_threshold, 255, CV_THRESH_BINARY );
+  cv::Mat inMat = cv::cvarrToMat(&inImage);
+  cv::Mat outMat = cv::cvarrToMat(&output);
+  cv::threshold( inMat, outMat, m_threshold, 255, CV_THRESH_BINARY );
 }
 
 } // namespace Cing
