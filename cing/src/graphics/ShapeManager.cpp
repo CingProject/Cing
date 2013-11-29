@@ -52,6 +52,10 @@ ShapeManager::~ShapeManager()
  */
 bool ShapeManager::init()
 {
+	// If already initialized, do nothing
+	if ( m_bIsValid )
+		return true;
+
 	// Init line data
 	m_lines = Shape(LINES);
 

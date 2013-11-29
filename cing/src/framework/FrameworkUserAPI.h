@@ -46,7 +46,8 @@ namespace Cing
     void windowBorder		( bool border );
     void windowMonitorIndex	( unsigned int index  );
     void size				( int width, int height, GraphicMode mode = OPENGL );
-    
+	void size				( int width, int height, int windowX, int windowY, GraphicMode mode = OPENGL );
+
     // Application control
     void useOgreMessagePump ( bool useOgreMessagePump );
     void exit();

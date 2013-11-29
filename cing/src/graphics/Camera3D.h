@@ -39,6 +39,12 @@
 // Stl
 #include <string>
 
+// Forward declarations
+namespace Ogre
+{
+	class Viewport;
+}
+
 namespace Cing
 {
 
@@ -55,7 +61,7 @@ public:
 	~Camera3D();
 
 	// Init / Release / Update
-	bool                init            				( Ogre::SceneManager* pOgreSceneManager, const std::string& cameraName = DEFAULT_NAME );
+	bool                init            				( Ogre::Viewport* viewport, Ogre::SceneManager* pOgreSceneManager, const std::string& cameraName = DEFAULT_NAME, Cing::GraphicsType coordinateSystem = PROCESSING );
 	void                end             				();
 	void                update          				();
 

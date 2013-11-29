@@ -1,6 +1,8 @@
 /*
  This source file is part of the Cing project
  For the latest info, see http://www.cing.cc
+ This source file is part of the Cing project
+ For the latest info, see http://www.cing.cc
  
  License: MIT License (http://www.opensource.org/licenses/mit-license.php)
  

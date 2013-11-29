@@ -261,12 +261,14 @@ namespace Cing
 		if ( value )
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
-			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_ADD);
+			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_ADD );
+			setSceneBlendType( Ogre::SBT_ADD );
 		}
 		else
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+			setSceneBlendType( Ogre::SBT_REPLACE ); // this is replace in case the image has no alpha (configured in configureBlendingMode())
 		}
 
 	};
@@ -310,7 +312,7 @@ namespace Cing
 			m_pivotSceneNode = NULL;
 			m_sm->destroySceneNode( m_quadSceneNode );
 			m_quadSceneNode = NULL;
-			
+
 			// Destroy the manual object
 			m_sm->destroyManualObject( m_ogreManualObjectName );		
 
@@ -588,6 +590,51 @@ namespace Cing
 
 		// Apply transformations to the pivot node
  		applyTransformations2D(x, y, imgWidth, imgHeight);
+
+		m_quadSceneNode->setVisible( true );
+	}
+
+	/**
+	* @brief Draws the texture quad in two dimensions, with a specific size and a specific set UV coordinates
+	*
+	* @param x X coordinate where it will be drawn <b>in screen coordinates</b>
+	* @param y Y coordinate where it will be drawn <b>in screen coordinates</b>
+	* @param width		Width of the quad that will be rendered <b>in screen coordinates</b>
+	* @param height	Height of the quad that will be rendered <b>in screen coordinates</b>
+	*/
+	void TexturedQuad::drawUV2d( float x, float y, float imgWidth, float imgHeight, float minU, float minV, float maxU, float maxV )
+	{
+		if ( !isValid() )
+		{
+			LOG_ERROR_NTIMES( 1, "Trying to draw a textured quad not initialized" );
+			return;
+		}
+
+		// If the object was set to render in 3d -> set it to render in 2d
+		if ( !m_render2D )
+			set2dRendering();
+
+		// Set transparency settings
+		configureSceneBlending();
+
+		// Apply transformations to the pivot node
+ 		applyTransformations2D(x, y, imgWidth, imgHeight);
+
+		// Generate the geometry of the quad
+		m_quad->beginUpdate( 0 );
+
+		// m_quad texture coordinates
+		m_quad->position( -0.5f, -0.5f, 0.0f );		m_quad->textureCoord( minU, minV );
+		m_quad->position( 0.5f, -0.5f, 0.0f );		m_quad->textureCoord( maxU, minV );
+		m_quad->position( 0.5f, 0.5f, 0.0f );		m_quad->textureCoord( maxU, maxV );
+		m_quad->position( -0.5f, 0.5f, 0.0f );		m_quad->textureCoord( minU, maxV );
+
+		// m_quad indexes (two triangles)
+		m_quad->triangle( 0, 2, 1 );
+		m_quad->triangle( 0, 3, 2 );
+
+		// Finish defining geometry
+		m_quad->end();
 
 		m_quadSceneNode->setVisible( true );
 	}
@@ -1040,8 +1087,8 @@ namespace Cing
 	void TexturedQuad::configureSceneBlending()
 	{
 
-		// If the image has alpha channel
-		if ( hasAlpha() || (m_alpha < 255) )
+		// If the image has alpha channel (and blending is not additive)
+		if ( (hasAlpha() || (m_alpha < 255)) && !(m_sbType == Ogre::SBT_ADD) )
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			if ( !material.isNull() )
@@ -1050,7 +1097,16 @@ namespace Cing
 			enableDepthWrite(false);
 			enableDepthCheck(true);
 		}
-		// This image has no alpha channel
+		// Additive blending, but alpha is set to lower than 255 (some transparency(
+		else if ( (m_sbType == Ogre::SBT_ADD) && (m_alpha < 255) )
+		{
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
+			material->getTechnique(0)->getPass(0)->setSceneBlending( Ogre::SBF_SOURCE_ALPHA, Ogre::SBF_ONE );
+
+			enableDepthWrite(false);
+			enableDepthCheck(true);
+		}
+		// This image has no alpha channel or blending is additive
 		else
 		{
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);

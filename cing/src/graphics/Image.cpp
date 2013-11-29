@@ -69,13 +69,13 @@ namespace Cing
      *
      * @param
      */
-	Image::Image( const Image& other ):
+	Image::Image( const Image& img, Ogre::SceneManager* sm /*= NULL*/ ):
     m_bIsValid( false ),
     m_bUpdateTexture( false ),
     m_loadedFromFile(false),
     m_path( "NOT_LOADED_FROM_FILE")
 	{
-		*this = other;
+		init( img, sm );
 	}
     
 	/**
@@ -237,7 +237,7 @@ namespace Cing
      *
      * @param img Image to be copied
      */
-	void Image::init( Image& other )
+	void Image::init( const Image& img, Ogre::SceneManager* sm /*= NULL*/ )
 	{
 		// Check application correctly initialized (could not be if the user didn't call size() function)
 		Application::getSingleton().checkSubsystemsInit();
@@ -849,9 +849,30 @@ namespace Cing
 	}
     
 	/**
-     * @brief Draws the image in 2d -> screen coordinates, but specifying the four corners
-     * order: top-left, top-right, bottom-right, bottom-left (anti-cloclwise)
-     */
+	* @internal
+	* @brief Draws the image in 2d -> screen coordinates
+	*
+	* @param xPos x coordinate where the image should be drawn
+	* @param yPos y coordinate where the image should be drawn
+	* @param width		Width of the image that will be rendered <b>in screen coordinates</b>
+	* @param height	Height of the image that will be rendered <b>in screen coordinates</b>
+	*/
+	void Image::drawUV( float x, float y, float width, float height, float minU, float minV, float maxU, float maxV )
+	{
+		// check if texture needs to be updated
+		if (m_bUpdateTexture)
+		{
+			updateTexture();
+			m_bUpdateTexture = false;
+		}
+
+		m_quad.drawUV2d( x, y, width, height, minU, minV, maxU, maxV );
+	}
+
+	/**
+	* @brief Draws the image in 2d -> screen coordinates, but specifying the four corners
+	* order: top-left, top-right, bottom-right, bottom-left (anti-cloclwise)
+	*/
 	void Image::draw( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
 	{
 		// check if texture needs to be updated
@@ -887,8 +908,11 @@ namespace Cing
 	{
 		// Check the other image is valid
 		if ( !other.isValid() )
-			THROW_EXCEPTION( "Trying to copy an invalid image" );
-        
+		{
+			LOG_ERROR( "Trying to copy an invalid image - NO COPY WILL HAPPEN" );
+			return;
+		}
+
 		// Check application correctly initialized (could not be if the user didn't calle size function)
 		Application::getSingleton().checkSubsystemsInit();
         

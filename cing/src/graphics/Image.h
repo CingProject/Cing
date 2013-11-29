@@ -49,7 +49,7 @@ namespace Cing
 
 		// Constructor / Destructor
 		Image				();
-		Image				( const Image& other );
+		Image				( const Image& img, Ogre::SceneManager* sm = NULL );
 		Image				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( const std::string& name, Ogre::SceneManager* sm = NULL );
@@ -58,7 +58,7 @@ namespace Cing
 		// Init / Release / Update / Save / Clone
 		void		init				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL, ImageDataPtr data = ImageDataPtr() );
 		void		initAsRenderTarget	( int width, int height );
-		void		init				( Image& other );
+		void		init				( const Image& img, Ogre::SceneManager* sm = NULL );
 		bool		load				( const std::string& path, Ogre::SceneManager* sm = NULL );
 		void		save				( const std::string& path );
 		void		end					();
@@ -86,6 +86,8 @@ namespace Cing
 		void	draw	( float xPos, float yPos );
 		void	draw	( float xPos, float yPos, float width, float height );
 		void	draw	( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
+
+		void	drawUV	( float x, float y, float width, float height, float minU, float minV, float maxU, float maxV );
 
 		void	drawBackground( float xPos, float yPos, float width, float height );
 
