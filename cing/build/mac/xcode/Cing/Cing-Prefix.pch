@@ -3,5 +3,42 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
+#import <Cocoa/Cocoa.h>
+#endif
+
+#ifdef __cplusplus
+
+#ifndef TIXML_USE_STL
+#define TIXML_USE_STL
+#endif
+
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <list>
+
+#include "boost/config.hpp"
+
+// Ogre headers you need
+/*
+#include <Ogre.h>
+#include <OgreException.h>
+#include <OgreRoot.h>
+#include <OgreConfigFile.h>
+#include <OgreCamera.h>
+#include <OgreViewport.h>
+#include <OgreSceneManager.h>
+#include <OgreRenderWindow.h>
+#include <OgreEntity.h>
+#include <OgreWindowEventUtilities.h>
+#include <OgreTexture.h>
+#include <OgreMaterial.h>
+#include <OgrePrerequisites.h>
+#include <OgreString.h>
+#include <OgreIteratorWrappers.h>
+#include <OgreCamera.h>
+#include <OgreCommon.h>
+ */
+
 #endif

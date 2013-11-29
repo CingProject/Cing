@@ -33,6 +33,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Ogre includes
 #include "OgreLight.h"
 #include "OgrePixelFormat.h"
+#include "OgreTexture.h"
 
 // Set to 1 to use the Ogre Native formats (as opposed to Byte formats)
 //#define USE_OGRE_NATIVE_FORMATS 1

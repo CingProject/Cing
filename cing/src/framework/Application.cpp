@@ -68,7 +68,7 @@ namespace Cing
 	* @brief Constructor. Initializes class attributes.
 	*/
 	Application::Application():
-m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ), m_ogreView(NULL), m_userApp(NULL), m_inputManager(NULL)
+m_bIsValid( false ), m_finish( false ), m_loop( true ), m_needUpdate( false ), m_forcedFrameRate( 0 ), m_timePerFrameMillis( 0 ), m_ogreView(NULL), m_userApp(NULL), m_inputManager(NULL), m_useOgreMessagePump( true )
 {
 }
 

@@ -61,7 +61,9 @@ namespace Cing
 
 		// Init / Release / Update
 		bool	load 	( const std::string& xmlFileName );
-		void	end		();
+		bool	parse	( const std::string& xmlData );
+        void    init    ( const std::string& topLevelName );
+        void	end		();
 
 		// Save to file
 		bool save( const std::string& xmlFileName );
@@ -82,6 +84,9 @@ namespace Cing
 		TiXmlElement*	getRootTiXmlElement	() { return m_rootElem; }
 
 		// Set methods
+        XMLElement      insertChildNode ( const std::string& name );
+        void            insertComment   ( const std::string& text );
+        
 		void			setAttribute	( const std::string& name, double val );
 		void			setAttribute	( const std::string& name, int val );
 		void			setAttribute	( const std::string& name, const std::string& val );

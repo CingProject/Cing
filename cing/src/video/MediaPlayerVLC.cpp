@@ -342,6 +342,18 @@ namespace Cing
 	}
 
 	/**
+	* Returns the fps of the playback video      
+	**/
+	float MediaPlayerVLC::fps()
+	{
+		// Check if video is ok
+		if ( !isValid() )
+			return 0;
+
+		return libvlc_media_player_get_fps( m_mediaPlayer, &m_vlcException );
+	}
+
+	/**
 	* Checks if there has been an error in VLC                                                                    
 	**/
 	void MediaPlayerVLC::checkVLCException()

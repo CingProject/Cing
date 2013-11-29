@@ -64,6 +64,7 @@ namespace Cing
 	std::string ResourceManager::userDataPath				= "";
 	std::string ResourceManager::userExecPath				= "";
 	std::string resourcesPathInBundle						= "";
+    char        bundlePath[2048];
 #endif
 	
 	/**
@@ -103,9 +104,16 @@ namespace Cing
 		new Ogre::Root( resourcesPathInBundle + pluginsPath );
 
 		 // Store user data path in globals
-		dataFolder = userDataPath;
-		LOG("User Data Folder: %s", dataFolder.c_str() );
+#ifdef WIN32
+		dataFolder = userDataPath + "/";
+#elif __APPLE__
+        dataFolder = String(bundlePath) + "/" + userResourcesDirName + "/";
+#endif
+        
+        LOG("User Data Folder: %s", dataFolder.c_str() );
 
+        
+        
 		// Load Cing Config file
 		XMLElement xml;
 		xml.load( "CingConfig.xml" );
@@ -204,8 +212,13 @@ namespace Cing
 		std::string absPath = path;
 		// if the path is not absolute, build it
 		if ( isPathAbsolute( absPath ) == false )
-			absPath = userExecPath + path;
-
+        {
+#ifdef WIN32
+            absPath = userExecPath + path;
+#elif __APPLE__	
+            absPath = dataFolder + path;
+#endif
+        }
 		// Add the resource and initialise it
 		//static int idCounter = 0;
 		//std::string newResourceGroupName = userResourcesGroupName + toString(idCounter++);
@@ -268,7 +281,6 @@ namespace Cing
 	 */
 	void ResourceManager::extractUserAppPathMAC()
 	{
-		char bundlePath[2048];
 		char exePath[2048];
 		char resourcesPath[2048];
 
@@ -306,6 +318,7 @@ namespace Cing
 		CFRelease( exeURL);
 		CFRelease( cfStringRef);
 		CFRelease( cfExePathRef);
+        CFRelease( resourcesURL );
 		CFRelease( cfResourcesPathRef);
 
 		

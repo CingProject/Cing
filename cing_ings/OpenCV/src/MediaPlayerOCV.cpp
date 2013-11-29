@@ -25,6 +25,8 @@
 #include "MediaPlayerOCV.h"
 #include "OpenCVUtils.h"
 
+#include "opencv2/imgproc/imgproc.hpp"
+
 // Common
 #include "common/CommonUtilsIncludes.h"
 #include "common/XMLElement.h"
@@ -32,10 +34,77 @@
 // Framework
 #include "framework/UserAppGlobals.h"
 
+// Extern
+#undef nil
+#include "PTypes/include/pasync.h"
+
 
 namespace Cing
 {
 	
+    void MediaPlayerOCV::OCVCaptureThread::execute()
+	{
+		//m_ocvCamera.m_capture.open( m_ocvCamera.getDeviceId() );
+		if ( !m_player.m_capture.isOpened() )
+		{
+			LOG_ERROR( "[MediaPlayerOCV] Player not opened, capture thread will not load" );
+			return;
+		}
+
+        
+        // Capture thread loop
+		while( !get_signaled() )
+		{            
+            // New frame flag
+            bool newFrame = false;
+            
+            // If false, opencv controls the playhead. If false, it is controlled by our timer
+            bool setPlayhead = false;
+            
+            // Set the playhead
+            double currentActualFrame = 0.0f;
+            if ( setPlayhead )
+            {
+                unsigned long millisPlayback = m_timer.getMilliseconds();
+                double currentFrame = ((double)millisPlayback/1000.0) * m_fps;
+                currentActualFrame = m_player.m_capture.get(CV_CAP_PROP_POS_FRAMES);
+                
+                // Have new frame?
+                if ( currentFrame > currentActualFrame )
+                {
+                    m_player.m_capture.set(CV_CAP_PROP_POS_FRAMES, currentFrame);
+                    currentActualFrame = currentFrame;
+                }
+            }
+            
+            // And grab new frame (it will be updated in the next call to getImage()
+            {
+                cv::Mat m_cvCaptureImage;
+                newFrame = m_player.m_capture.read( m_cvCaptureImage );
+                
+                // Convert from BGR to RGB
+                cv::cvtColor(m_cvCaptureImage, m_localMat, CV_BGR2RGB);
+                
+                // Get the current frame position
+                if ( !setPlayhead )
+                    currentActualFrame = m_player.m_capture.get(CV_CAP_PROP_POS_FRAMES);
+                
+                // Set the new frame to the player
+                if ( newFrame )
+                {
+                    m_player.setNewFrame( currentActualFrame, m_localMat );
+                    
+                    // relax the thread
+                    relax(20);
+                }
+            }
+		}
+	}
+	
+	void MediaPlayerOCV::OCVCaptureThread::cleanup()
+	{
+        // nothing to clean up or now
+	}
 	
 	
 	/**
@@ -54,6 +123,8 @@ namespace Cing
 	m_pixelFormat	( RGB	),
 	m_mute			( false ),
 	m_volume		( 1.0f  ),
+    m_captureThread ( NULL  ),
+    m_multithreaded ( false ),
 	m_currentFrame	( 0 )
 	{
 	}
@@ -63,7 +134,7 @@ namespace Cing
 	 * @param filename	Name of the movie to load (it can be a local path relative to the data folder, or a network path)
 	 * @param fps		Desired Frames per Second for the playback. -1 means to use the fps of the movie file.
 	 */
-	MediaPlayerOCV::MediaPlayerOCV( const char* filename, float fps /*= -1*/ ):
+	MediaPlayerOCV::MediaPlayerOCV( const std::string& filename, float fps /*= -1*/ ):
 	m_bufferSizeInBytes(0),
 	m_videoWidth	( 0 ),
 	m_videoHeight	( 0 ),
@@ -75,7 +146,9 @@ namespace Cing
 	m_bIsValid		( false ),
 	m_pixelFormat	( RGB	),
 	m_mute			( false ),
+    m_captureThread ( NULL  ),
 	m_volume		( 1.0f  ),
+    m_multithreaded ( false ),
 	m_currentFrame	( 0 )
 	{
 		// Load the movie
@@ -107,8 +180,12 @@ namespace Cing
 	 * @param fps			Desired Frames per Second for the playback. -1 means to use the fps of the movie file.
 	 * @return true if the video was succesfully loaded
 	 */
-	bool MediaPlayerOCV::load( const char* fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
+	bool MediaPlayerOCV::load( const std::string& fileName, GraphicsType requestedVideoFormat /*= RGB*/, float fps /*= -1*/  )
 	{
+        // If this is re-load: release resources first
+        if ( isValid() )
+            end();
+        
 		// Build path to file
 		bool result = buildPathToFile( fileName );
 		if ( !result )
@@ -117,6 +194,7 @@ namespace Cing
 			return false;
 		}
 
+        
 		// Load video
 		m_capture.open( m_filePath );
 		if ( m_capture.isOpened() == false )
@@ -124,7 +202,7 @@ namespace Cing
 			LOG_ERROR( "MediaPlayerOCV Could not load file %s", m_fileName.c_str() );
 			return false;
 		}
-		
+        
 		m_videoWidth    = m_capture.get( CV_CAP_PROP_FRAME_WIDTH );
 		m_videoHeight   = m_capture.get( CV_CAP_PROP_FRAME_HEIGHT );
 		m_videoFps		= m_capture.get( CV_CAP_PROP_FPS );
@@ -145,8 +223,19 @@ namespace Cing
 			m_capture.set( CV_CAP_PROP_FPS, fps );
 			m_videoFps = m_capture.get( CV_CAP_PROP_FPS );
 		}
-		
-		LOG( "MediaPlayer: File %s correctly loaded", m_fileName.c_str() );
+        
+        // Create capture thread
+        if ( m_multithreaded )
+        {
+            // Load the intermediate image
+            m_bufferFromThread = toCVMat(m_frameImg).clone();
+            
+            // Start the thread
+            m_captureThread = new OCVCaptureThread( *this, m_timer, m_videoFps );
+            m_captureThread->start();
+        }
+        
+		LOG( "MediaPlayer: File %s correctly loaded (Working in Multithreaded mode = [%s]", m_fileName.c_str(), toString(m_multithreaded).c_str());
 		
 		// The object is valid when the file is loaded
 		m_bIsValid = true;
@@ -163,10 +252,29 @@ namespace Cing
 		if ( !isValid() )
 			return;
 		
+        // Release thread
+        if ( m_multithreaded && m_captureThread )
+        {
+            // Signal the thread and wait for it to be done
+            m_captureThread->signal();
+            Ogre::Timer timerLimit;
+            timerLimit.reset();
+            while( (m_captureThread->get_finished() == false) && (timerLimit.getMilliseconds() < 250) )
+                ;
+			if ( m_captureThread->get_finished() )
+            {
+                delete m_captureThread;
+            }
+            else
+                LOG_CRITICAL( "MediaPlayerOCV: capture thread timer expired, and the thread did not finish. Something is wrong, there will be a memory leak" );
+            m_captureThread = NULL;
+        }
+        
 		// Clear resources
 		m_capture.release();
-
-		
+        
+        m_frameImg.end();
+        
 		// Clear flags
 		m_bIsValid			= false;
 		m_newBufferReady	= false;
@@ -175,8 +283,15 @@ namespace Cing
 	
 	/**
 	 * Updates media playback state
+     *
+     * @param forceFrame If this is passed, the current frame for the video will be set accordingly
+     * @param updateTexture If this is false (default), the player is updated but the new frame is not updated
+     * in m_frameImg (nor in its texture) until the next call to getImage. With updateTexture set to true, the image and textures are updated if
+     * there is a new frame regardless of teh getImage() call. The latter might be slower if you won't need or use the image or texture, but if for example
+     * you are using the player just as a texture for an object that use it but don't need to draw the video on screen, you can pass updateTexture to true so that the
+     * texture is always up to date.
 	 */
-	void MediaPlayerOCV::update()
+	void MediaPlayerOCV::update( unsigned int forceFrame /*= -1*/, bool updateTexture /*= false*/ )
 	{
 		// Check if we have to loop
 		if ( m_loopPending )
@@ -184,33 +299,100 @@ namespace Cing
 			jump(0);
 			m_loopPending = false;
 		}
-		
-		
-		// Set the playhead
-		unsigned long millisPlayback = m_timer.getMilliseconds();
-		double currentFrame = ((double)millisPlayback/1000.0) * m_videoFps;
-		//double ratio = currentFrame / (double)m_videoNFrames;
-		
-		// Request frames until the playhed is where we want
-		// NOTE: This is done this way, as in mac / opencv video capture has bugs in CV_CAP_PROP_POS_MSEC, CV_CAP_PROP_POS_FRAMES and CV_CAP_PROP_POS_AVI_RATIO
-		// So it is not possible to control the playhead
-		m_newBufferReady = false;
-		while( m_currentFrame < currentFrame )
+       	
+		// Set the playhead and get new frame if we are in sigle thread mode
+		if ( !m_multithreaded )
 		{
-			m_capture.grab();
-			m_newBufferReady = true;
-			m_currentFrame++;
+            m_newBufferReady = false;
+            
+			double currentFrame = 0;
+			if ( forceFrame != -1 )
+			{
+				currentFrame = forceFrame;
+			}
+			else
+			{
+				unsigned long millisPlayback = m_timer.getMilliseconds();
+				currentFrame = ((double)millisPlayback/1000.0) * m_videoFps;
+			}
+        
+        	//double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
+        	//if ( currentFrame > currentActualFrame )
+        	//{
+           		m_capture.set(CV_CAP_PROP_POS_FRAMES, currentFrame);
+        		//double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
+
+            	// And grab new frame (it will be updated in the next call to getImage()
+            	m_newBufferReady = m_capture.grab();
+        	//}
+        
+        	// If we got a new frame
+        	if ( m_newBufferReady )
+        	{
+            	m_currentFrame = currentFrame;
+        
+            	// Update image and texture if necessary
+            	copyBufferIntoImage(updateTexture);
+	        }
 		}
-		
+        // We are in multithreaded mode
+        else if ( m_newBufferReady )
+        {
+            // Update playhead
+            unsigned long millisPlayback = m_timer.getMilliseconds();
+			double currentFrame = ((double)millisPlayback/1000.0) * m_videoFps;
+            
+        	double currentActualFrame = m_capture.get(CV_CAP_PROP_POS_FRAMES);
+            //LOG( "** Current = %f, current actual = %f", currentFrame, currentActualFrame);
+
+        	if ( currentFrame > currentActualFrame )
+        	{
+                m_currentFrame = currentFrame;
+                if (m_currentFrame >= m_videoNFrames)
+                {
+                    // Looping
+                    if ( m_loop )
+                    {
+                        m_timer.reset();
+                        m_currentFrame = 0;
+                        m_capture.set( CV_CAP_PROP_POS_FRAMES, 0 );
+                    }
+                    // Not looping
+                    else
+                    {
+                        m_playing = false;
+                        m_currentFrame = 0;
+                    }
+                }
+                
+                if ( m_playing )
+                    m_capture.set(CV_CAP_PROP_POS_FRAMES, m_currentFrame);
+            }
+            
+            // Get new frames
+            if ( m_playing )
+            {
+                copyFrameFromThread();
+                if ( updateTexture )
+                    m_frameImg.updateTexture();
+            }
+        }
+        
 		// Check loop
-		if ( m_currentFrame >= m_videoNFrames )
+		if ( !m_multithreaded && (m_currentFrame >= m_videoNFrames) )
 		{
 			// Looping
 			if ( m_loop )
 			{
 				m_timer.reset();
 				m_currentFrame = 0;
-				m_capture.set( CV_CAP_PROP_POS_MSEC, 0 );
+                if ( m_multithreaded )
+                {
+                    //boost::mutex::scoped_lock lock(m_mutex);
+                    m_capture.set( CV_CAP_PROP_POS_FRAMES, 0 );
+                }
+                else
+                    m_capture.set( CV_CAP_PROP_POS_FRAMES, 0 );
 			}
 			// Not looping
 			else 
@@ -233,13 +415,6 @@ namespace Cing
 			LOG_ERROR_NTIMES( 1, "MediaPlayerOCV not corretly initialized. No new frame will be returned" );
 			return m_frameImg;
 		}
-		
-		// Update, just in case there are pending operations
-		update();
-		
-		// Check if we have a new buffer to copy
-		if ( m_newBufferReady )
-			copyBufferIntoImage();
 		
 		return m_frameImg;
 	}
@@ -274,7 +449,8 @@ namespace Cing
 			return 0;
 		}
 
-		return m_capture.get( CV_CAP_PROP_POS_MSEC ) / 1000.0;
+        float currentTime = m_capture.get( CV_CAP_PROP_POS_MSEC ) / 1000.0;
+        return currentTime;
 	}
 	
 	/**
@@ -295,6 +471,7 @@ namespace Cing
 		
 		// Timer that will control the playback
 		m_timer.reset();
+        m_capture.set( CV_CAP_PROP_POS_MSEC, 0 );
 	}
 	
 	/**
@@ -314,7 +491,8 @@ namespace Cing
 		m_playing = true;
 		
 		// Timer that will control the playback
-		m_timer.reset();	
+		m_timer.reset();
+		m_capture.set( CV_CAP_PROP_POS_MSEC, 0 );
 	}
 	
 	/**
@@ -371,7 +549,8 @@ namespace Cing
 		if ( m_newBufferReady )
 			m_newBufferReady	= false;
 		
-		m_capture.set( CV_CAP_PROP_POS_MSEC, whereInSecs * 1000 );
+        m_capture.set( CV_CAP_PROP_POS_MSEC, whereInSecs * 1000 );
+		
 	}
 	
 	/**
@@ -388,7 +567,8 @@ namespace Cing
 			return;
 		}
 
-		m_capture.set( CV_CAP_PROP_FPS, m_videoFps * rate );
+       m_capture.set( CV_CAP_PROP_FPS, m_videoFps * rate );
+		
 	}
 	
 	/**
@@ -458,14 +638,18 @@ namespace Cing
 	 * Builds an absolute path to the file that will be loaded into the player
 	 * @return true if there was no problem
 	 */
-	bool MediaPlayerOCV::buildPathToFile( const String& path )
+	bool MediaPlayerOCV::buildPathToFile( const std::string& path )
 	{
 		// Store incomming path as the filename (if it's a local file, the use would have passed the file path
 		// relative to the data folder)
-		m_fileName = path;
+		 m_fileName = path;
+        
+        if ( isPathAbsolute(path) )
+            m_filePath = path;
+        else
+            m_filePath = dataFolder + path;
 		
-		m_filePath = dataFolder + path;
-		if ( !fileExists( m_filePath ) )
+        if ( !fileExists( m_filePath ) )
 		{
 			LOG_ERROR( "MediaPlayer: File %s not found in data folder.", path.c_str() );
 			return false;
@@ -476,21 +660,88 @@ namespace Cing
 	
 	/**
 	 * Copies the last buffer that came from the stream into the Image (drawable)
-	 */
-	void MediaPlayerOCV::copyBufferIntoImage()
+	 * @param updateTexture if false, only the ram buffer of m_frameImg is udpate, if true, it's GPU texture is updated as well.
+     */
+	void MediaPlayerOCV::copyBufferIntoImage( bool updateTexture /*= false*/)
 	{
 		// Check if video is ok
 		if ( !isValid() || !m_newBufferReady)
 			return;
 		
-		// Retrieve frame
+		// Retrieve frame (different paths windows/mac)
+        // TODO: review why they differ
+#ifdef WIN32
+        cv::Mat videoFrame;
         cv::Mat outMat = toCVMat(m_frameImg);
-		m_capture.retrieve( outMat, 0 );
-		m_frameImg.updateTexture();
-		
+		bool result = m_capture.retrieve( videoFrame );
+        if ( result )
+        {
+            // Convert from BGR to RGB
+            cv::cvtColor(videoFrame, outMat, CV_BGR2RGB);
+            
+            if ( updateTexture )
+                m_frameImg.updateTexture();
+        }
+#elif __APPLE__
+        cv::Mat outMat = toCVMat(m_frameImg);
+        cv::Mat videoFrame;
+        
+        // NOTE: for some reason, the capture stores the image in a new mat that is RGBA format instead of RGB, so we are copying to
+        // a temp image to fix this for now (less optimized but...)
+		bool result = m_capture.retrieve( videoFrame );
+        if ( result )
+        {
+            // Convert from BGR to RGB
+            cv::cvtColor(videoFrame, outMat, CV_BGR2RGB);
+            
+            if ( updateTexture )
+                m_frameImg.updateTexture();
+            else
+                m_frameImg.setUpdateTexture();
+        }
+#endif
+        
 		// Clear new buffer flag
 		m_newBufferReady	= false;
 	}
+    
+    /*
+     * Called from the capture thread to store a new video frame coming from the capture (movie file).
+     */
+    void MediaPlayerOCV::setNewFrame( unsigned int currentFrameNumber, cv::Mat& currentFrame )
+    {
+        if ( !isValid() )
+            return;
+        
+        //LOG( "**^ MediaPlayerOCV::setNewFrame: BEFORE LOCK. Frame: %d", currentFrameNumber);
+        boost::mutex::scoped_lock lock(m_mutex);
+        if ( lock )
+        {
+            currentFrame.copyTo(m_bufferFromThread);
+            m_currentFrame = currentFrameNumber;
+            m_newBufferReady = true;
+        }
+    }
+    
+    /*
+     * Copies the new frame received from the capture thread into the MediaPlayerOCV internal image (the one that will be accessed from the outside).
+     */
+    void MediaPlayerOCV::copyFrameFromThread()
+    {
+        if ( !isValid() )
+            return;
+    
+        // Try lock (instead of lock) to avoid stalling the main thread
+        boost::mutex::scoped_try_lock lock(m_mutex);
+        if ( lock )
+        {
+            // Copy the new frame
+            cv::Mat imageMat = toCVMat(m_frameImg);
+            m_bufferFromThread.copyTo(imageMat);
+            m_frameImg.setUpdateTexture();
+            m_newBufferReady = false;
+        }
+    }
 	
 	
 } // namespace

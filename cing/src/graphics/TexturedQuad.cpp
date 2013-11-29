@@ -241,15 +241,15 @@ namespace Cing
 		m_2dWidth = (m_textWidth / (float)width) * 2.0f;
 		m_2dHeight = (m_textHeight / (float)height) * 2.0f;
 
-		// No shadow casting in textured quads by default
-		enableCastShadows(false);
-
-		// No lighting by default (as this is usually used to render 2d images and not images in 3d scenes with lighting).
-		//enableLighting(false);
-
 		// The class is now initialized
 		m_bIsValid = true;
 
+        // No shadow casting in textured quads by default
+		enableCastShadows(false);
+        
+		// No lighting by default (as this is usually used to render 2d images and not images in 3d scenes with lighting).
+		//enableLighting(false);
+        
 		return true;
 	}
 	/**
@@ -512,7 +512,7 @@ namespace Cing
 								float x3, float y3, float z3,
 								float x4, float y4, float z4)
 	{
-		if ( !isValid() )
+		if ( !isValid() || !m_quad )
 		{
 			LOG_ERROR_NTIMES( 1, "Trying to draw a textured quad not initialized" );
 			return;
@@ -573,7 +573,7 @@ namespace Cing
 	*/
 	void TexturedQuad::draw2d( float x, float y, float imgWidth, float imgHeight )
 	{
-		if ( !isValid() )
+		if ( !isValid() || !m_quadSceneNode )
 		{
 			LOG_ERROR_NTIMES( 1, "Trying to draw a textured quad not initialized" );
 			return;
@@ -609,7 +609,7 @@ namespace Cing
 	*/
 	void TexturedQuad::draw2d( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 )
 	{
-		if ( !isValid() )
+		if ( !isValid() || !m_quad || !m_quadSceneNode )
 		{
 			LOG_ERROR_NTIMES( 1, "Trying to draw a textured quad not initialized" );
 			return;

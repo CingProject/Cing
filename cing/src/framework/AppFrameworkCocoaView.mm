@@ -25,6 +25,7 @@
  THE SOFTWARE.
  */
 
+
 #include "AppFrameworkCocoaView.h"
 
 #include "Application.h"
@@ -33,6 +34,8 @@
 // Ogre
 #include "OgreException.h"
 #include "RenderSystems/GL/OSX/OgreOSXCocoaView.h"
+//#include "RenderSystems/GL/OSX/OgreOSXCocoaWindow.h"
+
 
 // Common includes
 #include "common/Exception.h"
@@ -40,6 +43,8 @@
 #include "common/eString.h"
 
 #include "input/InputManagerCocoa.h"
+
+#include "graphics/GraphicsManager.h"
 
 // OpenCV
 #include "opencv2/core/core.hpp"
@@ -51,13 +56,29 @@
 {
     NSTimer *_timer;
     Cing::InputManagerCocoa *_inputManager;
+    
+    // CVDisplayLink related
+    CVDisplayLinkRef    *_displayLinkOut;
+    NSOpenGLContext     *_GLContext;
 }
 
 @end
 
 @implementation CingCocoaViewApplication
 
-- (id)initWithName:(const char *)appName andView:(void *)view
+/*
+ more about display link http://pastebin.com/PrkLvJKY
+ http://iphonedevsdk.com/forum/iphone-sdk-game-development/42309-the-best-game-loop.html
+// This is the renderer output callback function when using CVDisplayLink for the render loop
+static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
+{
+    CVReturn result = [(__bridge glView*)displayLinkContext getFrameForTime:outputTime];
+    return result;
+}
+
+ */
+
+- (id)initWithName:(const char *)appName andView:(void *)view andUserApp:(Cing::UserApplicationBase *)userApp
 {
     self = [super init];
     if ( self != nil )
@@ -74,11 +95,12 @@
 
             Cing::Application::getSingleton().setOgreView( view );
             
-            _inputManager = new Cing::InputManagerCocoa();
-            _inputManager->setParentView( ogreView );
+            //_inputManager = new Cing::InputManagerCocoa();
+            //_inputManager->setParentView( ogreView );
+            _inputManager = NULL;
 
             // Init application
-            Cing::Application::getSingleton().initApp( _inputManager );
+            Cing::Application::getSingleton().initApp( _inputManager, (Cing::UserApplicationBase *)userApp );
         }
         catch( Ogre::Exception& e )
         {
@@ -103,12 +125,95 @@
         }
         
         // enter main loop for app
-        _timer = [[NSTimer scheduledTimerWithTimeInterval:0.02
-                                                   target:self
-                                                 selector:@selector(renderFrame)
-                                                 userInfo:NULL
-                                                  repeats:YES] retain];
+        bool useDisplayLink = false;
         
+        // Using Timer
+        if ( useDisplayLink == false )
+        {
+            _timer = [[NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f
+                                                       target:self
+                                                     selector:@selector(renderFrame)
+                                                     userInfo:NULL
+                                                      repeats:YES] retain];
+            
+        }
+        // Using Display Link
+        else
+        {
+            /*
+            // Store pointer to Ogre's open gl context
+            _GLContext = nil;
+            Ogre::RenderWindow *ogreWindow =  GraphicsManager::getSingleton().getMainWindow().getOgreWindow();
+            if ( ogreWindow )
+            {
+                Ogre::OSXCocoaWindow* videoOutputCocoa  = static_cast<Ogre::OSXCocoaWindow*>(ogreWindow);
+                _GLContext = videoOutputCocoa->nsopenGLContext();
+            }
+            
+            if ( _GLContext )
+            {
+                // Create a display link capable of being used with all active displays
+                CVDisplayLinkCreateWithActiveCGDisplays(_displayLinkOut);
+                
+                // Set the renderer output callback function
+                CVDisplayLinkSetOutputCallback(_displayLinkOut, &MyDisplayLinkCallback, (void*)self);
+                
+                // Set the display link for the current renderer
+                CGLContextObj cglContext = (CGLContextObj) [_GLContext CGLContextObj];
+                CGLPixelFormatObj cglPixelFormat = [[ogreView pixelFormat] CGLPixelFormatObj];
+                CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(_displayLinkOut, cglContext, cglPixelFormat);
+                
+                // Activate the display link
+                CVDisplayLinkStart(m_displayLink);
+                
+              
+                /////////////////////////
+
+#if PD_USE_DISPLAY_LINK == 1
+                static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
+                                                    const CVTimeStamp* now,
+                                                    const CVTimeStamp* outputTime,
+                                                    CVOptionFlags,
+                                                    CVOptionFlags*,
+                                                    void* displayLinkContext)
+                {
+                    PDOgreRenderSystem * renderSystem =
+                    (__bridge PDOgreRenderSystem *) displayLinkContext;
+                    
+                    @autoreleasepool {
+                        
+                        if(!renderSystem.isStopped &&
+                           Ogre::Root::getSingletonPtr() &&
+                           Ogre::Root::getSingleton().isInitialised()) {
+                            
+                            // Get OpenGL context from render window
+                            NSOpenGLContext *ctx =
+                            static_cast<Ogre::CocoaWindow const *>(renderSystem.renderWindow)->nsopenGLContext();
+                            
+                            CGLContextObj cglContext = (CGLContextObj) [ctx CGLContextObj];
+                            
+                            // lock the context
+                            CGLLockContext(cglContext);
+                            
+                            // compute seconds elapsed since last call
+                            float deltaTime = 1.0 / (outputTime->rateScalar * (float)outputTime->videoTimeScale / (float)outputTime->videoRefreshPeriod);
+                            
+                            // Let Ogre render the next frame
+                            [ctx makeCurrentContext];
+                            
+                            Ogre::Root::getSingleton().renderOneFrame(deltaTime);
+                            
+                            CGLUnlockContext(cglContext);
+                        }
+                    }
+                    
+                    return kCVReturnSuccess;
+                }
+                /////////////////////////
+            }
+             */
+        }
+
         // listen to the app termination notification
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationWillTerminate)
@@ -136,6 +241,44 @@
         Cing::Application::getSingleton().drawOneFrame();
 }
 
+/*
+// Callback function use when CVDisplayLink controls the render loop
+- (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime
+{
+    Ogre::RenderSystem *renderSystem = Ogre::Root::getSingleton().getRenderSystem();
+    
+    @autoreleasepool {
+        
+        if(Ogre::Root::getSingletonPtr() &&
+           Ogre::Root::getSingleton().isInitialised()) {
+            
+            // Get OpenGL context from render window
+            NSOpenGLContext *ctx =            static_cast<Ogre::CocoaWindow const *>(renderSystem.renderWindow)->nsopenGLContext();
+            
+            CGLContextObj cglContext = (CGLContextObj) [ctx CGLContextObj];
+            
+            // lock the context
+            CGLLockContext(cglContext);
+            
+            // compute seconds elapsed since last call
+            float deltaTime = 1.0 / (outputTime->rateScalar * (float)outputTime->videoTimeScale / (float)outputTime->videoRefreshPeriod);
+            
+            // Let Ogre render the next frame
+            [ctx makeCurrentContext];
+            
+            Ogre::Root::getSingleton().renderOneFrame(deltaTime);
+            [self renderFrame];
+            
+            CGLUnlockContext(cglContext);
+        }
+    }
+    
+    return kCVReturnSuccess;
+
+}
+ */
+
+
 - (void)applicationWillTerminate
 {
     Cing::Application::getSingleton().endApp();
@@ -149,9 +292,9 @@
 namespace Cing
 {
     
-    void RunApplicationCocoaView(const char *_appName, void *_view)
+    void RunApplicationCocoaView(const char *_appName, void *_view, UserApplicationBase *_userApp /*= NULL*/ )
     {
-        [[[CingCocoaViewApplication alloc] initWithName:_appName andView:_view] autorelease];
+        [[[CingCocoaViewApplication alloc] initWithName:_appName andView:_view andUserApp:(UserApplicationBase *)_userApp] autorelease];
     }
     
 }

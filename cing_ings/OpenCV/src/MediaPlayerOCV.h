@@ -31,6 +31,7 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
+
 // Graphics
 #include "graphics/Image.h"
 
@@ -40,7 +41,9 @@
 // OpenCV
 #include "opencv2/highgui/highgui.hpp"
 
-// Common
+// Threading related
+#include <boost/thread/mutex.hpp>
+// Extern
 #undef nil
 #include "PTypes/include/pasync.h"
 
@@ -52,26 +55,45 @@ namespace Cing
 	class MediaPlayerOCV
 	{
 	public:
+        
+        // structure to capture the image from the camera in a different thread
+        struct OCVCaptureThread: public pt::thread
+        {
+            OCVCaptureThread( MediaPlayerOCV& player, Ogre::Timer& timer, float fps ): pt::thread( false ), m_player( player ), m_timer(timer), m_fps(fps) {};
+            void execute();
+            void cleanup();
+            
+            cv::Mat             m_localMat;
+            MediaPlayerOCV&     m_player;
+            Ogre::Timer&        m_timer;
+            float               m_fps;
+        };
+        
 
 		// Constructor / Destructor
 		MediaPlayerOCV();
-		MediaPlayerOCV( const char* filename, float fps = -1 );
+		MediaPlayerOCV( const std::string& filename, float fps = -1 );
 		~MediaPlayerOCV();
 
 		// Init / Release / Update
 		bool    init    ();
-		bool    load    ( const char* fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
+		bool    load    ( const std::string& fileName, GraphicsType requestedVideoFormat = RGB, float fps = -1 );
 		void    end     ();
-		void    update  ();
+		void    update  ( unsigned int forceFrame = -1, bool updateTexture = false );
 		Image&  getImage();
 
+        // General player settings
+        void    setMultithreaded ( bool threaded ) { m_multithreaded = threaded; } // NOTE: it has to be called before load.
+        
 		// Query methods
-		bool    isValid   () const { return m_bIsValid; }
-		bool    isPlaying ();
-		float   duration  () const { return (float)m_videoDuration; }
-		float   time      ();
-		int     getWidth  () const { return m_videoWidth; }
-		int     getHeight () const { return m_videoHeight; }
+		bool			isValid     () const { return m_bIsValid; }
+		bool			isPlaying   ();
+		float			duration    () const { return (float)m_videoDuration; }
+		float			time        ();
+		int				getWidth    () const { return m_videoWidth; }
+		int				getHeight   () const { return m_videoHeight; }
+        float			fps         () const { return m_videoFps; }
+		unsigned int	frameCount	() const { return m_videoNFrames; }
 
 		// Media control
 		void    play    ();
@@ -90,12 +112,18 @@ namespace Cing
 
 	private:
 		// Internal methods
-		bool			buildPathToFile			( const String& path );
-		void			copyBufferIntoImage		();
-
+		bool			buildPathToFile			( const std::string& path );
+		void			copyBufferIntoImage		( bool updateTexture = false ); // from update in single thread mode
+        
+        // Threaded version
+        void            setNewFrame             ( unsigned int currentFrameNumber, cv::Mat& currentFrame ); // from thread in multithreaded mode
+        void            copyFrameFromThread     ();
+        
 		// Open CV stuff
-		cv::VideoCapture		m_capture;			///< OpenCV capture to read movie file
-		
+		cv::VideoCapture		m_capture;          ///< OpenCV capture to read movie file
+        OCVCaptureThread        *m_captureThread;   ///< Thread to capture images from the video
+        cv::Mat                 m_bufferFromThread; ///< Intermediate buffer to read/write from thread
+
 		// Media info
 		String					m_fileName;			///< Name of the loaded video
 		String					m_filePath;			///< Full path of the loaded video
@@ -119,6 +147,8 @@ namespace Cing
 		bool					m_playing;			///< True when the player is active (playing)
 		
 		// Buffer Stuff
+        bool                    m_multithreaded;    ///< If true, the frame capture from the video happens in a separate thread.
+        boost::try_mutex        m_mutex;            ///< Mutex used to sync read/writes from capture thread and main thread
 		int						m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)
 		GraphicsType			m_pixelFormat;		///< Pixel format in which new image frames will be stored
 		Image					m_frameImg;			///< Image containing the buffer of the current video frame

@@ -163,6 +163,9 @@
     <Filter Include="cing_ings\GStreamer">
       <UniqueIdentifier>{26c679fe-95ab-40b4-a6f4-17f60f843733}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cing_ings\cURLNetworkClient">
+      <UniqueIdentifier>{eb1fa3fd-32f1-40c4-9086-9c2ec045f784}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\CingMaterials.material">
@@ -448,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.cpp">
       <Filter>cing_ings\OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.cpp">
+      <Filter>cing_ings\cURLNetworkClient</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -820,6 +826,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.h">
       <Filter>cing_ings\OpenCV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.h">
+      <Filter>cing_ings\cURLNetworkClient</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

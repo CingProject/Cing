@@ -306,7 +306,7 @@ inline bool findIntersection( const Point2& p1, const Point2& p2, const Point2& 
 	float xD1,yD1,xD2,yD2,xD3,yD3;
 	float dot,deg,len1,len2;
 	float segmentLen1,segmentLen2;
-	float ua,ub,div;
+	float ua,div;
 
 	// calculate differences
 	xD1 = p2.x-p1.x;
@@ -332,7 +332,7 @@ inline bool findIntersection( const Point2& p1, const Point2& p2, const Point2& 
 	// find intersection Pt between two lines
 	div=yD2*xD1-xD2*yD1;
 	ua=(xD2*yD3-yD2*xD3)/div;
-	ub=(xD1*yD3-yD1*xD3)/div;
+	//ub=(xD1*yD3-yD1*xD3)/div; // commented as never used.
 	intersection.x = p1.x+ua*xD1;
 	intersection.y = p1.y+ua*yD1;
 

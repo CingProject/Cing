@@ -24,7 +24,6 @@ Copyright (c) 2008-2009 Julio Obelleiro and Jorge Cano
 
 #include "XMLElement.h"
 #include "CommonTypes.h"
-#include "XMLElement.h"
 
 namespace Cing
 {
@@ -40,7 +39,9 @@ public:
 	~XMLSettings() { m_valid = false; }
 
 	// Load xml file
-	bool load( const std::string& pathToXML );
+	bool load	( const std::string& pathToXML );
+	bool parse	( const std::string& xmlData );
+    void init	( const std::string& topLevelName );
 
 	// Getters to retrieve the content of an xml tag (what is inside the opening and closing tag: example <bookstore>Content</bookstore>
     std::string 		get		( const std::string& name, const std::string& defValue );
@@ -58,6 +59,9 @@ public:
     int         		getAttribute	( const std::string& tagName, const std::string& attributeName, int defValue );
 	bool				getBoolAttribute( const std::string& tagName, const std::string& attributeName, bool defValue );
 	Cing::Vector		getAttribute	( const std::string& tagName, const Cing::Vector& defValue );
+
+	// Returns list of XML tags with the same path (for cases where there are several and you don't know the number)
+	void				getChildren      ( XMLElement::XMLElementArray& children, const std::string& path = "NO_PATH" );
 
 	// Getter of the XML parsing elements
 	Cing::XMLElement	get( const std::string& name );

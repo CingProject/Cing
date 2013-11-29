@@ -67,7 +67,29 @@ namespace Cing
         UserAppClass userAppClassInstance;                                  \
         RunApplicationBasic( appName, &userAppClassInstance );              \
         return 0;                                                           \
-    };
+    };																		\
+	void setup()			{};												\
+	void draw()				{};												\
+	void end()				{};												\
+	void mousePressed()		{};												\
+	void mouseReleased()	{};												\
+	void keyPressed()		{};												\
+	void mouseMoved()		{};
+
+	#define CREATE_USER_CONSOLE_APPLICATION( appName, UserAppClass )		\
+	int main()																\
+	{                                                                       \
+		UserAppClass userAppClassInstance;                                  \
+		RunApplicationBasic( appName, &userAppClassInstance );              \
+		return 0;                                                           \
+	};																		\
+	void setup()			{};												\
+	void draw()				{};												\
+	void end()				{};												\
+	void mousePressed()		{};												\
+	void mouseReleased()	{};												\
+	void keyPressed()		{};												\
+	void mouseMoved()		{};
 
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     
@@ -86,8 +108,12 @@ namespace Cing
         return 0;                                                           \
     };
     
-    #define CREATE_COCOA_VIEW_APPLICATION( appName, ogreView )                \
+    #define CREATE_COCOA_VIEW_APPLICATION( appName, ogreView )              \
         RunApplicationCocoaView( appName, ogreView );
+    
+    #define CREATE_COCOA_VIEW_USER_APPLICATION( appName, ogreView, userAppClassInstance )     \
+        RunApplicationCocoaView( appName, ogreView, userAppClassInstance );
+    
     
 #else
 

@@ -65,8 +65,8 @@
     #define LOG_ERROR(msg, args...)				Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_CRITICAL, msg, ## args )
     #define LOG_CRITICAL LOG_ERROR
     #define LOG_ERROR_NTIMES(n, x, args...)	{ static int count = 0; if ( ++count <= n ) Cing::LogManager::getSingleton().logMessage( Cing::LogManager::LOG_CRITICAL, x, ## args ); }
-    #define LOG_ENTER_FUNCTION LOG_TRIVIAL( __FUNCTION__ " - enter" )
-    #define LOG_EXIT_FUNCTION  LOG_TRIVIAL( __FUNCTION__ " - exit" )
+    #define LOG_ENTER_FUNCTION 
+    #define LOG_EXIT_FUNCTION
 
 // No LOG
 #else

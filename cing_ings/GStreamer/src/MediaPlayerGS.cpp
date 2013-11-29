@@ -367,7 +367,7 @@ namespace Cing
 	/**
 	 * Updates media playback state
 	 */
-	void MediaPlayerGS::update()
+	void MediaPlayerGS::update( unsigned int forceFrame /* = -1 */, bool updateTexture /* = false */ )
 	{
 		LOG_ENTER_FUNCTION;
 	
@@ -377,6 +377,12 @@ namespace Cing
 			jump(0);
 			m_loopPending = false;
 		}
+
+		if ( forceFrame > -1 )
+			jump(forceFrame/m_nFrames*m_videoFps);
+
+		if ( m_newBufferReady )
+			copyBufferIntoImage();
 
 		LOG_EXIT_FUNCTION;
 	}
@@ -399,8 +405,8 @@ namespace Cing
 			update();
 
 			// Check if we have a new buffer to copy
-			if ( m_newBufferReady )
-				copyBufferIntoImage();
+			//if ( m_newBufferReady )
+				//copyBufferIntoImage();
 		}
 
 		LOG_EXIT_FUNCTION;
@@ -660,7 +666,7 @@ namespace Cing
 		LOG_ENTER_FUNCTION;
 	
 		// Clamp time position
-		frameNumber = constrain( frameNumber, 0.0, numberOfFrames()-1 );
+		frameNumber = constrain( frameNumber, 0.0, frameCount()-1 );
 
 		// Calculate time in seconds for this frame
 		double whereInSecs = (double)frameNumber / fps();

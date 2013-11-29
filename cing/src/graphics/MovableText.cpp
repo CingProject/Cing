@@ -67,7 +67,7 @@ void MovableText::init( Ogre::SceneNode* parentNode /*= NULL*/ /*const String &c
 		offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
 		// Texcoords
 		decl->addElement(POS_TEX_BINDING, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 0);
-		offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
+		//offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
 		// Colours - store these in a separate buffer because they change less often
 		decl->addElement(COLOUR_BINDING, 0, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE);
 
@@ -121,7 +121,8 @@ void MovableText::setFontName( const String &fontName )
 	mpFont = Ogre::FontManager::getSingleton().getByName(fontName);
 	if ( mpFont.isNull() )
 	{
-		LOG_ERROR( "MovableText::setFontName: Could not find font %s", fontName.toChar() );
+		LOG_ERROR_NTIMES( 10, "MovableText::setFontName: Could not find font %s", fontName.toChar() );
+		return;
 	}
 	mpFont->load();
 	mpMaterial = mpFont->getMaterial();
@@ -645,8 +646,10 @@ void MovableText::_setupGeometry()
 
 void MovableText::_updateColors( void )
 {
-	assert(!mpFont.isNull());
-	assert(!mpMaterial.isNull());
+	if ( mpFont.isNull()  || mpMaterial.isNull() )
+	{
+		return;
+	}
 
 	// Convert to system-specific
 	Ogre::RGBA color;
@@ -770,7 +773,6 @@ void MovableText::calculateLineBreaks( ForcedLineBreaks& forcedLineBreaks )
 		{
 			// Get current character
 			Ogre::Font::CodePoint character = OGRE_DEREF_DISPLAYSTRING_ITERATOR(i);
-			charLength = 0.0f;
 			itemsInLine++;
 
 			// New line?

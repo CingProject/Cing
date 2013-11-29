@@ -46,9 +46,9 @@ void draw() {
 		pos.y	+= random(-ranValue,ranValue);
 		pos.z	+= random(-ranValue,ranValue);
 
-		// Constrain positions in x and y
-		pos.x = constrain( pos.x, 100, width-100);
-		pos.y = constrain( pos.y, 100, height-100);
+		// Constrain positions in x and y 
+		pos.x = constrain( pos.x, 100.0f, (float)width-100.0f);
+		pos.y = constrain( pos.y, 100.0f, (float)height-100.0f);
 
 		// Set sphere position
 		spheres[i].setPosition(pos);
