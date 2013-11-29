@@ -237,7 +237,7 @@ namespace Cing
      *
      * @param img Image to be copied
      */
-	void Image::init( const Image& img, Ogre::SceneManager* sm /*= NULL*/ )
+	void Image::init( const Image& other, Ogre::SceneManager* sm /*= NULL*/ )
 	{
 		// Check application correctly initialized (could not be if the user didn't call size() function)
 		Application::getSingleton().checkSubsystemsInit();
@@ -1395,13 +1395,13 @@ namespace Cing
 		//}
 	}
     
-	void Image::operator +=	( const Image& img ){
+	void Image::operator +=	( const Image& other ){
         
 		//cv::add( m_cvImage, img.getCVMat(), m_cvImage );
 		//setUpdateTexture(true);
 	}
     
-	void Image::operator -=	( const Image& img ){
+	void Image::operator -=	( const Image& other ){
         
 		//cv::subtract( m_cvImage, img.getCVMat(), m_cvImage );
 		//setUpdateTexture(true);

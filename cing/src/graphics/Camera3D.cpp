@@ -125,36 +125,6 @@ namespace Cing
 		// Shadow far distance (in case there are shadows)
 		m_pOgreSceneManager->setShadowFarDistance( m_pOgreCamera->getFarClipDistance() );
 
-		// Override with specific coordinate system 
-		switch(coordinateSystem)
-		{
-		case OPENGL3D:
-			{
-				// Reset camera position (and orientation?)
-				m_cameraSceneNode->setPosition( Ogre::Vector3( 0, 0, 2000.0 ) );
-				// Reset applied symmetry to y-world axis
-				m_pOgreSceneManager->getRootSceneNode()->setScale(1,1,1);
-			}
-			break;
-		case PROCESSING:
-			{
-				// Calculate new camera position 
-				float cameraDistance    =  (viewportHeight / 2.0f ) / tanf( (m_pOgreCamera->getFOVy().valueRadians()) / 2.0f );
-
-				Ogre::Vector3 camPos = Ogre::Vector3( viewportWidth/2.0f, viewportHeight/2.0f, cameraDistance );
-				// Set the camera position
-
-				m_cameraSceneNode->setPosition( camPos );
-				m_cameraSceneNode->lookAt( Ogre::Vector3(viewportWidth/2.0f, viewportHeight/2.0f, 0.0f), Ogre::Node::TS_WORLD );
-
-				// Apply symmetry to y-world axis
-				m_pOgreSceneManager->getRootSceneNode()->setScale(1,-1,1);
-			}	
-			break;
-		default:
-			break;
-		};
-
 		// The class is now initialized
 		m_bIsValid = true;
 

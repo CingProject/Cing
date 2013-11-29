@@ -93,6 +93,8 @@ namespace Cing
     m_windowBorder(true),
     m_windowMonitorIndex(0),
     m_saveFrame(false),
+	m_windowPosX(-INT_MAX),
+	m_windowPosY(-INT_MAX),
     m_shadowsEnabled(false),
     m_showConfigDialog(false)
     {
@@ -150,9 +152,9 @@ namespace Cing
         windowParams["border"] = m_windowBorder? "fixed": "none";
         windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
         windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
-        //windowParams["left"] = "0";
-        //windowParams["top"] = "0";
-        windowParams["depthBuffer"] = "true";
+		windowParams["left"] = m_windowPosX != -INT_MAX? toString(m_windowPosX): "0";
+		windowParams["top"] = m_windowPosY != -INT_MAX? toString(m_windowPosY): "0";       
+		windowParams["depthBuffer"] = "true";
         windowParams["FSAA"] = toString(m_fsaa);
         windowParams["displayFrequency"] = toString(60);
         windowParams["vsync"] = toString(m_vSync);
@@ -183,7 +185,7 @@ namespace Cing
         ogreSceneManager	= m_pSceneManager;
         
         // Init the main camera
-        m_activeCamera.init( m_pSceneManager );
+		m_activeCamera.init( m_mainWindow.getViewport(), m_pSceneManager );
         
         // Set the global pointer to the camera
         ogreCamera	= m_activeCamera.getOgreCamera();

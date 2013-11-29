@@ -49,7 +49,7 @@ namespace Cing
 
 		// Constructor / Destructor
 		Image				();
-		Image				( const Image& img, Ogre::SceneManager* sm = NULL );
+		Image				( const Image& other, Ogre::SceneManager* sm = NULL );
 		Image				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( const std::string& name, Ogre::SceneManager* sm = NULL );
@@ -58,7 +58,7 @@ namespace Cing
 		// Init / Release / Update / Save / Clone
 		void		init				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL, ImageDataPtr data = ImageDataPtr() );
 		void		initAsRenderTarget	( int width, int height );
-		void		init				( const Image& img, Ogre::SceneManager* sm = NULL );
+		void		init				( const Image& other, Ogre::SceneManager* sm = NULL );
 		bool		load				( const std::string& path, Ogre::SceneManager* sm = NULL );
 		void		save				( const std::string& path );
 		void		end					();
@@ -137,13 +137,13 @@ namespace Cing
 		void operator = ( float scalar);
 		void operator -=( float scalar );
 		void operator +=( float scalar );
-		void operator -=( const Image& img );
-		void operator +=( const Image& img );
+		void operator -=( const Image& other );
+		void operator +=( const Image& other );
 		bool operator ==( const Image& other) const;
 		void blend		( const Image& other, float percentage );
 
 		// Other
-		void copy( const Image& img );
+		void copy( const Image& other );
 
 		// Texture update control
 		void	setUpdateTexture( bool updateTextureFlag = true );	
