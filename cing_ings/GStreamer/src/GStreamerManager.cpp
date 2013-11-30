@@ -74,8 +74,8 @@ namespace Cing
 			m_pluginsPath = pluginsFolder.getStringAttribute( "relativePath" );
 			if ( m_pluginsPath.empty() )
 			{
-				LOG_ERROR( "GStreamer_Plugins_Folder tag not found in data/CingConfig.xml file. You may have an old version of this file." );
-				return false;
+				// not defined, use default path
+				m_pluginsPath = "Plugins/gstreamer-0.10";
 			}
 
 			// Check if folder exists

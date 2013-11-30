@@ -1,0 +1,6 @@
+Notes con Cing-Beats
+----------------------
+
+Each Cing-Beat should have its own folder. 
+
+Cing-Beats that require dll copy or additional libs or include folders should define a property sheet so that users can include it and have all the steps to build an application using it without defining the build properties manually
