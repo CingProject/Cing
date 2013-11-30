@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <CING_ROOT>..\..\..\cing\</CING_ROOT>
+    <CING_INGS_ROOT>..\..\..\cing_ings\</CING_INGS_ROOT>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
+    <OutDir>$(ProjectDir)\..\$(Configuration)\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <_PropertySheetDisplayName>CingProject_VS11PropertySheet_Debug</_PropertySheetDisplayName>
+    <TargetName>$(ProjectName)_d</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(CING_ROOT);$(CING_ROOT)src\;$(CING_ROOT)libraries\win\vs2012\LibVLC\include;$(CING_ROOT)libraries\win\vs2012;$(CING_ROOT)libraries\win\vs2012\Ogre3d\include\OGRE;$(CING_ROOT)libraries\win\vs2012\Ogre3d\include\OIS;$(CING_ROOT)libraries\win\vs2012\Ogre3d\boost;$(CING_ROOT)libraries\win\vs2012\Ogre-CameraControlSystem\include;$(CING_ROOT)libraries\win\vs2012\CEGUI\include;$(CING_ROOT)libraries\win\vs2012\Bullet\src;$(CING_ROOT)libraries\win\vs2012\OgreBullet\Collisions\include;$(CING_ROOT)libraries\win\vs2012\OpenAL\include;$(CING_INGS_ROOT);$(CING_INGS_ROOT)\OpenCV\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain_d.lib;OgreOverlay_d.lib;OIS_d.lib;ptypes_d.lib;tinyxml_STL_d.lib;videoInput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CING_ROOT)libraries\win\vs2012\Fmod\lib;$(CING_ROOT)libraries\win\vs2012\Ogre3d\lib;$(CING_ROOT)libraries\win\vs2012\Ogre3d\boost\lib;$(CING_ROOT)libraries\win\vs2012\Ogre-CameraControlSystem\lib;$(CING_ROOT)libraries\win\vs2012\CEGUI\lib;$(CING_ROOT)libraries\win\vs2012\PortVideo\lib;$(CING_ROOT)libraries\win\vs2012\PTypes\lib;$(CING_ROOT)libraries\win\vs2012\VideoInput\lib;$(CING_ROOT)libraries\win\vs2012\OgreCollada\lib;$(CING_ROOT)libraries\win\vs2012\LibVLC\lib;$(CING_ROOT)libraries\win\vs2012\TinyXML\lib;$(CING_INGS_ROOT);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>atlthunk;libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>%(Command)
+
+echo ------------------------------------------
+echo Copying Bin Cing files to output folder
+echo ------------------------------------------
+xcopy "$(CING_ROOT)bin\win\vs2012\$(Configuration)" "$(OutDir)" /i /d /y /s
+
+echo Copying Bin files from OpenCV addon
+xcopy  "$(CING_INGS_ROOT)\OpenCV\lib\bin\vs2012\*d.dll" "$(OutDir)" /i /d /y /s
+
+REM Check if it was ok
+if errorlevel 1 goto BuildEventFailed
+goto BuildEventOK
+
+:BuildEventFailed
+echo POSTBUILDSTEP for $(ProjectName) FAILED
+exit 1
+
+:BuildEventOK
+echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK</Command>
+      <Message>Copying exe to samples bin directory ...</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="CING_ROOT">
+      <Value>$(CING_ROOT)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="CING_INGS_ROOT">
+      <Value>$(CING_INGS_ROOT)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
