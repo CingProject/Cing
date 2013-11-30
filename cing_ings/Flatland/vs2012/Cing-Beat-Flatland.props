@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <CING_INGS_ROOT>..\..\..\cing_ings\</CING_INGS_ROOT>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_PropertySheetDisplayName>Cing-Beat-Flatland</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(CING_INGS_ROOT)\GStreamer\lib\include;$(CING_INGS_ROOT)\GStreamer\lib\include\glib-2.0;$(CING_INGS_ROOT)\GStreamer\lib\include\gstreamer-0.10;$(CING_INGS_ROOT)\GStreamer\lib\include\libxml2\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(CING_INGS_ROOT)\GStreamer\lib\lib\vs2012;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gstreamer-0.10.lib;gstvideo-0.10.lib;gstbase-0.10.lib;gstapp-0.10.lib;gstbasevideo-0.10.lib;glib-2.0.lib;gobject-2.0.lib;gthread-2.0.lib;xml2.lib;iconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>%(Command)
+
+xcopy "$(CING_INGS_ROOT)GStreamer\lib\bin\vs2012\*" "$(OutDir)" /i /f /y /s
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="CING_INGS_ROOT">
+      <Value>$(CING_INGS_ROOT)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
