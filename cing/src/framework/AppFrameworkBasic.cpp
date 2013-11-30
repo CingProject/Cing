@@ -45,9 +45,6 @@
 #include "common/LogManager.h"
 #include "common/eString.h"
 
-// OpenCV
-#include "opencv2/core/core.hpp"
-
 namespace Cing
 {
 
@@ -103,10 +100,6 @@ namespace Cing
 #else
 			std::cerr << "An exception has occurred: " << e.getFullDescription();
 #endif
-		}
-		catch( cv::Exception& e )
-		{
-			LOG_ERROR( "OpenCV Exception: %s", e.what() );
 		}
 		catch ( Exception& e ) 
 		{

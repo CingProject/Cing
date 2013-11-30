@@ -30,15 +30,15 @@
       <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>echo ------------------------------------------
+      <Command>%(Command)
+
+echo ------------------------------------------
 echo Copying Bin Cing files to output folder
 echo ------------------------------------------
 xcopy "$(CING_ROOT)bin\win\vs2012\$(Configuration)" "$(OutDir)" /i /d /y /s
 
-
 echo Copying Bin files from OpenCV addon
 xcopy  "$(CING_INGS_ROOT)\OpenCV\lib\bin\vs2012\*d.dll" "$(OutDir)" /i /d /y /s
-
 
 REM Check if it was ok
 if errorlevel 1 goto BuildEventFailed

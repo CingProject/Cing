@@ -37,7 +37,9 @@
       <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>echo ------------------------------------------
+      <Command>%(Command)
+
+echo ------------------------------------------
 echo Copying Bin Cing files to output folder
 echo ------------------------------------------
 xcopy "$(CING_ROOT)bin\win\vs2012\$(Configuration)" "$(OutDir)" /i /d /y /s

@@ -8,8 +8,9 @@ CREATE_APPLICATION( "Cing" );
  * It also supports audio/volume control.
  */
 
+#include "GStreamer/src/MediaPlayerGS.h"
 
-MediaPlayer mediaPlayer;
+MediaPlayerGS mediaPlayer;
 
 void setup()
 {
