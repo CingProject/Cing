@@ -38,6 +38,8 @@
 
 - (Boolean) loadFile:(NSString *)filename {
     
+    if ( _frameBuffer != nil )
+        free(_frameBuffer);
     _frameBuffer = nil;
     
     // File loading
@@ -45,9 +47,14 @@
     //NSLog(@"Trying to load %@", filename);
     
     // Init the asset to have access to the file
+    if ( _asset != nil )
+        [_asset release];
     _asset = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
     
     // Create the asset reader
+    if ( _assetReader != nil )
+        [_assetReader release];
+    
     NSError *error;
     _assetReader = [[AVAssetReader alloc] initWithAsset:_asset error:&error];
     if ( !_assetReader ) {
@@ -74,6 +81,8 @@
 
     
     //Construct the actual track output and add it to the asset reader:
+    if ( _assetReaderOutput != nil )
+        [_assetReaderOutput release];
     _assetReaderOutput = [[AVAssetReaderTrackOutput alloc] initWithTrack:video_track outputSettings:dictionary];
     [_assetReader addOutput:_assetReaderOutput];
     

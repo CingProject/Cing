@@ -98,6 +98,12 @@
 // Adds a frame to the video
 - (void)addFrame:(char*)data width:(unsigned int)width height:(unsigned int)height {
     
+    // Check
+    if ( _videoWriter == nil ) {
+        NSLog( @"ERROR attempting to encode a frame on a not valid video writer. Maybe it was not initialized or has been deallocated or the video finished?" );
+        return;
+    }
+    
     // Double check that the size is correct
     if ( (width != _width) || (height != _height) ) {
          NSLog( @"ERROR attempting to encode frame with wrong side: Received size is: (%d, %d), Expected size is: (%d, %d)", width, height, _width, _height);
