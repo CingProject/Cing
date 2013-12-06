@@ -42,6 +42,7 @@ public:
     // Query
     bool            isValid     () const { return m_bIsValid; }
     bool            isPlaying   ();
+    bool            isPaused    ();
     float           duration    () const { return (float)m_videoDuration; }
     float           time        ();
     int             getWidth    () const { return m_videoWidth; }
@@ -95,6 +96,7 @@ private:
     Ogre::Timer				m_timer;			///< Used to control de playback
     int						m_currentFrame;		///< Current frame (last frame retrieved from capture)
     bool					m_playing;			///< True when the player is active (playing)
+    bool                    m_paused;           ///< True when the player has been paused (when play or loop is called next, playhead will resume from the position where it was paused).
     
     // Buffer Stuff
     int						m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)

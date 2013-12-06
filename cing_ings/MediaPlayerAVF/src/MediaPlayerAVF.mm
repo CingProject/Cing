@@ -103,6 +103,7 @@ namespace Cing
 
         
         m_playing = false;
+        m_paused  = false;
         m_desiredFps = fps;
         
 		LOG( "MediaPlayer: File %s correctly loaded.", m_fileName.c_str() );
@@ -157,6 +158,7 @@ namespace Cing
         {
             m_currentFrame	= 0;
             m_playing		= false;
+            m_paused        = false;
             
             
             // Init the frame container to the video size
@@ -262,6 +264,14 @@ namespace Cing
 	{
 		return m_playing;
 	}
+    
+    /**
+	 * Returns true if the media is on pause, false otherwise
+	 **/
+	bool MediaPlayerAVF::isPaused()
+	{
+		return m_paused;
+	}
 
 	
 	/**
@@ -305,8 +315,9 @@ namespace Cing
 		}
 		
 		// no loop mode
-		m_loop = false;
-		m_playing = true;
+		m_loop      = false;
+		m_playing   = true;
+        m_paused    = false;
 		
 		// Timer that will control the playback
 		m_timer.reset();
@@ -328,6 +339,7 @@ namespace Cing
 		// loop mode
 		m_loop = true;
 		m_playing = true;
+        m_paused = false;
 		
 		// Timer that will control the playback
 		m_timer.reset();
@@ -348,6 +360,7 @@ namespace Cing
 		
 		m_currentFrame = 0;
 		m_playing = false;
+        m_paused = false;
         [m_player stop];
 	}
 	
@@ -364,6 +377,7 @@ namespace Cing
 		}
         
 		m_playing = false;
+        m_paused = true;
         [m_player pause];
 	}
 	
