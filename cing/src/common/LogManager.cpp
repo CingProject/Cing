@@ -108,12 +108,12 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= true*/ )
 
 	// Create custom log (the default log for Cing from now on, not for Ogre which will output to Ogre.log)
 	m_log = Ogre::LogManager::getSingleton().createLog( logFileName, false, logToOutput, !logToFile );
+	
+	m_bIsValid = true;
+	m_enabled  = true;
 
 	// Set log level
 	setLogLevel(m_debugOutputLogLevel);
-
-	m_bIsValid = true;
-	m_enabled  = true;
 }
 
 /**
