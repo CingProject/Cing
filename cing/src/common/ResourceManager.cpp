@@ -246,6 +246,7 @@ namespace Cing
 
 	// Windows specific code
 #ifdef WIN32
+#define _WINSOCKAPI_
 #include <Windows.h>
 	/**
 	* @internal

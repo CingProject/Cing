@@ -40,6 +40,7 @@
 
 // To use the outputdebugstring
 #ifdef WIN32
+#define _WINSOCKAPI_
 #include <Windows.h>
 #endif
 

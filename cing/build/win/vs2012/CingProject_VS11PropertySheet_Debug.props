@@ -3,8 +3,8 @@
   <ImportGroup Label="PropertySheets">
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <CING_ROOT>..\..\..\cing\</CING_ROOT>
-    <CING_INGS_ROOT>..\..\..\cing_ings\</CING_INGS_ROOT>
+    <CING_ROOT>../cing/cing/</CING_ROOT>
+    <CING_INGS_ROOT>../cing/cing_ings/</CING_INGS_ROOT>
   </PropertyGroup>
   <PropertyGroup>
     <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
