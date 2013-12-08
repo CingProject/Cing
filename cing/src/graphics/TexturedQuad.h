@@ -63,8 +63,9 @@ namespace Cing
 		// Set methods
 		void  	setPosition     ( float x, float y, float z );
 		void  	setPosition2d   ( float x, float y );
-		void	setScale		( float xScale, float yScale, float zScale );
-		void	setScale2d		( float xScale, float yScale );
+		void	setScale		( float xScale, float yScale, float zScale );	/// only for render, does not resize texture
+		void	setScale2d		( float xScale, float yScale );					/// only for render, does not resize texture
+		void	resize			(unsigned int newWidth, unsigned int newHeight ); /// resizes the texture
 		void	setOrientation	( const Vector& axis, float angle );
 		void	setOrientation	( const Quaternion& orientation );
 		void	rotate			( const Vector& axis, float angle );
