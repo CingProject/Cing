@@ -63,7 +63,13 @@ namespace Cing
 		FontProperties() 
 		{
 			// Default values
-			fontName	= "DefaultFont";				// Should be Font::DEFAULT_FONT_NAME but for some reason it appears blank when assigning so
+			reset();
+		}
+
+		// Set default values
+		void reset() 
+		{
+			fontName	= Font::DEFAULT_FONT_NAME;				// Should be Font::DEFAULT_FONT_NAME but for some reason it appears blank when assigning so
 			size		= Font::DEFAULT_FONT_SIZE;		// Use default size (the one specified in the ttf when loaed)
 			resolution	= Font::DEFAULT_FONT_RESOLUTION;
 			x			= 0;

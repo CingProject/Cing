@@ -100,7 +100,7 @@ bool DebugOverlay::init()
   textArea->setCharHeight(26);
 
   // set the font name to the font resource that you just created.
-  textArea->setFontName( "DefaultFont" );
+  textArea->setFontName( Font::DEFAULT_FONT_NAME );
 
   // say something
   textArea->setCaption( "Hello, World!" ); 

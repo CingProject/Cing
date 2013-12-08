@@ -47,13 +47,13 @@ namespace Cing
  * @internal
  * Manages the font system
  */
-class FontManager: public SingletonStatic< FontManager >
+class FontManager: public Singleton< FontManager >
 {
 
 public:
 
 	// Required for singleton
-	friend class SingletonStatic< FontManager >;
+	friend class Singleton< FontManager >;
 
 	// Destructor
 	virtual ~FontManager();
