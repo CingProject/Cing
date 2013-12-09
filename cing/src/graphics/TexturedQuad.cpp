@@ -440,7 +440,7 @@ namespace Cing
 	{
 		if ( !isValid() )
 		{
-			LOG_ERROR( "Trying to set position in an invalid textured quad" );
+			LOG_ERROR( "Trying to set visibility on an invalid textured quad" );
 			return;
 		}
 
