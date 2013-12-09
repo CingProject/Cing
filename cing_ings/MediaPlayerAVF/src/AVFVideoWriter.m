@@ -112,8 +112,17 @@
     
     // Wait for the writer to be ready
     // NOTE: should we add a timeout here?
-    while( [_videoWriterInput isReadyForMoreMediaData] == false )
-        ;
+    unsigned int timeTrying = 0;
+    while( ([_videoWriterInput isReadyForMoreMediaData] == false) && (timeTrying < 100) ) {
+        timeTrying += Cing::elapsedMillis;
+    }
+    
+    // media is not ready to receive frames
+    if ( timeTrying > 100 ) {
+        NSLog(@"ERROR: Time out to attempt to write new frame. Media is not ready for somem readon" );
+        return;
+    }
+        
 
     // Append the new frame
     CVPixelBufferRef buffer = (CVPixelBufferRef)[self pixelBufferFromData:data];
