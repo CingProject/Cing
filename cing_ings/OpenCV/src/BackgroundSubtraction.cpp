@@ -83,7 +83,7 @@ void BackgroundSubtraction::end()
 void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 {
 	// If we don't have background stored -> store this image as the background
-	if ( m_backgroundImage.empty() )
+	if ( m_backgroundImage.isValid() == false )
 		storeBackground( imgToAnalyze );
 
 	// Request temporal images to the image resource manager
@@ -105,7 +105,7 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 	if ( m_technique == ABS_DIFF )
 	{
 		// Calculate the difference between the background and the current image
-		m_differenceFilter.apply( m_backgroundImage, toCVMat(imgToAnalyze), *tempImage );
+		m_differenceFilter.apply( toCVMat(m_backgroundImage), toCVMat(imgToAnalyze), *tempImage );
 
 		// Threshold the image
         cv::Mat outMat = toCVMat(output);
@@ -114,7 +114,7 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 	else if ( m_technique == BRIGHTNESS )
 	{
 		// Subtract background from the current image (brighter pixels will remain non black)
-		cv::subtract( toCVMat(imgToAnalyze), m_backgroundImage, *tempImage );
+		cv::subtract( toCVMat(imgToAnalyze), toCVMat(m_backgroundImage), *tempImage );
 
 		// Threshold the image
         cv::Mat outMat = toCVMat(output);
@@ -138,19 +138,19 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 void BackgroundSubtraction::storeBackground( const Image& backgroundImage )
 {
 	// Create the image if necessary
-	if (	(m_backgroundImage.empty()) || 
-				( backgroundImage.getHeight() != m_backgroundImage.rows) ||
-				( backgroundImage.getWidth() != m_backgroundImage.cols) ||
-				( backgroundImage.getNChannels() != m_backgroundImage.channels()) )
+	if (	(!m_backgroundImage.isValid()) || 
+				( backgroundImage.getHeight() != m_backgroundImage.getHeight()) ||
+				( backgroundImage.getWidth() != m_backgroundImage.getWidth()) ||
+				( backgroundImage.getNChannels() != m_backgroundImage.getNChannels()) )
 	{
 		LOG_TRIVIAL( "BackgroundSubtraction::storeBackground: WARNING Creating a new image to store the background (we don't have one or it has a different size of number of channels)" );
 
 		// Release old image (if it exists) and create the new one
-		m_backgroundImage = toCVMat(backgroundImage).clone();
+		m_backgroundImage.end();
+		m_backgroundImage.init( backgroundImage.getWidth(), backgroundImage.getHeight(), backgroundImage.getFormat() );
 	}
-	// If we have an ok image -> just copy the data
-	else
-		toCVMat(backgroundImage).copyTo( m_backgroundImage );
+	// now just copy the data
+	m_backgroundImage.setData( backgroundImage.getData() );
 }
 
 } // namespace Cing

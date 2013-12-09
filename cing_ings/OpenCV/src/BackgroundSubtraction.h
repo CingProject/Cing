@@ -67,13 +67,14 @@ public:
 
 	// Configuration
 	void	setThreshold		( int threshold ) { m_thresholdFilter.setThreshold( threshold ); }
+	int		getThreshold		() { return m_thresholdFilter.getThreshold(); }
 	void	setTechnique		( BgSubtractionTechnique technique ) { m_technique = technique; }
 
 	// Query  Methods
-	bool	isValid	() { return m_backgroundImage.empty() == false; }
+	bool	isValid	() { return m_backgroundImage.isValid(); }
 
 	// Returns current background
-	cv::Mat getBackground() { return m_backgroundImage; }
+	Image& getBackground() { return m_backgroundImage; }
 
 	// Constants
 	static const int DEFAULT_THRESHOLD; ///< Default threshold value to perform background subtraction
@@ -81,7 +82,7 @@ public:
 private:
 
 	// Attributes
-	cv::Mat						m_backgroundImage;	///< Background.	Image that will be compared with the image received in the compute method
+	Image						m_backgroundImage;	///< Background.	Image that will be compared with the image received in the compute method
 
 	// Filters used
 	ImageDifferenceFilter		m_differenceFilter;
