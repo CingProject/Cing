@@ -626,13 +626,7 @@ namespace Cing
             return;
         }
         
-        // Set content (or create inner node if it has none yet)
-        if ( m_rootElem->FirstChildElement() )
-            m_rootElem->FirstChildElement()->SetValue( toString(val) );
-        else {
-            TiXmlText* newText = new TiXmlText( toString(val) );
-            m_rootElem->LinkEndChild(newText);
-        }
+		setContent( toString(val) );
     }
     
     /**
@@ -648,13 +642,9 @@ namespace Cing
             return;
         }
         
-        // Set content (or create inner node if it has none yet)
-        if ( m_rootElem->FirstChildElement() )
-            m_rootElem->FirstChildElement()->SetValue( toString(val) );
-        else {
-            TiXmlText* newText = new TiXmlText( toString(val) );
-            m_rootElem->LinkEndChild(newText);
-        }    }
+		setContent( toString(val) );
+    
+	}
     
     /**
      * @brief Sets value for this element
@@ -668,13 +658,9 @@ namespace Cing
             LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
             return;
         }
-        // Set content (or create inner node if it has none yet)
-        if ( m_rootElem->FirstChildElement() )
-            m_rootElem->FirstChildElement()->SetValue( toString(val) );
-        else {
-            TiXmlText* newText = new TiXmlText( toString(val) );
-            m_rootElem->LinkEndChild(newText);
-        }    }
+    
+		setContent( toString(val) );
+	}
     
     /**
      * @brief Sets value for this element
@@ -688,13 +674,15 @@ namespace Cing
             LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
             return;
         }
+
         
         // Set content (or create inner node if it has none yet)
-        if ( m_rootElem->FirstChildElement() )
-            m_rootElem->FirstChildElement()->SetValue( toString(val) );
+		if ( m_rootElem->FirstChild() )
+            m_rootElem->FirstChild()->SetValue( toString(val) );
         else {
             TiXmlText* newText = new TiXmlText( toString(val) );
-            m_rootElem->LinkEndChild(newText);
-        }    }
+			m_rootElem->LinkEndChild(newText);
+        }
+	}
     
 } // namespace Cing
