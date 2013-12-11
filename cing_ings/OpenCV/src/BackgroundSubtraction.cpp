@@ -86,18 +86,18 @@ void BackgroundSubtraction::update( const Image& imgToAnalyze, Image& output )
 	if ( m_backgroundImage.isValid() == false )
 		storeBackground( imgToAnalyze );
 
+		// Check if is valid
+	if ( !isValid() )
+	{
+		LOG_ERROR( "To apply background subtraction, a background image should be added before!" );
+		return;
+	}
+
 	// Request temporal images to the image resource manager
 	cv::Mat* tempImage = ImageResourceManager::getSingleton().getImage( imgToAnalyze.getWidth(), imgToAnalyze.getHeight(), imgToAnalyze.getNChannels() );
 	if ( tempImage == NULL )
 	{
 		LOG_ERROR( "Could not apply BackgroundSubtraction due to the lack of temporal image to work" );
-		return;
-	}
-
-	// Check if is valid
-	if ( !isValid() )
-	{
-		LOG_ERROR( "To apply background subtraction, a background image should be added before!" );
 		return;
 	}
 
