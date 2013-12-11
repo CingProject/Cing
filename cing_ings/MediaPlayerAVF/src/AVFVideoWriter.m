@@ -17,6 +17,16 @@
     [super dealloc];
 }
 
+// Configure movie and codec type
+
+- (void)setMovieType:(NSString*)movieType {
+    _movieType = movieType;
+}
+
+- (void)setVideoCodec:(NSString*)videoCodec {
+    _videoCodec = videoCodec;
+}
+
 // Creates a video with default settings
 - (void)initWithURL:(NSString*)path width:(unsigned int)width height:(unsigned int)height {
     
@@ -32,35 +42,60 @@
         
     NSError *error = nil;
     
+    // Set default values for movie and codec type of not set prior
+    if ( _movieType == nil )
+        _movieType = AVFileTypeMPEG4;
+    if ( _videoCodec == nil )
+        _videoCodec = AVVideoCodecH264;
+    
     // Create the asset writer to create the file
     if ( _videoWriter != nil )
         [_videoWriter release];
     
-    NSURL *fileURL = [NSURL fileURLWithPath:[path stringByStandardizingPath]];
-
-    _videoWriter = [[AVAssetWriter alloc] initWithURL:fileURL fileType:AVFileTypeMPEG4 error:&error];
-    NSParameterAssert(_videoWriter);
-    
-    
     // Encoding settings
-    NSDictionary *codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   [NSNumber numberWithDouble:avgBitRate], AVVideoAverageBitRateKey,
-                                   [NSNumber numberWithInt:keyFrameInterval],AVVideoMaxKeyFrameIntervalKey,
-                                   nil];
+    NSDictionary *codecSettings;
     
-    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   AVVideoCodecH264, AVVideoCodecKey,
-                                   [NSNumber numberWithInt:width], AVVideoWidthKey,
-                                   [NSNumber numberWithInt:height], AVVideoHeightKey,
-                                   codecSettings, AVVideoCompressionPropertiesKey,
-                                   nil];
+    // NOTES on available video codecs
+    // http://stackoverflow.com/questions/12602835/avassetwriting-write-in-uncompressed-format
+    // https://developer.apple.com/library/mac/documentation/CoreMedia/Reference/CMFormatDescription/Reference/reference.html#//apple_ref/doc/c_ref/CMVideoCodecType
+    NSDictionary *videoSettings;
+    
+    // Depending on codec (for example ProRes needs quicktime movie type (and no bitrate or keyframe settings)
+    if ( (_videoCodec == AVVideoCodecAppleProRes4444) || (_videoCodec == AVVideoCodecAppleProRes422) ) {
+        
+        // Force quicktime file (due to prores) 
+        _movieType = AVFileTypeQuickTimeMovie;
+        videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                         _videoCodec, AVVideoCodecKey,
+                         [NSNumber numberWithInt:width], AVVideoWidthKey,
+                         [NSNumber numberWithInt:height], AVVideoHeightKey,
+                         nil];
+    }
+    else {
+        
+        codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                         [NSNumber numberWithDouble:avgBitRate], AVVideoAverageBitRateKey,
+                         [NSNumber numberWithInt:keyFrameInterval],AVVideoMaxKeyFrameIntervalKey,
+                         nil];
+        
+        videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                         _videoCodec, AVVideoCodecKey,
+                         [NSNumber numberWithInt:width], AVVideoWidthKey,
+                         [NSNumber numberWithInt:height], AVVideoHeightKey,
+                         codecSettings, AVVideoCompressionPropertiesKey,
+                         nil];
+    }
+    
+    // Build path to file and create the writer
+    NSURL *fileURL = [NSURL fileURLWithPath:[path stringByStandardizingPath]];
+    _videoWriter = [[AVAssetWriter alloc] initWithURL:fileURL fileType:_movieType error:&error];
+    NSParameterAssert(_videoWriter);
   
-    // create the video writer input that will allow us to encode frames 
+    // create the video writer input that will allow us to encode frames
     _videoWriterInput = [[AVAssetWriterInput
                           assetWriterInputWithMediaType:AVMediaTypeVideo
                           outputSettings:videoSettings] retain];
-    NSParameterAssert(_videoWriterInput);
-    NSParameterAssert([_videoWriter canAddInput:_videoWriterInput]);
+
     _videoWriterInput.expectsMediaDataInRealTime = NO;
     [_videoWriter addInput:_videoWriterInput];
     
@@ -111,18 +146,20 @@
     }
     
     // Wait for the writer to be ready
-    // NOTE: should we add a timeout here?
-    unsigned int timeTrying = 0;
-    while( ([_videoWriterInput isReadyForMoreMediaData] == false) && (timeTrying < 100) ) {
-        timeTrying += Cing::elapsedMillis;
+    unsigned int count = 0;
+    unsigned int lockLimit = 10; // total wait, 1 sec max
+    while ( ([_videoWriterInput isReadyForMoreMediaData] == NO) && (count < lockLimit)) {
+        NSDate *maxDate = [NSDate dateWithTimeIntervalSinceNow:0.1];
+        [[NSRunLoop currentRunLoop] runUntilDate:maxDate]; // NOTE: this is better than a sleep, as this allows for another task in this same thread to complete and mark the writer as ready, whereas sleep will leave the thread on pause.
+        ++count;
     }
     
     // media is not ready to receive frames
-    if ( timeTrying > 100 ) {
-        NSLog(@"ERROR: Time out to attempt to write new frame. Media is not ready for somem readon" );
+    if ( count >= lockLimit ) {
+        NSLog(@"ERROR: Time out to attempt to write new frame. Media is not ready for some reason" );
         return;
     }
-        
+    
 
     // Append the new frame
     CVPixelBufferRef buffer = (CVPixelBufferRef)[self pixelBufferFromData:data];

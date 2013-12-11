@@ -17,9 +17,16 @@
     unsigned int        _width;
     unsigned int        _height;
     float               _fps;
+    NSString            *_movieType; // Like AVFileTypeQuickTimeMovie or AVFileTypeMPEG4
+    NSString            *_videoCodec; // Like AVVideoCodecH264, AVVideoCodecJPEG, AVVideoCodecAppleProRes422 or AVVideoCodecAppleProRes4444
+    
     
     unsigned int        _frameCount; // Number of frames encoded in the video
 }
+
+// Configure before creating file
+- (void)setMovieType:(NSString*)movieType;
+- (void)setVideoCodec:(NSString*)videoCodec;
 
 // Create files
 - (void)initWithURL:(NSString*)path width:(unsigned int)width height:(unsigned int)height;
