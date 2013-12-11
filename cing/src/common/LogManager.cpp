@@ -196,11 +196,11 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	{
 		if ( level >= m_debugOutputLogLevel )
 		{
-			std::cout << "Cing Log not enabled yet. Log: " << msgFormated << std::endl; 
+			std::cout << msgFormated << std::endl; 
 
 			// If on windows also output to the debug console
 #if defined(WIN32)
-			OutputDebugString( msgFormated );	// In release, only critical messages
+			OutputDebugString( msgFormated );
 			OutputDebugString( "\n" );
 #endif
 		}
