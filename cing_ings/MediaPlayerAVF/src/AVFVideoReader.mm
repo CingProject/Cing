@@ -93,7 +93,7 @@
     
     // Start reading
     if ( [_assetReader startReading] == YES ) {
-        NSLog(@"Reading video asset");
+        NSLog(@"Reading video asset [%@]", filename );
         return true;
     }
     // Couldn't start reading, review error
