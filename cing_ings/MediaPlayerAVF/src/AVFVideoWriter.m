@@ -147,7 +147,7 @@
     
     // Wait for the writer to be ready
     unsigned int count = 0;
-    unsigned int lockLimit = 10; // total wait, 1 sec max
+    unsigned int lockLimit = 50; // total wait, 5 sec max (as each frame we can't write, we're waiting 0.1 secs in this while loop)
     while ( ([_videoWriterInput isReadyForMoreMediaData] == NO) && (count < lockLimit)) {
         NSDate *maxDate = [NSDate dateWithTimeIntervalSinceNow:0.1];
         [[NSRunLoop currentRunLoop] runUntilDate:maxDate]; // NOTE: this is better than a sleep, as this allows for another task in this same thread to complete and mark the writer as ready, whereas sleep will leave the thread on pause.
