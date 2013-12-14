@@ -44,6 +44,8 @@
 #include <Windows.h>
 #endif
 
+//#define USE_VSTUDIO_OUTPUTDEBUGSTRING
+
 namespace Cing
 {
 
@@ -200,7 +202,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 			std::cout << "Cing Log not enabled yet. Log: " << msgFormated << std::endl; 
 
 			// If on windows also output to the debug console
-#if defined(WIN32)
+#if defined(WIN32) && defined(USE_VSTUDIO_OUTPUTDEBUGSTRING)
 			OutputDebugString( msgFormated );	// In release, only critical messages
 			OutputDebugString( "\n" );
 #endif
@@ -214,7 +216,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	{
 		m_log->logMessage( outputMsg.str(), (Ogre::LogMessageLevel)level );
 
-#if defined(WIN32)
+#if defined(WIN32) && defined(USE_VSTUDIO_OUTPUTDEBUGSTRING)
 			OutputDebugString( msgFormated );	// In release, only critical messages
 			OutputDebugString( "\n" );
 #endif
