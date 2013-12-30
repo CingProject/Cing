@@ -130,11 +130,15 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         // Using Timer
         if ( useDisplayLink == false )
         {
+            NSRunLoop *runloop = [NSRunLoop currentRunLoop];
             _timer = [[NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f
                                                        target:self
                                                      selector:@selector(renderFrame)
                                                      userInfo:NULL
                                                       repeats:YES] retain];
+            
+            [runloop addTimer:_timer forMode:NSRunLoopCommonModes];
+            [runloop addTimer:_timer forMode:NSEventTrackingRunLoopMode];
             
         }
         // Using Display Link
@@ -237,8 +241,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void)renderFrame
 {
-    if ( !Cing::Application::getSingleton().shouldExit() )
+    if ( !Cing::Application::getSingleton().shouldExit() ) {
         Cing::Application::getSingleton().drawOneFrame();
+    }
 }
 
 /*
