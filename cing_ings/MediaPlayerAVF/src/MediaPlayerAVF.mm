@@ -144,14 +144,15 @@ namespace Cing
      * there is a new frame regardless of teh getImage() call. The latter might be slower if you won't need or use the image or texture, but if for example
      * you are using the player just as a texture for an object that use it but don't need to draw the video on screen, you can pass updateTexture to true so that the
      * texture is always up to date.
+     * @return true if a new frame is available. False otherwise
 	 */
-	void MediaPlayerAVF::update( bool updateTexture /*= false*/ )
+	bool MediaPlayerAVF::update( bool updateTexture /*= false*/ )
 	{
         // Check if the player is ready
         bool ready = [m_player ready];
         
         if ( !ready )
-            return;
+            return false;
         
         // Finally file loaded? (load is asynchronous)
         if ( ready && !isValid() )
@@ -200,6 +201,7 @@ namespace Cing
                         m_frameImg.setUpdateTexture();
                 
                     m_newBufferReady = true;
+                    return true;
                 }
                 
             }
@@ -235,6 +237,9 @@ namespace Cing
 			}
 		}
          */
+        
+        // No new frame
+        return false;
 	}
 	
 	/**

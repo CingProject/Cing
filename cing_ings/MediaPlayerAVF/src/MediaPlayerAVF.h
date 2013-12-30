@@ -36,7 +36,7 @@ public:
     //NOTE: AVFoundation player seems to only work (return frames) when format is set to BGRA)
     bool            load    ( const std::string& fileName, GraphicsType requestedVideoFormat = BGRA, float fps = -1 );
     void            end     ();
-    void            update  ( bool updateTexture = false );
+    bool            update  ( bool updateTexture = false );
     Image&          getImage();
     
     // Query
