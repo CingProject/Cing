@@ -122,6 +122,7 @@ public:
 	Cing::Plugin*	getPlugin		( const std::string& pluginName );
     
     void            setOgreView     ( void* view );
+    void*           getOgreView     () { return m_ogreView; }
 
 private:
 	// private constructor to ensure singleton
