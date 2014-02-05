@@ -989,7 +989,19 @@ void saveCurrentFrame( const String& name )
  */
 void saveCurrentFrame( const String& name, const Rect& rect )
 {
-	GraphicsManager::getSingleton().saveFrame( name );
+	GraphicsManager::getSingleton().saveFrame( name, rect );
+};
+
+/**
+ * @brief Saves an area/rectangle of the current frame been rendered into an image file (defining the resolution of the output file, so it allows scaling it)
+ * @param name Path (relative to data folder or absolute) for the file to be created
+ * @param rect rectangle to be saved
+ * @param   imageWidth width of the saved image file
+ * @param   imageHeight height of the saved image file
+ */
+void saveCurrentFrame( const String& name, const Rect& rect, int imageWidth, int imageHeight )
+{
+	GraphicsManager::getSingleton().saveFrame( name, rect, imageWidth, imageHeight );
 };
 
 //----------------------------------------------------------------------------------- 

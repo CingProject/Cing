@@ -45,17 +45,20 @@ RTTRectSaveManager::~RTTRectSaveManager()
 {
 }
 
-void RTTRectSaveManager::storePicture( const std::string& fileName, const Rect& rect, Ogre::PixelBox* picture )
+void RTTRectSaveManager::storePicture( const std::string& fileName, const Rect& rect, Ogre::PixelBox* picture, int outputImageWidth, int outputImageHeight )
 {
-    RTTRectSaveManager::PictureWriter* writer = new RTTRectSaveManager::PictureWriter( fileName, rect, picture );
+    RTTRectSaveManager::PictureWriter* writer = new RTTRectSaveManager::PictureWriter( fileName, rect, picture, outputImageWidth, outputImageHeight );
     writer->start();
 }
 
-RTTRectSaveManager::PictureWriter::PictureWriter( const std::string& aFileName, const Rect& _rect, Ogre::PixelBox* aPicture )
+RTTRectSaveManager::PictureWriter::PictureWriter( const std::string& aFileName, const Rect& _rect, Ogre::PixelBox* aPicture, int _outputImageWidth, int _outputImageHeight )
     : pt::thread( true )
     , fileName( aFileName )
 	, rect( _rect )
     , picture( aPicture )
+	, outputImageWidth(_outputImageWidth)
+	, outputImageHeight(_outputImageHeight)
+
 {
 }
 
@@ -66,28 +69,40 @@ RTTRectSaveManager::PictureWriter::~PictureWriter()
 
 void RTTRectSaveManager::PictureWriter::execute()
 {
+	// Get area from source image
 	BoxArea box((size_t)rect.left, (size_t)rect.top, (size_t)rect.right, (size_t)rect.bottom);
     Ogre::PixelBox pbox = picture->getSubVolume( box );
 
-    size_t elementSize = Ogre::PixelUtil::getMemorySize( 1, 1, 1, picture->format );
-    size_t w = pbox.getWidth();
-    size_t h = pbox.getHeight();
-    void* data = malloc( elementSize*w*h );
-    unsigned char* wptr = (unsigned char*)data;
-    unsigned char* rptr = (unsigned char*)pbox.data;
+    void* data = pbox.data;
+	
+	// Check if we have to resize the output image: if so, resize now to only copy the real final size
+	// Check if we have to resize
+	if ( (pbox.getWidth() != outputImageWidth) || (pbox.getHeight() != outputImageHeight) )
+	{
+		// Reserve data for final output buffer
+		size_t elementSize = Ogre::PixelUtil::getMemorySize( 1, 1, 1, picture->format );
+		size_t w = outputImageWidth;
+		size_t h = outputImageHeight;
+		void* dataResized = malloc( elementSize*w*h );
 
-    for ( size_t j = 0; j < h; j++ )
-    {
-        memcpy( wptr, rptr, elementSize*w );
-        wptr += elementSize*w;
-        rptr += elementSize*(w + pbox.getRowSkip());
-    }
+		Ogre::PixelBox destPBox( Ogre::Box(0, 0, outputImageWidth, outputImageHeight), pbox.format, dataResized );
+		Ogre::Image::scale(pbox, destPBox);
 
-    Ogre::Image pic;
-    pic.loadDynamicImage( (Ogre::uchar*)data, w, h, 1, picture->format );
-    pic.save( fileName );
+		Ogre::Image pic;
+		pic.loadDynamicImage( (Ogre::uchar*)dataResized, outputImageWidth, outputImageHeight, 1, picture->format );
 
-    free( data );
+		// save the image
+		pic.save( fileName );
+		free( dataResized );
+	}
+	else
+	{
+		Ogre::Image pic;
+		pic.loadDynamicImage( (Ogre::uchar*)data, outputImageWidth, outputImageHeight, 1, picture->format );
+
+		// save the image
+		pic.save( fileName );
+	}
 }
 
 void RTTRectSaveManager::PictureWriter::cleanup()

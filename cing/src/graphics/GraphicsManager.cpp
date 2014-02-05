@@ -360,15 +360,15 @@ void GraphicsManager::draw()
 
         for ( std::vector<TNameRect>::const_iterator it = m_rectSaveList.begin(); it != m_rectSaveList.end(); ++it )
         {
-            const Rect& rect = it->second;
+            const Rect& rect = it->rect;
             Ogre::PixelFormat pf = m_RttTexture->getBuffer()->getRenderTarget()->suggestPixelFormat();
             size_t w = m_RttTexture->getWidth();
             size_t h = m_RttTexture->getHeight();
             void* buffer = malloc( Ogre::PixelUtil::getMemorySize( w, h, 1, pf ) );
             
-            Ogre::PixelBox* pbox = new Ogre::PixelBox( Ogre::Box( 0, 0, w-1, h-1 ), pf, buffer );
+            Ogre::PixelBox* pbox = new Ogre::PixelBox( Ogre::Box( 0, 0, w, h ), pf, buffer );
             m_RttTexture->getBuffer()->getRenderTarget()->copyContentsToMemory( *pbox, Ogre::RenderTarget::FB_AUTO );
-            RTTRectSaveManager::getSingleton().storePicture( it->first, rect, pbox );
+			RTTRectSaveManager::getSingleton().storePicture( ResourceManager::userDataPath + it->name, rect, pbox, it->outputWidth, it->outputHeight );
         }
         m_rectSaveList.clear();
     }
@@ -539,7 +539,29 @@ void GraphicsManager::saveFrame( const String& name )
  */
 void GraphicsManager::saveFrame( const String& name, const Rect& rect )
 {
-    m_rectSaveList.push_back( TNameRect( name, rect ) );
+	TNameRect newScreenCapture;
+	newScreenCapture.name = name;
+	newScreenCapture.rect = rect;
+	newScreenCapture.outputWidth = width;
+	newScreenCapture.outputHeight = height;
+    m_rectSaveList.push_back( newScreenCapture );
+};
+
+/**
+ * @brief   Saves an image with a rectangle taken from the current frame on screen, and allows to define the of the saved image. The image is saved in the data folder
+ * @param   name name of the image to be saved/exported
+ * @param   rect rectangle to be saved
+ * @param   imageWidth width of the saved image file
+ * @param   imageHeight height of the saved image file
+ */
+void GraphicsManager::saveFrame( const String& name, const Rect& rect, int imageWidth, int imageHeight )
+{
+	TNameRect newScreenCapture;
+	newScreenCapture.name = name;
+	newScreenCapture.rect = rect;
+	newScreenCapture.outputWidth = imageWidth;
+	newScreenCapture.outputHeight = imageHeight;
+    m_rectSaveList.push_back( newScreenCapture );
 };
 
 /**

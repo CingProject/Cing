@@ -47,14 +47,14 @@ public:
     RTTRectSaveManager();
     ~RTTRectSaveManager();
 
-    void storePicture( const std::string& fileName, const Rect& rect, Ogre::PixelBox* picture );
+    void storePicture( const std::string& fileName, const Rect& rect, Ogre::PixelBox* picture, int outputImageWidth, int outputImageHeight  );
 
 private:
 
     class PictureWriter: public pt::thread
     {
     public:
-        PictureWriter( const std::string& fileName, const Rect& rect, Ogre::PixelBox* picture );
+        PictureWriter( const std::string& fileName, const Rect& rect, Ogre::PixelBox* picture, int _outputImageWidth, int _outputImageHeight );
         ~PictureWriter();
 
         virtual void execute();
@@ -64,6 +64,9 @@ private:
         std::string		fileName;
         Ogre::PixelBox* picture;
         Rect			rect;
+		int				outputImageWidth;
+		int				outputImageHeight;
+
     };
 
 };
