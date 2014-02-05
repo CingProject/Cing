@@ -28,6 +28,9 @@
 #include "SystemUtils.h"
 #include "LogManager.h"
 
+#include "boost/filesystem.hpp"
+
+
 #if defined( _MSC_VER )
 	#include <direct.h>
 	#include  <io.h>
@@ -103,6 +106,19 @@ namespace Cing
 		
 		return false;
 	}
+
+	/**
+	 * @brief Creates a folder
+	 *
+	 * @param folderPath Absolute path to the folder to be created
+	 * @return True if the folder was succesfullt created, false otherwise
+	 */
+	bool createFolder( const std::string& folderPath )
+	{
+		boost::filesystem::path dir(folderPath);
+		return boost::filesystem::create_directory(dir);
+	}
+
 
 
 	/** Splits a path into the basePath (the folder) and the file name (just filename + extension.
