@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software Foundation,
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+*/ 
 
 // Precompiled headers
 #include "Cing-Precompiled.h"
@@ -61,6 +61,10 @@ VICamera::~VICamera()
  */
 bool VICamera::init( int deviceId, int width, int height, int fps, GraphicsType format, bool multithreaded /*= true*/ )
 {
+	// uncomment for silent setup
+	//videosetVerbose(false);
+	m_viCamera.setVerbose(true);
+
 	// List connected devices
 	int numDevices = videoInput::listDevices();	
 	if ( numDevices == 0 )
@@ -69,10 +73,12 @@ bool VICamera::init( int deviceId, int width, int height, int fps, GraphicsType 
 		return false;
 	}
 	else
+	{
 		LOG( "Number of devices to capture found: %d", numDevices );
+		for ( int i = 0; i < numDevices; ++i )
+			LOG( "Input device: %d, name: %s", i, videoInput::getDeviceName(i) );
 
-	// uncomment for silent setup
-	//videosetVerbose(false);
+	}
 
 	// multi threaded?
 	m_viCamera.setUseCallback( multithreaded );
