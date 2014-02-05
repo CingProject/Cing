@@ -44,6 +44,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "common/CommonConstants.h"
 #include "common/ResourceManager.h"
 #include "common/LogManager.h"
+#include "common/SystemUtils.h"
 
 // Ogre includes
 #include "OgreRoot.h"
@@ -354,7 +355,9 @@ void GraphicsManager::draw()
     
         if ( m_saveFrame )
 	    {
-		    m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(ResourceManager::userDataPath + m_frameName );
+			if ( isPathAbsolute( m_frameName ) == false  )
+				m_frameName = ResourceManager::userDataPath + m_frameName;
+		    m_RttTexture->getBuffer()->getRenderTarget()->writeContentsToFile(m_frameName);
 		    m_saveFrame = false;
 	    }
 
@@ -368,7 +371,12 @@ void GraphicsManager::draw()
             
             Ogre::PixelBox* pbox = new Ogre::PixelBox( Ogre::Box( 0, 0, w, h ), pf, buffer );
             m_RttTexture->getBuffer()->getRenderTarget()->copyContentsToMemory( *pbox, Ogre::RenderTarget::FB_AUTO );
-			RTTRectSaveManager::getSingleton().storePicture( ResourceManager::userDataPath + it->name, rect, pbox, it->outputWidth, it->outputHeight );
+
+			std::string path = it->name;
+			if ( isPathAbsolute( it->name ) == false  )
+				path = ResourceManager::userDataPath + it->name;
+
+			RTTRectSaveManager::getSingleton().storePicture( path, rect, pbox, it->outputWidth, it->outputHeight );
         }
         m_rectSaveList.clear();
     }
