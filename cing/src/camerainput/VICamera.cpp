@@ -50,7 +50,7 @@ VICamera::~VICamera()
 
 /**
  * @internal
- * @brief Initializes the class so it becomes valid.
+ * @brief Init the camera input capture based on device ID
  *
  * @param[in] deviceId	Id of the device to capture from (starting at 0)
  * @param[in] width			width resolution capture
@@ -96,6 +96,88 @@ bool VICamera::init( int deviceId, int width, int height, int fps, GraphicsType 
 
 	// Init base class (with actual capture resolution)
 	result = BaseCameraInput::init( deviceId, m_viCamera.getWidth( deviceId ), m_viCamera.getHeight( deviceId ), fps, format );
+	if ( result == false )
+	{
+		LOG_ERROR( "Internal error initializing BaseCameraInput" );
+		end();
+		return false;
+	}
+
+	// Set capture format (optional)
+	//m_viCamera.setFormat(dev, VI_NTSC_M);					//optional set the format
+
+	m_bIsValid = true;
+	return true;
+}
+
+
+
+/**
+ * @internal
+ * @brief Init the camera input capture based on a preferred name. If not found, camera ID 0 will be used.
+ *
+ * @param[in] preferedName	Prefered name (if a camera contains it, it will be chosen, otherwise, camera index 0 will be used).
+ * @param[in] width			width resolution capture
+ * @param[in] height		height resolution capture
+ * @param[in] fps			frames per second to capture
+ * @param[in] format		Format of the image. if RGB the captured images will be color (if supported by the camera), if GRAYSCALE, they will be b/w
+ * @return True if the camera was correctly initialized, false otherwise
+ */
+bool VICamera::init( std::string& preferedName, int width, int height, int fps, GraphicsType format, bool multithreaded /*= true*/ )
+{
+// uncomment for silent setup
+	//videosetVerbose(false);
+	m_viCamera.setVerbose(true);
+
+	int selectedCameraID = 0;
+	bool preferedCameraFound = false;
+
+	// List connected devices
+	int numDevices = videoInput::listDevices();	
+	if ( numDevices == 0 )
+	{
+		LOG_ERROR( "No camera device found" );
+		return false;
+	}
+	else
+	{
+		LOG( "Number of devices to capture found: %d", numDevices );
+		for ( int i = 0; i < numDevices; ++i )
+		{
+			LOG( "Input device: %d, name: %s", i, videoInput::getDeviceName(i) );
+			std::string deviceName = videoInput::getDeviceName(i);
+			if ( deviceName.find( preferedName ) != std::string::npos )
+			{
+				selectedCameraID = i;
+				preferedCameraFound = true;
+				break;
+			}
+		}
+
+	}
+
+	// Log if the device was found
+	if ( preferedCameraFound )
+		LOG( "VICamera::init. Prefered camera FOUND");
+	else
+		LOG( "VICamera::init. Prefered camera NOT FOUND");
+
+	// multi threaded?
+	m_viCamera.setUseCallback( multithreaded );
+
+	// Capture  fps (not waranteed)
+	m_viCamera.setIdealFramerate(selectedCameraID, fps);
+
+	// Setup camera
+	bool result = m_viCamera.setupDevice( selectedCameraID, width, height, VI_COMPOSITE ); 
+	if ( result == false )
+	{
+		LOG_ERROR( "Error setting up camera device for capture" );
+		return false;
+	}
+
+	// Init base class (with actual capture resolution)
+	result = BaseCameraInput::init( selectedCameraID, m_viCamera.getWidth( selectedCameraID ), m_viCamera.getHeight( selectedCameraID ), fps, format );
 	if ( result == false )
 	{
 		LOG_ERROR( "Internal error initializing BaseCameraInput" );
