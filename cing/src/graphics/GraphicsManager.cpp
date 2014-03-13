@@ -150,8 +150,8 @@ namespace Cing
         windowParams["border"] = m_windowBorder? "fixed": "none";
         windowParams["monitorIndex"] = toString(m_windowMonitorIndex);
         windowParams["colourDepth"] = toString(32); // only applied if on fullscreen
-        //windowParams["left"] = "0";
-        //windowParams["top"] = "0";
+        windowParams["left"] = "0";
+        windowParams["top"] = "0";
         windowParams["depthBuffer"] = "true";
         windowParams["FSAA"] = toString(m_fsaa);
         windowParams["displayFrequency"] = toString(60);
