@@ -55,7 +55,8 @@ public:
   void  apply        ( const cv::Mat& inImage, cv::Mat& output );
 
   // Set image threshold value
-  void  setThreshold ( int threshold ) { m_threshold = threshold; }
+  void  setThreshold	( int threshold ) { m_threshold = threshold; }
+  int	getThreshold	() { return m_threshold; }
 
 
 private:

@@ -29,6 +29,7 @@
 #include "Cing-Precompiled.h"
 
 #if defined( _MSC_VER )
+#define _WINSOCKAPI_
 #include "windows.h"
 #endif
 

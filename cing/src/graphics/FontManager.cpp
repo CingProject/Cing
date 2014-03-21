@@ -59,8 +59,11 @@ namespace Cing
 	*/
 	bool FontManager::init()
 	{
+		// Reset default falues for active font properties (used in the next text call)
+		m_activeFontProperties.reset();
+
 		// Load the default font
-		m_defaultFont.load();
+		m_defaultFont.load( Font::DEFAULT_FONT_NAME );
 
 		// Set active font to the default (until the user sets one)
 		m_activeFont = &m_defaultFont;
