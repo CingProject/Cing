@@ -7,6 +7,7 @@
 
 
 #include "common/Singleton.h"
+#define _WINSOCKAPI_
 #include <windows.h>
 #include "XEventLog.h"
 

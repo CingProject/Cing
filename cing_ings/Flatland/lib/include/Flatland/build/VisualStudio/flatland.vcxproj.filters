@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{3f5113c2-de08-4ffe-b02b-c9588af34782}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{6036674e-248e-4614-86b7-647566e1f04f}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="ode">
+      <UniqueIdentifier>{fba21fd5-965c-47df-beea-9ba9c86f965e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\circle-circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\composite-all.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\flatland.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\intersection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\quad-circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\quad-quad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\shapes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\terrain-all.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\array.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\error.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\fastdot.c">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\fastldlt.c">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\fastlsolve.c">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\fastltsolve.c">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\joint.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\lcp.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\mass.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\mat.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\matrix.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\memory.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\misc.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\obstack.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\ode.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\odemath.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\quickstep.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\rotation.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\step.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\stepfast.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\testing.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\timer.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ode\source\util.cpp">
+      <Filter>ode</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\aabb.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\enums.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\flatland.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\intersection.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shapes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vector.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

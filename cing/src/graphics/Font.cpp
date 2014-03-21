@@ -36,7 +36,7 @@ namespace Cing
 {
 
 	// Static member definition
-	const std::string	Font::DEFAULT_FONT_NAME       = "DefaultFont";
+	const std::string	Font::DEFAULT_FONT_NAME       = "CALIBRI.TTF";
 	const float			Font::DEFAULT_FONT_SIZE       = 16;
 	const int			Font::DEFAULT_FONT_RESOLUTION = 96;
 

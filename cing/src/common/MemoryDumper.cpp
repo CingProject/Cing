@@ -13,6 +13,7 @@
 #include <iostream>
 #include <tchar.h>
 
+#define _WINSOCKAPI_
 #include "windows.h"
 #include "dbghelp.h"
 

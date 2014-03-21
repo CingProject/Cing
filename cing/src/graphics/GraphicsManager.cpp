@@ -302,16 +302,17 @@ namespace Cing
         // Release canvas
         m_canvas.end();
         
+        // Release the Font Manager
+        FontManager::getSingleton().end();
+		FontManager::destroySingleton();
+
         // Overlay system
         delete m_overlaySystem;
         
         // Release scene manager
         Ogre::Root::getSingleton().destroySceneManager( m_pSceneManager );
         m_pSceneManager = NULL;
-        
-        // Release the Font Manager
-        FontManager::getSingleton().end();
-        
+                
         // Release the Shape Manager
         ShapeManager::getSingleton().end();
         

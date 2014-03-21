@@ -379,6 +379,11 @@ namespace Cing
 	*/
 	void TexturedQuad::setScale( float xScale, float yScale, float zScale /*= 1.0f*/ )
 	{
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Trying to set scale in an invalid textured quad" );
+			return;
+		}
 		m_xScale = xScale;
 		m_yScale = yScale;
 		m_zScale = zScale;
@@ -394,11 +399,46 @@ namespace Cing
 	*/
 	void TexturedQuad::setScale2d( float xScale, float yScale )
 	{
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Trying to set scale in an invalid textured quad" );
+			return;
+		}
+
 		m_2dWidth = (xScale / (float)width) * 2.0f;
 		m_2dHeight = (yScale / (float)height) * 2.0f;
 		m_quadSceneNode->setScale( m_2dWidth, m_2dHeight, 1 );
 	}
 
+	/**
+	 * @brief Sets the scale of the object in 2d, this is in screen coordinates
+	 *
+	 * @param[in] xScale scale in the x axis
+	 * @param[in] xScale scale in the y axis
+	 */
+	void TexturedQuad::resize( unsigned int newWidth, unsigned int newHeight )
+	{
+		if ( !isValid() )
+		{
+			LOG_ERROR( "Trying to resize in an invalid textured quad" );
+			return;
+		}
+
+		// Resize texture
+		m_ogreTexture->freeInternalResources();
+		m_ogreTexture->setWidth( newWidth );
+		m_ogreTexture->setHeight( newHeight );
+		m_ogreTexture->createInternalResources();
+
+		// Store new values
+		m_textWidthP2 = (float)newWidth;
+		m_textHeightP2 = (float)newHeight;
+
+		// Store the texture data
+		m_textWidth     = (float)newWidth;
+		m_textHeight    = (float)newHeight;	
+
+	}
 	/**
 	* @brief Sets the orientation of the quad (in relation to its parents)
 	*
