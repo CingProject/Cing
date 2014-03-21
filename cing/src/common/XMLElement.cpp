@@ -27,6 +27,8 @@
 #include "LogManager.h"
 #include "Release.h"
 #include "XMLVisitor.h"
+#include "common/SystemUtils.h"
+
 
 // Tiny xml
 #include "TinyXML/include/tinyxml.h"
@@ -98,7 +100,12 @@ bool XMLElement::load( const std::string& xmlFileName )
 		end();
 
 	// Load the xml file
-	std::string fileAbsPath = dataFolder + xmlFileName;
+	std::string fileAbsPath = xmlFileName;
+
+	// If it's a relative path, add the data folder to the path.
+	if ( isPathAbsolute( xmlFileName ) == false  )
+		fileAbsPath = dataFolder + xmlFileName;
+
 	LOG("Trying to load XML file: %s", fileAbsPath.c_str());
 	m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( fileAbsPath.c_str() ) );
 	m_xmlDoc->LoadFile();
