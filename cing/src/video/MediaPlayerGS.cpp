@@ -617,11 +617,16 @@ namespace Cing
 		// NOTE: this is cause otherwise Gstreamer throws this error: "(qtdemux10): This file contains no playable streams."
 		unsigned int frameToJump = floor(whereInSecs * m_videoFps);
 		unsigned int currentFrame = currentFrameNumber();
-		if ( currentFrame == frameToJump )
+		float timePerFrame = 1.0f / m_videoFps;
+		float currentTimeDifference = abs(time() - whereInSecs);
+		if ( currentTimeDifference <= (timePerFrame*2.0) )
 		{
-			LOG_TRIVIAL( "MediaPlayerGS::jump. Not jumping, already at time/frame [%f/%d]", whereInSecs, currentFrame );
+			//LOG_CRITICAL( "MediaPlayerGS::jump. Not jumping, already at time/frame [%f/%d]", whereInSecs, currentFrame );
 			return;
 		}
+
+		//LOG_CRITICAL( "MediaPlayerGS::jump. JUMPING, current[%f/%d], requested[%f/%d]. Time Dif vs max[%f/%f]", time(), currentFrame, whereInSecs, frameToJump, currentTimeDifference, timePerFrame );
+		
 
 		// Clamp time position
 		whereInSecs = constrain( whereInSecs, 0, duration() );
