@@ -142,8 +142,13 @@ namespace Cing
         if ( isValid() )
             end();
         
-        // Load the xml file
-        std::string fileAbsPath = dataFolder + xmlFileName;
+		// Load the xml file
+		std::string fileAbsPath = xmlFileName;
+
+		// If it's a relative path, add the data folder to the path.
+		if ( isPathAbsolute( xmlFileName ) == false  )
+			fileAbsPath = dataFolder + xmlFileName;
+		
         LOG("Trying to load XML file: %s", fileAbsPath.c_str());
         m_xmlDoc = XMLDocSharedPtr( new TiXmlDocument( fileAbsPath.c_str() ) );
         m_xmlDoc->LoadFile();

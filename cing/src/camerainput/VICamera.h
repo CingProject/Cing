@@ -54,6 +54,7 @@ public:
 
 	// Init / Release / Update
 	bool	init 	( int deviceId, int width, int height, int fps, GraphicsType format, bool multithreaded = true );
+	bool	init 	( std::string& preferedName, int width, int height, int fps, GraphicsType format, bool multithreaded = true );
 	void	update	();
 	void	end		();	
 

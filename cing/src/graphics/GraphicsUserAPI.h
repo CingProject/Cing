@@ -202,7 +202,9 @@ namespace Cing
     
     //Save frames
     void saveCurrentFrame( const String& name );
-    
+    void saveCurrentFrame( const String& name, const Rect& rect);
+	void saveCurrentFrame( const String& name, const Rect& rect, int imageWidth, int imageHeight );
+
     //-----------------------------------------------------------------------------------
     // Typography
     //-----------------------------------------------------------------------------------

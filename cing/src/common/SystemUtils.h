@@ -44,6 +44,7 @@ namespace Cing
 	// Files I/O
 	bool 		fileExists( const std::string& fileName );
 	bool 		folderExists( const std::string& folderPath );
+	bool		createFolder( const std::string& folderPath );
 
 	// Paths
 	void		splitFilename		( const std::string& path, std::string& outBasePath, std::string& outFileName );
