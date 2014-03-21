@@ -60,7 +60,7 @@ ImageResourceManager::~ImageResourceManager()
 
 /**
  * @internal
- * @brief Initializes the class so it becomes valid.
+ * @brief In this class init just creates a cache to speed up the process for the most comon kind of image sizes.
  *
  * @return true if the initialization was ok | false otherwise
  */
@@ -179,10 +179,6 @@ void ImageResourceManager::releaseImage( cv::Mat* image )
  */
 void ImageResourceManager::end()
 {
-  // Check if the class is already released
-  if ( !isValid() )
-    return;
-
 	// Release all images
 
 	// 1 channel images

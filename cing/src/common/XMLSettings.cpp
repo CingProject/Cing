@@ -66,18 +66,7 @@ namespace Cing
      */
     Cing::XMLElement XMLSettings::get( const std::string& name )
     {
-        // split input name in tokens
-        std::vector<std::string> tokens;
-        split( name, '/', tokens );
-        
-        Cing::XMLElement elem = m_xmlFile;
-        for ( std::vector<std::string>::const_iterator it = tokens.begin(); it != tokens.end(); ++it )
-        {
-            elem = elem.getChild( *it );
-            if ( !elem.isValid() )
-                break;
-        }
-        return elem;
+		return m_xmlFile.getChild(name);
     }
     
     /**

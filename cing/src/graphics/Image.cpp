@@ -939,7 +939,7 @@ namespace Cing
 			m_data.reset();
 			m_data = other.m_data;
             
-			// Give Ogre::Image the new pointer
+			// Give Ogre::Image the: new pointer
 			m_image.loadDynamicImage( m_data.get(), other.getWidth(), other.getHeight(), toOgrePixelFormat( other.getFormat() ) );
 		}
         
@@ -1072,9 +1072,47 @@ namespace Cing
 	void Image::setScale( float xScale, float yScale, float zScale )
 	{
 		if ( !isValid() )
-			THROW_EXCEPTION( "Trying to rotate an invalid image" );
+			THROW_EXCEPTION( "Trying to set scale for an invalid image" );
         
 		m_quad.setScale( xScale, yScale, zScale );
+	}
+
+	/**
+     * @brief Resizes the image (memory pixels and texture)
+     */
+	void Image::resize( unsigned int newWidth, unsigned int newHeight )
+	{
+		if ( !isValid() )
+		{
+			LOG_CRITICAL( "Trying to resize an invalid image" );
+			return;
+		}
+		
+		// Create new buffer
+		size_t bufferSize		= newWidth * newHeight * m_nChannels;
+		ImageDataPtr newData	= ImageDataPtr( new unsigned char[bufferSize] );
+
+		// Create pixel box (ogre) to do the scaling
+		Ogre::PixelBox srcData( getWidth(), getHeight(), 1, (Ogre::PixelFormat)getFormat(), getData());
+		Ogre::PixelBox dstData( newWidth, newHeight, 1, (Ogre::PixelFormat)getFormat(), newData.get() );
+
+		// Perform the scaling
+		Ogre::Image::scale( srcData, dstData, Ogre::Image::FILTER_BILINEAR );
+
+		// Release the source data
+		m_data.reset();
+		m_image.freeMemory(); // it should not have memory, but just in case
+
+		// Store new data
+		m_data = newData;
+		m_image.loadDynamicImage( m_data.get(), newWidth, newHeight, (Ogre::PixelFormat)getFormat() );
+
+		// Now resize the GPU texture
+		m_quad.resize( newWidth, newHeight );
+
+		// Flag the texture to require an update on next render
+		m_bUpdateTexture = true;
+
 	}
     
 	/**

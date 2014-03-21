@@ -52,6 +52,7 @@ namespace Cing
  */
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 && !_CONSOLE
 
+	#define _WINSOCKAPI_
     #include "Windows.h"
 
     #define CREATE_APPLICATION( appName )                                     \

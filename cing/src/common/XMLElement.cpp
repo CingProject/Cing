@@ -304,30 +304,40 @@ namespace Cing
             LOG_ERROR( "Error in XMLElement::getChild. path received is empty" );
             return XMLElement();
         }
-        
-        // Get first child
-        TiXmlNode* childNode = m_rootElem->FirstChild( tokens[0].c_str() );
-        if ( childNode )
-            child = childNode->ToElement();
-        if ( !child )
+
+        // Iterate through all the tokens in the list
+		TiXmlElement* elem = m_rootElem;
+        for ( size_t i = 0; i < tokens.size(); ++i )
         {
-            LOG_ERROR( "Error in XMLElement::getChild. path received does not correspond to any child in the XML file. %s not found", tokens[0].c_str() );
-            return XMLElement();
-        }
-        
-        // Iterate to find the rest if there is more than one leve in the path
-        for ( size_t i = 1; i < tokens.size(); ++i )
-        {
-            child = child->FirstChild( tokens[i].c_str() )->ToElement();
-            if ( !child )
-            {
-                LOG_ERROR( "Error in XMLElement::getChild. path received does not correspond to any child in the XML file. %s not found", tokens[i].c_str() );
-                return XMLElement();
-            }
+			// security check
+			if ( !elem )
+			{
+				LOG_ERROR( "Error in XMLElement::getChild. path received does not correspond to any child in the XML file. %s not found", path.c_str() );
+				return XMLElement();
+			}
+
+			// get the next child node
+			TiXmlNode* childNode = elem->FirstChild( tokens[i].c_str() );        
+			// Get first child that is not a comment (this prevents that if there is a comment with the same text as a label, the label is returned first)
+			while ( childNode && (childNode->ToElement() == NULL) ) // it can be not null, but be null when caseted to element (a comment for example)
+			{
+				childNode = m_rootElem->IterateChildren(childNode);
+			}
+            
+			// If it's a tag we should be able to convert it to element
+			TiXmlElement* childElem = childNode? childNode->ToElement(): NULL;
+			if ( !childElem )
+			{
+				LOG_ERROR( "Error in XMLElement::getChild. path received does not correspond to any child in the XML file. %s not found", path.c_str() );
+				return XMLElement();
+			}
+
+			/// Move to next
+			elem = childElem;
         }
         
         // Return found element
-        return XMLElement( child, m_xmlDoc );
+        return XMLElement( elem, m_xmlDoc );
     }
     
     /**
@@ -631,13 +641,7 @@ namespace Cing
             return;
         }
         
-        // Set content (or create inner node if it has none yet)
-        if ( m_rootElem->FirstChildElement() )
-            m_rootElem->FirstChildElement()->SetValue( toString(val) );
-        else {
-            TiXmlText* newText = new TiXmlText( toString(val) );
-            m_rootElem->LinkEndChild(newText);
-        }
+		setContent( toString(val) );
     }
     
     /**
@@ -653,13 +657,9 @@ namespace Cing
             return;
         }
         
-        // Set content (or create inner node if it has none yet)
-        if ( m_rootElem->FirstChildElement() )
-            m_rootElem->FirstChildElement()->SetValue( toString(val) );
-        else {
-            TiXmlText* newText = new TiXmlText( toString(val) );
-            m_rootElem->LinkEndChild(newText);
-        }    }
+		setContent( toString(val) );
+    
+	}
     
     /**
      * @brief Sets value for this element
@@ -673,13 +673,9 @@ namespace Cing
             LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
             return;
         }
-        // Set content (or create inner node if it has none yet)
-        if ( m_rootElem->FirstChildElement() )
-            m_rootElem->FirstChildElement()->SetValue( toString(val) );
-        else {
-            TiXmlText* newText = new TiXmlText( toString(val) );
-            m_rootElem->LinkEndChild(newText);
-        }    }
+    
+		setContent( toString(val) );
+	}
     
     /**
      * @brief Sets value for this element
@@ -693,13 +689,15 @@ namespace Cing
             LOG_ERROR( "Trying to call setContent() in a XMLElement no correctly initialized. You should call load() before using this object)" );
             return;
         }
+
         
         // Set content (or create inner node if it has none yet)
-        if ( m_rootElem->FirstChildElement() )
-            m_rootElem->FirstChildElement()->SetValue( toString(val) );
+		if ( m_rootElem->FirstChild() )
+            m_rootElem->FirstChild()->SetValue( toString(val) );
         else {
             TiXmlText* newText = new TiXmlText( toString(val) );
-            m_rootElem->LinkEndChild(newText);
-        }    }
+			m_rootElem->LinkEndChild(newText);
+        }
+	}
     
 } // namespace Cing
