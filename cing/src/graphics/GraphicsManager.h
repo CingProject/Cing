@@ -156,6 +156,7 @@ namespace Cing
 		//Save frames
 		void						saveFrame( const String& name );
         void                        saveFrame( const String& name, const Rect& box );
+		void						saveFrame( const String& name, const Rect& rect, int imageWidth, int imageHeight );
 
 		// Import Collada
 		//bool loadCollada( const String& fileName );
@@ -245,7 +246,14 @@ namespace Cing
 		//to allow screen capture and effects
 		Ogre::TexturePtr			m_RttTexture;
 		bool						m_saveFrame;
-        typedef std::pair< std::string, Rect> TNameRect;
+
+		struct TNameRect
+		{
+			std::string	name;
+			Rect		rect;
+			int			outputWidth;
+			int			outputHeight;
+		};
         std::vector<TNameRect>      m_rectSaveList;
 		String						m_frameName;
 

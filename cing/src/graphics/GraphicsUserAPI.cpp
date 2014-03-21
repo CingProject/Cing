@@ -1012,24 +1012,36 @@ namespace Cing
         GraphicsManager::getSingleton().m_shapesTransforms.top().scale( x, y, 1 );
     };
     
-    /**
-     * @brief Saves the current frame been rendered into an image file
-     * @param name Path (relative to data folder or absolute) for the file to be created
-     */
-    void saveCurrentFrame( const String& name )
-    {
-        GraphicsManager::getSingleton().saveFrame( name );
-    };
-    
-    /**
-     * @brief Saves an area/rectangle of the current frame been rendered into an image file
-     * @param name Path (relative to data folder or absolute) for the file to be created
-     * @param rect rectangle to be saved
-     */
-    void saveCurrentFrame( const String& name, const Rect& rect )
-    {
-        GraphicsManager::getSingleton().saveFrame( name );
-    };
+	/**
+ 	 * @brief Saves the current frame been rendered into an image file
+ 	 * @param name Path (relative to data folder or absolute) for the file to be created
+ 	 */
+	void saveCurrentFrame( const String& name )
+ 	{
+		GraphicsManager::getSingleton().saveFrame( name );
+	};
+
+	/**
+	 * @brief Saves an area/rectangle of the current frame been rendered into an image file
+	 * @param name Path (relative to data folder or absolute) for the file to be created
+	 * @param rect rectangle to be saved
+	 */
+	void saveCurrentFrame( const String& name, const Rect& rect )
+	{
+		GraphicsManager::getSingleton().saveFrame( name, rect );
+	};
+
+	/**
+ 	 * @brief Saves an area/rectangle of the current frame been rendered into an image file (defining the resolution of the output file, so it allows scaling it)
+ 	 * @param name Path (relative to data folder or absolute) for the file to be created
+ 	 * @param rect rectangle to be saved
+ 	 * @param   imageWidth width of the saved image file
+ 	 * @param   imageHeight height of the saved image file
+ 	 */
+	void saveCurrentFrame( const String& name, const Rect& rect, int imageWidth, int imageHeight )
+	{
+		GraphicsManager::getSingleton().saveFrame( name, rect, imageWidth, imageHeight );
+	};
     
     //-----------------------------------------------------------------------------------
     // Typography
