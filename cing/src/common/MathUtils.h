@@ -664,6 +664,16 @@ struct Average
 		index = 0;
 	}
 
+	// Clears current values
+	void flush()
+	{
+		cacheValid = false;
+		values.clear();
+		values.reserve( nValues );
+		index = 0;
+	}
+
+
 	/// @brief ads a value to average
 	void addValue( const T& value )
 	{
