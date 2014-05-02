@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <QTDIR>$(CING_ROOT)../cing_ings/QT</QTDIR>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(QTDIR)\src;$(QTDIR)\lib\include\;$(QTDIR)\lib\include\QtCore;$(QTDIR)\lib\include\QtGui;$(QTDIR)\lib\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib\lib\vs2012;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>%(Command)
+
+xcopy "$(CING_INGS_ROOT)QT\lib\bin\vs2012\*" "$(OutDir)" /i /f /y /s
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="QTDIR">
+      <Value>$(QTDIR)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
