@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_PlayingVideos", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple_Strings", "..\Simple_Strings\vs2012\Simple_Strings.vcxproj", "{F29536D7-2DBF-4A50-8EB7-A04A88EFE244}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced_QTDialog", "..\Advanced_QTDialog\vs2012\Advanced_QTDialog.vcxproj", "{1DF81B5A-0F2A-4AF7-9E85-03AEBE14A868}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -111,6 +113,10 @@ Global
 		{F29536D7-2DBF-4A50-8EB7-A04A88EFE244}.Debug|Win32.Build.0 = Debug|Win32
 		{F29536D7-2DBF-4A50-8EB7-A04A88EFE244}.Release|Win32.ActiveCfg = Release|Win32
 		{F29536D7-2DBF-4A50-8EB7-A04A88EFE244}.Release|Win32.Build.0 = Release|Win32
+		{1DF81B5A-0F2A-4AF7-9E85-03AEBE14A868}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1DF81B5A-0F2A-4AF7-9E85-03AEBE14A868}.Debug|Win32.Build.0 = Debug|Win32
+		{1DF81B5A-0F2A-4AF7-9E85-03AEBE14A868}.Release|Win32.ActiveCfg = Release|Win32
+		{1DF81B5A-0F2A-4AF7-9E85-03AEBE14A868}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
