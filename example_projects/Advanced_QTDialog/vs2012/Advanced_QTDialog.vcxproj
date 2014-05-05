@@ -127,7 +127,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\src\ControlPanelDialog.ui">
+    <CustomBuild Include="..\src\Dialog.ui">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\lib\bin\vs2012\uic.exe" -o "%(RelativeDir)\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\lib\bin\vs2012\uic.exe" -o "%(RelativeDir)\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
@@ -139,7 +139,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\GeneratedFiles\ui_ControlPanelDialog.h" />
+    <ClInclude Include="..\src\GeneratedFiles\ui_Dialog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

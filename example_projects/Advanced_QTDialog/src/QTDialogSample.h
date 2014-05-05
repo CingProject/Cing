@@ -10,7 +10,7 @@
 
 namespace Ui
 {
-	class ControlPanelDialog;
+	class Dialog;
 }
 
 class QPixmap;
@@ -41,10 +41,13 @@ public slots:
 
 	// This will be called when a button is pushed to change bg color to random color
 	void setRandomBackgroundColor();
+	
+	// This will be called when the white level slider changes, to change the background color.
+	void setWhiteLevel(int newValue);
 
 
 private:
-	Ui::ControlPanelDialog*		m_ui;
+	Ui::Dialog*		m_ui;
 	QTimer						m_timer;
 
 };
