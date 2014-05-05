@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\Advanced_QTDialog.cpp" />
+    <ClCompile Include="..\src\QTDialogSample.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GeneratedFiles\Debug\moc_QTDialogSample.cpp">
+      <Filter>GeneratedFiles\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GeneratedFiles\Release\moc_QTDialogSample.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="UI">
+      <UniqueIdentifier>{4e9ff096-41c9-4aef-9c08-fe388292d118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeneratedFiles">
+      <UniqueIdentifier>{248da341-acc4-4556-a5b9-40409b33e3cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeneratedFiles\Debug">
+      <UniqueIdentifier>{897b17b7-272e-4d62-b93c-981a82ee7b12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeneratedFiles\Release">
+      <UniqueIdentifier>{ab598554-769d-42ce-988c-c3b3460f5873}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\src\QTDialogSample.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\src\Dialog.ui">
+      <Filter>UI</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\GeneratedFiles\ui_Dialog.h">
+      <Filter>GeneratedFiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -114,7 +114,8 @@ namespace Cing
 		destroySound();
 
 		// System pointer is not valid any more
-		m_sysPtr = NULL;
+		// NOTE: not setting this pointer to null as it is static and there might be other sounds in use.
+		//m_sysPtr = NULL;
 	}
 
 	/**

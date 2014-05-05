@@ -149,9 +149,9 @@ namespace Cing
 			return true;
 		
 		// Init capture (from any camera)
-		//m_capture.open(deviceId);
-		//if(!m_capture.isOpened()) 
-		//	return false;
+		m_capture.open(deviceId);
+		if(!m_capture.isOpened()) 
+			return false;
 		
 /*		m_capture = cvCaptureFromCAM( deviceId );
 		if ( !m_capture )
@@ -162,11 +162,11 @@ namespace Cing
 		cvSetCaptureProperty( m_capture, CV_CAP_PROP_FRAME_HEIGHT, height );
 		cvSetCaptureProperty( m_capture, CV_CAP_PROP_FPS, fps );
 */
-		//m_capture.set( CV_CAP_PROP_FRAME_WIDTH, width );
-		//m_capture.set( CV_CAP_PROP_FRAME_HEIGHT, height );
+		m_capture.set( CV_CAP_PROP_FRAME_WIDTH, width );
+		m_capture.set( CV_CAP_PROP_FRAME_HEIGHT, height );
 		
 		// Set FPS
-		//m_capture.set( CV_CAP_PROP_FPS, CV_CAP_PROP_FPS );		
+		m_capture.set( CV_CAP_PROP_FPS, CV_CAP_PROP_FPS );		
 	
 		// Init base class (with actual capture resolution)
 		BaseCameraInput::init( deviceId, width, height, fps, format );

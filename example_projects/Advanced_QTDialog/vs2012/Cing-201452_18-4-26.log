@@ -1,0 +1,5 @@
+18:04:26: Exception: 
+-----------Error!----------
+Critical Error: No available render systems. Please re-install the application
+Exception thrown at ..\..\..\..\src\graphics\GraphicsManager.cpp(461)
+
