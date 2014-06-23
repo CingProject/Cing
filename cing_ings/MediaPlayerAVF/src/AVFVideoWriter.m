@@ -46,7 +46,10 @@
     if ( _movieType == nil )
         _movieType = AVFileTypeMPEG4;
     if ( _videoCodec == nil )
+    {
+//        _videoCodec = AVVideoCodecJPEG;
         _videoCodec = AVVideoCodecH264;
+    }
     
     // Create the asset writer to create the file
     if ( _videoWriter != nil )
@@ -71,11 +74,25 @@
                          [NSNumber numberWithInt:height], AVVideoHeightKey,
                          nil];
     }
-    else {
+    else if ( _videoCodec == AVVideoCodecJPEG )
+    {
+        codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                         [NSNumber numberWithDouble:1.0f], AVVideoQualityKey,
+                         nil];
         
+        videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                         _videoCodec, AVVideoCodecKey,
+                         [NSNumber numberWithInt:width], AVVideoWidthKey,
+                         [NSNumber numberWithInt:height], AVVideoHeightKey,
+                         codecSettings, AVVideoCompressionPropertiesKey,
+                         nil];
+    }
+    else
+    {
         codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                          [NSNumber numberWithDouble:avgBitRate], AVVideoAverageBitRateKey,
-                         [NSNumber numberWithInt:keyFrameInterval],AVVideoMaxKeyFrameIntervalKey,
+                         [NSNumber numberWithInt:keyFrameInterval], AVVideoMaxKeyFrameIntervalKey,
+                         AVVideoProfileLevelH264HighAutoLevel, AVVideoProfileLevelKey,
                          nil];
         
         videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
