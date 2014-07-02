@@ -98,6 +98,30 @@ T max( T value1, T value2 )
 	return (value1 > value2)? value1: value2;
 }
 
+/*
+ * @brief Returns the given value clamped to the range [minVal..maxVal]
+ * @return the value clamped to a given range
+ */
+template < typename T >
+T clamp( T value, T minVal, T maxVal )
+{
+	T result = (value >= minVal) ? value : minVal;
+	result = (result <= maxVal) ? result : maxVal;
+
+	return result;
+}
+
+/*
+ * @brief Rounds a number into the closest integer
+ * @return the rounded number
+ */
+template < typename T >
+T round( T value )
+{
+	return floor( value + (T)0.5 );
+}
+
+
 /**
  * @brief Returns the absolute value of the received number
  * @param[in] value Number to get the absolute value
@@ -511,41 +535,25 @@ inline float map( float value, float low1, float hight1, float low2, float hight
  *
  * @return the constrained value
  */
-	inline float constrain( float value, float limit1, float limit2 )
+	template<typename T1, typename T2, typename T3>
+	inline T1 constrain( T1 value, T2 limit1, T3 limit2 )
 	{
 		// Case where limit1 is lower than limit2
 		if ( limit1 < limit2 )
 		{
-			if ( value > limit2 )	return limit2;
-			if ( value < limit1 )	return limit1;
+			if ( value > limit2 )	return (T1)limit2;
+			if ( value < limit1 )	return (T1)limit1;
 			return value;
 		}
 		// other case: limit2 is lower than limit1 (so they are in inverse order)
 		else 
 		{
-			if ( value > limit1 )	return limit1;
-			if ( value < limit2 )	return limit2;
+			if ( value > limit1 )	return (T1)limit1;
+			if ( value < limit2 )	return (T1)limit2;
 			return value;
 		}
 	}
 
-	// overload (not using templates as it tends to confuse users in terms of error messaging when parameters are ambiguous)
-	inline unsigned int constrain( unsigned int value, unsigned int limit1, unsigned int limit2 )
-	{
-		return (unsigned int)constrain((float) value, (float) limit1, (float) limit2);
-	}
-
-    // overload (not using templates as it tends to confuse users in terms of error messaging when parameters are ambiguous)
-    inline int constrain( int value, int limit1, int limit2 )
-    {
-        return (int)constrain((float) value, (float) limit1, (float) limit2);
-    }
-
-	template<typename T>
-	inline T constrain( T value, T limit1, T limit2 )
-    {
-        return (T)constrain((float) value, (float) limit1, (float) limit2);
-    }
 
 /*
  * @brief Returns true if a number is within a defined range, false otherwise

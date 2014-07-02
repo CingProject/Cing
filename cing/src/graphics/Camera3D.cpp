@@ -71,11 +71,13 @@ namespace Cing
 	* @internal
 	* @brief Initializes the class so it becomes valid.
 	*
-	* @param[in] pOgreSceneManager Ogre Scene Manager. It allows the creation of the ogre camera
-	* @param[in] cameraName        Optional parameter to specify a name for the camera
+	* @param viewport				viewport in which this camera will render (used to set the right aspect ratio)
+	* @param[in] pOgreSceneManager	Ogre Scene Manager. It allows the creation of the ogre camera
+	* @param[in] cameraName			Optional parameter to specify a name for the camera
+	* @param coordinateSystem		Coordinate system to setup in this camera (PROCESSING OR OPENGL3D)
 	* @return true if the initialization was ok | false otherwise
 	*/
-	bool Camera3D::init( Ogre::SceneManager* pOgreSceneManager, const std::string& cameraName /*= DEFAULT_NAME*/ )
+	bool Camera3D::init( Ogre::Viewport* viewport, Ogre::SceneManager* pOgreSceneManager, const std::string& cameraName /*= DEFAULT_NAME*/, Cing::GraphicsType coordinateSystem /*= PROCESSING*/ )
 	{
 		// Check if the class is already initialized
 		if ( isValid() )
@@ -86,7 +88,18 @@ namespace Cing
 
 		// Check scene manager
 		if ( !pOgreSceneManager )
-			THROW_EXCEPTION( "Internal Error: NULL Scene Manager" );
+			THROW_EXCEPTION( "Internal Error: NULL Scene Manager received" );
+
+		// Viewport dimmensions
+		int viewportWidth	= width;
+		int viewportHeight	= height; 
+
+		// Check viewport
+		if ( viewport )
+		{
+			viewportWidth = viewport->getActualWidth();
+			viewportHeight= viewport->getActualHeight();
+		}
 
 		// Store scene manager pointer
 		m_pOgreSceneManager = pOgreSceneManager;
@@ -99,7 +112,7 @@ namespace Cing
 		m_cameraSceneNode->attachObject( m_pOgreCamera );
 
 		// Set initial properties:
-		m_aspectRatio = static_cast< float >( width ) / static_cast< float >( height );
+		m_aspectRatio = (float)viewportWidth / (float)viewportHeight;
 		m_pOgreCamera->setAspectRatio( m_aspectRatio );
 		m_pOgreCamera->setFOVy(Ogre::Radian(degToRad(Camera3D::V_FOV_DEG)));
 		m_cameraSceneNode->setPosition( 0, 0, 2000 );

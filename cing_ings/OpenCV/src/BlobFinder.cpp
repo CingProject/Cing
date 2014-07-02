@@ -125,6 +125,7 @@ void BlobFinder::update( const Image& inImage, bool sortBlobsBySize /*= true*/ )
 		return;
 	}
 
+
 	// Contour finding needs a one channel image
 	cv::Mat* cvTempImage =  ImageResourceManager::getSingleton().getImage( inImage.getWidth(), inImage.getHeight(), 1 );; 
 
@@ -175,9 +176,8 @@ void BlobFinder::update( const Image& inImage, bool sortBlobsBySize /*= true*/ )
 		newBlob.center.z = 0.0f;
 	}
 
-	// Release temp image if it was reserved from the manager
-	if ( inImage.getNChannels() == 3 )
-		ImageResourceManager::getSingleton().releaseImage( cvTempImage );
+	// Release temp image 
+	ImageResourceManager::getSingleton().releaseImage( cvTempImage );
 
 	// Order blobs (from bigger to smaller) -> this way the most relevant are at the beginning
 	std::sort( m_blobs.begin(), m_blobs.end(), std::greater< Blob >() );

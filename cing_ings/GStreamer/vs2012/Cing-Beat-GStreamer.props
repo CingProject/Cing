@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <CING_INGS_ROOT>..\..\..\cing_ings\</CING_INGS_ROOT>
+    <CING_INGS_ROOT>$(CING_ROOT)..\cing_ings\</CING_INGS_ROOT>
   </PropertyGroup>
   <PropertyGroup>
     <_PropertySheetDisplayName>Cing-Beat-GStreamer</_PropertySheetDisplayName>

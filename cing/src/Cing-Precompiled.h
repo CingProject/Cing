@@ -11,6 +11,7 @@
 
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		#define WIN32_LEAN_AND_MEAN
+		#define _WINSOCKAPI_
 		#include <WinSock2.h>
 		#include "windows.h"
 	#endif

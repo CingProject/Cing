@@ -202,7 +202,9 @@ namespace Cing
     
     //Save frames
     void saveCurrentFrame( const String& name );
-    
+    void saveCurrentFrame( const String& name, const Rect& rect);
+	void saveCurrentFrame( const String& name, const Rect& rect, int imageWidth, int imageHeight );
+
     //-----------------------------------------------------------------------------------
     // Typography
     //-----------------------------------------------------------------------------------
@@ -253,7 +255,11 @@ namespace Cing
     Ogre::Entity*	pickEntity				( const Vector2& screenCoordinate );
     
     
-    
+    //----------------------------------------------------------------------------------- 
+	// Window and Viewport Related
+	//----------------------------------------------------------------------------------- 
+	void setActiveViewport( Ogre::Viewport* viewport );
+
     //----------------------------------------------------------------------------------- 
     // Helpers
     //----------------------------------------------------------------------------------- 

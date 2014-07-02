@@ -49,7 +49,7 @@ namespace Cing
 
 		// Constructor / Destructor
 		Image				();
-		Image				( const Image& other );
+		Image				( const Image& other, Ogre::SceneManager* sm = NULL );
 		Image				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( unsigned char* data, int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL );
 		Image				( const std::string& name, Ogre::SceneManager* sm = NULL );
@@ -58,7 +58,7 @@ namespace Cing
 		// Init / Release / Update / Save / Clone
 		void		init				( int width, int height, GraphicsType format = RGB, Ogre::SceneManager* sm = NULL, ImageDataPtr data = ImageDataPtr() );
 		void		initAsRenderTarget	( int width, int height );
-		void		init				( Image& other );
+		void		init				( const Image& other, Ogre::SceneManager* sm = NULL );
 		bool		load				( const std::string& path, Ogre::SceneManager* sm = NULL );
 		void		save				( const std::string& path );
 		void		end					();
@@ -75,8 +75,10 @@ namespace Cing
 		// Transformations
 		void			setOrientation	( const Vector& axis, float angleRadians );
 		void			setOrientation	( const Quaternion& orientation );
-		void			rotate			( const Vector& axis, float angleRadians ); ///< Rotates around an axis specificed by the provided normalization vector, by an amount in radians provided by the angle specificed
-		void			setScale		( float xScale, float yScale, float zScale );
+		void			rotate			( const Vector& axis, float angleRadians );		///< Rotates around an axis specificed by the provided normalization vector, by an amount in radians provided by the angle specificed
+		void			setScale		( float xScale, float yScale, float zScale );	///< This does not scale pixels or texture, it is just scale used to draw image
+		void			resize			( unsigned int newWidth, unsigned int newHeight ); ///< Resizes the actual pixels and texture
+
 
 		// Draw on scene
 		void	draw	( float xPos, float yPos, float zPos );
@@ -86,6 +88,8 @@ namespace Cing
 		void	draw	( float xPos, float yPos );
 		void	draw	( float xPos, float yPos, float width, float height );
 		void	draw	( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
+
+		void	drawUV	( float x, float y, float width, float height, float minU, float minV, float maxU, float maxV );
 
 		void	drawBackground( float xPos, float yPos, float width, float height );
 
@@ -135,13 +139,13 @@ namespace Cing
 		void operator = ( float scalar);
 		void operator -=( float scalar );
 		void operator +=( float scalar );
-		void operator -=( const Image& img );
-		void operator +=( const Image& img );
+		void operator -=( const Image& other );
+		void operator +=( const Image& other );
 		bool operator ==( const Image& other) const;
 		void blend		( const Image& other, float percentage );
 
 		// Other
-		void copy( const Image& img );
+		void copy( const Image& other );
 
 		// Texture update control
 		void	setUpdateTexture( bool updateTextureFlag = true );	

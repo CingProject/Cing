@@ -63,8 +63,9 @@ namespace Cing
 		// Set methods
 		void  	setPosition     ( float x, float y, float z );
 		void  	setPosition2d   ( float x, float y );
-		void	setScale		( float xScale, float yScale, float zScale );
-		void	setScale2d		( float xScale, float yScale );
+		void	setScale		( float xScale, float yScale, float zScale );	/// only for render, does not resize texture
+		void	setScale2d		( float xScale, float yScale );					/// only for render, does not resize texture
+		void	resize			(unsigned int newWidth, unsigned int newHeight ); /// resizes the texture
 		void	setOrientation	( const Vector& axis, float angle );
 		void	setOrientation	( const Quaternion& orientation );
 		void	rotate			( const Vector& axis, float angle );
@@ -82,6 +83,7 @@ namespace Cing
 		void	draw2d			( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
 		void	drawBackground	( float x, float y );
 		void	drawBackground	( float x, float y , float imgWidth, float imgHeight );
+		void	drawUV2d		( float x, float y, float width, float height, float minU, float minV, float maxU, float maxV );
 
 		// Texture update
 		void	updateTexture	( const Ogre::Image& img );
@@ -99,8 +101,8 @@ namespace Cing
 		Ogre::SceneNode*		getSceneNode	()			{ return m_quadSceneNode;   }
 		const Ogre::SceneNode*	getSceneNode	() const	{ return m_quadSceneNode;   }
 		Ogre::SceneNode*		getPivotSceneNode()			{ return m_pivotSceneNode;   }
-		const String&			getMaterialName	() const	{ return m_ogreMaterialName; }
-		const String&			getTextureName	() const	{ return m_ogreTextureName; }
+		const std::string&		getMaterialName	() const	{ return m_ogreMaterialName; }
+		const std::string&		getTextureName	() const	{ return m_ogreTextureName; }
 		bool					hasAlpha		() const;
 
 		// Texture coordinate control
@@ -169,9 +171,9 @@ namespace Cing
 		float						m_2dWidth, m_2dHeight;			///< Width and height of the object when it is being drawn in 2d (in screen coordinates)
 		float						m_2dXPos, m_2dYPos;					///< Position (in screen coordinates) of the object when it is being drawn in 2d
 
-		String               		m_ogreManualObjectName; 		///< Unique object name
-		String               		m_ogreTextureName;      		///< Unique texture name
-		String               		m_ogreMaterialName;     		///< Unique material name
+		std::string               	m_ogreManualObjectName; 		///< Unique object name
+		std::string					m_ogreTextureName;      		///< Unique texture name
+		std::string               	m_ogreMaterialName;     		///< Unique material name
 
 		bool						m_visible;						///< Tells if the object is visible or not
 		bool						m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene

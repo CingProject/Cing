@@ -1,6 +1,8 @@
 /*
  This source file is part of the Cing project
  For the latest info, see http://www.cing.cc
+ This source file is part of the Cing project
+ For the latest info, see http://www.cing.cc
  
  License: MIT License (http://www.opensource.org/licenses/mit-license.php)
  
@@ -1010,24 +1012,36 @@ namespace Cing
         GraphicsManager::getSingleton().m_shapesTransforms.top().scale( x, y, 1 );
     };
     
-    /**
-     * @brief Saves the current frame been rendered into an image file
-     * @param name Path (relative to data folder or absolute) for the file to be created
-     */
-    void saveCurrentFrame( const String& name )
-    {
-        GraphicsManager::getSingleton().saveFrame( name );
-    };
-    
-    /**
-     * @brief Saves an area/rectangle of the current frame been rendered into an image file
-     * @param name Path (relative to data folder or absolute) for the file to be created
-     * @param rect rectangle to be saved
-     */
-    void saveCurrentFrame( const String& name, const Rect& rect )
-    {
-        GraphicsManager::getSingleton().saveFrame( name );
-    };
+	/**
+ 	 * @brief Saves the current frame been rendered into an image file
+ 	 * @param name Path (relative to data folder or absolute) for the file to be created
+ 	 */
+	void saveCurrentFrame( const String& name )
+ 	{
+		GraphicsManager::getSingleton().saveFrame( name );
+	};
+
+	/**
+	 * @brief Saves an area/rectangle of the current frame been rendered into an image file
+	 * @param name Path (relative to data folder or absolute) for the file to be created
+	 * @param rect rectangle to be saved
+	 */
+	void saveCurrentFrame( const String& name, const Rect& rect )
+	{
+		GraphicsManager::getSingleton().saveFrame( name, rect );
+	};
+
+	/**
+ 	 * @brief Saves an area/rectangle of the current frame been rendered into an image file (defining the resolution of the output file, so it allows scaling it)
+ 	 * @param name Path (relative to data folder or absolute) for the file to be created
+ 	 * @param rect rectangle to be saved
+ 	 * @param   imageWidth width of the saved image file
+ 	 * @param   imageHeight height of the saved image file
+ 	 */
+	void saveCurrentFrame( const String& name, const Rect& rect, int imageWidth, int imageHeight )
+	{
+		GraphicsManager::getSingleton().saveFrame( name, rect, imageWidth, imageHeight );
+	};
     
     //-----------------------------------------------------------------------------------
     // Typography
@@ -1434,6 +1448,24 @@ namespace Cing
         return NULL;
     }
     
+	
+	//----------------------------------------------------------------------------------- 
+	// Window and Viewport Related
+	//----------------------------------------------------------------------------------- 
+
+	// When using multiple windows or viewports, this sets a viewrport as active, allowing all uses of width/height of the viewport to read
+	// the correct values (if this is not called, the globals width and height will have the values of the main/initial viwerport).
+	// IMPORTANTE: after this call, the values of width and height will correspond with those of the passed viewport
+	void setActiveViewport( Ogre::Viewport* viewport )
+	{
+		if ( viewport )
+		{
+			width = (int)viewport->getActualWidth();
+			height = (int)viewport->getActualHeight();
+		}
+	}
+
+
     //----------------------------------------------------------------------------------- 
     // Helpers
     //----------------------------------------------------------------------------------- 

@@ -116,6 +116,7 @@
 #include "common/XMLElement.h"
 #include "common/XMLSettings.h"
 #include "common/MemoryDumper.h"
+#include "common/MathUtils.h"
 
 // Physics
 //#include "physics/PhysicsUserAPI.h"
@@ -166,7 +167,7 @@ typedef	VICamera Capture;
 // Sound and Mic
 //typedef SoundFMOD Sound;
 //typedef AudioInputFMOD	AudioInput;
-typedef BaseSound Sound;
+//typedef BaseSound Sound;
 typedef BaseAudioInput	AudioInput;
 
 // Graphics (Processing compatibility)

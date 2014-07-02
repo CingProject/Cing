@@ -40,8 +40,11 @@
 
 // To use the outputdebugstring
 #ifdef WIN32
+#define _WINSOCKAPI_
 #include <Windows.h>
 #endif
+
+//#define USE_VSTUDIO_OUTPUTDEBUGSTRING
 
 namespace Cing
 {
@@ -107,12 +110,12 @@ void LogManager::init( bool logToOutput /*= true*/, bool logToFile /*= true*/ )
 
 	// Create custom log (the default log for Cing from now on, not for Ogre which will output to Ogre.log)
 	m_log = Ogre::LogManager::getSingleton().createLog( logFileName, false, logToOutput, !logToFile );
+	
+	m_bIsValid = true;
+	m_enabled  = true;
 
 	// Set log level
 	setLogLevel(m_debugOutputLogLevel);
-
-	m_bIsValid = true;
-	m_enabled  = true;
 }
 
 /**
@@ -199,8 +202,8 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 			std::cout << msgFormated << std::endl; 
 
 			// If on windows also output to the debug console
-#if defined(WIN32)
-			OutputDebugString( msgFormated );
+#if defined(WIN32) && defined(USE_VSTUDIO_OUTPUTDEBUGSTRING)
+			OutputDebugString( msgFormated );	// In release, only critical messages
 			OutputDebugString( "\n" );
 #endif
 		}
@@ -213,7 +216,7 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	{
 		m_log->logMessage( outputMsg.str(), (Ogre::LogMessageLevel)level );
 
-#if defined(WIN32)
+#if defined(WIN32) && defined(USE_VSTUDIO_OUTPUTDEBUGSTRING)
 			OutputDebugString( msgFormated );	// In release, only critical messages
 			OutputDebugString( "\n" );
 #endif

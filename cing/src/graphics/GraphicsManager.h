@@ -83,6 +83,7 @@ namespace Cing
 		void						vSync						(bool value )		{ m_vSync = value; }
 		void						FSAA						( int fsaa )		{ m_fsaa = fsaa; }
 		void						windowBorder				( bool border )		{ m_windowBorder = border; }
+		void						windowPosition				( int windowX, int windowY ) { m_windowPosX = windowX; m_windowPosY = windowY; }
 		void						windowMonitorIndex			( unsigned int index ) { m_windowMonitorIndex = index; }
 
 		// Query methods
@@ -155,6 +156,7 @@ namespace Cing
 		//Save frames
 		void						saveFrame( const String& name );
         void                        saveFrame( const String& name, const Rect& box );
+		void						saveFrame( const String& name, const Rect& rect, int imageWidth, int imageHeight );
 
 		// Import Collada
 		//bool loadCollada( const String& fileName );
@@ -202,8 +204,9 @@ namespace Cing
 		//CameraController			m_defaultCamController;
 
 
-		Window						m_mainWindow;     ///< Main application window
-		Camera3D					m_activeCamera;   ///< Active camera
+		Window						m_mainWindow;					///< Main application window
+		Camera3D					m_activeCamera;					///< Active camera
+		int							m_windowPosX, m_windowPosY;		///< Top-Left position of the window. Should be changed before calling size
 
 		// Graphics system setup
 		int                        	m_defaultWindowWidth;
@@ -243,7 +246,14 @@ namespace Cing
 		//to allow screen capture and effects
 		Ogre::TexturePtr			m_RttTexture;
 		bool						m_saveFrame;
-        typedef std::pair< std::string, Rect> TNameRect;
+
+		struct TNameRect
+		{
+			std::string	name;
+			Rect		rect;
+			int			outputWidth;
+			int			outputHeight;
+		};
         std::vector<TNameRect>      m_rectSaveList;
 		String						m_frameName;
 

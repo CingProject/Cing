@@ -62,18 +62,19 @@ namespace Cing
 		Image&  getImage();
 
 		// Query methods
-		bool    			isValid   		() const { return m_bIsValid; }
-		bool    			isPlaying 		();
-		bool				isPaused  		();
-		float   			duration  		() const { return (float)m_videoDuration; }
-		float   			time      		();
-		unsigned int    	getWidth  		() const { return m_videoWidth; }
-		unsigned int    	getHeight 		() const { return m_videoHeight; }
-		float   			fps		  		() const { return m_videoFps; }
-		float   			frameRate 		() const { return m_videoFps; }
-		unsigned int		frameCount		() const { return m_nFrames; } 
-		const std::string&	getFilePath		() const { return m_fileName; }
-		bool				hasNewFrame () const { return true; }
+		bool    			isValid   			() const { return m_bIsValid; }
+		bool    			isPlaying 			();
+		bool				isPaused  			();
+		float   			duration  			() const { return (float)m_videoDuration; }
+		float   			time      			();
+		unsigned int		currentFrameNumber	() { return (unsigned int)floor(time() * m_videoFps); }
+		unsigned int    	getWidth  			() const { return m_videoWidth; }
+		unsigned int    	getHeight 			() const { return m_videoHeight; }
+		float   			fps		  			() const { return m_videoFps; }
+		float   			frameRate 			() const { return m_videoFps; }
+		unsigned int		frameCount			() const { return m_nFrames; } 
+		const std::string&	getFilePath			() const { return m_fileName; }
+		bool				hasNewFrame			() const { return true; }
 
 		// Media control
 		void    play    ();
@@ -140,6 +141,7 @@ namespace Cing
 		boost::shared_ptr<pt::mutex>	m_bufferMutex;		///< Mutex to ensure threading safe buffer copy (from gstreamer to our internal buffer)
 		unsigned char*					m_internalBuffer;	///< Internal buffer to store the buffer comming from gstreamer
 		int								m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)
+		int								m_widthStep;		///< Size in bytes of each row of pixels in the video (It is usually width*channelCount, but it might be different
 		String							m_outputGstVideoFormat;///< GStreamer output buffer video format
 		GraphicsType					m_pixelFormat;		///< Pixel format in which new image frames will be stored
 		Image							m_frameImg;			///< Image containing the buffer of the current video frame
