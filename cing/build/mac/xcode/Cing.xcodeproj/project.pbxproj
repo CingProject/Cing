@@ -1060,6 +1060,7 @@
 					"-lfreetype",
 					"-lOIS",
 					"-Wl,-flat_namespace,-undefined,dynamic_lookup",
+					"-lboost_filesystem",
 				);
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
@@ -1133,6 +1134,7 @@
 					"-lfreetype",
 					"-lOIS",
 					"-Wl,-flat_namespace,-undefined,dynamic_lookup",
+					"-lboost_filesystem",
 				);
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
