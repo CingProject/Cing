@@ -83,7 +83,8 @@ namespace Cing
 	void FontManager::end()
 	{
 		// Release the fonts
-		std::for_each( m_activeFontsToRender.begin(), m_activeFontsToRender.end(), ReleaseFunctor<MovableText>() );
+        if ( m_activeFontsToRender.size() > 0 )
+            std::for_each( m_activeFontsToRender.begin(), m_activeFontsToRender.end(), ReleaseFunctor<MovableText>() );
 		m_activeFontsToRender.clear();
 		m_activeFont = NULL;
 

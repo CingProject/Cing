@@ -47,7 +47,9 @@
         _movieType = AVFileTypeMPEG4;
     if ( _videoCodec == nil )
     {
-//        _videoCodec = AVVideoCodecJPEG;
+        //_videoCodec = AVVideoCodecJPEG;
+        //_videoCodec = AVVideoCodecAppleProRes422;
+        //_videoCodec = AVVideoCodecAppleProRes4444;
         _videoCodec = AVVideoCodecH264;
     }
     
