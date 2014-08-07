@@ -1043,10 +1043,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"-lboost_thread-mt",
-					"-lboost_date_time-mt",
-					"-lboost_chrono-mt",
-					"-lboost_system-mt",
+					"-lboost_thread-xgcc42-mt-1_53",
+					"-lboost_date_time-xgcc42-mt-1_53",
+					"-lboost_chrono-xgcc42-mt-1_53",
+					"-lboost_system-xgcc42-mt-1_53",
 					"-lTinyXML",
 					"-lptypes",
 					"-lopencv_highgui",
@@ -1060,7 +1060,7 @@
 					"-lfreetype",
 					"-lOIS",
 					"-Wl,-flat_namespace,-undefined,dynamic_lookup",
-					"-lboost_filesystem",
+					"-lboost_filesystem-xgcc42-mt-1_53",
 				);
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
@@ -1117,10 +1117,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"-lboost_thread-mt",
-					"-lboost_date_time-mt",
-					"-lboost_chrono-mt",
-					"-lboost_system-mt",
+					"-lboost_thread-xgcc42-mt-1_53",
+					"-lboost_date_time-xgcc42-mt-1_53",
+					"-lboost_chrono-xgcc42-mt-1_53",
+					"-lboost_system-xgcc42-mt-1_53",
 					"-lTinyXML",
 					"-lptypes",
 					"-lopencv_highgui",
@@ -1134,7 +1134,7 @@
 					"-lfreetype",
 					"-lOIS",
 					"-Wl,-flat_namespace,-undefined,dynamic_lookup",
-					"-lboost_filesystem",
+					"-lboost_filesystem-xgcc42-mt-1_53",
 				);
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
