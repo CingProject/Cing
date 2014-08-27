@@ -99,7 +99,7 @@
         codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                          bitRateNumber, AVVideoAverageBitRateKey,
                          keyframeIntervalNumber, AVVideoMaxKeyFrameIntervalKey,
-                         AVVideoProfileLevelH264Main41, AVVideoProfileLevelKey, // had to change from "AVVideoProfileLevelH264HighAutoLevel" because it was added in 10.9
+                         AVVideoProfileLevelH264HighAutoLevel, AVVideoProfileLevelKey, // had to change from "AVVideoProfileLevelH264HighAutoLevel" because it was added in 10.9
                          nil];
         
         videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
