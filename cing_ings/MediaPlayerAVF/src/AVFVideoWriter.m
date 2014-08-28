@@ -95,12 +95,23 @@
         NSNumber *keyframeIntervalNumber = [NSNumber numberWithInt:keyFrameInterval];
         NSLog(@"bitRateNumber: %@", bitRateNumber);
         NSLog(@"keyframeIntervalNumber: %@", keyframeIntervalNumber);
-        
-        codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                         bitRateNumber, AVVideoAverageBitRateKey,
-                         keyframeIntervalNumber, AVVideoMaxKeyFrameIntervalKey,
-                         AVVideoProfileLevelH264HighAutoLevel, AVVideoProfileLevelKey, // had to change from "AVVideoProfileLevelH264HighAutoLevel" because it was added in 10.9
-                         nil];
+
+        if ( floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_8 )
+        {
+            codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                             bitRateNumber, AVVideoAverageBitRateKey,
+                             keyframeIntervalNumber, AVVideoMaxKeyFrameIntervalKey,
+                             AVVideoProfileLevelH264Main41, AVVideoProfileLevelKey,
+                             nil];
+        }
+        else
+        {
+            codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                             bitRateNumber, AVVideoAverageBitRateKey,
+                             keyframeIntervalNumber, AVVideoMaxKeyFrameIntervalKey,
+                             AVVideoProfileLevelH264HighAutoLevel, AVVideoProfileLevelKey,
+                             nil];
+        }
         
         videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                          _videoCodec, AVVideoCodecKey,
