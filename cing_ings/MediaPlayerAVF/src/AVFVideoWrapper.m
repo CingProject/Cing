@@ -70,6 +70,7 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
     NSArray *requestedKeys = [NSArray arrayWithObjects:kTracksKey, kPlayableKey, nil];
     [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"loadFile::loadValuesAsynchronouslyForKeys -- asset: %@, requestedKeys: %@", asset, requestedKeys);
             [self setupPlaybackWithAsset:asset];
         });
     }];
@@ -326,6 +327,8 @@ static void *AVPlayerItemStatusContext = &AVPlayerItemStatusContext;
                     break;
                 case AVPlayerItemStatusReadyToPlay:
                     NSLog( @"-- player Item: AVPlayerItemStatusReadyToPlay" );
+                    
+                    ready = YES;
                                       
                     break;
                 case AVPlayerItemStatusFailed:
