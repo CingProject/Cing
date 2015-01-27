@@ -949,10 +949,10 @@ namespace Cing
 		// Get Stroke and Fill Color
 		GraphicsManager& graphManager = GraphicsManager::getSingleton();
 		Color color			= graphManager.getStrokeColor();
-		int	  fontScale		= 2;
+		int	  fontScale		= 1;
 
         cv::Mat outMat = toCVMat(image);
-		cv::putText(outMat, text, cv::Point(x1,y1), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar( color.r, color.g, color.b, color.a ));
+		cv::putText(outMat, text, cv::Point(x1,y1), cv::FONT_HERSHEY_COMPLEX_SMALL, fontScale, cv::Scalar( color.r, color.g, color.b, color.a ));
 	}
 
 	void  Renderer2DOpenCV::fill( Image& image, const Color& color )
