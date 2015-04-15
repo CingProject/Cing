@@ -44,6 +44,8 @@ namespace Cing
 
 		fetchRequest( headers, &URL, &oss );
 
+		curl_slist_free_all( headers );
+
 		_lastResult = oss.str();
 
 		return _lastResult;
@@ -59,6 +61,8 @@ namespace Cing
 		curl_slist_append( headers, "charsets: utf-8" );
 
 		fetchRequest( headers, &URL, &oss );
+
+		curl_slist_free_all( headers );
 
 		_lastResult = oss.str();
 
